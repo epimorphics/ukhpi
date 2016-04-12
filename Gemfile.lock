@@ -93,9 +93,6 @@ GEM
       nokogiri (~> 1.6.0)
       ruby_parser (~> 3.5)
     i18n (0.7.0)
-    jbuilder (2.4.1)
-      activesupport (>= 3.0.0, < 5.1)
-      multi_json (~> 1.2)
     jquery-rails (4.1.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -144,7 +141,6 @@ GEM
     mocha (1.1.0)
       metaclass (~> 0.0.1)
     modernizr-rails (2.7.1)
-    multi_json (1.11.2)
     multipart-post (2.0.0)
     nokogiri (1.6.7.2)
       mini_portile2 (~> 2.0.0.rc2)
@@ -178,8 +174,6 @@ GEM
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
     rake (11.1.2)
-    rdoc (4.2.2)
-      json (~> 1.4)
     ruby-progressbar (1.7.5)
     ruby_parser (3.8.1)
       sexp_processor (~> 4.1)
@@ -190,9 +184,6 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sdoc (0.4.1)
-      json (~> 1.7, >= 1.7.7)
-      rdoc (~> 4.0)
     sexp_processor (4.7.0)
     spring (1.7.0)
     sprockets (3.6.0)
@@ -231,7 +222,6 @@ DEPENDENCIES
   govuk_frontend_toolkit
   govuk_template
   haml-rails
-  jbuilder (~> 2.0)
   jquery-rails
   jquery-ui-rails
   js-routes
@@ -245,7 +235,6 @@ DEPENDENCIES
   quiet_assets
   rails (= 4.2.6)
   sass-rails (~> 5.0)
-  sdoc (~> 0.4.0)
   spring
   uglifier (>= 1.3.0)
   web-console (~> 2.0)

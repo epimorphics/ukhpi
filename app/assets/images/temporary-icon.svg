@@ -13,7 +13,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="temporary-icon.svg">
+   sodipodi:docname="temporary-icon.svg"
+   inkscape:export-filename="/home/ian/workspace/land-registry/ukhpi/app/assets/images/temporary-icon.png"
+   inkscape:export-xdpi="294.54544"
+   inkscape:export-ydpi="294.54544">
   <metadata
      id="metadata10">
     <rdf:RDF>
@@ -51,9 +54,9 @@
   <path
      d="M20 7.093v-5.093h-3v2.093l3 3zm4 5.907l-12-12-12 12h3v10h18v-10h3zm-5 8h-14v-10.26l7-6.912 7 6.99v10.182zm-5-1h-4v-6h4v6z"
      id="path4"
-     style="fill:#f0f0f0;fill-opacity:1" />
+     style="fill:#a6d71c;fill-opacity:1;opacity:0.98" />
   <path
-     style="fill:none;fill-rule:evenodd;stroke:#cfcfcf;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
+     style="fill:none;fill-rule:evenodd;stroke:#525247;stroke-width:2;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
      d="m 0.91525424,22.271186 7.72881356,-8.237288 5.1864402,3.457627 6.81356,-9.4576267 0.508474,0.7118644 4.271187,-3.0508474"
      id="path4138"
      inkscape:connector-curvature="0" />

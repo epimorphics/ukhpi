@@ -19,13 +19,14 @@
 
   %body.government.website.lr.ppd-standard-report
 
-    %header#global-header.with-proposition.c-lr-header{ role: "banner" }
+    %header#global-header.with-proposition.lr-header{ role: "banner" }
       .header-wrapper
         .header-global
           .header-logo
-            %a.content{ href: "/app/ukhpi", title: "UK HPI" }
-              = image_tag "temporary-icon.svg"
-            UK House Price Index
+            %h1.title-bar--h1
+              %a.content{ href: "/app/ukhpi", title: "UK HPI" }
+                = image_tag "temporary-icon.svg"
+              UK House Price Index
 
     .o-lr-top-bar
 

@@ -1,0 +1,255 @@
+// Common style settings to share between LR applications
+// Trying to follow @csswizardry's CSS Namespaces advice
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/
+
+/* variables */
+
+$lr-green-dark: #5A8006;
+$lr-yellow: #e5ea08;
+$lr-logo-green-light: #a6d71c;
+$lr-logo-green-dark: #66c430;
+$lr-logo-grey: #a7a5a6;
+$lr-green-nav: #ACCD40;
+
+$lr-headline: $lr-green-dark;
+$lr-separator: $lr-green-nav;
+$lr-link: $lr-headline;
+$lr-link-quiet: $lr-logo-green-light;
+$lr-focus: $lr-logo-green-dark;
+$lr-top-line: $lr-green-nav;
+$lr-footer-grey: #f0f5f0;
+$lr-footer-link: lighten( $lr-separator, 10 );
+$lr-footer-background: #818181;
+$lr-green-nav-darkened: darken( $lr-green-nav, 20% );
+
+/* settings */
+
+/* elements */
+
+:focus,
+a:focus,
+input:focus {
+  outline: 1px solid $lr-focus;
+}
+
+.btn-success:focus {
+  color: #333;
+}
+
+.form-control:focus {
+  border: 0;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+}
+
+a {
+  cursor: pointer;
+}
+
+ol.numbered {
+  list-style: decimal outside;
+  margin-left: 2rem;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  transform: scale(1.5);
+  -webkit-transform: scale(1.5);
+}
+
+/* objects */
+
+.o-beta-banner {
+  @include phase-banner(beta);
+}
+.o-beta-tag{
+  @include phase-tag(beta);
+}
+
+.o-lr-top-bar {
+  width: 100%;
+  height: 3px;
+  background-color: $lr-top-line;
+  margin: 5px 0;
+}
+
+.o-container {
+  @extend %site-width-container;
+}
+
+.o-footerx {
+  margin-top: 2rem;
+  background-color: $lr-footer-background;
+  border-top: 8px solid $lr-separator;
+  font-size: 1.5rem;
+
+  .o-footer--h2 {
+    line-height: normal;
+    font-size: 1rem;
+
+    img {
+      max-height: 18px;
+      margin-right: 15px;
+    }
+
+    a {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  a {
+    color: $lr-footer-link;
+  }
+
+  .o-footer--ogl p {
+    color: #303030;
+    font-size: 11pt;
+  }
+}
+
+.o-form-control {
+  line-height: 3rem;
+
+  .o-form-control--label {
+  }
+
+  .o-form-control--input {
+    margin-right: 0.8rem;
+  }
+
+  .o-form-control--label {
+    display: block;
+  }
+
+  .o-form-control--label-inline {
+    display: inline-block;
+  }
+
+  .o-form-control--label input[type=text] {
+    // margin-left: 0.8rem;
+    width: 100%;
+  }
+}
+
+/* components */
+
+.lr-header {
+  background-color: white;
+}
+
+.c-review-report {
+  .c-review-report--summary-key {
+    color: $grey-1;
+  }
+
+  .c-review-report--summary-value {
+    font-weight: bold;
+  }
+
+  .c-review-report--change-option {
+    font-size: 80%;
+    margin-left: 20px;
+  }
+}
+
+.c-form-submit {
+  margin-top: 30px;
+}
+
+.c-back-action {
+  display: none;
+}
+
+.js .c-back-action {
+  display: inline-block;
+  margin-top: 33px;
+  margin-left: 20px;
+  color: $grey-1;
+}
+
+.c-heading-prefix {
+  display: block;
+  color: $grey-1;
+}
+
+/* utilities */
+
+.u-large-top-margin {
+  margin-top: 3rem;
+}
+
+.u-font-bold {
+  font-weight: bold;
+}
+
+/* surface */
+
+.o-form-control--label details {
+  margin-left: 2.5rem;
+}
+
+// override UK gov stylesheet, which uses the highly specific #global-header selector
+#global-header.lr-header {
+  background-color: white;
+
+  .header-wrapper {
+    background-color: white;
+  }
+}
+
+#global-header .header-proposition #proposition-name.lr-header--proposition-name {
+  color: $lr-link;
+}
+
+#global-header .header-proposition #proposition-links {
+  .lr-header--header-proposition--a {
+    color: $lr-link-quiet;
+  }
+
+  .lr-header--header-proposition--a__active {
+    color: $lr-link;
+  }
+
+  .lr-header--header-proposition {
+    color: $lr-headline;
+  }
+}
+
+#footer {
+  margin-top: 3rem;
+
+  .footer-meta .footer-meta-inner {
+    width: 100% !important;
+  }
+
+  .footer-meta a {
+    text-decoration: underline;
+  }
+
+  .footer-meta .footer-meta-inner .logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 41px;
+    height: 100%;
+  }
+
+  .footer-meta .footer-meta-inner .open-government-licence .logo a {
+    background-image: url( "https://designnotes.blog.gov.uk/wp-content/themes/gds-blogs/build/govuk_template/assets/stylesheets/images/open-government-licence.png?0.10.0" );
+    display: block;
+    width: 41px;
+    height: 17px;
+    overflow: hidden;
+    text-indent: -999em;
+  }
+
+  .footer-meta .footer-meta-inner .open-government-licence p {
+    margin: 0;
+    padding-top: 0.1em;
+  }
+}
+
+.panel {
+  border: 0;
+}
