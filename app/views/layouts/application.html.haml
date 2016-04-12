@@ -1,0 +1,55 @@
+!!! html
+%html
+  %head
+    %title Land Registry - PPD standard reports
+    = javascript_include_tag :modernizr
+    = stylesheet_link_tag    "application", media: "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
+    = favicon_link_tag
+    %script{ type: "text/javascript", src: "https://apis.google.com/js/plusone.js"}
+      {"parsetags": "explicit"}
+
+    - if @preferences
+      %link{ rel: "canonical", href: "http://#{request.host_with_port}#{@preferences.as_path( :view )}"}
+
+    /[if lt IE 9]
+      %script{ src: "assets/html5shiv.js", type: "application/javascript"}
+      %script{ src: "assets/respond.min.js", type: "application/javascript"}
+
+  %body.government.website.lr.ppd-standard-report
+
+    %header#global-header.with-proposition.c-lr-header{ role: "banner" }
+      .header-wrapper
+        .header-global
+          .header-logo
+            %a.content{ href: "/app/ukhpi", title: "UK HPI" }
+              = image_tag "temporary-icon.svg"
+            UK House Price Index
+
+    .o-lr-top-bar
+
+
+    =render partial: "common/flash_message"
+
+    %main.container.o-container{ role: "main"}
+      .o-beta-banner
+        %p
+          %strong.o-beta-tag BETA
+          %span.text-muted
+            This is a new service – your <a href="mailto:commercial.services@landregistry.gov.uk">feedback</a> will help us to improve it.
+      .row
+        .col-md-12
+          = yield
+
+    = render partial: "common/footer"
+
+    :javascript
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-21165003-6']);
+      _gaq.push(['_trackPageview']);
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
