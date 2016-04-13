@@ -1,0 +1,83 @@
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix xsd:   <http://www.w3.org/2001/XMLSchema#> .
+@prefix dct:   <http://purl.org/dc/terms/> .
+@prefix qb:    <http://purl.org/linked-data/cube#> .
+@prefix wfd: <http://location.data.gov.uk/def/am/wfd/> .
+@prefix uk-hpi: <http://landregistry.data.gov.uk/def/ukhpi/> .
+@prefix dsapi: <http://www.epimorphics.com/public/vocabulary/dsapi#> .
+@prefix admingeo: <http://data.ordnancesurvey.co.uk/ontology/admingeo/> .
+@prefix sr:    <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
+@prefix :  <http://landregistry.data.gov.uk/dsapi/hpi#> .
+
+:hpi a dsapi:Dataset;
+    rdfs:label "UK house price index";
+    dct:description "A Data Cube of UK house price index data from Land Registry";
+    dsapi:source "source3";
+    dsapi:aspect
+      [rdfs:label "period"                          ; dsapi:property uk-hpi:refPeriod],
+      [rdfs:label "region"                          ; dsapi:property uk-hpi:refRegion],
+#      [rdfs:label "region name"                     ; dsapi:property uk-hpi:refRegionName],
+#      [rdfs:label "indices"                         ; dsapi:property uk-hpi:indices],
+#      [rdfs:label "indices SA"                      ; dsapi:property uk-hpi:indicesSA],
+#      [rdfs:label "average prices SA"               ; dsapi:property uk-hpi:averagePricesSA;                 dsapi:optional true],
+#      [rdfs:label "average prices SASM"             ; dsapi:property uk-hpi:averagePricesSASM;               dsapi:optional true],
+#      [rdfs:label "indices SASM"                    ; dsapi:property uk-hpi:indicesSASM;                     dsapi:optional true],
+#      [rdfs:label "monthly change"                  ; dsapi:property uk-hpi:monthlyChange;                   dsapi:optional true],
+#      [rdfs:label "annual change"                   ; dsapi:property uk-hpi:annualChange;                    dsapi:optional true],
+#      [rdfs:label "sales volume"                    ; dsapi:property uk-hpi:salesVolume;                     dsapi:optional true],
+#      [rdfs:label "average prices detached"         ; dsapi:property uk-hpi:averagePricesDetachedSASM;       dsapi:optional true],
+#      [rdfs:label "average prices semi-detached"    ; dsapi:property uk-hpi:averagePricesSemiDetachedSASM;   dsapi:optional true],
+#      [rdfs:label "average prices terraced"         ; dsapi:property uk-hpi:averagePricesTerracedSASM;       dsapi:optional true],
+#      [rdfs:label "average prices flat/maisonette"  ; dsapi:property uk-hpi:averagePricesFlatMaisonetteSASM; dsapi:optional true]
+
+        [rdfs:label "average price" ; dsapi:property uk-hpi:averagePrice; dsapi:optional true ] ,
+        [rdfs:label "house price index" ; dsapi:property uk-hpi:housePriceIndex; dsapi:optional true ] ,
+        [rdfs:label "house price index SA" ; dsapi:property uk-hpi:housePriceIndexSA; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change" ; dsapi:property uk-hpi:percentageMonthlyChange; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change" ; dsapi:property uk-hpi:percentageAnnualChange; dsapi:optional true ] ,
+        [rdfs:label "average price SA" ; dsapi:property uk-hpi:averagePriceSA; dsapi:optional true ] ,
+        [rdfs:label "sales volume" ; dsapi:property uk-hpi:salesVolume; dsapi:optional true ] ,
+        [rdfs:label "average price detached" ; dsapi:property uk-hpi:averagePriceDetached; dsapi:optional true ] ,
+        [rdfs:label "index detached" ; dsapi:property uk-hpi:indexDetached; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change detached" ; dsapi:property uk-hpi:percentageMonthlyChangeDetached; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change detached" ; dsapi:property uk-hpi:percentageAnnualChangeDetached; dsapi:optional true ] ,
+        [rdfs:label "average price semi-detached" ; dsapi:property uk-hpi:averagePriceSemiDetached; dsapi:optional true ] ,
+        [rdfs:label "index semi-detached" ; dsapi:property uk-hpi:indexSemiDetached; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change semi-detached" ; dsapi:property uk-hpi:percentageMonthlyChangeSemiDetached; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change semi-detached" ; dsapi:property uk-hpi:percentageAnnualChangeSemiDetached; dsapi:optional true ] ,
+        [rdfs:label "average price terraced" ; dsapi:property uk-hpi:averagePriceTerraced; dsapi:optional true ] ,
+        [rdfs:label "index terraced" ; dsapi:property uk-hpi:indexTerraced; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change terraced" ; dsapi:property uk-hpi:percentageMonthlyChangeTerraced; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change terraced" ; dsapi:property uk-hpi:percentageAnnualChangeTerraced; dsapi:optional true ] ,
+        [rdfs:label "average price flat/maisonette" ; dsapi:property uk-hpi:averagePriceFlatMaisonette; dsapi:optional true ] ,
+        [rdfs:label "index flat/maisonette" ; dsapi:property uk-hpi:indexFlatMaisonette; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change flat/maisonette" ; dsapi:property uk-hpi:percentageMonthlyChangeFlatMaisonette; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change flat/maisonette" ; dsapi:property uk-hpi:percentageAnnualChangeFlatMaisonette; dsapi:optional true ] ,
+        [rdfs:label "average price cash" ; dsapi:property uk-hpi:averagePriceCash; dsapi:optional true ] ,
+        [rdfs:label "index cash" ; dsapi:property uk-hpi:indexCash; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change cash" ; dsapi:property uk-hpi:percentageMonthlyChangeCash; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change cash" ; dsapi:property uk-hpi:percentageAnnualChangeCash; dsapi:optional true ] ,
+        [rdfs:label "average price mortgage" ; dsapi:property uk-hpi:averagePriceMortgage; dsapi:optional true ] ,
+        [rdfs:label "index mortgage" ; dsapi:property uk-hpi:indexMortgage; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change mortgage" ; dsapi:property uk-hpi:percentageMonthlyChangeMortgage; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change mortgage" ; dsapi:property uk-hpi:percentageAnnualChangeMortgage; dsapi:optional true ] ,
+        [rdfs:label "average price first-time buyer" ; dsapi:property uk-hpi:averagePriceFirstTimeBuyer; dsapi:optional true ] ,
+        [rdfs:label "index first-time buyer" ; dsapi:property uk-hpi:indexFirstTimeBuyer; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change first-time buyer" ; dsapi:property uk-hpi:percentageMonthlyChangeFirstTimeBuyer; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change first-time buyer" ; dsapi:property uk-hpi:percentageAnnualChangeFirstTimeBuyer; dsapi:optional true ] ,
+        [rdfs:label "average price former owner occupier" ; dsapi:property uk-hpi:averagePriceFormerOwnerOccupier; dsapi:optional true ] ,
+        [rdfs:label "index former owner occupier" ; dsapi:property uk-hpi:indexFormerOwnerOccupier; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change former owner occupier" ; dsapi:property uk-hpi:percentageMonthlyChangeFormerOwnerOccupier; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change former owner occupier" ; dsapi:property uk-hpi:percentageAnnualChangeFormerOwnerOccupier; dsapi:optional true ] ,
+        [rdfs:label "average price new build" ; dsapi:property uk-hpi:averagePriceNewBuild; dsapi:optional true ] ,
+        [rdfs:label "index new build" ; dsapi:property uk-hpi:indexNewBuild; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change new build" ; dsapi:property uk-hpi:percentageMonthlyChangeNewBuild; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change new build" ; dsapi:property uk-hpi:percentageAnnualChangeNewBuild  ; dsapi:optional true ] ,
+        [rdfs:label "average price existing property" ; dsapi:property uk-hpi:averagePriceExistingProperty; dsapi:optional true ] ,
+        [rdfs:label "index existing property" ; dsapi:property uk-hpi:indexExistingProperty; dsapi:optional true ] ,
+        [rdfs:label "percentage monthly change existing property" ; dsapi:property uk-hpi:percentageMonthlyChangeExistingProperty; dsapi:optional true ] ,
+        [rdfs:label "percentage annual change existing property" ; dsapi:property uk-hpi:percentageAnnualChangeExistingProperty; dsapi:optional true ]
+    .
