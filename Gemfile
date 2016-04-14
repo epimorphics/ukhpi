@@ -41,6 +41,9 @@ group :development, :test do
   gem 'minitest-reporters'
   gem 'capybara_minitest_spec'
   gem 'mocha'
+  gem 'simplecov', :require => false
+  gem 'vcr'
+  gem 'nokogiri'
 end
 
 group :development do
