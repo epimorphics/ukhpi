@@ -10,4 +10,8 @@ class Region
     @parent = parent
     @gss = gss
   end
+
+  def matches_name?( name, rtype )
+    @labels.any? {|lang, label| name == lang} && type == rtype
+  end
 end
