@@ -12,4 +12,4 @@
 !/log/.keep
 /tmp
 query-results.json
-regions-table.js
+.byebug_history
