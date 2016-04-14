@@ -73,6 +73,10 @@ class Location
     @types.find {|t| t =~/admingeo/}
   end
 
+  def to_ruby
+    "Region.new( #{uri.inspect}, #{@labels.inspect}, #{preferred_type.inspect}, #{parent.inspect}, \"#{gss}\" )"
+  end
+
   def to_json
     "{#{json_attributes}}"
   end
@@ -127,10 +131,12 @@ namespace :ukhpi do
     locations = Hash.new
     location_names = []
     gss_index = Hash.new
+    all_types = Set.new
 
     sresults["results"]["bindings"].each do |result|
       lr = LocationRecord.new( result )
       loc = locations[lr.uri]
+      all_types << lr.type
 
       if loc
         loc.update_from( lr )
@@ -155,14 +161,15 @@ namespace :ukhpi do
     open( "regions-table.js", "w") do |file|
       file << "var Locations = (function() {\n"
       file << "use strict;\n"
-      file << "  var locationNames = #{location_names.to_json};" << "\n"
+      file << "  var locationNames = #{location_names.to_json};\n"
+      file << "  var types = #{all_types.to_a.sort.to_json};\n"
       file << "  var locations = {\n"
       locations.each do |uri,loc|
         file << "    #{loc.to_json},\n"
       end
       file << "  };\n"
       file << "  var gssIndex = #{gss_index.to_json};\n"
-      file << "  return {names: locationNames, locations: locations, gssIndex: gssIndex };\n"
+      file << "  return {names: locationNames, types: types, locations: locations, gssIndex: gssIndex };\n"
       file << "})();\n"
     end
 
@@ -172,8 +179,15 @@ namespace :ukhpi do
       file << "  def location_names\n"
       file << "    #{location_names.inspect}\n"
       file << "  end\n"
+      file << "  def types\n"
+      file << "    #{all_types.to_a.sort.inspect}\n"
+      file << "  end\n"
       file << "  def locations\n"
-      file << "    #{locations.inspect}\n"
+      file << "    {\n"
+      locations.each do |uri,loc|
+        file << "    #{uri.inspect} => #{loc.to_ruby},\n"
+      end
+      file << "    }\n"
       file << "  end\n"
       file << "  def gss_index\n"
       file << "    #{gss_index.inspect}\n"
