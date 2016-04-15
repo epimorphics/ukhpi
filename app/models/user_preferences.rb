@@ -3,21 +3,40 @@
 
 class UserPreferences
   VALIDATIONS = {
-    from: ->( value, params ) {Date.parse( value )},
-    to: ->( value, params ) {Date.parse( value )},
-    now: ->( value, params ) {Date.parse( value )},
-    region: ->( value, params ) {Regions.parse_region( value, params )},
-    rt: ->( value, params ) {Regions.parse_region_type( value )}
+    from: ->( value, context )    {Date.parse( value )},
+    to: ->( value, context )      {Date.parse( value )},
+    _now: ->( value, context )    {Date.parse( value )},
+    region: ->( value, context )  {(value != "" && value) || raise( "Missing location" )},
+    rt: ->( value, context )      {Regions.parse_region_type( value )}
   }
 
   WHITELIST = VALIDATIONS.keys
 
-  attr_reader :params
-
   def initialize( params )
-    whitelisted = params.select {|k,v| WHITELIST.include?( k )}
-    @params = whitelisted.map do |k, v|
-      VALIDATIONS[k.to_sym].apply( v, whitelisted )
+    whitelisted = params
+      .symbolize_keys
+      .select {|key| WHITELIST.include?( key )}
+    context = {params: whitelisted}
+
+    @params = validate_params( whitelisted, context )
+  end
+
+  def method_missing( key, *args, &block )
+    WHITELIST.include?( key.to_sym ) && @params[key.to_sym]
+  end
+
+  :private
+
+  def validate_params( params, context )
+    params.inject( {} ) do |memo, pair|
+      k = pair.first
+      sanitized = sanitize_user_input( pair.second )
+      memo[k] = VALIDATIONS[k].call( sanitized, context )
+      memo
     end
+  end
+
+  def sanitize_user_input( str )
+    Rails::Html::FullSanitizer.new.sanitize( str )
   end
 end
