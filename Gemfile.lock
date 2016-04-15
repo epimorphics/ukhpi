@@ -242,6 +242,7 @@ DEPENDENCIES
   nokogiri
   quiet_assets
   rails (= 4.2.6)
+  rails-html-sanitizer
   sass-rails (~> 5.0)
   simplecov
   spring

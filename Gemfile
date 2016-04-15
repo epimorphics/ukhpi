@@ -22,6 +22,7 @@ gem 'lodash-rails'
 gem 'bootstrap-sass'
 gem 'modernizr-rails'
 gem 'font-awesome-rails'
+gem 'rails-html-sanitizer'
 
 gem 'govuk_template'
 gem 'govuk_frontend_toolkit'#, github: "alphagov/govuk_frontend_toolkit_gem", submodules: true
