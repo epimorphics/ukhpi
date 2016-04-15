@@ -5,9 +5,9 @@ require "regions-table"
 class Regions
   extend RegionsTable
 
-  def self.parse_region( region_name, params )
+  def self.match( region_name, params )
     rtype = self.validate_region_type( params[:rt] )
-    locations.find do |uri, loc|
+    locations.select do |uri, loc|
       loc.matches_name?( region_name, rtype )
     end
   end

@@ -19,4 +19,31 @@ class RegionsTest < ActiveSupport::TestCase
     Regions.validate_region_type( nil ).must_be_nil
   end
 
+  it "matches a full region name with a type" do
+    hits = Regions.match( "Mendip", {} )
+    hits.must_be_kind_of Hash
+    hits.size.must_equal 1
+
+    r = hits.values.first
+    r.must_be_kind_of Region
+    r.label( :en ).must_equal "Mendip"
+  end
+
+  it "matches multiple values when given a partial name" do
+    hits = Regions.match( "South", {} )
+    hits.must_be_kind_of Hash
+    hits.size.must_be :>, 20
+  end
+
+  it "matches fewer values when constrained by type" do
+    hits = Regions.match( "South", {rt: "http://data.ordnancesurvey.co.uk/ontology/admingeo/District"} )
+    hits.must_be_kind_of Hash
+    hits.size.must_be :<, 20
+  end
+
+  it "returns empty for an unsatisfiable search" do
+    hits = Regions.match( "Mendip", {rt: "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough"} )
+    hits.must_be_kind_of Hash
+    hits.must_be_empty
+  end
 end
