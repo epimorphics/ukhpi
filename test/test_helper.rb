@@ -27,3 +27,15 @@ class ActiveSupport::TestCase
     assert_empty doc.errors
   end
 end
+
+module MiniTest::Assertions
+  def assert_truthy( proposition )
+    assert proposition
+  end
+  def assert_not_truthy( proposition )
+    assert !proposition
+  end
+end
+
+Object.infect_an_assertion :assert_truthy, :must_be_truthy, :unary
+Object.infect_an_assertion :assert_not_truthy, :must_not_be_truthy, :unary
