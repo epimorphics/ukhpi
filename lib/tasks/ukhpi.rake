@@ -175,7 +175,7 @@ namespace :ukhpi do
 
     # Ruby module output
     open( "regions-table.rb", "w") do |file|
-      file << "module RegionsTable do\n"
+      file << "module RegionsTable\n"
       file << "  def location_names\n"
       file << "    #{location_names.inspect}\n"
       file << "  end\n"
@@ -199,7 +199,7 @@ namespace :ukhpi do
   desc "Move the files to their correct locations"
   task move_region_files: :environment do
     puts "Moving region files ..."
-    File.rename( "regions-table.js", "app/assets/javascripts/region-table.js" )
-    File.rename( "regions-table.rb", "app/models/region-table.rb" )
+    File.rename( "regions-table.js", "app/assets/javascripts/regions-table.js" )
+    File.rename( "regions-table.rb", "app/models/regions-table.rb" )
   end
 end
