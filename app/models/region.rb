@@ -11,7 +11,11 @@ class Region
     @gss = gss
   end
 
-  def matches_name?( name, rtype )
-    @labels.any? {|lang, label| name == lang} && type == rtype
+  def matches_name?( name, rtype, lang = :en )
+    @labels.any? {|key, label| key == lang && label.include?( name )} && type == rtype
+  end
+
+  def label( lang = :en )
+    @labels[lang]
   end
 end
