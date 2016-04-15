@@ -54,4 +54,9 @@ class RegionTest < ActiveSupport::TestCase
     region.matches_name?( "foo", nil, :en ).must_be_truthy
     region.matches_name?( "bar", nil, :en ).must_not_be_truthy
   end
+
+  it "should ignore case when matching" do
+    region.matches_name?( "FOO", nil, :en ).must_be_truthy
+    region.matches_name?( "BaR", nil, :en ).must_not_be_truthy
+  end
 end

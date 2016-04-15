@@ -13,7 +13,10 @@ class Region
 
   def matches_name?( name, rtype, lang = :en )
     is_of_type?( rtype ) &&
-    @labels.any? {|key, label| key == lang && label.include?( name )}
+    @labels.any? do |key, label|
+      key == lang &&
+      label.downcase.include?( name.downcase )
+    end
   end
 
   def is_of_type?( rtype )
