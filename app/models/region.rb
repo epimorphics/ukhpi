@@ -12,7 +12,8 @@ class Region
   end
 
   def matches_name?( name, rtype, lang = :en )
-    @labels.any? {|key, label| key == lang && label.include?( name )} && type == rtype
+    type == rtype &&
+    @labels.any? {|key, label| key == lang && label.include?( name )}
   end
 
   def label( lang = :en )
