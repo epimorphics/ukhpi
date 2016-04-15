@@ -66,7 +66,7 @@ class Location
   end
 
   def add_label( lr )
-    @labels[lr.lang] = lr.label
+    @labels[lr.lang.to_sym] = lr.label
   end
 
   def preferred_type
