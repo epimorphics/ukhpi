@@ -19,19 +19,18 @@ VCR.configure do |config|
   config.hook_into :faraday
 end
 
-class ActiveSupport::TestCase
-  # Add more helper methods to be used by all tests here...
+# Minitest assertions
 
+module MiniTest::Assertions
   def assert_well_formed_html( fragment )
     doc = Nokogiri::XML( fragment )
     assert_empty doc.errors
   end
-end
 
-module MiniTest::Assertions
   def assert_truthy( proposition )
     assert proposition
   end
+
   def assert_not_truthy( proposition )
     assert !proposition
   end
