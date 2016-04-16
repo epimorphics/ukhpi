@@ -14,6 +14,8 @@ gem 'uglifier', '>= 1.3.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
+gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+
 gem 'sass-rails', '~> 5.0'
 gem 'haml-rails'
 gem 'jquery-rails'
