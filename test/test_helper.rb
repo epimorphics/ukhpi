@@ -11,6 +11,7 @@ require "minitest/rails/capybara"
 require "mocha/mini_test"
 require "minitest/reporters"
 require "vcr"
+require "json_expressions/minitest"
 
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 

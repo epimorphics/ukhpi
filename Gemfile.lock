@@ -113,6 +113,7 @@ GEM
       railties (>= 3.2)
       sprockets-rails
     json (1.8.3)
+    json_expressions (0.8.3)
     leaflet-rails (0.7.7)
     lodash-rails (4.6.1)
       railties (>= 3.1)
@@ -243,6 +244,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   js-routes
+  json_expressions
   leaflet-rails
   lodash-rails
   minitest-rails-capybara

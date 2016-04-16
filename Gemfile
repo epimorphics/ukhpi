@@ -47,6 +47,7 @@ group :development, :test do
   gem 'simplecov', :require => false
   gem 'vcr'
   gem 'nokogiri'
+  gem 'json_expressions'
 end
 
 group :development do
