@@ -46,4 +46,13 @@ class RegionsTest < ActiveSupport::TestCase
     hits.must_be_kind_of Hash
     hits.must_be_empty
   end
+
+  it "allows a location to be looked up by URI" do
+    loc = Regions.lookup_region( "http://landregistry.data.gov.uk/id/region/south-east" )
+    loc.label( :en ).must_equal "South East"
+  end
+
+  it "returns nil if the lookup URI does not match anything" do
+    Regions.lookup_region( "http" ).must_be_nil
+  end
 end
