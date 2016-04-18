@@ -60,6 +60,10 @@ class ExplorationState
     prefs && prefs.send( key )
   end
 
+  def query_results
+    @cmd.results
+  end
+
   :private
 
   def state_name

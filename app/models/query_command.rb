@@ -3,7 +3,7 @@
 class QueryCommand
   include DataService
 
-  attr_reader :prefs
+  attr_reader :prefs, :results
 
   def initialize( prefs )
     @prefs = prefs
@@ -17,7 +17,7 @@ class QueryCommand
 
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
     puts query.to_json
-    hpi.query( query )
+    @results = hpi.query( query )
   end
 
   def query_command?

@@ -1,1 +1,25 @@
 %h2 Results
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th
+        Date
+      %th
+        Indicator
+      %th
+        Value
+  %tbody
+    - @exploration_state.query_results.each do |qr|
+      %tr
+        %td{rowspan: 2}
+          = qr["ukhpi:refPeriod"]["@value"]
+        %td
+          Average price
+        %td
+          = qr["ukhpi:averagePrice"].first
+      %tr
+        %td
+          House price index
+        %td
+          = qr["ukhpi:housePriceIndex"].first
