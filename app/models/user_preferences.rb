@@ -3,10 +3,10 @@
 
 class UserPreferences
   VALIDATIONS = {
-    from: ->( value, context )    {Date.parse( value )},
-    to: ->( value, context )      {Date.parse( value )},
-    _now: ->( value, context )    {Date.parse( value )},
-    region: ->( value, context )  {(value != "" && value) || raise( ArgumentError, "Missing location" )},
+    from: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
+    to: ->( value, context )      {empty_value?( value ) ? nil : Date.parse( value )},
+    _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
+    region: ->( value, context )  {(!empty_value?( value ) && value) || raise( ArgumentError, "Missing location" )},
     rt: ->( value, context )      {Regions.parse_region_type( value )}
   }
 
@@ -38,5 +38,9 @@ class UserPreferences
 
   def sanitize_user_input( str )
     Rails::Html::FullSanitizer.new.sanitize( str )
+  end
+
+  def self.empty_value?( v )
+    v == nil || v == ""
   end
 end

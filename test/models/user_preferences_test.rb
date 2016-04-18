@@ -33,5 +33,11 @@ class UserPreferencesTest < ActiveSupport::TestCase
       UserPreferences.new( {"from" => "century of the fruitbat"} )
     }.must_raise ArgumentError
   end
+
+  it "allows a null date" do
+    up = UserPreferences.new( {"region" => "foo", "from" => "", "to" => ""})
+    up.from.must_be_nil
+    up.to.must_be_nil
+  end
 end
 
