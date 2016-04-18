@@ -35,12 +35,12 @@ class SearchCommand
   :private
 
   def perform_search
-    @results = regions.match( region )
+    @results = regions.match( region, prefs )
     case @results.size
     when 0
       :no_results
     when 1
-      @region = @results.first
+      @region = @results.values.first
       :single_result
     else
       :multiple_results

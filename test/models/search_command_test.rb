@@ -30,8 +30,8 @@ class SearchCommandTest < ActiveSupport::TestCase
     prefs = UserPreferences.new( region: "foo" )
     regions = mock()
     regions.expects( :match )
-           .with( "foo" )
-           .returns( [Struct::MockUriValue.new( "http://foo.bar" )] )
+           .with() {|term, up| term == "foo"}
+           .returns( {"http://foo.bar" => Struct::MockUriValue.new( "http://foo.bar" )} )
 
     sc = SearchCommand.new( prefs, regions )
     sc.search_status.must_equal :single_result
@@ -42,8 +42,8 @@ class SearchCommandTest < ActiveSupport::TestCase
     prefs = UserPreferences.new( region: "foo" )
     regions = mock()
     regions.expects( :match )
-           .with( "foo" )
-           .returns( [] )
+           .with() {|term, up| term == "foo"}
+           .returns( {} )
 
     sc = SearchCommand.new( prefs, regions )
     sc.search_status.must_equal :no_results
@@ -53,8 +53,11 @@ class SearchCommandTest < ActiveSupport::TestCase
     prefs = UserPreferences.new( region: "foo" )
     regions = mock()
     regions.expects( :match )
-           .with( "foo" )
-           .returns( [Struct::MockUriValue.new( "http://foo.bar" ), Struct::MockUriValue.new( "http://foo.1.bar" )] )
+           .with() {|term, up| term == "foo"}
+           .returns( {
+              "http://foo.bar" => Struct::MockUriValue.new( "http://foo.bar" ),
+              "http://foo.1.bar" => Struct::MockUriValue.new( "http://foo.1.bar" )
+            } )
 
     sc = SearchCommand.new( prefs, regions )
     sc.search_status.must_equal :multiple_results
