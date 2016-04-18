@@ -1,0 +1,10 @@
+%p.bg-warning
+  = t( "index.multpiple_search_preamble" )
+%p.c-results-summary
+  = @exploration_state.results_summary
+
+%ul.c-results-list
+  - @exploration_state.results_list.each do |result|
+    %li.c-search-result
+      %a.c-search-result--a{href: result[:uri]}
+        = result[:label]

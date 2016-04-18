@@ -1,5 +1,9 @@
 # Presenter for the status of the search & query that the user has performed
 class ExplorationState
+  MAX_SEARCH_RESULTS = 20
+
+  attr_reader :cmd
+
   def initialize( cmd = nil )
     @cmd = cmd
   end
@@ -17,9 +21,34 @@ class ExplorationState
     @cmd == nil
   end
 
+  def prefs
+    @cmd.respond_to( :prefs ) && @cmd.prefs
+  end
+
   def partial_name( section )
     "#{state_name}_#{section}"
   end
+
+  def results_summary
+    count = cmd.results.length
+    display_count = [MAX_SEARCH_RESULTS, count].min
+    (count == display_count) ?
+      sprintf( I18n.t( "index.show_all_results" ), count ) :
+      sprintf( I18n.t( "index.show_some_results" ), display_count, count )
+  end
+
+  def results_list
+    cmd
+      .results
+      .values
+      .sort
+      .take( MAX_SEARCH_RESULTS )
+      .map do |result|
+        {label: result.label, uri: "#todo"}
+      end
+  end
+
+  :private
 
   def state_name
     case
@@ -33,4 +62,5 @@ class ExplorationState
       :search
     end
   end
+
 end
