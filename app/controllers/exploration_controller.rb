@@ -14,6 +14,8 @@ class ExplorationController < ApplicationController
     end
   end
 
+  alias :new :index
+
   :private
 
   def enact_search( user_prefs )

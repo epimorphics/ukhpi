@@ -1,1 +1,20 @@
-%p HPI search form
+= form_tag( {controller: :exploration, action: :new}, method: "get", class: "form-horizontal" ) do
+  .form-group
+    %label.col-sm-2.control-label{ for: "region" }
+      = t( "index.location" )
+    .col-sm-10
+      %input.form-control{ type: "text", id: "region", name: "region" }
+  .form-group
+    %label.col-sm-2.control-label{ for: "from" }
+      = t( "index.from" )
+    .col-sm-10
+      %input.form-control{ type: "date", id: "from", name: "from" }
+  .form-group
+    %label.col-sm-2.control-label{ for: "to" }
+      = t( "index.to" )
+    .col-sm-10
+      %input.form-control{ type: "date", id: "to", name: "to" }
+  .form-group
+    %label.col-sm-2
+    .col-sm-10
+      = submit_tag( "Search", class: "btn btn-lg btn-default")

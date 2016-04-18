@@ -26,3 +26,6 @@ en:
     multpiple_search_preamble: "More than one location matches your search terms. Select an alternative below, or change your search term:"
     show_all_results: "Showing %d results"
     show_some_results: "Showing %d of %d results"
+    location: "Location"
+    from: "From"
+    to: "To"
