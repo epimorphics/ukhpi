@@ -20,6 +20,10 @@ class QueryCommand
     hpi.query( query )
   end
 
+  def query_command?
+    true
+  end
+
   :private
 
   def preference( key )

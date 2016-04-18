@@ -28,6 +28,12 @@ class SearchCommand
     @region = region.match( /\Ahttp:\/\// ) && regions.lookup_region( region )
   end
 
+  def query_command?
+    false
+  end
+
+  :private
+
   def perform_search
     @results = regions.match( region )
     case @results.size

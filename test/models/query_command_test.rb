@@ -69,5 +69,9 @@ class SearchCommandTest < ActiveSupport::TestCase
         ]
     })
   end
+
+  it "should state that it is a query command" do
+    QueryCommand.new( {} ).query_command?.must_equal true
+  end
 end
 

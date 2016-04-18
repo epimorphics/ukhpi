@@ -59,4 +59,8 @@ class SearchCommandTest < ActiveSupport::TestCase
     sc = SearchCommand.new( prefs, regions )
     sc.search_status.must_equal :multiple_results
   end
+
+  it "should state that it is not a query command" do
+    SearchCommand.new( {}, nil ).query_command?.must_equal false
+  end
 end
