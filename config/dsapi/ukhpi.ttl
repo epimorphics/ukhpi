@@ -12,7 +12,7 @@
 @prefix sr:    <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/> .
 @prefix :  <http://landregistry.data.gov.uk/dsapi/hpi#> .
 
-:hpi a dsapi:Dataset;
+:ukhpi a dsapi:Dataset;
     rdfs:label "UK house price index";
     dct:description "A Data Cube of UK house price index data from Land Registry";
     dsapi:source "source3";
