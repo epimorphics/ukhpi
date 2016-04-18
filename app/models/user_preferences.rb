@@ -25,6 +25,10 @@ class UserPreferences
     WHITELIST.include?( key.to_sym ) && @params[key.to_sym]
   end
 
+  def with( p, v )
+    UserPreferences.new( @params.merge( {p => v} ))
+  end
+
   :private
 
   def validate_params( params, context )
