@@ -26,4 +26,8 @@ class Region
   def label( lang = :en )
     @labels[lang]
   end
+
+  def <=>( other_region, lang = :en )
+    label( lang ) <=> other_region.label( lang )
+  end
 end

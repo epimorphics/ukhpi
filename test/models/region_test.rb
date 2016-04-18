@@ -59,4 +59,16 @@ class RegionTest < ActiveSupport::TestCase
     region.matches_name?( "FOO", nil, :en ).must_be_truthy
     region.matches_name?( "BaR", nil, :en ).must_not_be_truthy
   end
+
+  it "should sort by label" do
+    regions = [
+      Region.new( "http://foo.bar/a", {en: "A"}, nil, nil, nil ),
+      Region.new( "http://foo.bar/c", {en: "C"}, nil, nil, nil ),
+      Region.new( "http://foo.bar/b", {en: "B"}, nil, nil, nil )
+    ]
+    regions.sort!
+    regions[0].label.must_equal "A"
+    regions[1].label.must_equal "B"
+    regions[2].label.must_equal "C"
+  end
 end
