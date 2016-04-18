@@ -19,13 +19,19 @@ class UserPreferencesTest < ActiveSupport::TestCase
   it "rejects invalid values for region" do
     lambda {
       UserPreferences.new( {"region" => ""})
-    }.must_raise RuntimeError
+    }.must_raise ArgumentError
   end
 
   it "accepts valid dates" do
     up = UserPreferences.new( {"from" => "2015-01-01", "to" => "2016-01-01" })
     up.from.must_be_kind_of Date
     up.to.must_be_kind_of Date
+  end
+
+  it "rejects invalid dates" do
+    lambda {
+      UserPreferences.new( {"from" => "century of the fruitbat"} )
+    }.must_raise ArgumentError
   end
 end
 

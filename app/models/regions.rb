@@ -13,7 +13,7 @@ class Regions
   end
 
   def self.validate_region_type( region_type )
-    !region_type || types.include?( region_type ) || raise( "Not a valid region type: #{region_type}" )
+    !region_type || types.include?( region_type ) || raise( ArgumentError, "Not a valid region type: #{region_type}" )
     region_type
   end
 

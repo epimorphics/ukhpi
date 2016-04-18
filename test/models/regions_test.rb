@@ -12,7 +12,7 @@ class RegionsTest < ActiveSupport::TestCase
   it "recognise a valid region type" do
     lambda {
       Regions.validate_region_type( "http://data.ordnancesurvey.co.uk/ontology/admingeo/Banana" )
-    }.must_raise RuntimeError
+    }.must_raise ArgumentError
   end
 
   it "allows region type to be empty" do

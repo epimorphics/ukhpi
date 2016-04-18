@@ -6,7 +6,7 @@ class UserPreferences
     from: ->( value, context )    {Date.parse( value )},
     to: ->( value, context )      {Date.parse( value )},
     _now: ->( value, context )    {Date.parse( value )},
-    region: ->( value, context )  {(value != "" && value) || raise( "Missing location" )},
+    region: ->( value, context )  {(value != "" && value) || raise( ArgumentError, "Missing location" )},
     rt: ->( value, context )      {Regions.parse_region_type( value )}
   }
 
