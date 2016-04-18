@@ -16,4 +16,21 @@ class ExplorationState
   def empty?
     @cmd == nil
   end
+
+  def partial_name( section )
+    "#{state_name}_#{section}"
+  end
+
+  def state_name
+    case
+    when exception?
+      :exception
+    when empty?
+      :empty_state
+    when query?
+      :query
+    else
+      :search
+    end
+  end
 end
