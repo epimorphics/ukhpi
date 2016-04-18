@@ -13,12 +13,8 @@ class UserPreferences
   WHITELIST = VALIDATIONS.keys
 
   def initialize( params )
-    whitelisted = params
-      .symbolize_keys
-      .select {|key| WHITELIST.include?( key )}
-    context = {params: whitelisted}
-
-    @params = validate_params( whitelisted, context )
+    @params = params[:_scrubbed] || scrub_params( params )
+    @params.freeze
   end
 
   def method_missing( key, *args, &block )
@@ -26,10 +22,29 @@ class UserPreferences
   end
 
   def with( p, v )
-    UserPreferences.new( @params.merge( {p => v} ))
+    UserPreferences.new( _scrubbed: @params.merge( {p => v} ))
+  end
+
+  def as_search_string
+    @params
+      .map {|k,v| "#{URI.escape k.to_s}=#{URI.escape v.to_s}"}
+      .join( "," )
+  end
+
+  def to_hash
+    @params
   end
 
   :private
+
+  def scrub_params( params )
+    whitelisted = params
+      .symbolize_keys
+      .select {|key| WHITELIST.include?( key )}
+    context = {params: whitelisted}
+
+    validate_params( whitelisted, context )
+  end
 
   def validate_params( params, context )
     params.inject( {} ) do |memo, pair|

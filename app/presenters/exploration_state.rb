@@ -1,5 +1,7 @@
 # Presenter for the status of the search & query that the user has performed
 class ExplorationState
+  include Rails.application.routes.url_helpers
+
   MAX_SEARCH_RESULTS = 20
 
   attr_reader :cmd
@@ -22,7 +24,7 @@ class ExplorationState
   end
 
   def prefs
-    @cmd.respond_to( :prefs ) && @cmd.prefs
+    @cmd.respond_to?( :prefs ) && @cmd.prefs
   end
 
   def partial_name( section )
@@ -44,8 +46,18 @@ class ExplorationState
       .sort
       .take( MAX_SEARCH_RESULTS )
       .map do |result|
-        {label: result.label, uri: "#todo"}
+        pw = prefs.with( :region, result.uri )
+        uri = url_for( {
+          only_path: true,
+          controller: :exploration,
+          action: :new
+        }.merge( pw ) )
+        {label: result.label, uri: uri}
       end
+  end
+
+  def preference( key )
+    prefs && prefs.send( key )
   end
 
   :private

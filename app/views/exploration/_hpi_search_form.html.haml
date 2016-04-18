@@ -3,17 +3,17 @@
     %label.col-sm-2.control-label{ for: "region" }
       = t( "index.location" )
     .col-sm-10
-      %input.form-control{ type: "text", id: "region", name: "region" }
+      %input.form-control{ type: "text", id: "region", name: "region", value: @exploration_state.preference( :region ) }
   .form-group
     %label.col-sm-2.control-label{ for: "from" }
       = t( "index.from" )
     .col-sm-10
-      %input.form-control{ type: "date", id: "from", name: "from" }
+      %input.form-control{ type: "date", id: "from", name: "from", value: @exploration_state.preference( :from ) }
   .form-group
     %label.col-sm-2.control-label{ for: "to" }
       = t( "index.to" )
     .col-sm-10
-      %input.form-control{ type: "date", id: "to", name: "to" }
+      %input.form-control{ type: "date", id: "to", name: "to", value: @exploration_state.preference( :to ) }
   .form-group
     %label.col-sm-2
     .col-sm-10

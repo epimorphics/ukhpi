@@ -42,7 +42,7 @@ class UserPreferencesTest < ActiveSupport::TestCase
 
   it "allows a parameter to be set" do
     up = UserPreferences.new( {"region" => "foo"})
-    up0 = up.with( "region", "bar" )
+    up0 = up.with( :region, "bar" )
     up.region.must_equal "foo"
     up0.region.must_equal "bar"
   end
