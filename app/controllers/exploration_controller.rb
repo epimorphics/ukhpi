@@ -8,7 +8,6 @@ class ExplorationController < ApplicationController
       # rescue RuntimeError => e
       #   @exploration_state = ExplorationState.new( exception: e )
       rescue ArgumentError => e
-        byebug
         @exploration_state = ExplorationState.new( exception: e )
       end
     end
