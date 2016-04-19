@@ -37,6 +37,8 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'yajl-ruby', require: 'yajl'
 
+gem 'rdf-turtle'
+
 group :development, :test do
   gem 'minitest-spec-rails'
   gem 'minitest-rails-capybara'
