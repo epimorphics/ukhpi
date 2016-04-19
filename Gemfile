@@ -31,15 +31,13 @@ gem 'govuk_frontend_toolkit'#, github: "alphagov/govuk_frontend_toolkit_gem", su
 gem 'govuk_elements_rails'#, github: "ministryofjustice/govuk_elements_rails", submodules: true
 gem 'leaflet-rails'
 gem 'js-routes'
+gem 'byebug'
 
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-
   gem 'minitest-spec-rails'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
