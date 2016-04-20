@@ -4,7 +4,7 @@
 class Aspects
   attr_reader :prefs
 
-  DEFAULT_ASPECTS = %i( hpi ap pcm pca )
+  DEFAULT_ASPECTS = %i( hpi ap pmc pac )
 
   def initialize( prefs )
     @prefs = prefs
