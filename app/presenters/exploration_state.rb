@@ -64,6 +64,14 @@ class ExplorationState
     @cmd.results
   end
 
+  def visible_aspects
+    aspects.visible_aspects
+  end
+
+  def aspect( key )
+    aspects.aspect( key )
+  end
+
   :private
 
   def state_name
@@ -79,4 +87,7 @@ class ExplorationState
     end
   end
 
+  def aspects
+    @aspects ||= Aspects.new( @cmd.prefs )
+  end
 end

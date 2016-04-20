@@ -41,4 +41,17 @@ class ExplorationStateTest < ActiveSupport::TestCase
     es.empty?.must_equal true
     es.partial_name( "foo" ).must_equal "empty_state_foo"
   end
+
+  it "can report the visible aspects" do
+    mock_aspects = mock
+    mock_aspects.expects( :aspects ).returns( [:ap] )
+    q = mock
+    q.expects( :prefs ).returns( mock_aspects )
+
+    es = ExplorationState.new( q )
+
+    as = es.visible_aspects
+    as.first.must_equal :ap
+    es.aspect( as.first ).label.must_equal "Average price"
+  end
 end
