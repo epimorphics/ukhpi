@@ -20,6 +20,12 @@ class CubeResource
   def range
     @graph.query( [@resource, RDF::RDFS.range, nil] ).first.object
   end
+
+  def slug
+    local_name = @resource.to_s.match( /([^\/\#]*)\Z/ )[1]
+    slug_mixed_case = local_name[0] + local_name.gsub( /[[:lower:]]/, "" )
+    slug_mixed_case.downcase
+  end
 end
 
 class CubeComponent < CubeResource
@@ -71,6 +77,7 @@ class CubeMeasure < CubeResource
       :unknown
     end
   end
+
 end
 
 class CubeDimension < CubeResource

@@ -16,13 +16,13 @@ class SearchCommandTest < ActiveSupport::TestCase
   it "should retrieve the labels for each compoonent" do
     dsd = DataModel.new
     labels = dsd.measures.map &:label
-    labels.include?( "Average price" ).must_equal true
+    labels.must_include "Average price"
   end
 
   it "should retrieve the comments for each component" do
     dsd = DataModel.new
     comments = dsd.measures.map &:comment
-    comments.include?( "The percentage change in the average house price compared to the same period twelve months earlier." ).must_equal true
+    comments.must_include "The percentage change in the average house price compared to the same period twelve months earlier."
   end
 
   it "should separate out the dimensions" do
@@ -33,5 +33,12 @@ class SearchCommandTest < ActiveSupport::TestCase
   it "should separate out the measures" do
     dsd = DataModel.new
     dsd.measures.count.must_equal 47
+  end
+
+  it "should produce a unique slug for each measure" do
+    dsd = DataModel.new
+    slugs = dsd.measures.map &:slug
+    slugs.must_include "apsd"
+    slugs.uniq.length.must_equal slugs.length
   end
 end
