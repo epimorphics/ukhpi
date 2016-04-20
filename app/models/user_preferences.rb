@@ -8,7 +8,11 @@ class UserPreferences
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     region: ->( value, context )  {(!empty_value?( value ) && value) || raise( ArgumentError, "Missing location" )},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
-    aspects: ->( value, context ) {empty_value?( value ) ? nil : [value].flatten.map( &:to_sym ) }
+    aspects: ->( value, context ) {
+      empty_value?( value ) ?
+        nil :
+        [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
+    }
   }
 
   WHITELIST = VALIDATIONS.keys
@@ -28,8 +32,9 @@ class UserPreferences
 
   def as_search_string
     @params
-      .map {|k,v| "#{URI.escape k.to_s}=#{URI.escape v.to_s}"}
-      .join( "," )
+      .map {|k,v| encode_as_search_string( k, v )}
+      .sort
+      .join( "&" )
   end
 
   def to_hash
@@ -70,5 +75,12 @@ class UserPreferences
 
   def self.empty_value?( v )
     v == nil || v == ""
+  end
+
+  def encode_as_search_string( k, v )
+    if v.is_a?( Array )
+      v = v.map( &:to_s ).join( "," )
+    end
+    "#{URI.escape k.to_s}=#{URI.escape v.to_s}"
   end
 end

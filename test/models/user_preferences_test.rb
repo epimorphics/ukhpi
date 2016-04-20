@@ -60,11 +60,33 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up.aspects.length.must_equal 2
   end
 
+  it "decodes selected aspects as an array" do
+    up = UserPreferences.new( "aspects" => "foo,bar" )
+    up.aspects.must_be_kind_of Array
+    up.aspects.first.must_equal :foo
+    up.aspects.second.must_equal :bar
+    up.aspects.length.must_equal 2
+  end
+
   it "wraps a single aspect as an array" do
     up = UserPreferences.new( "aspects" => "foo" )
     up.aspects.must_be_kind_of Array
     up.aspects.first.must_equal :foo
     up.aspects.length.must_equal 1
+  end
+
+  it "can encode parameters as a URL search string" do
+    UserPreferences
+      .new( "region" => "foo", "from" => "2016-04-04" )
+      .as_search_string
+      .must_equal "from=2016-04-04&region=foo"
+  end
+
+  it "can encode array-valued parameters as a search string" do
+    UserPreferences
+      .new( "aspects" => ["foo", "bar"] )
+      .as_search_string
+      .must_equal "aspects=foo,bar"
   end
 end
 
