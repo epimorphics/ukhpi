@@ -7,7 +7,8 @@ class UserPreferences
     to: ->( value, context )      {empty_value?( value ) ? nil : Date.parse( value )},
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     region: ->( value, context )  {(!empty_value?( value ) && value) || raise( ArgumentError, "Missing location" )},
-    rt: ->( value, context )      {Regions.parse_region_type( value )}
+    rt: ->( value, context )      {Regions.parse_region_type( value )},
+    aspects: ->( value, context ) {empty_value?( value ) ? nil : [value].flatten.map( &:to_sym ) }
   }
 
   WHITELIST = VALIDATIONS.keys
@@ -55,7 +56,15 @@ class UserPreferences
     end
   end
 
-  def sanitize_user_input( str )
+  def sanitize_user_input( input )
+    if input.is_a?( Array )
+      input.map {|str| sanitize_user_input_string( str )}
+    else
+      Rails::Html::FullSanitizer.new.sanitize( input )
+    end
+  end
+
+  def sanitize_user_input_string( str )
     Rails::Html::FullSanitizer.new.sanitize( str )
   end
 

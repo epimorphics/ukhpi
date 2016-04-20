@@ -47,5 +47,24 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up0.region.must_equal "bar"
   end
 
+  it "ignores an empty selection for aspects" do
+    up = UserPreferences.new( "aspects" => "" )
+    up.aspects.must_be_nil
+  end
+
+  it "reports selected aspects as an array" do
+    up = UserPreferences.new( "aspects" => ["foo", "bar"] )
+    up.aspects.must_be_kind_of Array
+    up.aspects.first.must_equal :foo
+    up.aspects.second.must_equal :bar
+    up.aspects.length.must_equal 2
+  end
+
+  it "wraps a single aspect as an array" do
+    up = UserPreferences.new( "aspects" => "foo" )
+    up.aspects.must_be_kind_of Array
+    up.aspects.first.must_equal :foo
+    up.aspects.length.must_equal 1
+  end
 end
 
