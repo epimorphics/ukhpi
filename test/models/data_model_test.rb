@@ -41,4 +41,11 @@ class SearchCommandTest < ActiveSupport::TestCase
     slugs.must_include "apsd"
     slugs.uniq.length.must_equal slugs.length
   end
+
+  it "should produce a qname for each measure" do
+    dsd = DataModel.new
+    slugs = dsd.measures.map &:qname
+    slugs.must_include "ukhpi:averagePriceSemiDetached"
+    slugs.uniq.length.must_equal slugs.length
+  end
 end

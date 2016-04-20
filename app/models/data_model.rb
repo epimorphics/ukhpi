@@ -22,9 +22,16 @@ class CubeResource
   end
 
   def slug
-    local_name = @resource.to_s.match( /([^\/\#]*)\Z/ )[1]
     slug_mixed_case = local_name[0] + local_name.gsub( /[[:lower:]]/, "" )
     slug_mixed_case.downcase
+  end
+
+  def local_name
+    @resource.to_s.match( /([^\/\#]*)\Z/ )[1]
+  end
+
+  def qname
+    "ukhpi:#{local_name}"
   end
 end
 
