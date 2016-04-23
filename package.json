@@ -1,0 +1,27 @@
+{
+  "name": "ukhpi",
+  "version": "0.0.1",
+  "description": "UKHPI build support",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "bower": "^1.7.9",
+    "grunt-bowercopy": "^1.2.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epimorphics/ukhpi.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/epimorphics/ukhpi/issues"
+  },
+  "homepage": "https://github.com/epimorphics/ukhpi#readme"
+}
