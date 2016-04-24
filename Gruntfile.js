@@ -30,18 +30,16 @@ module.exports = function (grunt) {
           destPrefix: 'vendor/assets/javascripts'
         },
         files: {
-          'jquery/dist/jquery.js': 'jquery.js',
-          'd3/d3.js': 'd3.js',
-          'lodash/lodash.js': 'lodash.js'
+          'jquery.js': 'jquery/dist/jquery.js',
+          'd3.js': 'd3/d3.js',
+          'lodash.js': 'lodash/lodash.js'
         }
       }
     }
 
   });
 
-  grunt.registerTask( "s3", [
-    "build",
-    "shell:tarfile",
-    "shell:s3"
+  grunt.registerTask( "copy", [
+    "bowercopy"
   ] );
 };
