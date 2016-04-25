@@ -2,6 +2,7 @@
 
 class QueryCommand
   include DataService
+  INTERIM_DATASET = true
 
   attr_reader :prefs, :results
 
@@ -46,9 +47,13 @@ class QueryCommand
 
   def default_date( key )
     {
-      from: Date.today.prev_year,
-      to: Date.today
+      from: default_anchor_date.prev_year,
+      to: default_anchor_date
     }[key]
+  end
+
+  def default_anchor_date
+    INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today
   end
 
   def add_location_constraint( query )
