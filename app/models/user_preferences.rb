@@ -48,19 +48,13 @@ class UserPreferences
   end
 
   def summary
-    {
+    templates = {
       region: "Search term: %s",
       from: "from %s",
       to: "to %s"
-    }.map do |k, template|
-      if value = @params[k]
-        region = Regions.lookup_region( value )
-        value = region ? region.label : value
-        template % value
-      end
-    end
-      .compact
-      .join( ", " )
+    }
+
+    apply_templates( templates, @params ).join( ", " )
   end
 
   :private
@@ -104,5 +98,15 @@ class UserPreferences
       v = v.map( &:to_s ).join( "," )
     end
     "#{URI.escape k.to_s}=#{URI.escape v.to_s}"
+  end
+
+  def apply_templates( templates, params )
+    templates.map do |k, template|
+      if value = params[k]
+        region = Regions.lookup_region( value )
+        value = region ? region.label : value
+        template % value
+      end
+    end .compact
   end
 end
