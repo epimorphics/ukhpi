@@ -2,6 +2,6 @@
   "prefsSummary": "<%= @exploration_state.prefs.summary %>"
   <% if @exploration_state.query? %>
     ,
-    "results": <%= @exploration_state.query_results.to_json %>
+    "results": <%= @exploration_state.query_results.to_json.html_safe %>
   <% end %>
 }
