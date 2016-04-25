@@ -12,7 +12,19 @@ function(
 
   var PreferencesView = function() {
     console.log("PreferencesView initializing..." );
+    this.initPreferencesForm();
   };
+
+  _.extend( PreferencesView.prototype, {
+    preferences: function() {
+      return $("#preferences").serialize();
+    },
+
+    initPreferencesForm: function() {
+      $("form .js-hidden").addClass( "hidden" );
+      $("form .js-hidden input").attr( "type", "hidden" );
+    }
+  } );
 
   return PreferencesView;
 } );
