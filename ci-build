@@ -1,0 +1,6 @@
+#!/bin/bash
+# Run UKHPI tests
+
+set -e
+bundle
+rake test
