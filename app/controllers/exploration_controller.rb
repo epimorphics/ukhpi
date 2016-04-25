@@ -1,5 +1,5 @@
 class ExplorationController < ApplicationController
-  def index
+  def new
     if no_user_params?
       @exploration_state = ExplorationState.new
     else
@@ -11,9 +11,21 @@ class ExplorationController < ApplicationController
         @exploration_state = ExplorationState.new( exception: e )
       end
     end
+
+    respond_to do |format|
+      format.json {render}
+      format.html {render}
+    end
   end
 
-  alias :new :index
+  def index
+    @exploration_state = ExplorationState.new( collectUserPreferences )
+
+    respond_to do |format|
+      format.json {render}
+      format.html {render}
+    end
+  end
 
   :private
 
