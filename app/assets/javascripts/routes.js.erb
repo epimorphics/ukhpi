@@ -3,7 +3,7 @@
 define( [],
 function() {
   return {
-    explore: <%= explore_path %>,
-    new_exploration: <%= new_exploration_path %>
+    explore: "<%= Rails.application.routes.url_helpers.explore_path %>",
+    new_exploration: "<%= Rails.application.routes.url_helpers.new_exploration_path %>"
   }
 } );
