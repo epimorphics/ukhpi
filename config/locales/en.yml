@@ -21,7 +21,7 @@
 
 en:
   index:
-    main_heading: "Search the UK House Price Index"
+    main_heading: "Browse the UK House Price Index"
     exception_preamble: "There was a problem with your search:"
     multpiple_search_preamble: "More than one location matches your search terms. Select an alternative below, or change your search term:"
     show_all_results: "Showing %d results"
