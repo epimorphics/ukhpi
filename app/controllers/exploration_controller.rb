@@ -1,15 +1,9 @@
 class ExplorationController < ApplicationController
   def new
-    if no_user_params?
-      @exploration_state = ExplorationState.new
-    else
-      begin
-        enact_search( collectUserPreferences )
-      # rescue RuntimeError => e
-      #   @exploration_state = ExplorationState.new( exception: e )
-      rescue ArgumentError => e
-        @exploration_state = ExplorationState.new( exception: e )
-      end
+    begin
+      enact_search( collectUserPreferences )
+    rescue ArgumentError => e
+      @exploration_state = ExplorationState.new( exception: e )
     end
 
     respond_to do |format|

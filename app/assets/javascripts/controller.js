@@ -36,14 +36,16 @@ function(
     },
 
     loadResults: function() {
-      $.getJSON( Routes.explore, this.component( "preferencesView" ).preferences() )
+      $.getJSON( Routes.new_exploration, this.component( "preferencesView" ).preferences() )
        .done( function( data ) {
         console.log( "Hello data: " );
         console.log( data );
        } )
-       .error( function( e ) {
+       .error( function( e, m, a ) {
         console.log( "barf: " );
         console.log( e );
+        console.log( m );
+        console.log( a );
        })
     }
 
