@@ -16,10 +16,10 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up.womble.must_not_be_truthy
   end
 
-  it "rejects invalid values for region" do
-    lambda {
-      UserPreferences.new( {"region" => ""})
-    }.must_raise ArgumentError
+  it "provides a default value for region" do
+    up = UserPreferences.new( {"region" => ""})
+    up.region.wont_be_nil
+    up.region.start_with?( "http:" )
   end
 
   it "accepts valid dates" do

@@ -2,11 +2,13 @@
 # House Price Index data
 
 class UserPreferences
+  DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/great-britain"
+
   VALIDATIONS = {
     from: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     to: ->( value, context )      {empty_value?( value ) ? nil : Date.parse( value )},
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
-    region: ->( value, context )  {(!empty_value?( value ) && value) || raise( ArgumentError, "Missing location" )},
+    region: ->( value, context )  {empty_value?( value ) ? DEFAULT_LOCATION : value},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
     aspects: ->( value, context ) {
       empty_value?( value ) ?
