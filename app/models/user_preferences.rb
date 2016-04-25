@@ -41,6 +41,22 @@ class UserPreferences
     @params
   end
 
+  def prefs
+    self
+  end
+
+  def summary
+    {
+      region: "Search term: %s",
+      from: "from %s",
+      to: "to %s"
+    }.map do |k, v|
+      @params[k] ? (v % @params[k]) : nil
+    end
+      .compact
+      .join( ", " )
+  end
+
   :private
 
   def scrub_params( params )

@@ -88,5 +88,18 @@ class UserPreferencesTest < ActiveSupport::TestCase
       .as_search_string
       .must_equal "aspects=foo,bar"
   end
+
+  it "should return itself when asked for preferences" do
+    up = UserPreferences.new( {} )
+    up.prefs.must_be_same_as up
+  end
+
+  it "should summarise itself" do
+    up = UserPreferences.new( "region" => "foo" )
+    up.summary.must_equal( "Search term: foo" )
+
+    up1 = UserPreferences.new( "region" => "foo", "to" => "2016-01-01" )
+    up1.summary.must_equal( "Search term: foo, to 2016-01-01" )
+  end
 end
 
