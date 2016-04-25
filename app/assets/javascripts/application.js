@@ -1,14 +1,18 @@
 define( [
   "lodash",
-  "jquery"
+  "jquery",
+  "controller"
 ],
 function(
   _,
-  $
+  $,
+  Controller
 ) {
   "use strict";
 
-  $(function() {console.log( "application here!");});
+  var controller = new Controller();
 
-  return {};
+  return {
+    controller: controller
+  };
 } );
