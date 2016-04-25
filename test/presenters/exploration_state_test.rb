@@ -15,6 +15,18 @@ class ExplorationStateTest < ActiveSupport::TestCase
     es.partial_name( "foo" ).must_equal "query_foo"
   end
 
+  it "recognises a search command" do
+    q = mock()
+    q.expects( :"search_status").at_least( 0 ).returns( true )
+    es = ExplorationState.new(q)
+
+    es.search?.must_equal true
+    es.query?.must_equal false
+    es.empty?.must_equal false
+    es.exception?.must_equal false
+    es.partial_name( "foo" ).must_equal "search_foo"
+  end
+
   it "recognises a non-query command" do
     q = mock()
     q.expects( :"query_command?").at_least_once.returns( false )
@@ -23,7 +35,7 @@ class ExplorationStateTest < ActiveSupport::TestCase
     es.query?.must_equal false
     es.empty?.must_equal false
     es.exception?.must_equal false
-    es.partial_name( "foo" ).must_equal "search_foo"
+    es.partial_name( "foo" ).must_equal "empty_state_foo"
   end
 
   it "recognises an exception" do

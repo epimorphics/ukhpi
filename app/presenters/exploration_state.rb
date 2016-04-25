@@ -15,6 +15,11 @@ class ExplorationState
     @cmd.respond_to?( :"query_command?" ) && @cmd.query_command?
   end
 
+  # Return true if this presenter is encapsulating a search command
+  def search?
+    @cmd.respond_to?( :"search_status" )
+  end
+
   def exception?
     @cmd.respond_to?( :[] ) && @cmd[:exception]
   end
@@ -78,12 +83,12 @@ class ExplorationState
     case
     when exception?
       :exception
-    when empty?
-      :empty_state
     when query?
       :query
-    else
+    when search?
       :search
+    else
+      :empty_state
     end
   end
 
