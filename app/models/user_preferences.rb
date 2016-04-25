@@ -52,8 +52,12 @@ class UserPreferences
       region: "Search term: %s",
       from: "from %s",
       to: "to %s"
-    }.map do |k, v|
-      @params[k] ? (v % @params[k]) : nil
+    }.map do |k, template|
+      if value = @params[k]
+        region = Regions.lookup_region( value )
+        value = region ? region.label : value
+        template % value
+      end
     end
       .compact
       .join( ", " )

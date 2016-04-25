@@ -101,5 +101,10 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up1 = UserPreferences.new( "region" => "foo", "to" => "2016-01-01" )
     up1.summary.must_equal( "Search term: foo, to 2016-01-01" )
   end
+
+  it "should correctly summarise a URI valued location" do
+    up = UserPreferences.new( "region" => "http://landregistry.data.gov.uk/id/region/great-britain" )
+    up.summary.must_equal( "Search term: Great Britain" )
+  end
 end
 
