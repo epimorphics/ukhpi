@@ -2,13 +2,16 @@
 # House Price Index data
 
 class UserPreferences
+  INTERIM_DATASET = true
+
   DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/great-britain"
+  DEFAULT_ASPECTS = %i( hpi ap pmc pac )
 
   VALIDATIONS = {
     from: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     to: ->( value, context )      {empty_value?( value ) ? nil : Date.parse( value )},
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
-    region: ->( value, context )  {empty_value?( value ) ? DEFAULT_LOCATION : value},
+    region: ->( value, context )  {empty_value?( value ) ? nil : value},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
     aspects: ->( value, context ) {
       empty_value?( value ) ?
@@ -19,13 +22,20 @@ class UserPreferences
 
   WHITELIST = VALIDATIONS.keys
 
+  DEFAULTS = {
+    from: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today.prev_year,
+    to: INTERIM_DATASET ? Date.new( 2013, 12, 31 ) : Date.today,
+    region: DEFAULT_LOCATION,
+    aspects: DEFAULT_ASPECTS
+  }
+
   def initialize( params )
     @params = params[:_scrubbed] || scrub_params( params )
     @params.freeze
   end
 
   def method_missing( key, *args, &block )
-    WHITELIST.include?( key.to_sym ) && @params[key.to_sym]
+    WHITELIST.include?( key.to_sym ) && value_of( key.to_sym )
   end
 
   def with( p, v )
@@ -58,6 +68,10 @@ class UserPreferences
   end
 
   :private
+
+  def value_of( param )
+    @params[param] || DEFAULTS[param]
+  end
 
   def scrub_params( params )
     whitelisted = params

@@ -7,8 +7,8 @@ class UserPreferencesTest < ActiveSupport::TestCase
   it "permits access to whitelisted parameters" do
     up = UserPreferences.new( {"region" => "foo"})
     up.region.must_equal "foo"
-    up.from.must_be_nil
-    up.to.must_be_nil
+    up.from.wont_be_nil
+    up.to.wont_be_nil
   end
 
   it "returns nil for non-whitelist parameters" do
@@ -34,10 +34,10 @@ class UserPreferencesTest < ActiveSupport::TestCase
     }.must_raise ArgumentError
   end
 
-  it "allows a null date" do
+  it "provides a default date" do
     up = UserPreferences.new( {"region" => "foo", "from" => "", "to" => ""})
-    up.from.must_be_nil
-    up.to.must_be_nil
+    up.from.must_be_kind_of Date
+    up.to.must_be_kind_of Date
   end
 
   it "allows a parameter to be set" do
@@ -47,9 +47,10 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up0.region.must_equal "bar"
   end
 
-  it "ignores an empty selection for aspects" do
+  it "provides a default selection for aspects" do
     up = UserPreferences.new( "aspects" => "" )
-    up.aspects.must_be_nil
+    up.aspects.wont_be_nil
+    up.aspects.length.must_be :>, 1
   end
 
   it "reports selected aspects as an array" do

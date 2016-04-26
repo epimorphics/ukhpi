@@ -4,8 +4,6 @@
 class Aspects
   attr_reader :prefs
 
-  DEFAULT_ASPECTS = %i( hpi ap pmc pac )
-
   def initialize( prefs )
     @prefs = prefs
     @aspects = all_measures.reduce( Hash.new ) do |hash, measure|
@@ -15,7 +13,7 @@ class Aspects
   end
 
   def visible_aspects
-    prefs.aspects || DEFAULT_ASPECTS
+    prefs.aspects
   end
 
   def aspect( slug )

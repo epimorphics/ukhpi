@@ -2,7 +2,6 @@
 
 class QueryCommand
   include DataService
-  INTERIM_DATASET = true
 
   attr_reader :prefs, :results
 
@@ -17,8 +16,10 @@ class QueryCommand
     query = add_location_constraint( query )
 
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
-    puts query.to_json
+    Rails.logger.debug query.to_json
+    start = Time.now
     @results = hpi.query( query )
+    Rails.logger.debug( "query took %.1f ms\n" % ((Time.now - start) * 1000.0) )
   end
 
   def query_command?
@@ -42,18 +43,7 @@ class QueryCommand
   end
 
   def boundary_date( key )
-    preference( key ) || default_date( key )
-  end
-
-  def default_date( key )
-    {
-      from: default_anchor_date.prev_year,
-      to: default_anchor_date
-    }[key]
-  end
-
-  def default_anchor_date
-    INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today
+    preference( key )
   end
 
   def add_location_constraint( query )
