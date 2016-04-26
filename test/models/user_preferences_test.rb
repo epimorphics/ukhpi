@@ -26,6 +26,7 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up = UserPreferences.new( {"from" => "2015-01-01", "to" => "2016-01-01" })
     up.from.must_be_kind_of Date
     up.to.must_be_kind_of Date
+    ( up.from < up.to ).must_equal true
   end
 
   it "rejects invalid dates" do

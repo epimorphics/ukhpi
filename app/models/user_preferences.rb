@@ -23,8 +23,8 @@ class UserPreferences
   WHITELIST = VALIDATIONS.keys
 
   DEFAULTS = {
-    from: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today.prev_year,
-    to: INTERIM_DATASET ? Date.new( 2013, 12, 31 ) : Date.today,
+    from: INTERIM_DATASET ? Date.new( 2013, 12, 31 ) : Date.today.prev_year,
+    to: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today,
     region: DEFAULT_LOCATION,
     aspects: DEFAULT_ASPECTS
   }
