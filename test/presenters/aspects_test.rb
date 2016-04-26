@@ -34,9 +34,16 @@ class AspectsTest < ActiveSupport::TestCase
     ag.first.label.must_equal "overall indices"
     ag.first.advanced?.must_equal false
 
+    ag.second.label.must_equal "detached properties"
+    ag.second.advanced?.must_equal false
+
     # each measure is a pair [label, measure]
     m = ag.first.measures.first
     m.first.must_equal "index"
     m.second.label.must_equal "Index"
+
+    m = ag.second.measures.first
+    m.first.must_equal "index"
+    m.second.label.must_equal "Detached property index"
   end
 end

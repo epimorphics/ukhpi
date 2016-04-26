@@ -20,12 +20,13 @@ class Aspects
     {root: "FormerOwnerOccupier", label: "former owner-occupiers",   advanced: true}
   ]
 
-  INDICES = %w( index averagePrice percentageMonthlyChange percentageAnnualChange )
+  INDICES = %w( housePriceIndex averagePrice percentageMonthlyChange percentageAnnualChange )
 
   INDEX_LABELS = INDICES.map do |ind|
     ind
       .underscore
       .gsub( /_/, " " )
+      .gsub( "house price ", "" )
       .gsub( "percentage ", "" )
   end
 
@@ -72,12 +73,7 @@ class Aspects
   end
 
   def lookup_measure( ind, root )
-    if ind == "index" && root.empty?
-      qname = "ukhpi:housePriceIndex"
-    else
-      qname = "ukhpi:#{ind}#{root}"
-    end
-
+    qname = "ukhpi:#{ind}#{root}"
     measure_from_qname( qname )
   end
 end

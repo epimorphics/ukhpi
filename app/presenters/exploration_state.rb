@@ -77,6 +77,10 @@ class ExplorationState
     aspects.aspect( key )
   end
 
+  def aspects
+    @aspects ||= Aspects.new( @cmd.prefs )
+  end
+
   :private
 
   def state_name
@@ -90,9 +94,5 @@ class ExplorationState
     else
       :empty_state
     end
-  end
-
-  def aspects
-    @aspects ||= Aspects.new( @cmd.prefs )
   end
 end
