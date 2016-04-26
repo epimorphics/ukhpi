@@ -12,7 +12,7 @@ function(
 
   var PreferencesView = function() {
     console.log("PreferencesView initializing..." );
-    this.initPreferencesForm();
+    this.bindEvents();
   };
 
   _.extend( PreferencesView.prototype, {
@@ -20,13 +20,18 @@ function(
       return $("#preferences").serialize();
     },
 
-    initPreferencesForm: function() {
-      $("form .js-hidden").addClass( "hidden" );
-      $("form .js-hidden input").attr( "type", "hidden" );
+    bindEvents: function() {
+      $(".js-reveal-button").on( "click", _.bind( this.onReveal, this ) );
     },
 
     updatePrompt: function( data ) {
       $(".js-search-prompt").text( data.prefsSummary );
+    },
+
+    onReveal: function( e ) {
+      e.preventDefault();
+      $(".js-reveal-button").addClass( "hidden" );
+      $(".js-preferences-form").removeClass( "js-hidden" );
     }
   } );
 

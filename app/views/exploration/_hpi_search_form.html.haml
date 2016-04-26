@@ -4,12 +4,12 @@
       = t( "index.location" )
     .col-sm-10
       %input.form-control{ type: "text", id: "region", name: "region", value: @exploration_state.preference( :region ) }
-  .form-group.js-hidden
+  .form-group
     %label.col-sm-2.control-label{ for: "from" }
       = t( "index.from" )
     .col-sm-10
       %input.form-control{ type: "date", id: "from", name: "from", value: @exploration_state.preference( :from ) }
-  .form-group.js-hidden
+  .form-group
     %label.col-sm-2.control-label{ for: "to" }
       = t( "index.to" )
     .col-sm-10
