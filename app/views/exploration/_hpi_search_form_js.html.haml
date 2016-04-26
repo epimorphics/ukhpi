@@ -1,0 +1,47 @@
+= form_tag( {controller: :exploration, action: :new}, method: "get", class: "", id: "preferences" ) do
+  .row
+    .col-sm-12
+      %ul.nav.nav-tabs.js-preferences
+        %li.active
+          %a{ href: "#location", data: {toggle: "tab"}}
+            Location
+        %li
+          %a{ href: "#dates", data: {toggle: "tab"}}
+            Dates
+        %li
+          %a{ href: "#indicators", data: {toggle: "tab"}}
+            Statistics
+    .col-sm-12
+      .tab-content
+        #location.tab-pane.active
+          .row
+            .col-sm-12
+              .form-group
+                %label.control-label{ for: "region" }
+                  = t( "index.location" )
+                %input.form-control{ type: "text", id: "region", name: "region", value: @exploration_state.preference( :region ) }
+        #dates.tab-pane
+          .row
+            .col-sm-12
+              .form-group
+                %label.control-label{ for: "from" }
+                  = t( "index.from" )
+                %input.form-control{ type: "date", id: "from", name: "from", value: @exploration_state.preference( :from ) }
+              .form-group
+                %label.control-label{ for: "to" }
+                  = t( "index.to" )
+                %input.form-control{ type: "date", id: "to", name: "to", value: @exploration_state.preference( :to ) }
+        #indicators.tab-pane
+          - @exploration_state.aspects.aspect_groups.each do |ag|
+            - unless ag.advanced?
+              .row
+                .col-sm-12
+                  %h3
+                    = ag.label
+                - ag.measures.each do |pair|
+                  - short_label = pair.first
+                  - aspect = pair.second
+                  .col-xs-12.col-sm-6.col-md-3
+                    %label.checkbox-inline
+                      %input.checkbox{ type: "checkbox", name: "aspect[]", value: aspect.slug }
+                      = short_label

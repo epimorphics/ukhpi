@@ -2,7 +2,7 @@
 
 define( [
   "lodash",
-  "jquery"
+  "jquery/jquery"
 ],
 function(
   _,
@@ -32,6 +32,7 @@ function(
       e.preventDefault();
       $(".js-reveal-button").addClass( "hidden" );
       $(".js-preferences-form").removeClass( "js-hidden" );
+      $(".js-preferences").tab();
     }
   } );
 
