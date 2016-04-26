@@ -27,12 +27,14 @@ module.exports = function (grunt) {
       },
       scripts: {
         options: {
-          destPrefix: 'vendor/assets/javascripts'
+          destPrefix: 'vendor/assets'
         },
         files: {
-          'jquery.js': 'jquery/dist/jquery.js',
-          'd3.js': 'd3/d3.js',
-          'lodash.js': 'lodash/lodash.js'
+          'javascripts/external/sizzle/': 'jquery/sizzle/',
+          'javascripts/jquery/': 'jquery/src/',
+          'javascripts/d3.js': 'd3/d3.js',
+          'javascripts/lodash.js': 'lodash/lodash.js',
+          'javascripts/bootstrap/': 'bootstrap-amd/lib/*.js'
         }
       }
     }

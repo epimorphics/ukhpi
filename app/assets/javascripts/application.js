@@ -1,7 +1,8 @@
 define( [
   "lodash",
-  "jquery",
-  "controller"
+  "jquery/jquery",
+  "controller",
+  "bootstrap/bootstrap"
 ],
 function(
   _,
