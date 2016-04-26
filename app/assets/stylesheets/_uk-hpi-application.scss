@@ -17,4 +17,24 @@
 
 /* utilities */
 
+.js-hidden {
+}
+
+.js .js-hidden {
+  @extend .hidden;
+}
+
+.js-reveal {
+  @extend .hidden;
+}
+
+.js .js-reveal {
+  display: inline !important;
+  visibility: visible;
+}
+
+.js .js-reveal.reveal-block {
+  display: block !important;
+}
+
 /* surface */

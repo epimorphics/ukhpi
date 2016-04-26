@@ -29,3 +29,7 @@ en:
     location: "Location"
     from: "From"
     to: "To"
+
+  search_state:
+    prompt: "Showing index data for "
+    reveal_button_caption: "change selection ..."

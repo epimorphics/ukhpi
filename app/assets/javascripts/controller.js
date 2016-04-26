@@ -37,16 +37,17 @@ function(
 
     loadResults: function() {
       $.getJSON( Routes.new_exploration, this.component( "preferencesView" ).preferences() )
-       .done( function( data ) {
-        console.log( "Hello data: " );
-        console.log( data );
-       } )
+       .done( _.bind( this.onUpdateData, this ) )
        .error( function( e, m, a ) {
-        console.log( "barf: " );
+        console.log( "API get failed: " );
         console.log( e );
         console.log( m );
         console.log( a );
        })
+    },
+
+    onUpdateData: function( data ) {
+      this.component( "preferencesView" ).updatePrompt( data );
     }
 
   } );

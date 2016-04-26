@@ -1,0 +1,7 @@
+%section
+  %h1
+    = t( "index.main_heading" )
+
+  = render partial: @exploration_state.partial_name( :header )
+  = render partial: "search_state_reveal"
+  = render partial: @exploration_state.partial_name( :body )

@@ -98,15 +98,15 @@ class UserPreferencesTest < ActiveSupport::TestCase
 
   it "should summarise itself" do
     up = UserPreferences.new( "region" => "foo" )
-    up.summary.must_equal( "Search term: foo" )
+    up.summary.must_equal( "foo" )
 
     up1 = UserPreferences.new( "region" => "foo", "to" => "2016-01-01" )
-    up1.summary.must_equal( "Search term: foo, to 2016-01-01" )
+    up1.summary.must_equal( "foo, to 2016-01-01" )
   end
 
   it "should correctly summarise a URI valued location" do
     up = UserPreferences.new( "region" => "http://landregistry.data.gov.uk/id/region/great-britain" )
-    up.summary.must_equal( "Search term: Great Britain" )
+    up.summary.must_equal( "Great Britain" )
   end
 end
 

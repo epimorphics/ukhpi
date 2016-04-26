@@ -23,6 +23,10 @@ function(
     initPreferencesForm: function() {
       $("form .js-hidden").addClass( "hidden" );
       $("form .js-hidden input").attr( "type", "hidden" );
+    },
+
+    updatePrompt: function( data ) {
+      $(".js-search-prompt").text( data.prefsSummary );
     }
   } );
 

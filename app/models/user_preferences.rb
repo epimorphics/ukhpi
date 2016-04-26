@@ -59,7 +59,7 @@ class UserPreferences
 
   def summary
     templates = {
-      region: "Search term: %s",
+      region: "%s",
       from: "from %s",
       to: "to %s"
     }
