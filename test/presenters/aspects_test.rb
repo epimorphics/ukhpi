@@ -34,7 +34,7 @@ class AspectsTest < ActiveSupport::TestCase
     ag.first.label.must_equal "overall indices"
     ag.first.advanced?.must_equal false
 
-    ag.second.label.must_equal "detached properties"
+    ag.second.label.must_equal "detached houses"
     ag.second.advanced?.must_equal false
 
     # each measure is a pair [label, measure]

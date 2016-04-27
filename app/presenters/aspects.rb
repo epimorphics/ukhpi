@@ -7,17 +7,17 @@ class Aspects
   attr_reader :prefs
 
   MEASURE_GROUP_ROOTS = [
-    {root: "",                    label: "overall indices",          advanced: false},
-    {root: "Detached",            label: "detached properties",      advanced: false},
-    {root: "SemiDetached",        label: "semi-detached properties", advanced: false},
-    {root: "Terraced",            label: "terraced houses",          advanced: false},
-    {root: "FlatMaisonette",      label: "flats and maisonettes",    advanced: false},
-    {root: "NewBuild",            label: "new build",                advanced: false},
-    {root: "ExistingProperty",    label: "existing properties",      advanced: false},
-    {root: "Cash",                label: "cash purchases",           advanced: true},
-    {root: "Mortgage",            label: "mortgage purchases",       advanced: true},
-    {root: "FirstTimeBuyer",      label: "first-time buyers",        advanced: true},
-    {root: "FormerOwnerOccupier", label: "former owner-occupiers",   advanced: true}
+    {root: "",                    label: "overall_indices",          advanced: false},
+    {root: "Detached",            label: "detached_houses"    ,      advanced: false},
+    {root: "SemiDetached",        label: "semi_detached_houses",     advanced: false},
+    {root: "Terraced",            label: "terraced_houses",          advanced: false},
+    {root: "FlatMaisonette",      label: "flats_and_maisonettes",    advanced: false},
+    {root: "NewBuild",            label: "new_build",                advanced: false},
+    {root: "ExistingProperty",    label: "existing_properties",      advanced: false},
+    {root: "Cash",                label: "cash_purchases",           advanced: true},
+    {root: "Mortgage",            label: "mortgage_purchases",       advanced: true},
+    {root: "FirstTimeBuyer",      label: "first_time_buyers",        advanced: true},
+    {root: "FormerOwnerOccupier", label: "former_owner_occupiers",   advanced: true}
   ]
 
   INDICES = %w( housePriceIndex averagePrice percentageMonthlyChange percentageAnnualChange )
@@ -55,7 +55,7 @@ class Aspects
       inds =INDICES.map {|ind| lookup_measure( ind, grouping[:root] )}
 
       Struct::AspectGroup.new(
-        grouping[:label],
+        I18n.t( "aspect.#{grouping[:label]}" ),
         grouping[:advanced],
         INDEX_LABELS.zip( inds )
       )

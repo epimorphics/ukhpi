@@ -34,3 +34,17 @@ en:
     prompt: "Showing index data for "
     reveal_button_caption: "change selection ..."
     revealing_button_caption: "hide"
+
+  aspect:
+    overall_indices: "overall indices"
+    detached_houses: "detached houses"
+    semi_detached_houses: "semi-detached houses"
+    terraced_houses: "terraced houses"
+    flats_and_maisonettes: "flats and maisonettes"
+    new_build: "new build"
+    existing_properties: "existing properties"
+    cash_purchases: "cash purchases"
+    mortgage_purchases: "mortgage purchases"
+    first_time_buyers: "first-time buyers"
+    former_owner_occupiers: "former owner-occupiers"
+
