@@ -17,6 +17,13 @@
 
 .c-preferences-form {
   font-size: 14px;
+
+  .tab-content {
+    padding: 10px;
+    border-left: 1px solid $grey-3;
+    border-right: 1px solid $grey-3;
+    border-bottom: 1px solid $grey-3;
+  }
 }
 
 .c-preferences-form--subheading {
