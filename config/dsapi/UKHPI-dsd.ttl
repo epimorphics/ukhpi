@@ -105,7 +105,7 @@ def-ukhpi:housePriceIndex
         rdfs:label    "Index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:housePriceIndexSA
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -113,7 +113,7 @@ def-ukhpi:housePriceIndexSA
         rdfs:label    "Seasonally adjusted index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageAnnualChange  a  owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "The percentage change in the average house price compared to the same period twelve months earlier."@en ;
@@ -131,7 +131,7 @@ def-ukhpi:percentageMonthlyChange  a  owl:DatatypeProperty , qb:MeasureProperty 
 
 def-ukhpi:salesVolume
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "Volume of sales upon which analysis is based, aggregated over the given reference period.  Figures include all sales included in the electronic register at the time of data extraction.  This lag in recording transactions predominantly affects the calculation for the most recent month. "@en ;
+        rdfs:comment  "Volume of sales upon which analysis is based, aggregated over the given reference period.  Figures include all sales included in the electronic register at the time of data extraction. "@en ;
         rdfs:label    "Sales volume"@en ;
         rdfs:range    xsd:integer ;
         <http://qudt.org/schema/qudt#unit>
@@ -151,7 +151,7 @@ def-ukhpi:housePriceIndexDetached
         rdfs:label    "Detached property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -183,7 +183,7 @@ def-ukhpi:housePriceIndexSemiDetached
         rdfs:label    "Semi detached property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeSemiDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -215,7 +215,7 @@ def-ukhpi:housePriceIndexTerraced
         rdfs:label    "Terraced property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeTerraced
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -247,7 +247,7 @@ def-ukhpi:housePriceIndexFlatMaisonette
         rdfs:label    "Flat or Maisonette property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeFlatMaisonette
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -279,7 +279,7 @@ def-ukhpi:housePriceIndexCash
         rdfs:label    "Cash Sale property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeCash
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -311,7 +311,7 @@ def-ukhpi:housePriceIndexMortgage
         rdfs:label    "Mortgage Sale property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeMortgage
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -343,7 +343,7 @@ def-ukhpi:housePriceIndexFirstTimeBuyer
         rdfs:label    "First Time Buyer property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeFirstTimeBuyer
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -375,7 +375,7 @@ def-ukhpi:housePriceIndexFormerOwnerOccupier
         rdfs:label    "Former Owner Occupier Buyer property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeFormerOwnerOccupier
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -407,7 +407,7 @@ def-ukhpi:housePriceIndexNewBuild
         rdfs:label    "New Build property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeNewBuild
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -439,7 +439,7 @@ def-ukhpi:housePriceIndexExistingProperty
         rdfs:label    "Existing property index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/page/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .                
 
 def-ukhpi:percentageMonthlyChangeExistingProperty
         a             owl:DatatypeProperty , qb:MeasureProperty ;
