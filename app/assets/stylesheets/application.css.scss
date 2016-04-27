@@ -1,21 +1,10 @@
-/*
- *= require_self
- *= require jquery-ui/autocomplete
-
- *= require font-awesome
- *= require leaflet
-
- *= depend_on_asset "layers.png"
- *= depend_on_asset "layers-2x.png"
- */
-
-
 @import
   "govuk-template",
   "govuk-elements",
   "bootstrap-sprockets",
   "bootstrap",
   "bootstrap-adjust",
+  "font-awesome",
   "lr-common",
   "uk-hpi-application",
   "landing",

@@ -21,17 +21,17 @@ function(
     },
 
     bindEvents: function() {
-      $(".js-reveal-button").on( "click", _.bind( this.onReveal, this ) );
+      $(".js-reveal-button").on( "click", _.bind( this.onToggleRevealPreferences, this ) );
     },
 
     updatePrompt: function( data ) {
       $(".js-search-prompt").text( data.prefsSummary );
     },
 
-    onReveal: function( e ) {
+    onToggleRevealPreferences: function( e ) {
       e.preventDefault();
-      $(".js-reveal-button").addClass( "hidden" );
-      $(".js-preferences-form").removeClass( "js-hidden" );
+      $(".js-reveal-button").toggleClass( "revealing" );
+      $(".js-preferences-form").toggleClass( "js-hidden" );
       $(".js-preferences").tab();
     }
   } );

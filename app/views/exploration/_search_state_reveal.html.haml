@@ -3,7 +3,11 @@
   %span.js-search-prompt
 
   %button.btn.btn-sm.btn-primary.js-reveal-button
-    = t( "search_state.reveal_button_caption" )
+    %i.fa
+    %span.if-revealing
+      = t( "search_state.revealing_button_caption" )
+    %span.not-revealing
+      = t( "search_state.reveal_button_caption" )
 
 .js-preferences-form.js-hidden
   = render partial: "hpi_search_form_js"

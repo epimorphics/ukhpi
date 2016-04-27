@@ -24,6 +24,33 @@
   font-weight: bold;
 }
 
+.js-reveal-button {
+  i.fa {
+    @extend .fa-angle-double-down;
+    font-size: 14px;
+  }
+
+  .if-revealing {
+    @extend .hidden;
+  }
+}
+
+.js-reveal-button.revealing {
+  i.fa {
+    @extend .fa-angle-double-up;
+    font-size: 14px;
+  }
+
+  .if-revealing {
+    display: inline !important;
+    visibility: visible;
+  }
+
+  .not-revealing {
+    @extend .hidden;
+  }
+}
+
 /* utilities */
 
 .js-hidden {
