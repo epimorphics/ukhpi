@@ -34,7 +34,12 @@ module.exports = function (grunt) {
           'javascripts/jquery/': 'jquery/src/',
           'javascripts/d3.js': 'd3/d3.js',
           'javascripts/lodash.js': 'lodash/lodash.js',
-          'javascripts/bootstrap/': 'bootstrap-amd/lib/*.js'
+          'javascripts/bootstrap/': 'bootstrap-amd/lib/*.js',
+          'javascripts/jquery.dataTables.js': "datatables/media/js/jquery.dataTables.js",
+          'javascripts/dataTables.bootstrap.js': "datatables/media/js/dataTables.bootstrap.js",
+          'stylesheets/jquery.dataTables.css': "datatables/media/css/jquery.dataTables.css",
+          'stylesheets/dataTables.bootstrap.css': "datatables/media/css/dataTables.bootstrap.css",
+          "images/": "datatables/media/images/*.png"
         }
       }
     }
