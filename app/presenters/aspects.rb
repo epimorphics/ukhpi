@@ -62,6 +62,10 @@ class Aspects
     end
   end
 
+  def visible?( aspect )
+    prefs.aspects.find {|a| a == aspect.slug.to_sym}
+  end
+
   :private
 
   def all_measures

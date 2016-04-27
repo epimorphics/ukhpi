@@ -1,4 +1,4 @@
-= form_tag( {controller: :exploration, action: :new}, method: "get", class: "", id: "preferences" ) do
+= form_tag( {controller: :exploration, action: :new}, method: "get", class: "c-preferences-form", id: "preferences" ) do
   .row
     .col-sm-12
       %ul.nav.nav-tabs.js-preferences
@@ -32,16 +32,17 @@
                   = t( "index.to" )
                 %input.form-control{ type: "date", id: "to", name: "to", value: @exploration_state.preference( :to ) }
         #indicators.tab-pane
-          - @exploration_state.aspects.aspect_groups.each do |ag|
+          - aspects = @exploration_state.aspects
+          - aspects.aspect_groups.each do |ag|
             - unless ag.advanced?
               .row
                 .col-sm-12
-                  %h3
+                  %h3.c-preferences-form--subheading
                     = ag.label
                 - ag.measures.each do |pair|
                   - short_label = pair.first
                   - aspect = pair.second
                   .col-xs-12.col-sm-6.col-md-3
                     %label.checkbox-inline
-                      %input.checkbox{ type: "checkbox", name: "aspect[]", value: aspect.slug }
+                      %input{ type: "checkbox", name: "aspect[]", value: aspect.slug, checked: aspects.visible?( aspect ) }
                       = short_label

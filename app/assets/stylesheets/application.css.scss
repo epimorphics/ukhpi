@@ -13,8 +13,9 @@
 @import
   "govuk-template",
   "govuk-elements",
-  "bootstrap-sprockets", // "bootstrap-sprockets" must be imported before "bootstrap"
+  "bootstrap-sprockets",
   "bootstrap",
+  "bootstrap-adjust",
   "lr-common",
   "uk-hpi-application",
   "landing",
