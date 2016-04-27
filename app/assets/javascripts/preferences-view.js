@@ -31,7 +31,7 @@ function(
     onToggleRevealPreferences: function( e ) {
       e.preventDefault();
       $(".js-reveal-button").toggleClass( "revealing" );
-      $(".js-preferences-form").toggleClass( "js-hidden" );
+      $(".js-preferences-form").toggleClass( "hidden" );
       $(".js-preferences").tab();
     }
   } );
