@@ -2,15 +2,19 @@
 
 define( [
   "lodash",
-  "jquery/jquery",
+  "jquery",
   "preferences-view",
-  "routes"
+  "routes",
+  "query-results",
+  "data-table-view"
 ],
 function(
   _,
   $,
   PreferencesView,
-  Routes
+  Routes,
+  QueryResults,
+  DataTableView
 ) {
   "use strict";
 
@@ -23,7 +27,8 @@ function(
   _.extend( Controller.prototype, {
     createComponents: function() {
       this.components = {
-        preferencesView: new PreferencesView()
+        preferencesView: new PreferencesView(),
+        dataTableView: new DataTableView()
       };
     },
 
@@ -43,11 +48,13 @@ function(
         console.log( e );
         console.log( m );
         console.log( a );
-       })
+       });
     },
 
     onUpdateData: function( data ) {
-      this.component( "preferencesView" ).updatePrompt( data );
+      var qr = new QueryResults( data );
+      this.component( "preferencesView" ).updatePrompt( qr );
+      this.component( "dataTableView" ).showQueryResults( qr );
     }
 
   } );

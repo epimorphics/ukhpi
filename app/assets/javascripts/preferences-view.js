@@ -2,7 +2,7 @@
 
 define( [
   "lodash",
-  "jquery/jquery"
+  "jquery"
 ],
 function(
   _,
@@ -24,8 +24,8 @@ function(
       $(".js-reveal-button").on( "click", _.bind( this.onToggleRevealPreferences, this ) );
     },
 
-    updatePrompt: function( data ) {
-      $(".js-search-prompt").text( data.prefsSummary );
+    updatePrompt: function( qr ) {
+      $(".js-search-prompt").text( qr.prefsSummary() );
     },
 
     onToggleRevealPreferences: function( e ) {
