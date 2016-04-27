@@ -1,2 +1,15 @@
 modules:
   - name: 'application'
+packages:
+  - name: 'jquery'
+    location: 'jquery'
+    main: 'jquery'
+  - name: 'sizzle'
+    location: 'external/sizzle/dist'
+    main: 'sizzle'
+  - name: 'bootstrap'
+    location: 'bootstrap'
+    main: 'bootstrap'
+map:
+  "*":
+    "datatables.net": "jquery.dataTables"
