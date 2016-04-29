@@ -56,14 +56,15 @@ class ExplorationStateTest < ActiveSupport::TestCase
 
   it "can report the visible aspects" do
     mock_aspects = mock
-    mock_aspects.expects( :aspects ).returns( [:ap] )
+    mock_aspects.expects( :aspect_categories ).returns( [""] )
+    mock_aspects.expects( :aspect_indicators ).returns( ["averagePrice"] )
     q = mock
     q.expects( :prefs ).returns( mock_aspects )
 
     es = ExplorationState.new( q )
 
     as = es.visible_aspects
-    as.first.must_equal :ap
+    as.first.must_equal :averagePrice
     es.aspect( as.first ).label.must_equal "Average price"
   end
 end

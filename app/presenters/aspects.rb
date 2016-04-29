@@ -33,7 +33,7 @@ class Aspects
   def initialize( prefs )
     @prefs = prefs
     @aspects = all_measures.reduce( Hash.new ) do |hash, measure|
-      hash[measure.slug.to_sym] = measure
+      hash[measure.local_name.to_sym] = measure
       hash
     end
   end
@@ -44,8 +44,8 @@ class Aspects
     end
   end
 
-  def aspect( slug )
-    @aspects[slug]
+  def aspect( name )
+    @aspects[name]
   end
 
   def each( &block )
