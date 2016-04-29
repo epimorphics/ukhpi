@@ -39,7 +39,9 @@ class Aspects
   end
 
   def visible_aspects
-    prefs.aspects
+    prefs.aspect_indicators.product( prefs.aspect_categories ).map do |pair|
+      "#{pair.first}#{pair.second.capitalize}".to_sym
+    end
   end
 
   def aspect( slug )
@@ -48,18 +50,6 @@ class Aspects
 
   def each( &block )
     @aspects.values.each( &block )
-  end
-
-  def aspect_groups
-    MEASURE_GROUP_ROOTS.map do |grouping|
-      inds =INDICES.map {|ind| lookup_measure( ind, grouping[:root] )}
-
-      Struct::AspectGroup.new(
-        I18n.t( "aspect.#{grouping[:label]}" ),
-        grouping[:advanced],
-        INDEX_LABELS.zip( inds )
-      )
-    end
   end
 
   def visible?( aspect )
