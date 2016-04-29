@@ -4,11 +4,13 @@ define( [
   "lodash",
   "jquery",
   "preferences",
+  "aspects",
   "dataTables.bootstrap"
 ], function(
   _,
   $,
-  Preferences
+  Preferences,
+  Aspects
 ) {
   "use strict";
 
@@ -27,7 +29,7 @@ define( [
         columns: [
           {title: "Date"},
           {title: "Measure"},
-          {title: "Value", type: "num"}
+          {title: "Value", type: "num-fmt", className: "text-right"}
         ]
       } );
     },
@@ -45,7 +47,7 @@ define( [
           return [
             result.period(),
             zv[0],
-            zv[1] || null
+            zv[1] ? formatValue( zv[0], zv[1] ) : null
           ];
         } );
       } );
@@ -54,6 +56,18 @@ define( [
     }
 
   } );
+
+  var formatValue = function( aspectName, value ) {
+    var aspect = Aspects[aspectName];
+    switch (aspect.unitType) {
+      case "percentage":
+        return value + "%";
+      case "pound_sterling":
+        return "£" + value;
+      default:
+        return value;
+    }
+  };
 
   return DataTableView;
 } );
