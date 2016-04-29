@@ -5,7 +5,8 @@ class UserPreferences
   INTERIM_DATASET = true
 
   DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/great-britain"
-  DEFAULT_ASPECTS = %i( hpi ap pmc pac )
+  DEFAULT_ASPECT_INDICATORS = %w( housePriceIndex averagePrice percentageMonthyChange percentageYearlyChange )
+  DEFAULT_ASPECT_CATEGORIES = [""]
 
   VALIDATIONS = {
     from: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
@@ -13,7 +14,12 @@ class UserPreferences
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     region: ->( value, context )  {empty_value?( value ) ? nil : value},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
-    aspects: ->( value, context ) {
+    ai: ->( value, context ) {
+      empty_value?( value ) ?
+        nil :
+        [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
+    },
+    ac: ->( value, context ) {
       empty_value?( value ) ?
         nil :
         [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
@@ -26,12 +32,21 @@ class UserPreferences
     from: INTERIM_DATASET ? Date.new( 2013, 12, 31 ) : Date.today.prev_year,
     to: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today,
     region: DEFAULT_LOCATION,
-    aspects: DEFAULT_ASPECTS
+    ai: DEFAULT_ASPECT_INDICATORS,
+    ac: DEFAULT_ASPECT_CATEGORIES
   }
 
   def initialize( params )
     @params = params[:_scrubbed] || scrub_params( params )
     @params.freeze
+  end
+
+  def aspect_indicators
+    value_of( :ai )
+  end
+
+  def aspect_categories
+    value_of( :ac )
   end
 
   def method_missing( key, *args, &block )

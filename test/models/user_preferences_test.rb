@@ -48,33 +48,40 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up0.region.must_equal "bar"
   end
 
-  it "provides a default selection for aspects" do
-    up = UserPreferences.new( "aspects" => "" )
-    up.aspects.wont_be_nil
-    up.aspects.length.must_be :>, 1
+  it "provides a default selection for aspect indicators" do
+    up = UserPreferences.new( "ai" => "" )
+    up.aspect_indicators.wont_be_nil
+    up.aspect_indicators.length.must_equal 4
   end
 
-  it "reports selected aspects as an array" do
-    up = UserPreferences.new( "aspects" => ["foo", "bar"] )
-    up.aspects.must_be_kind_of Array
-    up.aspects.first.must_equal :foo
-    up.aspects.second.must_equal :bar
-    up.aspects.length.must_equal 2
+  it "provides a default selection for aspect categories" do
+    up = UserPreferences.new( "ac" => "" )
+    up.aspect_categories.wont_be_nil
+    up.aspect_categories.length.must_equal 1
+    up.aspect_categories.first.must_equal ""
   end
 
-  it "decodes selected aspects as an array" do
-    up = UserPreferences.new( "aspects" => "foo,bar" )
-    up.aspects.must_be_kind_of Array
-    up.aspects.first.must_equal :foo
-    up.aspects.second.must_equal :bar
-    up.aspects.length.must_equal 2
+  it "reports selected aspect indicators as an array" do
+    up = UserPreferences.new( "ai" => ["foo", "bar"] )
+    up.aspect_indicators.must_be_kind_of Array
+    up.aspect_indicators.first.must_equal :foo
+    up.aspect_indicators.second.must_equal :bar
+    up.aspect_indicators.length.must_equal 2
   end
 
-  it "wraps a single aspect as an array" do
-    up = UserPreferences.new( "aspects" => "foo" )
-    up.aspects.must_be_kind_of Array
-    up.aspects.first.must_equal :foo
-    up.aspects.length.must_equal 1
+  it "decodes selected aspect indicators as an array" do
+    up = UserPreferences.new( "ai" => "foo,bar" )
+    up.aspect_indicators.must_be_kind_of Array
+    up.aspect_indicators.first.must_equal :foo
+    up.aspect_indicators.second.must_equal :bar
+    up.aspect_indicators.length.must_equal 2
+  end
+
+  it "wraps a single aspect indicator as an array" do
+    up = UserPreferences.new( "ai" => "foo" )
+    up.aspect_indicators.must_be_kind_of Array
+    up.aspect_indicators.first.must_equal :foo
+    up.aspect_indicators.length.must_equal 1
   end
 
   it "can encode parameters as a URL search string" do
@@ -86,9 +93,9 @@ class UserPreferencesTest < ActiveSupport::TestCase
 
   it "can encode array-valued parameters as a search string" do
     UserPreferences
-      .new( "aspects" => ["foo", "bar"] )
+      .new( "ai" => ["foo", "bar"] )
       .as_search_string
-      .must_equal "aspects=foo,bar"
+      .must_equal "ai=foo,bar"
   end
 
   it "should return itself when asked for preferences" do
