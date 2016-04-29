@@ -30,6 +30,10 @@ class CubeResource
     @resource.to_s.match( /([^\/\#]*)\Z/ )[1]
   end
 
+  def uri
+    @resource.to_s
+  end
+
   def qname
     "ukhpi:#{local_name}"
   end
