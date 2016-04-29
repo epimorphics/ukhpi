@@ -6,29 +6,26 @@ Struct.new( "AspectGroup", :label, :"advanced?", :measures )
 class Aspects
   attr_reader :prefs
 
-  MEASURE_GROUP_ROOTS = [
-    {root: "",                    label: "overall_indices",          advanced: false},
-    {root: "Detached",            label: "detached_houses"    ,      advanced: false},
-    {root: "SemiDetached",        label: "semi_detached_houses",     advanced: false},
-    {root: "Terraced",            label: "terraced_houses",          advanced: false},
-    {root: "FlatMaisonette",      label: "flats_and_maisonettes",    advanced: false},
-    {root: "NewBuild",            label: "new_build",                advanced: false},
-    {root: "ExistingProperty",    label: "existing_properties",      advanced: false},
-    {root: "Cash",                label: "cash_purchases",           advanced: true},
-    {root: "Mortgage",            label: "mortgage_purchases",       advanced: true},
-    {root: "FirstTimeBuyer",      label: "first_time_buyers",        advanced: true},
-    {root: "FormerOwnerOccupier", label: "former_owner_occupiers",   advanced: true}
+  CATEGORIES = [
+    {root: "",                        label: "overall_indices",          advanced: false},
+    {root: "Detached",                label: "detached_houses"    ,      advanced: false},
+    {root: "SemiDetached",            label: "semi_detached_houses",     advanced: false},
+    {root: "Terraced",                label: "terraced_houses",          advanced: false},
+    {root: "FlatMaisonette",          label: "flats_and_maisonettes",    advanced: false},
+    {root: "NewBuild",                label: "new_build",                advanced: false},
+    {root: "ExistingProperty",        label: "existing_properties",      advanced: false},
+    {root: "Cash",                    label: "cash_purchases",           advanced: true},
+    {root: "Mortgage",                label: "mortgage_purchases",       advanced: true},
+    {root: "FirstTimeBuyer",          label: "first_time_buyers",        advanced: true},
+    {root: "FormerOwnerOccupier",     label: "former_owner_occupiers",   advanced: true}
   ]
 
-  INDICES = %w( housePriceIndex averagePrice percentageMonthlyChange percentageAnnualChange )
-
-  INDEX_LABELS = INDICES.map do |ind|
-    ind
-      .underscore
-      .gsub( /_/, " " )
-      .gsub( "house price ", "" )
-      .gsub( "percentage ", "" )
-  end
+  INDICATORS = [
+    {root: "housePriceIndex",         label: "house_price_index"},
+    {root: "averagePrice",            label: "average_price"},
+    {root: "percentageMonthlyChange", label: "percentage_monthly_change"},
+    {root: "percentageAnnualChange",  label: "percentage_annual_change"}
+  ]
 
   def initialize( prefs )
     @prefs = prefs

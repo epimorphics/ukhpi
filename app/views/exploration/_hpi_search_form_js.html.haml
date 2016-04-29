@@ -1,3 +1,4 @@
+- prefs = @exploration_state.prefs
 = form_tag( {controller: :exploration, action: :new}, method: "get", class: "c-preferences-form", id: "preferences" ) do
   .row
     .col-sm-12
@@ -32,17 +33,25 @@
                   = t( "index.to" )
                 %input.form-control{ type: "date", id: "to", name: "to", value: @exploration_state.preference( :to ) }
         #indicators.tab-pane
-          - aspects = @exploration_state.aspects
-          - aspects.aspect_groups.each do |ag|
-            - unless ag.advanced?
-              .row
-                .col-sm-12
-                  %h3.c-preferences-form--subheading
-                    = ag.label
-                - ag.measures.each do |pair|
-                  - short_label = pair.first
-                  - aspect = pair.second
-                  .col-xs-12.col-sm-6.col-md-3
-                    %label.checkbox-inline
-                      %input{ type: "checkbox", name: "aspect[]", value: aspect.slug, checked: aspects.visible?( aspect ) }
-                      = short_label
+          .row
+            .col-sm-12
+              %h3 Indicators
+            .form-group
+              - Aspects::INDICATORS.each do |ind|
+                .col-xs-12.col-sm-6.col-md-3
+                  %label.checkbox-inline
+                    - name = ind[:root]
+                    - visible = prefs.aspect_indicators.include?( name )
+                    %input{ type: "checkbox", name: "ai[]", value: name, checked: visible }
+                    = t( ind[:label] )
+
+            .col-sm-12
+              %h3 Data categories
+            .form-group
+              - Aspects::CATEGORIES.each do |cat|
+                .col-xs-12.col-sm-6.col-md-3
+                  %label.checkbox-inline
+                    - name = cat[:root]
+                    - visible = prefs.aspect_categories.include?( name )
+                    %input{ type: "checkbox", name: "ac[]", value: name, checked: visible }
+                    = t( cat[:label] )
