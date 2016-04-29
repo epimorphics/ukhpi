@@ -10,7 +10,7 @@ function(
 
   var QueryResult = function( data ) {
     this._data = data;
-    this.slugifyData( data );
+    this.indexData( data );
   };
 
   _.extend( QueryResult.prototype, {
@@ -22,14 +22,14 @@ function(
       return this._sData[slug];
     },
 
-    slugifyData: function( data ) {
+    indexData: function( data ) {
       this._sData = {};
       var sData = this._sData;
-      var asSlug = this.slug;
 
       _.each( data, function( v, k ) {
-        if (k.match( /^ukhpi:/ )) {
-          sData[asSlug( k )] = (v && _.isArray(v)) ? _.first( v ) : v;
+        var match = k.match( /^ukhpi:(.*)/ );
+        if (match) {
+          sData[match[1]] = (v && _.isArray(v)) ? _.first( v ) : v;
         }
       } );
     },
