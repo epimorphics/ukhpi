@@ -42,7 +42,7 @@
                   %label.checkbox-inline
                     - name = ind[:root]
                     - visible = prefs.aspect_indicators.include?( name )
-                    %input{ type: "checkbox", name: "ai[]", value: name, checked: visible }
+                    %input.js-aspect{ type: "checkbox", name: "ai[]", value: name, checked: visible }
                     = t( ind[:label] )
 
             .col-sm-12
@@ -53,5 +53,5 @@
                   %label.checkbox-inline
                     - name = cat[:root]
                     - visible = prefs.aspect_categories.include?( name )
-                    %input{ type: "checkbox", name: "ac[]", value: name, checked: visible }
+                    %input.js-aspect{ type: "checkbox", name: "ac[]", value: name, checked: visible }
                     = t( cat[:label] )

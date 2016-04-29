@@ -22,6 +22,9 @@ function(
 
     bindEvents: function() {
       $(".js-reveal-button").on( "click", _.bind( this.onToggleRevealPreferences, this ) );
+      $(".js-aspect").on( "click", function() {
+        $("body").trigger( "changeAspectSelection" );
+      } );
     },
 
     updatePrompt: function( qr ) {

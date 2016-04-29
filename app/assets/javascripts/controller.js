@@ -37,7 +37,7 @@ function(
     },
 
     bindEvents: function() {
-
+      $("body").on( "changeAspectSelection", _.bind( this.renderCurrentQueryResults, this ) );
     },
 
     loadResults: function() {
@@ -52,8 +52,16 @@ function(
     },
 
     onUpdateData: function( data ) {
-      var qr = new QueryResults( data );
-      this.component( "preferencesView" ).updatePrompt( qr );
+      this._qr = new QueryResults( data );
+      this.component( "preferencesView" ).updatePrompt( this._qr );
+      this.renderQueryResults( this._qr );
+    },
+
+    renderCurrentQueryResults: function() {
+      this.renderQueryResults( this._qr );
+    },
+
+    renderQueryResults: function( qr ) {
       this.component( "dataTableView" ).showQueryResults( qr );
     }
 
