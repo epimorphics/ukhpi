@@ -4,7 +4,6 @@
     %title Land Registry - PPD standard reports
     = javascript_include_tag :modernizr
     = stylesheet_link_tag    "application", media: "all"
-    = requirejs_include_tag "application"
     = csrf_meta_tags
     = favicon_link_tag
     %script{ type: "text/javascript", src: "https://apis.google.com/js/plusone.js"}
@@ -16,6 +15,12 @@
     /[if lt IE 9]
       %script{ src: "assets/html5shiv.js", type: "application/javascript"}
       %script{ src: "assets/respond.min.js", type: "application/javascript"}
+
+    <!--[if gt IE 8]><!-->
+    = javascript_include_tag :d3
+    <!--<![endif]-->
+
+    = requirejs_include_tag "application"
 
   %body.government.website.lr.ppd-standard-report
 
