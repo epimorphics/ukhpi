@@ -3,7 +3,7 @@
 modulejs.define( "routes", [],
 function() {
   return {
-    explore: "<%= Rails.application.routes.url_helpers.explore_path %>",
-    new_exploration: "<%= Rails.application.routes.url_helpers.new_exploration_path %>"
+    explore: "<%= Rails.application.config.relative_url_root%><%= Rails.application.routes.url_helpers.explore_path %>",
+    new_exploration: "<%= Rails.application.config.relative_url_root%><%= Rails.application.routes.url_helpers.new_exploration_path %>"
   }
 } );
