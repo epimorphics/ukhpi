@@ -1,7 +1,7 @@
 /** Model object encapsulating a single result */
 
-define( [
-  "lodash"
+modulejs.define( "query-result", [
+  "lib/lodash"
 ],
 function(
   _

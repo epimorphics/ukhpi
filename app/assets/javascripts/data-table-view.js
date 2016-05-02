@@ -1,11 +1,10 @@
 /** Component for showing the queried index data as a table */
 
-define( [
-  "lodash",
-  "jquery",
+modulejs.define( "data-table-view", [
+  "lib/lodash",
+  "lib/jquery",
   "preferences",
-  "aspects",
-  "dataTables.bootstrap"
+  "aspects"
 ], function(
   _,
   $,

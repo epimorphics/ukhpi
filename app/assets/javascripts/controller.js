@@ -1,8 +1,8 @@
 /* Simple controller for client-side interaction in UKHPI */
 
-define( [
-  "lodash",
-  "jquery",
+modulejs.define( "controller", [
+  "lib/lodash",
+  "lib/jquery",
   "preferences-view",
   "routes",
   "query-results",

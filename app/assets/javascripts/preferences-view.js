@@ -1,11 +1,9 @@
 /** Component for display the user preferences */
 
-define( [
-  "lodash",
-  "jquery",
-  "regions-table",
-  "bootstrap3-typeahead",
-  "bootstrap-datetimepicker"
+modulejs.define( "preferences-view", [
+  "lib/lodash",
+  "lib/jquery",
+  "regions-table"
 ],
 function(
   _,
@@ -38,6 +36,7 @@ function(
     },
 
     onToggleRevealPreferences: function( e ) {
+      console.log("onToggleRevealPreferences");
       e.preventDefault();
       $(".js-reveal-button").toggleClass( "revealing" );
       $(".js-preferences-form").toggleClass( "hidden" );
@@ -45,6 +44,7 @@ function(
     },
 
     setupTypeahead: function() {
+      console.log( "setupTypeahead " + RegionsTable.names.length);
       var names = [];
       _.each(
         RegionsTable.names,

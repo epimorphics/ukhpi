@@ -1,12 +1,18 @@
-define( [
-  "lodash",
-  "jquery",
-  "controller",
-  "bootstrap/bootstrap"
+// = require jquery
+// = require lodash
+// = require modulejs
+// = require bootstrap
+// = require dataTables/jquery.dataTables
+// = require dataTables/bootstrap/3/jquery.dataTables.bootstrap
+// = require moment
+// = require bootstrap-datetimepicker
+// = require bootstrap3-typeahead
+// = require_tree .
+
+modulejs.define( "application", [
+  "controller"
 ],
 function(
-  _,
-  $,
   Controller
 ) {
   "use strict";
@@ -16,4 +22,8 @@ function(
   return {
     controller: controller
   };
+} );
+
+$( function() {
+  modulejs.require( "application" );
 } );

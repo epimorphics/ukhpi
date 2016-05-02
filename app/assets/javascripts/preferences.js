@@ -1,8 +1,8 @@
 /** Model object to encapsulate the current user preferences */
 
-define( [
-  "lodash",
-  "jquery"
+modulejs.define( "preferences", [
+  "lib/lodash",
+  "lib/jquery"
 ], function(
   _,
   $
