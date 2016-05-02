@@ -15,6 +15,11 @@ class ExplorationState
     @cmd.respond_to?( :"query_command?" ) && @cmd.query_command?
   end
 
+  # Return true if this presenter is encapsulating a search command
+  def search?
+    @cmd.respond_to?( :"search_status" )
+  end
+
   def exception?
     @cmd.respond_to?( :[] ) && @cmd[:exception]
   end
@@ -64,19 +69,34 @@ class ExplorationState
     @cmd.results
   end
 
+  def visible_aspects
+    aspects.visible_aspects
+  end
+
+  def aspect( key )
+    aspects.aspect( key )
+  end
+
+  def aspects
+    @aspects ||= Aspects.new( @cmd.prefs )
+  end
+
+  def lookup_region( r )
+    Regions.lookup_region( r )
+  end
+
   :private
 
   def state_name
     case
     when exception?
       :exception
-    when empty?
-      :empty_state
     when query?
       :query
-    else
+    when search?
       :search
+    else
+      :empty_state
     end
   end
-
 end

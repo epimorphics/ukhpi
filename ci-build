@@ -1,0 +1,6 @@
+#!/bin/bash
+# Run UKHPI tests
+
+set -e
+ssh-agent bash -c "ssh-add ~/.ssh/epi_deploy ; bundle"
+rake test

@@ -25,6 +25,8 @@ gem 'bootstrap-sass'
 gem 'modernizr-rails'
 gem 'font-awesome-rails'
 gem 'rails-html-sanitizer'
+gem 'requirejs-rails'
+gem 'd3-rails'
 
 gem 'govuk_template'
 gem 'govuk_frontend_toolkit'#, github: "alphagov/govuk_frontend_toolkit_gem", submodules: true
@@ -36,6 +38,8 @@ gem 'byebug'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'yajl-ruby', require: 'yajl'
+
+gem 'rdf-turtle'
 
 group :development, :test do
   gem 'minitest-spec-rails'

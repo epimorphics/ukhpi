@@ -21,7 +21,7 @@
 
 en:
   index:
-    main_heading: "Search the UK House Price Index"
+    main_heading: "Browse the UK House Price Index"
     exception_preamble: "There was a problem with your search:"
     multpiple_search_preamble: "More than one location matches your search terms. Select an alternative below, or change your search term:"
     show_all_results: "Showing %d results"
@@ -29,3 +29,22 @@ en:
     location: "Location"
     from: "From"
     to: "To"
+
+  search_state:
+    prompt: "Showing index data for "
+    reveal_button_caption: "change selection ..."
+    revealing_button_caption: "hide"
+
+  aspect:
+    overall_indices: "overall indices"
+    detached_houses: "detached houses"
+    semi_detached_houses: "semi-detached houses"
+    terraced_houses: "terraced houses"
+    flats_and_maisonettes: "flats and maisonettes"
+    new_build: "new build"
+    existing_properties: "existing properties"
+    cash_purchases: "cash purchases"
+    mortgage_purchases: "mortgage purchases"
+    first_time_buyers: "first-time buyers"
+    former_owner_occupiers: "former owner-occupiers"
+

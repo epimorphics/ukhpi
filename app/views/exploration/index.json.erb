@@ -1,0 +1,7 @@
+{
+  prefsSummary: "<%= @exploration_state.prefs.summary %>"
+  <% if @exploration_state.query? %>
+    ,
+    results: <%= @exploration_state.query_results.to_json %>
+  <% end %>
+}

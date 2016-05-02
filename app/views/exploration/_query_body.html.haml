@@ -11,15 +11,13 @@
         Value
   %tbody
     - @exploration_state.query_results.each do |qr|
-      %tr
-        %td{rowspan: 2}
-          = qr["ukhpi:refPeriod"]["@value"]
-        %td
-          Average price
-        %td
-          = qr["ukhpi:averagePrice"].first
-      %tr
-        %td
-          House price index
-        %td
-          = qr["ukhpi:housePriceIndex"].first
+      - @exploration_state.visible_aspects.each_with_index do |aspect_name, i|
+        - aspect = @exploration_state.aspect( aspect_name )
+        %tr
+          - if i == 0
+            %td{rowspan: @exploration_state.visible_aspects.size}
+              = qr["ukhpi:refPeriod"]["@value"]
+          %td
+            = aspect.label
+          %td
+            = qr[aspect.qname].first

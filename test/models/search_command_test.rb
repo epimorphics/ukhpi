@@ -39,7 +39,9 @@ class SearchCommandTest < ActiveSupport::TestCase
   end
 
   it "recognises a search term that does not match any results" do
-    prefs = UserPreferences.new( region: "foo" )
+    prefs = mock()
+    prefs.expects( :region ).at_least_once.returns( "foo" ) #UserPreferences.new( region: "foo" )
+
     regions = mock()
     regions.expects( :match )
            .with() {|term, up| term == "foo"}

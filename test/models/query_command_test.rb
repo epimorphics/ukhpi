@@ -10,7 +10,7 @@ class MockService
   end
 end
 
-class SearchCommandTest < ActiveSupport::TestCase
+class QueryCommandTest < ActiveSupport::TestCase
 
   it "constructs a query correctly" do
     service = MockService.new
@@ -32,36 +32,6 @@ class SearchCommandTest < ActiveSupport::TestCase
           }},
           {"ukhpi:refPeriod":{
             "@le": {"@value":"2016-06","@type":"http://www.w3.org/2001/XMLSchema#gYearMonth"}
-          }},
-          {"ukhpi:refRegion":{
-            "@eq": {"@id":"http://fubar.com/foo"}
-          }}
-        ]
-    })
-  end
-
-  it "uses default dates if not told from and to" do
-    service = MockService.new
-    sc = mock()
-    sc.expects( :from ).returns( nil )
-    sc.expects( :to ).returns( nil )
-    sc.expects( :region_uri ).returns( "http://fubar.com/foo" )
-
-    qc = QueryCommand.new( sc )
-    qc.perform_query( service )
-
-    json = service.capture
-    json.wont_be_nil
-    json.must_match_json_expression( {
-      "@and":
-        [
-          {"ukhpi:refPeriod":{
-            "@ge": {"@value": Time.new( Time.now.year - 1, Time.now.month ).strftime( "%Y-%m" ),
-                    "@type":"http://www.w3.org/2001/XMLSchema#gYearMonth"}
-          }},
-          {"ukhpi:refPeriod":{
-            "@le": {"@value": Time.now.strftime( "%Y-%m" ),
-                    "@type":"http://www.w3.org/2001/XMLSchema#gYearMonth"}
           }},
           {"ukhpi:refRegion":{
             "@eq": {"@id":"http://fubar.com/foo"}

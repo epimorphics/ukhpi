@@ -1,24 +1,31 @@
 class ExplorationController < ApplicationController
-  def index
-    if no_user_params?
-      @exploration_state = ExplorationState.new
-    else
-      begin
-        enact_search( collectUserPreferences )
-      # rescue RuntimeError => e
-      #   @exploration_state = ExplorationState.new( exception: e )
-      rescue ArgumentError => e
-        @exploration_state = ExplorationState.new( exception: e )
-      end
+  def new
+    begin
+      enact_search( collectUserPreferences )
+    rescue ArgumentError => e
+      @exploration_state = ExplorationState.new( exception: e )
+    end
+
+    respond_to do |format|
+      format.json {render}
+      format.html {render}
     end
   end
 
-  alias :new :index
+  def index
+    @exploration_state = ExplorationState.new( collectUserPreferences )
+
+    respond_to do |format|
+      format.json {render}
+      format.html {render}
+    end
+  end
 
   :private
 
   def enact_search( user_prefs )
     search_cmd = SearchCommand.new( user_prefs, Regions )
+    Rails.logger.debug( "search cmd status = #{search_cmd.search_status}" )
 
     if search_cmd.search_status == :single_result
       @exploration_state = ExplorationState.new( enact_query( search_cmd ) )
