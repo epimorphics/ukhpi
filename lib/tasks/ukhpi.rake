@@ -110,18 +110,20 @@ def write_regions_files( locations, all_types )
   puts "Generating region files ... "
   # JavaScript module output
   open( "regions-table.js", "w") do |file|
-    file << "var Locations = (function() {\n"
+    file << "define( [], function() {\n"
     file << "\"use strict\";\n"
     file << "  var locationNames = #{location_names.to_json};\n"
     file << "  var types = #{all_types.to_a.sort.to_json};\n"
-    file << "  var locations = [\n"
+    file << "  var locations = {\n"
+    sep = "  "
     locations.each do |uri,loc|
-      file << "    #{loc.to_json},\n"
+      file << "#{sep}\"#{uri}\": #{loc.to_json}"
+      sep = ",\n  "
     end
-    file << "  ];\n"
+    file << "\n};\n"
     file << "  var gssIndex = #{gss_index.to_json};\n"
     file << "  return {names: locationNames, types: types, locations: locations, gssIndex: gssIndex };\n"
-    file << "})();\n"
+    file << "});\n"
   end
 
   # Ruby module output
