@@ -1,7 +1,7 @@
 /** Data model encapsulating the results we got back from the server */
 
-define( [
-  "lodash",
+modulejs.define( "query-results", [
+  "lib/lodash",
   "query-result"
 ], function(
   _,
