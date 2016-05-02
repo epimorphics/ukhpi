@@ -1,6 +1,7 @@
 require 'set'
 require 'json'
 require 'byebug'
+require 'csv'
 
 # Helper classes
 class LocationRecord
@@ -91,10 +92,64 @@ class Location
   end
 end
 
+def write_regions_files( locations, all_types )
+  location_names = []
+  gss_index = Hash.new
+
+  locations.each do |uri,loc|
+    loc.labels.each do |lang,txt|
+      location_names << {value: loc.uri, label: txt, lang: lang}
+    end
+
+    # properties[:children] = properties[:children].to_a.sort
+    gss_index[loc.gss] = loc.uri if loc.gss
+  end
+
+  location_names.sort! {|l0,l1| l0[:label] <=> l1[:label]}
+
+  puts "Generating region files ... "
+  # JavaScript module output
+  open( "regions-table.js", "w") do |file|
+    file << "var Locations = (function() {\n"
+    file << "\"use strict\";\n"
+    file << "  var locationNames = #{location_names.to_json};\n"
+    file << "  var types = #{all_types.to_a.sort.to_json};\n"
+    file << "  var locations = [\n"
+    locations.each do |uri,loc|
+      file << "    #{loc.to_json},\n"
+    end
+    file << "  ];\n"
+    file << "  var gssIndex = #{gss_index.to_json};\n"
+    file << "  return {names: locationNames, types: types, locations: locations, gssIndex: gssIndex };\n"
+    file << "})();\n"
+  end
+
+  # Ruby module output
+  open( "regions-table.rb", "w") do |file|
+    file << "module RegionsTable\n"
+    file << "  def location_names\n"
+    file << "    #{location_names.inspect}\n"
+    file << "  end\n"
+    file << "  def types\n"
+    file << "    #{all_types.to_a.sort.inspect}\n"
+    file << "  end\n"
+    file << "  def locations\n"
+    file << "    {\n"
+    locations.each do |uri,loc|
+      file << "    #{uri.inspect} => #{loc.to_ruby},\n"
+    end
+    file << "    }\n"
+    file << "  end\n"
+    file << "  def gss_index\n"
+    file << "    #{gss_index.inspect}\n"
+    file << "  end\n"
+    file << "end\n"
+  end
+end
 
 namespace :ukhpi do
-  desc "Generate the regions files from scratch"
-  task regions: [:regions_query, :regions_generate, :move_region_files]
+  desc "Generate the regions files by SPARQL query"
+  task regions_sparql: [:regions_query, :regions_generate, :move_region_files]
 
   desc "run the SPARQL query to generate the region results"
   task regions_query: :environment do
@@ -129,8 +184,6 @@ namespace :ukhpi do
     puts "Loading query results ..."
     sresults = JSON.parse( IO.read( 'query-results.json' ) )
     locations = Hash.new
-    location_names = []
-    gss_index = Hash.new
     all_types = Set.new
 
     sresults["results"]["bindings"].each do |result|
@@ -145,55 +198,7 @@ namespace :ukhpi do
       end
     end
 
-    locations.each do |uri,loc|
-      loc.labels.each do |lang,txt|
-        location_names << {value: loc.uri, label: txt, lang: lang}
-      end
-
-      # properties[:children] = properties[:children].to_a.sort
-      gss_index[loc.gss] = loc.uri if loc.gss
-    end
-
-    location_names.sort! {|l0,l1| l0[:label] <=> l1[:label]}
-
-    puts "Generating region files ... "
-    # JavaScript module output
-    open( "regions-table.js", "w") do |file|
-      file << "var Locations = (function() {\n"
-      file << "use strict;\n"
-      file << "  var locationNames = #{location_names.to_json};\n"
-      file << "  var types = #{all_types.to_a.sort.to_json};\n"
-      file << "  var locations = {\n"
-      locations.each do |uri,loc|
-        file << "    #{loc.to_json},\n"
-      end
-      file << "  };\n"
-      file << "  var gssIndex = #{gss_index.to_json};\n"
-      file << "  return {names: locationNames, types: types, locations: locations, gssIndex: gssIndex };\n"
-      file << "})();\n"
-    end
-
-    # Ruby module output
-    open( "regions-table.rb", "w") do |file|
-      file << "module RegionsTable\n"
-      file << "  def location_names\n"
-      file << "    #{location_names.inspect}\n"
-      file << "  end\n"
-      file << "  def types\n"
-      file << "    #{all_types.to_a.sort.inspect}\n"
-      file << "  end\n"
-      file << "  def locations\n"
-      file << "    {\n"
-      locations.each do |uri,loc|
-        file << "    #{uri.inspect} => #{loc.to_ruby},\n"
-      end
-      file << "    }\n"
-      file << "  end\n"
-      file << "  def gss_index\n"
-      file << "    #{gss_index.inspect}\n"
-      file << "  end\n"
-      file << "end\n"
-    end
+    write_regions_files( locations, all_types )
   end
 
   desc "Move the files to their correct locations"
