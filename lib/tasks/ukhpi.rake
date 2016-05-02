@@ -209,4 +209,29 @@ namespace :ukhpi do
     File.rename( "regions-table.js", "app/assets/javascripts/regions-table.js" )
     File.rename( "regions-table.rb", "app/models/regions-table.rb" )
   end
+
+  desc "Generate the regions files by SPARQL query"
+  task regions_sparql: [:regions_query, :regions_generate, :move_region_files]
+
+  desc "SPARQL-describe the given URI"
+  task :describe, [:uri] => [:environment] do |t, args|
+    uri = args[:uri]
+
+    rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    qb="http://purl.org/linked-data/cube#"
+    hpi="http://landregistry.data.gov.uk/def/ukhpi/"
+    rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    sr="http://data.ordnancesurvey.co.uk/ontology/spatialrelations/"
+    owl="http://www.w3.org/2002/07/owl#"
+
+    query="describe <#{uri}>"
+
+    squery=(ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
+    server=ENV["SERVER"] || "http://lr-data-dev-c.epimorphics.net/landregistry/query"
+
+    puts "Running SPARQL query ..."
+    system "#{squery} --server='#{server}' '#{query}'"
+
+  end
+
 end
