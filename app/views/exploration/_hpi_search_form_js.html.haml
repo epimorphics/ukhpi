@@ -20,7 +20,7 @@
               .form-group
                 %label.control-label{ for: "region" }
                   = t( "index.location" )
-                %input.form-control{ type: "text", id: "region", name: "region", value: @exploration_state.preference( :region ) }
+                %input.form-control.js-typeahead{ type: "text", id: "region", name: "region", value: @exploration_state.preference( :region ) }
         #dates.tab-pane
           .row
             .col-sm-12
