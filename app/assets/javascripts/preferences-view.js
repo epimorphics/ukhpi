@@ -4,7 +4,8 @@ define( [
   "lodash",
   "jquery",
   "regions-table",
-  "bootstrap3-typeahead"
+  "bootstrap3-typeahead",
+  "bootstrap-datetimepicker"
 ],
 function(
   _,
@@ -17,6 +18,7 @@ function(
     console.log("PreferencesView initializing..." );
     this.bindEvents();
     this.setupTypeahead();
+    this.setupDateTimePickers();
   };
 
   _.extend( PreferencesView.prototype, {
@@ -61,6 +63,17 @@ function(
     onAutocompleteSelect: function( value ) {
       $(".js-location-uri").val( value.uri );
       $("body").trigger( "changePreferences" );
+    },
+
+    setupDateTimePickers: function() {
+      _.each( ["#fromdatepicker, #todatepicker"], function( sel ) {
+        $(sel).datetimepicker( {
+          viewMode: "years",
+          format: "YYYY-MM"
+        }).on( "dp.change", function() {
+          $("body").trigger( "changePreferences" );
+        });
+      } );
     }
   } );
 

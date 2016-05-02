@@ -8,3 +8,26 @@
 .c-results-list {
   @extend .list-inline;
 }
+
+.date .input-group-addon {
+  background-color: inherit;
+  border: 0;
+  text-align: inherit;
+}
+
+// Bootstrap tables adjust
+table.dataTable thead .sorting {
+  background-image: none;
+}
+table.dataTable thead .sorting_asc {
+  background-image: none;
+}
+table.dataTable thead .sorting_desc {
+  background-image: none;
+}
+table.dataTable thead .sorting_asc_disabled {
+  background-image: none
+}
+table.dataTable thead .sorting_desc_disabled {
+  background-image: none;
+}

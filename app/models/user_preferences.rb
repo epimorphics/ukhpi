@@ -9,8 +9,8 @@ class UserPreferences
   DEFAULT_ASPECT_CATEGORIES = [""]
 
   VALIDATIONS = {
-    from: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
-    to: ->( value, context )      {empty_value?( value ) ? nil : Date.parse( value )},
+    from: ->( value, context )    {empty_value?( value ) ? nil : Date.strptime( value, "%Y-%m" )},
+    to: ->( value, context )      {empty_value?( value ) ? nil : Date.strptime( value, "%Y-%m" )},
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     region: ->( value, context )  {empty_value?( value ) ? nil : value},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
