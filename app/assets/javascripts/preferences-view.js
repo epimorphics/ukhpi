@@ -48,17 +48,18 @@ function(
         RegionsTable.names,
         function( name ) {
           if (name.lang === "en" && name.label && name.label.length > 0) {
-            names.push( {id: name.value, name: name.label} );
+            names.push( {uri: name.value, name: name.label} );
           }
         });
 
-      $( ".js-typeahead" ).typeahead( {
+      $( ".js-location" ).typeahead( {
         source: names,
         afterSelect: _.bind( this.onAutocompleteSelect, this )
       } );
     },
 
     onAutocompleteSelect: function( value ) {
+      $(".js-location-uri").val( value.uri );
       $("body").trigger( "changePreferences" );
     }
   } );

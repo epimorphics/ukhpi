@@ -25,6 +25,7 @@ class ExplorationController < ApplicationController
 
   def enact_search( user_prefs )
     search_cmd = SearchCommand.new( user_prefs, Regions )
+    Rails.logger.debug( "search cmd status = #{search_cmd.search_status}" )
 
     if search_cmd.search_status == :single_result
       @exploration_state = ExplorationState.new( enact_query( search_cmd ) )

@@ -81,6 +81,10 @@ class ExplorationState
     @aspects ||= Aspects.new( @cmd.prefs )
   end
 
+  def lookup_region( r )
+    Regions.lookup_region( r )
+  end
+
   :private
 
   def state_name
