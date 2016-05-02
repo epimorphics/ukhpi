@@ -40,7 +40,10 @@ module.exports = function (grunt) {
           "stylesheets/jquery.dataTables.css": "datatables/media/css/jquery.dataTables.css",
           "stylesheets/dataTables.bootstrap.css": "datatables/media/css/dataTables.bootstrap.css",
           "images/": "datatables/media/images/*.png",
-          "javascripts/bootstrap3-typeahead.js": "bootstrap3-typeahead/bootstrap3-typeahead.js"
+          "javascripts/bootstrap3-typeahead.js": "bootstrap3-typeahead/bootstrap3-typeahead.js",
+          "javascripts/moment.js": "moment/moment.js",
+          "javascripts/bootstrap-datetimepicker.js": "eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker.js",
+          "stylesheets/_bootstrap-datetimepicker.scss": "eonasdan-bootstrap-datetimepicker/src/sass/_bootstrap-datetimepicker.scss"
         }
       }
     }
