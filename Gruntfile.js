@@ -23,23 +23,24 @@ module.exports = function (grunt) {
 
     bowercopy: {
       options: {
-        srcPrefix: 'bower_components'
+        srcPrefix: "bower_components"
       },
       scripts: {
         options: {
-          destPrefix: 'vendor/assets'
+          destPrefix: "vendor/assets"
         },
         files: {
-          'javascripts/external/sizzle/': 'jquery/sizzle/',
-          'javascripts/jquery': 'jquery/src/',
-          'javascripts/d3.js': 'd3/d3.js',
-          'javascripts/lodash.js': 'lodash/lodash.js',
-          'javascripts/bootstrap/': 'bootstrap-amd/lib/*.js',
-          'javascripts/jquery.dataTables.js': "datatables/media/js/jquery.dataTables.js",
-          'javascripts/dataTables.bootstrap.js': "datatables/media/js/dataTables.bootstrap.js",
-          'stylesheets/jquery.dataTables.css': "datatables/media/css/jquery.dataTables.css",
-          'stylesheets/dataTables.bootstrap.css': "datatables/media/css/dataTables.bootstrap.css",
-          "images/": "datatables/media/images/*.png"
+          "javascripts/external/sizzle/": "jquery/sizzle/",
+          "javascripts/jquery": "jquery/src/",
+          "javascripts/d3.js": "d3/d3.js",
+          "javascripts/lodash.js": "lodash/lodash.js",
+          "javascripts/bootstrap/": "bootstrap-amd/lib/*.js",
+          "javascripts/jquery.dataTables.js": "datatables/media/js/jquery.dataTables.js",
+          "javascripts/dataTables.bootstrap.js": "datatables/media/js/dataTables.bootstrap.js",
+          "stylesheets/jquery.dataTables.css": "datatables/media/css/jquery.dataTables.css",
+          "stylesheets/dataTables.bootstrap.css": "datatables/media/css/dataTables.bootstrap.css",
+          "images/": "datatables/media/images/*.png",
+          "javascripts/bootstrap3-typeahead.js": "bootstrap3-typeahead/bootstrap3-typeahead.js"
         }
       }
     }
