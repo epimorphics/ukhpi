@@ -16,7 +16,7 @@
       .tab-content
         #location.tab-pane.active
           .row
-            .col-sm-12
+            .col-sm-12.col-md-6
               .form-group
                 %label.control-label{ for: "region" }
                   = t( "index.location" )
@@ -24,6 +24,8 @@
                 - region_name = @exploration_state.lookup_region(region ).label
                 %input.js-location-uri{ type: "hidden", name: "region", value: region}
                 %input.form-control.js-location{ type: "text", id: "region", value: region_name }
+            .col-sm-12.col-md-6
+              = image_tag( "United_Kingdom_1843.jpg", title: "Interactive map selector will go here" )
         #dates.tab-pane
           .row
             .col-sm-12
