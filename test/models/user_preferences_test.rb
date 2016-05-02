@@ -86,9 +86,9 @@ class UserPreferencesTest < ActiveSupport::TestCase
 
   it "can encode parameters as a URL search string" do
     UserPreferences
-      .new( "region" => "foo", "from" => "2016-04-04" )
+      .new( "region" => "foo", "from" => "2016-04" )
       .as_search_string
-      .must_equal "from=2016-04-04&region=foo"
+      .must_equal "from=2016-04-01&region=foo"
   end
 
   it "can encode array-valued parameters as a search string" do
