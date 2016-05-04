@@ -63,9 +63,10 @@
               %h3 Data categories
             .form-group
               - Aspects::CATEGORIES.each do |cat|
-                .col-xs-12.col-sm-6.col-md-3
-                  %label.checkbox-inline
-                    - name = cat[:root]
-                    - visible = prefs.aspect_categories.include?( name )
-                    %input.js-aspect{ type: "checkbox", name: "ac[]", value: name, checked: visible }
-                    = t( cat[:label] )
+                - unless cat[:advanced]
+                  .col-xs-12.col-sm-6.col-md-3
+                    %label.checkbox-inline
+                      - name = cat[:root]
+                      - visible = prefs.aspect_categories.include?( name )
+                      %input.js-aspect{ type: "checkbox", name: "ac[]", value: name, checked: visible }
+                      = t( cat[:label] )
