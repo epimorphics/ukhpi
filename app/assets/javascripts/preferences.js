@@ -48,10 +48,29 @@ modulejs.define( "preferences", [
       return this._prefs.to;
     },
 
-    aspects: function() {
-      var inds = this._prefs.ai || [];
-      var cats = this._prefs.ac || [];
-      var pairs = cartesianProductOf( inds, cats );
+    /** @return The currently selected indicators, optionally limited to just a given selection */
+    indicators: function( only ) {
+      var ai = this._prefs.ai || [];
+      if (only && only.indicators) {
+        ai = _.intersection( only.indicators, ai );
+      }
+
+      return ai;
+    },
+
+    /** @return The currently selected categories, optionally limited to just a given selection */
+    categories: function( only ) {
+      var ac = this._prefs.ac || [];
+      if (only && only.categories) {
+        ac = _.intersection( only.categories, ac );
+      }
+
+      return ac;
+    },
+
+    /** @return The selected aspects, optionally limited to only certain indicators or categories */
+    aspects: function( only ) {
+      var pairs = cartesianProductOf( this.indicators( only ), this.categories( only ) );
 
       return _.map( pairs, function( pair ) {
         return pair[0] + _.upperFirst( pair[1] );
