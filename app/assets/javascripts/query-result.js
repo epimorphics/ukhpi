@@ -54,7 +54,7 @@ function(
     /** @return A momentJS object denoting the (start of the) period as a date */
     periodDate: function() {
       if (!this._date) {
-        this._date = moment( this.period, "YYYY-MM" );
+        this._date = moment( this.period(), "YYYY-MM" );
       }
 
       return this._date;

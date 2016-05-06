@@ -32,10 +32,12 @@ modulejs.define( "query-results", [
       var min = _.minBy( this.results(), function( r) { return r.periodDate().toDate(); } );
       var max = _.maxBy( this.results(), function( r) { return r.periodDate().toDate(); } );
 
-      return [min.periodDate(),
+      return [min.periodDate()
+                 .toDate(),
               max.periodDate()
                  .add( 1, "month")
-                 .subtract( 1, "second" )];
+                 .subtract( 1, "second" )
+                 .toDate()];
     }
   } );
 

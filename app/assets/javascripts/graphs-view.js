@@ -32,7 +32,7 @@ modulejs.define( "graphs-view", [
     top: 30,
     right: 20,
     bottom: 20,
-    left: 40
+    left: 80
   };
   GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right;
   GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
@@ -46,7 +46,7 @@ modulejs.define( "graphs-view", [
 
     showQueryResults: function( qr ) {
       var gv = this;
-      var dateRange = D3.range( qr.dateRange() );
+      var dateRange = qr.dateRange();
 
       _.each( this.prefs().indicators(), function( indicator ) {
         var options = GRAPHS_OPTIONS[indicator];
@@ -88,8 +88,18 @@ modulejs.define( "graphs-view", [
 
   var createScales = function( graphElem ) {
     var xScale = D3.time.scale().nice(D3.time.month);
-    var yScale = D3.scale.linear();
+    var yScale = D3.scale.linear().nice();
     return setScaleViewDimensions( xScale, yScale, graphElem );
+  };
+
+  var setScaleViewDimensions = function( xScale, yScale, elem ) {
+    var width = parseInt( elem.style("width") ) - GRAPH_PADDING.horizontal;
+    var height = parseInt( elem.style("height") ) - GRAPH_PADDING.vertical;
+
+    xScale.range( [0, width] );
+    yScale.range( [height, 0] );
+
+    return {x: xScale, y: yScale, width: width, height: height};
   };
 
   var createAxes = function( scales, options ) {
@@ -106,16 +116,6 @@ modulejs.define( "graphs-view", [
     return {x: xAxis, y: yAxis};
   };
 
-  var setScaleViewDimensions = function( xScale, yScale, elem ) {
-    var width = parseInt( elem.style("width") ) - GRAPH_PADDING.horizontal;
-    var height = parseInt( elem.style("height") ) - GRAPH_PADDING.vertical;
-
-    xScale.range( [0, width] );
-    yScale.range( [height, 0] );
-
-    return {x: xScale, y: yScale, width: width, height: height};
-  };
-
   var setScaleDomain = function( scales, dateRange, valueRange ) {
     scales.x.domain( dateRange );
     scales.y.domain( valueRange );
@@ -123,20 +123,22 @@ modulejs.define( "graphs-view", [
 
   var calculateValueRange = function( indicator, prefs, qr, options ) {
     var aspects = prefs.aspects( {indicators: [indicator]} );
-    var ranges = _.map( aspects, function( aspect ) {
-      return D3.range( qr.results(), function( result ) {
+    var nsAspects = _.map( aspects, function( a ) {return "ukhpi:" + a;} );
+
+    var extents = _.map( nsAspects, function( aspect ) {
+      return D3.extent( qr.results(), function( result ) {
         return result.value( aspect );
       } );
     } );
 
-    var overallRange = D3.range( _.flatten( ranges ) );
+    var overallRange = D3.extent( _.flatten( extents ) );
 
     if (options.symmetricalYAxis) {
       var largest = _.max( _.map( overallRange, Math.abs ) );
-      return D3.range( [largest * -1.0, largest] );
+      return [largest * -1.0, largest];
     }
     else {
-      return D3.range( [0, overallRange[1]] );
+      return [0, overallRange[1]];
     }
   };
 
