@@ -6,7 +6,8 @@ modulejs.define( "controller", [
   "preferences-view",
   "routes",
   "query-results",
-  "data-table-view"
+  "data-table-view",
+  "graphs-view"
 ],
 function(
   _,
@@ -14,7 +15,8 @@ function(
   PreferencesView,
   Routes,
   QueryResults,
-  DataTableView
+  DataTableView,
+  GraphsView
 ) {
   "use strict";
 
@@ -28,7 +30,8 @@ function(
     createComponents: function() {
       this.components = {
         preferencesView: new PreferencesView(),
-        dataTableView: new DataTableView()
+        dataTableView: new DataTableView(),
+        graphsView: new GraphsView()
       };
     },
 
@@ -64,6 +67,7 @@ function(
 
     renderQueryResults: function( qr ) {
       this.component( "dataTableView" ).showQueryResults( qr );
+      this.component( "graphsView" ).showQueryResults( qr );
     }
 
   } );
