@@ -20,12 +20,20 @@ modulejs.define( "graphs-view", [
     this.graphConf = {};
   };
 
+  var SERIES_MARKER = {
+    "":               "circle",
+    "Detached":       "diamond",
+    "SemiDetached":   "square",
+    "Terraced":       "triangle-down",
+    "FlatMaisonette": "triangle-up"
+  };
+
   var GRAPHS_OPTIONS = {
     averagePrice: {
       cssClass: "average-price",
       ticksCount: 5,
       yDomain: ""
-    }
+    },
   };
 
   var GRAPH_PADDING = {
@@ -60,6 +68,7 @@ modulejs.define( "graphs-view", [
           var valueRange = calculateValueRange( indicator, gv.prefs(), qr, options );
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
+          drawPoints( indicator, gv.prefs(), qr, graphConf, options );
         }
       } );
     }
@@ -70,7 +79,10 @@ modulejs.define( "graphs-view", [
 
   var revealGraphElem = function( options ) {
     var selector = ".js-graph." + options.cssClass;
-    $( selector ).removeClass( "hidden" );
+    $( selector )
+      .removeClass( "hidden" )
+      .find( "svg" )
+      .empty();
     return D3.select( selector + " svg" );
   };
 
@@ -88,7 +100,7 @@ modulejs.define( "graphs-view", [
 
   var createScales = function( graphElem ) {
     var xScale = D3.time.scale().nice(D3.time.month);
-    var yScale = D3.scale.linear().nice();
+    var yScale = D3.scale.linear();
     return setScaleViewDimensions( xScale, yScale, graphElem );
   };
 
@@ -106,7 +118,7 @@ modulejs.define( "graphs-view", [
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
-      .tickFormat(D3.time.format("%b"));
+      .tickFormat(D3.time.format("%b %Y"));
 
     var yAxis = D3.svg.axis()
       .scale( scales.y )
@@ -118,14 +130,12 @@ modulejs.define( "graphs-view", [
 
   var setScaleDomain = function( scales, dateRange, valueRange ) {
     scales.x.domain( dateRange );
-    scales.y.domain( valueRange );
+    scales.y.domain( valueRange ).nice();
   };
 
   var calculateValueRange = function( indicator, prefs, qr, options ) {
-    var aspects = prefs.aspects( {indicators: [indicator]} );
-    var nsAspects = _.map( aspects, function( a ) {return "ukhpi:" + a;} );
-
-    var extents = _.map( nsAspects, function( aspect ) {
+    var aspects = aspectNames( indicator, prefs );
+    var extents = _.map( aspects, function( aspect ) {
       return D3.extent( qr.results(), function( result ) {
         return result.value( aspect );
       } );
@@ -140,6 +150,11 @@ modulejs.define( "graphs-view", [
     else {
       return [0, overallRange[1]];
     }
+  };
+
+  var aspectNames = function( indicator, prefs ) {
+    var aspects = prefs.aspects( {indicators: [indicator]} );
+    return _.map( aspects, function( a ) {return "ukhpi:" + a;} );
   };
 
   var drawGraphRoot = function( graphConf ) {
@@ -159,6 +174,25 @@ modulejs.define( "graphs-view", [
       .append("g")
       .attr("class", "y axis")
       .call( graphConf.axes.y );
+  };
+
+  var drawPoints = function( indicator, prefs, qr, graphConf, options ) {
+    var x = graphConf.scales.x;
+    var y = graphConf.scales.y;
+
+    var s = _.map( prefs.categories(), function( c ) {
+      return qr.series( indicator, c );
+    } );
+
+    graphConf.root
+      .selectAll(".point")
+      .data( _.flatten(s) )
+      .enter()
+      .append("path")
+      .attr("class", function( d ) {return "point " + d.cat;} )
+      .attr("d", function( d, i ) {return D3.svg.symbol().type( SERIES_MARKER[d.cat] )( d, i );} )
+      .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
   };
 
   return GraphView;

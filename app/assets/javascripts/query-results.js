@@ -35,9 +35,18 @@ modulejs.define( "query-results", [
       return [min.periodDate()
                  .toDate(),
               max.periodDate()
-                 .add( 1, "month")
-                 .subtract( 1, "second" )
                  .toDate()];
+    },
+
+    /* @return The data in a particular category series */
+    series: function( indicator, category ) {
+      var aspect = "ukhpi:" + indicator + category;
+      return _.map( this.results(), function( r ) {
+        return {x: r.periodDate().toDate(),
+                y: r.value( aspect ),
+                ind: indicator,
+                cat: category};
+      } );
     }
   } );
 

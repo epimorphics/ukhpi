@@ -10,13 +10,11 @@ modulejs.define( "preferences", [
   "use strict";
 
   var Preferences = function() {
-    this.initialize();
   };
 
   _.extend( Preferences.prototype, {
-    initialize: function() {
-      this._prefs = {};
-      var prefs = this._prefs;
+    loadPrefs: function() {
+      var prefs = {};
 
       var selections = $("#preferences").serializeArray();
       _.each( selections, function( selection ) {
@@ -34,23 +32,25 @@ modulejs.define( "preferences", [
           prefs[name] = selection.value;
         }
       } );
+
+      return prefs;
     },
 
     region: function() {
-      return this._prefs.region;
+      return this.loadPrefs().region;
     },
 
     from: function() {
-      return this._prefs.from;
+      return this.loadPrefs().from;
     },
 
     to: function() {
-      return this._prefs.to;
+      return this.loadPrefs().to;
     },
 
     /** @return The currently selected indicators, optionally limited to just a given selection */
     indicators: function( only ) {
-      var ai = this._prefs.ai || [];
+      var ai = this.loadPrefs().ai || [];
       if (only && only.indicators) {
         ai = _.intersection( only.indicators, ai );
       }
@@ -60,7 +60,7 @@ modulejs.define( "preferences", [
 
     /** @return The currently selected categories, optionally limited to just a given selection */
     categories: function( only ) {
-      var ac = this._prefs.ac || [];
+      var ac = this.loadPrefs().ac || [];
       if (only && only.categories) {
         ac = _.intersection( only.categories, ac );
       }
@@ -86,7 +86,7 @@ modulejs.define( "preferences", [
         });
       }));
     }, [ [] ]);
-  };
+  }
 
   return Preferences;
 } );
