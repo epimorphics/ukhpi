@@ -41,12 +41,14 @@ modulejs.define( "query-results", [
     /* @return The data in a particular category series */
     series: function( indicator, category ) {
       var aspect = "ukhpi:" + indicator + category;
-      return _.map( this.results(), function( r ) {
+      var s = _.map( this.results(), function( r ) {
         return {x: r.periodDate().toDate(),
                 y: r.value( aspect ),
                 ind: indicator,
                 cat: category};
       } );
+
+      return _.sortBy( s, function( d ) {return d.x;} );
     }
   } );
 

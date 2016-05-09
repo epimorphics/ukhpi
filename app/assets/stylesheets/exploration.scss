@@ -1,3 +1,4 @@
+
 .c-search-result {
   a {
     @extend .btn;
@@ -16,6 +17,18 @@
 }
 
 // D3 graphs
+
+$graphDefautColour: #DE5153;
+
+$graphColours: (
+  overall: $graphDefautColour,
+  default: $graphDefautColour,
+  detached: #377EB8,
+  semi-detached: #72B971,
+  terraced: #984EA3,
+  flat-maisonette: #FF7F00,
+  volume: #A65628
+);
 
 .js-graph svg {
   width: 100%;
@@ -39,6 +52,26 @@
   .c-y-axis-caption {
     font-size: 10px;
     fill: $grey-1;
+  }
+
+  .line {
+    fill: none;
+    stroke-width: 0.5;
+    stroke: $graphDefautColour;
+  }
+
+  .point {
+    fill: $graphDefautColour;
+    stroke: none;
+  }
+
+  @each $category, $colour in $graphColours {
+    .line.#{$category} {
+      stroke: $colour;
+    }
+    .point.#{$category} {
+      fill: $colour;
+    }
   }
 }
 

@@ -4,12 +4,14 @@ modulejs.define( "graphs-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/d3",
+  "lib/util",
   "preferences",
   "aspects"
 ], function(
   _,
   $,
   D3,
+  Util,
   Preferences,
   Aspects
 ) {
@@ -69,6 +71,7 @@ modulejs.define( "graphs-view", [
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
           drawPoints( indicator, gv.prefs(), qr, graphConf, options );
+          drawLine( indicator, gv.prefs(), qr, graphConf );
         }
       } );
     }
@@ -176,6 +179,10 @@ modulejs.define( "graphs-view", [
       .call( graphConf.axes.y );
   };
 
+  var categoryCssClass = function( categoryName ) {
+    return Util.Text.unCamelCase( categoryName, "-" ).toLocaleLowerCase();
+  };
+
   var drawPoints = function( indicator, prefs, qr, graphConf, options ) {
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
@@ -189,9 +196,29 @@ modulejs.define( "graphs-view", [
       .data( _.flatten(s) )
       .enter()
       .append("path")
-      .attr("class", function( d ) {return "point " + d.cat;} )
+      .attr("class", function( d ) {return "point " + categoryCssClass( d.cat );} )
       .attr("d", function( d, i ) {return D3.svg.symbol().type( SERIES_MARKER[d.cat] )( d, i );} )
       .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+
+  };
+
+  var drawLine = function( indicator, prefs, qr, graphConf ) {
+    var x = graphConf.scales.x;
+    var y = graphConf.scales.y;
+
+    var line = d3.svg
+      .line()
+      .x( function(d) { return x( d.x ); } )
+      .y( function(d) { return y( d.y ); } );
+
+    _.each( prefs.categories(), function( c ) {
+      var s = qr.series( indicator, c );
+      graphConf.root
+        .append( "path" )
+        .datum( s )
+        .attr( "class", "line " + categoryCssClass( c ) )
+        .attr( "d", line );
+    } );
 
   };
 
