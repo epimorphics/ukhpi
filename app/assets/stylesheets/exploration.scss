@@ -1,3 +1,4 @@
+
 .c-search-result {
   a {
     @extend .btn;
@@ -13,6 +14,104 @@
   background-color: inherit;
   border: 0;
   text-align: inherit;
+}
+
+// D3 graphs
+
+$graphDefautColour: #DE5153;
+$graphDetachedColour: #377EB8;
+$graphSemiDetachedColour: #72B971;
+$graphTerracedColour: #984EA3;
+$graphFlatMaisonetteColour: #FF7F00;
+$graphVolumeColour: #A65628;
+
+$graphColours: (
+  overall: $graphDefautColour,
+  default: $graphDefautColour,
+  detached: $graphDetachedColour,
+  semi-detached: $graphSemiDetachedColour,
+  terraced: $graphTerracedColour,
+  flat-maisonette: $graphFlatMaisonetteColour,
+  volume: $graphVolumeColour
+);
+
+.js-graph svg {
+  width: 100%;
+  height: 200px;
+
+  .axis {
+    font-size: 11px;
+    stroke: $grey-1;
+  }
+
+  path.domain {
+    fill: none;
+  }
+
+  .c-graph-title {
+    font-weight: normal;
+    fill: $semi-black;
+    stroke: none;
+  }
+
+  .c-y-axis-caption {
+    font-size: 10px;
+    fill: $grey-1;
+  }
+
+  .line {
+    fill: none;
+    stroke-width: 0.5;
+    stroke: $graphDefautColour;
+  }
+
+  .point {
+    fill: $graphDefautColour;
+    stroke: none;
+  }
+
+  .bar {
+    fill: $graphDefautColour;
+    stroke: none;
+  }
+
+  @each $category, $colour in $graphColours {
+    .line.#{$category} {
+      stroke: $colour;
+    }
+    .point.#{$category} {
+      fill: $colour;
+    }
+    .bar.#{$category} {
+      fill: $colour;
+    }
+  }
+}
+
+@each $category, $colour in $graphColours {
+  .#{$category} {
+    color: $colour;
+  }
+}
+
+.c-graph-key {
+  font-size: 12px;
+}
+
+.c-graph-key--list {
+  display: inline-block;
+}
+
+.v-smaller {
+  font-size: 75%;
+}
+
+.v-larger {
+  font-size: 115%;
+}
+
+.v-diamond {
+  transform: scaleX(0.6) rotate(45deg);
 }
 
 // Bootstrap tables adjust

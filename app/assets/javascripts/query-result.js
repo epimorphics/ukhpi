@@ -1,10 +1,12 @@
 /** Model object encapsulating a single result */
 
 modulejs.define( "query-result", [
-  "lib/lodash"
+  "lib/lodash",
+  "lib/moment"
 ],
 function(
-  _
+  _,
+  moment
 ) {
   "use strict";
 
@@ -14,6 +16,11 @@ function(
   };
 
   _.extend( QueryResult.prototype, {
+    value: function( aspect ) {
+      var val = this._data[aspect];
+      return _.isArray( val ) ? _.first( val ) : val;
+    },
+
     valuesFor: function( slugs ) {
       return _.map( slugs, _.bind( this.valueFor, this ) );
     },
@@ -42,6 +49,15 @@ function(
 
     period: function() {
       return this._data["ukhpi:refPeriod"]["@value"];
+    },
+
+    /** @return A momentJS object denoting the (start of the) period as a date */
+    periodDate: function() {
+      if (!this._date) {
+        this._date = moment( this.period(), "YYYY-MM" );
+      }
+
+      return this._date;
     }
   } );
 

@@ -18,5 +18,5 @@
   "trailing": true,
   "smarttabs": true,
   "jquery": false,
-  "globals": {"define": false}
+  "globals": {"modulejs": false}
 }
