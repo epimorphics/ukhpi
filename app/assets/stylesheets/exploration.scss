@@ -65,11 +65,19 @@ $graphColours: (
     stroke: none;
   }
 
+  .bar {
+    fill: $graphDefautColour;
+    stroke: none;
+  }
+
   @each $category, $colour in $graphColours {
     .line.#{$category} {
       stroke: $colour;
     }
     .point.#{$category} {
+      fill: $colour;
+    }
+    .bar.#{$category} {
       fill: $colour;
     }
   }

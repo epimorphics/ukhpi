@@ -34,12 +34,21 @@ modulejs.define( "graphs-view", [
     averagePrice: {
       cssClass: "average-price",
       ticksCount: 5,
-      yDomain: ""
+      yDomain: "",
+      graphType: "lineAndPoints"
     },
     housePriceIndex: {
       cssClass: "house-price-index",
       ticksCount: 5,
-      yDomain: ""
+      yDomain: "",
+      graphType: "lineAndPoints"
+    },
+    percentageMonthlyChange: {
+      cssClass: "percentage-monthly-change",
+      ticksCount: 5,
+      yDomain: "",
+      graphType: "bars",
+      symmetricalYAxis: true
     }
   };
 
@@ -51,6 +60,13 @@ modulejs.define( "graphs-view", [
   };
   GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right;
   GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
+
+  /** Width of graph bars, in pixels */
+  var HALF_BAR_WIDTH = 1;
+  var BAR_WIDTH = HALF_BAR_WIDTH * 2;
+
+  /** Minimum height of graph bars (so that zero values are still visible) */
+  var MIN_BAR_HEIGHT = 2;
 
   /* Methods */
 
@@ -75,8 +91,7 @@ modulejs.define( "graphs-view", [
           var valueRange = calculateValueRange( indicator, gv.prefs(), qr, options );
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
-          drawPoints( indicator, gv.prefs(), qr, graphConf, options );
-          drawLine( indicator, gv.prefs(), qr, graphConf );
+          drawGraph( indicator, gv.prefs(), qr, graphConf, options );
         }
       } );
     }
@@ -188,17 +203,39 @@ modulejs.define( "graphs-view", [
     return Util.Text.unCamelCase( categoryName, "-" ).toLocaleLowerCase();
   };
 
+  var drawGraph = function( indicator, prefs, qr, graphConf, options ) {
+    switch (options.graphType) {
+    case "lineAndPoints":
+      drawPoints( indicator, prefs, qr, graphConf, options );
+      drawLine( indicator, prefs, qr, graphConf );
+      break;
+    case "bars":
+      drawBars( indicator, prefs, qr, graphConf );
+      break;
+    default:
+      console.log( "Unknown graph type" );
+    }
+  };
+
+  var collectedSeries = function( indicator, prefs, qr ) {
+    var s = _.map( prefs.categories(), function( c, i ) {
+      var series = qr.series( indicator, c );
+      _.each( series, function( d ) {d.categoryIndex = i;} );
+
+      return series;
+    } );
+
+    return _.flatten( s );
+  };
+
   var drawPoints = function( indicator, prefs, qr, graphConf, options ) {
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
-
-    var s = _.map( prefs.categories(), function( c ) {
-      return qr.series( indicator, c );
-    } );
+    var data = collectedSeries( indicator, prefs, qr );
 
     graphConf.root
       .selectAll(".point")
-      .data( _.flatten(s) )
+      .data( data )
       .enter()
       .append("path")
       .attr("class", function( d ) {return "point " + categoryCssClass( d.cat );} )
@@ -211,7 +248,7 @@ modulejs.define( "graphs-view", [
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
 
-    var line = d3.svg
+    var line = D3.svg
       .line()
       .x( function(d) { return x( d.x ); } )
       .y( function(d) { return y( d.y ); } );
@@ -224,8 +261,35 @@ modulejs.define( "graphs-view", [
         .attr( "class", "line " + categoryCssClass( c ) )
         .attr( "d", line );
     } );
-
   };
+
+  var drawBars = function( indicator, prefs, qr, graphConf ) {
+    var x = graphConf.scales.x;
+    var y = graphConf.scales.y;
+    var y0 = y( 0 );
+
+    var offsets = barOffsets( prefs.categories().length );
+    var data = collectedSeries( indicator, prefs, qr );
+
+    graphConf.root
+      .selectAll( ".bar" )
+      .data( data )
+      .enter()
+      .append( "rect" )
+      .attr( "class", function( d ) {return "bar " + categoryCssClass( d.cat );} )
+      .attr( "x", function( d ) { return x( d.x ) + offsets[d.categoryIndex]; })
+      .attr( "y", function( d ) { return y( Math.max( 0, d.y ) ); })
+      .attr( "width", BAR_WIDTH )
+      .attr( "height", function( d ) {return Math.max( MIN_BAR_HEIGHT, Math.abs( y( d.y ) - y0 ) );} );
+  };
+
+  /** @return An array of the offsets around 0 for n category bars */
+  var barOffsets = function( nPrefs ) {
+    var lower = (nPrefs - 1) * HALF_BAR_WIDTH * -1.0;
+    var upper = nPrefs * HALF_BAR_WIDTH;
+    return _.range( lower, upper, BAR_WIDTH );
+  };
+
 
   return GraphView;
 } );
