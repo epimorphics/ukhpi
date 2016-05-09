@@ -62,8 +62,10 @@ modulejs.define( "graphs-view", [
   GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
 
   /** Width of graph bars, in pixels */
-  var HALF_BAR_WIDTH = 1;
-  var BAR_WIDTH = HALF_BAR_WIDTH * 2;
+  var BAR_MARGIN = 1;
+  var VISIBLE_BAR_WIDTH = 3;;
+  var BAR_WIDTH = VISIBLE_BAR_WIDTH + BAR_MARGIN;
+  var HALF_BAR_WIDTH = BAR_WIDTH / 2;
 
   /** Minimum height of graph bars (so that zero values are still visible) */
   var MIN_BAR_HEIGHT = 2;
@@ -279,7 +281,7 @@ modulejs.define( "graphs-view", [
       .attr( "class", function( d ) {return "bar " + categoryCssClass( d.cat );} )
       .attr( "x", function( d ) { return x( d.x ) + offsets[d.categoryIndex]; })
       .attr( "y", function( d ) { return y( Math.max( 0, d.y ) ); })
-      .attr( "width", BAR_WIDTH )
+      .attr( "width", VISIBLE_BAR_WIDTH )
       .attr( "height", function( d ) {return Math.max( MIN_BAR_HEIGHT, Math.abs( y( d.y ) - y0 ) );} );
   };
 
