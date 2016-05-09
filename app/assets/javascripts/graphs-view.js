@@ -5,15 +5,13 @@ modulejs.define( "graphs-view", [
   "lib/jquery",
   "lib/d3",
   "lib/util",
-  "preferences",
-  "aspects"
+  "preferences"
 ], function(
   _,
   $,
   D3,
   Util,
-  Preferences,
-  Aspects
+  Preferences
 ) {
   "use strict";
 
@@ -28,6 +26,8 @@ modulejs.define( "graphs-view", [
     "Terraced":       "triangle-down",
     "FlatMaisonette": "triangle-up"
   };
+
+  var oneDecimalPlace = D3.format( ".2g" );
 
   var GRAPHS_OPTIONS = {
     averagePrice: {
@@ -47,14 +47,16 @@ modulejs.define( "graphs-view", [
       ticksCount: 5,
       yDomain: "",
       graphType: "bars",
-      symmetricalYAxis: true
+      symmetricalYAxis: true,
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     },
     percentageYearlyChange: {
       cssClass: "percentage-yearly-change",
       ticksCount: 5,
       yDomain: "",
       graphType: "bars",
-      symmetricalYAxis: true
+      symmetricalYAxis: true,
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     }
   };
 
@@ -69,7 +71,7 @@ modulejs.define( "graphs-view", [
 
   /** Width of graph bars, in pixels */
   var BAR_MARGIN = 1;
-  var VISIBLE_BAR_WIDTH = 3;;
+  var VISIBLE_BAR_WIDTH = 3;
   var BAR_WIDTH = VISIBLE_BAR_WIDTH + BAR_MARGIN;
   var HALF_BAR_WIDTH = BAR_WIDTH / 2;
 
@@ -168,6 +170,10 @@ modulejs.define( "graphs-view", [
       .orient("left")
       .ticks( options.ticksCount );
 
+    if (options.tickFormat) {
+      yAxis = yAxis.tickFormat( options.tickFormat );
+    }
+
     return {x: xAxis, y: yAxis};
   };
 
@@ -226,7 +232,7 @@ modulejs.define( "graphs-view", [
   var drawGraph = function( indicator, prefs, qr, graphConf, options ) {
     switch (options.graphType) {
     case "lineAndPoints":
-      drawPoints( indicator, prefs, qr, graphConf, options );
+      drawPoints( indicator, prefs, qr, graphConf );
       drawLine( indicator, prefs, qr, graphConf );
       break;
     case "bars":
@@ -248,7 +254,7 @@ modulejs.define( "graphs-view", [
     return _.flatten( s );
   };
 
-  var drawPoints = function( indicator, prefs, qr, graphConf, options ) {
+  var drawPoints = function( indicator, prefs, qr, graphConf ) {
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
     var data = collectedSeries( indicator, prefs, qr );
