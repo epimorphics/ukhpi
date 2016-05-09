@@ -1,18 +1,28 @@
-.c-results.js-hidden
-  %h2.c-graphs-heading.sr-only Graphs
+%article.c-results.js-hidden
+  %section.c-graphs
+    %h2.c-graphs--heading.sr-only Graphs
 
-  .js-graph.average-price.hidden
-    %svg
+    .js-graph.average-price.hidden
+      %h2 Average price
+      = render partial: "graphs_key"
+      %svg
 
-  .js-graph.house-price-index.hidden
-    %svg
+    .js-graph.house-price-index.hidden
+      %h2 House price index
+      = render partial: "graphs_key"
+      %svg
 
-  .js-graph.percentage-monthly-change.hidden
-    %svg
+    .js-graph.percentage-monthly-change.hidden
+      %h2 Percentage monthly change
+      = render partial: "graphs_key"
+      %svg
 
-  .js-graph.percentage-yearly-change.hidden
-    %svg
+    .js-graph.percentage-yearly-change.hidden
+      %h2 Percentage yearly change
+      = render partial: "graphs_key"
+      %svg
 
-  %h2.c-table-heading Data
+  %section.c-table
+    %h2.c-table--heading Data
 
-  %table#results-table.table.table-striped
+    %table#results-table.table.table-striped

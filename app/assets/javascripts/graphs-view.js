@@ -83,15 +83,20 @@ modulejs.define( "graphs-view", [
       return this.preferences;
     },
 
-    resetGraphs: function() {
+    resetGraphs: function( prefs ) {
       $(".js-graph").addClass( "hidden" );
+
+      $(".c-graph-key li").addClass( "hidden" );
+      _.each( prefs.categories(), function( category ) {
+        $(".c-graph-key li.key-" + categoryCssClass( category )).removeClass( "hidden" );
+      } );
     },
 
     showQueryResults: function( qr ) {
       var gv = this;
       var dateRange = qr.dateRange();
       var prefs = new Preferences();
-      this.resetGraphs();
+      this.resetGraphs( prefs );
 
       _.each( prefs.indicators(), function( indicator ) {
         var options = GRAPHS_OPTIONS[indicator];
