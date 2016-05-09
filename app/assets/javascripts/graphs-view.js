@@ -18,7 +18,6 @@ modulejs.define( "graphs-view", [
   "use strict";
 
   var GraphView = function() {
-    this.preferences = new Preferences();
     this.graphConf = {};
   };
 
@@ -84,11 +83,17 @@ modulejs.define( "graphs-view", [
       return this.preferences;
     },
 
+    resetGraphs: function() {
+      $(".js-graph").addClass( "hidden" );
+    },
+
     showQueryResults: function( qr ) {
       var gv = this;
       var dateRange = qr.dateRange();
+      var prefs = new Preferences();
+      this.resetGraphs();
 
-      _.each( this.prefs().indicators(), function( indicator ) {
+      _.each( prefs.indicators(), function( indicator ) {
         var options = GRAPHS_OPTIONS[indicator];
         if (options) {
           gv.graphConf[indicator] = {};
@@ -97,10 +102,10 @@ modulejs.define( "graphs-view", [
           graphConf.elem = revealGraphElem( options );
           graphConf.root = drawGraphRoot( graphConf );
 
-          var valueRange = calculateValueRange( indicator, gv.prefs(), qr, options );
+          var valueRange = calculateValueRange( indicator, prefs, qr, options );
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
-          drawGraph( indicator, gv.prefs(), qr, graphConf, options );
+          drawGraph( indicator, prefs, qr, graphConf, options );
         }
       } );
     }
