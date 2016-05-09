@@ -49,6 +49,13 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "bars",
       symmetricalYAxis: true
+    },
+    percentageYearlyChange: {
+      cssClass: "percentage-yearly-change",
+      ticksCount: 5,
+      yDomain: "",
+      graphType: "bars",
+      symmetricalYAxis: true
     }
   };
 
