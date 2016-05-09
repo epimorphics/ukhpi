@@ -143,7 +143,8 @@ modulejs.define( "graphs-view", [
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
-      .tickFormat(D3.time.format("%b %Y"));
+      .tickFormat(D3.time.format("%b %Y"))
+      .ticks( 8 );
 
     var yAxis = D3.svg.axis()
       .scale( scales.y )
@@ -154,7 +155,7 @@ modulejs.define( "graphs-view", [
   };
 
   var setScaleDomain = function( scales, dateRange, valueRange ) {
-    scales.x.domain( dateRange );
+    scales.x.domain( dateRange ).nice();
     scales.y.domain( valueRange ).nice();
   };
 
