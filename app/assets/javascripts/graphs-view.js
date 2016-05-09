@@ -36,6 +36,11 @@ modulejs.define( "graphs-view", [
       ticksCount: 5,
       yDomain: ""
     },
+    housePriceIndex: {
+      cssClass: "house-price-index",
+      ticksCount: 5,
+      yDomain: ""
+    }
   };
 
   var GRAPH_PADDING = {
