@@ -42,13 +42,20 @@ modulejs.define( "query-results", [
     series: function( indicator, category ) {
       var aspect = "ukhpi:" + indicator + category;
       var s = _.map( this.results(), function( r ) {
-        return {x: r.periodDate().toDate(),
-                y: r.value( aspect ),
-                ind: indicator,
-                cat: category};
+        var val = r.value( aspect );
+        if (val) {
+          return {x: r.periodDate().toDate(),
+                  y: r.value( aspect ),
+                  ind: indicator,
+                  cat: category};
+        }
+        else {
+          console.log( "missing value for " + aspect + " " + r.periodDate().format( "YYYY-MM" ));
+          return null;
+        }
       } );
 
-      return _.sortBy( s, function( d ) {return d.x;} );
+      return _.sortBy( _.compact( s ), function( d ) {return d.x;} );
     }
   } );
 
