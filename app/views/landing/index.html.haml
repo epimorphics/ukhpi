@@ -1,13 +1,53 @@
-%h1 UK House Price Index
+%h1.heading-large UK House Price Index
+
 
 %p
-  Here we briefly explain what the house price index is, and how it was calculated.
+  The UK House Price Index (HPI) uses house sales data from
+  = succeed "," do
+    = link_to "Land Registry", "//www.gov.uk/government/organisations/land-registry"
+  = succeed "," do
+    = link_to "Registers of Scotland", "//www.ros.gov.uk/"
+  and
+  = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
+  and is calculated by the
+  = succeed "." do
+    = link_to "Office of National Statistics", "//ons.gov.uk"
+  The index applies a statistical method, called a
+  = succeed "," do
+    = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
+  to the various sources of data on property price and attributes
+  to produce estimates of the change in house prices each period.
+
 %p
-  Current headline figure goes here
+  The index is published monthly, with Northern Ireland figures updated quarterly.
+
+.c-current-figures.panel.panel-border-wide
+  %p
+    The current average house price in the UK is
+    %span.c-current-uk-average
+    and the index stands at
+    = succeed "." do
+      %span.c-current-uk-index
+
+%h2.heading-medium   Search the UK House Price Index
+
 %p
-  = link_to "find house price index data", explore_path, class: "btn btn-lg btn-primary"
-%p.c-logos
-  = image_tag( "lr_logo_221_80.png")
-  = image_tag( "ros_logo.png" )
-  = image_tag( "nisra_logo.gif" )
-  = image_tag( "ons_logo.png" )
+  Use this tool to find average sales house prices and monthly and annual changes
+  by property type for a specified location and period of time.
+
+%p.c-cta
+  = link_to "search the house price index", explore_path, class: "c-search-tool"
+
+.c-logos
+  .col-lg-3.col-md-6.col-sm-12.text-center
+    = link_to "//www.gov.uk/government/organisations/land-registry" do
+      = image_tag( "lr_logo_221_80.png")
+  .col-lg-3.col-md-6.col-sm-12.text-center
+    = link_to "//www.ros.gov.uk/" do
+      = image_tag( "ros_logo.png" )
+  .col-lg-3.col-md-6.col-sm-12.text-center
+    = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
+      = image_tag( "nisra_logo.gif" )
+  .col-lg-3.col-md-6.col-sm-12.text-center
+    = link_to "//ons.gov.uk" do
+      = image_tag( "ons_logo.png" )
