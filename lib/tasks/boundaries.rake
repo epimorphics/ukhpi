@@ -8,6 +8,7 @@ COUNTY_SOURCE = "#{BL_SOURCE}GB/county_region.shp"
 DISTRICT_SOURCE = "#{BL_SOURCE}GB/district_borough_unitary_region.shp"
 EURO_REGION_SOURCE = "#{BL_SOURCE}GB/european_region_region.shp"
 CEREMONIAL_SOURCE = "#{BL_SOURCE}Supplementary_Ceremonial/Boundary-line-ceremonial-counties.shp"
+SCOTLAND_WALES_SOURCE = "#{BL_SOURCE}/GB/scotland_and_wales_region_region.shp"
 
 SIMPLIFICATION = 500
 
@@ -35,11 +36,17 @@ def as_keys( name )
 end
 
 def create_index( filename, index = Hash.new )
+  puts "Indexing #{filename}"
   RGeo::Shapefile::Reader.open( filename ) do |file|
     file.each do |record|
-      name = record.attributes["NAME"] || record.attributes["Name"]
-      as_keys( name ).each do |key|
-        index[key] = record
+      attribs = record.attributes
+      gss_or_name = attribs["CODE"] || attribs["Code"] || attribs["NAME"] || attribs["Name"]
+      if gss_or_name
+        as_keys( gss_or_name ).each do |key|
+          index[key] = record
+        end
+      else
+        puts "No code for: #{record.attributes.inspect}"
       end
     end
   end
@@ -54,7 +61,10 @@ def composite_index
       EURO_REGION_SOURCE,
       create_index(
         COUNTY_SOURCE,
-        create_index( DISTRICT_SOURCE ) )))
+        create_index(
+          SCOTLAND_WALES_SOURCE,
+          create_index(
+            DISTRICT_SOURCE ) ))))
 end
 
 def as_geo_record( name, index )
@@ -119,24 +129,31 @@ def line_to_lat_long( a )
   end
 end
 
-class RT
-  include RegionsTable
+def load_index
+  index = File.exist?( "index.json" ) && JSON.load( File.open( "index.json" ) )
+
+  unless index
+    puts "Loading index"
+    index = composite_index
+    File.open( "index.json", "w") do |f|
+      f << JSON.generate( index )
+    end
+  end
+
+  index
 end
 
 namespace :ukhpi do
   desc "Check region names against index"
   task region_names_check: :environment do
-    regions = RT.new
-    index =composite_index
-    puts "Index has #{index.size} keys"
+    index = load_index
 
-    regions.location_names.each do |location|
-      name = location[:label].upcase
-      if index[name]
+    Regions.each_location do |location|
+      if index[location.gss] || index[location.label.upcase]
         print "."
         STDOUT.flush
       else
-        puts "\nlocation[:label]"
+        puts "\n#{location.label} - #{location.gss}"
       end
     end
   end

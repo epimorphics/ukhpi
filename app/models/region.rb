@@ -30,4 +30,8 @@ class Region
   def <=>( other_region, lang = :en )
     label( lang ) <=> other_region.label( lang )
   end
+
+  def is_gss?( gss )
+    @gss == gss
+  end
 end

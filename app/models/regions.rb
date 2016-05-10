@@ -20,4 +20,12 @@ class Regions
   def self.lookup_region( uri )
     locations[uri]
   end
+
+  def self.lookup_gss( gss )
+    locations.values.find {|loc| loc.is_gss?( gss )}
+  end
+
+  def self.each_location( &block )
+    locations.values.each( &block )
+  end
 end
