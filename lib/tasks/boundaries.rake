@@ -1,14 +1,23 @@
 require 'bundler/setup'
-Bundler.require
+Bundler.require(:development)
 
 require './app/models/regions-table'
+require 'find'
 
 BL_SOURCE = "./data/boundary-line/Data/"
 COUNTY_SOURCE = "#{BL_SOURCE}GB/county_region.shp"
 DISTRICT_SOURCE = "#{BL_SOURCE}GB/district_borough_unitary_region.shp"
 EURO_REGION_SOURCE = "#{BL_SOURCE}GB/european_region_region.shp"
 CEREMONIAL_SOURCE = "#{BL_SOURCE}Supplementary_Ceremonial/Boundary-line-ceremonial-counties.shp"
-SCOTLAND_WALES_SOURCE = "#{BL_SOURCE}/GB/scotland_and_wales_region_region.shp"
+SCOTLAND_WALES_SOURCE = "#{BL_SOURCE}/GB/scotland_and_wales_const_region.shp"
+IRELAND_COUNTIES_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__County_Boundaries.shp"
+IRELAND_DISTRICTS_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__Local_Government_Districts_2012.shp"
+ONS_REGIONS  = "#{BL_SOURCE}/ONS_regions/RGN_DEC_2015_EN_BGC.shp"
+ONS_DISTRICTS = "#{BL_SOURCE}/ONS_districts/LAD_DEC_2015_GB_BGC.shp"
+ONS_COUNTRIES = "#{BL_SOURCE}/ONS_countries/CTRY_DEC_2015_GB_BGC.shp"
+SOURCES = [COUNTY_SOURCE, DISTRICT_SOURCE, EURO_REGION_SOURCE, CEREMONIAL_SOURCE,
+           SCOTLAND_WALES_SOURCE, IRELAND_COUNTIES_SOURCE, IRELAND_DISTRICTS_SOURCE,
+           ONS_REGIONS, ONS_DISTRICTS, ONS_COUNTRIES]
 
 SIMPLIFICATION = 500
 
@@ -40,13 +49,16 @@ def create_index( filename, index = Hash.new )
   RGeo::Shapefile::Reader.open( filename ) do |file|
     file.each do |record|
       attribs = record.attributes
-      gss_or_name = attribs["CODE"] || attribs["Code"] || attribs["NAME"] || attribs["Name"]
+      gss_or_name = attribs["CODE"] || attribs["Code"] ||
+                    attribs["LGDCode"] ||
+                    attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
+                    attribs["NAME"] || attribs["Name"] || attribs["CountyName"]
       if gss_or_name
         as_keys( gss_or_name ).each do |key|
           index[key] = record
         end
       else
-        puts "No code for: #{record.attributes.inspect}"
+        puts "No code or name for: #{record.attributes.inspect}"
       end
     end
   end
@@ -55,16 +67,9 @@ def create_index( filename, index = Hash.new )
 end
 
 def composite_index
-  create_index(
-    CEREMONIAL_SOURCE,
-    create_index(
-      EURO_REGION_SOURCE,
-      create_index(
-        COUNTY_SOURCE,
-        create_index(
-          SCOTLAND_WALES_SOURCE,
-          create_index(
-            DISTRICT_SOURCE ) ))))
+  SOURCES.inject( Hash.new ) do |acc, source|
+    create_index( source, acc )
+  end
 end
 
 def as_geo_record( name, index )
@@ -154,6 +159,31 @@ namespace :ukhpi do
         STDOUT.flush
       else
         puts "\n#{location.label} - #{location.gss}"
+      end
+    end
+  end
+
+  desc "Produce attributes for all shape files"
+  task shape_file_attribs: :environment do
+    shape_files = []
+    Find.find( "./data/boundary-line" ) do |file|
+      shape_files << file if file =~ /.*\.shp$/
+    end
+    shape_files.each do |sf|
+      puts "Creating attributes for #{sf}"
+      attrib_file_name = sf.gsub( ".shp", ".attributes" )
+
+      if File.exist?( attrib_file_name )
+        puts " ... already exists"
+      else
+        File.open( attrib_file_name, "w" ) do |af|
+          RGeo::Shapefile::Reader.open( sf ) do |file|
+            file.each do |record|
+              attribs = record.attributes
+              af << attribs.inspect << "\n"
+            end
+          end
+        end
       end
     end
   end

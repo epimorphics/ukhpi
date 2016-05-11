@@ -16,3 +16,5 @@ query-results.json
 coverage
 bower_components/
 node_modules/
+index-names.txt
+index.json

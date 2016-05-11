@@ -56,7 +56,7 @@ class Location
 
     if lr.same
       @same = lr.same
-      if @same =~ /(E\d+)$/
+      if @same =~ /([A-Z]\d+)$/
         @gss = $1
       end
     end
@@ -163,13 +163,23 @@ namespace :ukhpi do
     owl="http://www.w3.org/2002/07/owl#"
 
     query="select distinct ?refRegion ?label ?type ?parent ?same {
-      GRAPH <http://landregistry.data.gov.uk/UKHPI-2014-01> {
+      {
+        SELECT DISTINCT ?g {
+          GRAPH ?g {
+            ?s <#{hpi}refRegion> ?r .
+          }
+        }
+      }
+      GRAPH ?g {
         ?obs a <#{qb}Observation> ;
           <#{hpi}refRegion> ?refRegion.
         ?refRegion <#{rdfs}label> ?label.
         ?refRegion <#{rdf}type> ?type.
         optional {?refRegion <#{sr}within> ?parent.}
-        optional {?refRegion <#{owl}sameAs> ?same}
+        optional {
+          ?refRegion <#{owl}sameAs> ?same .
+          FILTER regex( str(?same), \"statistical-geography\" )
+        }
       }
     }"
 
