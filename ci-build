@@ -2,5 +2,7 @@
 # Run UKHPI tests
 
 set -e
-ssh-agent bash -c "ssh-add ~/.ssh/epi_deploy ; bundle"
-rake test
+
+# bwm switched to using path because of permossion problem installing required gems
+ssh-agent bash -c "ssh-add ~/.ssh/epi_deploy ; bundle --path vendor/bundle"
+bundle exec rake test

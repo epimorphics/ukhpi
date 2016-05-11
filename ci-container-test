@@ -1,0 +1,59 @@
+#!/bin/bash
+
+
+
+. ci-container-test.conf
+
+echo JOB_NAME=$JOB_NAME
+
+#trap "docker stop \"$JOB_NAME\" || true ; docker rm \"$JOB_NAME\" " EXIT
+
+set -e
+
+# clean up any old containers left
+docker stop "$JOB_NAME" > /dev/null 2>&1 || true
+docker rm   "$JOB_NAME" > /dev/null 2>&1 || true
+
+
+# start the container
+
+docker run --name "$JOB_NAME" -d \
+  --volume `pwd`:/mnt            \
+  "$IMAGE"                       \
+  >/dev/null 2>&1
+  
+echo container started
+
+# copy the build directory
+if [ ! ${BUILD_DIR:-no-build} == "no-build" ]
+then
+  docker exec "$JOB_NAME" /bin/bash -c "cp -R /mnt/* ${BUILD_DIR} ; chown -R $USER:$USER \"$BUILD_DIR\""
+fi
+echo build directory copied
+
+# copy the deploy key
+if [ ! ${KEY_SOURCE:-no-key} == "no-key" ]
+then
+  docker exec -i "$JOB_NAME" /bin/bash -c "cat > \"${KEY_DEST}\" ; chmod 0400 \"${KEY_DEST}\" ; chown $USER:$USER \"${KEY_DEST}\"" < "${KEY_SOURCE}"
+fi
+echo key installed
+
+# trust the github.com key
+
+docker exec -u $USER "$JOB_NAME" /bin/bash -c "cd "$BUILD_DIR" ; pwd ; ssh-keyscan github.com > .ssh/known_hosts ; cat .ssh/known_hosts"
+echo github.com trusted
+
+# run the build in the container
+docker exec -u $USER "$JOB_NAME" /bin/bash -c "cd \"$BUILD_DIR\" ; ./ci-build"
+
+echo build run
+
+# clean up
+docker stop "$JOB_NAME" || true > /dev/null 2>&1
+docker rm   "$JOB_NAME" || true > /dev/null 2>&1
+
+echo "$JOB_NAME" done
+
+
+
+ 
