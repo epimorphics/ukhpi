@@ -65,7 +65,7 @@ group :development do
   gem 'quiet_assets'
 
   # Region boundary generation
-  gem 'rgeo'
+  gem 'rgeo', github: "ijdickinson/rgeo"
   gem 'rgeo-geojson'
   gem 'rgeo-shapefile'
   gem 'simplify_rb'

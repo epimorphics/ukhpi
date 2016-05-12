@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/ijdickinson/rgeo.git
+  revision: e71949045f88ffa70435606b29ef816e3d455361
+  specs:
+    rgeo (0.5.2)
+
+GIT
   remote: git@github.com:epimorphics/ds-api-ruby.git
   revision: 65e7e1fafc248d01d6e95db4d2b9c7101aa7636a
   specs:
@@ -211,7 +217,6 @@ GEM
     rdf-turtle (2.0.0)
       ebnf (~> 1.0, >= 1.0.1)
       rdf (~> 2.0)
-    rgeo (0.5.3)
     rgeo-geojson (0.4.3)
       rgeo (~> 0.5)
     rgeo-shapefile (0.4.1)
@@ -297,7 +302,7 @@ DEPENDENCIES
   rails (= 4.2.6)
   rails-html-sanitizer
   rdf-turtle
-  rgeo
+  rgeo!
   rgeo-geojson
   rgeo-shapefile
   sass-rails (~> 5.0)
