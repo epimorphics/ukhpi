@@ -54,6 +54,7 @@ group :development, :test do
   gem 'vcr'
   gem 'nokogiri'
   gem 'json_expressions'
+  gem 'oj'
 end
 
 group :development do

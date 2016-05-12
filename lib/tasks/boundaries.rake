@@ -3,6 +3,7 @@ Bundler.require(:development)
 
 require './app/models/regions-table'
 require 'find'
+require 'rake'
 
 BL_SOURCE = "./data/boundary-line/Data/"
 COUNTY_SOURCE = "#{BL_SOURCE}GB/county_region.shp"
@@ -54,7 +55,9 @@ def create_index( filename, index = Hash.new )
                     attribs["LGDCode"] ||
                     attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
                     attribs["NAME"] || attribs["Name"] || attribs["CountyName"]
+
       if gss_or_name
+        attribs["ukhpiID"] = gss_or_name
         as_keys( gss_or_name ).each do |key|
           index[key] = record
         end
@@ -140,6 +143,15 @@ def load_index
   composite_index
 end
 
+def transform_coordinates( json, fn )
+  j_features = json["features"]
+  j_features.each do |feature|
+    geometry = feature["geometry"]
+    geometry["coordinates"] = fn.call( geometry["coordinates"] )
+  end
+end
+
+
 namespace :ukhpi do
   desc "Generate the features.json file"
   task generate_features: :environment do
@@ -169,6 +181,27 @@ namespace :ukhpi do
 
     puts "Saving file fc.json"
     File.open( "fc.json", "w" ) {|f| f << JSON.generate( json )}
+  end
+
+  desc "Simplify the raw features to smooth the outlines of the polygons. Generates fc.json unless it exists"
+  task simplify_features: :environment do
+    unless File.exist?( "fc.json" )
+      Rake::Task["ukhpi:generate_features"].invoke
+    end
+
+    json = JSON.load( File.open( "fc.json" ) )
+
+    puts "Simplifying"
+    transform_coordinates( json, method( :simplify_lines ) )
+
+    puts "Converting to lat long"
+    transform_coordinates( json, method( :line_to_lat_long ) )
+
+    Oj.default_options = {mode: :strict, float_precision: 6}
+    File.open( "fc_simple.json", "w" ) do |file|
+      file << Oj.dump( json )
+      file.flush
+    end
   end
 
   desc "Check region names against index"
