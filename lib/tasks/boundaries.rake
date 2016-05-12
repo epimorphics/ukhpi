@@ -15,6 +15,7 @@ IRELAND_DISTRICTS_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries
 ONS_REGIONS  = "#{BL_SOURCE}/ONS_regions/RGN_DEC_2015_EN_BGC.shp"
 ONS_DISTRICTS = "#{BL_SOURCE}/ONS_districts/LAD_DEC_2015_GB_BGC.shp"
 ONS_COUNTRIES = "#{BL_SOURCE}/ONS_countries/CTRY_DEC_2015_GB_BGC.shp"
+
 SOURCES = [COUNTY_SOURCE, DISTRICT_SOURCE, EURO_REGION_SOURCE, CEREMONIAL_SOURCE,
            SCOTLAND_WALES_SOURCE, IRELAND_COUNTIES_SOURCE, IRELAND_DISTRICTS_SOURCE,
            ONS_REGIONS, ONS_DISTRICTS, ONS_COUNTRIES]
@@ -72,8 +73,8 @@ def composite_index
   end
 end
 
-def as_geo_record( name, index )
-  index[name] || raise( "No data for '#{name}'")
+def as_geo_record( location, index )
+  index[location.gss] || index[location.label.upcase]
 end
 
 def simplify_line( line )
@@ -135,20 +136,41 @@ def line_to_lat_long( a )
 end
 
 def load_index
-  index = File.exist?( "index.json" ) && JSON.load( File.open( "index.json" ) )
-
-  unless index
-    puts "Loading index"
-    index = composite_index
-    File.open( "index.json", "w") do |f|
-      f << JSON.generate( index )
-    end
-  end
-
-  index
+  puts "Creating index"
+  composite_index
 end
 
 namespace :ukhpi do
+  desc "Generate the features.json file"
+  task generate_features: :environment do
+    index = load_index
+    puts "Done indexing, generating features"
+
+    features = []
+    Regions.each_location do |location|
+      geo_record = as_geo_record( location, index )
+      if geo_record
+        features << as_geojson_feature( location.label, geo_record )
+      else
+        puts "No geo_record for #{location.label}"
+      end
+    end
+
+    puts "Sorting by reverse area"
+    features.sort! do |f0, f1|
+      (f1.property("HECTARES") || MAX_AREA) <=> (f0.property("HECTARES") || MAX_AREA)
+    end
+
+    puts "Done feature generation, generating collection"
+    fc = RGeo::GeoJSON::FeatureCollection.new( features )
+
+    puts "Done collecting"
+    json = RGeo::GeoJSON.encode( fc )
+
+    puts "Saving file fc.json"
+    File.open( "fc.json", "w" ) {|f| f << JSON.generate( json )}
+  end
+
   desc "Check region names against index"
   task region_names_check: :environment do
     index = load_index
