@@ -131,7 +131,7 @@ GEM
     json_expressions (0.8.3)
     leaflet-rails (0.7.7)
     link_header (0.0.8)
-    lodash-rails (4.6.1)
+    lodash-rails (4.11.2)
       railties (>= 3.1)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
