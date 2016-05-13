@@ -15,58 +15,8 @@
     .col-sm-12
       .tab-content
         #location.tab-pane.active
-          .row
-            .col-sm-12.col-md-6
-              .form-group
-                %label.control-label{ for: "region" }
-                  = t( "index.location" )
-                - region = @exploration_state.preference( :region )
-                - region_name = @exploration_state.lookup_region(region ).label
-                %input.js-location-uri{ type: "hidden", name: "region", value: region}
-                %input.form-control.js-location.typeahead{ type: "text", id: "region", value: region_name }
-            .col-sm-12.col-md-6
-              #map.c-map
+          = render partial: "location_preferences_tab", locals: {prefs: prefs}
         #dates.tab-pane
-          .row
-            .col-sm-12.col-md-6
-              .form-group
-                %label.control-label{ for: "from" }
-                  = t( "index.from" )
-                  #fromdatepicker.input-group.date
-                    %span.input-group-addon
-                      %input{ type: "text", name: "from", value: @exploration_state.preference( :from )}
-                      %span.fa.fa-calendar
-
-            .col-sm-12.col-md-6
-              .form-group
-                %label.control-label{ for: "to" }
-                  = t( "index.to" )
-                  #todatepicker.input-group.date
-                    %span.input-group-addon
-                      %input{ type: "text", name: "to", value: @exploration_state.preference( :to )}
-                      %span.fa.fa-calendar
-
+          = render partial: "dates_preferences_tab", locals: {prefs: prefs}
         #indicators.tab-pane
-          .row
-            .col-sm-12
-              %h3 Indicators
-            .form-group
-              - Aspects::INDICATORS.each do |ind|
-                .col-xs-12.col-sm-6.col-md-3
-                  %label.checkbox-inline
-                    - name = ind[:root]
-                    - visible = prefs.aspect_indicators.include?( name )
-                    %input.js-aspect{ type: "checkbox", name: "ai[]", value: name, checked: visible }
-                    = t( ind[:label] )
-
-            .col-sm-12
-              %h3 Data categories
-            .form-group
-              - Aspects::CATEGORIES.each do |cat|
-                - unless cat[:advanced]
-                  .col-xs-12.col-sm-6.col-md-3
-                    %label.checkbox-inline
-                      - name = cat[:root]
-                      - visible = prefs.aspect_categories.include?( name )
-                      %input.js-aspect{ type: "checkbox", name: "ac[]", value: name, checked: visible }
-                      = t( cat[:label] )
+          = render partial: "indicators_preferences_tab", locals: {prefs: prefs}
