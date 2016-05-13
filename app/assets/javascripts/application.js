@@ -12,10 +12,10 @@
 // = require_tree .
 
 modulejs.define( "application", [
-  "controller"
+  "router"
 ],
 function(
-  Controller
+  Router
 ) {
   "use strict";
 
@@ -29,13 +29,16 @@ function(
   delete String.prototype.startsWith;
   delete String.prototype.repeat;
 
-  var controller = new Controller();
+  var router = new Router();
+  router.invoke( window.location );
 
   return {
-    controller: controller
+    router: router
   };
 } );
 
+/* global $ */
 $( function() {
+  "use strict";
   modulejs.require( "application" );
 } );
