@@ -8,6 +8,7 @@
 // = require bootstrap-datetimepicker
 // = require bootstrap3-typeahead
 // = require d3
+// = require leaflet
 // = require_tree .
 
 modulejs.define( "application", [
