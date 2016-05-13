@@ -7,7 +7,8 @@ modulejs.define( "controller", [
   "routes",
   "query-results",
   "data-table-view",
-  "graphs-view"
+  "graphs-view",
+  "map-view"
 ],
 function(
   _,
@@ -16,7 +17,8 @@ function(
   Routes,
   QueryResults,
   DataTableView,
-  GraphsView
+  GraphsView,
+  MapView
 ) {
   "use strict";
 
@@ -31,7 +33,8 @@ function(
       this.components = {
         preferencesView: new PreferencesView(),
         dataTableView: new DataTableView(),
-        graphsView: new GraphsView()
+        graphsView: new GraphsView(),
+        mapView: new MapView()
       };
     },
 
