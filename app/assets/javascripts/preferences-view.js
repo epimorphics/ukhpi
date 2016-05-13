@@ -29,6 +29,7 @@ function(
       $(".js-aspect").on( "click", function() {
         $("body").trigger( "changeAspectSelection" );
       } );
+      $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -78,6 +79,11 @@ function(
           $("body").trigger( "changePreferences" );
         });
       } );
+    },
+
+    onChangeLocationType: function( e ) {
+      var target = $(e.currentTarget).val();
+      $("body").trigger( "ukhpi.location-type.change", {locationType: target} );
     }
   } );
 

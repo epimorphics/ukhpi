@@ -23,6 +23,7 @@ function(
     bindEvents: function() {
       $("a[data-toggle='tab']").on( "shown.bs.tab", _.bind( this.onShowTab, this ) );
       $("body").on( "ukhpi.prefs.revealed", _.bind( this.onRevealPreferences, this ) );
+      $("body").on( "ukhpi.location-type.change", _.bind( this.onChangeLocationType, this ) );
     },
 
     fetchFeatures: function() {
@@ -44,8 +45,16 @@ function(
     show: function() {
       if (!this._map) {
         var map = this.createMap();
-        this._featuresPartition.country.addTo( map );
+        this.showLayer( "country", map );
       }
+    },
+
+    showLayer: function( layerId, map ) {
+      if (this._currentLayer) {
+        map.removeLayer( this._currentLayer );
+      }
+      this._currentLayer = this._featuresPartition[layerId];
+      map.addLayer( this._currentLayer );
     },
 
     partitionFeatures: function( features ) {
@@ -101,6 +110,10 @@ function(
 
     onRevealPreferences: function( e ) {
       this.show();
+    },
+
+    onChangeLocationType: function( e, args ) {
+      this.showLayer( args.locationType, this._map );
     }
   } );
 
