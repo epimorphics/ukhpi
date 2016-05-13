@@ -41,6 +41,10 @@ function(
       $(".js-reveal-button").toggleClass( "revealing" );
       $(".js-preferences-form").toggleClass( "hidden" );
       $(".js-preferences").tab();
+
+      if ($(".js-preferences-form").is( ":not(.hidden)" )) {
+        $("body").trigger( "ukhpi.prefs.revealed" );
+      }
     },
 
     setupTypeahead: function() {
