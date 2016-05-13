@@ -24,7 +24,7 @@ class Aspects
     {root: "housePriceIndex",         label: "house_price_index"},
     {root: "averagePrice",            label: "average_price"},
     {root: "percentageMonthlyChange", label: "percentage_monthly_change"},
-    {root: "percentageYearlyChange",  label: "percentage_annual_change"}
+    {root: "percentageAnnualChange",  label: "percentage_annual_change"}
   ]
 
   def initialize( prefs )

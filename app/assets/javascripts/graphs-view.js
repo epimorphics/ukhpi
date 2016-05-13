@@ -50,8 +50,8 @@ modulejs.define( "graphs-view", [
       symmetricalYAxis: true,
       tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     },
-    percentageYearlyChange: {
-      cssClass: "percentage-yearly-change",
+    percentageAnnualChange: {
+      cssClass: "percentage-annual-change",
       ticksCount: 5,
       yDomain: "",
       graphType: "bars",
