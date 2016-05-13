@@ -114,6 +114,15 @@ $graphColours: (
   transform: scaleX(0.6) rotate(45deg);
 }
 
+
+// Map view
+
+.c-map {
+  width: 100%;
+  min-height: 300px;
+  margin-top: 20px;
+}
+
 // Bootstrap tables adjust
 table.dataTable thead .sorting {
   background-image: none;
