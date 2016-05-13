@@ -17,9 +17,16 @@ ONS_REGIONS  = "#{BL_SOURCE}/ONS_regions/RGN_DEC_2015_EN_BGC.shp"
 ONS_DISTRICTS = "#{BL_SOURCE}/ONS_districts/LAD_DEC_2015_GB_BGC.shp"
 ONS_COUNTRIES = "#{BL_SOURCE}/ONS_countries/CTRY_DEC_2015_GB_BGC.shp"
 
-SOURCES = [COUNTY_SOURCE, DISTRICT_SOURCE, EURO_REGION_SOURCE, CEREMONIAL_SOURCE,
-           SCOTLAND_WALES_SOURCE, IRELAND_COUNTIES_SOURCE, IRELAND_DISTRICTS_SOURCE,
-           ONS_REGIONS, ONS_DISTRICTS, ONS_COUNTRIES]
+SOURCES = [{source: COUNTY_SOURCE, type: "county"},
+           {source: DISTRICT_SOURCE, type: "district"},
+           {source: EURO_REGION_SOURCE, type: "region"},
+           {source: CEREMONIAL_SOURCE,type: "county"},
+           {source: IRELAND_COUNTIES_SOURCE, type: "county"},
+           {source: IRELAND_DISTRICTS_SOURCE,type: "district"},
+           {source: ONS_REGIONS, type: "region"},
+           {source: ONS_DISTRICTS, type: "district"},
+           {source: ONS_COUNTRIES,type: "country"}
+          ]
 
 SIMPLIFICATION = 500
 
@@ -46,7 +53,8 @@ def as_keys( name )
   candidates.map( &:strip ).uniq
 end
 
-def create_index( filename, index = Hash.new )
+def create_index( options, index = Hash.new )
+  filename = options[:source]
   puts "Indexing #{filename}"
   RGeo::Shapefile::Reader.open( filename ) do |file|
     file.each do |record|
@@ -58,6 +66,7 @@ def create_index( filename, index = Hash.new )
 
       if gss_or_name
         attribs["ukhpiID"] = gss_or_name
+        attribs["ukhpiType"] = options[:type]
         as_keys( gss_or_name ).each do |key|
           index[key] = record
         end
