@@ -1,11 +1,30 @@
-.row
-  .col-sm-12.col-md-6
-    .form-group
-      %label.control-label{ for: "region" }
-        = t( "index.location" )
-      - region = @exploration_state.preference( :region )
-      - region_name = @exploration_state.lookup_region(region ).label
-      %input.js-location-uri{ type: "hidden", name: "region", value: region}
-      %input.form-control.js-location.typeahead{ type: "text", id: "region", value: region_name }
-  .col-sm-12.col-md-6
-    #map.c-map
+%section
+  .c-location-types
+    %ul.list-inline
+      %li.c-location-types--option
+        %label.c-location-types--label
+          %input{ type: "radio", name: "location-type", value: "country", checked: true }
+          countries
+      %li.c-location-types--option
+        %label.c-location-types--label
+          %input{ type: "radio", name: "location-type", value: "region" }
+          regions
+      %li.c-location-types--option
+        %label.c-location-types--label
+          %input{ type: "radio", name: "location-type", value: "county" }
+          counties and unitary authorities
+      %li.c-location-types--option
+        %label.c-location-types--label
+          %input{ type: "radio", name: "location-type", value: "district" }
+          local authorities
+  .row
+    .col-sm-12.col-md-6
+      .form-group
+        %label.control-label{ for: "region" }
+          = t( "index.location" )
+        - region = @exploration_state.preference( :region )
+        - region_name = @exploration_state.lookup_region(region ).label
+        %input.js-location-uri{ type: "hidden", name: "region", value: region}
+        %input.form-control.js-location.typeahead{ type: "text", id: "region", value: region_name }
+    .col-sm-12.col-md-6
+      #map.c-map
