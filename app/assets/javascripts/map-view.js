@@ -4,13 +4,15 @@ modulejs.define( "map-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/leaflet",
-  "routes"
+  "routes",
+  "regions-table"
 ],
 function(
   _,
   $,
   Leaflet,
-  Routes
+  Routes,
+  Regions
 ) {
   "use strict";
 
@@ -61,12 +63,9 @@ function(
       var featuresPartition = {};
 
       features.eachLayer( function( layer ) {
-        var featureType = layer.feature.properties.ukhpiType;
-        if (!_.has( featuresPartition, featureType )) {
-          featuresPartition[featureType] = Leaflet.layerGroup( [] );
-        }
-
-        featuresPartition[featureType].addLayer( layer );
+        _.each( partitionKeysByType( layer ), function( partKey ) {
+          addToPartition( featuresPartition, partKey, layer );
+        } );
       } );
 
       return featuresPartition;
@@ -108,7 +107,7 @@ function(
       }
     },
 
-    onRevealPreferences: function( e ) {
+    onRevealPreferences: function() {
       this.show();
     },
 
@@ -127,6 +126,62 @@ function(
         dashArray: "3",
         fillOpacity: 0.7
     };
+  };
+
+  /** @return The URI of the layer, looked up either by GSS code or name */
+  var regionURI = function( layer ) {
+    var id = layer.feature.properties.ukhpiID;
+    var uri = Regions.gssIndex[id];
+
+    if (!uri) {
+      var lName = _.find( Regions.locationNames, function( locName ) {
+        return locName.label === id;
+      } );
+
+      uri = lName ? lName.value : uri;
+    }
+
+    return uri;
+  };
+
+  var layerType = function( layer ) {
+    var rURI = regionURI( layer );
+    return rURI ? Regions.locations[rURI].type : "unknown";
+  };
+
+  var partitionKeysByType = function( layer ) {
+    // workaround to present a natural category of "country" to users
+    if (layer.feature.properties.ukhpiType === "country") {
+      return countryPartitionKeys( layer );
+    }
+    else {
+      return {
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough": ["local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/County": ["county"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/District": ["local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion": ["region"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority": ["county"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough": ["local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict": ["local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/No_Region_type": [],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["county", "local-authority"],
+        "http://landregistry.data.gov.uk/def/ukhpi/Region": [],
+        "unknown": []
+      }[layerType( layer )];
+    }
+  };
+
+  /** @return Special case partition keys by UK country */
+  var countryPartitionKeys = function() {
+    return ["country"];
+  };
+
+  var addToPartition = function( partitionTable, key, layer ) {
+    if (!_.has( partitionTable, key )) {
+      partitionTable[key] = Leaflet.layerGroup( [] );
+    }
+
+    partitionTable[key].addLayer( layer );
   };
 
 
