@@ -67,13 +67,13 @@ function(
     },
 
     onFeaturesLoaded: function( json ) {
-      var features = Leaflet.geoJson( json, {style: defaultRegionStyle} );
+      var features = Leaflet.geoJson( json, {style: defaultRegionStyle, onEachFeature: _.bind( this.onEachFeature, this )} );
       this._featuresPartition = this.partitionFeatures( features );
       this.receivedRequest();
     },
 
     onUkFeatureLoaded: function( json ) {
-      this._ukFeature = Leaflet.geoJson( json, {style: backgroundRegionStyle} );
+      this._ukFeature = Leaflet.geoJson( json, {style: backgroundRegionStyle, onEachFeature: _.bind( this.onEachFeature, this )} );
       this.receivedRequest();
     },
 
@@ -164,11 +164,15 @@ function(
       var layer = this.findLayer( layerName );
 
       if (layer) {
-        layer.setStyle( style() );
+        this.styleLayer( layer, style );
       }
       else {
         console.log("No layer for: " + layerName );
       }
+    },
+
+    styleLayer: function( layer, style ) {
+      layer.setStyle( style() );
     },
 
     showSelectedLocations: function( locations ) {
@@ -207,7 +211,51 @@ function(
     onSelectLocation: function( e, uri ) {
       var selected = LOCATION_EXPANSIONS[uri] || [uri];
       this.showSelectedLocations( selected );
-    }
+    },
+
+    onEachFeature: function( feature, layer ) {
+      layer.on({
+          mouseover: _.bind( this.onHighlightFeature, this ),
+          mouseout: _.bind( this.onUnhighlightFeature, this ),
+          click: _.bind( this.onSelectFeature, this )
+      });
+    },
+
+    onHighlightFeature: function( e ) {
+      var layer = e.target;
+      var feature = layer.feature;
+
+      this.styleLayer( layer, highlightRegionStyle );
+
+      Leaflet.popup( {
+          offset: new Leaflet.Point( 0, -10 ),
+          autoPan: false
+        } )
+       .setLatLng( e.latlng )
+       .setContent( feature.properties.ukhpiLabel )
+       .openOn( this._map );
+    },
+
+    onUnhighlightFeature: function( e ) {
+      var layer = e.target;
+      this.styleLayer( layer, defaultRegionStyle );
+    },
+
+    onSelectFeature: function( e ) {
+      // var oldSelectedFeature = _selectedFeature;
+      // _selectedFeature = e.target;
+
+      // unHighlightFeature( oldSelectedFeature );
+      // highlightFeature( _selectedFeature, "#e5ea08" );
+
+      // selectFeature( _selectedFeature );
+      console.log( "onSelectFeature");
+      console.log( e );
+    },
+
+
+
+
   } );
 
 
@@ -236,6 +284,12 @@ function(
       color: "#686",
       fillOpacity: 0.7,
       dashArray: ""
+    } );
+  };
+
+  var highlightRegionStyle = function() {
+    return _.extend( defaultRegionStyle(), {
+      color: "ff0"
     } );
   };
 
