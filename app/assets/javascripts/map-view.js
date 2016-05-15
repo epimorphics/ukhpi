@@ -23,11 +23,32 @@ function(
 
   var DEFAULT_LAYER = "country";
 
+  /** Cases where selecting one thing highlights several things */
+  var LOCATION_EXPANSIONS = {
+    "http://landregistry.data.gov.uk/id/region/great-britain":
+      ["http://landregistry.data.gov.uk/id/region/england",
+       "http://landregistry.data.gov.uk/id/region/scotland",
+       "http://landregistry.data.gov.uk/id/region/wales"
+      ],
+    "http://landregistry.data.gov.uk/id/region/united-kingdom":
+      ["http://landregistry.data.gov.uk/id/region/england",
+       "http://landregistry.data.gov.uk/id/region/scotland",
+       "http://landregistry.data.gov.uk/id/region/wales",
+       "http://landregistry.data.gov.uk/id/region/northern-ireland"
+      ],
+    "http://landregistry.data.gov.uk/id/region/england-and-wales":
+      ["http://landregistry.data.gov.uk/id/region/england",
+       "http://landregistry.data.gov.uk/id/region/wales"
+      ]
+  };
+
   _.extend( MapView.prototype, {
     bindEvents: function() {
       $("a[data-toggle='tab']").on( "shown.bs.tab", _.bind( this.onShowTab, this ) );
       $("body").on( "ukhpi.prefs.revealed", _.bind( this.onRevealPreferences, this ) );
-      $("body").on( "ukhpi.location-type.change", _.bind( this.onChangeLocationType, this ) );
+      $("body")
+        .on( "ukhpi.location-type.change", _.bind( this.onChangeLocationType, this ) )
+        .on( "ukhpi.location.selected", _.bind( this.onSelectLocation, this ) );
     },
 
     fetchFeatures: function() {
@@ -111,6 +132,18 @@ function(
       return this._map;
     },
 
+    // feature selection
+
+    findLayer: function( id ) {
+      var found = null;
+      this._map.eachLayer( function( layer ) {
+        var uri = _.get( layer, "feature.properties.ukhpiURI" );
+        found = (id === uri) ? layer : found;
+      } );
+
+      return found;
+    },
+
     resetSelection: function() {
       var f = this._selectedFeature;
       this._selectedFeature = null;
@@ -127,6 +160,34 @@ function(
       // }
     },
 
+    styleLayerNamed: function( layerName, style ) {
+      var layer = this.findLayer( layerName );
+
+      if (layer) {
+        layer.setStyle( style() );
+      }
+      else {
+        console.log("No layer for: " + layerName );
+      }
+    },
+
+    showSelectedLocations: function( locations ) {
+      var sln = _.bind( this.styleLayerNamed, this );
+
+      if (this._currentSelections) {
+        _.each( this._currentSelections, function( selectedLayer ) {
+          sln( selectedLayer, defaultRegionStyle );
+        } );
+        this._currentSelections = [];
+      }
+
+      _.each( locations, function( layer ) {
+        sln( layer, selectedRegionStyle );
+      } );
+
+      this._currentSelections = locations;
+    },
+
     onShowTab: function( e ) {
       var target = $(e.target).attr( "href" );
       if (target === "#location") {
@@ -141,26 +202,40 @@ function(
     onChangeLocationType: function( e, args ) {
       this.showLocationSelection( args.locationType );
       _.defer( _.bind( this.showLayer, this ), args.locationType, this._map );
+    },
+
+    onSelectLocation: function( e, uri ) {
+      var selected = LOCATION_EXPANSIONS[uri] || [uri];
+      this.showSelectedLocations( selected );
     }
   } );
 
 
   var defaultRegionStyle = function() {
     return {
-        fillColor: "#5A8006",
-        weight: 1,
-        opacity: 1,
-        color: "white",
-        dashArray: "3",
-        fillOpacity: 0.7
+      fillColor: "#5A8006",
+      weight: 1,
+      opacity: 1,
+      color: "white",
+      dashArray: "3",
+      fillOpacity: 0.7
     };
   };
 
   var backgroundRegionStyle = function() {
     return _.extend( defaultRegionStyle(), {
-        fillColor: "#666666",
-        color: "#666666",
-        fillOpacity: 0.7
+      fillColor: "#666666",
+      color: "#666666",
+      fillOpacity: 0.7
+    } );
+  };
+
+  var selectedRegionStyle = function() {
+    return _.extend( defaultRegionStyle(), {
+      fillColor: "#C0C006",
+      color: "#686",
+      fillOpacity: 0.7,
+      dashArray: ""
     } );
   };
 

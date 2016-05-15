@@ -81,7 +81,9 @@ function(
     selectLocation: function( uri ) {
       console.log( "Setting location uri " + uri );
       $(".js-location-uri").val( uri );
-      $("body").trigger( "ukhpi.preferences.change" );
+      $("body")
+        .trigger( "ukhpi.preferences.change" )
+        .trigger( "ukhpi.location.selected", uri );
     },
 
     setupDateTimePickers: function() {
