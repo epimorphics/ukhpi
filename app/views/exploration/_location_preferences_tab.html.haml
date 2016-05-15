@@ -88,7 +88,7 @@
 
       .form-group.c-location-search.county.local-authority.hidden
         %label.control-label{ for: "region" }
-          = t( "index.location" )
+          Search
         - region = @exploration_state.preference( :region )
         - region_name = @exploration_state.lookup_region(region ).label
         %input.js-location-uri{ type: "hidden", name: "region", value: region}

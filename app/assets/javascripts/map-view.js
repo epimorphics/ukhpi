@@ -21,6 +21,8 @@ function(
     this.bindEvents();
   };
 
+  var DEFAULT_LAYER = "country";
+
   _.extend( MapView.prototype, {
     bindEvents: function() {
       $("a[data-toggle='tab']").on( "shown.bs.tab", _.bind( this.onShowTab, this ) );
@@ -65,9 +67,9 @@ function(
       if (!this._map && create) {
         this.createMap();
       }
-      if (this._map) {
+      if (this._map && !this._map.hasLayer( this._ukFeature )) {
         this._map.addLayer( this._ukFeature );
-        this.showLayer( "country", this._map );
+        this.showLayer( DEFAULT_LAYER, this._map );
       }
     },
 
@@ -77,6 +79,11 @@ function(
       }
       this._currentLayer = this._featuresPartition[layerId];
       map.addLayer( this._currentLayer );
+    },
+
+    showLocationSelection: function( selectionType ) {
+      $(".c-location-search").addClass( "hidden" );
+      $(".c-location-search." + selectionType ).removeClass( "hidden" );
     },
 
     partitionFeatures: function( features ) {
@@ -133,6 +140,7 @@ function(
 
     onChangeLocationType: function( e, args ) {
       this.showLayer( args.locationType, this._map );
+      this.showLocationSelection( args.locationType );
     }
   } );
 
