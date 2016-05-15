@@ -25,72 +25,72 @@
         %ul.list-unstyled
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/united-kingdom" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/united-kingdom" }
               United Kingdom
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/great-britain", checked: true }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/great-britain", checked: true }
               Great Britain
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/england-and-wales" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/england-and-wales" }
               England and Wales
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/england" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/england" }
               England
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/scotland" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/scotland" }
               Scotland
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/wales" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/wales" }
               Wales
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/northern-ireland" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/northern-ireland" }
               Northern Ireland
 
       .form-group.c-location-search.region.hidden
         %ul.list-unstyled
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/east-of-england" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/east-of-england" }
               East of England
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/east-midlands" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/east-midlands" }
               East Midlands
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/london" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/london" }
               London
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/north-east" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/north-east" }
               North East
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/south-east" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/south-east" }
               South East
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/south-west" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/south-west" }
               South West
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/west-midlands" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/west-midlands" }
               West Midlands
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region", value: "http://landregistry.data.gov.uk/id/region/yorkshire-and-the-humber" }
+              %input.js-location-choice{ type: "radio", value: "http://landregistry.data.gov.uk/id/region/yorkshire-and-the-humber" }
               Yorkshire and the Humber
 
 
       .form-group.c-location-search.county.local-authority.hidden
-        %label.control-label{ for: "region" }
+        %label.control-label{ for: "region-name" }
           Search
-        %input.form-control.js-location.typeahead{ type: "text", id: "region" }
+        %input.form-control.js-location.typeahead{ type: "text", id: "region-name" }
     .col-sm-12.col-md-6
       #map.c-map

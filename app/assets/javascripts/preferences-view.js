@@ -26,7 +26,7 @@ function(
     bindEvents: function() {
       $(".js-reveal-button").on( "click", _.bind( this.onToggleRevealPreferences, this ) );
       $(".js-aspect").on( "click", function() {
-        $("body").trigger( "changeAspectSelection" );
+        $("body").trigger( "ukhpi.aspectSelection.change" );
       } );
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
@@ -74,12 +74,14 @@ function(
     },
 
     onAutocompleteSelect: function( value ) {
+      console.log( "on autocomplete select " + value );
       this.selectLocation( value.uri );
     },
 
     selectLocation: function( uri ) {
+      console.log( "Setting location uri " + uri );
       $(".js-location-uri").val( uri );
-      $("body").trigger( "changePreferences" );
+      $("body").trigger( "ukhpi.preferences.change" );
     },
 
     setupDateTimePickers: function() {
@@ -88,7 +90,7 @@ function(
           viewMode: "years",
           format: "YYYY-MM"
         }).on( "dp.change", function() {
-          $("body").trigger( "changePreferences" );
+          $("body").trigger( "ukhpi.preferences.change" );
         });
       } );
     },

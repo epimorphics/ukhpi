@@ -43,8 +43,8 @@ function(
     },
 
     bindEvents: function() {
-      $("body").on( "changeAspectSelection", _.bind( this.renderCurrentQueryResults, this ) );
-      $("body").on( "changePreferences", _.bind( this.loadResults, this ) );
+      $("body").on( "ukhpi.aspectSelection.change", _.bind( this.renderCurrentQueryResults, this ) );
+      $("body").on( "ukhpi.preferences.change", _.bind( this.loadResults, this ) );
     },
 
     loadResults: function() {
