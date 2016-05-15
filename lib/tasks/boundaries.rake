@@ -64,11 +64,11 @@ def create_index( options, index = Hash.new )
     file.each do |record|
       attribs = record.attributes
 
-      gss_or_name = attribs["CODE"] || attribs["Code"] ||
-                    attribs["LGDCode"] ||
-                    attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
-                    attribs["NAME"] || attribs["Name"] || attribs["CountyName"] ||
-                    attribs["NAME_LOCAL"]
+      gss = attribs["CODE"] || attribs["Code"] || attribs["LGDCode"]
+      name = attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
+             attribs["NAME"] || attribs["Name"] || attribs["CountyName"] ||
+             attribs["NAME_LOCAL"]
+      gss_or_name = gss || name
 
       if gss_or_name
         attribs["ukhpiID"] = gss_or_name
@@ -235,6 +235,8 @@ namespace :ukhpi do
     Regions.each_location do |location|
       geo_record = as_geo_record( location, index )
       if geo_record
+        geo_record.attributes["ukhpiURI"] = location.uri
+        geo_record.attributes["ukhpiLabel"] = location.label
         features << as_geojson_feature( location.label, geo_record )
       else
         puts "No geo_record for #{location.label}"
