@@ -240,7 +240,6 @@ namespace :ukhpi do
         puts "No geo_record for #{location.label}"
       end
     end
-    features << as_geojson_feature( "Northern Ireland", index["NORTHERN IRELAND"])
 
     puts "Sorting by reverse area"
     features.sort! do |f0, f1|
