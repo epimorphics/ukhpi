@@ -19,7 +19,74 @@
           local authorities
   .row
     .col-sm-12.col-md-6
-      .form-group
+      .form-group.c-location-search.country
+        %ul.list-unstyled
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "United Kingdom" }
+              United Kingdom
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "Great Britain" }
+              Great Britain
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "England and Wales" }
+              England and Wales
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "England" }
+              England
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "Scotland" }
+              Scotland
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "Wales" }
+              Wales
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "Northern Ireland" }
+              Northern Ireland
+
+      .form-group.c-location-search.region.hidden
+        %ul.list-unstyled
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "East of England" }
+              East of England
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "East Midlands" }
+              East Midlands
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "London" }
+              London
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "North East" }
+              North East
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "South East" }
+              South East
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "South West" }
+              South West
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "West Midlands" }
+              West Midlands
+          %li
+            %label.c-location-search--label
+              %input.js-location-choice{ type: "radio", name: "region", value: "Yorkshire and the Humber" }
+              Yorkshire and the Humber
+
+
+      .form-group.c-location-search.county.local-authority.hidden
         %label.control-label{ for: "region" }
           = t( "index.location" )
         - region = @exploration_state.preference( :region )

@@ -29,6 +29,8 @@ function(
     },
 
     fetchFeatures: function() {
+      this._outstandingRequests = 2;
+
       $.getJSON( Routes.public_path + "features.json" )
        .done( _.bind( this.onFeaturesLoaded, this ) )
        .error( function( e, m, a ) {
@@ -37,17 +39,35 @@ function(
           console.log( m );
           console.log( a );
        } );
+      $.getJSON( Routes.public_path + "uk.json" )
+       .done( _.bind( this.onUkFeatureLoaded, this ) );
     },
 
     onFeaturesLoaded: function( json ) {
       var features = Leaflet.geoJson( json, {style: defaultRegionStyle} );
       this._featuresPartition = this.partitionFeatures( features );
+      this.receivedRequest();
     },
 
-    show: function() {
-      if (!this._map) {
-        var map = this.createMap();
-        this.showLayer( "country", map );
+    onUkFeatureLoaded: function( json ) {
+      this._ukFeature = Leaflet.geoJson( json, {style: backgroundRegionStyle} );
+      this.receivedRequest();
+    },
+
+    receivedRequest: function() {
+      this._outstandingRequests--;
+      if (this._outstandingRequests === 0) {
+        this.show( false );
+      }
+    },
+
+    show: function( create ) {
+      if (!this._map && create) {
+        this.createMap();
+      }
+      if (this._map) {
+        this._map.addLayer( this._ukFeature );
+        this.showLayer( "country", this._map );
       }
     },
 
@@ -74,8 +94,8 @@ function(
     createMap: function() {
       if (!this._map) {
         this._map = Leaflet.map( "map" )
-                           .setView( [53.0072, -2], 6 );
-        this._map.attributionControl.setPrefix( "Contains Ordnance Survey data &copy; Crown copyright 2016" );
+                           .setView( [54.0072, -2], 5 );
+        this._map.attributionControl.setPrefix( "Contains OGL and Ordnance Survey data &copy; Crown copyright 2016" );
       }
       else {
         this.resetSelection();
@@ -103,12 +123,12 @@ function(
     onShowTab: function( e ) {
       var target = $(e.target).attr( "href" );
       if (target === "#location") {
-        this.show();
+        this.show( true );
       }
     },
 
     onRevealPreferences: function() {
-      this.show();
+      this.show( true );
     },
 
     onChangeLocationType: function( e, args ) {
@@ -126,6 +146,14 @@ function(
         dashArray: "3",
         fillOpacity: 0.7
     };
+  };
+
+  var backgroundRegionStyle = function() {
+    return _.extend( defaultRegionStyle(), {
+        fillColor: "#666666",
+        color: "#666666",
+        fillOpacity: 0.7
+    } );
   };
 
   /** @return The URI of the layer, looked up either by GSS code or name */
