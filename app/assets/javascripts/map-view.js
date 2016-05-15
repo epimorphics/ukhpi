@@ -139,8 +139,8 @@ function(
     },
 
     onChangeLocationType: function( e, args ) {
-      this.showLayer( args.locationType, this._map );
       this.showLocationSelection( args.locationType );
+      _.defer( _.bind( this.showLayer, this ), args.locationType, this._map );
     }
   } );
 
