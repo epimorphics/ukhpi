@@ -13,19 +13,22 @@ CEREMONIAL_SOURCE = "#{BL_SOURCE}Supplementary_Ceremonial/Boundary-line-ceremoni
 SCOTLAND_WALES_SOURCE = "#{BL_SOURCE}/GB/scotland_and_wales_const_region.shp"
 IRELAND_COUNTIES_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__County_Boundaries.shp"
 IRELAND_DISTRICTS_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__Local_Government_Districts_2012.shp"
+IRELAND_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__NI_Outline.shp"
+
 ONS_REGIONS  = "#{BL_SOURCE}/ONS_regions/RGN_DEC_2015_EN_BGC.shp"
 ONS_DISTRICTS = "#{BL_SOURCE}/ONS_districts/LAD_DEC_2015_GB_BGC.shp"
 ONS_COUNTRIES = "#{BL_SOURCE}/ONS_countries/CTRY_DEC_2015_GB_BGC.shp"
 
-SOURCES = [{source: COUNTY_SOURCE, type: "county"},
-           {source: DISTRICT_SOURCE, type: "district"},
-           {source: EURO_REGION_SOURCE, type: "region"},
-           {source: CEREMONIAL_SOURCE,type: "county"},
-           {source: IRELAND_COUNTIES_SOURCE, type: "county"},
-           {source: IRELAND_DISTRICTS_SOURCE,type: "district"},
-           {source: ONS_REGIONS, type: "region"},
-           {source: ONS_DISTRICTS, type: "district"},
-           {source: ONS_COUNTRIES,type: "country"}
+SOURCES = [{source: COUNTY_SOURCE, type: "county", projection: :bng},
+           {source: DISTRICT_SOURCE, type: "district", projection: :bng},
+           {source: EURO_REGION_SOURCE, type: "region", projection: :bng},
+           # {source: CEREMONIAL_SOURCE,type: "county", projection: :bng},
+           {source: IRELAND_COUNTIES_SOURCE, type: "county", projection: :bng},
+           {source: IRELAND_DISTRICTS_SOURCE,type: "district", projection: :bng},
+           {source: ONS_REGIONS, type: "region", projection: :bng},
+           {source: ONS_DISTRICTS, type: "district", projection: :bng},
+           {source: ONS_COUNTRIES,type: "country", projection: :bng}
+           #{source: IRELAND_SOURCE,type: "country", projection: :wgs84}
           ]
 
 SIMPLIFICATION = 500
@@ -48,6 +51,7 @@ def as_keys( name )
     candidates << n.gsub( /City Of/i, "" )
     candidates << n.gsub( /euro region/i, "" )
     candidates << n.gsub( /\&/, "AND" )
+    candidates << n.gsub( /outline of/i, "" )
   end
 
   candidates.map( &:strip ).uniq
@@ -59,14 +63,18 @@ def create_index( options, index = Hash.new )
   RGeo::Shapefile::Reader.open( filename ) do |file|
     file.each do |record|
       attribs = record.attributes
+
       gss_or_name = attribs["CODE"] || attribs["Code"] ||
                     attribs["LGDCode"] ||
                     attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
-                    attribs["NAME"] || attribs["Name"] || attribs["CountyName"]
+                    attribs["NAME"] || attribs["Name"] || attribs["CountyName"] ||
+                    attribs["NAME_LOCAL"]
 
       if gss_or_name
         attribs["ukhpiID"] = gss_or_name
         attribs["ukhpiType"] = options[:type]
+        attribs["ukhpiProjection"] = options[:projection]
+
         as_keys( gss_or_name ).each do |key|
           index[key] = record
         end
@@ -79,8 +87,8 @@ def create_index( options, index = Hash.new )
   index
 end
 
-def composite_index
-  SOURCES.inject( Hash.new ) do |acc, source|
+def composite_index( sources )
+  sources.inject( Hash.new ) do |acc, source|
     create_index( source, acc )
   end
 end
@@ -90,15 +98,50 @@ def as_geo_record( location, index )
 end
 
 def simplify_line( line )
-  puts( "Starting simplify, #points = #{line.length}")
+  if is_ring?( line )
+    simplify_ring( line )
+  else
+    simplify_non_ring_line( line )
+  end
+end
+
+def is_ring?( line )
+  f = line.first
+  l = line.last
+
+  !line.empty? && (f[0] == l[0]) && (f[1] == l[1])
+end
+
+def simplify_ring( ring )
+  return ring if ring.length <= 3
+
+  group_length = [250, (ring.length / 3).to_i].min
+  segments = []
+  ring.in_groups_of( group_length, false ) {|g| segments << g}
+
+  # check for short last group
+  if segments.last.length < 8
+    g0 = segments.pop
+    g1 = segments.pop
+    segments.push( g1 + g0 )
+  end
+
+  puts( "ring of length #{ring.length} processing as #{segments.length} segments of length #{segments.first.length}")
+  simplify_lines( segments ).inject &:+
+end
+
+def simplify_non_ring_line( line )
+  puts( "Starting simplify non-ring, no. points = #{line.length}")
   xy = to_xy( line )
-  simplified = SimplifyRb.simplify( xy, SIMPLIFICATION, true )
-  puts( " .. done simplify, #points = #{simplified.length}")
-  from_xy( simplified )
+  l = SimplifyRb.simplify( xy, SIMPLIFICATION, true )
+
+  puts( " .. done simplify, no. points = #{l.length}")
+
+  from_xy( l )
 end
 
 def to_xy( line )
-  line.map {|p| {x: p[0].round(3), y: p[1].round(3)}}
+  line.map {|p| {x: p[0], y: p[1]}}
 end
 
 def from_xy( line )
@@ -106,7 +149,12 @@ def from_xy( line )
 end
 
 def as_geojson_feature( name, record )
-  RGeo::GeoJSON::Feature.new( record.geometry, name, record.attributes )
+  if record.attributes["ukhpiProjection"].to_sym == :wgs84
+    bng_geometry = RGeo::Feature.cast( record.geometry, factory: BNG_PROJECTION, project: true )
+    RGeo::GeoJSON::Feature.new( bng_geometry, name, record.attributes )
+  else
+    RGeo::GeoJSON::Feature.new( record.geometry, name, record.attributes )
+  end
 end
 
 def is_point?( p )
@@ -147,9 +195,25 @@ def line_to_lat_long( a )
   end
 end
 
+def point_to_bng( point )
+  ll_point = LATLONG_PROJECTION.point( *point )
+  bng_point = RGeo::Feature.cast( ll_point, type: RGeo::Feature::Point, factory: BNG_PROJECTION, project: true )
+  [bng_point.x, bng_point.y]
+end
+
+def line_to_bng( a )
+  a.map do |a_value|
+    if is_point?( a_value )
+      point_to_bng( a_value )
+    else
+      line_to_bng( a_value )
+    end
+  end
+end
+
 def load_index
   puts "Creating index"
-  composite_index
+  composite_index( SOURCES )
 end
 
 def transform_coordinates( json, fn )
@@ -176,6 +240,7 @@ namespace :ukhpi do
         puts "No geo_record for #{location.label}"
       end
     end
+    features << as_geojson_feature( "Northern Ireland", index["NORTHERN IRELAND"])
 
     puts "Sorting by reverse area"
     features.sort! do |f0, f1|
@@ -249,6 +314,31 @@ namespace :ukhpi do
           end
         end
       end
+    end
+  end
+
+  desc "Create a background shapefile for the whole of the UK"
+  task uk_shapefile: :environment do
+    unless File.exist?( "uk.geojson" )
+      puts "Reminder: download GBR_adm0.shp and export to uk.geojson with QGIS"
+      abort "No input file"
+    end
+
+    json = JSON.load( File.new( "uk.geojson"))
+
+    puts "Converting uk.geojson to BNG"
+    transform_coordinates( json, method( :line_to_bng ) )
+
+    puts "Simplifying"
+    transform_coordinates( json, method( :simplify_lines ) )
+
+    puts "Converting to lat long"
+    transform_coordinates( json, method( :line_to_lat_long ) )
+
+    Oj.default_options = {mode: :strict, float_precision: 6}
+    File.open( "uk.json", "w" ) do |file|
+      file << Oj.dump( json )
+      file.flush
     end
   end
 end
