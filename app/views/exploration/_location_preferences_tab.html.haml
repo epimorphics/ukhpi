@@ -88,9 +88,15 @@
               Yorkshire and the Humber
 
 
-      .form-group.c-location-search.county.local-authority.hidden
-        %label.control-label{ for: "region-name" }
-          Search
-        %input.form-control.js-location.typeahead{ type: "text", id: "region-name" }
+      .form-group.c-location-search.county.hidden
+        %label.control-label{ for: "region-name-county" }
+          Search counties and unitary authorities
+        %input.form-control.js-location.typeahead{ type: "text", id: "region-name-county" }
+
+      .form-group.c-location-search.local-authority.hidden
+        %label.control-label{ for: "region-name-local-authority" }
+          Search local authorities
+        %input.form-control.js-location.typeahead{ type: "text", id: "region-name-local-authority" }
+
     .col-sm-12.col-md-6
       #map.c-map

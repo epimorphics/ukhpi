@@ -18,6 +18,17 @@ function(
     this.setupDateTimePickers();
   };
 
+  var COUNTY_TYPE =  "http://data.ordnancesurvey.co.uk/ontology/admingeo/County";
+  var UNITARY_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority";
+  var BOROUGH_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough";
+  var DISTRICT_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/District";
+  var GLA_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority";
+  var LONDON_BOROUGH_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough";
+  var METRO_DISTRICT_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict";
+
+  var COUNTY_TYPES = [COUNTY_TYPE, UNITARY_TYPE];
+  var LOCAL_AUTH_TYPES = [BOROUGH_TYPE, DISTRICT_TYPE, GLA_TYPE, LONDON_BOROUGH_TYPE, METRO_DISTRICT_TYPE];
+
   _.extend( PreferencesView.prototype, {
     preferences: function() {
       return $("#preferences").serialize();
@@ -49,18 +60,30 @@ function(
     },
 
     setupTypeahead: function() {
-      console.log( "setupTypeahead " + RegionsTable.names.length);
-      var names = [];
-      _.each(
-        RegionsTable.names,
-        function( name ) {
-          if (name.lang === "en" && name.label && name.label.length > 0) {
-            names.push( {uri: name.value, name: name.label} );
-          }
-        });
+      var countyNames = [];
+      var laNames = [];
 
-      $( ".js-location" ).typeahead( {
-        source: names,
+      _.each( RegionsTable.names, function( name ) {
+        if (name.lang === "en") {
+          var uri = name.value;
+          var type = RegionsTable.locations[uri].type;
+
+          if (_.includes( COUNTY_TYPES, type )) {
+            countyNames.push( {name: name.label, uri: uri} );
+          }
+          else if (_.includes( LOCAL_AUTH_TYPES, type )) {
+            laNames.push( {name: name.label, uri: uri} );
+          }
+        }
+      });
+
+      console.log( "setupTypeahead " + countyNames.length + " " + laNames.length);
+      $( ".county .js-location" ).typeahead( {
+        source: countyNames,
+        afterSelect: _.bind( this.onAutocompleteSelect, this )
+      } );
+      $( ".local-authority .js-location" ).typeahead( {
+        source: laNames,
         afterSelect: _.bind( this.onAutocompleteSelect, this )
       } );
     },
