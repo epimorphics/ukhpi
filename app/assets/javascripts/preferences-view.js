@@ -13,7 +13,6 @@ function(
   "use strict";
 
   var PreferencesView = function() {
-    console.log("PreferencesView initializing..." );
     this.bindEvents();
     this.setupTypeahead();
     this.setupDateTimePickers();
@@ -30,6 +29,7 @@ function(
         $("body").trigger( "changeAspectSelection" );
       } );
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
+      $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -65,8 +65,20 @@ function(
       } );
     },
 
+    /** Reset all current location selections */
+    resetSelections: function( clearText ) {
+      $(".c-location-search input[type=radio]").attr( "selected", null );
+      if (clearText) {
+        $(".c-location-search input[type=text]").val( "" );
+      }
+    },
+
     onAutocompleteSelect: function( value ) {
-      $(".js-location-uri").val( value.uri );
+      this.selectLocation( value.uri );
+    },
+
+    selectLocation: function( uri ) {
+      $(".js-location-uri").val( uri );
       $("body").trigger( "changePreferences" );
     },
 
@@ -84,6 +96,13 @@ function(
     onChangeLocationType: function( e ) {
       var target = $(e.currentTarget).val();
       $("body").trigger( "ukhpi.location-type.change", {locationType: target} );
+    },
+
+    onSelectLocationOption: function( e ) {
+      var elem = $(e.currentTarget);
+      this.resetSelections( true );
+      elem.attr( "selected", true );
+      this.selectLocation( elem.val() );
     }
   } );
 
