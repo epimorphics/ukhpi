@@ -132,7 +132,7 @@ modulejs.define( "graphs-view", [
 
   var configureAxes = function( graphConf, dateRange, valueRange, options ) {
     var scales = createScales( graphConf.elem );
-    var axes = createAxes( scales, options );
+    var axes = createAxes( scales, options, graphConf );
 
     setScaleDomain( scales, dateRange, valueRange );
 
@@ -158,7 +158,7 @@ modulejs.define( "graphs-view", [
     return {x: xScale, y: yScale, width: width, height: height};
   };
 
-  var createAxes = function( scales, options ) {
+  var createAxes = function( scales, options, graphConf ) {
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
@@ -168,7 +168,8 @@ modulejs.define( "graphs-view", [
     var yAxis = D3.svg.axis()
       .scale( scales.y )
       .orient("left")
-      .ticks( options.ticksCount );
+      .ticks( options.ticksCount )
+      .innerTickSize( -1 * scales.width );
 
     if (options.tickFormat) {
       yAxis = yAxis.tickFormat( options.tickFormat );
