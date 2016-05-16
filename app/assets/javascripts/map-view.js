@@ -97,6 +97,7 @@ function(
     showLayer: function( layerId, map ) {
       if (this._currentLayer) {
         map.removeLayer( this._currentLayer );
+        map.closePopup();
       }
       this._currentLayer = this._featuresPartition[layerId];
       map.addLayer( this._currentLayer );
@@ -227,13 +228,18 @@ function(
 
       this.styleLayer( layer, highlightRegionStyle );
 
-      Leaflet.popup( {
-          offset: new Leaflet.Point( 0, -10 ),
-          autoPan: false
-        } )
-       .setLatLng( e.latlng )
-       .setContent( feature.properties.ukhpiLabel )
-       .openOn( this._map );
+      if (feature && feature.properties && feature.properties.ukhpiLabel) {
+        Leaflet.popup( {
+            offset: new Leaflet.Point( 0, -10 ),
+            autoPan: false
+          } )
+         .setLatLng( e.latlng )
+         .setContent( feature.properties.ukhpiLabel )
+         .openOn( this._map );
+      }
+      else {
+        this._map.closePopup();
+      }
     },
 
     onUnhighlightFeature: function( e ) {
