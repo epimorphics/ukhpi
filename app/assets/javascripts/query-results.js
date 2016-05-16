@@ -18,6 +18,10 @@ modulejs.define( "query-results", [
       return this._data.prefsSummary;
     },
 
+    location: function() {
+      return this._data.prefsSummary.replace( /,.*/, "" );
+    },
+
     results: function() {
       if (!this._results) {
         this._results = _.map( this._data.results, function( result ) {

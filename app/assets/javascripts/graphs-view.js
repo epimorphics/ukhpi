@@ -98,6 +98,7 @@ modulejs.define( "graphs-view", [
       var gv = this;
       var dateRange = qr.dateRange();
       var prefs = new Preferences();
+
       this.resetGraphs( prefs );
 
       _.each( prefs.indicators(), function( indicator ) {
@@ -106,7 +107,7 @@ modulejs.define( "graphs-view", [
           gv.graphConf[indicator] = {};
           var graphConf = gv.graphConf[indicator];
 
-          graphConf.elem = revealGraphElem( options );
+          graphConf.elem = revealGraphElem( options, qr.location() );
           graphConf.root = drawGraphRoot( graphConf );
 
           var valueRange = calculateValueRange( indicator, prefs, qr, options );
@@ -121,12 +122,16 @@ modulejs.define( "graphs-view", [
 
   /* Helper functions */
 
-  var revealGraphElem = function( options ) {
+  var revealGraphElem = function( options, location ) {
     var selector = ".js-graph." + options.cssClass;
     $( selector )
       .removeClass( "hidden" )
       .find( "svg" )
       .empty();
+    $( selector )
+      .find( ".c-graph-heading span" )
+      .empty()
+      .text( ": " + location );
     return D3.select( selector + " svg" );
   };
 
