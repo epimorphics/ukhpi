@@ -35,6 +35,8 @@ SIMPLIFICATION = 500
 
 if Rails.env.production?
   # Stub out these calls so that the compiler doesn't barf on this rakefile in production
+  module RGeo
+  end
   class RGeo::Cartesian
     def factory( *args )
     end
