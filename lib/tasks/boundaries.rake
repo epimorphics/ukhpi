@@ -33,6 +33,36 @@ SOURCES = [{source: COUNTY_SOURCE, type: "county", projection: :bng},
 
 SIMPLIFICATION = 500
 
+if Rails.env.production?
+  # Stub out these calls so that the compiler doesn't barf on this rakefile in production
+  class RGeo::Cartesian
+    def factory( *args )
+    end
+  end
+  class RGeo::Shapefile::Reader
+    def open( *args )
+    end
+  end
+  class RGeo::Feature
+    def cast
+    end
+  end
+  class RGeo::GeoJSON::Feature
+    def initialize( *args )
+    end
+  end
+  class RGeo::Feature::Point
+  end
+  class RGeo::GeoJSON::FeatureCollection
+    def initialize( *args )
+    end
+  end
+  module RGeo::GeoJSON
+    def encode( *args )
+    end
+  end
+end
+
 BNG_PROJECTION = RGeo::Cartesian.factory( proj4: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs' )
 LATLONG_PROJECTION = RGeo::Cartesian.factory( proj4: "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs" )
 
