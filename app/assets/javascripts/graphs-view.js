@@ -46,7 +46,7 @@ modulejs.define( "graphs-view", [
       cssClass: "percentage-monthly-change",
       ticksCount: 5,
       yDomain: "",
-      graphType: "bars",
+      graphType: "lineAndPoints",
       symmetricalYAxis: true,
       tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     },
@@ -54,7 +54,7 @@ modulejs.define( "graphs-view", [
       cssClass: "percentage-annual-change",
       ticksCount: 5,
       yDomain: "",
-      graphType: "bars",
+      graphType: "lineAndPoints",
       symmetricalYAxis: true,
       tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     }
@@ -98,6 +98,7 @@ modulejs.define( "graphs-view", [
       var gv = this;
       var dateRange = qr.dateRange();
       var prefs = new Preferences();
+
       this.resetGraphs( prefs );
 
       _.each( prefs.indicators(), function( indicator ) {
@@ -106,7 +107,7 @@ modulejs.define( "graphs-view", [
           gv.graphConf[indicator] = {};
           var graphConf = gv.graphConf[indicator];
 
-          graphConf.elem = revealGraphElem( options );
+          graphConf.elem = revealGraphElem( options, qr.location() );
           graphConf.root = drawGraphRoot( graphConf );
 
           var valueRange = calculateValueRange( indicator, prefs, qr, options );
@@ -121,18 +122,22 @@ modulejs.define( "graphs-view", [
 
   /* Helper functions */
 
-  var revealGraphElem = function( options ) {
+  var revealGraphElem = function( options, location ) {
     var selector = ".js-graph." + options.cssClass;
     $( selector )
       .removeClass( "hidden" )
       .find( "svg" )
       .empty();
+    $( selector )
+      .find( ".c-graph-heading span" )
+      .empty()
+      .text( ": " + location );
     return D3.select( selector + " svg" );
   };
 
   var configureAxes = function( graphConf, dateRange, valueRange, options ) {
     var scales = createScales( graphConf.elem );
-    var axes = createAxes( scales, options );
+    var axes = createAxes( scales, options, graphConf );
 
     setScaleDomain( scales, dateRange, valueRange );
 
@@ -158,7 +163,7 @@ modulejs.define( "graphs-view", [
     return {x: xScale, y: yScale, width: width, height: height};
   };
 
-  var createAxes = function( scales, options ) {
+  var createAxes = function( scales, options, graphConf ) {
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
@@ -168,7 +173,8 @@ modulejs.define( "graphs-view", [
     var yAxis = D3.svg.axis()
       .scale( scales.y )
       .orient("left")
-      .ticks( options.ticksCount );
+      .ticks( options.ticksCount )
+      .innerTickSize( -1 * scales.width );
 
     if (options.tickFormat) {
       yAxis = yAxis.tickFormat( options.tickFormat );

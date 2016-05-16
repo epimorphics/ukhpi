@@ -27,22 +27,6 @@ $lr-green-nav-darkened: darken( $lr-green-nav, 20% );
 
 /* elements */
 
-:focus,
-a:focus,
-input:focus {
-  outline: 1px solid $lr-focus;
-}
-
-.btn-success:focus {
-  color: #333;
-}
-
-.form-control:focus {
-  border: 0;
-  box-shadow: none;
-  -webkit-box-shadow: none;
-}
-
 a {
   cursor: pointer;
 }

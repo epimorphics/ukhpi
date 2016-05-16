@@ -7,7 +7,7 @@ class Aspects
   attr_reader :prefs
 
   CATEGORIES = [
-    {root: "",                        label: "overall_indices",          advanced: false},
+    {root: "",                        label: "all_property_types",       advanced: false},
     {root: "Detached",                label: "detached_houses"    ,      advanced: false},
     {root: "SemiDetached",            label: "semi_detached_houses",     advanced: false},
     {root: "Terraced",                label: "terraced_houses",          advanced: false},

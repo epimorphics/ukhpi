@@ -3,22 +3,26 @@
     %h2.c-graphs--heading.sr-only Graphs
 
     .js-graph.average-price.hidden
-      %h2 Average price
+      %h2.c-graph-heading
+        Average price<span></span>
       = render partial: "graphs_key"
       %svg
 
     .js-graph.house-price-index.hidden
-      %h2 House price index
+      %h2.c-graph-heading
+        House price index<span></span>
       = render partial: "graphs_key"
       %svg
 
     .js-graph.percentage-monthly-change.hidden
-      %h2 Percentage monthly change
+      %h2.c-graph-heading
+        Percentage monthly change<span></span>
       = render partial: "graphs_key"
       %svg
 
     .js-graph.percentage-annual-change.hidden
-      %h2 Percentage annual change
+      %h2.c-graph-heading
+        Percentage annual change<span></span>
       = render partial: "graphs_key"
       %svg
 

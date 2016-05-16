@@ -18,16 +18,20 @@
 
 // D3 graphs
 
-$graphDefautColour: #DE5153;
-$graphDetachedColour: #377EB8;
-$graphSemiDetachedColour: #72B971;
-$graphTerracedColour: #984EA3;
-$graphFlatMaisonetteColour: #FF7F00;
+.c-graph-heading {
+  font-size: 18pt;
+}
+
+$graphDefaultColour: #377EB8;
+$graphDetachedColour: #72B971;
+$graphSemiDetachedColour: #984EA3;
+$graphTerracedColour: #FF7F00;
+$graphFlatMaisonetteColour: #DE5153;
 $graphVolumeColour: #A65628;
 
 $graphColours: (
-  overall: $graphDefautColour,
-  default: $graphDefautColour,
+  overall: $graphDefaultColour,
+  default: $graphDefaultColour,
   detached: $graphDetachedColour,
   semi-detached: $graphSemiDetachedColour,
   terraced: $graphTerracedColour,
@@ -42,6 +46,11 @@ $graphColours: (
   .axis {
     font-size: 11px;
     stroke: $grey-1;
+  }
+
+  .y .tick line {
+      stroke: lightgrey;
+      opacity: 0.7;
   }
 
   path.domain {
@@ -62,16 +71,16 @@ $graphColours: (
   .line {
     fill: none;
     stroke-width: 0.5;
-    stroke: $graphDefautColour;
+    stroke: $graphDefaultColour;
   }
 
   .point {
-    fill: $graphDefautColour;
+    fill: $graphDefaultColour;
     stroke: none;
   }
 
   .bar {
-    fill: $graphDefautColour;
+    fill: $graphDefaultColour;
     stroke: none;
   }
 
