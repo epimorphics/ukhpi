@@ -38,21 +38,21 @@ if Rails.env.production?
   module RGeo
   end
   class RGeo::Cartesian
-    def factory( *args )
+    def self.factory( *args )
     end
   end
   module RGeo::Shapefile
   end
   class RGeo::Shapefile::Reader
-    def open( *args )
+    def self.open( *args )
     end
   end
   module RGeo::Feature
-    def cast
+    def self.cast
     end
   end
   module RGeo::GeoJSON
-    def encode( *args )
+    def self.encode( *args )
     end
   end
   class RGeo::GeoJSON::Feature
