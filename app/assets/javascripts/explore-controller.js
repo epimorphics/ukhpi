@@ -8,7 +8,8 @@ modulejs.define( "explore-controller", [
   "query-results",
   "data-table-view",
   "graphs-view",
-  "map-view"
+  "map-view",
+  "lib/ajax-monitor"
 ],
 function(
   _,

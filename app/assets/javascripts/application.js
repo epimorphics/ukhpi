@@ -9,6 +9,8 @@
 // = require bootstrap3-typeahead
 // = require d3
 // = require leaflet
+// = require spin
+// = require jquery.spin
 // = require_tree .
 
 modulejs.define( "application", [

@@ -146,19 +146,20 @@ function(
     },
 
     resetSelection: function() {
-      var f = this._selectedFeature;
-      this._selectedFeature = null;
-      this.unHighlightFeature( f );
+      var cs = this._currentSelections;
+      this._currentSelections = [];
+      this.unHighlightFeature( cs );
     },
 
-    unHighlightFeature: function( feature ) {
-      // TODO
-      // if (feature) {
-      //   _geojson.resetStyle( feature );
-      // }
-      // if (_selectedFeature) {
-      //   highlightFeature( _selectedFeature, "#e5ea08" );
-      // }
+    unHighlightFeatures: function( featureNames ) {
+      var mv = this;
+      _.each( featureNames, function( featureName ) {
+        this.styleLayerNamed( featureName, mv.styleFor( featureName ) );
+      } );
+    },
+
+    styleFor: function( layerName ) {
+      return _.includes( this._currentSelections, layerName ) ? selectedRegionStyle : defaultRegionStyle;
     },
 
     styleLayerNamed: function( layerName, style ) {
@@ -244,7 +245,9 @@ function(
 
     onUnhighlightFeature: function( e ) {
       var layer = e.target;
-      this.styleLayer( layer, defaultRegionStyle );
+      var uri = layer.feature.properties.ukhpiURI;
+      var style = this.styleFor( uri );
+      this.styleLayer( layer, style );
     },
 
     onSelectFeature: function( l ) {

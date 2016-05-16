@@ -3,11 +3,13 @@
 modulejs.define( "preferences-view", [
   "lib/lodash",
   "lib/jquery",
+  "lib/util",
   "regions-table"
 ],
 function(
   _,
   $,
+  Util,
   RegionsTable
 ) {
   "use strict";
@@ -49,15 +51,20 @@ function(
     },
 
     onToggleRevealPreferences: function( e ) {
-      console.log("onToggleRevealPreferences");
       e.preventDefault();
-      $(".js-reveal-button").toggleClass( "revealing" );
-      $(".js-preferences-form").toggleClass( "hidden" );
-      $(".js-preferences").tab();
+      Util.JQuery.spinStart();
 
-      if ($(".js-preferences-form").is( ":not(.hidden)" )) {
-        $("body").trigger( "ukhpi.prefs.revealed" );
-      }
+      _.defer( function() {
+        $(".js-reveal-button").toggleClass( "revealing" );
+        $(".js-preferences-form").toggleClass( "hidden" );
+        $(".js-preferences").tab();
+
+        if ($(".js-preferences-form").is( ":not(.hidden)" )) {
+          $("body").trigger( "ukhpi.prefs.revealed" );
+        }
+
+        Util.JQuery.spinStop();
+      });
     },
 
     setupTypeahead: function() {

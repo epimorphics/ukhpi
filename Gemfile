@@ -30,11 +30,12 @@ gem 'd3-rails'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
 gem 'modulejs-rails'
+gem 'spinjs-rails'
+gem 'leaflet-rails'
 
 gem 'govuk_template'
 gem 'govuk_frontend_toolkit'#, github: "alphagov/govuk_frontend_toolkit_gem", submodules: true
 gem 'govuk_elements_rails'#, github: "ministryofjustice/govuk_elements_rails", submodules: true
-gem 'leaflet-rails'
 gem 'js-routes'
 gem 'byebug'
 
