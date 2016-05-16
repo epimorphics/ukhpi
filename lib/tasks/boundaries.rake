@@ -41,12 +41,18 @@ if Rails.env.production?
     def factory( *args )
     end
   end
+  module RGeo::Shapefile
+  end
   class RGeo::Shapefile::Reader
     def open( *args )
     end
   end
-  class RGeo::Feature
+  module RGeo::Feature
     def cast
+    end
+  end
+  module RGeo::GeoJSON
+    def encode( *args )
     end
   end
   class RGeo::GeoJSON::Feature
@@ -57,10 +63,6 @@ if Rails.env.production?
   end
   class RGeo::GeoJSON::FeatureCollection
     def initialize( *args )
-    end
-  end
-  module RGeo::GeoJSON
-    def encode( *args )
     end
   end
 end
