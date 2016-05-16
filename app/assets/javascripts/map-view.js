@@ -247,20 +247,15 @@ function(
       this.styleLayer( layer, defaultRegionStyle );
     },
 
-    onSelectFeature: function( e ) {
-      // var oldSelectedFeature = _selectedFeature;
-      // _selectedFeature = e.target;
-
-      // unHighlightFeature( oldSelectedFeature );
-      // highlightFeature( _selectedFeature, "#e5ea08" );
-
-      // selectFeature( _selectedFeature );
-      console.log( "onSelectFeature");
-      console.log( e );
-    },
-
-
-
+    onSelectFeature: function( l ) {
+      var feature = l.target && l.target.feature;
+      if (feature) {
+        var uri = feature.properties.ukhpiURI;
+        $("body")
+          .trigger( "ukhpi.location.selected", uri )
+          .trigger( "ukhpi.preferences.change" );
+      }
+    }
 
   } );
 

@@ -41,6 +41,7 @@ function(
       } );
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
+      $("body").on( "ukhpi.location.selected", _.bind( this.onLocationSelected, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -130,6 +131,14 @@ function(
       this.resetSelections( true );
       elem.attr( "selected", true );
       this.selectLocation( elem.val() );
+    },
+
+    onLocationSelected: function( e, uri ) {
+      var elem = $(".js-location-uri");
+      if (elem.val() !== uri) {
+        $(".js-location-choice[value='" + uri + "']").attr( "checked", true );
+        elem.val( uri );
+      }
     }
   } );
 
