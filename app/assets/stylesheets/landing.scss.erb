@@ -1,0 +1,35 @@
+// Place all the styles related to the Landing controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.c-logos {
+  img {
+    max-height: 50px;
+    margin-right: 20px;
+  }
+}
+
+.c-headline-figure {
+  font-weight: bold;
+}
+
+.c-current-figures {
+  p {
+    border-left: 8px solid $lr-green-dark;
+    padding-left: 10px;
+    margin-left: -10px;
+  }
+}
+
+.c-cta {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.c-search-tool {
+  @extend .button;
+  @extend .button-start;
+
+  background-image: url(<%= asset_path 'icon-pointer.png' %>);
+}

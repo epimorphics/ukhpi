@@ -23,13 +23,31 @@
 
 .c-current-figures.panel.panel-border-wide
   %p
-    The current average house price in the UK is
-    %span.c-current-uk-average
+    As of
+    %span.c-headline-figure
+      = @landing_state.period
+    the average house price in the UK is
+    %span.c-headline-figure
+      = succeed "," do
+        &pound;#{@landing_state.average_price}
     and the index stands at
-    = succeed "." do
-      %span.c-current-uk-index
+    %span.c-headline-figure
+      = succeed "." do
+        = @landing_state.house_price_index
+    House prices have
+    %span.c-headline-figure
+      = @landing_state.percentage_monthly_change
+    compared to the
+    %span
+      previous month,
+    and
+    %span.c-headline-figure
+      = @landing_state.percentage_annual_change
+    compared to the
+    %span
+      previous year.
 
-%h2.heading-medium   Search the UK House Price Index
+%h2.heading-medium Browse the UK House Price Index
 
 %p
   Use this tool to find average sales house prices and monthly and annual changes
