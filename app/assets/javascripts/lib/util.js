@@ -300,7 +300,7 @@ function(
 
     /** Stop the spinner */
     var spinStop = function() {
-      spinCount = spinCount - 1;
+      spinCount = Math.max( spinCount - 1, 0 );
       if (spinCount === 0) {
         $("body").spin( false );
       }

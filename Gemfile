@@ -30,11 +30,12 @@ gem 'd3-rails'
 gem 'momentjs-rails'
 gem 'bootstrap3-datetimepicker-rails'
 gem 'modulejs-rails'
+gem 'spinjs-rails'
+gem 'leaflet-rails'
 
 gem 'govuk_template'
 gem 'govuk_frontend_toolkit'#, github: "alphagov/govuk_frontend_toolkit_gem", submodules: true
 gem 'govuk_elements_rails'#, github: "ministryofjustice/govuk_elements_rails", submodules: true
-gem 'leaflet-rails'
 gem 'js-routes'
 gem 'byebug'
 
@@ -54,6 +55,7 @@ group :development, :test do
   gem 'vcr'
   gem 'nokogiri'
   gem 'json_expressions'
+  gem 'oj'
 end
 
 group :development do
@@ -63,5 +65,12 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'quiet_assets'
+
+  # Region boundary generation
+  gem 'rgeo', github: "ijdickinson/rgeo"
+  gem 'rgeo-geojson'
+  gem 'rgeo-shapefile'
+  gem 'simplify_rb'
+
 end
 

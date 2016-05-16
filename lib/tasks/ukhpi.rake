@@ -56,7 +56,7 @@ class Location
 
     if lr.same
       @same = lr.same
-      if @same =~ /(E\d+)$/
+      if @same =~ /([A-Z]\d+)$/
         @gss = $1
       end
     end
@@ -98,7 +98,7 @@ def write_regions_files( locations, all_types )
 
   locations.each do |uri,loc|
     loc.labels.each do |lang,txt|
-      location_names << {value: loc.uri, label: txt, lang: lang}
+      location_names << {value: loc.uri, label: txt, lang: lang} unless txt.empty?
     end
 
     # properties[:children] = properties[:children].to_a.sort
@@ -110,7 +110,7 @@ def write_regions_files( locations, all_types )
   puts "Generating region files ... "
   # JavaScript module output
   open( "regions-table.js", "w") do |file|
-    file << "define( [], function() {\n"
+    file << "modulejs.define( \"regions-table\", [], function() {\n"
     file << "\"use strict\";\n"
     file << "  var locationNames = #{location_names.to_json};\n"
     file << "  var types = #{all_types.to_a.sort.to_json};\n"
@@ -163,13 +163,23 @@ namespace :ukhpi do
     owl="http://www.w3.org/2002/07/owl#"
 
     query="select distinct ?refRegion ?label ?type ?parent ?same {
-      GRAPH <http://landregistry.data.gov.uk/UKHPI-2014-01> {
+      {
+        SELECT DISTINCT ?g {
+          GRAPH ?g {
+            ?s <#{hpi}refRegion> ?r .
+          }
+        }
+      }
+      GRAPH ?g {
         ?obs a <#{qb}Observation> ;
           <#{hpi}refRegion> ?refRegion.
         ?refRegion <#{rdfs}label> ?label.
         ?refRegion <#{rdf}type> ?type.
         optional {?refRegion <#{sr}within> ?parent.}
-        optional {?refRegion <#{owl}sameAs> ?same}
+        optional {
+          ?refRegion <#{owl}sameAs> ?same .
+          FILTER regex( str(?same), \"statistical-geography\" )
+        }
       }
     }"
 

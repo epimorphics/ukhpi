@@ -114,6 +114,41 @@ $graphColours: (
   transform: scaleX(0.6) rotate(45deg);
 }
 
+
+// Map view
+
+.c-map {
+  width: 100%;
+  min-height: 300px;
+  margin-top: 20px;
+}
+
+.c-location-types {
+  background-color: $green-25;
+  width: 100%;
+}
+
+.c-location-types--option {
+  padding: 0.5em 0 0.3em 1em;
+  margin-left: 1em;
+  margin-right: 2em;
+  text-align: center;
+  font-weight: normal;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.c-location-types--label {
+  font-weight: normal;
+}
+
+// Location search
+
+.c-location-search.country, .c-location-search.region {
+  padding-left: 1em;
+  padding-top: 1em;
+}
+
 // Bootstrap tables adjust
 table.dataTable thead .sorting {
   background-image: none;

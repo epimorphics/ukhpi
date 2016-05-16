@@ -8,23 +8,29 @@
 // = require bootstrap-datetimepicker
 // = require bootstrap3-typeahead
 // = require d3
+// = require leaflet
+// = require spin
+// = require jquery.spin
 // = require_tree .
 
 modulejs.define( "application", [
-  "controller"
+  "router"
 ],
 function(
-  Controller
+  Router
 ) {
   "use strict";
 
-  var controller = new Controller();
+  var router = new Router();
+  router.invoke( window.location );
 
   return {
-    controller: controller
+    router: router
   };
 } );
 
+/* global $ */
 $( function() {
+  "use strict";
   modulejs.require( "application" );
 } );

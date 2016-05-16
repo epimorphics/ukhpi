@@ -1,0 +1,23 @@
+.row
+  .col-sm-12
+    %h3 Indicators
+  .form-group
+    - Aspects::INDICATORS.each do |ind|
+      .col-xs-12.col-sm-6.col-md-3
+        %label.checkbox-inline
+          - name = ind[:root]
+          - visible = prefs.aspect_indicators.include?( name )
+          %input.js-aspect{ type: "checkbox", name: "ai[]", value: name, checked: visible }
+          = t( ind[:label] )
+
+  .col-sm-12
+    %h3 Data categories
+  .form-group
+    - Aspects::CATEGORIES.each do |cat|
+      - unless cat[:advanced]
+        .col-xs-12.col-sm-6.col-md-3
+          %label.checkbox-inline
+            - name = cat[:root]
+            - visible = prefs.aspect_categories.include?( name )
+            %input.js-aspect{ type: "checkbox", name: "ac[]", value: name, checked: visible }
+            = t( cat[:label] )

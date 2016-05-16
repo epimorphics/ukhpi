@@ -1,13 +1,15 @@
 /* Simple controller for client-side interaction in UKHPI */
 
-modulejs.define( "controller", [
+modulejs.define( "explore-controller", [
   "lib/lodash",
   "lib/jquery",
   "preferences-view",
   "routes",
   "query-results",
   "data-table-view",
-  "graphs-view"
+  "graphs-view",
+  "map-view",
+  "lib/ajax-monitor"
 ],
 function(
   _,
@@ -16,7 +18,8 @@ function(
   Routes,
   QueryResults,
   DataTableView,
-  GraphsView
+  GraphsView,
+  MapView
 ) {
   "use strict";
 
@@ -31,7 +34,8 @@ function(
       this.components = {
         preferencesView: new PreferencesView(),
         dataTableView: new DataTableView(),
-        graphsView: new GraphsView()
+        graphsView: new GraphsView(),
+        mapView: new MapView()
       };
     },
 
@@ -40,8 +44,8 @@ function(
     },
 
     bindEvents: function() {
-      $("body").on( "changeAspectSelection", _.bind( this.renderCurrentQueryResults, this ) );
-      $("body").on( "changePreferences", _.bind( this.loadResults, this ) );
+      $("body").on( "ukhpi.aspectSelection.change", _.bind( this.renderCurrentQueryResults, this ) );
+      $("body").on( "ukhpi.preferences.change", _.bind( this.loadResults, this ) );
     },
 
     loadResults: function() {
