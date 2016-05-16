@@ -36,7 +36,7 @@ en:
     revealing_button_caption: "hide"
 
   aspect:
-    overall_indices: "overall indices"
+    overall_indices: "all property types"
     detached_houses: "detached houses"
     semi_detached_houses: "semi-detached houses"
     terraced_houses: "terraced houses"
