@@ -46,7 +46,7 @@ modulejs.define( "graphs-view", [
       cssClass: "percentage-monthly-change",
       ticksCount: 5,
       yDomain: "",
-      graphType: "bars",
+      graphType: "lineAndPoints",
       symmetricalYAxis: true,
       tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     },
@@ -54,7 +54,7 @@ modulejs.define( "graphs-view", [
       cssClass: "percentage-annual-change",
       ticksCount: 5,
       yDomain: "",
-      graphType: "bars",
+      graphType: "lineAndPoints",
       symmetricalYAxis: true,
       tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
     }
