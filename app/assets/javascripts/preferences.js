@@ -75,6 +75,24 @@ modulejs.define( "preferences", [
       return _.map( pairs, function( pair ) {
         return pair[0] + _.upperFirst( pair[1] );
       } );
+    },
+
+    asURLParameters: function() {
+      var prefs = this.loadPrefs();
+      var pairs = [];
+
+      _.each( prefs, function( v, k ) {
+        if (_.isArray( v )) {
+          _.each( v, function( va ) {
+            pairs.push( [k.toString() + "[]", encodeURIComponent( va )].join( "=" ) );
+          } );
+        }
+        else {
+          pairs.push( [k.toString(), encodeURIComponent( v )].join( "=" ) );
+        }
+      } );
+
+      return pairs.join( "&" );
     }
   } );
 
