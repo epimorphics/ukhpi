@@ -4,13 +4,15 @@ modulejs.define( "preferences-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/util",
-  "regions-table"
+  "regions-table",
+  "preferences"
 ],
 function(
   _,
   $,
   Util,
-  RegionsTable
+  RegionsTable,
+  Preferences
 ) {
   "use strict";
 
@@ -18,6 +20,7 @@ function(
     this.bindEvents();
     this.setupTypeahead();
     this.setupDateTimePickers();
+    this.setPreferencesLinkURLs();
   };
 
   var COUNTY_TYPE =  "http://data.ordnancesurvey.co.uk/ontology/admingeo/County";
@@ -43,7 +46,9 @@ function(
       } );
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
-      $("body").on( "ukhpi.location.selected", _.bind( this.onLocationSelected, this ) );
+      $("body")
+        .on( "ukhpi.location.selected", _.bind( this.onLocationSelected, this ) )
+        .on( "ukhpi.preferences.change", _.bind( this.onPreferencesChange, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -146,6 +151,21 @@ function(
         $(".js-location-choice[value='" + uri + "']").attr( "checked", true );
         elem.val( uri );
       }
+    },
+
+    onPreferencesChange: function() {
+      this.setPreferencesLinkURLs();
+    },
+
+    setPreferencesLinkURLs: function() {
+      var prefs = new Preferences();
+      var params = "?" + prefs.asURLParameters();
+
+      $(".js-preferences-url").each( function( i, elem ) {
+        var link = $(elem);
+        var url = link.attr( "href" ).replace( /\?.*$/, "" );
+        link.attr( "href", url + params );
+      } );
     }
   } );
 
