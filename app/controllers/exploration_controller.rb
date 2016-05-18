@@ -1,7 +1,7 @@
 class ExplorationController < ApplicationController
   def new
     begin
-      enact_search( collectUserPreferences )
+      @exploration_state = enact_search( collectUserPreferences )
     rescue ArgumentError => e
       @exploration_state = ExplorationState.new( exception: e )
     end
@@ -24,14 +24,13 @@ class ExplorationController < ApplicationController
   :private
 
   def enact_search( user_prefs )
-    search_cmd = SearchCommand.new( user_prefs, Regions )
-    Rails.logger.debug( "search cmd status = #{search_cmd.search_status}" )
+    state = SearchCommand.new( user_prefs, Regions )
 
-    if search_cmd.search_status == :single_result
-      @exploration_state = ExplorationState.new( enact_query( search_cmd ) )
-    else
-      @exploration_state = ExplorationState.new( search_cmd )
+    if state.search_status == :single_result
+      state = enact_query( state )
     end
+
+    ExplorationState.new( state )
   end
 
   def collectUserPreferences

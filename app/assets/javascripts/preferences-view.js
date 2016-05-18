@@ -48,7 +48,9 @@ function(
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
       $("body")
         .on( "ukhpi.location.selected", _.bind( this.onLocationSelected, this ) )
-        .on( "ukhpi.preferences.change", _.bind( this.onPreferencesChange, this ) );
+        .on( "ukhpi.location.selected", _.bind( this.onPreferencesChange, this ) )
+        .on( "ukhpi.preferences.change", _.bind( this.onPreferencesChange, this ) )
+        .on( "ukhpi.aspectSelection.change", _.bind( this.onPreferencesChange, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -154,6 +156,7 @@ function(
     },
 
     onPreferencesChange: function() {
+      console.log( "onPreferencesChange " );
       this.setPreferencesLinkURLs();
     },
 
