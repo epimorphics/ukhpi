@@ -22,6 +22,6 @@ class DownloadState < Presenter
     uri = r["ukhpi:refRegion"]["@id"]
     region = Regions.lookup_region( uri )
 
-    [region.label, uri, region.gss]
+    [region.label, uri, region.gss] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
   end
 end
