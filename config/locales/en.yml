@@ -32,8 +32,8 @@ en:
 
   search_state:
     prompt: "Showing index data for "
-    reveal_button_caption: "change selection ..."
-    revealing_button_caption: "hide"
+    reveal_button_caption: "change selection"
+    revealing_button_caption: "hide selections"
 
   aspect:
     overall_indices: "all property types"

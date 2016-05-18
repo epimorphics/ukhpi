@@ -1,0 +1,21 @@
+/* Action button styles */
+
+.c-action {
+  padding: 5px 10px;
+  background-color: $grey-2;
+  border: 1px solid $grey-1;
+  font-size: 13px;
+}
+
+.c-action-prominent {
+  background-color: $button-colour;
+  color: white;
+}
+
+.c-download-controls {
+  margin-left: 2em;
+
+  a {
+    margin-left: 5px;
+  }
+}
