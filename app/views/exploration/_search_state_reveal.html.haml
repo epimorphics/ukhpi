@@ -1,13 +1,27 @@
 .js-reveal.reveal-block
-  = t( "search_state.prompt" )
-  %span.js-search-prompt
+  .js-search-prompt
+    = t( "search_state.prompt" )
+    %span
 
-  %button.btn.btn-sm.btn-primary.js-reveal-button
-    %i.fa
-    %span.if-revealing
-      = t( "search_state.revealing_button_caption" )
-    %span.not-revealing
-      = t( "search_state.reveal_button_caption" )
+  .c-search-controls
+    %button.c-action.c-action-prominent.js-reveal-button
+      %i.fa
+      %span.if-revealing
+        = t( "search_state.revealing_button_caption" )
+      %span.not-revealing
+        = t( "search_state.reveal_button_caption" )
+
+    %span.c-download-controls
+      %span.c-download-controls--prompt
+      = link_to( download_index_path, class: "c-action" ) do
+        %i.fa.fa-external-link
+        download as json
+      = link_to( download_index_path, class: "c-action" ) do
+        %i.fa.fa-external-link
+        download as spreadsheet (csv)
+      = link_to( download_index_path, class: "c-action" ) do
+        %i.fa.fa-external-link
+        download as rdf
 
 .js-preferences-form.hidden
   = render partial: "hpi_search_form_js"

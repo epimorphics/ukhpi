@@ -47,7 +47,7 @@ function(
     },
 
     updatePrompt: function( qr ) {
-      $(".js-search-prompt").text( qr.prefsSummary() );
+      $(".js-search-prompt span").text( qr.prefsSummary() );
     },
 
     onToggleRevealPreferences: function( e ) {
