@@ -3,5 +3,5 @@ Rails.application.routes.draw do
   resources :landing, only: [:index]
   get "/explore", to: "exploration#index"
   resources :exploration, only: [:new]
-  resources :download, only: [:index]
+  resources :download, only: [:new]
 end

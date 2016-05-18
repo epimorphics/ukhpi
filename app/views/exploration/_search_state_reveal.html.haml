@@ -13,13 +13,13 @@
 
     %span.c-download-controls
       %span.c-download-controls--prompt
-      = link_to( download_index_path( format: "json" ), class: "c-action js-preferences-url" ) do
+      = link_to( new_download_path( format: "json" ), class: "c-action js-preferences-url" ) do
         %i.fa.fa-external-link
         download as json
-      = link_to( download_index_path( format: "csv" ), class: "c-action js-preferences-url" ) do
+      = link_to( new_download_path( format: "csv" ), class: "c-action js-preferences-url" ) do
         %i.fa.fa-external-link
         download as spreadsheet (csv)
-      = link_to( download_index_path( format: "ttl" ), class: "c-action js-preferences-url" ) do
+      = link_to( new_download_path( format: "ttl" ), class: "c-action js-preferences-url" ) do
         %i.fa.fa-external-link
         download as rdf
 

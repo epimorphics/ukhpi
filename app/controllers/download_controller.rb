@@ -1,2 +1,2 @@
-class DownloadController < ApplicationController
+class DownloadController < ExplorationController
 end
