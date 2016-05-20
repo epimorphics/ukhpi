@@ -47,8 +47,10 @@ function(
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
       $("body")
-        .on( "ukhpi.location.selected", _.bind( this.onLocationSelected, this ) )
-        .on( "ukhpi.location.selected", _.bind( this.onPreferencesChange, this ) )
+        .on( "ukhpi.location.selected-map", _.bind( function() {
+          this.onLocationSelected.apply( this, arguments );
+          // this.onPreferencesChange.apply( this, arguments );
+        }, this ) )
         .on( "ukhpi.preferences.change", _.bind( this.onPreferencesChange, this ) )
         .on( "ukhpi.aspectSelection.change", _.bind( this.onPreferencesChange, this ) );
     },
@@ -92,7 +94,6 @@ function(
         }
       });
 
-      console.log( "setupTypeahead " + countyNames.length + " " + laNames.length);
       $( ".county .js-location" ).typeahead( {
         source: countyNames,
         afterSelect: _.bind( this.onAutocompleteSelect, this )
@@ -112,12 +113,10 @@ function(
     },
 
     onAutocompleteSelect: function( value ) {
-      console.log( "on autocomplete select " + value );
       this.selectLocation( value.uri );
     },
 
     selectLocation: function( uri ) {
-      console.log( "Setting location uri " + uri );
       $(".js-location-uri").val( uri );
       $("body")
         .trigger( "ukhpi.preferences.change" )
@@ -150,13 +149,11 @@ function(
     onLocationSelected: function( e, uri ) {
       var elem = $(".js-location-uri");
       if (elem.val() !== uri) {
-        $(".js-location-choice[value='" + uri + "']").attr( "checked", true );
-        elem.val( uri );
+        $(".js-location-choice[value='" + uri + "']").click();
       }
     },
 
     onPreferencesChange: function() {
-      console.log( "onPreferencesChange " );
       this.setPreferencesLinkURLs();
     },
 

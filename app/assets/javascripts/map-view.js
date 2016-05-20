@@ -254,9 +254,7 @@ function(
       var feature = l.target && l.target.feature;
       if (feature) {
         var uri = feature.properties.ukhpiURI;
-        $("body")
-          .trigger( "ukhpi.location.selected", uri )
-          .trigger( "ukhpi.preferences.change" );
+        $("body").trigger( "ukhpi.location.selected-map", uri );
       }
     }
 
