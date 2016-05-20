@@ -42,7 +42,7 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "lineAndPoints"
     },
-    percentageMonthlyChange: {
+    percentageChange: {
       cssClass: "percentage-monthly-change",
       ticksCount: 5,
       yDomain: "",

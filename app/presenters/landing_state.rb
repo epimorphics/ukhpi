@@ -27,7 +27,7 @@ class LandingState
   end
 
   def percentage_monthly_change
-    format_percentage( result[:"ukhpi:percentageMonthlyChange"].first )
+    format_percentage( result[:"ukhpi:percentageChange"].first )
   end
 
   def percentage_annual_change

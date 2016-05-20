@@ -23,7 +23,7 @@ class Aspects
   INDICATORS = [
     {root: "housePriceIndex",         label: "house_price_index"},
     {root: "averagePrice",            label: "average_price"},
-    {root: "percentageMonthlyChange", label: "percentage_monthly_change"},
+    {root: "percentageChange",        label: "percentage_monthly_change"},
     {root: "percentageAnnualChange",  label: "percentage_annual_change"}
   ]
 
