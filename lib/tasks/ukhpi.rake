@@ -155,33 +155,35 @@ namespace :ukhpi do
 
   desc "run the SPARQL query to generate the region results"
   task regions_query: :environment do
-    rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-    qb="http://purl.org/linked-data/cube#"
-    hpi="http://landregistry.data.gov.uk/def/ukhpi/"
-    rdfs="http://www.w3.org/2000/01/rdf-schema#"
-    sr="http://data.ordnancesurvey.co.uk/ontology/spatialrelations/"
-    owl="http://www.w3.org/2002/07/owl#"
 
-    query="select distinct ?refRegion ?label ?type ?parent ?same {
+    query="
+      prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+      prefix qb: <http://purl.org/linked-data/cube#>
+      prefix hpi: <http://landregistry.data.gov.uk/def/ukhpi/>
+      prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      prefix sr: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/>
+      prefix owl: <http://www.w3.org/2002/07/owl#>
+
+      select distinct ?refRegion ?label ?type ?parent ?same {
       {
         SELECT DISTINCT ?g {
           GRAPH ?g {
-            ?s <#{hpi}refRegion> ?r .
+            ?s hpi:refRegion ?r .
           }
         }
       }
       GRAPH ?g {
-        ?obs a <#{qb}Observation> ;
-          <#{hpi}refRegion> ?refRegion.
-        ?refRegion <#{rdfs}label> ?label.
-        ?refRegion <#{rdf}type> ?type.
-        optional {?refRegion <#{sr}within> ?parent.}
+        ?obs a qb:Observation ;
+          hpi:refRegion ?refRegion.
+        ?refRegion rdfs:label ?label.
+        ?refRegion rdf:type ?type.
+        optional {?refRegion sr:within ?parent.}
         optional {
-          ?refRegion <#{owl}sameAs> ?same .
+          ?refRegion rdfs:seeAlso ?same .
           FILTER regex( str(?same), \"statistical-geography\" )
         }
       }
-    }"
+      }"
 
     squery=(ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
     server=ENV["SERVER"] || "http://lr-data-dev-c.epimorphics.net/landregistry/query"
