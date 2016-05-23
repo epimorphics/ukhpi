@@ -331,7 +331,7 @@ function(
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough": ["local-authority"],
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict": ["local-authority"],
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/No_Region_type": [],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["county", "local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["local-authority"],
         "http://landregistry.data.gov.uk/def/ukhpi/Region": [],
         "unknown": []
       }[layerType( layer )];

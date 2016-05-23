@@ -31,8 +31,9 @@ function(
   var LONDON_BOROUGH_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough";
   var METRO_DISTRICT_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict";
 
-  var COUNTY_TYPES = [COUNTY_TYPE, UNITARY_TYPE];
-  var LOCAL_AUTH_TYPES = [BOROUGH_TYPE, DISTRICT_TYPE, GLA_TYPE, LONDON_BOROUGH_TYPE, METRO_DISTRICT_TYPE];
+  var COUNTY_TYPES = [COUNTY_TYPE];
+  var LOCAL_AUTH_TYPES = [BOROUGH_TYPE, DISTRICT_TYPE, GLA_TYPE,
+                          LONDON_BOROUGH_TYPE, METRO_DISTRICT_TYPE, UNITARY_TYPE];
 
   _.extend( PreferencesView.prototype, {
     preferences: function() {
