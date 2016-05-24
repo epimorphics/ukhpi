@@ -240,15 +240,24 @@ function(
       var feature = layer.feature;
 
       this.styleLayer( layer, highlightRegionStyle );
+      this.showPopup( _.get( feature, "properties.ukhpiLabel" ), e.latlng );
+    },
 
-      if (feature && feature.properties && feature.properties.ukhpiLabel) {
-        Leaflet.popup( {
-            offset: new Leaflet.Point( 0, -10 ),
-            autoPan: false
-          } )
-         .setLatLng( e.latlng )
-         .setContent( feature.properties.ukhpiLabel )
-         .openOn( this._map );
+    showPopup: function( label, point ) {
+      if (label) {
+        var popup = Leaflet.popup( {
+          offset: new Leaflet.Point( 0, -10 ),
+          autoPan: false
+        } )
+          .setLatLng( point )
+          .setContent( label );
+
+        popup.openOn( this._map );
+        var hidePopup = (function( m, p ) {
+          return function() {m.closePopup( p );};
+        })( this._map, popup );
+
+        _.delay( hidePopup, 2000 );
       }
       else {
         this._map.closePopup();
@@ -311,10 +320,12 @@ function(
     } );
   };
 
-  var highlightRegionStyle = function( layer ) {
-    return _.extend( defaultRegionStyle( layer ), {
-      color: "ff0"
-    } );
+  var highlightRegionStyle = function() {
+    return {
+      color: "#ded",
+      fillColor: "#ded",
+      weight: 2
+    };
   };
 
   /** @return The URI of the layer, looked up either by GSS code or name */
