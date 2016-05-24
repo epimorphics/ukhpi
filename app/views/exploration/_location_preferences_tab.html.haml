@@ -9,27 +9,27 @@
           countries
       %li.c-location-types--option
         %label.c-location-types--label
+          %input.js-location-type{ type: "radio", name: "location-type", value: "local-authority" }
+          local authorities
+      %li.c-location-types--option
+        %label.c-location-types--label
           %input.js-location-type{ type: "radio", name: "location-type", value: "region" }
-          regions
+          English regions
       %li.c-location-types--option
         %label.c-location-types--label
           %input.js-location-type{ type: "radio", name: "location-type", value: "county" }
-          counties and unitary authorities
-      %li.c-location-types--option
-        %label.c-location-types--label
-          %input.js-location-type{ type: "radio", name: "location-type", value: "local-authority" }
-          local authorities
+          English counties
   .row
     .col-sm-12.col-md-6
       .form-group.c-location-search.country
         %ul.list-unstyled
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/united-kingdom" }
+              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/united-kingdom", checked: true }
               United Kingdom
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/great-britain", checked: true }
+              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/great-britain" }
               Great Britain
           %li
             %label.c-location-search--label
@@ -80,7 +80,7 @@
               South West
           %li
             %label.c-location-search--label
-              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/west-midlands" }
+              %input.js-location-choice{ type: "radio", name: "region-selection", value: "http://landregistry.data.gov.uk/id/region/west-midlands-region" }
               West Midlands
           %li
             %label.c-location-search--label

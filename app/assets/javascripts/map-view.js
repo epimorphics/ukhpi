@@ -92,6 +92,11 @@ function(
         this._map.addLayer( this._ukFeature );
         this.showLayer( DEFAULT_LAYER, this._map );
       }
+
+      if (this._map && this._defaultLocation) {
+        this.onSelectLocation( null, this._defaultLocation );
+        this._defaultLocation = null;
+      }
     },
 
     showLayer: function( layerId, map ) {
@@ -137,9 +142,12 @@ function(
 
     findLayer: function( id ) {
       var found = null;
-      this._map.eachLayer( function( layer ) {
-        var uri = _.get( layer, "feature.properties.ukhpiURI" );
-        found = (id === uri) ? layer : found;
+      _.each( this._featuresPartition, function( featureGroup ) {
+        featureGroup.eachLayer( function( layer ) {
+          var uri = _.get( layer, "feature.properties.ukhpiURI" );
+          found = (id === uri) ? layer : found;
+        } );
+
       } );
 
       return found;
@@ -174,7 +182,7 @@ function(
     },
 
     styleLayer: function( layer, style ) {
-      layer.setStyle( style() );
+      layer.setStyle( style( layer ) );
     },
 
     showSelectedLocations: function( locations ) {
@@ -192,6 +200,10 @@ function(
       } );
 
       this._currentSelections = locations;
+    },
+
+    setDefaultLocation: function( uri ) {
+      this._defaultLocation = uri;
     },
 
     onShowTab: function( e ) {
@@ -228,15 +240,24 @@ function(
       var feature = layer.feature;
 
       this.styleLayer( layer, highlightRegionStyle );
+      this.showPopup( _.get( feature, "properties.ukhpiLabel" ), e.latlng );
+    },
 
-      if (feature && feature.properties && feature.properties.ukhpiLabel) {
-        Leaflet.popup( {
-            offset: new Leaflet.Point( 0, -10 ),
-            autoPan: false
-          } )
-         .setLatLng( e.latlng )
-         .setContent( feature.properties.ukhpiLabel )
-         .openOn( this._map );
+    showPopup: function( label, point ) {
+      if (label) {
+        var popup = Leaflet.popup( {
+          offset: new Leaflet.Point( 0, -10 ),
+          autoPan: false
+        } )
+          .setLatLng( point )
+          .setContent( label );
+
+        popup.openOn( this._map );
+        var hidePopup = (function( m, p ) {
+          return function() {m.closePopup( p );};
+        })( this._map, popup );
+
+        _.delay( hidePopup, 2000 );
       }
       else {
         this._map.closePopup();
@@ -261,7 +282,15 @@ function(
   } );
 
 
-  var defaultRegionStyle = function() {
+  var isBackgroundLayer = function( layer ) {
+    return layer && _.get( layer, "feature.properties.ISO" ) === "GBR";
+  };
+
+  var defaultRegionStyle = function( layer ) {
+    return (isBackgroundLayer( layer ) ? backgroundRegionStyle : standardRegionStyle)( layer );
+  };
+
+  var standardRegionStyle = function() {
     return {
       fillColor: "#5A8006",
       weight: 1,
@@ -273,15 +302,17 @@ function(
   };
 
   var backgroundRegionStyle = function() {
-    return _.extend( defaultRegionStyle(), {
+    return {
       fillColor: "#666666",
       color: "#666666",
+      weight: 1,
+      dashArray: "3",
       fillOpacity: 0.7
-    } );
+    };
   };
 
-  var selectedRegionStyle = function() {
-    return _.extend( defaultRegionStyle(), {
+  var selectedRegionStyle = function( layer ) {
+    return _.extend( defaultRegionStyle( layer ), {
       fillColor: "#C0C006",
       color: "#686",
       fillOpacity: 0.7,
@@ -290,9 +321,11 @@ function(
   };
 
   var highlightRegionStyle = function() {
-    return _.extend( defaultRegionStyle(), {
-      color: "ff0"
-    } );
+    return {
+      color: "#ded",
+      fillColor: "#ded",
+      weight: 2
+    };
   };
 
   /** @return The URI of the layer, looked up either by GSS code or name */
@@ -331,7 +364,7 @@ function(
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough": ["local-authority"],
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict": ["local-authority"],
         "http://data.ordnancesurvey.co.uk/ontology/admingeo/No_Region_type": [],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["county", "local-authority"],
+        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["local-authority"],
         "http://landregistry.data.gov.uk/def/ukhpi/Region": [],
         "unknown": []
       }[layerType( layer )];

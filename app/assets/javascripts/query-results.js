@@ -47,7 +47,7 @@ modulejs.define( "query-results", [
       var aspect = "ukhpi:" + indicator + category;
       var s = _.map( this.results(), function( r ) {
         var val = r.value( aspect );
-        if (val) {
+        if (_.isFinite( val )) {
           return {x: r.periodDate().toDate(),
                   y: r.value( aspect ),
                   ind: indicator,

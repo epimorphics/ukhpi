@@ -5,67 +5,27 @@ require './app/models/regions-table'
 require 'find'
 require 'rake'
 
-BL_SOURCE = "./data/boundary-line/Data/"
-COUNTY_SOURCE = "#{BL_SOURCE}GB/county_region.shp"
-DISTRICT_SOURCE = "#{BL_SOURCE}GB/district_borough_unitary_region.shp"
-EURO_REGION_SOURCE = "#{BL_SOURCE}GB/european_region_region.shp"
-CEREMONIAL_SOURCE = "#{BL_SOURCE}Supplementary_Ceremonial/Boundary-line-ceremonial-counties.shp"
-SCOTLAND_WALES_SOURCE = "#{BL_SOURCE}/GB/scotland_and_wales_const_region.shp"
-IRELAND_COUNTIES_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__County_Boundaries.shp"
-IRELAND_DISTRICTS_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__Local_Government_Districts_2012.shp"
-IRELAND_SOURCE = "#{BL_SOURCE}/UK/OSNI_Open_Data_Largescale_Boundaries__NI_Outline.shp"
+OUTPUTS = "./data/outputs"
 
-ONS_REGIONS  = "#{BL_SOURCE}/ONS_regions/RGN_DEC_2015_EN_BGC.shp"
-ONS_DISTRICTS = "#{BL_SOURCE}/ONS_districts/LAD_DEC_2015_GB_BGC.shp"
-ONS_COUNTRIES = "#{BL_SOURCE}/ONS_countries/CTRY_DEC_2015_GB_BGC.shp"
-
-SOURCES = [{source: COUNTY_SOURCE, type: "county", projection: :bng},
-           {source: DISTRICT_SOURCE, type: "district", projection: :bng},
-           {source: EURO_REGION_SOURCE, type: "region", projection: :bng},
-           # {source: CEREMONIAL_SOURCE,type: "county", projection: :bng},
-           {source: IRELAND_COUNTIES_SOURCE, type: "county", projection: :bng},
-           {source: IRELAND_DISTRICTS_SOURCE,type: "district", projection: :bng},
-           {source: ONS_REGIONS, type: "region", projection: :bng},
-           {source: ONS_DISTRICTS, type: "district", projection: :bng},
-           {source: ONS_COUNTRIES,type: "country", projection: :bng}
-           #{source: IRELAND_SOURCE,type: "country", projection: :wgs84}
-          ]
+Struct.new( "Source", :file, :type, :crs, :id_attrib, :name_attrib )
+SOURCES = [
+  Struct::Source.new( "#{OUTPUTS}/eng-counties.shp",
+                      "county", :osgb, "CTYUA15CD", "CTYUA15NM" ),
+  Struct::Source.new( "#{OUTPUTS}/la-districts.shp",
+                      "district", :osgb, "LAD15CD", "LAD15NM" ),
+  Struct::Source.new( "#{OUTPUTS}/lm-counties.shp",
+                      "district", :osgb, "LMCTY11CD", "LMCTY11NM" ),
+  Struct::Source.new( "#{OUTPUTS}/eng-regions.shp",
+                      "region", :osgb, "RGN15CD", "RGN15NM" ),
+  Struct::Source.new( "#{OUTPUTS}/gb-countries.shp",
+                      "country", :osgb, "CTRY15CD", "CTRY15NM" ),
+  Struct::Source.new( "#{OUTPUTS}/ni-districts.shp",
+                      "district", :wgs84, "LGDCode", "LGDNAME" ),
+  Struct::Source.new( "#{OUTPUTS}/ni-outline.shp",
+                      "country", :wgs84, "not-applicable", "NAME" )
+]
 
 SIMPLIFICATION = 500
-
-if Rails.env.production?
-  # Stub out these calls so that the compiler doesn't barf on this rakefile in production
-  module RGeo
-  end
-  class RGeo::Cartesian
-    def self.factory( *args )
-    end
-  end
-  module RGeo::Shapefile
-  end
-  class RGeo::Shapefile::Reader
-    def self.open( *args )
-    end
-  end
-  module RGeo::Feature
-    def self.cast
-    end
-  end
-  module RGeo::GeoJSON
-    def self.encode( *args )
-    end
-  end
-  class RGeo::GeoJSON::Feature
-    def initialize( *args )
-    end
-  end
-  class RGeo::Feature::Point
-  end
-  class RGeo::GeoJSON::FeatureCollection
-    def initialize( *args )
-    end
-  end
-end
 
 BNG_PROJECTION = RGeo::Cartesian.factory( proj4: '+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000 +ellps=airy +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894 +units=m +no_defs' )
 LATLONG_PROJECTION = RGeo::Cartesian.factory( proj4: "+proj=longlat +ellps=WGS84 +towgs84=0,0,0 +no_defs" )
@@ -92,22 +52,20 @@ def as_keys( name )
 end
 
 def create_index( options, index = Hash.new )
-  filename = options[:source]
+  filename = options.file
   puts "Indexing #{filename}"
   RGeo::Shapefile::Reader.open( filename ) do |file|
     file.each do |record|
       attribs = record.attributes
 
-      gss = attribs["CODE"] || attribs["Code"] || attribs["LGDCode"]
-      name = attribs["CTRY15CD"] || attribs["LAD15CD"] || attribs["RGN15CD"] ||
-             attribs["NAME"] || attribs["Name"] || attribs["CountyName"] ||
-             attribs["NAME_LOCAL"]
+      gss = attribs[options.id_attrib]
+      name = attribs[options.name_attrib]
       gss_or_name = gss || name
 
       if gss_or_name
         attribs["ukhpiID"] = gss_or_name
-        attribs["ukhpiType"] = options[:type]
-        attribs["ukhpiProjection"] = options[:projection]
+        attribs["ukhpiType"] = options.type
+        attribs["ukhpiCRS"] = options.crs
 
         as_keys( gss_or_name ).each do |key|
           index[key] = record
@@ -183,12 +141,7 @@ def from_xy( line )
 end
 
 def as_geojson_feature( name, record )
-  if record.attributes["ukhpiProjection"].to_sym == :wgs84
-    bng_geometry = RGeo::Feature.cast( record.geometry, factory: BNG_PROJECTION, project: true )
-    RGeo::GeoJSON::Feature.new( bng_geometry, name, record.attributes )
-  else
-    RGeo::GeoJSON::Feature.new( record.geometry, name, record.attributes )
-  end
+  RGeo::GeoJSON::Feature.new( record.geometry, name, record.attributes )
 end
 
 def is_point?( p )
@@ -250,11 +203,13 @@ def load_index
   composite_index( SOURCES )
 end
 
-def transform_coordinates( json, fn )
+def transform_coordinates( json, fn, ifCRS = nil )
   j_features = json["features"]
   j_features.each do |feature|
-    geometry = feature["geometry"]
-    geometry["coordinates"] = fn.call( geometry["coordinates"] )
+    if feature["properties"]["ukhpiCRS"] == ifCRS
+      geometry = feature["geometry"]
+      geometry["coordinates"] = fn.call( geometry["coordinates"] )
+    end
   end
 end
 
@@ -266,6 +221,7 @@ namespace :ukhpi do
     puts "Done indexing, generating features"
 
     features = []
+    missing = 0
     Regions.each_location do |location|
       geo_record = as_geo_record( location, index )
       if geo_record
@@ -274,8 +230,11 @@ namespace :ukhpi do
         features << as_geojson_feature( location.label, geo_record )
       else
         puts "No geo_record for #{location.label}"
+        missing += 1
       end
     end
+
+    puts "Missing count: #{missing}"
 
     puts "Sorting by reverse area"
     features.sort! do |f0, f1|
@@ -300,11 +259,8 @@ namespace :ukhpi do
 
     json = JSON.load( File.open( "fc.json" ) )
 
-    puts "Simplifying"
-    transform_coordinates( json, method( :simplify_lines ) )
-
     puts "Converting to lat long"
-    transform_coordinates( json, method( :line_to_lat_long ) )
+    transform_coordinates( json, method( :line_to_lat_long ), "osgb" )
 
     Oj.default_options = {mode: :strict, float_precision: 6}
     File.open( "fc_simple.json", "w" ) do |file|
@@ -330,7 +286,7 @@ namespace :ukhpi do
   desc "Produce attributes for all shape files"
   task shape_file_attribs: :environment do
     shape_files = []
-    Find.find( "./data/boundary-line" ) do |file|
+    Find.find( "./data/outputs" ) do |file|
       shape_files << file if file =~ /.*\.shp$/
     end
     shape_files.each do |sf|

@@ -31,8 +31,9 @@ function(
   var LONDON_BOROUGH_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough";
   var METRO_DISTRICT_TYPE = "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict";
 
-  var COUNTY_TYPES = [COUNTY_TYPE, UNITARY_TYPE];
-  var LOCAL_AUTH_TYPES = [BOROUGH_TYPE, DISTRICT_TYPE, GLA_TYPE, LONDON_BOROUGH_TYPE, METRO_DISTRICT_TYPE];
+  var COUNTY_TYPES = [COUNTY_TYPE];
+  var LOCAL_AUTH_TYPES = [BOROUGH_TYPE, DISTRICT_TYPE, GLA_TYPE,
+                          LONDON_BOROUGH_TYPE, METRO_DISTRICT_TYPE, UNITARY_TYPE];
 
   _.extend( PreferencesView.prototype, {
     preferences: function() {
@@ -149,7 +150,17 @@ function(
     onLocationSelected: function( e, uri ) {
       var elem = $(".js-location-uri");
       if (elem.val() !== uri) {
-        $(".js-location-choice[value='" + uri + "']").click();
+        $(".js-location-choice:checked").prop( "checked", false );
+
+        var inputElem = $(".js-location-choice[value='" + uri + "']");
+        if (inputElem.length > 0) {
+          inputElem.click();
+        }
+        else {
+          var regionName = _.find( RegionsTable.names, {value: uri} ).label;
+          $(".js-location:visible").val( regionName );
+          this.selectLocation( uri );
+        }
       }
     },
 

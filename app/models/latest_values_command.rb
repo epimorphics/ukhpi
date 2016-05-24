@@ -34,7 +34,7 @@ class LatestValuesCommand
   end
 
   def add_location_constraint( query )
-    value = DataServicesApi::Value.uri( "http://landregistry.data.gov.uk/id/region/great-britain" )
+    value = DataServicesApi::Value.uri( "http://landregistry.data.gov.uk/id/region/united-kingdom" )
     query.eq( "ukhpi:refRegion", value )
   end
 
