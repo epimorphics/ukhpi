@@ -9,16 +9,16 @@
           countries
       %li.c-location-types--option
         %label.c-location-types--label
+          %input.js-location-type{ type: "radio", name: "location-type", value: "local-authority" }
+          local authorities
+      %li.c-location-types--option
+        %label.c-location-types--label
           %input.js-location-type{ type: "radio", name: "location-type", value: "region" }
-          regions
+          English regions
       %li.c-location-types--option
         %label.c-location-types--label
           %input.js-location-type{ type: "radio", name: "location-type", value: "county" }
-          counties and unitary authorities
-      %li.c-location-types--option
-        %label.c-location-types--label
-          %input.js-location-type{ type: "radio", name: "location-type", value: "local-authority" }
-          local authorities
+          English counties
   .row
     .col-sm-12.col-md-6
       .form-group.c-location-search.country
