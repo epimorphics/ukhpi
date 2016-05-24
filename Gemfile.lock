@@ -1,4 +1,10 @@
 GIT
+  remote: git://github.com/axyjo/leaflet-rails.git
+  revision: 4a60fe3f0b5e2b4cf29d024a3eab1836bc528b84
+  specs:
+    leaflet-rails (1.0.0.pre.rc1)
+
+GIT
   remote: git://github.com/ijdickinson/rgeo.git
   revision: e71949045f88ffa70435606b29ef816e3d455361
   specs:
@@ -135,7 +141,6 @@ GEM
       sprockets-rails
     json (1.8.3)
     json_expressions (0.8.3)
-    leaflet-rails (0.7.7)
     link_header (0.0.8)
     lodash-rails (4.11.2)
       railties (>= 3.1)
@@ -291,7 +296,7 @@ DEPENDENCIES
   jquery-ui-rails
   js-routes
   json_expressions
-  leaflet-rails
+  leaflet-rails!
   lodash-rails
   minitest-rails-capybara
   minitest-reporters
