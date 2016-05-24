@@ -2,9 +2,8 @@
 # House Price Index data
 
 class UserPreferences
-  INTERIM_DATASET = true
+  INTERIM_DATASET = false
 
-  DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/united-kingdom"
   DEFAULT_ASPECT_INDICATORS = %w( housePriceIndex averagePrice percentageChange percentageAnnualChange )
   DEFAULT_ASPECT_CATEGORIES = [""]
 
@@ -31,7 +30,7 @@ class UserPreferences
   DEFAULTS = {
     from: INTERIM_DATASET ? Date.new( 2013, 12, 31 ) : Date.today.prev_year,
     to: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today,
-    region: DEFAULT_LOCATION,
+    region: Constants::DEFAULT_LOCATION,
     ai: DEFAULT_ASPECT_INDICATORS,
     ac: DEFAULT_ASPECT_CATEGORIES
   }
