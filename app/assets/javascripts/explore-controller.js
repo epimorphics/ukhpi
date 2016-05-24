@@ -3,6 +3,7 @@
 modulejs.define( "explore-controller", [
   "lib/lodash",
   "lib/jquery",
+  "constants",
   "preferences-view",
   "routes",
   "query-results",
@@ -14,6 +15,7 @@ modulejs.define( "explore-controller", [
 function(
   _,
   $,
+  Constants,
   PreferencesView,
   Routes,
   QueryResults,
@@ -27,6 +29,7 @@ function(
     this.createComponents();
     this.bindEvents();
     this.loadResults();
+    this.setDefaultLocation();
   };
 
   _.extend( Controller.prototype, {
@@ -72,6 +75,10 @@ function(
     renderQueryResults: function( qr ) {
       this.component( "dataTableView" ).showQueryResults( qr );
       this.component( "graphsView" ).showQueryResults( qr );
+    },
+
+    setDefaultLocation: function() {
+      this.components.mapView.setDefaultLocation( Constants.DEFAULT_LOCATION );
     }
 
   } );

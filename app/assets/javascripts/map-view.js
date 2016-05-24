@@ -92,6 +92,11 @@ function(
         this._map.addLayer( this._ukFeature );
         this.showLayer( DEFAULT_LAYER, this._map );
       }
+
+      if (this._map && this._defaultLocation) {
+        this.onSelectLocation( null, this._defaultLocation );
+        this._defaultLocation = null;
+      }
     },
 
     showLayer: function( layerId, map ) {
@@ -192,6 +197,10 @@ function(
       } );
 
       this._currentSelections = locations;
+    },
+
+    setDefaultLocation: function( uri ) {
+      this._defaultLocation = uri;
     },
 
     onShowTab: function( e ) {
