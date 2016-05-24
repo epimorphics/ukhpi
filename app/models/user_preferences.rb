@@ -4,7 +4,7 @@
 class UserPreferences
   INTERIM_DATASET = true
 
-  DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/great-britain"
+  DEFAULT_LOCATION = "http://landregistry.data.gov.uk/id/region/united-kingdom"
   DEFAULT_ASPECT_INDICATORS = %w( housePriceIndex averagePrice percentageChange percentageAnnualChange )
   DEFAULT_ASPECT_CATEGORIES = [""]
 
