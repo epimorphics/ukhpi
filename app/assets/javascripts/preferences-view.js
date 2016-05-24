@@ -37,7 +37,7 @@ function(
 
   _.extend( PreferencesView.prototype, {
     preferences: function() {
-      return $("#preferences").serialize();
+      return $("#preferences-js").serialize();
     },
 
     bindEvents: function() {

@@ -322,7 +322,7 @@ function(
 
   var highlightRegionStyle = function() {
     return {
-      color: "#ded",
+      color: "#222",
       fillColor: "#ded",
       weight: 2
     };

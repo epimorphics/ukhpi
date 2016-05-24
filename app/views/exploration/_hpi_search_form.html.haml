@@ -33,7 +33,7 @@
           - visible = prefs.aspect_categories.include?( name )
           %input{ type: "checkbox", name: "ac[]", value: name, checked: visible }
           = t( cat[:label] )
-      %input.form-control{ type: "date", id: "to", name: "to", value: @exploration_state.preference( :to ) }
+
   .form-group.js-hidden
     %label.col-sm-2
     .col-sm-10

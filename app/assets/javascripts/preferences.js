@@ -16,7 +16,7 @@ modulejs.define( "preferences", [
     loadPrefs: function() {
       var prefs = {};
 
-      var selections = $("#preferences").serializeArray();
+      var selections = $("#preferences-js").serializeArray();
       _.each( selections, function( selection ) {
         var name = selection.name;
 
