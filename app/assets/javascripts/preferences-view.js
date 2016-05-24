@@ -150,7 +150,17 @@ function(
     onLocationSelected: function( e, uri ) {
       var elem = $(".js-location-uri");
       if (elem.val() !== uri) {
-        $(".js-location-choice[value='" + uri + "']").click();
+        $(".js-location-choice:checked").prop( "checked", false );
+
+        var inputElem = $(".js-location-choice[value='" + uri + "']");
+        if (inputElem.length > 0) {
+          inputElem.click();
+        }
+        else {
+          var regionName = _.find( RegionsTable.names, {value: uri} ).label;
+          $(".js-location:visible").val( regionName );
+          this.selectLocation( uri );
+        }
       }
     },
 
