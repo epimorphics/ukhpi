@@ -31,6 +31,21 @@
   font-weight: bold;
 }
 
+.c-results-table--compact {
+  @extend .v-scroll;
+
+  font-size: 90%;
+
+  table td {
+    font-size: 14px !important;
+  }
+
+  table th {
+    font-size: 14px;
+    font-weight: normal;
+  }
+}
+
 .js-reveal-button {
   i.fa {
     @extend .fa-angle-double-down;
@@ -81,3 +96,7 @@
 }
 
 /* surface */
+
+.v-scroll {
+  overflow: auto;
+}
