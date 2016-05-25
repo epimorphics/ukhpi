@@ -79,11 +79,6 @@ $graphColours: (
     stroke: none;
   }
 
-  .bar {
-    fill: $graphDefaultColour;
-    stroke: none;
-  }
-
   @each $category, $colour in $graphColours {
     .line.#{$category} {
       stroke: $colour;
@@ -94,6 +89,25 @@ $graphColours: (
     .bar.#{$category} {
       fill: $colour;
     }
+  }
+
+  .c-graph-overlay {
+    fill: none;
+    pointer-events: all;
+  }
+
+  .c-x-track {
+    fill: none;
+    stroke-width: 0.5;
+    stroke: #999;
+  }
+
+  .c-x-track--g {
+  }
+
+  .c-x-track--title {
+    font-size: 11px;
+    fill: #555;
   }
 }
 

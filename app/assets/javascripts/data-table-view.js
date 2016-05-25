@@ -5,13 +5,15 @@ modulejs.define( "data-table-view", [
   "lib/jquery",
   "constants",
   "preferences",
-  "aspects"
+  "aspects",
+  "values"
 ], function(
   _,
   $,
   Constants,
   Preferences,
-  Aspects
+  Aspects,
+  Values
 ) {
   "use strict";
 
@@ -69,7 +71,7 @@ modulejs.define( "data-table-view", [
           return [
             result.period(),
             formatAspectNameLong( zv[0], " " ),
-            zv[1] ? formatValue( zv[0], zv[1] ) : null
+            zv[1] ? Values.formatValue( zv[0], zv[1] ) : null
           ];
         } );
       } );
@@ -81,7 +83,7 @@ modulejs.define( "data-table-view", [
       return _.map( qr.results(), function( result ) {
         var values = result.valuesFor( aspects );
         var formattedValues = _.map( _.zip( aspects, values ), function( pair ) {
-          return formatValue.apply( null, pair );
+          return Values.formatValue.apply( null, pair );
         } );
 
         return [result.period()].concat( formattedValues );
@@ -125,17 +127,6 @@ modulejs.define( "data-table-view", [
 
   } );
 
-  var formatValue = function( aspectName, value ) {
-    var aspect = Aspects[aspectName];
-    switch (aspect.unitType) {
-      case "percentage":
-        return value + "%";
-      case "pound_sterling":
-        return "£" + value;
-      default:
-        return _.isFinite( value ) ? value.toFixed( 2 ) : value;
-    }
-  };
 
   var formatAspectNameShort = function( aspectName, sep ) {
     sep = sep || "<br />";

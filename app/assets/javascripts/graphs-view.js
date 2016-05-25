@@ -6,14 +6,16 @@ modulejs.define( "graphs-view", [
   "lib/d3",
   "lib/util",
   "constants",
-  "preferences"
+  "preferences",
+  "values"
 ], function(
   _,
   $,
   D3,
   Util,
   Constants,
-  Preferences
+  Preferences,
+  Values
 ) {
   "use strict";
 
@@ -107,6 +109,7 @@ modulejs.define( "graphs-view", [
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
           drawGraph( indicator, prefs, qr, graphConf, options );
+          drawOverlay( indicator, prefs, qr, graphConf );
         }
       } );
     }
@@ -285,6 +288,86 @@ modulejs.define( "graphs-view", [
         .attr( "d", line );
     } );
   };
+
+  var formatAspect = function( indicator, cat, value ) {
+    var catName = {
+      "": "all ",
+      "Detached": "det. ",
+      "SemiDetached": "s.det. ",
+      "Terraced": "terr. ",
+      "FlatMaisonette": "f/m. "
+    }[cat];
+    return catName + Values.formatValue( indicator + cat, value );
+  };
+
+  var bisectDate = D3.bisector( function(d) { return d.x; } ).left;
+
+
+  var drawOverlay = function( indicator, prefs, qr, graphConf ) {
+    var aCategory = _.first( prefs.categories() );
+    var aSeries = qr.series( indicator, aCategory );
+
+    var xTrack = graphConf
+      .elem
+      .append( "g" )
+      .attr( "class", "c-x-track--g")
+      .style( "display", "none" );
+    xTrack
+      .append( "rect" )
+      .attr( "class", "c-x-track" )
+      .attr( "height", graphConf.scales.height )
+      .attr( "width", 0.5 )
+      .attr( "stroke-dasharray", "5,5" )
+      .attr( "y", GRAPH_PADDING.top );
+
+    xTrack
+      .append( "text" )
+      .attr( "class", "c-x-track--title" )
+      .attr( "y", 20 )
+      .append( "dy", "0.35em" );
+
+    graphConf
+      .elem
+      .append("rect")
+      .attr("class", "c-graph-overlay")
+      .attr("width", graphConf.scales.width)
+      .attr("height", graphConf.scales.height)
+      .attr("transform", "translate(" + GRAPH_PADDING.left + "," + GRAPH_PADDING.top + ")")
+      .on("mouseover", function() { xTrack.style("display", null); })
+      .on("mouseout", function() { xTrack.style("display", "none"); })
+      .on("mousemove", function() {
+        var x = graphConf.scales.x;
+        var x0 = x.invert( D3.mouse(this)[0] ),
+            i = bisectDate( aSeries, x0, 1 ),
+            d0 = aSeries[i - 1],
+            d1 = aSeries[i],
+            d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
+        xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
+
+        var label = D3.time.format("%b %Y")( d.x );
+        label = label + ": " + _.map( prefs.categories(), function( cat ) {
+          var value = _.find( qr.series( indicator, cat ), {x: d.x} );
+          return formatAspect( indicator, cat, value.y );
+        } ).join( ", ");
+
+        var txtLen = xTrack
+          .select("text")
+          .text( label )
+          .node()
+          .getComputedTextLength();
+
+        var maxLeft = graphConf.scales.width - txtLen;
+        var delta = maxLeft - x(d.x);
+        if (delta < 0) {
+          xTrack
+            .select("text")
+            .attr( "transform", "translate( " + delta + ", 0)" );
+        }
+      } );
+
+  // }
+  };
+
 
   return GraphView;
 } );
