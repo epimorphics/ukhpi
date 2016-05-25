@@ -71,15 +71,6 @@ modulejs.define( "graphs-view", [
   GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right;
   GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
 
-  /** Width of graph bars, in pixels */
-  var BAR_MARGIN = 1;
-  var VISIBLE_BAR_WIDTH = 3;
-  var BAR_WIDTH = VISIBLE_BAR_WIDTH + BAR_MARGIN;
-  var HALF_BAR_WIDTH = BAR_WIDTH / 2;
-
-  /** Minimum height of graph bars (so that zero values are still visible) */
-  var MIN_BAR_HEIGHT = 2;
-
   /* Methods */
 
   _.extend( GraphView.prototype, {
@@ -243,23 +234,9 @@ modulejs.define( "graphs-view", [
       drawPoints( indicator, prefs, qr, graphConf );
       drawLine( indicator, prefs, qr, graphConf );
       break;
-    case "bars":
-      drawBars( indicator, prefs, qr, graphConf );
-      break;
     default:
       console.log( "Unknown graph type" );
     }
-  };
-
-  var collectedSeries = function( indicator, prefs, qr ) {
-    var s = _.map( prefs.categories(), function( c, i ) {
-      var series = qr.series( indicator, c );
-      _.each( series, function( d ) {d.categoryIndex = i;} );
-
-      return series;
-    } );
-
-    return _.flatten( s );
   };
 
   var sampledSeries = function( indicator, prefs, qr ) {
@@ -308,34 +285,6 @@ modulejs.define( "graphs-view", [
         .attr( "d", line );
     } );
   };
-
-  var drawBars = function( indicator, prefs, qr, graphConf ) {
-    var x = graphConf.scales.x;
-    var y = graphConf.scales.y;
-    var y0 = y( 0 );
-
-    var offsets = barOffsets( prefs.categories().length );
-    var data = collectedSeries( indicator, prefs, qr );
-
-    graphConf.root
-      .selectAll( ".bar" )
-      .data( data )
-      .enter()
-      .append( "rect" )
-      .attr( "class", function( d ) {return "bar " + categoryCssClass( d.cat );} )
-      .attr( "x", function( d ) { return x( d.x ) + offsets[d.categoryIndex]; })
-      .attr( "y", function( d ) { return y( Math.max( 0, d.y ) ); })
-      .attr( "width", VISIBLE_BAR_WIDTH )
-      .attr( "height", function( d ) {return Math.max( MIN_BAR_HEIGHT, Math.abs( y( d.y ) - y0 ) );} );
-  };
-
-  /** @return An array of the offsets around 0 for n category bars */
-  var barOffsets = function( nPrefs ) {
-    var lower = (nPrefs - 1) * HALF_BAR_WIDTH * -1.0;
-    var upper = nPrefs * HALF_BAR_WIDTH;
-    return _.range( lower, upper, BAR_WIDTH );
-  };
-
 
   return GraphView;
 } );
