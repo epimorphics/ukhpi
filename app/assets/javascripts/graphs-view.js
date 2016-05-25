@@ -5,12 +5,14 @@ modulejs.define( "graphs-view", [
   "lib/jquery",
   "lib/d3",
   "lib/util",
+  "constants",
   "preferences"
 ], function(
   _,
   $,
   D3,
   Util,
+  Constants,
   Preferences
 ) {
   "use strict";
@@ -163,7 +165,7 @@ modulejs.define( "graphs-view", [
     return {x: xScale, y: yScale, width: width, height: height};
   };
 
-  var createAxes = function( scales, options, graphConf ) {
+  var createAxes = function( scales, options ) {
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
@@ -260,10 +262,22 @@ modulejs.define( "graphs-view", [
     return _.flatten( s );
   };
 
+  var sampledSeries = function( indicator, prefs, qr ) {
+    var s = _.map( prefs.categories(), function( c, i ) {
+      var series = qr.series( indicator, c );
+      var datum = _.sample( series );
+      datum.categoryIndex = i;
+
+      return datum;
+    } );
+
+    return s;
+  };
+
   var drawPoints = function( indicator, prefs, qr, graphConf ) {
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
-    var data = collectedSeries( indicator, prefs, qr );
+    var data = sampledSeries( indicator, prefs, qr );
 
     graphConf.root
       .selectAll(".point")
