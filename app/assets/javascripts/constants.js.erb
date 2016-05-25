@@ -2,6 +2,13 @@ modulejs.define( "constants", [], function() {
   "use strict";
 
   return {
-    DEFAULT_LOCATION: "<%= Constants::DEFAULT_LOCATION %>"
+    DEFAULT_LOCATION: "<%= Constants::DEFAULT_LOCATION %>",
+
+    EVENT_ASPECTS_CHANGE: "ukhpi.aspectSelection.change",
+    EVENT_PREFERENCES_CHANGE: "ukhpi.preferences.change",
+    EVENT_PREFS_REVEALED: "ukhpi.prefs.revealed",
+    EVENT_LOCATION_TYPE_CHANGE: "ukhpi.location-type.change",
+    EVENT_LOCATION_SELECTED: "ukhpi.location.selected",
+    EVENT_SELECTED_MAP: "ukhpi.location.selected-map"
   };
 } );

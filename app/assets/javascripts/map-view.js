@@ -4,6 +4,7 @@ modulejs.define( "map-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/leaflet",
+  "constants",
   "routes",
   "regions-table"
 ],
@@ -11,6 +12,7 @@ function(
   _,
   $,
   Leaflet,
+  Constants,
   Routes,
   Regions
 ) {
@@ -45,10 +47,10 @@ function(
   _.extend( MapView.prototype, {
     bindEvents: function() {
       $("a[data-toggle='tab']").on( "shown.bs.tab", _.bind( this.onShowTab, this ) );
-      $("body").on( "ukhpi.prefs.revealed", _.bind( this.onRevealPreferences, this ) );
+      $("body").on( Constants.EVENT_PREFS_REVEALED, _.bind( this.onRevealPreferences, this ) );
       $("body")
-        .on( "ukhpi.location-type.change", _.bind( this.onChangeLocationType, this ) )
-        .on( "ukhpi.location.selected", _.bind( this.onSelectLocation, this ) );
+        .on( Constants.EVENT_LOCATION_TYPE_CHANGE, _.bind( this.onChangeLocationType, this ) )
+        .on( Constants.EVENT_LOCATION_SELECTED, _.bind( this.onSelectLocation, this ) );
     },
 
     fetchFeatures: function() {
@@ -278,7 +280,7 @@ function(
       var feature = l.target && l.target.feature;
       if (feature) {
         var uri = feature.properties.ukhpiURI;
-        $("body").trigger( "ukhpi.location.selected-map", uri );
+        $("body").trigger( Constants.EVENT_SELECTED_MAP, uri );
       }
     }
 

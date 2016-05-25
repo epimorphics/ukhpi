@@ -4,6 +4,7 @@ modulejs.define( "preferences-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/util",
+  "constants",
   "regions-table",
   "preferences"
 ],
@@ -11,6 +12,7 @@ function(
   _,
   $,
   Util,
+  Constants,
   RegionsTable,
   Preferences
 ) {
@@ -43,17 +45,17 @@ function(
     bindEvents: function() {
       $(".js-reveal-button").on( "click", _.bind( this.onToggleRevealPreferences, this ) );
       $(".js-aspect").on( "click", function() {
-        $("body").trigger( "ukhpi.aspectSelection.change" );
+        $("body").trigger( Constants.EVENT_ASPECTS_CHANGE );
       } );
       $(".js-location-type").on( "click", _.bind( this.onChangeLocationType, this ) );
       $(".c-location-search input[type=radio]").on( "click", _.bind( this.onSelectLocationOption, this ) );
       $("body")
-        .on( "ukhpi.location.selected-map", _.bind( function() {
+        .on( Constants.EVENT_SELECTED_MAP, _.bind( function() {
           this.onLocationSelected.apply( this, arguments );
           // this.onPreferencesChange.apply( this, arguments );
         }, this ) )
-        .on( "ukhpi.preferences.change", _.bind( this.onPreferencesChange, this ) )
-        .on( "ukhpi.aspectSelection.change", _.bind( this.onPreferencesChange, this ) );
+        .on( Constants.EVENT_PREFERENCES_CHANGE, _.bind( this.onPreferencesChange, this ) )
+        .on( Constants.EVENT_ASPECTS_CHANGE, _.bind( this.onPreferencesChange, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -70,7 +72,7 @@ function(
         $(".js-preferences").tab();
 
         if ($(".js-preferences-form").is( ":not(.hidden)" )) {
-          $("body").trigger( "ukhpi.prefs.revealed" );
+          $("body").trigger( Constants.EVENT_PREFS_REVEALED );
         }
 
         Util.JQuery.spinStop();
@@ -120,8 +122,8 @@ function(
     selectLocation: function( uri ) {
       $(".js-location-uri").val( uri );
       $("body")
-        .trigger( "ukhpi.preferences.change" )
-        .trigger( "ukhpi.location.selected", uri );
+        .trigger( Constants.EVENT_PREFERENCES_CHANGE )
+        .trigger( Constants.EVENT_LOCATION_SELECTED, uri );
     },
 
     setupDateTimePickers: function() {
@@ -130,14 +132,14 @@ function(
           viewMode: "years",
           format: "YYYY-MM"
         }).on( "dp.change", function() {
-          $("body").trigger( "ukhpi.preferences.change" );
+          $("body").trigger( Constants.EVENT_PREFERENCES_CHANGE );
         });
       } );
     },
 
     onChangeLocationType: function( e ) {
       var target = $(e.currentTarget).val();
-      $("body").trigger( "ukhpi.location-type.change", {locationType: target} );
+      $("body").trigger( Constants.EVENT_LOCATION_TYPE_CHANGE, {locationType: target} );
     },
 
     onSelectLocationOption: function( e ) {
