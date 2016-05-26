@@ -38,13 +38,15 @@ modulejs.define( "graphs-view", [
       cssClass: "average-price",
       ticksCount: 5,
       yDomain: "",
-      graphType: "lineAndPoints"
+      graphType: "lineAndPoints",
+      byPropertyType: true
     },
     housePriceIndex: {
       cssClass: "house-price-index",
       ticksCount: 5,
       yDomain: "",
-      graphType: "lineAndPoints"
+      graphType: "lineAndPoints",
+      byPropertyType: true
     },
     percentageChange: {
       cssClass: "percentage-monthly-change",
@@ -52,7 +54,8 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "lineAndPoints",
       symmetricalYAxis: true,
-      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";},
+      byPropertyType: true
     },
     percentageAnnualChange: {
       cssClass: "percentage-annual-change",
@@ -60,7 +63,15 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "lineAndPoints",
       symmetricalYAxis: true,
-      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";},
+      byPropertyType: true
+    },
+    salesVolume: {
+      cssClass: "sales-volume",
+      ticksCount: 5,
+      yDomain: "",
+      graphType: "lineAndPoints",
+      byPropertyType: false
     }
   };
 
@@ -96,7 +107,7 @@ modulejs.define( "graphs-view", [
 
       this.resetGraphs( prefs );
 
-      _.each( prefs.indicators(), function( indicator ) {
+      _.each( prefs.visibleGraphTypes(), function( indicator ) {
         var options = GRAPHS_OPTIONS[indicator];
         if (options) {
           gv.graphConf[indicator] = {};
@@ -185,7 +196,7 @@ modulejs.define( "graphs-view", [
   };
 
   var calculateValueRange = function( indicator, prefs, qr, options ) {
-    var aspects = aspectNames( indicator, prefs );
+    var aspects = options.byPropertyType ? aspectNames( indicator, prefs ) : ["ukhpi:" + indicator];
     var extents = _.map( aspects, function( aspect ) {
       return D3.extent( qr.results(), function( result ) {
         return result.value( aspect );
@@ -204,7 +215,7 @@ modulejs.define( "graphs-view", [
   };
 
   var aspectNames = function( indicator, prefs ) {
-    var aspects = prefs.aspects( {indicators: [indicator]} );
+    var aspects = prefs.aspects( {indicators: [indicator], common: []} );
     return _.map( aspects, function( a ) {return "ukhpi:" + a;} );
   };
 
@@ -234,7 +245,9 @@ modulejs.define( "graphs-view", [
   var drawGraph = function( indicator, prefs, qr, graphConf, options ) {
     switch (options.graphType) {
     case "lineAndPoints":
-      drawPoints( indicator, prefs, qr, graphConf );
+      if (options.byPropertyType) {
+        drawPoints( indicator, prefs, qr, graphConf );
+      }
       drawLine( indicator, prefs, qr, graphConf );
       break;
     default:

@@ -27,6 +27,10 @@ class Aspects
     {root: "percentageAnnualChange",  label: "percentage_annual_change"}
   ]
 
+  COMMON_STATS = [
+    {root: "salesVolume",             label: "sales_volume"}
+  ]
+
   def initialize( prefs )
     @prefs = prefs
     @aspects = all_measures.reduce( Hash.new ) do |hash, measure|

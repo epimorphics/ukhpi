@@ -68,13 +68,30 @@ modulejs.define( "preferences", [
       return ac;
     },
 
+    /** @return The currently selected common stats */
+    commonStats: function( only ) {
+      var cs = this.loadPrefs().cs || [];
+      if (only && only.common) {
+        cs = _.intersection( only.common, cs );
+      }
+
+      return cs;
+    },
+
+    /** @return The preferences for base graph types to display */
+    visibleGraphTypes: function() {
+      return this.indicators().concat( this.commonStats() );
+    },
+
     /** @return The selected aspects, optionally limited to only certain indicators or categories */
     aspects: function( only ) {
       var pairs = cartesianProductOf( this.indicators( only ), this.categories( only ) );
 
-      return _.map( pairs, function( pair ) {
+      var compoundAspects = _.map( pairs, function( pair ) {
         return pair[0] + _.upperFirst( pair[1] );
       } );
+
+      return compoundAspects.concat( this.commonStats( only ) );
     },
 
     asURLParameters: function() {
