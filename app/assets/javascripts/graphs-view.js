@@ -317,8 +317,7 @@ modulejs.define( "graphs-view", [
 
 
   var drawOverlay = function( indicator, prefs, qr, graphConf ) {
-    var aCategory = _.first( prefs.categories() );
-    var aSeries = qr.series( indicator, aCategory );
+    var categories = prefs.categories();
 
     var xTrack = graphConf
       .elem
@@ -348,39 +347,42 @@ modulejs.define( "graphs-view", [
       .attr("transform", "translate(" + GRAPH_PADDING.left + "," + GRAPH_PADDING.top + ")")
       .on("mouseover", function() { xTrack.style("display", null); })
       .on("mouseout", function() { xTrack.style("display", "none"); })
-      .on("mousemove", function() {
-        var x = graphConf.scales.x;
-        var x0 = x.invert( D3.mouse(this)[0] ),
-            i = bisectDate( aSeries, x0, 1 ),
-            d0 = aSeries[i - 1],
-            d1 = aSeries[i],
-            d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
-        xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
-
-        var label = D3.time.format("%b %Y")( d.x );
-        label = label + ": " + _.map( prefs.categories(), function( cat ) {
-          var value = _.find( qr.series( indicator, cat ), {x: d.x} );
-          return formatAspect( indicator, cat, value.y );
-        } ).join( ", ");
-
-        var txtLen = xTrack
-          .select("text")
-          .text( label )
-          .node()
-          .getComputedTextLength();
-
-        var maxLeft = graphConf.scales.width - txtLen;
-        var delta = maxLeft - x(d.x);
-        if (delta < 0) {
-          xTrack
-            .select("text")
-            .attr( "transform", "translate( " + delta + ", 0)" );
-        }
-      } );
-
-  // }
+      .on("mousemove", (function() {
+          return function() {onXTrackMouseMove.call( this, indicator, graphConf, categories, qr, xTrack );};
+      })() );
   };
 
+  var onXTrackMouseMove = function( indicator, graphConf, categories, qr, xTrack ) {
+    var aSeries = qr.series( indicator, _.first( categories ) );
+
+    var x = graphConf.scales.x;
+    var x0 = x.invert( D3.mouse(this)[0] ),
+        i = bisectDate( aSeries, x0, 1 ),
+        d0 = aSeries[i - 1],
+        d1 = aSeries[i],
+        d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
+    xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
+
+    var label = D3.time.format("%b %Y")( d.x );
+    label = label + ": " + _.map( categories, function( cat ) {
+      var value = _.find( qr.series( indicator, cat ), {x: d.x} );
+      return formatAspect( indicator, cat, value.y );
+    } ).join( ", ");
+
+    var txtLen = xTrack
+      .select("text")
+      .text( label )
+      .node()
+      .getComputedTextLength();
+
+    var maxLeft = graphConf.scales.width - txtLen;
+    var delta = maxLeft - x(d.x);
+    if (delta < 0) {
+      xTrack
+        .select("text")
+        .attr( "transform", "translate( " + delta + ", 0)" );
+    }
+  };
 
   return GraphView;
 } );
