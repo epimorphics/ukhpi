@@ -1,4 +1,5 @@
 {
-  "prefsSummary": "<%= @download_state.prefs.summary %>",
-  "results": <%= @download_state.cmd.cmd.results.to_json.html_safe %>
+  "@context": "http://land-registry.data.gov.uk/app/ukhpi/ukhpi.jsonld",
+  "openSearch:searchTerms": "<%= @download_state.prefs.summary %>",
+  "items": <%= @download_state.cmd.cmd.results.to_json.html_safe %>
 }
