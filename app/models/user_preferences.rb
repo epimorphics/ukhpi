@@ -6,6 +6,13 @@ class UserPreferences
 
   DEFAULT_ASPECT_INDICATORS = %w( housePriceIndex averagePrice percentageChange percentageAnnualChange )
   DEFAULT_ASPECT_CATEGORIES = [""]
+  DEFAULT_COMMON_STATS = %w( salesVolume )
+
+  parse_param_list = ->( value, context ) {
+    empty_value?( value ) ?
+      nil :
+      [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
+  }
 
   VALIDATIONS = {
     from: ->( value, context )    {empty_value?( value ) ? nil : Date.strptime( value, "%Y-%m" )},
@@ -13,16 +20,9 @@ class UserPreferences
     _now: ->( value, context )    {empty_value?( value ) ? nil : Date.parse( value )},
     region: ->( value, context )  {empty_value?( value ) ? nil : value},
     rt: ->( value, context )      {Regions.parse_region_type( value )},
-    ai: ->( value, context ) {
-      empty_value?( value ) ?
-        nil :
-        [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
-    },
-    ac: ->( value, context ) {
-      empty_value?( value ) ?
-        nil :
-        [value].map {|v| v.split(",")}.flatten.map( &:to_sym )
-    }
+    ai: parse_param_list,
+    ac: parse_param_list,
+    cs: parse_param_list
   }
 
   WHITELIST = VALIDATIONS.keys
@@ -32,7 +32,8 @@ class UserPreferences
     to: INTERIM_DATASET ? Date.new( 2014, 12, 31 ) : Date.today,
     region: Constants::DEFAULT_LOCATION,
     ai: DEFAULT_ASPECT_INDICATORS,
-    ac: DEFAULT_ASPECT_CATEGORIES
+    ac: DEFAULT_ASPECT_CATEGORIES,
+    cs: DEFAULT_COMMON_STATS
   }
 
   def initialize( params )
@@ -46,6 +47,10 @@ class UserPreferences
 
   def aspect_categories
     value_of( :ac )
+  end
+
+  def common_stats
+    value_of( :cs )
   end
 
   def method_missing( key, *args, &block )

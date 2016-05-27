@@ -38,13 +38,15 @@ modulejs.define( "graphs-view", [
       cssClass: "average-price",
       ticksCount: 5,
       yDomain: "",
-      graphType: "lineAndPoints"
+      graphType: "lineAndPoints",
+      byPropertyType: true
     },
     housePriceIndex: {
       cssClass: "house-price-index",
       ticksCount: 5,
       yDomain: "",
-      graphType: "lineAndPoints"
+      graphType: "lineAndPoints",
+      byPropertyType: true
     },
     percentageChange: {
       cssClass: "percentage-monthly-change",
@@ -52,7 +54,8 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "lineAndPoints",
       symmetricalYAxis: true,
-      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";},
+      byPropertyType: true
     },
     percentageAnnualChange: {
       cssClass: "percentage-annual-change",
@@ -60,7 +63,15 @@ modulejs.define( "graphs-view", [
       yDomain: "",
       graphType: "lineAndPoints",
       symmetricalYAxis: true,
-      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";}
+      tickFormat: function( d) {return oneDecimalPlace( d ) + "%";},
+      byPropertyType: true
+    },
+    salesVolume: {
+      cssClass: "sales-volume",
+      ticksCount: 5,
+      yDomain: "",
+      graphType: "lineAndPoints",
+      byPropertyType: false
     }
   };
 
@@ -96,7 +107,7 @@ modulejs.define( "graphs-view", [
 
       this.resetGraphs( prefs );
 
-      _.each( prefs.indicators(), function( indicator ) {
+      _.each( prefs.visibleGraphTypes(), function( indicator ) {
         var options = GRAPHS_OPTIONS[indicator];
         if (options) {
           gv.graphConf[indicator] = {};
@@ -185,7 +196,7 @@ modulejs.define( "graphs-view", [
   };
 
   var calculateValueRange = function( indicator, prefs, qr, options ) {
-    var aspects = aspectNames( indicator, prefs );
+    var aspects = options.byPropertyType ? aspectNames( indicator, prefs ) : ["ukhpi:" + indicator];
     var extents = _.map( aspects, function( aspect ) {
       return D3.extent( qr.results(), function( result ) {
         return result.value( aspect );
@@ -204,7 +215,7 @@ modulejs.define( "graphs-view", [
   };
 
   var aspectNames = function( indicator, prefs ) {
-    var aspects = prefs.aspects( {indicators: [indicator]} );
+    var aspects = prefs.aspects( {indicators: [indicator], common: []} );
     return _.map( aspects, function( a ) {return "ukhpi:" + a;} );
   };
 
@@ -234,7 +245,9 @@ modulejs.define( "graphs-view", [
   var drawGraph = function( indicator, prefs, qr, graphConf, options ) {
     switch (options.graphType) {
     case "lineAndPoints":
-      drawPoints( indicator, prefs, qr, graphConf );
+      if (options.byPropertyType) {
+        drawPoints( indicator, prefs, qr, graphConf );
+      }
       drawLine( indicator, prefs, qr, graphConf );
       break;
     default:
@@ -304,8 +317,7 @@ modulejs.define( "graphs-view", [
 
 
   var drawOverlay = function( indicator, prefs, qr, graphConf ) {
-    var aCategory = _.first( prefs.categories() );
-    var aSeries = qr.series( indicator, aCategory );
+    var categories = prefs.categories();
 
     var xTrack = graphConf
       .elem
@@ -335,39 +347,42 @@ modulejs.define( "graphs-view", [
       .attr("transform", "translate(" + GRAPH_PADDING.left + "," + GRAPH_PADDING.top + ")")
       .on("mouseover", function() { xTrack.style("display", null); })
       .on("mouseout", function() { xTrack.style("display", "none"); })
-      .on("mousemove", function() {
-        var x = graphConf.scales.x;
-        var x0 = x.invert( D3.mouse(this)[0] ),
-            i = bisectDate( aSeries, x0, 1 ),
-            d0 = aSeries[i - 1],
-            d1 = aSeries[i],
-            d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
-        xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
-
-        var label = D3.time.format("%b %Y")( d.x );
-        label = label + ": " + _.map( prefs.categories(), function( cat ) {
-          var value = _.find( qr.series( indicator, cat ), {x: d.x} );
-          return formatAspect( indicator, cat, value.y );
-        } ).join( ", ");
-
-        var txtLen = xTrack
-          .select("text")
-          .text( label )
-          .node()
-          .getComputedTextLength();
-
-        var maxLeft = graphConf.scales.width - txtLen;
-        var delta = maxLeft - x(d.x);
-        if (delta < 0) {
-          xTrack
-            .select("text")
-            .attr( "transform", "translate( " + delta + ", 0)" );
-        }
-      } );
-
-  // }
+      .on("mousemove", (function() {
+          return function() {onXTrackMouseMove.call( this, indicator, graphConf, categories, qr, xTrack );};
+      })() );
   };
 
+  var onXTrackMouseMove = function( indicator, graphConf, categories, qr, xTrack ) {
+    var aSeries = qr.series( indicator, _.first( categories ) );
+
+    var x = graphConf.scales.x;
+    var x0 = x.invert( D3.mouse(this)[0] ),
+        i = bisectDate( aSeries, x0, 1 ),
+        d0 = aSeries[i - 1],
+        d1 = aSeries[i],
+        d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
+    xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
+
+    var label = D3.time.format("%b %Y")( d.x );
+    label = label + ": " + _.map( categories, function( cat ) {
+      var value = _.find( qr.series( indicator, cat ), {x: d.x} );
+      return formatAspect( indicator, cat, value.y );
+    } ).join( ", ");
+
+    var txtLen = xTrack
+      .select("text")
+      .text( label )
+      .node()
+      .getComputedTextLength();
+
+    var maxLeft = graphConf.scales.width - txtLen;
+    var delta = maxLeft - x(d.x);
+    if (delta < 0) {
+      xTrack
+        .select("text")
+        .attr( "transform", "translate( " + delta + ", 0)" );
+    }
+  };
 
   return GraphView;
 } );

@@ -7,6 +7,7 @@ function(
   Aspects
 ) {
   "use strict";
+  var DECIMAL_PLACES = 2;
 
   var formatValue = function( aspectName, value ) {
     var aspect = Aspects[aspectName];
@@ -15,8 +16,12 @@ function(
         return value + "%";
       case "pound_sterling":
         return "£" + value;
+      case "integer":
+        return value.toFixed()
+      case "decimal":
+        return value.toFixed( DECIMAL_PLACES )
       default:
-        return _.isFinite( value ) ? value.toFixed( 2 ) : value;
+        return value;
     }
   };
 
