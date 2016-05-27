@@ -11,6 +11,11 @@ function(
 
   var formatValue = function( aspectName, value ) {
     var aspect = Aspects[aspectName];
+
+    if (_.isNull( value ) || _.isUndefined( value )) {
+      return "not available";
+    }
+
     switch (aspect.unitType) {
       case "percentage":
         return value + "%";

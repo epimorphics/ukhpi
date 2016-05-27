@@ -259,12 +259,16 @@ modulejs.define( "graphs-view", [
     var s = _.map( prefs.categories(), function( c, i ) {
       var series = qr.series( indicator, c );
       var datum = _.sample( series );
-      datum.categoryIndex = i;
-
-      return datum;
+      if (datum) {
+        datum.categoryIndex = i;
+        return datum;
+      }
+      else {
+        return null;
+      }
     } );
 
-    return s;
+    return _.compact( s );
   };
 
   var drawPoints = function( indicator, prefs, qr, graphConf ) {
@@ -370,7 +374,7 @@ modulejs.define( "graphs-view", [
     var label = D3.time.format("%b %Y")( d.x );
     label = label + ": " + _.map( categories, function( cat ) {
       var value = _.find( qr.series( indicator, cat ), {x: d.x} );
-      return formatAspect( indicator, cat, value.y );
+      return formatAspect( indicator, cat, value && value.y );
     } ).join( ", ");
 
     var txtLen = xTrack
