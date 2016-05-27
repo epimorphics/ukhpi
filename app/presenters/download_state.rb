@@ -22,7 +22,17 @@ class DownloadState < Presenter
     uri = r["ukhpi:refRegion"]["@id"]
     region = Regions.lookup_region( uri )
     date = r["ukhpi:refPeriod"]["@value"]
+    region_label = "\'#{region.label}\'"
 
-    [region.label, uri, region.gss, date] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
+    [region_label, uri, region.gss, date] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
+  end
+
+  def as_filename
+    prefs
+      .summary
+      .gsub( /[ [[:punct:]]]/, "-" )
+      .gsub( "--", "-" )
+      .downcase
+      .strip
   end
 end
