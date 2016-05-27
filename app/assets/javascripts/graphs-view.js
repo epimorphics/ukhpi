@@ -120,7 +120,7 @@ modulejs.define( "graphs-view", [
           _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
           drawAxes( graphConf );
           drawGraph( indicator, prefs, qr, graphConf, options );
-          drawOverlay( indicator, prefs, qr, graphConf );
+          drawOverlay( indicator, prefs, qr, graphConf, options );
         }
       } );
     }
@@ -248,7 +248,7 @@ modulejs.define( "graphs-view", [
       if (options.byPropertyType) {
         drawPoints( indicator, prefs, qr, graphConf );
       }
-      drawLine( indicator, prefs, qr, graphConf );
+      drawLine( indicator, prefs, qr, graphConf, options );
       break;
     default:
       console.log( "Unknown graph type" );
@@ -283,7 +283,11 @@ modulejs.define( "graphs-view", [
 
   };
 
-  var drawLine = function( indicator, prefs, qr, graphConf ) {
+  var lineCategories = function( prefs, options ) {
+    return options.byPropertyType ? prefs.categories() : [""];
+  };
+
+  var drawLine = function( indicator, prefs, qr, graphConf, options ) {
     var x = graphConf.scales.x;
     var y = graphConf.scales.y;
 
@@ -292,7 +296,7 @@ modulejs.define( "graphs-view", [
       .x( function(d) { return x( d.x ); } )
       .y( function(d) { return y( d.y ); } );
 
-    _.each( prefs.categories(), function( c ) {
+    _.each( lineCategories( prefs, options ), function( c ) {
       var s = qr.series( indicator, c );
       graphConf.root
         .append( "path" )
@@ -316,8 +320,8 @@ modulejs.define( "graphs-view", [
   var bisectDate = D3.bisector( function(d) { return d.x; } ).left;
 
 
-  var drawOverlay = function( indicator, prefs, qr, graphConf ) {
-    var categories = prefs.categories();
+  var drawOverlay = function( indicator, prefs, qr, graphConf, options ) {
+    var categories = lineCategories( prefs, options );
 
     var xTrack = graphConf
       .elem
