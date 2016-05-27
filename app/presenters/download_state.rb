@@ -3,9 +3,10 @@
 class DownloadState < Presenter
 
   STANDARD_COLUMNS = [
-    {label: "Name", method: :name},
-    {label: "URI", property: "ukhpi:refRegion"},
-    {label: "GSS", method: :gss}
+    {label: "Name"},
+    {label: "URI"},
+    {label: "GSS"},
+    {label: "Period"}
   ]
 
 
@@ -14,14 +15,14 @@ class DownloadState < Presenter
   end
 
   def rows
-    # TODO
     cmd.cmd.results.map {|r| as_row( r )}
   end
 
   def as_row( r )
     uri = r["ukhpi:refRegion"]["@id"]
     region = Regions.lookup_region( uri )
+    date = r["ukhpi:refPeriod"]["@value"]
 
-    [region.label, uri, region.gss] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
+    [region.label, uri, region.gss, date] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
   end
 end
