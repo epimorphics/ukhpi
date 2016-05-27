@@ -64,6 +64,10 @@ class CubeMeasure < CubeResource
     @graph.query( [@resource, DataModel::QUDT.unit, nil] ).first.object
   end
 
+  def range
+    @graph.query( [@resource, RDF::RDFS.range, nil] ).first.object
+  end
+
   def scalar?
     unit == RDF::Resource.new( "http://dbpedia.org/page/Scalar" )
   end
@@ -76,6 +80,14 @@ class CubeMeasure < CubeResource
     unit == RDF::Resource.new( "http://dbpedia.org/resource/Pound_sterling" )
   end
 
+  def integer_range?
+    range == RDF::XSD.integer
+  end
+
+  def decimal_range?
+    range == RDF::XSD.decimal
+  end
+
   def unit_type
     case
     when scalar?
@@ -84,6 +96,10 @@ class CubeMeasure < CubeResource
       :percentage
     when pound_sterling?
       :pound_sterling
+    when integer_range?
+      :integer
+    when decimal_range?
+      :decimal
     else
       :unknown
     end
