@@ -191,3 +191,8 @@ table.dataTable thead .sorting_asc_disabled {
 table.dataTable thead .sorting_desc_disabled {
   background-image: none;
 }
+
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+  margin: 0;
+  padding: 0;
+}
