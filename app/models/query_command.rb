@@ -26,6 +26,10 @@ class QueryCommand
     true
   end
 
+  def explain_query_command?
+    false
+  end
+
   :private
 
   def preference( key )
