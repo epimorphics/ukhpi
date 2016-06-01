@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class SearchCommandTest < ActiveSupport::TestCase
+class DataModelTest < ActiveSupport::TestCase
   it "should load the DSD" do
     dsd = DataModel.new
     dsd.model.wont_be_nil
@@ -10,7 +10,7 @@ class SearchCommandTest < ActiveSupport::TestCase
 
   it "should list the components" do
     dsd = DataModel.new
-    dsd.components.count.must_equal 49
+    dsd.components.count.must_be :>=, 49
   end
 
   it "should retrieve the labels for each compoonent" do
