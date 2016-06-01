@@ -33,8 +33,8 @@ class QueryCommand
   end
 
   def add_date_range_constraint( query )
-    query.ge( "ukhpi:refPeriod", month_year_value( :from ) )
-         .le( "ukhpi:refPeriod", month_year_value( :to ) )
+    query.ge( "ukhpi:refMonth", month_year_value( :from ) )
+         .le( "ukhpi:refMonth", month_year_value( :to ) )
   end
 
   def month_year_value( key )

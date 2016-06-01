@@ -21,7 +21,7 @@ class DownloadState < Presenter
   def as_row( r )
     uri = r["ukhpi:refRegion"]["@id"]
     region = Regions.lookup_region( uri )
-    date = r["ukhpi:refPeriod"]["@value"]
+    date = r["ukhpi:refMonth"]["@value"]
     region_label = "\'#{region.label}\'"
 
     [region_label, uri, region.gss, date] + visible_aspects.map {|a| r["ukhpi:#{a}"]}

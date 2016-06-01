@@ -27,10 +27,10 @@ class QueryCommandTest < ActiveSupport::TestCase
     json.must_match_json_expression( {
       "@and":
         [
-          {"ukhpi:refPeriod":{
+          {"ukhpi:refMonth":{
             "@ge": {"@value":"2015-01","@type":"http://www.w3.org/2001/XMLSchema#gYearMonth"}
           }},
-          {"ukhpi:refPeriod":{
+          {"ukhpi:refMonth":{
             "@le": {"@value":"2016-06","@type":"http://www.w3.org/2001/XMLSchema#gYearMonth"}
           }},
           {"ukhpi:refRegion":{

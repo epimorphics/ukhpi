@@ -26,7 +26,7 @@ class LatestValuesCommand
   :private
 
   def add_date_range_constraint( query )
-    query.ge( "ukhpi:refPeriod", default_month_year_value )
+    query.ge( "ukhpi:refMonth", default_month_year_value )
   end
 
   def default_month_year_value
@@ -39,7 +39,7 @@ class LatestValuesCommand
   end
 
   def add_sort_constraint( query )
-    query.sort( :down, "ukhpi:refPeriod" )
+    query.sort( :down, "ukhpi:refMonth" )
   end
 
   def add_limit_constraint( query )

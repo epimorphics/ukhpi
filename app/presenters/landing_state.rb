@@ -13,8 +13,8 @@ class LandingState
   end
 
   def period
-    refPeriod = to_value( result[:"ukhpi:refPeriod"] )
-    date = DateTime.strptime( refPeriod.value, "%Y-%m" )
+    refMonth = to_value( result[:"ukhpi:refMonth"] )
+    date = DateTime.strptime( refMonth.value, "%Y-%m" )
     date.strftime( "%B %Y" )
   end
 

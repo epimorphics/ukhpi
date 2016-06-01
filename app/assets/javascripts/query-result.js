@@ -48,7 +48,7 @@ function(
     },
 
     period: function() {
-      return this._data["ukhpi:refPeriod"]["@value"];
+      return this._data["ukhpi:refMonth"]["@value"];
     },
 
     /** @return A momentJS object denoting the (start of the) period as a date */
