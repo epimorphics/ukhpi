@@ -77,7 +77,7 @@ modulejs.define( "graphs-view", [
 
   var GRAPH_PADDING = {
     top: 30,
-    right: 20,
+    right: 25,
     bottom: 20,
     left: 80
   };
