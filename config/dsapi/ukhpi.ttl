@@ -17,7 +17,7 @@
     dct:description "A Data Cube of UK house price index data from Land Registry";
     dsapi:source "source3";
     dsapi:aspect
-      [rdfs:label "period"                          ; dsapi:property ukhpi:refPeriod],
+      [rdfs:label "period"                          ; dsapi:property ukhpi:refMonth],
       [rdfs:label "region"                          ; dsapi:property ukhpi:refRegion],
 
         [rdfs:label "average price" ; dsapi:property ukhpi:averagePrice; dsapi:optional true ] ,
@@ -66,5 +66,9 @@
         [rdfs:label "average price existing property" ; dsapi:property ukhpi:averagePriceExistingProperty; dsapi:optional true ] ,
         [rdfs:label "house price index existing property" ; dsapi:property ukhpi:housePriceIndexExistingProperty; dsapi:optional true ] ,
         [rdfs:label "percentage monthly change existing property" ; dsapi:property ukhpi:percentageChangeExistingProperty; dsapi:optional true ] ,
-        [rdfs:label "percentage annual change existing property" ; dsapi:property ukhpi:percentageAnnualChangeExistingProperty; dsapi:optional true ]
+        [rdfs:label "percentage annual change existing property" ; dsapi:property ukhpi:percentageAnnualChangeExistingProperty; dsapi:optional true ] ,
+
+        [rdfs:label    "Reference period start" ; dsapi:property def-ukhpi:refPeriodStart ; dsapi:optional true ] ,
+        [rdfs:label    "Reference period duration" ; dsapi:property def-ukhpi:refPeriodDuration ; dsapi:optional true ]
+
     .
