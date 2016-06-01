@@ -22,7 +22,7 @@ function(
     this.bindEvents();
     this.setupTypeahead();
     this.setupDateTimePickers();
-    this.setPreferencesLinkURLs();
+    this.onPreferencesChange();
   };
 
   var COUNTY_TYPE =  "http://data.ordnancesurvey.co.uk/ontology/admingeo/County";
@@ -55,7 +55,8 @@ function(
           // this.onPreferencesChange.apply( this, arguments );
         }, this ) )
         .on( Constants.EVENT_PREFERENCES_CHANGE, _.bind( this.onPreferencesChange, this ) )
-        .on( Constants.EVENT_ASPECTS_CHANGE, _.bind( this.onPreferencesChange, this ) );
+        .on( Constants.EVENT_ASPECTS_CHANGE, _.bind( this.onPreferencesChange, this ) )
+        .on( Constants.EVENT_EXPLANATION_CHANGE, _.bind( this.onExplanationChange, this ) );
     },
 
     updatePrompt: function( qr ) {
@@ -167,20 +168,31 @@ function(
     },
 
     onPreferencesChange: function() {
-      this.setPreferencesLinkURLs();
+      var prefs = new Preferences();
+      this.setPreferencesLinkURLs( prefs );
     },
 
-    setPreferencesLinkURLs: function() {
-      var prefs = new Preferences();
+    setPreferencesLinkURLs: function( prefs ) {
       var params = "?" + prefs.asURLParameters();
 
       $(".js-preferences-url").each( function( i, elem ) {
-        var link = $(elem);
-        var url = link.attr( "href" ).replace( /\?.*$/, "" );
-        link.attr( "href", url + params );
+        setLinkSearchParams( elem, params );
       } );
+    },
+
+    onExplanationChange: function( e, data ) {
+      console.log( "Setting local store with sparql query" );
+      if (Util.Browser.setSessionStore( "qonsole.query", data.explanation.sparql )) {
+        setLinkSearchParams( ".js-explanation-url", "?query=_localstore" );
+      }
     }
   } );
+
+  var setLinkSearchParams = function( selector, params ) {
+    var link = $(selector);
+    var url = link.attr( "href" ).replace( /\?.*$/, "" );
+    link.attr( "href", url + params );
+  };
 
   return PreferencesView;
 } );

@@ -4,4 +4,9 @@
     ,
     "results": <%= @exploration_state.query_results.to_json.html_safe %>
   <% end %>
+  <% if @exploration_state.explain_query? %>
+    ,
+    "explanation": <%= @exploration_state.query_explanation.to_json.html_safe %>
+  <% end %>
+
 }

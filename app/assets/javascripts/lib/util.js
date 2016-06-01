@@ -245,6 +245,36 @@ function(
       return viewportSize().w < (smallMax || 768);
     };
 
+    /** @return True if the window or session store is available */
+    var storageAvailable = function( type ) {
+      try {
+        var storage = window[type];
+        var x = '__storage_test__';
+        storage.setItem(x, x);
+        storage.removeItem(x);
+        return true;
+      }
+      catch(e) {
+        return false;
+      }
+    };
+
+    /** @return True if we were able to set the given key/value pair in session storage */
+    var setSessionStore = function( key, value ) {
+      if (storageAvailable( "sessionStorage" )) {
+        window.sessionStorage.setItem( key, value );
+        return true;
+      }
+      else {
+        return false;
+      }
+    };
+
+    /** @return The value of the key from session storage, if available */
+    var getSessionStore = function( key ) {
+      return storageAvailable( "sessionStorage" ) && window.sessionStorage.getItem( key );
+    };
+
     return {
       isChrome: isChrome,
       isFirefox: isFirefox,
@@ -252,6 +282,8 @@ function(
       isOpera: isOpera,
       isSafari: isSafari,
       isViewportSmall: isViewportSmall,
+      getSessionStore: getSessionStore,
+      setSessionStore: setSessionStore,
       viewportSize: viewportSize
     };
   }());

@@ -28,7 +28,7 @@ function(
   var Controller = function() {
     this.createComponents();
     this.bindEvents();
-    this.loadResults();
+    this.onPreferencesChange();
     this.setDefaultLocation();
   };
 
@@ -48,11 +48,17 @@ function(
 
     bindEvents: function() {
       $("body").on( Constants.EVENT_ASPECTS_CHANGE, _.bind( this.renderCurrentQueryResults, this ) );
-      $("body").on( Constants.EVENT_PREFERENCES_CHANGE, _.bind( this.loadResults, this ) );
+      $("body").on( Constants.EVENT_PREFERENCES_CHANGE, _.bind( this.onPreferencesChange, this ) );
     },
 
-    loadResults: function() {
-      $.getJSON( Routes.new_exploration, this.component( "preferencesView" ).preferences() )
+    onPreferencesChange: function() {
+      var prefs = this.component( "preferencesView" ).preferences();
+      this.loadResults( prefs );
+      this.explainQuery( prefs );
+    },
+
+    loadResults: function( prefs ) {
+      $.getJSON( Routes.new_exploration, prefs )
        .done( _.bind( this.onUpdateData, this ) )
        .error( function( e, m, a ) {
         console.log( "API get failed: " );
@@ -79,6 +85,20 @@ function(
 
     setDefaultLocation: function() {
       this.components.mapView.setDefaultLocation( Constants.DEFAULT_LOCATION );
+    },
+
+    explainQuery: function( prefs ) {
+      var explainPrefs = prefs + "&explain=true";
+      $.getJSON( Routes.new_exploration, explainPrefs )
+       .done( _.bind( this.onExplanation, this ) )
+       .error( function( e ) {
+        console.log( "API get failed: " );
+        console.log( e );
+      } );
+    },
+
+    onExplanation: function( data ) {
+      $("body").trigger( Constants.EVENT_EXPLANATION_CHANGE, data );
     }
 
   } );

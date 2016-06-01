@@ -27,7 +27,7 @@ class ExplorationController < ApplicationController
     state = SearchCommand.new( user_prefs, Regions )
 
     if state.search_status == :single_result
-      state = enact_query( state )
+      state = explain_or_enact_query ( state )
     end
 
     ExplorationState.new( state )
@@ -37,10 +37,18 @@ class ExplorationController < ApplicationController
     UserPreferences.new( params )
   end
 
-  def enact_query( search_cmd )
-    qc = QueryCommand.new( search_cmd )
+  def explain_or_enact_query( search_cmd )
+    qc = params[:explain] ? explain_query( search_cmd ) : enact_query( search_cmd )
     qc.perform_query
     qc
+  end
+
+  def enact_query( search_cmd )
+    QueryCommand.new( search_cmd )
+  end
+
+  def explain_query( search_cmd )
+    ExplainQueryCommand.new( search_cmd )
   end
 
   def no_user_params?
