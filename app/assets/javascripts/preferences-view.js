@@ -132,14 +132,29 @@ function(
     },
 
     setupDateTimePickers: function() {
-      _.each( ["#fromdatepicker, #todatepicker"], function( sel ) {
-        $(sel).datetimepicker( {
-          viewMode: "years",
-          format: "YYYY-MM"
-        }).on( "dp.change", function() {
-          $("body").trigger( Constants.EVENT_PREFERENCES_CHANGE );
-        });
-      } );
+      var fromDatePicker = $("#fromdatepicker").datetimepicker( {
+        viewMode: "years",
+        format: "YYYY-MM"
+      });
+
+      var toDatePicker = $("#todatepicker").datetimepicker( {
+        viewMode: "years",
+        format: "YYYY-MM",
+        useCurrent: false
+      });
+
+      toDatePicker.data( "DateTimePicker" ).minDate( fromDatePicker.find("input").val() );
+      fromDatePicker.data( "DateTimePicker" ).maxDate( toDatePicker.find("input").val() );
+
+      fromDatePicker.on( "dp.change", function( e ) {
+        toDatePicker.data( "DateTimePicker" ).minDate( e.date );
+        $("body").trigger( Constants.EVENT_PREFERENCES_CHANGE );
+      });
+
+      toDatePicker.on( "dp.change", function( e ) {
+        fromDatePicker.data( "DateTimePicker" ).maxDate( e.date );
+        $("body").trigger( Constants.EVENT_PREFERENCES_CHANGE );
+      });
     },
 
     onChangeLocationType: function( e ) {
