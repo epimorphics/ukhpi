@@ -6,7 +6,8 @@ class DownloadState < Presenter
     {label: "Name"},
     {label: "URI"},
     {label: "GSS"},
-    {label: "Period"}
+    {label: "Period"},
+    {label: "SalesVolume"}
   ]
 
 
@@ -23,8 +24,9 @@ class DownloadState < Presenter
     region = Regions.lookup_region( uri )
     date = r["ukhpi:refMonth"]["@value"]
     region_label = "\'#{region.label}\'"
+    volume = (sv = r["ukhpi:salesVolume"]) ? sv.first : ""
 
-    [region_label, uri, region.gss, date] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
+    [region_label, uri, region.gss, date, volume] + visible_aspects.map {|a| r["ukhpi:#{a}"]}
   end
 
   def as_filename
