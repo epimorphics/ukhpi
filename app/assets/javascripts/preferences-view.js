@@ -100,11 +100,15 @@ function(
 
       $( ".county .js-location" ).typeahead( {
         source: countyNames,
-        afterSelect: _.bind( this.onAutocompleteSelect, this )
+        afterSelect: _.bind( this.onAutocompleteSelect, this ),
+        items: 15,
+        minLength: 2
       } );
       $( ".local-authority .js-location" ).typeahead( {
         source: laNames,
-        afterSelect: _.bind( this.onAutocompleteSelect, this )
+        afterSelect: _.bind( this.onAutocompleteSelect, this ),
+        items: 15,
+        minLength: 2
       } );
     },
 
