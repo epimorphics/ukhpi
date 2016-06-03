@@ -179,7 +179,7 @@ function(
           inputElem.click();
         }
         else {
-          var regionName = _.find( RegionsTable.names, {value: uri} ).label;
+          var regionName = _.find( RegionsTable.names, {value: uri, lang: "en"} ).label;
           $(".js-location:visible").val( regionName );
           this.selectLocation( uri );
         }
