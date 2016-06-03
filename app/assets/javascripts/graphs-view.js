@@ -138,7 +138,7 @@ modulejs.define( "graphs-view", [
     $( selector )
       .find( ".c-graph-heading span" )
       .empty()
-      .text( ": " + location );
+      .html( ": " + location );
     return D3.select( selector + " svg" );
   };
 
