@@ -47,6 +47,11 @@ modulejs.define( "data-table-view", [
         columns: columns,
         searching: false
       } );
+
+      if (this.afterTableViewCallback) {
+        this.afterTableViewCallback();
+        this.afterTableViewCallback = null;
+      }
     },
 
     preferences: function() {
@@ -123,6 +128,11 @@ modulejs.define( "data-table-view", [
       $(".c-results-table-container").toggleClass( "c-results-table--compact", this._tableViewCompact );
 
       $("body").trigger( Constants.EVENT_PREFERENCES_CHANGE );
+      this.afterTableViewCallback = function() {
+        _.defer( function() {
+          $(".c-results-table-container").get(0).scrollIntoView();
+        } );
+      };
     }
 
   } );
