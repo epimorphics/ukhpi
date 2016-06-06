@@ -422,7 +422,7 @@ modulejs.define( "graphs-view", [
 
       // we should be able to set maximumFractionDigits to 0 above, but
       // this causes a crash in Firefox
-      return formattedValue.replace( /\.00%/, "" );
+      return formattedValue.replace( /\.00$/, "" );
     }
     catch (e) {
       console.log( "Failed to format value: " + value );
