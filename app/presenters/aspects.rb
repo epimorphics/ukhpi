@@ -41,7 +41,7 @@ class Aspects
 
   def visible_aspects
     prefs.aspect_indicators.product( prefs.aspect_categories ).map do |pair|
-      "#{pair.first}#{pair.second.capitalize}".to_sym
+      "#{pair.first}#{pair.second}".to_sym
     end
   end
 
