@@ -56,16 +56,31 @@
 %p.c-cta
   = link_to "search the house price index", explore_path, class: "c-search-tool"
 
+%h2.heading-medium Download the data
+
+%p
+  Using the
+  = link_to "search the house price index", explore_path, class: ""
+  you can identify a specific subset of house price index data you're interested
+  in, and then download it. Or you can use this link to
+  = link_to "#todo" do
+    = succeed "." do
+      %strong download all of the data
+
 .c-logos
-  .col-lg-3.col-md-6.col-sm-12.text-center
-    = link_to "//www.gov.uk/government/organisations/land-registry" do
-      = image_tag( "lr_logo_221_80.png")
-  .col-lg-3.col-md-6.col-sm-12.text-center
-    = link_to "//www.ros.gov.uk/" do
-      = image_tag( "ros_logo.png" )
-  .col-lg-3.col-md-6.col-sm-12.text-center
-    = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
-      = image_tag( "nisra_logo.gif" )
-  .col-lg-3.col-md-6.col-sm-12.text-center
-    = link_to "//ons.gov.uk" do
-      = image_tag( "ons_logo.png" )
+  .col-lg-3.col-md-6.col-xs-12.text-center
+    %p
+      = link_to "//www.gov.uk/government/organisations/land-registry" do
+        = image_tag( "lr_logo_221_80.png")
+  .col-lg-3.col-md-6.col-xs-12.text-center
+    %p
+      = link_to "//www.ros.gov.uk/" do
+        = image_tag( "ros_logo.png" )
+  .col-lg-3.col-md-6.col-xs-12.text-center
+    %p
+      = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
+        = image_tag( "nisra_logo.gif" )
+  .col-lg-3.col-md-6.col-xs-12.text-center
+    %p
+      = link_to "//ons.gov.uk" do
+        = image_tag( "ons_logo.png" )
