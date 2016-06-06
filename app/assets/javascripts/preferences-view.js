@@ -174,7 +174,8 @@ function(
       if (elem.val() !== uri) {
         $(".js-location-choice:checked").prop( "checked", false );
 
-        var inputElem = $(".js-location-choice[value='" + uri + "']");
+        var quotedURI = uri.replace( /'/g, "\\'" );
+        var inputElem = $(".js-location-choice[value='" + quotedURI + "']");
         if (inputElem.length > 0) {
           inputElem.click();
         }
