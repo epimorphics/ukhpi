@@ -414,11 +414,20 @@ modulejs.define( "graphs-view", [
   };
 
   var asCurrency = function( value ) {
-    return value.toLocaleString(  "en-GB", {
-      style: "currency",
-      currency: "GBP",
-      maximumFractionDigits: 0
-    } );
+    try {
+      var formattedValue = value.toLocaleString(  "en-GB", {
+        style: "currency",
+        currency: "GBP"
+      } );
+
+      // we should be able to set maximumFractionDigits to 0 above, but
+      // this causes a crash in Firefox
+      return formattedValue.replace( /\.00$/, "" );
+    }
+    catch (e) {
+      console.log( "Failed to format value: " + value );
+      return "";
+    }
   };
 
   return GraphView;
