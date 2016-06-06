@@ -230,7 +230,7 @@ modulejs.define( "graphs-view", [
     graphConf.root
       .append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + graphConf.scales.height + ")")
+      .attr("transform", translateCmd( 0, graphConf.scales.height ))
       .call( graphConf.axes.x );
     graphConf.root
       .append("g")
@@ -283,7 +283,7 @@ modulejs.define( "graphs-view", [
       .append("path")
       .attr("class", function( d ) {return "point " + categoryCssClass( d.cat );} )
       .attr("d", function( d, i ) {return D3.svg.symbol().type( SERIES_MARKER[d.cat] )( d, i );} )
-      .attr("transform", function(d) { return "translate(" + x(d.x) + "," + y(d.y) + ")"; });
+      .attr("transform", function(d) { return translateCmd( x(d.x), y(d.y) );});
 
   };
 
@@ -352,7 +352,7 @@ modulejs.define( "graphs-view", [
       .attr("class", "c-graph-overlay")
       .attr("width", graphConf.scales.width)
       .attr("height", graphConf.scales.height)
-      .attr("transform", "translate(" + GRAPH_PADDING.left + "," + GRAPH_PADDING.top + ")")
+      .attr("transform", translateCmd( GRAPH_PADDING.left, GRAPH_PADDING.top ) )
       .on("mouseover", function() { xTrack.style("display", null); })
       .on("mouseout", function() { xTrack.style("display", "none"); })
       .on("mousemove", (function() {
@@ -369,7 +369,7 @@ modulejs.define( "graphs-view", [
         d0 = aSeries[i - 1],
         d1 = aSeries[i],
         d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
-    xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + -10 + ")");
+    xTrack.attr("transform", translateCmd( (GRAPH_PADDING.left + x(d.x)), -10 ) );
 
     var label = D3.time.format("%b %Y")( d.x );
     label = label + ": " + _.map( categories, function( cat ) {
@@ -377,8 +377,8 @@ modulejs.define( "graphs-view", [
       return formatAspect( indicator, cat, value && value.y );
     } ).join( ", ");
 
-    var txtLen = xTrack
-      .select("text")
+    var labelElem = xTrack.select( "text" );
+    var txtLen = labelElem
       .text( label )
       .node()
       .getComputedTextLength();
@@ -386,10 +386,15 @@ modulejs.define( "graphs-view", [
     var maxLeft = graphConf.scales.width - txtLen;
     var delta = maxLeft - x(d.x);
     if (delta < 0) {
-      xTrack
-        .select("text")
-        .attr( "transform", "translate( " + delta + ", 0)" );
+      labelElem.attr( "transform", translateCmd( delta, 0 ) );
     }
+    else {
+      labelElem.attr( "transform", translateCmd( 0, 0 ) );
+    }
+  };
+
+  var translateCmd = function( x, y ) {
+    return "translate(" + parseInt( x ) + "," + parseInt( y ) + ")";
   };
 
   return GraphView;
