@@ -39,6 +39,7 @@ modulejs.define( "graphs-view", [
       ticksCount: 5,
       yDomain: "",
       graphType: "lineAndPoints",
+      tickFormat: function( d) {return asCurrency( d );},
       byPropertyType: true
     },
     housePriceIndex: {
@@ -395,6 +396,14 @@ modulejs.define( "graphs-view", [
 
   var translateCmd = function( x, y ) {
     return "translate(" + parseInt( x ) + "," + parseInt( y ) + ")";
+  };
+
+  var asCurrency = function( value ) {
+    return value.toLocaleString(  "en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: 0
+    } );
   };
 
   return GraphView;
