@@ -10,11 +10,15 @@
       {"parsetags": "explicit"}
 
     - if @preferences
-      %link{ rel: "canonical", href: "http://#{request.host_with_port}#{@preferences.as_path( :view )}"}
+      %link{ rel: "canonical", href: "//#{request.host_with_port}#{@preferences.as_path( :view )}"}
 
     /[if lt IE 9]
-      %script{ src: "assets/html5shiv.js", type: "application/javascript"}
-      %script{ src: "assets/respond.min.js", type: "application/javascript"}
+      = javascript_include_tag "assets/html5shiv.js"
+      = javascript_include_tag "//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js"
+      = javascript_include_tag "//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js"
+      = javascript_include_tag "//cdn.jsdelivr.net/lodash/4.9.0/lodash.js"
+      :javascript
+        window.isIE8 = true;
 
     <!--[if gt IE 8]><!-->
     = javascript_include_tag :d3

@@ -1,8 +1,8 @@
 // ModuleJS wrapper
 
-/* global d3 */
+/* global window */
 
 modulejs.define( "lib/d3", function() {
   "use strict";
-  return d3;
+  return window.d3 || null;
 } );

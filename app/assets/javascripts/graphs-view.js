@@ -31,7 +31,7 @@ modulejs.define( "graphs-view", [
     "FlatMaisonette": "triangle-up"
   };
 
-  var oneDecimalPlace = D3.format( ".2g" );
+  var oneDecimalPlace = D3 && D3.format( ".2g" );
 
   var GRAPHS_OPTIONS = {
     averagePrice: {
@@ -102,33 +102,48 @@ modulejs.define( "graphs-view", [
     },
 
     showQueryResults: function( qr ) {
-      var gv = this;
-      var dateRange = qr.dateRange();
-      var prefs = new Preferences();
-
-      this.resetGraphs( prefs );
-
-      _.each( prefs.visibleGraphTypes(), function( indicator ) {
-        var options = GRAPHS_OPTIONS[indicator];
-        if (options) {
-          gv.graphConf[indicator] = {};
-          var graphConf = gv.graphConf[indicator];
-
-          graphConf.elem = revealGraphElem( options, qr.location() );
-          graphConf.root = drawGraphRoot( graphConf );
-
-          var valueRange = calculateValueRange( indicator, prefs, qr, options );
-          _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
-          drawAxes( graphConf );
-          drawGraph( indicator, prefs, qr, graphConf, options );
-          drawOverlay( indicator, prefs, qr, graphConf, options );
-        }
-      } );
+      if (window.isIE8) {
+        setNoGraphsMessage();
+      }
+      else {
+        showQueryResultGraphs.call( this, qr );
+      }
     }
   } );
 
 
   /* Helper functions */
+
+  var setNoGraphsMessage = function() {
+    $(".c-graphs").html(
+      "<h2>No graphs in IE version 8</h2>" + "<p>We are sorry, but graphs of house-price " +
+      "indices are not available in your browser.</p>" );
+  };
+
+  var showQueryResultGraphs = function( qr ) {
+    var gv = this;
+    var dateRange = qr.dateRange();
+    var prefs = new Preferences();
+
+    this.resetGraphs( prefs );
+
+    _.each( prefs.visibleGraphTypes(), function( indicator ) {
+      var options = GRAPHS_OPTIONS[indicator];
+      if (options) {
+        gv.graphConf[indicator] = {};
+        var graphConf = gv.graphConf[indicator];
+
+        graphConf.elem = revealGraphElem( options, qr.location() );
+        graphConf.root = drawGraphRoot( graphConf );
+
+        var valueRange = calculateValueRange( indicator, prefs, qr, options );
+        _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
+        drawAxes( graphConf );
+        drawGraph( indicator, prefs, qr, graphConf, options );
+        drawOverlay( indicator, prefs, qr, graphConf, options );
+      }
+    } );
+  };
 
   var revealGraphElem = function( options, location ) {
     var selector = ".js-graph." + options.cssClass;
@@ -322,7 +337,7 @@ modulejs.define( "graphs-view", [
     return catName + Values.formatValue( indicator + cat, value );
   };
 
-  var bisectDate = D3.bisector( function(d) { return d.x; } ).left;
+  var bisectDate = D3 && D3.bisector( function(d) { return d.x; } ).left;
 
 
   var drawOverlay = function( indicator, prefs, qr, graphConf, options ) {
