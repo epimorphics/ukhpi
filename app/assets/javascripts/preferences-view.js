@@ -60,7 +60,7 @@ function(
     },
 
     updatePrompt: function( qr ) {
-      $(".js-search-prompt span").text( qr.prefsSummary() );
+      $(".js-search-prompt span").html( qr.prefsSummary() );
     },
 
     onToggleRevealPreferences: function( e ) {
