@@ -83,7 +83,7 @@ class UserPreferences
       to: "to %s"
     }
 
-    apply_templates( templates, @params ).join( ", " )
+    apply_templates( templates, @params ).join( " " )
   end
 
   :private
@@ -136,10 +136,19 @@ class UserPreferences
   def apply_templates( templates, params )
     templates.map do |k, template|
       if value = params[k]
-        region = Regions.lookup_region( value )
-        value = region ? region.label : value
-        template % value
+        template % format_preference_value( value )
       end
     end .compact
+  end
+
+  def format_preference_value( value )
+    case
+    when r = Regions.lookup_region( value )
+      r.label
+    when value.is_a?( Date )
+      value.strftime( "%B %Y" )
+    else
+      value.to_s
+    end
   end
 end

@@ -108,7 +108,7 @@ class UserPreferencesTest < ActiveSupport::TestCase
     up.summary.must_equal( "foo" )
 
     up1 = UserPreferences.new( "region" => "foo", "to" => "2016-01-01" )
-    up1.summary.must_equal( "foo, to 2016-01-01" )
+    up1.summary.must_equal( "foo to January 2016" )
   end
 
   it "should correctly summarise a URI valued location" do

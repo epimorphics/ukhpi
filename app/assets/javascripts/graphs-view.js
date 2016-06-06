@@ -76,7 +76,7 @@ modulejs.define( "graphs-view", [
   };
 
   var GRAPH_PADDING = {
-    top: 30,
+    top: 10,
     right: 25,
     bottom: 20,
     left: 80
@@ -338,7 +338,7 @@ modulejs.define( "graphs-view", [
       .attr( "height", graphConf.scales.height )
       .attr( "width", 0.5 )
       .attr( "stroke-dasharray", "5,5" )
-      .attr( "y", GRAPH_PADDING.top );
+      .attr( "y", GRAPH_PADDING.top + 10 );
 
     xTrack
       .append( "text" )
@@ -369,7 +369,7 @@ modulejs.define( "graphs-view", [
         d0 = aSeries[i - 1],
         d1 = aSeries[i],
         d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
-    xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + 0 + ")");
+    xTrack.attr("transform", "translate(" + (GRAPH_PADDING.left + x(d.x)) + "," + -10 + ")");
 
     var label = D3.time.format("%b %Y")( d.x );
     label = label + ": " + _.map( categories, function( cat ) {
