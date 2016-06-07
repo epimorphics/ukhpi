@@ -45,7 +45,12 @@ modulejs.define( "data-table-view", [
       $("#results-table").DataTable( {
         data: data,
         columns: columns,
-        searching: false
+        searching: false,
+        buttons: [{
+          extend: 'print',
+          text: 'Print data table'
+        }],
+        lengthMenu: [ [12, 24, 48, -1], [12, 24, 48, "all"] ]
       } );
 
       if (this.afterTableViewCallback) {
