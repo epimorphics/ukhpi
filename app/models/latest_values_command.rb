@@ -9,8 +9,24 @@ class LatestValuesCommand
   end
 
   def perform_query( service = nil )
-    hpi = service || dataset( :ukhpi )
+    hpi = service_api( service )
 
+    hpi ? run_query( hpi ) : no_service
+  end
+
+  :private
+
+  def service_api( service )
+    begin
+      service || dataset( :ukhpi )
+    rescue Faraday::ConnectionFailed => e
+      Rails.logger.info( "Failed to connect to UK HPI " )
+      Rails.logger.info( e )
+      nil
+    end
+  end
+
+  def run_query( hpi )
     query = add_date_range_constraint( base_query )
     query = add_location_constraint( query )
     query = add_sort_constraint( query )
@@ -22,8 +38,6 @@ class LatestValuesCommand
     @results = hpi.query( query )
     Rails.logger.debug( "query took %.1f ms\n" % ((Time.now - start) * 1000.0) )
   end
-
-  :private
 
   def add_date_range_constraint( query )
     query.ge( "ukhpi:refMonth", default_month_year_value )
@@ -46,4 +60,7 @@ class LatestValuesCommand
     query.limit( 1 )
   end
 
+  def no_service
+    "Our apologies, but the latest index values are not available. Please check back again soon."
+  end
 end

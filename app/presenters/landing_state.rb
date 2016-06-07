@@ -9,39 +9,51 @@ class LandingState
   end
 
   def result
-    @result ||= to_value( latest.results.first.symbolize_keys )
+    results = latest.results ? latest.results.first.symbolize_keys : Hash.new
+    @result ||= to_value( results )
   end
 
   def period
-    refMonth = to_value( result[:"ukhpi:refMonth"] )
-    date = DateTime.strptime( refMonth.value, "%Y-%m" )
-    date.strftime( "%B %Y" )
+    month = result[:"ukhpi:refMonth"]
+    if month
+      refMonth = to_value( month )
+      date = DateTime.strptime( refMonth.value, "%Y-%m" )
+      date.strftime( "%B %Y" )
+    else
+      "Latest period not available"
+    end
   end
 
   def house_price_index
-    result[:"ukhpi:housePriceIndex"].first
+    first_value( "ukhpi:housePriceIndex" )
   end
 
   def average_price
-    result[:"ukhpi:averagePrice"].first
+    first_value( "ukhpi:averagePrice" )
   end
 
   def percentage_monthly_change
-    format_percentage( result[:"ukhpi:percentageChange"].first )
+    format_percentage( first_value( "ukhpi:percentageChange" ) )
   end
 
   def percentage_annual_change
-    format_percentage( result[:"ukhpi:percentageAnnualChange"].first )
+    format_percentage( first_value( "ukhpi:percentageAnnualChange" ) )
   end
 
   :private
+
+  def first_value( key )
+    @result[key.to_sym] ? @result[key.to_sym].first : "unknown"
+  end
 
   def to_value( v )
     DataServicesApi::Value.new( v.symbolize_keys )
   end
 
   def format_percentage( change )
-    if change == 0.0
+    if change == "unknown"
+      change
+    elsif change == 0.0
       "remained the same"
     elsif change > 0
       "risen by %.1f\%" % change.abs
