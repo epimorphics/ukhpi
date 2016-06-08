@@ -102,12 +102,14 @@ function(
         source: countyNames,
         afterSelect: _.bind( this.onAutocompleteSelect, this ),
         items: 15,
+        matcher: relaxedMatcher,
         minLength: 2
       } );
       $( ".local-authority .js-location" ).typeahead( {
         source: laNames,
         afterSelect: _.bind( this.onAutocompleteSelect, this ),
         items: 15,
+        matcher: relaxedMatcher,
         minLength: 2
       } );
     },
@@ -212,6 +214,21 @@ function(
     var link = $(selector);
     var url = link.attr( "href" ).replace( /\?.*$/, "" );
     link.attr( "href", url + params );
+  };
+
+  var relaxedMatcher = function( item ) {
+    if (!item.relaxedName) {
+      item.relaxedName = relaxedString( item.name );
+    }
+
+    var s1 = item.relaxedName;
+    var s2 = relaxedString( this.query );
+
+    return s2.length > 0 && s1.substr( 0, s2.length ) === s2;
+  };
+
+  var relaxedString = function( s ) {
+    return s.replace( /[ \',\.]/g, "" ).toLocaleLowerCase();
   };
 
   return PreferencesView;
