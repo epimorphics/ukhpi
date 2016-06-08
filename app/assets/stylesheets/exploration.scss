@@ -181,7 +181,7 @@ $graphColours: (
   padding-top: 1em;
 }
 
-// Bootstrap tables adjust
+// Jquery datatables adjust
 table.dataTable thead .sorting {
   background-image: none;
 }
@@ -201,4 +201,15 @@ table.dataTable thead .sorting_desc_disabled {
 .dataTables_wrapper .dataTables_paginate .paginate_button {
   margin: 0;
   padding: 0;
+}
+
+.dt-button, button.dt-button, .dt-buttons a.dt-button {
+  display: inline;
+  @extend .c-action;
+  border-radius: 0;
+  background-image: none;
+  padding-top: 7px;
+  padding-bottom: 6px;
+  margin-left: 20px;
+  color: #333;
 }
