@@ -20,7 +20,7 @@ function(
       case "percentage":
         return value + "%";
       case "pound_sterling":
-        return "£" + value;
+        return asCurrency( parseInt( value ) );
       case "integer":
         return value.toFixed()
       case "decimal":
@@ -30,7 +30,25 @@ function(
     }
   };
 
+  var asCurrency = function( value ) {
+    try {
+      var formattedValue = value.toLocaleString(  "en-GB", {
+        style: "currency",
+        currency: "GBP"
+      } );
+
+      // we should be able to set maximumFractionDigits to 0 above, but
+      // this causes a crash in Firefox
+      return formattedValue.replace( /\.00$/, "" );
+    }
+    catch (e) {
+      console.log( "Failed to format value: " + value );
+      return "";
+    }
+  };
+
   return {
+    asCurrency: asCurrency,
     formatValue: formatValue
   };
 } );

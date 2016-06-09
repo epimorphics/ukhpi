@@ -18,7 +18,7 @@
     the average house price in the UK is
     %span.c-headline-figure
       = succeed "," do
-        &pound;#{@landing_state.average_price}
+        = number_to_currency( @landing_state.average_price, locale: "en-GB", precision: 0 )
     and the index stands at
     %span.c-headline-figure
       = succeed "." do

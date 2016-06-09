@@ -39,7 +39,7 @@ modulejs.define( "graphs-view", [
       ticksCount: 5,
       yDomain: "",
       graphType: "lineAndPoints",
-      tickFormat: function( d) {return asCurrency( d );},
+      tickFormat: function( d) {return Values.asCurrency( d );},
       byPropertyType: true
     },
     housePriceIndex: {
@@ -421,23 +421,6 @@ modulejs.define( "graphs-view", [
 
   var translateCmd = function( x, y ) {
     return "translate(" + parseInt( x ) + "," + parseInt( y ) + ")";
-  };
-
-  var asCurrency = function( value ) {
-    try {
-      var formattedValue = value.toLocaleString(  "en-GB", {
-        style: "currency",
-        currency: "GBP"
-      } );
-
-      // we should be able to set maximumFractionDigits to 0 above, but
-      // this causes a crash in Firefox
-      return formattedValue.replace( /\.00$/, "" );
-    }
-    catch (e) {
-      console.log( "Failed to format value: " + value );
-      return "";
-    }
   };
 
   return GraphView;
