@@ -45,13 +45,21 @@ modulejs.define( "data-table-view", [
       $("#results-table").DataTable( {
         data: data,
         columns: columns,
-        searching: false
+        searching: false,
+        buttons: [{
+          extend: "print",
+          text: "<i class='fa fa-print'></i> Print data table"
+        }],
+        dom: "Bfrtip",
+        lengthMenu: [ [12, 24, 48, -1], [12, 24, 48, "all"] ]
       } );
 
       if (this.afterTableViewCallback) {
         this.afterTableViewCallback();
         this.afterTableViewCallback = null;
       }
+
+      this.relocateWideTableButton();
     },
 
     preferences: function() {
@@ -113,6 +121,14 @@ modulejs.define( "data-table-view", [
       } );
 
       return [{title: "Date"}].concat( aspectColumns );
+    },
+
+    relocateWideTableButton: function() {
+      if ($(".js-pre-table-actions-container .c-action").length > 0) {
+        $(".js-pre-table-actions-container .c-action")
+          .detach()
+          .prependTo( ".dt-buttons" );
+      }
     },
 
     // event handlers
