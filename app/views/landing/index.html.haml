@@ -1,25 +1,14 @@
 %h1.heading-large UK House Price Index
 
-
 %p
-  The UK House Price Index (HPI) uses house sales data from
-  = succeed "," do
-    = link_to "Land Registry", "//www.gov.uk/government/organisations/land-registry"
-  = succeed "," do
-    = link_to "Registers of Scotland", "//www.ros.gov.uk/"
-  and
-  = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
-  and is calculated by the
-  = succeed "." do
-    = link_to "Office of National Statistics", "//ons.gov.uk"
-  The index applies a statistical method, called a
-  = succeed "," do
-    = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
-  to the various sources of data on property price and attributes
-  to produce estimates of the change in house prices each period.
+  Use the search tool to find house price trends in the UK:
 
-%p
-  The index is published monthly, with Northern Ireland figures updated quarterly.
+%p.c-cta
+  = link_to "search the house price index", explore_path, class: "c-search-tool"
+
+
+%h2.heading-medium
+  Current index
 
 .c-current-figures.panel.panel-border-wide
   %p
@@ -47,25 +36,67 @@
     %span
       previous year.
 
-%h2.heading-medium Search the UK House Price Index
+
+%h2.heading-medium About the House Price Index
 
 %p
-  Use this tool to find average sales house prices and monthly and annual changes
-  by property type for a specified location and period of time.
+  The UK House Price Index (HPI) uses house sales data from
+  = succeed "," do
+    = link_to "Land Registry", "//www.gov.uk/government/organisations/land-registry"
+  = succeed "," do
+    = link_to "Registers of Scotland", "//www.ros.gov.uk/"
+  and
+  = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
+  and is calculated by the
+  = succeed "." do
+    = link_to "Office of National Statistics", "//ons.gov.uk"
+  The index applies a statistical method, called a
+  = succeed "," do
+    = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
+  to the various sources of data on property price and attributes
+  to produce estimates of the change in house prices each period.
 
-%p.c-cta
-  = link_to "search the house price index", explore_path, class: "c-search-tool"
+%p
+  The index is published monthly, with Northern Ireland figures updated quarterly.
 
-%h2.heading-medium Download the data
+%h2.heading-medium Downloading House Price Index Data
 
 %p
   Using the
-  = link_to "search the house price index", explore_path, class: ""
+  = link_to "search tool", explore_path, class: ""
   you can identify a specific subset of house price index data you're interested
-  in, and then download it. Or you can use this link to
+  in, and then download it. Alternatively, you can
   = link_to "#todo" do
-    = succeed "." do
-      %strong download all of the data
+    %strong download all of the data
+  in comma-separated (CSV) format.
+
+%h2.heading-medium
+  UK House Price Index Linked-Data
+
+%p
+  We publish this data in
+  = link_to( "linked data", "https://en.wikipedia.org/wiki/Linked_data" )
+  format, aiming for
+  = succeed "." do
+    %a{ href: "http://5stardata.info/en/"} five-star rating
+
+%p
+  To try out your own
+  %a{ href: "https://en.wikipedia.org/wiki/SPARQL"} queries
+  against our linked-data publications, use
+  = succeed "." do
+    %a{ href: "/app/qonsole"} the SPARQL query form
+  We have included some example queries
+  with the form, and you can generate output in a variety of different formats.
+
+%p
+  If you want to see, and run, the SPARQL query that is used to generate the report
+  created in the search tool, use the <code>show SPARQL query</code> button.
+
+%p
+  Links to other sources of open data are provided under the Open Government Licence
+  (ONS) and Open Data Licence (OS). Land Registry is not responsible for the
+  content or reliability of any linked websites.
 
 .c-logos
   .col-lg-3.col-md-6.col-xs-12.text-center
