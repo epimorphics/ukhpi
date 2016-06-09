@@ -134,7 +134,7 @@ function(
       if (!this._map) {
         this._map = Leaflet.map( "map" )
                            .setView( [54.0072, -2], 5 );
-        this._map.attributionControl.setPrefix( "Contains OGL and Ordnance Survey data &copy; Crown copyright 2016" );
+        this._map.attributionControl.setPrefix( "Open Government License &copy; Crown copyright 2016" );
       }
       else {
         this.resetSelection();
