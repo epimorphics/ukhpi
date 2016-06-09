@@ -160,7 +160,7 @@ modulejs.define( "graphs-view", [
 
   var configureAxes = function( graphConf, dateRange, valueRange, options ) {
     var scales = createScales( graphConf.elem );
-    var axes = createAxes( scales, options, graphConf );
+    var axes = createAxes( scales, options, graphConf, monthsSpanned( dateRange ) );
 
     setScaleDomain( scales, dateRange, valueRange );
 
@@ -186,12 +186,12 @@ modulejs.define( "graphs-view", [
     return {x: xScale, y: yScale, width: width, height: height};
   };
 
-  var createAxes = function( scales, options ) {
+  var createAxes = function( scales, options, graphConf, nMonths ) {
     var xAxis = D3.svg.axis()
       .scale( scales.x )
       .orient("bottom")
-      .tickFormat(D3.time.format("%b %Y"))
-      .ticks( 8 );
+      .tickFormat(D3.time.format("%b %Y"));
+    xAxis = xAxis.ticks( Math.min( nMonths, 8 ) );
 
     var yAxis = D3.svg.axis()
       .scale( scales.y )
@@ -228,6 +228,16 @@ modulejs.define( "graphs-view", [
     else {
       return [0, overallRange[1]];
     }
+  };
+
+  var monthsSpanned = function( dateRange ) {
+    var year0 = dateRange[0].getFullYear();
+    var year1 = dateRange[1].getFullYear();
+
+    var month0 = dateRange[0].getMonth();
+    var month1 = dateRange[1].getMonth();
+
+    return (year1 - year0) * 12 + (month1 - month0 + 1);
   };
 
   var aspectNames = function( indicator, prefs ) {
