@@ -406,7 +406,7 @@ modulejs.define( "graphs-view", [
 
   var onXTrackMouseMove = function( indicator, graphConf, categories, qr, xTrack ) {
     if (qr.size() > 0) {
-      onXTrackMouseMoveDraw( indicator, graphConf, categories, qr, xTrack );
+      onXTrackMouseMoveDraw.call( this, indicator, graphConf, categories, qr, xTrack );
     }
   };
 
