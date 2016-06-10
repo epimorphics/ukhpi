@@ -60,7 +60,9 @@ function(
     },
 
     updatePrompt: function( qr ) {
-      $(".js-search-prompt span").html( qr.prefsSummary() );
+      var parts = qr.prefsSummary().split( "from" );
+      $(".js-heading-location").html( "for: " + parts[0] )
+      $(".js-search-prompt span").html( parts[1] );
     },
 
     onToggleRevealPreferences: function( e ) {
