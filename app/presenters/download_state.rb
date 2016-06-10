@@ -5,7 +5,7 @@ class DownloadState < Presenter
   STANDARD_COLUMNS = [
     {label: "Name"},
     {label: "URI"},
-    {label: "GSS"},
+    {label: "Region_GSS_code"},
     {label: "Period"},
     {label: "SalesVolume"},
     {label: "ReportingPeriod"}
