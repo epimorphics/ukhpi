@@ -138,7 +138,7 @@ modulejs.define( "graphs-view", [
 
         var valueRange = calculateValueRange( indicator, prefs, qr, options );
         _.merge( graphConf, configureAxes( graphConf, dateRange, valueRange, options ) );
-        drawAxes( graphConf );
+        drawAxes( graphConf, options );
         drawGraph( indicator, prefs, qr, graphConf, options );
         drawOverlay( indicator, prefs, qr, graphConf, options );
       }
@@ -252,7 +252,7 @@ modulejs.define( "graphs-view", [
       .attr("transform", "translate(" + GRAPH_PADDING.left + "," + GRAPH_PADDING.top + ")");
   };
 
-  var drawAxes = function( graphConf ) {
+  var drawAxes = function( graphConf, options ) {
     graphConf.root
       .append("g")
       .attr("class", "x axis")
@@ -262,6 +262,16 @@ modulejs.define( "graphs-view", [
       .append("g")
       .attr("class", "y axis")
       .call( graphConf.axes.y );
+
+    if (options.symmetricalYAxis) {
+      graphConf.root
+        .append("svg:line")
+        .attr( "class", "x axis supplemental" )
+        .attr( "x1", 0 )
+        .attr( "x2", graphConf.scales.width )
+        .attr( "y1", graphConf.scales.y( 0 ) )
+        .attr( "y2", graphConf.scales.y( 0 ) )
+    }
   };
 
   var categoryCssClass = function( categoryName ) {
