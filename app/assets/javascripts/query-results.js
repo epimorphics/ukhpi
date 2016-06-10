@@ -32,14 +32,15 @@ modulejs.define( "query-results", [
       return this._results;
     },
 
+    size: function() {
+      return this.results().length;
+    },
+
     dateRange: function() {
       var min = _.minBy( this.results(), function( r) { return r.periodDate().toDate(); } );
       var max = _.maxBy( this.results(), function( r) { return r.periodDate().toDate(); } );
 
-      return [min.periodDate()
-                 .toDate(),
-              max.periodDate()
-                 .toDate()];
+      return min && [min.periodDate().toDate(), max.periodDate().toDate()];
     },
 
     /* @return The data in a particular category series */

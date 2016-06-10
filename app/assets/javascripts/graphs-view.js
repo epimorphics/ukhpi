@@ -122,8 +122,8 @@ modulejs.define( "graphs-view", [
 
   var showQueryResultGraphs = function( qr ) {
     var gv = this;
-    var dateRange = qr.dateRange();
     var prefs = new Preferences();
+    var dateRange = qr.dateRange() || prefs.dateRange();
 
     this.resetGraphs( prefs );
 
@@ -214,20 +214,27 @@ modulejs.define( "graphs-view", [
 
   var calculateValueRange = function( indicator, prefs, qr, options ) {
     var aspects = options.byPropertyType ? aspectNames( indicator, prefs ) : ["ukhpi:" + indicator];
-    var extents = _.map( aspects, function( aspect ) {
-      return D3.extent( qr.results(), function( result ) {
-        return result.value( aspect );
+    var extents = [0,1.0];
+
+    if (qr.size() > 0) {
+      extents = _.map( aspects, function( aspect ) {
+        return D3.extent( qr.results(), function( result ) {
+          return result.value( aspect );
+        } );
       } );
-    } );
+    }
 
     var overallRange = D3.extent( _.flatten( extents ) );
 
     if (options.symmetricalYAxis) {
       var largest = _.max( _.map( overallRange, Math.abs ) );
+      largest = Math.max( largest, 1.0 );
       return [largest * -1.0, largest];
     }
     else {
-      return [0, overallRange[1]];
+      var limit = overallRange[1];
+      limit = Math.max( limit, 100 );
+      return [0, limit];
     }
   };
 
@@ -398,6 +405,12 @@ modulejs.define( "graphs-view", [
   };
 
   var onXTrackMouseMove = function( indicator, graphConf, categories, qr, xTrack ) {
+    if (qr.size() > 0) {
+      onXTrackMouseMoveDraw( indicator, graphConf, categories, qr, xTrack );
+    }
+  };
+
+  var onXTrackMouseMoveDraw = function( indicator, graphConf, categories, qr, xTrack ) {
     var aSeries = qr.series( indicator, _.first( categories ) );
 
     var x = graphConf.scales.x;
