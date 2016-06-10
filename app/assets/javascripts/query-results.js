@@ -60,6 +60,16 @@ modulejs.define( "query-results", [
       } );
 
       return _.sortBy( _.compact( s ), function( d ) {return d.x;} );
+    },
+
+    /** @return The duration of the selected results, if known */
+    duration: function() {
+      if (this.results().length > 0) {
+        return this.results()[0].duration();
+      }
+      else {
+        return 0;
+      }
     }
   } );
 
