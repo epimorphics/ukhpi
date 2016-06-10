@@ -141,6 +141,7 @@ modulejs.define( "graphs-view", [
         drawAxes( graphConf, options );
         drawGraph( indicator, prefs, qr, graphConf, options );
         drawOverlay( indicator, prefs, qr, graphConf, options );
+        addGraphNote( qr, options );
       }
     } );
   };
@@ -270,7 +271,7 @@ modulejs.define( "graphs-view", [
         .attr( "x1", 0 )
         .attr( "x2", graphConf.scales.width )
         .attr( "y1", graphConf.scales.y( 0 ) )
-        .attr( "y2", graphConf.scales.y( 0 ) )
+        .attr( "y2", graphConf.scales.y( 0 ) );
     }
   };
 
@@ -431,6 +432,16 @@ modulejs.define( "graphs-view", [
 
   var translateCmd = function( x, y ) {
     return "translate(" + parseInt( x ) + "," + parseInt( y ) + ")";
+  };
+
+  var addGraphNote = function( qr, options ) {
+    var elem = $(".js-graph." + options.cssClass + " .js-graph-note");
+    if (qr.duration() === 3) {
+      elem.html( "<p><strong>Note:</strong> these figures are reported quarterly not monthly.<p>" );
+    }
+    else {
+      elem.empty();
+    }
   };
 
   return GraphView;
