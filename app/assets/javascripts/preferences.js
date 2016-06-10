@@ -44,8 +44,24 @@ modulejs.define( "preferences", [
       return this.loadPrefs().from;
     },
 
+    fromDate: function() {
+      var ym = this.from().split( "-" );
+      return new Date( ym[0], ym[1], 1 );
+    },
+
     to: function() {
       return this.loadPrefs().to;
+    },
+
+    toDate: function() {
+      var ym = this.to().split( "-" );
+      var month = ym[1];
+      var lastDay = [31,28,31,30,31,30,31,31,30,31,30,31][month];
+      return new Date( ym[0], month, lastDay );
+    },
+
+    dateRange: function() {
+      return [this.fromDate(), this.toDate()];
     },
 
     /** @return The currently selected indicators, optionally limited to just a given selection */
