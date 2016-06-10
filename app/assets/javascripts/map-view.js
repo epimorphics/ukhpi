@@ -91,11 +91,8 @@ function(
         this.createMap();
       }
       if (this._map && !this._map.hasLayer( this._ukFeature )) {
-        console.log( "About to add UK feature to leaflet map" );
         this._map.addLayer( this._ukFeature );
-        console.log( "Done adding UK feature" );
         this.showLayer( DEFAULT_LAYER, this._map );
-        console.log( "Done showing UK feature layer" );
       }
 
       if (this._map && this._defaultLocation) {

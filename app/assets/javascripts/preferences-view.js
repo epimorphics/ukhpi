@@ -205,7 +205,6 @@ function(
     },
 
     onExplanationChange: function( e, data ) {
-      console.log( "Setting local store with sparql query" );
       if (Util.Browser.setSessionStore( "qonsole.query", data.explanation.sparql )) {
         setLinkSearchParams( ".js-explanation-url", "?query=_localstore" );
       }
