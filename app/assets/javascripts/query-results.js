@@ -55,7 +55,6 @@ modulejs.define( "query-results", [
                   cat: category};
         }
         else {
-          console.log( "missing value for " + aspect + " " + r.periodDate().format( "YYYY-MM" ));
           return null;
         }
       } );
