@@ -435,12 +435,16 @@ modulejs.define( "graphs-view", [
   };
 
   var addGraphNote = function( qr, options ) {
-    var elem = $(".js-graph." + options.cssClass + " .js-graph-note");
+    var noteElem = $(".js-graph." + options.cssClass + " .js-graph-note" );
+    var periodElem = $(".js-graph." + options.cssClass + " .js-percentage-period" );
+
     if (qr.duration() === 3) {
-      elem.html( "<p><strong>Note:</strong> these figures are reported quarterly not monthly.<p>" );
+      noteElem.html( "<p><strong>Note:</strong> these figures are reported quarterly not monthly.<p>" );
+      periodElem.text( "quarterly" );
     }
     else {
-      elem.empty();
+      noteElem.empty();
+      periodElem.text( "monthly" );
     }
   };
 
