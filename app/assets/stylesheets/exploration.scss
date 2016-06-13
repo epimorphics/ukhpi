@@ -28,12 +28,12 @@
   font-size: 16pt;
 }
 
-$graphDefaultColour: #377EB8;
-$graphDetachedColour: #72B971;
-$graphSemiDetachedColour: #984EA3;
-$graphTerracedColour: #FF7F00;
-$graphFlatMaisonetteColour: #DE5153;
-$graphVolumeColour: #A65628;
+$graphDefaultColour: #ff7f00;
+$graphDetachedColour: #377eb8;
+$graphSemiDetachedColour: #4daf4a;
+$graphTerracedColour: #984ea3;
+$graphFlatMaisonetteColour: #e41a1c;
+$graphVolumeColour: #a65628;
 
 $graphColours: (
   overall: $graphDefaultColour,
@@ -76,7 +76,7 @@ $graphColours: (
 
   .line {
     fill: none;
-    stroke-width: 1.0;
+    stroke-width: 1.25;
     stroke: $graphDefaultColour;
   }
 
