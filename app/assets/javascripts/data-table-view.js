@@ -35,6 +35,7 @@ modulejs.define( "data-table-view", [
       googleAnalyticsDataTablesWorkaround();
 
       $(".c-results").removeClass( "js-hidden" );
+      this.relocateWideTableButton( true );
 
       // this should be necessary, but the destroy:true attrib on DataTables is not working
       if ($("#results-table.dataTable").length > 0) {
@@ -59,7 +60,7 @@ modulejs.define( "data-table-view", [
         this.afterTableViewCallback = null;
       }
 
-      this.relocateWideTableButton();
+      this.relocateWideTableButton( false );
     },
 
     preferences: function() {
@@ -123,11 +124,19 @@ modulejs.define( "data-table-view", [
       return [{title: "Date"}].concat( aspectColumns );
     },
 
-    relocateWideTableButton: function() {
-      if ($(".js-pre-table-actions-container .c-action").length > 0) {
-        $(".js-pre-table-actions-container .c-action")
+    relocateWideTableButton: function( keep ) {
+      var fromContainer = ".js-pre-table-actions-container";
+      var toContainer = ".dt-buttons";
+
+      if (keep) {
+        toContainer = ".js-pre-table-actions-container";
+        fromContainer = ".dt-buttons";
+      }
+
+      if ($(fromContainer + " .c-action").length > 0) {
+        $(fromContainer + " .c-action")
           .detach()
-          .prependTo( ".dt-buttons" );
+          .prependTo( toContainer );
       }
     },
 
