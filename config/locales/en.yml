@@ -31,8 +31,8 @@ en:
     to: "To"
 
   search_state:
-    reveal_button_caption: "change selection"
-    revealing_button_caption: "hide selections"
+    reveal_button_caption: "customise your search"
+    revealing_button_caption: "hide"
 
   aspect:
     overall_indices: "all property types"
