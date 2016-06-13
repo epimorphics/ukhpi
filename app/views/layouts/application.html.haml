@@ -49,6 +49,12 @@
           %span.text-muted
             This is a new service – your <a href="mailto:commercial.services@landregistry.gov.uk">feedback</a> will help us to improve it.
       .row
+        %p.pull-right.text-muted.u-font-smaller
+          = link_to "help", "/app/doc/ukhpi", class: "lr-header--header-proposition--a"
+          &middot;
+          = link_to "SPARQL query", "/app/qonsole", class: "lr-header--header-proposition--a"
+
+      .row
         .col-md-12
           = yield
 
