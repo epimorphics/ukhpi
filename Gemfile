@@ -15,6 +15,7 @@ gem 'uglifier', '>= 1.3.0'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'data_services_api', git: "git@github.com:epimorphics/ds-api-ruby.git"
+# gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 
 gem 'sass-rails', '~> 5.0'
 gem 'haml-rails'

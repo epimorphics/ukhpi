@@ -23,6 +23,16 @@ class LatestValuesCommand
       Rails.logger.info( "Failed to connect to UK HPI " )
       Rails.logger.info( e )
       nil
+    rescue DataServicesApi::ServiceException => e
+      Rails.logger.info( "Failed to get response from UK HPI service" )
+      Rails.logger.info( "Status: #{e.status}, body: '#{e.service_message}'" )
+      nil
+    rescue RuntimeError => e
+      Rails.logger.debug( "Unexpected error #{e.inspect}" )
+      Rails.logger.debug( e.class )
+      Rails.logger.debug( e.backtrace.join("\n") )
+      Rails.logger.debug( "Caused by: #{e.cause}" ) if e.cause
+      nil
     end
   end
 
