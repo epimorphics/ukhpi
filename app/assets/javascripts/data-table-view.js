@@ -6,7 +6,8 @@ modulejs.define( "data-table-view", [
   "constants",
   "preferences",
   "aspects",
-  "values"
+  "values",
+  "lib/datatables-dates"
 ], function(
   _,
   $,
@@ -110,7 +111,7 @@ modulejs.define( "data-table-view", [
 
     formulateColumnsNarrow: function() {
       return [
-        {title: "Date"},
+        {title: "Date", render: $.fn.dataTable.render.moment( "YYYY-MM", "MMM YYYY" )},
         {title: "Measure"},
         {title: "Value", type: "num-fmt", className: "text-right"}
       ];
@@ -121,7 +122,11 @@ modulejs.define( "data-table-view", [
         return {title: formatAspectNameShort( aspect ), className: "text-right", type: "num-fmt"};
       } );
 
-      return [{title: "Date"}].concat( aspectColumns );
+      return [
+        {title: "Date",
+         render: $.fn.dataTable.render.moment( "YYYY-MM", "MMM YYYY" )
+        }]
+        .concat( aspectColumns );
     },
 
     relocateWideTableButton: function( keep ) {
