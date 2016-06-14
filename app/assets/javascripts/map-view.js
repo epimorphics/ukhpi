@@ -75,7 +75,7 @@ function(
     },
 
     onUkFeatureLoaded: function( json ) {
-      this._ukFeature = Leaflet.geoJson( json, {style: backgroundRegionStyle, onEachFeature: _.bind( this.onEachFeature, this )} );
+      this._ukFeature = Leaflet.geoJson( json, {style: backgroundRegionStyle} );
       this.receivedRequest();
     },
 
