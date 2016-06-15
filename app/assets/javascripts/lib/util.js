@@ -19,10 +19,6 @@
  * Dates.daysOfMonth - return an array of the days of a given month
  */
 
-/* jshint quotmark: double */
-/* global define */
-
-
 modulejs.define( "lib/util",
 [
   "lib/lodash",
@@ -249,7 +245,7 @@ function(
     var storageAvailable = function( type ) {
       try {
         var storage = window[type];
-        var x = '__storage_test__';
+        var x = "__storage_test__";
         storage.setItem(x, x);
         storage.removeItem(x);
         return true;

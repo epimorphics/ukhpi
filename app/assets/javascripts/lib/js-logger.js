@@ -15,7 +15,7 @@ function(
   var DEFAULT_PATH = "logger/rails_client_logger/log";
 
   var serviceURL = function() {
-    return Routes.public_path + DEFAULT_PATH;
+    return Routes.publicPath + DEFAULT_PATH;
   };
 
   var csrfToken = function() {

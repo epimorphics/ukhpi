@@ -1,6 +1,6 @@
 // ModuleJS wrapper
 
-/* global Leaflet */
+/* global L */
 modulejs.define( "lib/leaflet", function() {
   "use strict";
   return L;
