@@ -1,9 +1,11 @@
 modulejs.define( "values", [
   "lib/lodash",
+  "lib/js-logger",
   "aspects"
 ],
 function(
   _,
+  Log,
   Aspects
 ) {
   "use strict";
@@ -22,9 +24,9 @@ function(
       case "pound_sterling":
         return asCurrency( parseInt( value ) );
       case "integer":
-        return value.toFixed()
+        return value.toFixed();
       case "decimal":
-        return value.toFixed( DECIMAL_PLACES )
+        return value.toFixed( DECIMAL_PLACES );
       default:
         return value;
     }
@@ -42,7 +44,7 @@ function(
       return formattedValue.replace( /\.00$/, "" );
     }
     catch (e) {
-      console.log( "Failed to format value: " + value );
+      Log.warn( "Failed to format value as currency: '" + value + "'");
       return "";
     }
   };

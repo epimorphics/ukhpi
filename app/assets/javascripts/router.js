@@ -2,9 +2,11 @@
 
 modulejs.define( "router", [
   "lib/lodash",
+  "lib/js-logger",
   "explore-controller"
 ], function(
   _,
+  Log,
   ExploreController
 ) {
   "use strict";
@@ -20,7 +22,7 @@ modulejs.define( "router", [
       }
 
       if (!this._controller) {
-        console.log( "No controller for route: " + route );
+        Log.warn( "No controller for route: " + route );
       }
       else {
         if (this._controller.init) {

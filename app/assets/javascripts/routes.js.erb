@@ -2,9 +2,11 @@
 
 modulejs.define( "routes", [],
 function() {
+  "use strict";
+
   return {
     explore: "<%= Rails.application.config.relative_url_root%><%= Rails.application.routes.url_helpers.explore_path %>",
-    new_exploration: "<%= Rails.application.config.relative_url_root%><%= Rails.application.routes.url_helpers.new_exploration_path %>",
-    public_path: "<%= Rails.application.config.relative_url_root%>/"
-  }
+    newExploration: "<%= Rails.application.config.relative_url_root%><%= Rails.application.routes.url_helpers.new_exploration_path %>",
+    publicPath: "<%= Rails.application.config.relative_url_root%>/"
+  };
 } );

@@ -3,6 +3,7 @@
 modulejs.define( "explore-controller", [
   "lib/lodash",
   "lib/jquery",
+  "lib/js-logger",
   "constants",
   "preferences-view",
   "routes",
@@ -15,6 +16,7 @@ modulejs.define( "explore-controller", [
 function(
   _,
   $,
+  Log,
   Constants,
   PreferencesView,
   Routes,
@@ -58,13 +60,10 @@ function(
     },
 
     loadResults: function( prefs ) {
-      $.getJSON( Routes.new_exploration, prefs )
+      $.getJSON( Routes.newExploration, prefs )
        .done( _.bind( this.onUpdateData, this ) )
-       .error( function( e, m, a ) {
-        console.log( "API get failed: " );
-        console.log( e );
-        console.log( m );
-        console.log( a );
+       .error( function( e, m ) {
+        Log.warn( "Failed to get exploration results: " + m + ", " + e );
        });
     },
 
@@ -89,11 +88,10 @@ function(
 
     explainQuery: function( prefs ) {
       var explainPrefs = prefs + "&explain=true";
-      $.getJSON( Routes.new_exploration, explainPrefs )
+      $.getJSON( Routes.newExploration, explainPrefs )
        .done( _.bind( this.onExplanation, this ) )
        .error( function( e ) {
-        console.log( "API get failed: " );
-        console.log( e );
+        Log.warn( "Failed to explain query via DsAPI: " + e );
       } );
     },
 

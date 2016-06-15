@@ -4,6 +4,7 @@ modulejs.define( "map-view", [
   "lib/lodash",
   "lib/jquery",
   "lib/leaflet",
+  "lib/js-logger",
   "constants",
   "routes",
   "regions-table"
@@ -12,6 +13,7 @@ function(
   _,
   $,
   Leaflet,
+  Log,
   Constants,
   Routes,
   Regions
@@ -56,15 +58,12 @@ function(
     fetchFeatures: function() {
       this._outstandingRequests = 2;
 
-      $.getJSON( Routes.public_path + "features.json" )
+      $.getJSON( Routes.publicPath + "features.json" )
        .done( _.bind( this.onFeaturesLoaded, this ) )
-       .error( function( e, m, a ) {
-          console.log( "API get failed: " );
-          console.log( e );
-          console.log( m );
-          console.log( a );
+       .error( function( e, m ) {
+          Log.warn( "Failed to retrieve map features: " + m + ", " + e );
        } );
-      $.getJSON( Routes.public_path + "uk.json" )
+      $.getJSON( Routes.publicPath + "uk.json" )
        .done( _.bind( this.onUkFeatureLoaded, this ) );
     },
 
@@ -179,7 +178,7 @@ function(
         this.styleLayer( layer, style );
       }
       else {
-        console.log("No layer for: " + layerName );
+        Log.warn( "No layer for: " + layerName );
       }
     },
 

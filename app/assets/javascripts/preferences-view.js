@@ -61,7 +61,7 @@ function(
 
     updatePrompt: function( qr ) {
       var parts = qr.prefsSummary().split( "from" );
-      $(".js-heading-location").html( "for: " + parts[0] )
+      $(".js-heading-location").html( "for: " + parts[0] );
       $(".js-search-prompt span").html( parts[1] );
     },
 

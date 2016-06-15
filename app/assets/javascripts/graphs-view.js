@@ -5,6 +5,7 @@ modulejs.define( "graphs-view", [
   "lib/jquery",
   "lib/d3",
   "lib/util",
+  "lib/js-logger",
   "constants",
   "preferences",
   "values"
@@ -13,6 +14,7 @@ modulejs.define( "graphs-view", [
   $,
   D3,
   Util,
+  Log,
   Constants,
   Preferences,
   Values
@@ -295,7 +297,7 @@ modulejs.define( "graphs-view", [
       drawLine( indicator, prefs, qr, graphConf, options );
       break;
     default:
-      console.log( "Unknown graph type" );
+      Log.warn( "Unknown graph type: " + options.graphType );
     }
   };
 
