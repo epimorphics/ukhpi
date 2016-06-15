@@ -30,7 +30,7 @@ function(
       },
       data: {
         level: level,
-        message: "[ClientLog::" + level "] " + message
+        message: "[ClientLog::" + level + "] " + message
       },
       url: serviceURL()
     } );
