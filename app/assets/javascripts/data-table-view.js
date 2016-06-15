@@ -50,7 +50,8 @@ modulejs.define( "data-table-view", [
         searching: false,
         buttons: [{
           extend: "print",
-          text: "<i class='fa fa-print'></i> Print data table"
+          text: "<i class='fa fa-print'></i> Print this data table",
+          message: "<h2>" + qr.location() + "</h2>"
         }],
         dom: "Bfrtip",
         lengthMenu: [ [12, 24, 48, -1], [12, 24, 48, "all"] ]
@@ -61,6 +62,7 @@ modulejs.define( "data-table-view", [
         this.afterTableViewCallback = null;
       }
 
+      this.setTableCaption( qr );
       this.relocateWideTableButton( false );
     },
 
@@ -143,6 +145,10 @@ modulejs.define( "data-table-view", [
           .detach()
           .prependTo( toContainer );
       }
+    },
+
+    setTableCaption: function( qr ) {
+      $(".js-data-table-caption").html( qr.location() );
     },
 
     // event handlers
