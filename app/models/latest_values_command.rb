@@ -11,7 +11,7 @@ class LatestValuesCommand
   def perform_query( service = nil )
     hpi = service_api( service )
 
-    hpi ? run_query( hpi ) : no_service
+    (hpi && run_query( hpi )) || no_service
   end
 
   :private
@@ -37,6 +37,7 @@ class LatestValuesCommand
   end
 
   def run_query( hpi )
+    success = true
     query = add_date_range_constraint( base_query )
     query = add_location_constraint( query )
     query = add_sort_constraint( query )
@@ -45,8 +46,15 @@ class LatestValuesCommand
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
     Rails.logger.debug query.to_json
     start = Time.now
-    @results = hpi.query( query )
+    begin
+      @results = hpi.query( query )
+    rescue Exception => e
+      Rails.logger.warn( "DsAPI run_query failed with: #{e.inspect}" )
+      success = false
+    end
+
     Rails.logger.debug( "query took %.1f ms\n" % ((Time.now - start) * 1000.0) )
+    success
   end
 
   def add_date_range_constraint( query )
