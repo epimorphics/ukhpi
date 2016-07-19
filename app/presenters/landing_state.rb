@@ -3,8 +3,8 @@
 class LandingState
   attr_reader :latest
 
-  def initialize
-    @latest = LatestValuesCommand.new
+  def initialize( lvc = LatestValuesCommand )
+    @latest = lvc.new
     @latest.perform_query
   end
 
