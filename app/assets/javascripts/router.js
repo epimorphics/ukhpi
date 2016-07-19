@@ -3,11 +3,13 @@
 modulejs.define( "router", [
   "lib/lodash",
   "lib/js-logger",
-  "explore-controller"
+  "explore-controller",
+  "landing-controller"
 ], function(
   _,
   Log,
-  ExploreController
+  ExploreController,
+  LandingController
 ) {
   "use strict";
 
@@ -17,17 +19,10 @@ modulejs.define( "router", [
   _.extend( Router.prototype, {
     /** Keep this really simple for now. We can complicate later if needed */
     invoke: function( route ) {
-      if (route.pathname.match( /\/explore/ )) {
-        this._controller = new ExploreController();
-      }
+      this._controller = resolveRoute( route.pathname );
 
-      if (!this._controller) {
-        Log.warn( "No controller for route: " + route );
-      }
-      else {
-        if (this._controller.init) {
-          this._controller.init();
-        }
+      if (this._controller) {
+        this._controller.init();
       }
     },
 
@@ -35,6 +30,20 @@ modulejs.define( "router", [
       return this._controller;
     }
   } );
+
+  /** Look-up the controller by route */
+  var resolveRoute = function( path )  {
+    if (path.match( /\/explore/ )) {
+      return new ExploreController();
+    }
+    else if (path.match( /(ukhpi\/?$)\(^\/?$)/ )) {
+      return new LandingController();
+    }
+    else {
+      Log.warn( "No controller for route: " + path );
+      return null;
+    }
+  };
 
   return Router;
 } );
