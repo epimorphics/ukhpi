@@ -36,7 +36,7 @@ modulejs.define( "router", [
     if (path.match( /\/explore/ )) {
       return new ExploreController();
     }
-    else if (path.match( /(ukhpi\/?$)\(^\/?$)/ )) {
+    else if (path.match( /(ukhpi\/?$)|(^\/?$)/ )) {
       return new LandingController();
     }
     else {
