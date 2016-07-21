@@ -9,7 +9,7 @@ class LandingState
   end
 
   def result
-    results = latest.results ? latest.results.first.symbolize_keys : Hash.new
+    results = (latest.results && !latest.results.empty?) ? latest.results.first : Hash.new
     @result ||= to_value( results )
   end
 
