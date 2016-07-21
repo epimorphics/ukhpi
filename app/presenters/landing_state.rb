@@ -9,8 +9,12 @@ class LandingState
   end
 
   def result
-    results = (latest.results && !latest.results.empty?) ? latest.results.first : Hash.new
-    @result ||= to_value( results )
+    unless @result
+      results = (latest.results && !latest.results.empty?) ? latest.results.first : Hash.new
+      @result = to_value( results )
+    end
+
+    @result
   end
 
   def period
@@ -25,18 +29,22 @@ class LandingState
   end
 
   def house_price_index
+    result
     first_value( "ukhpi:housePriceIndex" )
   end
 
   def average_price
+    result
     first_value( "ukhpi:averagePrice" )
   end
 
   def percentage_monthly_change
+    result
     format_percentage( first_value( "ukhpi:percentageChange" ) )
   end
 
   def percentage_annual_change
+    result
     format_percentage( first_value( "ukhpi:percentageAnnualChange" ) )
   end
 
