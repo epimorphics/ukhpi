@@ -27,6 +27,25 @@ function(
 
   var DEFAULT_LAYER = "country";
 
+  var ENGLAND = "http://landregistry.data.gov.uk/id/region/england";
+
+  var LOCAL_AUTHORITY_TYPES = [
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority"
+  ];
+
+  var COUNTY_TYPES = [
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/County",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority"
+  ];
+
+  var REGION_TYPES = [
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion"
+  ];
+
   /** Cases where selecting one thing highlights several things */
   var LOCATION_EXPANSIONS = {
     "http://landregistry.data.gov.uk/id/region/great-britain":
@@ -345,36 +364,40 @@ function(
     return uri;
   };
 
-  var layerType = function( layer ) {
-    var rURI = regionURI( layer );
-    return rURI ? Regions.locations[rURI].type : "unknown";
-  };
-
   var partitionKeysByType = function( layer ) {
+    var partitionKeys = [];
+
     // workaround to present a natural category of "country" to users
     if (layer.feature.properties.ukhpiType === "country") {
-      return countryPartitionKeys( layer );
+      partitionKeys.push( "country" );
     }
     else {
-      return {
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough": ["local-authority"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/County": ["county"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/District": ["local-authority"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion": ["region"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority": ["county"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough": ["local-authority"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict": ["local-authority"],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/No_Region_type": [],
-        "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority": ["local-authority"],
-        "http://landregistry.data.gov.uk/def/ukhpi/Region": [],
-        "unknown": []
-      }[layerType( layer )];
-    }
-  };
+      var layerRegionURI = regionURI( layer );
+      var region = Regions.locations[layerRegionURI];
 
-  /** @return Special case partition keys by UK country */
-  var countryPartitionKeys = function() {
-    return ["country"];
+      // add a partition key based on hierarchy position
+      if (region.container2 === ENGLAND) {
+        partitionKeys.push( "county" );
+      }
+
+      if (region.container3 === ENGLAND) {
+        partitionKeys.push( "local-authority" );
+      }
+
+      if (_.includes( REGION_TYPES, region.type )) {
+        partitionKeys.push( "region");
+      }
+
+      if (_.includes( COUNTY_TYPES, region.type )) {
+        partitionKeys.push( "county" );
+      }
+
+      if (_.includes( LOCAL_AUTHORITY_TYPES, region.type )) {
+        partitionKeys.push( "local-authority");
+      }
+    }
+
+    return _.uniq( partitionKeys );
   };
 
   var addToPartition = function( partitionTable, key, layer ) {
