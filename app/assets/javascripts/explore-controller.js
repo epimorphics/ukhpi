@@ -35,6 +35,9 @@ function(
   };
 
   _.extend( Controller.prototype, {
+    init: function() {
+    },
+
     createComponents: function() {
       this.components = {
         preferencesView: new PreferencesView(),
