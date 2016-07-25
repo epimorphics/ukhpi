@@ -25,8 +25,12 @@ class LocationRecord
     @json["label"]["xml:lang"]
   end
 
-  def parent
-    value_of @json["parent"]
+  def container
+    value_of @json["container"]
+  end
+
+  def container2
+    value_of @json["container2"]
   end
 
   def same
@@ -39,11 +43,12 @@ class LocationRecord
 end
 
 class Location
-  attr_reader :uri, :labels, :parent, :gss
+  attr_reader :uri, :labels, :container, :container2, :gss
 
   def initialize( lr )
     @uri = lr.uri
-    @parent = lr.parent
+    @container = lr.container
+    @container2 = lr.container2
     @labels = {}
     @types = []
 
@@ -75,7 +80,7 @@ class Location
   end
 
   def to_ruby
-    "Region.new( #{uri.inspect}, #{@labels.inspect}, #{preferred_type.inspect}, #{parent.inspect}, \"#{gss}\" )"
+    "Region.new( #{uri.inspect}, #{@labels.inspect}, #{preferred_type.inspect}, #{container.inspect}, \"#{gss}\" )"
   end
 
   def to_json
@@ -86,7 +91,8 @@ class Location
     [
       "uri: \"#{uri}\"",
       "gss: \"#{gss}\"",
-      "parent: \"#{parent}\"",
+      "container: \"#{container}\"",
+      "container2: \"#{container2}\"",
       "type: \"#{preferred_type}\"",
     ].join( ", " )
   end
@@ -164,7 +170,7 @@ namespace :ukhpi do
       prefix sr: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/>
       prefix owl: <http://www.w3.org/2002/07/owl#>
 
-      select distinct ?refRegion ?label ?type ?parent ?same {
+      select distinct ?refRegion ?label ?type ?container ?container2 ?same {
       {
         SELECT DISTINCT ?g {
           GRAPH ?g {
@@ -177,7 +183,8 @@ namespace :ukhpi do
           hpi:refRegion ?refRegion.
         ?refRegion rdfs:label ?label.
         ?refRegion rdf:type ?type.
-        optional {?refRegion sr:within ?parent.}
+        optional {?refRegion sr:within ?container.}
+        optional {?refRegion sr:within/sr:within ?container2.}
         optional {
           ?refRegion rdfs:seeAlso ?same .
           FILTER regex( str(?same), \"statistical-geography\" )
@@ -186,7 +193,7 @@ namespace :ukhpi do
       }"
 
     squery=(ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
-    server=ENV["SERVER"] || "http://lr-data-dev-c.epimorphics.net/landregistry/query"
+    server=ENV["SERVER"] || "http://landregistry.data.gov.uk/landregistry/query"
 
     puts "Running SPARQL query ..."
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
