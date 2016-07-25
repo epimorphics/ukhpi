@@ -33,6 +33,10 @@ class LocationRecord
     value_of @json["container2"]
   end
 
+  def container3
+    value_of @json["container3"]
+  end
+
   def same
     value_of @json["same"]
   end
@@ -43,12 +47,13 @@ class LocationRecord
 end
 
 class Location
-  attr_reader :uri, :labels, :container, :container2, :gss
+  attr_reader :uri, :labels, :container, :container2, :container3, :gss
 
   def initialize( lr )
     @uri = lr.uri
     @container = lr.container
     @container2 = lr.container2
+    @container3 = lr.container3
     @labels = {}
     @types = []
 
@@ -93,6 +98,7 @@ class Location
       "gss: \"#{gss}\"",
       "container: \"#{container}\"",
       "container2: \"#{container2}\"",
+      "container3: \"#{container3}\"",
       "type: \"#{preferred_type}\"",
     ].join( ", " )
   end
@@ -170,7 +176,7 @@ namespace :ukhpi do
       prefix sr: <http://data.ordnancesurvey.co.uk/ontology/spatialrelations/>
       prefix owl: <http://www.w3.org/2002/07/owl#>
 
-      select distinct ?refRegion ?label ?type ?container ?container2 ?same {
+      select distinct ?refRegion ?label ?type ?container ?container2 ?container3 ?same {
       {
         SELECT DISTINCT ?g {
           GRAPH ?g {
@@ -185,6 +191,7 @@ namespace :ukhpi do
         ?refRegion rdf:type ?type.
         optional {?refRegion sr:within ?container.}
         optional {?refRegion sr:within/sr:within ?container2.}
+        optional {?refRegion sr:within/sr:within/sr:within ?container3.}
         optional {
           ?refRegion rdfs:seeAlso ?same .
           FILTER regex( str(?same), \"statistical-geography\" )
