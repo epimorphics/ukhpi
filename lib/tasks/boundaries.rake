@@ -32,6 +32,11 @@ LATLONG_PROJECTION = RGeo::Cartesian.factory( proj4: "+proj=longlat +ellps=WGS84
 
 MAX_AREA = 99999999
 
+# Updated GSS codes since the publication of the shapefiles we have
+GSS_CORRECTIONS = {
+  "E11000004" => "E11000007"
+}
+
 def as_keys( name )
   candidates = []
 
@@ -58,7 +63,7 @@ def create_index( options, index = Hash.new )
     file.each do |record|
       attribs = record.attributes
 
-      gss = attribs[options.id_attrib]
+      gss = as_gss_with_corrections( attribs, options )
       name = attribs[options.name_attrib]
       gss_or_name = gss || name
 
@@ -77,6 +82,12 @@ def create_index( options, index = Hash.new )
   end
 
   index
+end
+
+def as_gss_with_corrections( attribs, options )
+  gss = attribs[options.id_attrib]
+
+  GSS_CORRECTIONS[gss] || gss
 end
 
 def composite_index( sources )
