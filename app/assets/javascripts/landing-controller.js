@@ -3,11 +3,12 @@
 modulejs.define( "landing-controller", [], function() {
   "use strict";
 
-  var init = function() {
+  var LandingController = function() {
+  };
+
+  LandingController.prototype.init = function() {
     // nothing to do
   };
 
-  return {
-    init: init
-  };
+  return LandingController;
 } );
