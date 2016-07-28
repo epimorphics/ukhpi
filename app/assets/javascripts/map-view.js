@@ -33,7 +33,7 @@ function(
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough",
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
-    "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+    // "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority"
   ];
 
