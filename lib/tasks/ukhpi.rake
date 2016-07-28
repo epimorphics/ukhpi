@@ -81,7 +81,15 @@ class Location
   end
 
   def preferred_type
-    @types.find {|t| t =~/admingeo/}
+    admin_geo_type( @types )
+      .reject {|t| t =~ /\/Borough/}
+      .first
+  end
+
+  def admin_geo_type( types )
+    types.select do |t|
+      t =~ /admingeo/
+    end .uniq
   end
 
   def to_ruby
