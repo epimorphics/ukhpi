@@ -31,9 +31,9 @@ function(
 
   var LOCAL_AUTHORITY_TYPES = [
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/District",
-    "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough",
+    // "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough",
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough",
-    // "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
+    "http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict",
     "http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority"
   ];
 
@@ -64,6 +64,18 @@ function(
        "http://landregistry.data.gov.uk/id/region/wales"
       ]
   };
+
+  /** A list of reqions that are typed as metropolitan districts but which should not appear
+   *  on the LA map due to problems with the data.
+   */
+  var LA_MAP_ERRATA = [
+    "http://landregistry.data.gov.uk/id/region/greater-manchester",
+    "http://landregistry.data.gov.uk/id/region/west-midlands",
+    "http://landregistry.data.gov.uk/id/region/west-yorkshire",
+    "http://landregistry.data.gov.uk/id/region/south-yorkshire",
+    "http://landregistry.data.gov.uk/id/region/merseyside",
+    "http://landregistry.data.gov.uk/id/region/tyne-and-wear"
+  ];
 
   _.extend( MapView.prototype, {
     bindEvents: function() {
@@ -392,7 +404,8 @@ function(
         partitionKeys.push( "county" );
       }
 
-      if (_.includes( LOCAL_AUTHORITY_TYPES, region.type )) {
+      if (_.includes( LOCAL_AUTHORITY_TYPES, region.type ) &&
+          !_.includes( LA_MAP_ERRATA, layerRegionURI )) {
         partitionKeys.push( "local-authority");
       }
     }
