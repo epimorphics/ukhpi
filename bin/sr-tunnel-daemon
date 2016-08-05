@@ -1,0 +1,19 @@
+#!/bin/bash
+
+HOST=LR-Pres-1-b
+
+if service tomcat7 status | grep 'Active: active'
+then
+  echo "Warning: local tomcat7 service is still running - aborting"
+  exit 1
+fi
+
+while true; do
+  ssh_running=`ps -fC ssh | grep "$HOST"`
+  if [[ "${ssh_running:-null}" = null ]];then
+    echo "Starting ssh tunnel"
+    ssh -f $HOST -L 8080:localhost:8080 -N
+  fi
+  sleep 5
+done
+
