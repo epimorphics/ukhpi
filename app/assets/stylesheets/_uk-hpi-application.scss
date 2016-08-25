@@ -100,3 +100,8 @@
 .v-scroll {
   overflow: auto;
 }
+
+// override GDS default
+a[rel="external"]:after {
+  background-position: right 2px;
+}
