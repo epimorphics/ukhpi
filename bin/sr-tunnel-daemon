@@ -1,6 +1,6 @@
 #!/bin/bash
 
-HOST=LR-Pres-1-b
+HOST=${HOST:-LR-Pres-1-b}
 
 if service tomcat7 status | grep 'Active: active'
 then
