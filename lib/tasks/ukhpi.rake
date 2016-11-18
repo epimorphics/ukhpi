@@ -183,7 +183,7 @@ namespace :ukhpi do
   desc "Generate the regions files by SPARQL query"
   task regions_sparql: [:regions_query, :regions_generate, :move_region_files]
 
-  desc "run the SPARQL query to generate the region results"
+  # run the SPARQL query to generate the region results
   task regions_query: :environment do
     query = "
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -223,7 +223,7 @@ namespace :ukhpi do
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
 
-  desc "Generate the regions modules in JavaScript and Ruby"
+  # Generate the regions modules in JavaScript and Ruby
   task regions_generate: :environment do
     puts "Loading query results ..."
     sresults = JSON.parse(IO.read('query-results.json'))
@@ -245,15 +245,12 @@ namespace :ukhpi do
     write_regions_files(locations, all_types)
   end
 
-  desc "Move the files to their correct locations"
+  # Move the files to their correct locations
   task move_region_files: :environment do
     puts "Moving region files ..."
     File.rename("regions-table.js", "app/assets/javascripts/regions-table.js")
     File.rename("regions-table.rb", "app/models/regions-table.rb")
   end
-
-  desc "Generate the regions files by SPARQL query"
-  task regions_sparql: [:regions_query, :regions_generate, :move_region_files]
 
   desc "SPARQL-describe the given URI"
   task :describe, [:uri] => [:environment] do |_t, args|
