@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# $HOST can be passed in as an argument, or default to staging server
 HOST=${HOST:-LR-Pres-1-b}
 
 if service tomcat7 status | grep 'Active: active'
@@ -8,6 +9,20 @@ then
   exit 1
 fi
 
+# handle control-c and kill the tunnel process
+trap cleanup_ssh_tunnel INT
+
+function cleanup_ssh_tunnel() {
+  ps_list=`pgrep -ax ssh | grep "$HOST"`
+  [[ $ps_list =~ ^([[:digit:]]+) ]]
+  pid=${BASH_REMATCH[1]}
+
+  echo  "Cleaning up ssh tunnel process $pid"
+  kill -HUP $pid
+  exit 0
+}
+
+# Fork an ssh tunnel, and keep checking in case it dies
 while true; do
   ssh_running=`ps -fC ssh | grep "$HOST"`
   if [[ "${ssh_running:-null}" = null ]];then
