@@ -38,7 +38,6 @@ gem 'govuk_template'
 gem 'govuk_frontend_toolkit'
 gem 'govuk_elements_rails'
 gem 'js-routes'
-gem 'byebug'
 
 gem 'faraday'
 gem 'faraday_middleware'
@@ -47,6 +46,7 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'rdf-turtle'
 
 group :development, :test do
+  gem 'byebug'
   gem 'minitest-spec-rails'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
