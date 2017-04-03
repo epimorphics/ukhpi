@@ -13,7 +13,6 @@ class CubeResource
   end
 
   def comment
-    byebug if @graph.query( [@resource, RDF::RDFS.comment, nil] ).first.nil?
     @graph.query( [@resource, RDF::RDFS.comment, nil] ).first.object.to_s
   end
 
