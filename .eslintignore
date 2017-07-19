@@ -1,0 +1,4 @@
+app/assets/javascripts/regions-table.js
+.coverage/**/*
+.node_modules/**/*
+public/*.json
