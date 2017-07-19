@@ -69,7 +69,7 @@ class Location
     return unless lr.same
 
     @same = lr.same
-    match = @same =~ /([A-Z]\d+)$/
+    match = @same.match(/([A-Z]\d+)$/)
     @gss = match[1] if match
   end
 
@@ -156,6 +156,7 @@ def write_regions_files(locations, all_types)
 
   # Ruby module output
   open("regions-table.rb", "w") do |file|
+    file << "# rubocop:disable all\n"
     file << "module RegionsTable\n"
     file << "  def location_names\n"
     file << "    #{location_names.inspect}\n"
@@ -218,7 +219,8 @@ namespace :ukhpi do
     squery = (ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
     server = ENV["SERVER"] || "http://landregistry.data.gov.uk/landregistry/query"
 
-    puts "Running SPARQL query ..."
+    puts "Running SPARQL query against server #{server}..."
+    puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
 
