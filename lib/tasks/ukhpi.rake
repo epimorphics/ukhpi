@@ -11,39 +11,39 @@ class LocationRecord
   end
 
   def value_of(json)
-    (json && json["value"]) || json
+    (json && json['value']) || json
   end
 
   def uri
-    value_of(@json["refRegion"])
+    value_of(@json['refRegion'])
   end
 
   def label
-    value_of @json["label"]
+    value_of @json['label']
   end
 
   def lang
-    @json["label"]["xml:lang"]
+    @json['label']['xml:lang']
   end
 
   def container
-    value_of @json["container"]
+    value_of @json['container']
   end
 
   def container2
-    value_of @json["container2"]
+    value_of @json['container2']
   end
 
   def container3
-    value_of @json["container3"]
+    value_of @json['container3']
   end
 
   def same
-    value_of @json["same"]
+    value_of @json['same']
   end
 
   def type
-    value_of @json["type"]
+    value_of @json['type']
   end
 end
 
@@ -94,7 +94,7 @@ class Location
   end
 
   def to_ruby
-    "Region.new(" \
+    'Region.new(' \
       "#{uri.inspect}, " \
       "#{@labels.inspect}, " \
       "#{preferred_type.inspect}, " \
@@ -114,7 +114,7 @@ class Location
       "container2: \"#{container2}\"",
       "container3: \"#{container3}\"",
       "type: \"#{preferred_type}\""
-    ].join(", ")
+    ].join(', ')
   end
 end
 
@@ -134,28 +134,28 @@ def write_regions_files(locations, all_types)
 
   location_names.sort! { |l0, l1| l0[:label] <=> l1[:label] }
 
-  puts "Generating region files ... "
+  puts 'Generating region files ... '
   # JavaScript module output
-  open("regions-table.js", "w") do |file|
+  open('regions-table.js', 'w') do |file|
     file << "modulejs.define(\"regions-table\", [], function() {\n"
     file << "\"use strict\";\n"
     file << "  var locationNames = #{location_names.to_json};\n"
     file << "  var types = #{all_types.to_a.sort.to_json};\n"
     file << "  var locations = {\n"
-    sep = "  "
+    sep = '  '
     locations.each do |uri, loc|
       file << "#{sep}\"#{uri}\": #{loc.to_json}"
       sep = ",\n  "
     end
     file << "\n};\n"
     file << "  var gssIndex = #{gss_index.to_json};\n"
-    file << "  return {names: locationNames, types: types, " \
+    file << '  return {names: locationNames, types: types, ' \
             "locations: locations, gssIndex: gssIndex };\n"
     file << "});\n"
   end
 
   # Ruby module output
-  open("regions-table.rb", "w") do |file|
+  open('regions-table.rb', 'w') do |file|
     file << "# rubocop:disable all\n"
     file << "module RegionsTable\n"
     file << "  def location_names\n"
@@ -180,8 +180,8 @@ end
 
 # rubocop:disable Metrics/BlockLength
 namespace :ukhpi do
-  desc "Generate the regions files by SPARQL query"
-  task regions_sparql: [:regions_query, :regions_generate, :move_region_files]
+  desc 'Generate the regions files by SPARQL query'
+  task regions_sparql: %i[regions_query regions_generate move_region_files]
 
   # run the SPARQL query to generate the region results
   task regions_query: :environment do
@@ -216,8 +216,8 @@ namespace :ukhpi do
       }
       }"
 
-    squery = (ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
-    server = ENV["SERVER"] || "http://landregistry.data.gov.uk/landregistry/query"
+    squery = (ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki') + '/bin/s-query'
+    server = ENV['SERVER'] || 'http://landregistry.data.gov.uk/landregistry/query'
 
     puts "Running SPARQL query against server #{server}..."
     puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
@@ -226,12 +226,12 @@ namespace :ukhpi do
 
   # Generate the regions modules in JavaScript and Ruby
   task regions_generate: :environment do
-    puts "Loading query results ..."
+    puts 'Loading query results ...'
     sresults = JSON.parse(IO.read('query-results.json'))
     locations = {}
     all_types = Set.new
 
-    sresults["results"]["bindings"].each do |result|
+    sresults['results']['bindings'].each do |result|
       lr = LocationRecord.new(result)
       loc = locations[lr.uri]
       all_types << lr.type
@@ -248,20 +248,20 @@ namespace :ukhpi do
 
   # Move the files to their correct locations
   task move_region_files: :environment do
-    puts "Moving region files ..."
-    File.rename("regions-table.js", "app/assets/javascripts/regions-table.js")
-    File.rename("regions-table.rb", "app/models/regions-table.rb")
+    puts 'Moving region files ...'
+    File.rename('regions-table.js', 'app/assets/javascripts/regions-table.js')
+    File.rename('regions-table.rb', 'app/models/regions-table.rb')
   end
 
-  desc "SPARQL-describe the given URI"
+  desc 'SPARQL-describe the given URI'
   task :describe, [:uri] => [:environment] do |_t, args|
     uri = args[:uri]
     query = "describe <#{uri}>"
 
-    squery = (ENV["FUSEKI"] || "/home/ian/dev/java/jena-fuseki") + "/bin/s-query"
-    server = ENV["SERVER"] || "http://lr-data-dev-c.epimorphics.net/landregistry/query"
+    squery = (ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki') + '/bin/s-query'
+    server = ENV['SERVER'] || 'http://lr-data-dev-c.epimorphics.net/landregistry/query'
 
-    puts "Running SPARQL query ..."
+    puts 'Running SPARQL query ...'
     system "#{squery} --server='#{server}' '#{query}'"
   end
 end

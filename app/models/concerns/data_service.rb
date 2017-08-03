@@ -2,7 +2,7 @@
 module DataService
   attr_reader :default_service_name
 
-  def initialize( default_service_name )
+  def initialize(default_service_name)
     @default_service_name = default_service_name
   end
 
@@ -12,8 +12,8 @@ module DataService
   end
 
   # Return a dataset wrapper object for the named dataset
-  def dataset( ds_id )
-    data_service.dataset( service_name( ds_id ) )
+  def dataset(ds_id)
+    data_service.dataset(service_name(ds_id))
   end
 
   # Return a new empty query generator
@@ -21,7 +21,7 @@ module DataService
     DataServicesApi::QueryGenerator.new
   end
 
-  def service_name( service )
+  def service_name(service)
     (service || default_service_name).to_s
   end
 end

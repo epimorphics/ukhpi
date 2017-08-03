@@ -1,17 +1,24 @@
 # Decorator which encapsulates an interpretation of the user preferences as a region search
-
 class SearchCommand
   attr_reader :prefs, :regions, :results
 
-  def initialize( prefs, regions )
+  def initialize(prefs, regions)
     @prefs = prefs
     @regions = regions
     @results = nil
     @region = nil
   end
 
-  def method_missing( method, *args, &block )
-    @prefs.send( method, *args, &block )
+  def method_missing(method, *args, &block)
+    if @prefs.respond_to?(method)
+      @prefs.send(method, *args, &block)
+    else
+      super
+    end
+  end
+
+  def respond_to_missing?(_method)
+    true
   end
 
   # Return one of :no_results, :single_result, :multiple_results depending
@@ -25,17 +32,17 @@ class SearchCommand
   end
 
   def uri_term?
-    @region = region.match( /\Ahttp:\/\// ) && regions.lookup_region( region )
+    @region = region.match(%r{\Ahttp://}) && regions.lookup_region(region)
   end
 
   def query_command?
     false
   end
 
-  :private
+  private
 
   def perform_search
-    @results = regions.match( region, prefs )
+    @results = regions.match(region, prefs)
     case @results.size
     when 0
       :no_results

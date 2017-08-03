@@ -1,2 +1,3 @@
+# :nodoc:
 module ExplorationHelper
 end

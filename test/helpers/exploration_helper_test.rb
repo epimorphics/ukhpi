@@ -1,4 +1,4 @@
-require "test_helper"
+require 'test_helper'
 
 class ExplorationHelperTest < ActionView::TestCase
   # def test_sanity

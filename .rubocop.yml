@@ -1,8 +1,7 @@
 AllCops:
-  Excludes:
+  Exclude:
     - app/models/regions-table.rb
 
 # Customize rules
 Metrics/LineLength:
   Max: 100
-
