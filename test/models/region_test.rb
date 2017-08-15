@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 # Unit tests on the Region class
 
 require 'test_helper'
 
 class RegionTest < ActiveSupport::TestCase
-  BOROUGH_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'.freeze
-  COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'.freeze
+  BOROUGH_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'
+  COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
 
   let(:region) do
     Region.new('http://foo.bar/bam', { en: 'foo', cy: 'bar' },

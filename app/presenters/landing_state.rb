@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Presenter for the state needed to drive the landing page
 class LandingState
   attr_reader :latest
@@ -62,7 +64,7 @@ class LandingState
       change
     elsif change == 0.0
       'remained the same'
-    elsif change > 0
+    elsif change.positive?
       format("risen by %.1f\%", change.abs)
     else
       format("fallen by %.1f\%", change.abs)

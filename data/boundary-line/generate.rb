@@ -1,16 +1,17 @@
 #!/usr/bin/ruby
+# frozen_string_literal: true
 
 # Generate simplified boundary lines for counties and regions
 require 'bundler'
 require 'json'
 Bundler.require
 
-TARGET_COUNTY_NAMES = '../county-names.txt'.freeze
+TARGET_COUNTY_NAMES = '../county-names.txt'
 
-COUNTY_SOURCE = './Data/GB/county_region.shp'.freeze
-DISTRICT_SOURCE = './Data/GB/district_borough_unitary_region.shp'.freeze
-EURO_REGION_SOURCE = './Data/GB/european_region_region.shp'.freeze
-CEREMONIAL_SOURCE = './Data/Supplementary_Ceremonial/Boundary-line-ceremonial-counties.shp'.freeze
+COUNTY_SOURCE = './Data/GB/county_region.shp'
+DISTRICT_SOURCE = './Data/GB/district_borough_unitary_region.shp'
+EURO_REGION_SOURCE = './Data/GB/european_region_region.shp'
+CEREMONIAL_SOURCE = './Data/Supplementary_Ceremonial/Boundary-line-ceremonial-counties.shp'
 
 SIMPLIFICATION = 500
 

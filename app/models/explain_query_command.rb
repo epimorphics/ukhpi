@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Explain query command
 class ExplainQueryCommand < QueryCommand
   attr_reader :explanation

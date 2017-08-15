@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Unit tests on the QueryCommand class
 
 require 'test_helper'

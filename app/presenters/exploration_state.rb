@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Presenter for the status of the search & query that the user has performed
 class ExplorationState < Presenter
   include Rails.application.routes.url_helpers

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'regions-table'
 
 # Encapsulates the regions that observations can apply to

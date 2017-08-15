@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bundler/setup'
 Bundler.require(:development)
 
@@ -5,7 +7,7 @@ require './app/models/regions-table'
 require 'find'
 require 'rake'
 
-OUTPUTS = './data/outputs'.freeze
+OUTPUTS = './data/outputs'
 
 Struct.new('Source', :file, :type, :crs, :id_attrib, :name_attrib)
 SOURCES = [
@@ -309,7 +311,7 @@ namespace :ukhpi do
   task shape_file_attribs: :environment do
     shape_files = []
     Find.find('./data/outputs') do |file|
-      shape_files << file if file =~ /.*\.shp$/
+      shape_files << file if file.match?(/.*\.shp$/)
     end
     shape_files.each do |sf|
       puts "Creating attributes for #{sf}"

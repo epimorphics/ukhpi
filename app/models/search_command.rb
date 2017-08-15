@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Decorator which encapsulates an interpretation of the user preferences as a region search
 class SearchCommand
   attr_reader :prefs, :regions, :results

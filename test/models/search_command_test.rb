@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Unit tests on the SearchCommand class
 
 require 'test_helper'

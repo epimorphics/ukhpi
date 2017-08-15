@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
   mount RailsClientLogger::Engine, at: 'logger'
   root 'landing#index'

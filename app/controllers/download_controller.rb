@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # :nodoc:
 class DownloadController < ExplorationController
   def new # rubocop:disable Metrics/MethodLength
@@ -21,7 +23,7 @@ class DownloadController < ExplorationController
   private
 
   def render_attachment(filename, mime_type)
-    if request.env['HTTP_USER_AGENT'] =~ /msie/i
+    if request.env['HTTP_USER_AGENT'].match?(/msie/i)
       headers['Pragma'] = 'public'
       headers['Content-type'] = 'text/plain'
       headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'

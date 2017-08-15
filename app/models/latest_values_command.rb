@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Command object to query the API for the latest available values
 class LatestValuesCommand
   include DataService

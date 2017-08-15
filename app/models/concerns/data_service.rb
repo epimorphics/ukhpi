@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Includeable module for objects that interact with the data services API
 module DataService
   attr_reader :default_service_name

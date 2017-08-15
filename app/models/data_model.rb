@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # :nodoc:
 class CubeResource
   attr_reader :resource, :graph

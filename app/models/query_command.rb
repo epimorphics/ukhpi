@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Class encapsulating the user action of making a UKHPI query
 class QueryCommand
   include DataService

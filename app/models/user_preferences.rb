@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Encapsulates the user's articulated preferences for filtering and displaying
 # House Price Index data
 # rubocop:disable Metrics/ClassLength

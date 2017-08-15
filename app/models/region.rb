@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Encapsulates a single regiong where UKHPI observations can be made
 class Region
   attr_reader :uri, :type, :parent, :gss

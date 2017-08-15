@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Presenter for download information
 class DownloadState < Presenter
   STANDARD_COLUMNS = [
