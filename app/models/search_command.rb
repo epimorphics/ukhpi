@@ -19,7 +19,7 @@ class SearchCommand
     end
   end
 
-  def respond_to_missing?(_method)
+  def respond_to_missing?(_method, _args = nil)
     true
   end
 

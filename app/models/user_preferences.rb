@@ -62,7 +62,7 @@ class UserPreferences
     WHITELIST.include?(key.to_sym) ? value_of(key.to_sym) : super
   end
 
-  def respond_to_missing?(method)
+  def respond_to_missing?(method, _args = nil)
     WHITELIST.include?(method.to_sym)
   end
 
