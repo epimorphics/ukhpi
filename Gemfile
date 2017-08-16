@@ -50,6 +50,7 @@ gem 'rdf-turtle'
 group :development, :test do
   gem 'byebug'
   gem 'capybara_minitest_spec'
+  gem 'haml-lint'
   gem 'json_expressions'
   gem 'm'
   gem 'minitest-rails-capybara'

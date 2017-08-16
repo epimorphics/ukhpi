@@ -1,39 +1,54 @@
 !!! html
-%html{ "lang" => "en", "xml:lang" => "en", "xmlns" => "http://www.w3.org/1999/xhtml"}
+%html{ 'lang' => 'en', 'xml:lang' => 'en', 'xmlns' => 'http://www.w3.org/1999/xhtml' }
   %head
     %title UK House Price Index
-    %meta{ charset: "utf-8" }
+    %meta{ charset: 'utf-8' }
     = javascript_include_tag :modernizr
-    = stylesheet_link_tag    "application", media: "all"
+    = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
-    %link{ rel: "apple-touch-icon", sizes: "57x57",   href: image_path( "favicon/apple-touch-icon-57x57.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "60x60",   href: image_path( "favicon/apple-touch-icon-60x60.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "72x72",   href: image_path( "favicon/apple-touch-icon-72x72.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "76x76",   href: image_path( "favicon/apple-touch-icon-76x76.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "114x114", href: image_path( "favicon/apple-touch-icon-114x114.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "120x120", href: image_path( "favicon/apple-touch-icon-120x120.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "144x144", href: image_path( "favicon/apple-touch-icon-144x144.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "152x152", href: image_path( "favicon/apple-touch-icon-152x152.png" ) }
-    %link{ rel: "apple-touch-icon", sizes: "180x180", href: image_path( "favicon/apple-touch-icon-180x180.png" ) }
-    %link{ rel: "icon", type: "image/png", href: image_path( "favicon/favicon-32x32.png" ), sizes: "32x32" }
-    %link{ rel: "icon", type: "image/png", href: image_path( "favicon/favicon-194x194.png" ), sizes: "194x194" }
-    %link{ rel: "icon", type: "image/png", href: image_path( "favicon/favicon-96x96.png" ), sizes: "96x96" }
-    %link{ rel: "icon", type: "image/png", href: image_path( "favicon/android-chrome-192x192.png" ), sizes: "192x192" }
-    %link{ rel: "icon", type: "image/png", href: image_path( "favicon/favicon-16x16.png" ), sizes: "16x16" }
-    %link{ rel: "manifest", href: asset_path( "favicon/manifest.json" ) }
-    %link{ rel: "mask-icon", href: image_path( "favicon/safari-pinned-tab.svg" ) }
-    %meta{ name: "msapplication-TileColor", content: "#00aba9" }
-    %meta{ name: "msapplication-TileImage", content: image_path( "favicon/mstile-144x144.png" ) }
-    %meta{ name: "theme-color", content: "#ffffff" }
+    %link{ rel: 'apple-touch-icon', sizes: '57x57',
+           href: image_path('favicon/apple-touch-icon-57x57.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '60x60',
+           href: image_path('favicon/apple-touch-icon-60x60.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '72x72',
+           href: image_path('favicon/apple-touch-icon-72x72.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '76x76',
+           href: image_path('favicon/apple-touch-icon-76x76.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '114x114',
+           href: image_path('favicon/apple-touch-icon-114x114.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '120x120',
+           href: image_path('favicon/apple-touch-icon-120x120.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '144x144',
+           href: image_path('favicon/apple-touch-icon-144x144.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '152x152',
+           href: image_path('favicon/apple-touch-icon-152x152.png') }
+    %link{ rel: 'apple-touch-icon', sizes: '180x180',
+           href: image_path('favicon/apple-touch-icon-180x180.png') }
+    %link{ rel: 'icon', type: 'image/png',
+           href: image_path('favicon/favicon-32x32.png'), sizes: '32x3' }
+    %link{ rel: 'icon', type: 'image/png',
+           href: image_path('favicon/favicon-194x194.png'), sizes: '194x19' }
+    %link{ rel: 'icon', type: 'image/png',
+           href: image_path('favicon/favicon-96x96.png'), sizes: '96x9' }
+    %link{ rel: 'icon', type: 'image/png',
+           href: image_path('favicon/android-chrome-192x192.png'), sizes: '192x19' }
+    %link{ rel: 'icon', type: 'image/png',
+           href: image_path('favicon/favicon-16x16.png'), sizes: '16x1' }
+    %link{ rel: 'manifest', href: asset_path('favicon/manifest.json') }
+    %link{ rel: 'mask-icon',
+           href: image_path('favicon/safari-pinned-tab.svg') }
+    %meta{ name: 'msapplication-TileColor', content: '#00aba9' }
+    %meta{ name: 'msapplication-TileImage', content: image_path('favicon/mstile-144x144.png') }
+    %meta{ name: 'theme-color', content: '#ffffff' }
 
     - if @preferences
-      %link{ rel: "canonical", href: "//#{request.host_with_port}#{@preferences.as_path( :view )}"}
+      %link{ rel: 'canonical', href: "//#{request.host_with_port}#{@preferences.as_path(:view)}" }
 
     /[if lt IE 9]
-      = javascript_include_tag "assets/html5shiv.js"
-      = javascript_include_tag "//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js"
-      = javascript_include_tag "//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js"
-      = javascript_include_tag "//cdn.jsdelivr.net/lodash/4.9.0/lodash.js"
+      = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
+      = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js'
+      = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js'
+      = javascript_include_tag '//cdn.jsdelivr.net/lodash/4.9.0/lodash.js'
       :javascript
         window.isIE8 = true;
 
@@ -41,49 +56,53 @@
     = javascript_include_tag :d3
     <!--<![endif]-->
 
-    = javascript_include_tag "application"
+    = javascript_include_tag 'application'
 
   %body.government.website.lr.ppd-standard-report
 
-    %header#global-header.with-proposition.lr-header{ role: "banner" }
+    %header.with-proposition.lr-header#global-header{ role: 'banner' }
       .header-wrapper
         .header-global
           .header-logo
             %h1.title-bar--h1
-              %a.content{ href: "/app/ukhpi", title: "UK HPI" }
-                = image_tag( "ukhpi-icon.png", srcset: image_path( "ukhpi-icon.svg" ) )
+              %a.content{ href: '/app/ukhpi', title: 'UK HPI' }
+                = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'))
               UK House Price Index
 
     .o-lr-top-bar
 
 
-    =render partial: "common/flash_message"
+    = render partial: 'common/flash_message'
 
-    %main.container.o-container{ role: "main"}
+    %main.container.o-container{ role: 'main' }
       .o-beta-banner
         %p
           %strong.o-beta-tag BETA
           %span.text-muted
-            This is a new service – your <a rel="external" href="mailto:commercial.services@landregistry.gov.uk">feedback</a>
+            This is a new service – your
+            <a rel="external" href="mailto:commercial.services@landregistry.gov.uk">feedback</a>
             will help us to improve it.
       .row
         %p.pull-right.text-muted.u-font-smaller
-          = link_to "help", "/app/doc/ukhpi", class: "lr-header--header-proposition--a"
+          = link_to 'help', '/app/doc/ukhpi', class: 'lr-header--header-proposition--a'
           &middot;
-          = link_to "SPARQL query", "/app/qonsole", class: "lr-header--header-proposition--a"
+          = link_to 'SPARQL query', '/app/qonsole', class: 'lr-header--header-proposition--a'
 
       .row
         .col-md-12
           = yield
 
-    = render partial: "common/footer"
+    = render partial: 'common/footer'
 
     :javascript
       var _gaq = _gaq || [];
       _gaq.push(['_setAccount', 'UA-21165003-6']);
       _gaq.push(['_trackPageview']);
       (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        var ga = document.createElement('script'); ga.type = 'text/javascript';
+        ga.async = true;
+        ga.src = ('https:' == document.location.protocol ?
+          'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(ga, s);
       })();
