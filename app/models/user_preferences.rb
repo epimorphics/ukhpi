@@ -4,8 +4,6 @@
 # House Price Index data
 # rubocop:disable Metrics/ClassLength
 class UserPreferences
-  INTERIM_DATASET = false
-
   DEFAULT_ASPECT_INDICATORS =
     %w[housePriceIndex averagePrice percentageChange percentageAnnualChange].freeze
   DEFAULT_ASPECT_CATEGORIES = [''].freeze
@@ -33,8 +31,8 @@ class UserPreferences
   WHITELIST = VALIDATIONS.keys
 
   DEFAULTS = {
-    from: INTERIM_DATASET ? Date.new(2013, 12, 31) : Date.today.prev_year,
-    to: INTERIM_DATASET ? Date.new(2014, 12, 31) : Date.today,
+    from: Date.today.prev_year,
+    to: Date.today,
     region: Constants::DEFAULT_LOCATION,
     ai: DEFAULT_ASPECT_INDICATORS,
     ac: DEFAULT_ASPECT_CATEGORIES,
