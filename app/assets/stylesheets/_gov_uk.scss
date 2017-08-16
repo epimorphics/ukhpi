@@ -18,7 +18,7 @@
 @import "elements/helpers";                       // Helper functions and classes
 
 $grey-8: #f0f0f0;
-@import "elements/base";                       // HTML elements, set by the GOV.UK template
+@import "elements/govuk-template-base";                       // HTML elements, set by the GOV.UK template
 
 
 @import 'elements/layout';
@@ -30,10 +30,9 @@ $grey-8: #f0f0f0;
 @import 'elements/details';
 @import 'elements/panels';
 @import 'elements/forms';
-@import 'elements/forms/form-block-labels';
+// @import 'elements/forms/form-block-labels';
 @import 'elements/forms/form-date';
 @import 'elements/forms/form-validation';
 @import 'elements/breadcrumbs';
 @import 'elements/phase-banner';
 @import 'elements/components';
-

@@ -45,12 +45,12 @@ input[type=radio] {
 /* objects */
 
 .o-beta-banner {
-  @include phase-banner(beta);
+  @include phase-banner;
   padding-top: 3px;
   padding-bottom: 3px;
 }
 .o-beta-tag{
-  @include phase-tag(beta);
+  @include phase-tag;
 }
 
 .o-lr-top-bar {
