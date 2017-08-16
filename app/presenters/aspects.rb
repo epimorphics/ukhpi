@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-Struct.new('AspectGroup', :label, :"advanced?", :measures)
-
 # Presenter for managing which measures of the cube are presented as aspects,
 # according to the current user preferences
 class Aspects
