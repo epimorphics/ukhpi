@@ -13,9 +13,9 @@ GIT
 
 GIT
   remote: git@github.com:epimorphics/ds-api-ruby.git
-  revision: 189d6f6b1254e20be4c4f0be3fc5fd5ee24fa73d
+  revision: cb66bee4689d73c6aa6234ff6aa4f57af4331b00
   specs:
-    data_services_api (0.3.1)
+    data_services_api (0.4.1)
       faraday_middleware
       json
       yajl-ruby
@@ -94,9 +94,9 @@ GEM
       sxp (~> 1.0)
     erubis (2.7.0)
     execjs (2.7.0)
-    faraday (0.11.0)
+    faraday (0.13.0)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.11.0.1)
+    faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
     font-awesome-rails (4.7.0.1)
       railties (>= 3.2, < 5.1)
@@ -141,7 +141,7 @@ GEM
     js-routes (1.3.3)
       railties (>= 3.2)
       sprockets-rails
-    json (2.0.3)
+    json (2.1.0)
     json_expressions (0.8.3)
     link_header (0.0.8)
     lodash-rails (4.17.4)
@@ -333,4 +333,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.12.5
+   1.15.3
