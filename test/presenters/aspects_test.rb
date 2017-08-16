@@ -6,14 +6,17 @@ require 'test_helper'
 
 class AspectsTest < ActiveSupport::TestCase
   it 'should define some default aspects' do
-    up = UserPreferences.new({})
+    up = UserPreferences.new(ActionController::Parameters.new({}))
     asp = Aspects.new(up)
     asp.visible_aspects.wont_be_nil
     asp.visible_aspects.length.must_be :>=, 4
   end
 
   it 'respects the users preferred aspects' do
-    up = UserPreferences.new('ac' => ['SemiDetached'], 'ai' => %w[housePriceIndex averagePrice])
+    up = UserPreferences.new(
+      ActionController::Parameters.new('ac' => ['SemiDetached'],
+                                       'ai' => %w[housePriceIndex averagePrice])
+    )
     asp = Aspects.new(up)
     asp.visible_aspects.length.must_equal 2
     asp.visible_aspects.first.must_equal :housePriceIndexSemiDetached

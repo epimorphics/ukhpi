@@ -41,6 +41,10 @@ class SearchCommand
     false
   end
 
+  def region_uri
+    @region && @region.uri
+  end
+
   private
 
   def perform_search
@@ -54,9 +58,5 @@ class SearchCommand
     else
       :multiple_results
     end
-  end
-
-  def region_uri
-    @region && @region.uri
   end
 end

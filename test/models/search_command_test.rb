@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# Unit tests on the SearchCommand class
-
 require 'test_helper'
 
 Struct.new('MockUriValue', :uri)
 
+# Unit tests on the SearchCommand class
 class SearchCommandTest < ActiveSupport::TestCase
   it 'delegates to the decorated preferences object' do
     prefs = mock
@@ -16,7 +15,7 @@ class SearchCommandTest < ActiveSupport::TestCase
   end
 
   it 'recognises a search term that is a valid location URI' do
-    prefs = UserPreferences.new(region: 'http://foo.bar')
+    prefs = UserPreferences.new(ActionController::Parameters.new(region: 'http://foo.bar'))
     regions = mock
     regions.expects(:lookup_region)
            .with('http://foo.bar')
@@ -24,11 +23,11 @@ class SearchCommandTest < ActiveSupport::TestCase
 
     sc = SearchCommand.new(prefs, regions)
     sc.search_status.must_equal :single_result
-    sc.region_uri.must_equal 'http://foo.bar'
+    sc.region.must_equal 'http://foo.bar'
   end
 
   it 'recognises a search term that matches one location' do
-    prefs = UserPreferences.new(region: 'foo')
+    prefs = UserPreferences.new(ActionController::Parameters.new(region: 'foo'))
     regions = mock
     regions.expects(:match)
            .with { |term, _up| term == 'foo' }
@@ -41,7 +40,7 @@ class SearchCommandTest < ActiveSupport::TestCase
 
   it 'recognises a search term that does not match any results' do
     prefs = mock
-    prefs.expects(:region).at_least_once.returns('foo') # UserPreferences.new( region: "foo" )
+    prefs.expects(:region).at_least_once.returns('foo')
 
     regions = mock
     regions.expects(:match)
@@ -53,7 +52,7 @@ class SearchCommandTest < ActiveSupport::TestCase
   end
 
   it 'recognises a search term that matches many results' do
-    prefs = UserPreferences.new(region: 'foo')
+    prefs = UserPreferences.new(ActionController::Parameters.new(region: 'foo'))
     regions = mock
     regions.expects(:match)
            .with { |term, _up| term == 'foo' }

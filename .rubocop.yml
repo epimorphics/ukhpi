@@ -5,3 +5,11 @@ AllCops:
 # Customize rules
 Metrics/LineLength:
   Max: 100
+
+Metrics/ClassLength:
+  Exclude:
+    - test/**/*
+
+Metrics/BlockLength:
+  Exclude:
+    - test/**/*

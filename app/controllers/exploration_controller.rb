@@ -37,7 +37,7 @@ class ExplorationController < ApplicationController
   end
 
   def collect_user_preferences
-    UserPreferences.new(params)
+    UserPreferences.new(ActionController::Parameters.new(params))
   end
 
   def explain_or_enact_query(search_cmd)
