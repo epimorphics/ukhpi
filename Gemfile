@@ -61,6 +61,7 @@ group :development, :test do
   gem 'oj'
   gem 'simplecov', require: false
   gem 'vcr'
+  gem 'webpacker'
 end
 
 group :development do

@@ -24,3 +24,5 @@ uk.json
 uk.geojson
 tags
 .tags
+/public/packs
+/node_modules
