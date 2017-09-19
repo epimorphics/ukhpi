@@ -45,10 +45,12 @@ def-ukhpi:datasetDefinition
         qb:component  [ qb:measure  def-ukhpi:housePriceIndexCash ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageChangeCash ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageAnnualChangeCash ] ;
+        qb:component  [ qb:measure  def-ukhpi:salesVolumeCash ] ;
         qb:component  [ qb:measure  def-ukhpi:averagePriceMortgage ] ;
         qb:component  [ qb:measure  def-ukhpi:housePriceIndexMortgage ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageChangeMortgage ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageAnnualChangeMortgage ] ;
+        qb:component  [ qb:measure  def-ukhpi:salesVolumeMortgage ] ;
         qb:component  [ qb:measure  def-ukhpi:averagePriceFirstTimeBuyer ] ;
         qb:component  [ qb:measure  def-ukhpi:housePriceIndexFirstTimeBuyer ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageChangeFirstTimeBuyer ] ;
@@ -60,11 +62,13 @@ def-ukhpi:datasetDefinition
         qb:component  [ qb:measure  def-ukhpi:averagePriceNewBuild ] ;
         qb:component  [ qb:measure  def-ukhpi:housePriceIndexNewBuild ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageChangeNewBuild ] ;
-        qb:component  [ qb:measure  def-ukhpi:percentageAnnualChangeNewBuild ] ;        
+        qb:component  [ qb:measure  def-ukhpi:percentageAnnualChangeNewBuild ] ;
+        qb:component  [ qb:measure  def-ukhpi:salesVolumeNewBuild ] ;
         qb:component  [ qb:measure  def-ukhpi:averagePriceExistingProperty ] ;
         qb:component  [ qb:measure  def-ukhpi:housePriceIndexExistingProperty ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageChangeExistingProperty ] ;
         qb:component  [ qb:measure  def-ukhpi:percentageAnnualChangeExistingProperty ] ;
+        qb:component  [ qb:measure  def-ukhpi:salesVolumeExistingProperty ] ;
         qb:component  [ qb:attribute  def-ukhpi:refPeriodStart ] ;
         qb:component  [ qb:attribute  def-ukhpi:refPeriodDuration ] ;
         .
@@ -78,8 +82,8 @@ def-ukhpi:MonthlyIndicesByRegion
 def-ukhpi:refRegion  a  owl:ObjectProperty , qb:DimensionProperty ;
         rdfs:comment  "The administrative areas that Land Registry, Registers of Scotland and Registers of Northern Ireland publish House Price Index data for. These include Scotland, Northern Ireland, Wales, the 9 English GORs, former counties, unitary authorities, London boroughs and metropolitan districts as defined in the Ordnance Survey administrative geography and civil voting area ontology."@en ;
         rdfs:label    "Region"@en ;
-        rdfs:range    def-ukhpi:Region . 
-        
+        rdfs:range    def-ukhpi:Region .
+
 def-ukhpi:refMonth
 		a			  owl:DatatypeProperty , qb:DimensionProperty ;
 		rdfs:comment  "The year and month to which the monthly indices apply for property within England, Wales and Scotland. The indices apply on a quarterly basis for property within Northern Ireland. "@en ;
@@ -101,7 +105,7 @@ def-ukhpi:averagePriceSA
         rdfs:range    xsd:integer ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Pound_sterling> .
-                
+
 def-ukhpi:housePriceIndex
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Monthly residential property price index at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period. "@en ;
@@ -118,15 +122,15 @@ def-ukhpi:housePriceIndexSA
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Scalar> .
 
-def-ukhpi:percentageAnnualChange  
+def-ukhpi:percentageAnnualChange
 		a  owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "The percentage change in the average house price compared to the same period twelve months earlier."@en ;
         rdfs:label    "Percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Percentage> .
-                
-def-ukhpi:percentageChange  
+
+def-ukhpi:percentageChange
 		a  owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "The percentage change in the average house price compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Percentage change"@en ;
@@ -149,22 +153,22 @@ def-ukhpi:averagePriceDetached
         rdfs:range    xsd:integer ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Pound_sterling> .
-                
+
 def-ukhpi:housePriceIndexDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Monthly property price index for a detached property at Country, Regional, County/Unitary/District Authority and London Borough level, aggregated over the given reference period."@en ;
         rdfs:label    "Detached property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average detached property price compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average detached property price compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Detached property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -172,7 +176,7 @@ def-ukhpi:percentageAnnualChangeDetached
         rdfs:label    "Detached property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:averagePriceSemiDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -188,15 +192,15 @@ def-ukhpi:housePriceIndexSemiDetached
         rdfs:label    "Semi detached property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeSemiDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average semi detached property price compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average semi detached property price compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Semi detached property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeSemiDetached
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -205,7 +209,7 @@ def-ukhpi:percentageAnnualChangeSemiDetached
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Percentage> .
-                
+
 def-ukhpi:averagePriceTerraced
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a terraced property at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -220,15 +224,15 @@ def-ukhpi:housePriceIndexTerraced
         rdfs:label    "Terraced property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeTerraced
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average terraced property price compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average terraced property price compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Terraced property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeTerraced
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -237,7 +241,7 @@ def-ukhpi:percentageAnnualChangeTerraced
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Percentage> .
-        
+
 def-ukhpi:averagePriceFlatMaisonette
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a flat or maisonette at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -252,11 +256,11 @@ def-ukhpi:housePriceIndexFlatMaisonette
         rdfs:label    "Flat or maisonette property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeFlatMaisonette
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average flat or maisonette property price compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average flat or maisonette property price compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Flat or maisonette property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
@@ -268,8 +272,8 @@ def-ukhpi:percentageAnnualChangeFlatMaisonette
         rdfs:label    "Flat or maisonette property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> .  
-                
+                <http://dbpedia.org/resource/Percentage> .
+
 def-ukhpi:averagePriceCash
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a property bought wholly as a Cash Sale at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -284,11 +288,11 @@ def-ukhpi:housePriceIndexCash
         rdfs:label    "Cash sale property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeCash
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of a property bought wholly as a Cash Sale compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of a property bought wholly as a Cash Sale compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Cash sale property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
@@ -300,8 +304,16 @@ def-ukhpi:percentageAnnualChangeCash
         rdfs:label    "Cash sale property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
-                
+                <http://dbpedia.org/resource/Percentage> .
+
+def-ukhpi:salesVolumeCash
+        a             owl:DatatypeProperty , qb:MeasureProperty ;
+        rdfs:comment  "The volume of sales for properties bought wholly as a Cash sale, at Country, Regional, County/Unitary/District Authority and London Borough level, aggregated over the given reference period. Figures include all wholly cash sales included in the electronic register at the time of data extraction."@en ;
+        rdfs:label    "Cash sale property sales volume"@en ;
+        rdfs:range    xsd:integer ;
+        <http://qudt.org/schema/qudt#unit>
+                <http://dbpedia.org/resource/Number> .
+
 def-ukhpi:averagePriceMortgage
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a property bought as a Mortgaged Sale at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -316,11 +328,11 @@ def-ukhpi:housePriceIndexMortgage
         rdfs:label    "Mortgage sale property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeMortgage
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of a property bought as a Mortgaged Sale compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of a property bought as a Mortgaged Sale compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Mortgage sale property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
@@ -332,8 +344,16 @@ def-ukhpi:percentageAnnualChangeMortgage
         rdfs:label    "Mortgage sale property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
-                
+                <http://dbpedia.org/resource/Percentage> .
+
+def-ukhpi:salesVolumeMortgage
+        a             owl:DatatypeProperty , qb:MeasureProperty ;
+        rdfs:comment  "The volume of sales for properties bought as a Mortgaged sale, at Country, Regional, County/Unitary/District Authority and London Borough level, aggregated over the given reference period. Figures include all Mortgaged sales included in the electronic register at the time of data extraction."@en ;
+        rdfs:label    "Mortgage sale property sales volume"@en ;
+        rdfs:range    xsd:integer ;
+        <http://qudt.org/schema/qudt#unit>
+                <http://dbpedia.org/resource/Number> .
+
 def-ukhpi:averagePriceFirstTimeBuyer
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a property bought by a First Time Buyer at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -348,11 +368,11 @@ def-ukhpi:housePriceIndexFirstTimeBuyer
         rdfs:label    "First time buyer property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeFirstTimeBuyer
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of a property bought by a First Time Buyer compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of a property bought by a First Time Buyer compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "First time buyer property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
@@ -365,7 +385,7 @@ def-ukhpi:percentageAnnualChangeFirstTimeBuyer
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
                 <http://dbpedia.org/resource/Percentage> .
-                
+
 def-ukhpi:averagePriceFormerOwnerOccupier
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for a property bought by a Former Owner Occupier Buyer at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -380,15 +400,15 @@ def-ukhpi:housePriceIndexFormerOwnerOccupier
         rdfs:label    "Former owner occupier buyer property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeFormerOwnerOccupier
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of a property bought by a Former Owner Occupier Buyer compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of a property bought by a Former Owner Occupier Buyer compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Former owner occupier buyer property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeFormerOwnerOccupier
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -396,7 +416,7 @@ def-ukhpi:percentageAnnualChangeFormerOwnerOccupier
         rdfs:label    "Former owner occupier buyer property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> .  
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:averagePriceNewBuild
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -412,15 +432,15 @@ def-ukhpi:housePriceIndexNewBuild
         rdfs:label    "New build property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeNewBuild
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of a New Build property compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of a New Build property compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "New build property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeNewBuild
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -428,8 +448,16 @@ def-ukhpi:percentageAnnualChangeNewBuild
         rdfs:label    "New build property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> .  
-                
+                <http://dbpedia.org/resource/Percentage> .
+
+def-ukhpi:salesVolumeNewBuild
+        a             owl:DatatypeProperty , qb:MeasureProperty ;
+        rdfs:comment  "The volume of sales for properties bought as a New Build sale, at Country, Regional, County/Unitary/District Authority and London Borough level, aggregated over the given reference period. Figures include all New Build sales included in the electronic register at the time of data extraction."@en ;
+        rdfs:label    "New Build property sales volume"@en ;
+        rdfs:range    xsd:integer ;
+        <http://qudt.org/schema/qudt#unit>
+                <http://dbpedia.org/resource/Number> .
+
 def-ukhpi:averagePriceExistingProperty
         a             owl:DatatypeProperty , qb:MeasureProperty ;
         rdfs:comment  "Average price for an existing property bought at Country, Regional, County/Unitary/District Authority and London Borough level, for the given reference period."@en ;
@@ -444,15 +472,15 @@ def-ukhpi:housePriceIndexExistingProperty
         rdfs:label    "Existing property house price index"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Scalar> .                
+                <http://dbpedia.org/resource/Scalar> .
 
 def-ukhpi:percentageChangeExistingProperty
         a             owl:DatatypeProperty , qb:MeasureProperty ;
-        rdfs:comment  "The percentage change for the average price of an existing property compared to the previous month, aggregated over the given reference period."@en ;
+        rdfs:comment  "The percentage change for the average price of an existing property compared to the previous reference period, aggregated over the given reference period."@en ;
         rdfs:label    "Existing property price percentage change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
+                <http://dbpedia.org/resource/Percentage> .
 
 def-ukhpi:percentageAnnualChangeExistingProperty
         a             owl:DatatypeProperty , qb:MeasureProperty ;
@@ -460,18 +488,26 @@ def-ukhpi:percentageAnnualChangeExistingProperty
         rdfs:label    "Existing property price percentage annual change"@en ;
         rdfs:range    xsd:decimal ;
         <http://qudt.org/schema/qudt#unit>
-                <http://dbpedia.org/resource/Percentage> . 
-                                                             
+                <http://dbpedia.org/resource/Percentage> .
+
+def-ukhpi:salesVolumeExistingProperty
+        a             owl:DatatypeProperty , qb:MeasureProperty ;
+        rdfs:comment  "The volume of sales for properties bought as an Existing Property sale, at Country, Regional, County/Unitary/District Authority and London Borough level, aggregated over the given reference period. Figures include all Existing Property sales included in the electronic register at the time of data extraction."@en ;
+        rdfs:label    "Existing Property sales volume"@en ;
+        rdfs:range    xsd:integer ;
+        <http://qudt.org/schema/qudt#unit>
+                <http://dbpedia.org/resource/Number> .
+
 def-ukhpi:refPeriodStart
         a             owl:DatatypeProperty , qb:AttributeProperty ;
         rdfs:comment  "The start date for the reference period over which the indices are calculated."@en ;
         rdfs:label    "Reference period start"@en ;
         rdfs:range    xsd:date
-        . 
-                
+        .
+
 def-ukhpi:refPeriodDuration
         a             owl:DatatypeProperty , qb:AttributeProperty ;
         rdfs:comment  "The duration of the reference period over which the indices are calculated in months."@en ;
         rdfs:label    "Reference period duration"@en ;
-        rdfs:range    xsd:integer 
-        .                                                                                                             
+        rdfs:range    xsd:integer
+        .
