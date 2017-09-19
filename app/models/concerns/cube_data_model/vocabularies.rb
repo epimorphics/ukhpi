@@ -6,5 +6,6 @@ module CubeDataModel
     QB = RDF::Vocabulary.new('http://purl.org/linked-data/cube#')
     UKHPI = RDF::Vocabulary.new('http://landregistry.data.gov.uk/def/ukhpi/')
     QUDT = RDF::Vocabulary.new('http://qudt.org/schema/qudt#')
+    DBPEDIA_RESOURCE = RDF::Vocabulary.new('http://dbpedia.org/resource/')
   end
 end
