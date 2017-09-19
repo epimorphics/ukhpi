@@ -38,5 +38,14 @@ module CubeDataModel
     def qname
       "ukhpi:#{local_name}"
     end
+
+    def objects_of(pred)
+      stmts = graph.query([resource, pred, nil])
+      (stmts || []).map(&:object)
+    end
+
+    def object_of(pred)
+      objects_of(pred).first
+    end
   end
 end
