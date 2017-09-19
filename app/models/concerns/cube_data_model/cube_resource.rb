@@ -2,8 +2,13 @@
 
 module CubeDataModel
   # Concern that encapsulates an RDF resource in a DataCube model
-  module CubeResource
+  class CubeResource
     attr_reader :resource, :graph
+
+    def initialize(graph, resource)
+      @graph = graph
+      @resource = resource
+    end
 
     def label
       graph.query([resource, RDF::RDFS.label, nil]).first.object.to_s

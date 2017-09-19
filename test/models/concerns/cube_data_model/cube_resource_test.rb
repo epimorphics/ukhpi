@@ -2,15 +2,6 @@
 
 require 'test_helper'
 
-class CubeResourceTestable
-  include CubeDataModel::CubeResource
-
-  def initialize(graph, resource)
-    @graph = graph
-    @resource = resource
-  end
-end
-
 # Unit tests on the DataModel class and helpers
 class CubeResourceTest < ActiveSupport::TestCase
   let :resource do
@@ -22,7 +13,7 @@ class CubeResourceTest < ActiveSupport::TestCase
     g << RDF::Statement(r, RDF::RDFS.comment, 'watch this!')
     g << RDF::Statement(r, RDF::RDFS.range, q)
 
-    CubeResourceTestable.new(g, r)
+    CubeDataModel::CubeResource.new(g, r)
   end
 
   describe 'CubeResource' do
