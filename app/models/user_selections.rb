@@ -36,15 +36,6 @@ class UserSelections
 
   PERMITTED = USER_PARAMS_MODEL
               .map { |k, v| v.array? ? { k => [] } : k }
-              .sort do |p0, p1|
-                if p0.class == p1.class
-                  0
-                elsif p0.is_a?(Hash)
-                  1
-                else
-                  -1
-                end
-              end
               .freeze
 
   attr_reader :params

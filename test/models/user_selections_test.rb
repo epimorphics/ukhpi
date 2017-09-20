@@ -32,5 +32,15 @@ class UserSelectionsTest < ActiveSupport::TestCase
         user_selections({}).indicators.must_include 'averagePrice'
       end
     end
+
+    describe '#selected_region' do
+      it 'should retrieve the value given in the parameters' do
+        user_selections('region' => 'foo').selected_region.must_equal 'foo'
+      end
+
+      it 'should retrieve the default value' do
+        user_selections({}).selected_region.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+      end
+    end
   end
 end
