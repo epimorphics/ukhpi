@@ -20,8 +20,9 @@ class UserSelections
   DEFAULT_REGION_TYPE = 'country'
 
   USER_PARAMS_MODEL = {
-    'region' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
+    'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
     'location-type' => Struct::UserParam.new(DEFAULT_REGION_TYPE, false, nil),
+    'location-term' => Struct::UserParam.new('', false, nil),
     'from' => Struct::UserParam.new(Date.today.prev_year, false, nil),
     'to' => Struct::UserParam.new(Date.today, false, nil),
     'explain' => Struct::UserParam.new(false, false, nil),
@@ -31,7 +32,9 @@ class UserSelections
 
     # legacy codes
     'ai' => Struct::UserParam.new(nil, true, 'in'),
-    'ac' => Struct::UserParam.new(nil, true, 'pt')
+    'ac' => Struct::UserParam.new(nil, true, 'pt'),
+    'region' => Struct::UserParam.new(nil, false, 'location'),
+    'region-selection' => Struct::UserParam.new(nil, false, 'location-term')
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL
@@ -44,12 +47,16 @@ class UserSelections
     @params = params[:__safe_params] || params.permit(*PERMITTED)
   end
 
-  def selected_region
-    param_or_default('region')
+  def selected_location
+    param_or_default('location')
   end
 
-  def selected_region_type
+  def location_search_type
     param_or_default('location-type')
+  end
+
+  def location_search_term
+    param_or_default('location-term')
   end
 
   def from_date

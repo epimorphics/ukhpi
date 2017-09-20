@@ -11,18 +11,18 @@ class UserSelectionsTest < ActiveSupport::TestCase
   describe 'UserSelections' do
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
-        selections = user_selections('region' => 'test-region')
-        selections.params.key?('region').must_equal true
+        selections = user_selections('location' => 'test-region')
+        selections.params.key?('location').must_equal true
       end
 
       it 'should initialize the parameters correctly when given safe params' do
-        selections = UserSelections.new(__safe_params: { 'region' => 'safe-test-region' })
-        selections.params.key?('region').must_equal true
+        selections = UserSelections.new(__safe_params: { 'location' => 'safe-test-region' })
+        selections.params.key?('location').must_equal true
       end
     end
 
     describe '#indicators' do
-      it 'should access the selected region from the params' do
+      it 'should access the selected indicator from the params' do
         selections = user_selections('in' => ['test-in'])
         selections.indicators.must_equal(['test-in'])
       end
@@ -38,31 +38,31 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-    describe '#selected_region' do
+    describe '#selected_location' do
       it 'should retrieve the value given in the parameters' do
-        user_selections('region' => 'foo').selected_region.must_equal 'foo'
+        user_selections('location' => 'foo').selected_location.must_equal 'foo'
       end
 
       it 'should retrieve the default value' do
-        user_selections({}).selected_region.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+        user_selections({}).selected_location.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
       end
     end
 
     describe '#with' do
       it 'should create a new user preferences with an additional value' do
-        selections0 = user_selections('region' => 'test-region-0')
-        selections0.selected_region.must_equal 'test-region-0'
+        selections0 = user_selections('location' => 'test-region-0')
+        selections0.selected_location.must_equal 'test-region-0'
 
         selections1 = selections0.with('in', ['averagePrice'])
-        selections0.selected_region.must_equal 'test-region-0'
+        selections0.selected_location.must_equal 'test-region-0'
         selections0.indicators.length.must_be :>=, 4
-        selections1.selected_region.must_equal 'test-region-0'
+        selections1.selected_location.must_equal 'test-region-0'
         selections1.indicators.must_equal ['averagePrice']
 
-        selections2 = selections1.with('region', 'test-region-2')
-        selections0.selected_region.must_equal 'test-region-0'
+        selections2 = selections1.with('location', 'test-region-2')
+        selections0.selected_location.must_equal 'test-region-0'
         selections0.indicators.length.must_be :>=, 4
-        selections2.selected_region.must_equal 'test-region-2'
+        selections2.selected_location.must_equal 'test-region-2'
         selections2.indicators.must_equal ['averagePrice']
       end
     end
