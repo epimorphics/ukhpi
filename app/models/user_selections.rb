@@ -76,6 +76,10 @@ class UserSelections
     param_or_default('np')
   end
 
+  def to_h
+    params.to_h
+  end
+
   # @return A new UserSelections object in which the parameter `param` has
   # the value `val` instead of the current value. Does not change this
   # UserSelections object

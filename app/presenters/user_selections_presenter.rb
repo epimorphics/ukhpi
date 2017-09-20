@@ -1,0 +1,62 @@
+# frozen-string-literal: true
+
+# Decorator-pattern class for creating presentations and renderings of
+# UserSelections objects
+class UserSelectionsPresenter
+  attr_reader :selections
+
+  def initialize(user_selections)
+    @selections = user_selections
+  end
+
+  # Present the contained user-selections in a form suitable for the query
+  # params of a URL link
+  def as_url_search_string
+    params
+      .map(&method(:encode_for_url_search_string))
+      .sort
+      .join('&')
+  end
+
+  # Present the contained user-selections as a title, by summarising the
+  # key identifying information
+  def as_title
+    templates = {
+      region: '%s',
+      from: 'from %s',
+      to: 'to %s'
+    }
+
+    apply_templates(templates, params).join(' ')
+  end
+
+  private
+
+  def params
+    selections.params.to_h
+  end
+
+  def encode_for_url_search_string(args)
+    k, v = *args
+    v = v.map(&:to_s).join(',') if v.is_a?(Array)
+    "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}"
+  end
+
+  def apply_templates(templates, params)
+    templates.map do |key, template|
+      if (value = params[key])
+        template % format_selection_value(value)
+      end
+    end .compact
+  end
+
+  def format_selection_value(value)
+    if (r = Regions.lookup_region(value))
+      r.label
+    elsif value.is_a?(Date)
+      value.strftime('%B %Y')
+    else
+      value.to_s
+    end
+  end
+end
