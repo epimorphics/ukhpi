@@ -44,4 +44,19 @@ class DataModelTest < ActiveSupport::TestCase
     slugs.must_include 'ukhpi:averagePriceSemiDetached'
     slugs.uniq.length.must_equal slugs.length
   end
+
+  describe 'elements' do
+    it 'should return the property type name elements' do
+      cube.property_type_elements.length.must_be :>=, 4
+      cube.property_type_elements.first.root_name.must_equal 'housePriceIndex'
+    end
+
+    it 'should return the indicator name elements' do
+      cube.indicator_elements.length.must_be :>=, 11
+    end
+
+    it 'should return the non-property-type indicator elements' do
+      cube.non_property_type_indicator_elements.length.must_be :>=, 1
+    end
+  end
 end
