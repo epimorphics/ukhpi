@@ -7,4 +7,5 @@ Rails.application.routes.draw do
   get '/explore', to: 'exploration#index'
   resources :exploration, only: [:new]
   resources :download, only: [:new]
+  resource :browse, only: %i[show edit], controller: :browse
 end
