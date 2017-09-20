@@ -41,7 +41,7 @@ class UserSelections
   attr_reader :params
 
   def initialize(params)
-    @params = params.permit(*PERMITTED)
+    @params = params[:__safe_params] || params.permit(*PERMITTED)
   end
 
   def selected_region
@@ -74,6 +74,13 @@ class UserSelections
 
   def non_property_type_indicators
     param_or_default('np')
+  end
+
+  # @return A new UserSelections object in which the parameter `param` has
+  # the value `val` instead of the current value. Does not change this
+  # UserSelections object
+  def with(param, val)
+    UserSelections.new(__safe_params: @params.merge(param => val))
   end
 
   private

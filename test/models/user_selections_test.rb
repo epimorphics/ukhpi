@@ -10,9 +10,14 @@ end
 class UserSelectionsTest < ActiveSupport::TestCase
   describe 'UserSelections' do
     describe '#initialize' do
-      it 'should process the parameters correctly' do
+      it 'should process the parameters correctly with action-controller params' do
         selections = user_selections('region' => 'test-region')
-        selections.params.key?('region')
+        selections.params.key?('region').must_equal true
+      end
+
+      it 'should initialize the parameters correctly when given safe params' do
+        selections = UserSelections.new(__safe_params: { 'region' => 'safe-test-region' })
+        selections.params.key?('region').must_equal true
       end
     end
 
@@ -40,6 +45,25 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should retrieve the default value' do
         user_selections({}).selected_region.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+      end
+    end
+
+    describe '#with' do
+      it 'should create a new user preferences with an additional value' do
+        selections0 = user_selections('region' => 'test-region-0')
+        selections0.selected_region.must_equal 'test-region-0'
+
+        selections1 = selections0.with('in', ['averagePrice'])
+        selections0.selected_region.must_equal 'test-region-0'
+        selections0.indicators.length.must_be :>=, 4
+        selections1.selected_region.must_equal 'test-region-0'
+        selections1.indicators.must_equal ['averagePrice']
+
+        selections2 = selections1.with('region', 'test-region-2')
+        selections0.selected_region.must_equal 'test-region-0'
+        selections0.indicators.length.must_be :>=, 4
+        selections2.selected_region.must_equal 'test-region-2'
+        selections2.indicators.must_equal ['averagePrice']
       end
     end
   end
