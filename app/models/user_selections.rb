@@ -30,6 +30,10 @@ class UserSelections
     'in' => Struct::UserParam.new(DEFAULT_INDICATORS, true, nil),
     'np' => Struct::UserParam.new(DEFAULT_NON_PT_INDICATORS, true, nil),
 
+    # used by selections update form
+    'form-action' => Struct::UserParam.new(nil, false, nil),
+    'utf8' => Struct::UserParam.new(nil, false, nil),
+
     # legacy codes
     'ai' => Struct::UserParam.new(nil, true, 'in'),
     'ac' => Struct::UserParam.new(nil, true, 'pt'),
@@ -87,11 +91,27 @@ class UserSelections
     params.to_h
   end
 
+  def action
+    params['form-action']
+  end
+
   # @return A new UserSelections object in which the parameter `param` has
   # the value `val` instead of the current value. Does not change this
   # UserSelections object
   def with(param, val)
     UserSelections.new(__safe_params: @params.merge(param => val))
+  end
+
+  # @return A new UserSelections object in which the parameter `param` has
+  # been removed. Does not change this UserSelections object
+  def without(param)
+    new_params = @params.dup
+    new_params.delete(param)
+    UserSelections.new(__safe_params: new_params)
+  end
+
+  def clear_selected_location
+    params['location'] = nil
   end
 
   private

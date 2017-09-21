@@ -66,5 +66,17 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections2.indicators.must_equal ['averagePrice']
       end
     end
+
+    describe '#without' do
+      it 'should create a new user preferences value without the given key' do
+        selections0 = user_selections('location' => 'test-region-0')
+        selections0.selected_location.must_equal 'test-region-0'
+
+        selections1 = selections0.without('location')
+        selections0.selected_location.must_equal 'test-region-0'
+        assert selections0.params.key?('location')
+        refute selections1.params.key?('location')
+      end
+    end
   end
 end
