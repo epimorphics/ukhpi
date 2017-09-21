@@ -23,6 +23,8 @@ class BrowseController < ApplicationController
     case action&.downcase
     when 'search'
       search_for_location(view_state)
+    when 'view'
+      view_result(view_state)
     end
   end
 
@@ -60,5 +62,13 @@ class BrowseController < ApplicationController
   def match_multiple_locations(view_state, locations)
     view_state.add_matched_locations(locations)
     view_state.user_selections.clear_selected_location
+  end
+
+  def view_result(view_state)
+    Rails.logger.debug "Redirecting to #{view_state.user_selections.params}"
+    redirect_to({
+      controller: :browse,
+      action: :show
+    }.merge(view_state.user_selections.params))
   end
 end

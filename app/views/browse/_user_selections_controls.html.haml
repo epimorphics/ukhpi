@@ -48,3 +48,7 @@
       = label_tag(:'indicator[]', for: id) do
         = check_box_tag(:'indicator[]', indicator.slug, checked, id: id)
         = t(indicator.label_key)
+
+%p
+  %button{ type: 'submit', value: 'view', name: 'form-action' }
+    Show result
