@@ -46,6 +46,10 @@ class Regions
     locations[uri]
   end
 
+  def self.region_label(uri)
+    (loc = locations[uri]) && loc.label
+  end
+
   def self.lookup_gss(gss)
     locations.values.find { |loc| loc.is_gss?(gss) }
   end
