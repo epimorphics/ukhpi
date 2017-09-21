@@ -35,7 +35,7 @@ class UkhpiDataCube
     ],
 
     volume: [
-      Struct::UkhpiStatistic.new('sal', 'salesVolume', 'sales_volume')
+      Struct::UkhpiStatistic.new('vol', 'salesVolume', 'sales_volume')
     ]
   }.freeze
 

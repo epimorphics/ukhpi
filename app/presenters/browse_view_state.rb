@@ -53,9 +53,14 @@ class BrowseViewState
     "?#{UserSelectionsPresenter.new(selection_with_loc).as_url_search_string}"
   end
 
-  private
-
   def data_cube
     @data_cube ||= UkhpiDataCube.new
+  end
+
+  def selected_param?(param_type, value_slug)
+    case param_type
+    when :indicator then user_selections.selected_indicators
+    when :statistic then user_selections.selected_statistics
+    end .include?(value_slug)
   end
 end

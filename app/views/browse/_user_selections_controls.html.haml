@@ -18,3 +18,22 @@
 %p
   = label_tag(:to, 'To:')
   = date_field_tag(:to, view_state.user_selections.to_date)
+
+%h3.o-heading--3 Displayed indicators
+
+%p
+  You can select which of the UKHPI statistics are visible on the browse page.
+
+%h4.o-heading--4 Indicators
+
+%ul
+  - view_state.data_cube.each_theme do |theme_key, theme|
+    %li
+      = t(theme_key)
+      - theme.each do |statistic|
+        %li
+          - id = "indicator-#{statistic.slug}"
+          - checked = view_state.selected_param?(:indicator, statistic.slug)
+          = label_tag(:'indicator[]', for: id) do
+            = check_box_tag(:'indicator[]', statistic.slug, checked, id: id)
+            = t(statistic.label_key)
