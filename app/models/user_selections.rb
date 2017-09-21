@@ -11,10 +11,8 @@
 class UserSelections
   Struct.new('UserParam', :default_value, :'array?', :alias)
 
-  DEFAULT_INDICATORS =
-    %w[housePriceIndex averagePrice percentageChange
-       percentageAnnualChange].freeze
-  DEFAULT_PROPERTY_TYPES = [''].freeze
+  DEFAULT_INDICATORS = %w[all vol].freeze
+  DEFAULT_STATISTICS = %w[hpi avg pmc pac].freeze
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
   DEFAULT_REGION_TYPE = 'country'
@@ -26,9 +24,8 @@ class UserSelections
     'from' => Struct::UserParam.new(Date.today.prev_year, false, nil),
     'to' => Struct::UserParam.new(Date.today, false, nil),
     'explain' => Struct::UserParam.new(false, false, nil),
-    'pt' => Struct::UserParam.new(DEFAULT_PROPERTY_TYPES, true, nil),
+    'st' => Struct::UserParam.new(DEFAULT_STATISTICS, true, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATORS, true, nil),
-    'np' => Struct::UserParam.new(DEFAULT_NON_PT_INDICATORS, true, nil),
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),
@@ -36,7 +33,7 @@ class UserSelections
 
     # legacy codes
     'ai' => Struct::UserParam.new(nil, true, 'in'),
-    'ac' => Struct::UserParam.new(nil, true, 'pt'),
+    'ac' => Struct::UserParam.new(nil, true, 'st'),
     'region' => Struct::UserParam.new(nil, false, 'location'),
     'region-selection' => Struct::UserParam.new(nil, false, 'location-term')
   }.freeze
@@ -75,16 +72,12 @@ class UserSelections
     param_or_default('explain') == 'true'
   end
 
-  def property_types
-    param_or_default('pt')
+  def selected_statistics
+    param_or_default('st')
   end
 
-  def indicators
+  def selected_indicators
     param_or_default('in')
-  end
-
-  def non_property_type_indicators
-    param_or_default('np')
   end
 
   def to_h

@@ -24,17 +24,17 @@ class UserSelectionsTest < ActiveSupport::TestCase
     describe '#indicators' do
       it 'should access the selected indicator from the params' do
         selections = user_selections('in' => ['test-in'])
-        selections.indicators.must_equal(['test-in'])
+        selections.selected_indicators.must_equal(['test-in'])
       end
 
       it 'should recognise a legacy parameter' do
         selections = user_selections('ai' => ['test-in'])
-        selections.indicators.must_equal(['test-in'])
+        selections.selected_indicators.must_equal(['test-in'])
       end
 
       it 'should return the default value if nothing is defined' do
-        user_selections({}).indicators.length.must_be :>=, 4
-        user_selections({}).indicators.must_include 'averagePrice'
+        user_selections({}).selected_indicators.length.must_be :>=, 2
+        user_selections({}).selected_indicators.must_include 'all'
       end
     end
 
@@ -55,15 +55,15 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
         selections1 = selections0.with('in', ['averagePrice'])
         selections0.selected_location.must_equal 'test-region-0'
-        selections0.indicators.length.must_be :>=, 4
+        selections0.selected_indicators.length.must_be :>=, 2
         selections1.selected_location.must_equal 'test-region-0'
-        selections1.indicators.must_equal ['averagePrice']
+        selections1.selected_indicators.must_equal ['averagePrice']
 
         selections2 = selections1.with('location', 'test-region-2')
         selections0.selected_location.must_equal 'test-region-0'
-        selections0.indicators.length.must_be :>=, 4
+        selections0.selected_indicators.length.must_be :>=, 2
         selections2.selected_location.must_equal 'test-region-2'
-        selections2.indicators.must_equal ['averagePrice']
+        selections2.selected_indicators.must_equal ['averagePrice']
       end
     end
 
