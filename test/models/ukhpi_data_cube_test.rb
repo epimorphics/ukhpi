@@ -45,18 +45,25 @@ class DataModelTest < ActiveSupport::TestCase
     slugs.uniq.length.must_equal slugs.length
   end
 
-  describe 'elements' do
-    it 'should return the property type name elements' do
-      cube.property_type_elements.length.must_be :>=, 4
-      cube.property_type_elements.first.root_name.must_equal 'housePriceIndex'
+  describe '#themes' do
+    it 'should return a Hash of the themes' do
+      cube.themes.keys.length.must_be :>=, 5
+      cube.themes.keys.first.must_equal :property_type
     end
+  end
 
-    it 'should return the indicator name elements' do
-      cube.indicator_elements.length.must_be :>=, 11
+  describe '#theme' do
+    it 'should return a theme object' do
+      cube.theme(:property_type).first.slug.must_equal 'all'
     end
+  end
 
-    it 'should return the non-property-type indicator elements' do
-      cube.non_property_type_indicator_elements.length.must_be :>=, 1
+  describe '#each_theme' do
+    it 'should iterate over the themes' do
+      arr = []
+      cube.each_theme { |_theme_key, theme| arr << theme.is_a?(Array) }
+      arr.length.must_be :>=, 5
+      arr.wont_include false
     end
   end
 end

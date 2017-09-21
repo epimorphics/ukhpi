@@ -7,35 +7,45 @@ class UkhpiDataCube
   CONFIG_DIR = 'dsapi'
   DSD_FILE = 'UKHPI-dsd.ttl'
 
-  Struct.new('DataCubeElements', :indicators, :property_types, :non_property_type_indicators)
-  Struct.new('DataCubeElement', :root_name, :label_key)
+  Struct.new('UkhpiStatistic', :slug, :root_name, :label_key)
+  Struct.new('UkhpiIndicator', :slug, :root_name, :label_key)
 
-  ELEMENTS = Struct::DataCubeElements.new(
-    [
-      Struct::DataCubeElement.new('',                    'all_property_types'),
-      Struct::DataCubeElement.new('Detached',            'detached_houses'),
-      Struct::DataCubeElement.new('SemiDetached',        'semi_detached_houses'),
-      Struct::DataCubeElement.new('Terraced',            'terraced_houses'),
-      Struct::DataCubeElement.new('FlatMaisonette',      'flats_and_maisonettes'),
-      Struct::DataCubeElement.new('NewBuild',            'new_build'),
-      Struct::DataCubeElement.new('ExistingProperty',    'existing_properties'),
-      Struct::DataCubeElement.new('Cash',                'cash_purchases'),
-      Struct::DataCubeElement.new('Mortgage',            'mortgage_purchases'),
-      Struct::DataCubeElement.new('FirstTimeBuyer',      'first_time_buyers'),
-      Struct::DataCubeElement.new('FormerOwnerOccupier', 'former_owner_occupiers')
+  THEMES = {
+    property_type: [
+      Struct::UkhpiStatistic.new('all', '',               'all_property_types'),
+      Struct::UkhpiStatistic.new('det', 'Detached',       'detached_houses'),
+      Struct::UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses'),
+      Struct::UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses'),
+      Struct::UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes')
     ],
 
-    [
-      Struct::DataCubeElement.new('housePriceIndex',        'house_price_index'),
-      Struct::DataCubeElement.new('averagePrice',           'average_price'),
-      Struct::DataCubeElement.new('percentageChange',       'percentage_monthly_change'),
-      Struct::DataCubeElement.new('percentageAnnualChange', 'percentage_annual_change')
+    ftb_foo: [
+      Struct::UkhpiStatistic.new('ftb', 'FirstTimeBuyer',      'first_time_buyers'),
+      Struct::UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers')
     ],
 
-    [
-      Struct::DataCubeElement.new('salesVolume', 'sales_volume')
+    cash_mortgage: [
+      Struct::UkhpiStatistic.new('cas', 'Cash',     'cash_purchases'),
+      Struct::UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases')
+    ],
+
+    new_existing: [
+      Struct::UkhpiStatistic.new('new', 'NewBuild',         'new_build'),
+      Struct::UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties')
+    ],
+
+    volume: [
+      Struct::UkhpiStatistic.new('sal', 'salesVolume', 'sales_volume')
     ]
-  ).freeze
+  }.freeze
+
+  INDICATORS =
+    [
+      Struct::UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
+      Struct::UkhpiIndicator.new('avg', 'averagePrice',           'average_price'),
+      Struct::UkhpiIndicator.new('pmc', 'percentageChange',       'percentage_monthly_change'),
+      Struct::UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change')
+    ].freeze
 
   attr_reader :dsd
 
@@ -43,10 +53,29 @@ class UkhpiDataCube
     @dsd = CubeDataModel::DSD.new(load_model, UKHPI.datasetDefinition)
   end
 
-  # @return The elements of the data-cube properties (and thus also DSAPI aspects)
-  # corresponding to the property type
-  def property_type_elements
-    ELEMENTS.property_types
+  # @return The themes which are used to group statistics into logical units
+  def themes
+    THEMES
+  end
+
+  # @return A given theme, useful for grouping statistics into logical units
+  def theme(theme_name)
+    themes[theme_name.to_sym]
+  end
+
+  # Invoke a block with the key and members for each theme of statistics
+  def each_theme(&block)
+    THEMES.each(&block)
+  end
+
+  # @return An array of the indicators
+  def indicators
+    INDICATORS
+  end
+
+  # Invoke a block with each indicator as an argument
+  def each_indicator(&block)
+    indicators.each(&block)
   end
 
   # @return The elements of the data-cube properties (and thus also DSAPI aspects)
