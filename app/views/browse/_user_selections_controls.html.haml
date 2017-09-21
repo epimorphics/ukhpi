@@ -6,5 +6,15 @@
   = label_tag(:'location-term', 'Search for a location')
   = text_field_tag(:'location-term')
 
-%button{ type: 'submit', value: 'search', name: 'form-action' }
-  Search
+  %button{ type: 'submit', value: 'search', name: 'form-action' }
+    Search
+
+%h3.o-heading--3 Dates
+
+%p
+  = label_tag(:from, 'From:')
+  = date_field_tag(:from, view_state.user_selections.from_date)
+
+%p
+  = label_tag(:to, 'To:')
+  = date_field_tag(:to, view_state.user_selections.to_date)
