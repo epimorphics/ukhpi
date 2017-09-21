@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
-    - app/models/regions-table.rb
+    - app/models/regions_table.rb
+    - app/models/locations_table.rb
 
 # Customize rules
 Metrics/LineLength:
