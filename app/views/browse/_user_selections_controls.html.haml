@@ -1,0 +1,10 @@
+%p
+  = label_tag(:'location-type', 'Location type')
+  = select_tag(:'location-type', options_for_select(view_state.location_type_options))
+
+%p
+  = label_tag(:'location-term', 'Search for a location')
+  = text_field_tag(:'location-term')
+
+%button{ type: 'submit', value: 'search', name: 'form-action' }
+  Search

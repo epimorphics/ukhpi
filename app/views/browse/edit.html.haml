@@ -17,32 +17,7 @@
       To select another location, search for the location name below.
 
   - if @view_state.matched_locations
-    %h3.o-heading--3 Search results
-    %p
-      Locations matching search term
-      %code
-        = @view_state.user_selections.location_search_term
-      of type
-      = succeed ':' do
-        %code
-          = @view_state.user_selections.location_search_type
-    %ul
-      - @view_state.matched_locations[0..9].each do |location|
-        %li
-          %a{ href: @view_state.with_location_path(location) }
-            = location.label
-      - if @view_state.matched_locations.length > 10
-        %li
-          &hellip; and #{@view_state.matched_locations.length - 10} more
+    = render partial: 'matching_locations', locals: { view_state: @view_state }
 
   - else
-    %p
-      = label_tag(:'location-type', 'Location type')
-      = select_tag(:'location-type', options_for_select(@view_state.location_type_options))
-
-    %p
-      = label_tag(:'location-term', 'Search for a location')
-      = text_field_tag(:'location-term')
-
-    %button{ type: 'submit', value: 'search', name: 'form-action' }
-      Search
+    = render partial: 'user_selections_controls', locals: { view_state: @view_state }

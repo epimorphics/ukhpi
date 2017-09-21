@@ -1,0 +1,17 @@
+%h3.o-heading--3 Search results
+%p
+  Locations matching search term
+  %code
+    = view_state.user_selections.location_search_term
+  of type
+  = succeed ':' do
+    %code
+      = view_state.user_selections.location_search_type
+%ul
+  - view_state.matched_locations[0..9].each do |location|
+    %li
+      %a{ href: view_state.with_location_path(location) }
+        = location.label
+  - if view_state.matched_locations.length > 10
+    %li
+      &hellip; and #{view_state.matched_locations.length - 10} more
