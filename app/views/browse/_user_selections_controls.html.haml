@@ -24,7 +24,7 @@
 %p
   You can select which of the UKHPI statistics are visible on the browse page.
 
-%h4.o-heading--4 Indicators
+%h4.o-heading--4 Statistics
 
 %ul
   - view_state.data_cube.each_theme do |theme_key, theme|
@@ -32,8 +32,19 @@
       = t(theme_key)
       - theme.each do |statistic|
         %li
-          - id = "indicator-#{statistic.slug}"
-          - checked = view_state.selected_param?(:indicator, statistic.slug)
-          = label_tag(:'indicator[]', for: id) do
-            = check_box_tag(:'indicator[]', statistic.slug, checked, id: id)
+          - id = "statistic-#{statistic.slug}"
+          - checked = view_state.selected_param?(:statistic, statistic.slug)
+          = label_tag(:'statistic[]', for: id) do
+            = check_box_tag(:'statistic[]', statistic.slug, checked, id: id)
             = t(statistic.label_key)
+
+%h4.o-heading--4 Indicator
+
+%ul
+  - view_state.data_cube.indicators.each do |indicator|
+    %li
+      - id = "indicator-#{indicator.slug}"
+      - checked = view_state.selected_param?(:indicator, indicator.slug)
+      = label_tag(:'indicator[]', for: id) do
+        = check_box_tag(:'indicator[]', indicator.slug, checked, id: id)
+        = t(indicator.label_key)

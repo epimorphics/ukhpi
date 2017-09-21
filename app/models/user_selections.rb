@@ -11,8 +11,8 @@
 class UserSelections
   Struct.new('UserParam', :default_value, :'array?', :alias)
 
-  DEFAULT_INDICATORS = %w[all vol].freeze
-  DEFAULT_STATISTICS = %w[hpi avg pmc pac].freeze
+  DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
+  DEFAULT_STATISTICS = %w[all vol].freeze
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
   DEFAULT_REGION_TYPE = 'country'
