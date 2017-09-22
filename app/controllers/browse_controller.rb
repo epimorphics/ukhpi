@@ -8,7 +8,7 @@ class BrowseController < ApplicationController
   end
 
   def edit
-    @view_state = BrowseViewState.new(params)
+    @view_state = BrowseEditViewState.new(params)
     process_form_action(@view_state)
   end
 

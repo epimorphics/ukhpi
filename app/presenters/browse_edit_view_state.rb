@@ -1,7 +1,7 @@
 # frozen-string-literal: true
 
 # Adapter mapping the view state in a browse controller to the browse view
-class BrowseViewState
+class BrowseEditViewState
   attr_reader :user_selections
   attr_reader :matched_locations
 
