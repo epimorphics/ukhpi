@@ -31,7 +31,7 @@ class DataViewsPresenter
   def as_data_views(indicators, theme_names)
     themes = theme_names.map { |theme_name| ukhpi.theme(theme_name) }
 
-    indicators.product(themes).map do |indicator, theme|
+    themes.product(indicators).map do |theme, indicator|
       DataView.new(user_selections: user_selections, query_result: query_result,
                    indicator: indicator, theme: theme)
     end

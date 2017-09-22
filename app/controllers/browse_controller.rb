@@ -5,6 +5,8 @@
 # support non-JS access by setting browse preferences in the `edit` action.
 class BrowseController < ApplicationController
   def show
+    user_selections = UserSelections.new(params)
+    @view_state = DataViewsPresenter.new(user_selections, nil)
   end
 
   def edit

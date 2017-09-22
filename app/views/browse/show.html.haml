@@ -1,1 +1,7 @@
-%h2.o-heading--2 Display graphs
+%article
+  %h2.o-heading--2
+    = t( "index.main_heading" )
+    %span.js-heading-location
+
+  - @view_state.data_views.each do |data_view|
+    = render partial: 'data_view', locals: { data_view: data_view }
