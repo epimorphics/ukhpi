@@ -17,22 +17,21 @@ class DataViewsPresenter
 
   private
 
+  # @return An array of the data views that are qualified by indicators
   def qualified_data_views
-    as_data_views(qualified_themes)
+    as_data_views(ukhpi.indicators, qualified_themes)
   end
 
+  # @return An array of the data views that are not qualified by indicators
   def non_qualified_data_views
-    themes = non_qualified_themes.map(&method(:as_theme))
-    themes.map do |theme|
-      DataView.new(user_selections: user_selections, query_result: query_result,
-                   indicator: nil, theme: theme)
-    end
+    as_data_views([nil], non_qualified_themes)
   end
 
-  def as_data_views(theme_names)
-    themes = theme_names.map(&method(:as_theme))
+  # @return An array of data view objects
+  def as_data_views(indicators, theme_names)
+    themes = theme_names.map { |theme_name| ukhpi.theme(theme_name) }
 
-    ukhpi.indicators.product(themes).map do |indicator, theme|
+    indicators.product(themes).map do |indicator, theme|
       DataView.new(user_selections: user_selections, query_result: query_result,
                    indicator: indicator, theme: theme)
     end
@@ -52,9 +51,5 @@ class DataViewsPresenter
 
   def ukhpi
     @ukhpi ||= UkhpiDataCube.new
-  end
-
-  def as_theme(theme_name)
-    ukhpi.theme(theme_name)
   end
 end
