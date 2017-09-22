@@ -7,36 +7,38 @@ class UkhpiDataCube
   CONFIG_DIR = 'dsapi'
   DSD_FILE = 'UKHPI-dsd.ttl'
 
+  Struct.new('UkhpiTheme', :slug, :statistics)
   Struct.new('UkhpiStatistic', :slug, :root_name, :label_key)
   Struct.new('UkhpiIndicator', :slug, :root_name, :label_key)
 
+  # rubocop:disable Layout/IndentArray
   THEMES = {
-    property_type: [
+    property_type: Struct::UkhpiTheme.new('property_type', [
       Struct::UkhpiStatistic.new('all', '',               'all_property_types'),
       Struct::UkhpiStatistic.new('det', 'Detached',       'detached_houses'),
       Struct::UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses'),
       Struct::UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses'),
       Struct::UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes')
-    ],
+    ]),
 
-    ftb_foo: [
+    ftb_foo: Struct::UkhpiTheme.new('ftb_foo', [
       Struct::UkhpiStatistic.new('ftb', 'FirstTimeBuyer',      'first_time_buyers'),
       Struct::UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers')
-    ],
+    ]),
 
-    cash_mortgage: [
+    cash_mortgage: Struct::UkhpiTheme.new('cash_mortgage', [
       Struct::UkhpiStatistic.new('cas', 'Cash',     'cash_purchases'),
       Struct::UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases')
-    ],
+    ]),
 
-    new_existing: [
+    new_existing: Struct::UkhpiTheme.new('new_existing', [
       Struct::UkhpiStatistic.new('new', 'NewBuild',         'new_build'),
       Struct::UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties')
-    ],
+    ]),
 
-    volume: [
+    volume: Struct::UkhpiTheme.new('volume', [
       Struct::UkhpiStatistic.new('vol', 'salesVolume', 'sales_volume')
-    ]
+    ])
   }.freeze
 
   INDICATORS =
