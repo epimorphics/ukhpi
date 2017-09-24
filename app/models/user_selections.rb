@@ -98,14 +98,27 @@ class UserSelections
   # the value `val` instead of the current value. Does not change this
   # UserSelections object
   def with(param, val)
-    UserSelections.new(__safe_params: @params.merge(param => val))
+    new_params =
+      if array_valued?(param)
+        new_values = (param_or_default(param) + [val]).uniq
+        @params.merge(param => new_values)
+      else
+        @params.merge(param => val)
+      end
+
+    UserSelections.new(__safe_params: new_params)
   end
 
   # @return A new UserSelections object in which the parameter `param` has
   # been removed. Does not change this UserSelections object
-  def without(param)
-    new_params = @params.dup
-    new_params.delete(param)
+  def without(param, val)
+    if array_valued?(param)
+      new_values = param_or_default(param).reject { |v| v == val }
+      new_params = params.to_h.merge(param => new_values)
+    else
+      new_params = params.reject { |key, _val| key == param }
+    end
+
     UserSelections.new(__safe_params: new_params)
   end
 
@@ -135,5 +148,9 @@ class UserSelections
 
   def parse_date(date)
     date.is_a?(String) ? Date.parse(date) : date
+  end
+
+  def array_valued?(param)
+    USER_PARAMS_MODEL[param]&.array?
   end
 end

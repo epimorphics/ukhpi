@@ -55,33 +55,73 @@ class UserSelectionsTest < ActiveSupport::TestCase
     end
 
     describe '#with' do
-      it 'should create a new user preferences with an additional value' do
+      it 'should create a new user preferences with the new singular value' do
         selections0 = user_selections('location' => 'test-region-0')
         selections0.selected_location.must_equal 'test-region-0'
+        from = selections0.from_date
 
-        selections1 = selections0.with('in', ['averagePrice'])
+        selections1 = selections0.with('from', '2017-03-25')
         selections0.selected_location.must_equal 'test-region-0'
-        selections0.selected_indicators.length.must_be :>=, 2
-        selections1.selected_location.must_equal 'test-region-0'
-        selections1.selected_indicators.must_equal ['averagePrice']
+        selections0.from_date.must_equal from
+        selections1.from_date.must_equal Date.new(2017, 3, 25)
 
         selections2 = selections1.with('location', 'test-region-2')
         selections0.selected_location.must_equal 'test-region-0'
-        selections0.selected_indicators.length.must_be :>=, 2
         selections2.selected_location.must_equal 'test-region-2'
-        selections2.selected_indicators.must_equal ['averagePrice']
+        selections2.from_date.must_equal Date.new(2017, 3, 25)
+      end
+
+      it 'should create a new user preferences with an additional array value' do
+        selections0 = user_selections('in' => ['averagePrice'])
+        selections0.selected_indicators.must_equal ['averagePrice']
+
+        selections1 = selections0.with('in', 'percentageMonthlyChange')
+        selections0.selected_indicators.must_equal ['averagePrice']
+        selections1.selected_indicators.length.must_equal 2
+        selections1.selected_indicators.must_include 'averagePrice'
+        selections1.selected_indicators.must_include 'percentageMonthlyChange'
+
+        selections2 = selections1.with('in', 'percentageAnnualChange')
+        selections0.selected_indicators.must_equal ['averagePrice']
+        selections1.selected_indicators.length.must_equal 2
+        selections2.selected_indicators.length.must_equal 3
+        selections2.selected_indicators.must_include 'averagePrice'
+        selections2.selected_indicators.must_include 'percentageMonthlyChange'
+        selections2.selected_indicators.must_include 'percentageAnnualChange'
+      end
+
+      it 'should not create duplicate values in array-valued params' do
+        selections0 = user_selections('in' => ['averagePrice'])
+        selections1 = selections0.with('in', 'averagePrice')
+        selections0.selected_indicators.must_equal ['averagePrice']
+        selections1.selected_indicators.must_equal ['averagePrice']
       end
     end
 
     describe '#without' do
-      it 'should create a new user preferences value without the given key' do
+      it 'should create a new user preferences value without the given key for singlular values' do
         selections0 = user_selections('location' => 'test-region-0')
         selections0.selected_location.must_equal 'test-region-0'
 
-        selections1 = selections0.without('location')
+        selections1 = selections0.without('location', 'does not matter')
         selections0.selected_location.must_equal 'test-region-0'
         assert selections0.params.key?('location')
         refute selections1.params.key?('location')
+      end
+
+      it 'should create a new user preferences value without the given value for array values' do
+        selections0 = user_selections('in' => %w[averagePrice percentageMonthlyChange])
+        selections0.selected_indicators.length.must_equal 2
+        selections0.selected_indicators.must_include 'averagePrice'
+        selections0.selected_indicators.must_include 'percentageMonthlyChange'
+
+        selections1 = selections0.without('in', 'averagePrice')
+        selections0.selected_indicators.length.must_equal 2
+        selections1.selected_indicators.length.must_equal 1
+        selections0.selected_indicators.must_include 'averagePrice'
+        selections0.selected_indicators.must_include 'percentageMonthlyChange'
+        selections1.selected_indicators.wont_include 'averagePrice'
+        selections1.selected_indicators.must_include 'percentageMonthlyChange'
       end
     end
   end
