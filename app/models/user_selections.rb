@@ -61,11 +61,11 @@ class UserSelections
   end
 
   def from_date
-    param_or_default('from')
+    parse_date(param_or_default('from'))
   end
 
   def to_date
-    param_or_default('to')
+    parse_date(param_or_default('to'))
   end
 
   def explain?
@@ -125,5 +125,9 @@ class UserSelections
     USER_PARAMS_MODEL
       .find { |_key, value| value.alias == k }
       &.first
+  end
+
+  def parse_date(date)
+    date.is_a?(String) ? Date.parse(date) : date
   end
 end

@@ -34,7 +34,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should return the default value if nothing is defined' do
         user_selections({}).selected_indicators.length.must_be :>=, 2
-        user_selections({}).selected_indicators.must_include 'all'
+        user_selections({}).selected_indicators.must_include 'hpi'
       end
     end
 
@@ -45,6 +45,12 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should retrieve the default value' do
         user_selections({}).selected_location.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+      end
+    end
+
+    describe '#from_date' do
+      it 'should convert a date string to a date' do
+        user_selections('from' => '2017-09-18').from_date.month.must_equal 9
       end
     end
 
