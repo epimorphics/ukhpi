@@ -1,18 +1,25 @@
 -# Partial for drawing the main presentation of a data view
 - visible = data_view.visible?
 %section.o-data-view
-  %h3.o-heading--3
-    = data_view.title
-    %a{ href: data_view.add_remove_theme_link(!visible) }
-      = visible ? 'hide' : 'reveal'
+  %header
+    %h3.o-heading--3
+      = data_view.title
+      %a{ href: data_view.add_remove_theme_link(!visible) }
+        = visible ? 'hide' : 'reveal'
 
   - if visible
     .o-data-view__heading-group
-      %h4.o-heading--4.o-data-view__location
+
+      %p.o-heading--4.o-data-view__location
         For
         = data_view.selected_location_label
 
-      %h4.o-heading--4.o-data-view__date
+      %p.o-heading--4.o-data-view__date
         = data_view.from_date.strftime('%b %Y')
         to
         = data_view.to_date.strftime('%b %Y')
+
+      - data_view.each_statistic do |stat|
+        %label
+          %input{ type: 'checkbox', value: stat.slug }
+          = t(stat.label_key)

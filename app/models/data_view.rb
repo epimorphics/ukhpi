@@ -50,6 +50,11 @@ class DataView
     "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
   end
 
+  # Invoke a block for each of this theme's statisics
+  def each_statistic(&block)
+    theme.statistics.each(&block)
+  end
+
   private
 
   def title_with_indicator
@@ -62,5 +67,9 @@ class DataView
 
   def title_key
     theme.slug
+  end
+
+  def ukhpi
+    @ukhpi ||= UkhpiDataCube.new
   end
 end
