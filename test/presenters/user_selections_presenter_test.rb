@@ -21,7 +21,7 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
     describe '#as_url_search_string' do
       it 'should translate the selections to a well-formed search string' do
         presenter.as_url_search_string.must_equal 'from=2017-02-03&'\
-          'in=averagePrice%2ChousePriceIndex&'\
+          'in%5B%5D=averagePrice&in%5B%5D=housePriceIndex&'\
           'region=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Fwales&'\
           'to=2017-08-31'
       end

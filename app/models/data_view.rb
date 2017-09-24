@@ -37,6 +37,19 @@ class DataView
                .label
   end
 
+  # @return True if a data view should be visible, given the indicator and theme
+  def visible?
+    user_selections.selected_themes.include?(theme.slug) &&
+      (!indicator || user_selections.selected_indicators.include?(indicator.slug))
+  end
+
+  # @return The link location for showing or hiding a data view by adding or
+  # removing the theme from the selected themes
+  def add_remove_theme_link(add)
+    adjacent_selections = user_selections.send(add ? :with : :without, 'thm', theme.slug)
+    "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
+  end
+
   private
 
   def title_with_indicator

@@ -37,9 +37,16 @@ class UserSelectionsPresenter
   end
 
   def encode_for_url_search_string(args)
-    k, v = *args
-    v = v.map(&:to_s).join(',') if v.is_a?(Array)
-    "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}"
+    k, vs = *args
+    if vs.is_a?(Array)
+      k = "#{k}[]"
+    else
+      vs = [vs]
+    end
+
+    vs
+      .map { |v| "#{CGI.escape k.to_s}=#{CGI.escape v.to_s}" }
+      .join('&')
   end
 
   def apply_templates(templates, params)
