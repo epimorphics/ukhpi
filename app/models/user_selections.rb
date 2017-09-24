@@ -16,6 +16,7 @@ class UserSelections
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
   DEFAULT_REGION_TYPE = 'country'
+  DEFAULT_THEMES = %w[property_type volume].freeze
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
@@ -26,6 +27,7 @@ class UserSelections
     'explain' => Struct::UserParam.new(false, false, nil),
     'st' => Struct::UserParam.new(DEFAULT_STATISTICS, true, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATORS, true, nil),
+    'thm' => Struct::UserParam.new(DEFAULT_THEMES, true, nil),
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),
@@ -78,6 +80,10 @@ class UserSelections
 
   def selected_indicators
     param_or_default('in')
+  end
+
+  def selected_themes
+    param_or_default('thm')
   end
 
   def to_h
