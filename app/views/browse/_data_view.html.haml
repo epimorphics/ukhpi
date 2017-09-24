@@ -2,3 +2,13 @@
 %section.o-data-view
   %h3.o-heading--3
     = data_view.title
+
+  .o-data-view__heading-group
+    %h4.o-heading--4.o-data-view__location
+      For
+      = data_view.selected_location_label
+
+    %h4.o-heading--4.o-data-view__date
+      = data_view.from_date.strftime('%b %Y')
+      to
+      = data_view.to_date.strftime('%b %Y')

@@ -20,14 +20,21 @@ class DataView
     @theme = theme
   end
 
-  delegate :from, to: :user_selections
-  delegate :to, to: :user_selections
-  delegate :location, to: :user_selections
+  delegate :from_date, to: :user_selections
+  delegate :to_date, to: :user_selections
+  delegate :selected_location, to: :user_selections
 
   # @return The title for this view, taking into account the indicator and
   # the theme name
   def title
     indicator ? title_with_indicator : title_without_indicator
+  end
+
+  # @return The label for the currently selected location
+  def selected_location_label
+    @selected_location_label ||=
+      Locations.lookup_location(selected_location)
+               .label
   end
 
   private
