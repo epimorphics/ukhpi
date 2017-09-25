@@ -1,5 +1,7 @@
 # frozen-string-literal: true
 
+require_dependency 'active_support/core_ext/module/delegation'
+
 # Adapter mapping the view state in a browse controller to the browse view
 class BrowseEditViewState
   attr_reader :user_selections
@@ -9,25 +11,18 @@ class BrowseEditViewState
     @user_selections = UserSelections.new(params)
   end
 
+  delegate :location_search_term, to: :user_selections
+  delegate :location_search_type, to: :user_selections
+  delegate :selected_location, to: :user_selections
+  delegate :selected_themes, to: :user_selections
+
   def location_type_options
     Regions.location_search_options
-  end
-
-  def selected_location
-    user_selections.selected_location
   end
 
   def selected_location_label
     loc = selected_location
     loc && Regions.region_label(loc)
-  end
-
-  def location_search_term
-    user_selections.location_search_term
-  end
-
-  def location_search_type
-    user_selections.location_search_type
   end
 
   def add_matched_locations(locations)
@@ -62,5 +57,9 @@ class BrowseEditViewState
     when :indicator then user_selections.selected_indicators
     when :statistic then user_selections.selected_statistics
     end .include?(value_slug)
+  end
+
+  def selected_theme?(theme)
+    selected_themes.include?(theme.slug)
   end
 end

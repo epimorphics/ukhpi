@@ -67,10 +67,11 @@ class BrowseController < ApplicationController
   end
 
   def view_result(view_state)
-    Rails.logger.debug "Redirecting to #{view_state.user_selections.params}"
+    new_params = view_state.user_selections.without('form-action', nil).params
+    Rails.logger.debug "Redirecting to #{new_params}"
     redirect_to({
       controller: :browse,
       action: :show
-    }.merge(view_state.user_selections.params))
+    }.merge(new_params))
   end
 end
