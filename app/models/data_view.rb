@@ -64,6 +64,14 @@ class DataView
     add_remove_param(add, 'st', statistic.slug)
   end
 
+  # @return The data from the query, formatted in way that's suitable for
+  # rendering in a table
+  def as_table_data
+    columns = as_table_columns(theme, user_selections)
+    data = project_data(query_result, columns)
+    { columns: columns, data: data }
+  end
+
   private
 
   def title_with_indicator
@@ -85,5 +93,18 @@ class DataView
   def add_remove_param(add, param, value)
     adjacent_selections = user_selections.send(add ? :with : :without, param, value)
     "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
+  end
+
+  def as_table_columns(theme, user_selections)
+    [{ label: 'Date', pred: 'ukhpi:refMonth' }] +
+      ukhpi.theme(theme.slug).statistics.map do |statistic|
+        if user_selections.selected_statistics.include?(statistic.slug)
+          { label: I18n.t(statistic.slug), pred: pred_name(theme, statistic) }
+        end
+      end .compact
+  end
+
+  def pred_name(theme, statistic)
+    
   end
 end
