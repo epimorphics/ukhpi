@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-# Explain query command
+# Explain query command. This is an extension of the QueryCommand, and differs
+# only that it asks the DsAPI to explain its query strategy, rather than performing
+# the query.
 class ExplainQueryCommand < QueryCommand
   attr_reader :explanation
 
@@ -8,14 +10,15 @@ class ExplainQueryCommand < QueryCommand
     super
   end
 
-  def perform_query(service = nil)
-    hpi = service || dataset(:ukhpi)
+  # Explain the given query, and stash the results. Return time taken in ms.
+  def execute_query(service, query)
+    start = Time.now
+    @results = api_service(service).explain(query)
+    (Time.now - start) * MILLISECONDS
+  end
 
-    query = add_date_range_constraint(base_query)
-    query = add_location_constraint(query)
-
-    Rails.logger.debug "About to ask DsAPI to explain: #{query.to_json}"
-    @explanation = hpi.explain(query)
+  def query_command?
+    false
   end
 
   def explain_query_command?
