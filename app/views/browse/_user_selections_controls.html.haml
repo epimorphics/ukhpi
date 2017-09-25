@@ -30,7 +30,7 @@
   - view_state.data_cube.each_theme do |theme_key, theme|
     %li
       = t(theme_key)
-      - theme.each do |statistic|
+      - theme.statistics.each do |statistic|
         %li
           - id = "statistic-#{statistic.slug}"
           - checked = view_state.selected_param?(:statistic, statistic.slug)

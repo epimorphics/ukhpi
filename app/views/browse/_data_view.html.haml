@@ -12,12 +12,14 @@
 
       %p.o-heading--4.o-data-view__location
         For
-        = data_view.selected_location_label
+        = succeed ',' do
+          = data_view.selected_location_label
 
-      %p.o-heading--4.o-data-view__date
         = data_view.from_date.strftime('%b %Y')
         to
         = data_view.to_date.strftime('%b %Y')
+
+        = link_to('change', edit_browse_path(data_view.user_selections.params))
 
       - data_view.each_statistic do |stat|
         %label
