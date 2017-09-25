@@ -21,5 +21,7 @@
 
       - data_view.each_statistic do |stat|
         %label
-          %input{ type: 'checkbox', value: stat.slug }
-          = t(stat.label_key)
+          - checked = data_view.statistic_selected?(stat)
+          %input{ type: 'checkbox', value: stat.slug, readonly: true, checked: checked }
+          %a{ href: '' }
+            = t(stat.label_key)

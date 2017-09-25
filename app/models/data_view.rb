@@ -55,6 +55,11 @@ class DataView
     theme.statistics.each(&block)
   end
 
+  # @return True if a given statistic is selected for this theme
+  def statistic_selected?(statistic)
+    user_selections.selected_statistics.include?(statistic.slug)
+  end
+
   private
 
   def title_with_indicator
