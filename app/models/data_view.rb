@@ -46,8 +46,7 @@ class DataView
   # @return The link location for showing or hiding a data view by adding or
   # removing the theme from the selected themes
   def add_remove_theme_link(add)
-    adjacent_selections = user_selections.send(add ? :with : :without, 'thm', theme.slug)
-    "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
+    add_remove_param(add, 'thm', theme.slug)
   end
 
   # Invoke a block for each of this theme's statisics
@@ -58,6 +57,11 @@ class DataView
   # @return True if a given statistic is selected for this theme
   def statistic_selected?(statistic)
     user_selections.selected_statistics.include?(statistic.slug)
+  end
+
+  # @return The link location for adding or removing a statistic from a theme
+  def add_remove_statistic(add, statistic)
+    add_remove_param(add, 'st', statistic.slug)
   end
 
   private
@@ -76,5 +80,10 @@ class DataView
 
   def ukhpi
     @ukhpi ||= UkhpiDataCube.new
+  end
+
+  def add_remove_param(add, param, value)
+    adjacent_selections = user_selections.send(add ? :with : :without, param, value)
+    "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
   end
 end
