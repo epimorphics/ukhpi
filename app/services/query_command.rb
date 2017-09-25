@@ -67,7 +67,7 @@ class QueryCommand
   end
 
   def add_location_constraint(query)
-    value = DataServicesApi::Value.uri(region_uri)
+    value = DataServicesApi::Value.uri(location_uri)
     query.eq('ukhpi:refRegion', value)
   end
 
@@ -75,7 +75,7 @@ class QueryCommand
     DataServicesApi::Value.year_month(date.year, date.month)
   end
 
-  def region_uri
-    user_selections.selected_region
+  def location_uri
+    user_selections.selected_location
   end
 end

@@ -6,7 +6,11 @@
 class BrowseController < ApplicationController
   def show
     user_selections = UserSelections.new(params)
-    @view_state = DataViewsPresenter.new(user_selections, nil)
+    query_command = QueryCommand.new(user_selections)
+    query_command.perform_query
+    byebug
+
+    @view_state = DataViewsPresenter.new(user_selections, query_command.results)
   end
 
   def edit
