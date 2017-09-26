@@ -27,3 +27,18 @@
           %input{ type: 'checkbox', value: stat.slug, readonly: true, checked: checked }
           %a{ href: data_view.add_remove_statistic(!checked, stat) }
             = t(stat.label_key)
+
+    .o-data-view__data-table
+      - table_data = data_view.as_table_data
+      %table
+        %thead
+          %tr
+            - table_data[:columns].each do |col|
+              %th{ scope: 'col' }
+                = col[:label]
+        %tbody
+          - table_data[:data].each do |row|
+            %tr
+              - row.each do |datum|
+                %td
+                  = datum

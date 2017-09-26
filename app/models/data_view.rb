@@ -67,7 +67,7 @@ class DataView
   # @return The data from the query, formatted in way that's suitable for
   # rendering in a table
   def as_table_data
-    columns = as_table_columns(theme, user_selections)
+    columns = as_table_columns
     data = project_data(query_result, columns)
     { columns: columns, data: data }
   end
@@ -95,16 +95,34 @@ class DataView
     "?#{UserSelectionsPresenter.new(adjacent_selections).as_url_search_string}"
   end
 
-  def as_table_columns(theme, user_selections)
+  def as_table_columns
     [{ label: 'Date', pred: 'ukhpi:refMonth' }] +
-      ukhpi.theme(theme.slug).statistics.map do |statistic|
-        if user_selections.selected_statistics.include?(statistic.slug)
-          { label: I18n.t(statistic.slug), pred: pred_name(theme, statistic) }
+      theme.statistics.map do |statistic|
+        if statistic_selected?(statistic)
+          { label: I18n.t(statistic.label_key), pred: pred_name(statistic) }
         end
       end .compact
   end
 
-  def pred_name(theme, statistic)
-    
+  def pred_name(statistic)
+    "ukhpi:#{indicator_name(indicator)}#{statistic_name(statistic)}"
+  end
+
+  def indicator_name(indicator)
+    indicator&.root_name
+  end
+
+  def statistic_name(statistic)
+    statistic.root_name
+  end
+
+  def project_data(query_result, columns)
+    query_result.map do |row_data|
+      columns.map do |column|
+        datum = row_data[column[:pred]]
+        datum = datum.is_a?(Hash) ? datum['@value'] : datum
+        datum.is_a?(Array) && datum.length == 1 ? datum.first : datum
+      end
+    end
   end
 end

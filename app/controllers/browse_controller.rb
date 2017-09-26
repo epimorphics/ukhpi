@@ -8,7 +8,6 @@ class BrowseController < ApplicationController
     user_selections = UserSelections.new(params)
     query_command = QueryCommand.new(user_selections)
     query_command.perform_query
-    byebug
 
     @view_state = DataViewsPresenter.new(user_selections, query_command.results)
   end
