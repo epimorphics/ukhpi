@@ -6,6 +6,8 @@ AllCops:
 # Customize rules
 Metrics/LineLength:
   Max: 100
+  Exclude:
+    - bin/**/*
 
 Metrics/ClassLength:
   Exclude:
