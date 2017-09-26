@@ -4,6 +4,8 @@
 # Usually the primary interaction will be via JavaScript and XHR, but we also
 # support non-JS access by setting browse preferences in the `edit` action.
 class BrowseController < ApplicationController
+  layout 'webpack_application'
+
   def show
     user_selections = UserSelections.new(params)
     query_command = QueryCommand.new(user_selections)
