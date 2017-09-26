@@ -3,7 +3,9 @@
   %head
     %title UK House Price Index
     %meta{ charset: 'utf-8' }
-    = javascript_include_tag :modernizr
+    :javascript
+      document.querySelector('html').classList.add('js');
+
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
@@ -24,6 +26,7 @@
     <!--<![endif]-->
 
     = javascript_include_tag 'application'
+    = javascript_pack_tag 'hello_vue'
 
   %body.government.website.lr.ppd-standard-report
 
