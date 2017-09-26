@@ -15,7 +15,7 @@ itself is freely available under the terms of the
 
 ## Installation dependencies
 
-Currently depends on Ruby version 2.2.x, since that matches the production
+Currently depends on Ruby version 2.4.x, since that matches the production
 environment. Local Ruby version is specified by `.ruby-version`, assuming
 that [rbenv](https://github.com/rbenv/rbenv) is used.
 
@@ -24,6 +24,7 @@ To install on dev machine:
     git clone git@github.com:epimorphics/ukhpi.git
     cd ukhpi
     bundle install
+    yarn install
 
 ## Local data service
 
@@ -32,6 +33,71 @@ development, either start a local Fuseki instance, or, more usually, ssh tunnel
 to one of the data servers. A predefined script for tunnelling one of the remote
 data servers to localhost 8080 is provided in `bin/sr-tunnel-daemon`. A copy of
 the ssh access credentials will need to be in your `~/.ssh/config`.
+
+## Outline domain model
+
+In the 2017 update, we're extending the display to present all of the underlying
+statistics calculated by ONS. In addition to the figures by property type
+(all, detached houses, semi-detached, terraced and flat/maisonette) and sales
+volume, there are also figures for property status (new build vs. existing),
+buyer status (first-time buyer or not), and funding status (paid cash or bought
+with a mortgage).  For each of these figures, except the sales volume, multiple
+indicators are calculated: the statistical index, the percentage change (monthly
+and annual) and the average price.
+
+We represent these as follows:
+
+| theme | indicator | statistic |
+| --- | --- | --- |
+| Type of property | index | All property types |
+|  | average price | All property types |
+|  | % monthly change | All property types |
+|  | % annual change | All property types |
+|  | index | Detached houses |
+|  | average price | Detached houses |
+|  | % monthly change | Detached houses |
+|  | % annual change | Detached houses |
+|  | index | Semi-detached houses |
+|  | average price | Semi-detached houses |
+|  | % monthly change | Semi-detached houses |
+|  | % annual change | Semi-detached houses |
+|  | index | Terraced houses |
+|  | average price | Terraced houses |
+|  | % monthly change | Terraced houses |
+|  | % annual change | Terraced houses |
+|  | index | Flats and maisonettes |
+|  | average price | Flats and maisonettes |
+|  | % monthly change | Flats and maisonettes |
+|  | % annual change | Flats and maisonettes |
+| Buyer status | index | First-time buyers |
+|  | average price | First-time buyers |
+|  | % monthly change | First-time buyers |
+|  | % annual change | First-time buyers |
+|  | index | Former owner-occupiers |
+|  | average price | Former owner-occupiers |
+|  | % monthly change | Former owner-occupiers |
+|  | % annual change | Former owner-occupiers |
+| Funding status | index | Cash purchases |
+|  | average price | Cash purchases |
+|  | % monthly change | Cash purchases |
+|  | % annual change | Cash purchases |
+|  | index | Mortgage purchases |
+|  | average price | Mortgage purchases |
+|  | % monthly change | Mortgage purchases |
+|  | % annual change | Mortgage purchases |
+| Property status | index | New build |
+|  | average price | New build |
+|  | % monthly change | New build |
+|  | % annual change | New build |
+|  | index | Existing properties |
+|  | average price | Existing properties |
+|  | % monthly change | Existing properties |
+|  | % annual change | Existing properties |
+| Total sales volume | | Total sales volume |
+|  |  | Sales volume cash |
+|  |  | Sales volume mortgage |
+|  |  | Sales volume new build|
+|  |  | Sales volume existing building|
 
 ## Rake tasks
 
