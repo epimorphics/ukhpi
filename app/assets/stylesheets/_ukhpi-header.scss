@@ -1,0 +1,38 @@
+/* Styles for UKHPI header component */
+
+.c-hmlr-header-colours {
+  color: $black;
+  background-color: white;
+}
+
+#global-header {
+  &.c-hmlr-header {
+    @extend .c-hmlr-header-colours;
+
+    a, nav {
+      @extend .c-hmlr-header-colours;
+    }
+  }
+
+  .header-wrapper {
+    @extend .c-hmlr-header-colours;
+    padding-bottom: 0;
+  }
+
+  .header-proposition #proposition-name {
+    @extend .c-hmlr-header-colours;
+  }
+
+  .header-proposition #proposition-links a {
+    @extend .c-hmlr-header-colours;
+  }
+
+  .header-wrapper .header-global .header-logo .content img {
+    margin-top: 14px;
+    height: 40px;
+  }
+}
+
+.o-lr-top-bar {
+  height: 5px;
+}
