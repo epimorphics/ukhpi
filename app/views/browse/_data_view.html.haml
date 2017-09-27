@@ -10,25 +10,25 @@
         = visibility_action
 
   - if visible
-    .o-data-view__heading-group
+    .o-data-view__options
+      For
+      = succeed ',' do
+        = data_view.selected_location_label
 
-      %p.o-data-view__options
-        For
-        = succeed ',' do
-          = data_view.selected_location_label
+      = data_view.from_date.strftime('%b %Y')
+      to
+      = data_view.to_date.strftime('%b %Y')
 
-        = data_view.from_date.strftime('%b %Y')
-        to
-        = data_view.to_date.strftime('%b %Y')
+      = link_to('change', edit_browse_path(data_view.user_selections.params))
 
-        = link_to('change', edit_browse_path(data_view.user_selections.params))
-
-      - data_view.each_statistic do |stat|
-        %label
-          - checked = data_view.statistic_selected?(stat)
-          %input{ type: 'checkbox', value: stat.slug, readonly: true, checked: checked }
-          %a{ href: data_view.add_remove_statistic(!checked, stat) }
-            = t(stat.label_key)
+      %br
+      %span.o-data-view__options-statistics
+        - data_view.each_statistic do |stat|
+          %label
+            - checked = data_view.statistic_selected?(stat)
+            %input{ type: 'checkbox', value: stat.slug, readonly: true, checked: checked }
+            %a{ href: data_view.add_remove_statistic(!checked, stat) }
+              = t(stat.label_key)
 
     .o-data-view__data-table
       - table_data = data_view.as_table_data

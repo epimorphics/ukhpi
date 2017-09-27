@@ -18,6 +18,21 @@
       font-size: 18px;
       font-family: FontAwesome;
     }
+
+    &.reveal::after {
+      content: '\f0ab';
+      font-size: 18px;
+      font-family: FontAwesome;
+    }
+  }
+
+  .o-data-view__options {
+    margin-top: 5px;
+    line-height: 1.5;
+  }
+
+  .o-data-view__options-statistics {
+    font-size: 85%;
   }
 }
 
