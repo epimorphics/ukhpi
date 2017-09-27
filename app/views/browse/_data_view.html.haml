@@ -2,15 +2,17 @@
 - visible = data_view.visible?
 %section.o-data-view
   %header
-    %h3.o-heading--3
+    %h2.o-heading--3
       = data_view.title
-      %a{ href: data_view.add_remove_theme_link(!visible) }
-        = visible ? 'hide' : 'reveal'
+      - href = data_view.add_remove_theme_link(!visible)
+      - visibility_action = visible ? 'hide' : 'reveal'
+      %a.o-data-view__hide-action{ href: href, class: visibility_action }
+        = visibility_action
 
   - if visible
     .o-data-view__heading-group
 
-      %p.o-heading--4.o-data-view__location
+      %p.o-data-view__options
         For
         = succeed ',' do
           = data_view.selected_location_label

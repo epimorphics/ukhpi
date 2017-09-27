@@ -1,0 +1,27 @@
+/* Styles for a data-view component */
+
+.o-data-view {
+  background-color: $grey-3;
+  padding: 5px;
+  margin-bottom: 15px;
+
+  .o-heading--3 {
+    margin: 0;
+    border-bottom: 1px solid $grey-2;
+  }
+
+  &__hide-action {
+    float: right;
+
+    &.hide::after {
+      content: '\f0aa';
+      font-size: 18px;
+      font-family: FontAwesome;
+    }
+  }
+}
+
+.js .o-data-view__hide-action {
+  font-size: 0;
+  text-decoration: none;
+}

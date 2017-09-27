@@ -33,9 +33,7 @@
     = render partial: 'common/flash_message'
 
     %main.container.o-container{ role: 'main' }
-      .row
-        .col-md-12
-          = yield
+      = yield
 
     = render partial: 'common/footer'
     = render partial: 'common/google-analytics'
