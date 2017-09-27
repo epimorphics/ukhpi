@@ -7,6 +7,8 @@ gem 'rails', '~> 5.1.3'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
+gem 'haml-rails'
+
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -21,8 +23,7 @@ gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
 # gem 'bootstrap-sass'
 # gem 'bootstrap3-datetimepicker-rails'
 # gem 'd3-rails'
-# gem 'font-awesome-rails'
-# gem 'haml-rails'
+gem 'font-awesome-rails'
 # gem 'jquery-datatables-rails'
 # gem 'jquery-rails'
 # gem 'jquery-ui-rails'
