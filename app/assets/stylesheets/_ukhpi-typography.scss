@@ -1,0 +1,13 @@
+.o-heading {
+  &--1 {
+    @extend .heading-large;
+  }
+
+  &--2 {
+    @extend .heading-medium;
+  }
+
+  &--3, &--4 {
+    @extend .heading-small;
+  }
+}
