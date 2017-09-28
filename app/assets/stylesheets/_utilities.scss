@@ -11,3 +11,16 @@
   clip: rect(0 0 0 0);
   border: 0;
 }
+
+/* Hide content that is going to be managed instead by JavaScript */
+.js .u-js-hidden {
+  display: none;
+}
+
+.u-js-only {
+  display: none;
+}
+
+.js .u-js-only {
+  display: block;
+}

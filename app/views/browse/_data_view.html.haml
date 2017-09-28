@@ -10,7 +10,7 @@
         = visibility_action
 
   - if visible
-    .o-data-view__options
+    .o-data-view__options.u-js-hidden
       For
       = succeed ',' do
         = data_view.selected_location_label
@@ -30,7 +30,7 @@
             %a{ href: data_view.add_remove_statistic(!checked, stat) }
               = t(stat.label_key)
 
-    .o-data-view__data-table
+    .o-data-view__data-table.u-js-hidden
       - table_data = data_view.as_table_data
       %table
         %thead
@@ -44,3 +44,6 @@
               - row.each do |datum|
                 %td
                   = datum
+
+    .o-data-view__vue-root.u-js-only
+      We are devo
