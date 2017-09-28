@@ -77,7 +77,10 @@ class DataView
   def as_js_attributes
     {
       indicator: indicator.to_json,
-      theme: theme.to_json
+      theme: theme.to_json,
+      location: Locations.lookup_location(selected_location).to_json,
+      from_date: { date: user_selections.from_date }.to_json,
+      to_date: { date: user_selections.to_date }.to_json
     }
   end
 
