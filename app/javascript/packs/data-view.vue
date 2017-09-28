@@ -1,11 +1,12 @@
 <template lang="html">
   <div class='o-data-view__vue-root u-js-only'>
-    We are devo
+    <data-view-location :initial-location='location'></data-view-location>
   </div>
 </template>
 
 <script>
 import kebabCase from 'kebab-case';
+import DataViewLocation from './components/data-view-location.vue';
 
 export default {
   data: () => ({
@@ -15,6 +16,10 @@ export default {
     fromDate: null,
     toDate: null,
   }),
+
+  components: {
+    DataViewLocation,
+  },
 
   beforeMount() {
     const attrs = this.$el.attributes;

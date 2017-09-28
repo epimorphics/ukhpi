@@ -1,5 +1,8 @@
 import Vue from 'vue';
+import ElementUI from 'element-ui';
 import DataView from './data-view.vue';
+
+Vue.use(ElementUI);
 
 document.addEventListener('DOMContentLoaded', () => {
   const nodes = document.querySelectorAll('.o-data-view__vue-root');
