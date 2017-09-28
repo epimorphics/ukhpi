@@ -9,6 +9,7 @@
   "dependencies": {
     "autoprefixer": "^7.1.4",
     "babel-core": "^6.26.0",
+    "babel-eslint": "^8.0.1",
     "babel-loader": "7.x",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "babel-plugin-transform-class-properties": "^6.24.1",
@@ -19,6 +20,10 @@
     "coffee-script": "^1.12.7",
     "compression-webpack-plugin": "^1.0.0",
     "css-loader": "^0.28.7",
+    "eslint": "^4.7.2",
+    "eslint-config-airbnb-base": "^12.0.1",
+    "eslint-plugin-html": "^3.2.2",
+    "eslint-plugin-import": "^2.7.0",
     "extract-text-webpack-plugin": "^3.0.0",
     "file-loader": "^0.11.2",
     "glob": "^7.1.2",
