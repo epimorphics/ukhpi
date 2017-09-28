@@ -40,3 +40,9 @@
   font-size: 0;
   text-decoration: none;
 }
+
+.o-data-view--closed {
+  .o-data-view__vue-root {
+    display: none;
+  }
+}

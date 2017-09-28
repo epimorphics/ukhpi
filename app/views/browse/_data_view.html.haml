@@ -1,6 +1,6 @@
 -# Partial for drawing the main presentation of a data view
 - visible = data_view.visible?
-%section.o-data-view
+%section.o-data-view{ class: visible ? 'o-data-view--open' : 'o-data-view--closed' }
   %header
     %h2.o-heading--3
       = data_view.title
@@ -45,5 +45,5 @@
                 %td
                   = datum
 
-    .o-data-view__vue-root.u-js-only
-      We are devo
+  .o-data-view__vue-root.u-js-only{ data: data_view.as_js_attributes }
+    We are devo

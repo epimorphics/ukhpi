@@ -72,6 +72,15 @@ class DataView
     { columns: columns, data: data }
   end
 
+  # @return A Hash of the attributes needed to convey the key parameters of
+  # this data view to JavaScript code
+  def as_js_attributes
+    {
+      indicator: indicator.to_json,
+      theme: theme.to_json
+    }
+  end
+
   private
 
   def title_with_indicator
