@@ -1,12 +1,14 @@
 <template lang="html">
   <div class='o-data-view__vue-root u-js-only'>
     <data-view-location :initial-location='location'></data-view-location>
+    <data-view-dates :initial-from-date='fromDate' :initial-to-date='toDate'></data-view-dates>
   </div>
 </template>
 
 <script>
 import kebabCase from 'kebab-case';
 import DataViewLocation from './components/data-view-location.vue';
+import DataViewDates from './components/data-view-dates.vue';
 
 export default {
   data: () => ({
@@ -19,6 +21,7 @@ export default {
 
   components: {
     DataViewLocation,
+    DataViewDates,
   },
 
   beforeMount() {

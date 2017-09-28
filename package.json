@@ -33,6 +33,7 @@
     "grunt-bowercopy": "^1.2.4",
     "js-yaml": "^3.10.0",
     "kebab-case": "^1.0.0",
+    "moment": "^2.18.1",
     "node-sass": "^4.5.3",
     "path-complete-extname": "^0.1.0",
     "postcss-loader": "^2.0.6",
