@@ -1,5 +1,5 @@
 <template lang='html'>
-  <span class='o-data-view__dates' v-if='fromDate'>
+  <span class='o-data-view__js-options-dates' v-if='fromDate'>
     {{ fromDateFormatted }} to {{ toDateFormatted }}
     <el-button size='small'>
       <i class='fa fa-edit'></i>
@@ -39,7 +39,7 @@ export default {
 </script>
 
 <style lang="scss">
-.o-data-view__dates {
+.o-data-view__js-options-dates {
   float: right;
 }
 </style>

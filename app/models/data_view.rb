@@ -7,6 +7,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 # a view of the  `averagePrice` indicator, together with the relevant dates,
 # location and other options, and access to the underlying data, to enable
 # the renderer to draw the display
+# rubocop:disable Metrics/ClassLength
 class DataView
   attr_reader :user_selections
   attr_reader :query_result
@@ -77,7 +78,7 @@ class DataView
   def as_js_attributes
     {
       indicator: indicator.to_json,
-      theme: theme.to_json,
+      theme: theme_with_labels.to_json,
       location: Locations.lookup_location(selected_location).to_json,
       from_date: { date: user_selections.from_date }.to_json,
       to_date: { date: user_selections.to_date }.to_json
@@ -136,5 +137,18 @@ class DataView
         datum.is_a?(Array) && datum.length == 1 ? datum.first : datum
       end
     end
+  end
+
+  def theme_with_labels
+    twl = theme.dup
+
+    stats = theme.statistics.map do |statistic|
+      stat_h = statistic.to_h
+      stat_h[:label] = I18n.t(statistic.label_key)
+      stat_h
+    end
+
+    twl.statistics = stats
+    twl
   end
 end
