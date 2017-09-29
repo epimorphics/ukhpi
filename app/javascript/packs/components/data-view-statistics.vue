@@ -1,9 +1,9 @@
 <template lang='html'>
   <div class='o-data-view__js-options-statistics'>
     <span
-      v-for='statistic in statistics'
+      v-for='(statistic, index) in statistics'
       class='o-data-view__js-options-statistics'>
-      <span :class='"o-statistic o-statistic__selected--" + statistic.selected'>
+      <span :class='selectedClassExpression(statistic, index)'>
       </span>
       <a
         :data-slug='statistic.slug'
@@ -57,20 +57,15 @@ export default {
     findStatistic(slug) {
       return this.statistics.find(stat => stat.slug === slug);
     },
+
+    /** @return The CSS class for the status indicator */
+    selectedClassExpression({ selected }, index) {
+      const graphColour = selected ? `v-graph-${index}` : '';
+      return `o-statistic o-statistic__selected--${selected} ${graphColour}`;
+    },
   },
 };
 </script>
 
 <style lang='scss'>
-.o-statistic {
-  height: 15px;
-  width: 15px;
-  border: 1px solid black;
-
-  display: inline-block;
-
-  &.o-statistic__selected--true {
-    background-color: blue;
-  }
-}
 </style>

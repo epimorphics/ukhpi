@@ -1,0 +1,24 @@
+/* Styles for presenting statistics */
+
+$graph-colours: (
+  graph-0: $fuschia,
+  graph-1: $light-blue,
+  graph-2: $mellow-red,
+  graph-3: $green,
+  graph-4: $orange,
+  graph-5: $purple
+);
+
+.o-statistic {
+  height: 15px;
+  width: 15px;
+  border: 1px solid $black;
+
+  display: inline-block;
+}
+
+@for $i from 0 through 5 {
+  .v-graph-#{$i} {
+    background-color: map-get($graph-colours, graph-#{$i})
+  }
+}
