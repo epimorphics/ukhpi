@@ -145,6 +145,7 @@ class DataView
     stats = theme.statistics.map do |statistic|
       stat_h = statistic.to_h
       stat_h[:label] = I18n.t(statistic.label_key)
+      stat_h[:selected] = user_selections.selected_statistics.include?(statistic.slug)
       stat_h
     end
 
