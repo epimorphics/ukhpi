@@ -12,7 +12,14 @@ class DataViewsPresenter
   end
 
   def data_views
-    qualified_data_views + non_qualified_data_views
+    @data_views ||= qualified_data_views + non_qualified_data_views
+  end
+
+  def to_json(_options = {})
+    JSON.dump(
+      results: query_result,
+      selections: data_views.first.as_js_attributes
+    )
   end
 
   private

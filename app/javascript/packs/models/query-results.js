@@ -8,37 +8,30 @@ export default class QueryResults {
     this.json = data;
   }
 
-  prefsSummary() {
-    return this.json.prefsSummary;
+  selections() {
+    return this.json.selections;
   }
 
   location() {
-    return this.json.prefsSummary.replace(/,.*/, '');
+    return this.selections().location;
   }
 
   results() {
-    if (!this.results) {
-      this.results = _.map(this.json.results, result => new QueryResult(result));
+    if (!this.$results) {
+      this.$results = _.map(this.json.results, result => new QueryResult(result));
     }
 
-    return this.results;
+    return this.$results;
   }
 
   size() {
     return this.results().length;
   }
 
-  dateRange() {
-    const min = _.minBy(this.results(), r => r.periodDate().toDate());
-    const max = _.maxBy(this.results(), r => r.periodDate().toDate());
-
-    return min && [min.periodDate().toDate(), max.periodDate().toDate()];
-  }
-
   /* @return The data in a particular category series */
   series(indicator, category) {
     const aspect = `ukhpi:${indicator}${category}`;
-    const s = _.map(this.results(), (r) => {
+    const s = this.results.map((r) => {
       const val = r.value(aspect);
 
       if (_.isFinite(val)) {

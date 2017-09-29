@@ -12,6 +12,11 @@ class BrowseController < ApplicationController
     query_command.perform_query
 
     @view_state = DataViewsPresenter.new(user_selections, query_command.results)
+
+    respond_to do |format|
+      format.html
+      format.json { render json: @view_state }
+    end
   end
 
   def edit
