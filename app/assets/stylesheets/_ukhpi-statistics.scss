@@ -9,10 +9,11 @@ $graph-colours: (
   graph-5: $purple
 );
 
-.o-statistic {
+.o-statistic-option {
   height: 15px;
   width: 15px;
   border: 1px solid $black;
+  margin-bottom: -2px;
 
   display: inline-block;
 }
@@ -20,5 +21,13 @@ $graph-colours: (
 @for $i from 0 through 5 {
   .v-graph-#{$i} {
     background-color: map-get($graph-colours, graph-#{$i})
+  }
+}
+
+.o-data-view__js-options-statistics {
+  a {
+    text-decoration: none;
+    font-size: 85%;
+    margin-right: 10px;
   }
 }

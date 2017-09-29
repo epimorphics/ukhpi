@@ -3,11 +3,11 @@
     <span
       v-for='(statistic, index) in statistics'
       class='o-data-view__js-options-statistics'>
-      <span :class='selectedClassExpression(statistic, index)'>
-      </span>
       <a
         :data-slug='statistic.slug'
         href='#' @click='onSelectStatistic'>
+        <span :class='selectedClassExpression(statistic, index)'>
+        </span>
         {{ statistic.label }}
       </a>
     </span>
@@ -61,7 +61,7 @@ export default {
     /** @return The CSS class for the status indicator */
     selectedClassExpression({ selected }, index) {
       const graphColour = selected ? `v-graph-${index}` : '';
-      return `o-statistic o-statistic__selected--${selected} ${graphColour}`;
+      return `o-statistic-option o-statistic-option__selected--${selected} ${graphColour}`;
     },
   },
 };
