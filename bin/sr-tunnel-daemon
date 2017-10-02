@@ -2,10 +2,11 @@
 
 # $HOST can be passed in as an argument, or default to staging server
 HOST=${HOST:-LR-Pres-1-b}
+tomcat=`service --status-all | grep tomcat | sed -e 's/.*\(tomcat.*\)/\1/'`
 
-if service tomcat7 status | grep 'Active: active'
+if service $tomcat status | grep 'Active: active'
 then
-  echo "Warning: local tomcat7 service is still running - aborting"
+  echo "Warning: local $tomcat service is still running - aborting"
   exit 1
 fi
 
@@ -31,4 +32,3 @@ while true; do
   fi
   sleep 5
 done
-
