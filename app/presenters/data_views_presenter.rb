@@ -12,7 +12,12 @@ class DataViewsPresenter
   end
 
   def data_views
-    @data_views ||= qualified_data_views + non_qualified_data_views
+    unless @data_views
+      @data_views ||= qualified_data_views + non_qualified_data_views
+      @data_views.first.first = true
+    end
+
+    @data_views
   end
 
   def to_json(_options = {})

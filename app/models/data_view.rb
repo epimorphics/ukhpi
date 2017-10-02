@@ -13,6 +13,7 @@ class DataView
   attr_reader :query_result
   attr_reader :indicator
   attr_reader :theme
+  attr_accessor :first
 
   def initialize(user_selections:, query_result:, indicator:, theme:)
     @user_selections = user_selections
@@ -81,7 +82,8 @@ class DataView
       theme: theme_with_labels.to_json,
       location: Locations.lookup_location(selected_location).to_json,
       from_date: { date: user_selections.from_date }.to_json,
-      to_date: { date: user_selections.to_date }.to_json
+      to_date: { date: user_selections.to_date }.to_json,
+      first: first ? 'true' : nil
     }
   end
 
