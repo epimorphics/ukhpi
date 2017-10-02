@@ -15,6 +15,8 @@ import kebabCase from 'kebab-case';
 import DataViewLocation from './components/data-view-location.vue';
 import DataViewDates from './components/data-view-dates.vue';
 import DataViewStatistics from './components/data-view-statistics.vue';
+import store from './store/index';
+import { INITIALISE } from './store/mutation-types';
 
 export default {
   data: () => ({
@@ -23,6 +25,7 @@ export default {
     location: null,
     fromDate: null,
     toDate: null,
+    first: false,
   }),
 
   components: {
@@ -44,6 +47,30 @@ export default {
       }
     }
   },
+
+  mounted() {
+    this.checkStoreInitialised();
+  },
+
+  methods: {
+    checkStoreInitialised() {
+      // we only need this to happen once, so the page renderer sets a flag on
+      // the first data-view component on the page
+      if (this.first) {
+        this.initialiseStore();
+      }
+    },
+
+    initialiseStore() {
+      this.$store.commit(INITIALISE, {
+        location: this.location,
+        fromDate: this.fromDate,
+        toDate: this.toDate,
+      });
+    },
+  },
+
+  store,
 };
 </script>
 
