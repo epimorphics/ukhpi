@@ -1,9 +1,9 @@
 <template lang="html">
   <span v-if='location' class='o-data-view__js-options-location'>
-    {{ location.labels.en }}
-    <el-button size='small'>
+    <a href='#'>
+      {{ location.labels.en }}
       <i class='fa fa-edit'></i>
-    </el-button>
+    </a>
   </span>
 </template>
 

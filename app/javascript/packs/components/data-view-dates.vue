@@ -1,9 +1,9 @@
 <template lang='html'>
   <span class='o-data-view__js-options-dates' v-if='fromDate'>
-    {{ fromDateFormatted }} to {{ toDateFormatted }}
-    <el-button size='small'>
+    <a href='#'>
+      {{ fromDateFormatted }} to {{ toDateFormatted }}
       <i class='fa fa-edit'></i>
-    </el-button>
+    </a>
   </span>
 </template>
 

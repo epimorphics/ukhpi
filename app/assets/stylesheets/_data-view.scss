@@ -1,5 +1,7 @@
 /* Styles for a data-view component */
 
+$options-panel-grey: #eef1f6;
+
 .o-data-view {
   background-color: $grey-3;
   padding: 5px;
@@ -45,4 +47,28 @@
   .o-data-view__vue-root {
     display: none;
   }
+}
+
+.o-data-view__js-options {
+  background-color: $options-panel-grey;
+  padding: 5px;
+  font-size: 16px;
+  line-height: 25px;
+
+  a, a:visited {
+    color: $black;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus {
+      background-color: inherit;
+      outline-width: 1px !important;
+      outline-style: dotted !important;
+    }
+  }
+
+
 }
