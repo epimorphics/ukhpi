@@ -47,10 +47,13 @@ export const mutations = {
   [types.SET_UKHPI_QUERY_RESULTS](state, queryResults) {
     state.queryResults = queryResults;
   },
+
+  [types.SELECT_STATISTIC](state, stat) {
+    Vue.set(state.selectedStatistics, stat.slug, stat.selected);
+  },
 };
 
 export const getters = {
-  initialised: state => !!state.location,
 };
 
 export const actions = {
@@ -63,6 +66,7 @@ export default new Vuex.Store({
     fromDate: null,
     toDate: null,
     queryResults: null,
+    selectedStatistics: {},
   },
   mutations,
   getters,

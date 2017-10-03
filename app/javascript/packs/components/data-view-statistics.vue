@@ -15,51 +15,54 @@
 </template>
 
 <script>
-import bus from '../lib/event-bus';
+import { SELECT_STATISTIC } from '../store/mutation-types';
 
 export default {
   data: () => ({
-    statistics: {},
+    statistics: [],
   }),
 
-  props: [
-    'initialStatistics',
-  ],
+  props: {
+    initialStatistics: {
+      type: Array,
+      required: true,
+    },
+  },
+
+  getters: {
+  },
 
   mounted() {
+    const store = this.$store;
     this.statistics = this.initialStatistics;
-    bus.$on('statistic-selected', this.onStatisticSelected);
+
+    this.initialStatistics.forEach((stat) => {
+      store.commit(SELECT_STATISTIC, { slug: stat.slug, selected: stat.selected });
+    });
   },
 
   methods: {
     /**
      * Handler for the event of the user clicking to select or deselect a statistic.
-     * Actual state change happens by propagating an event to all DataViewStatistic
-     * components.
+     * Actual state change happens by propagating a change to the Vuex store
      */
     onSelectStatistic(event) {
       const slug = event.toElement.attributes.getNamedItem('data-slug').value;
-      const statistic = this.findStatistic(slug);
-      bus.$emit('statistic-selected', { slug, selected: !statistic.selected });
-    },
-
-    /**
-     * Event handler for the event that the given statistic has been selected or
-     * deselected in every DataView that contains it.
-     */
-    onStatisticSelected(event) {
-      const stat = this.findStatistic(event.slug);
-      if (stat) {
-        stat.selected = event.selected;
-      }
+      const selected = this.isSelectedStatistic(slug);
+      this.$store.commit(SELECT_STATISTIC, { slug, selected: !selected });
     },
 
     findStatistic(slug) {
       return this.statistics.find(stat => stat.slug === slug);
     },
 
+    isSelectedStatistic(slug) {
+      return this.$store.state.selectedStatistics[slug];
+    },
+
     /** @return The CSS class for the status indicator */
-    selectedClassExpression({ selected }, index) {
+    selectedClassExpression({ slug }, index) {
+      const selected = this.isSelectedStatistic(slug);
       const graphColour = selected ? `v-graph-${index}` : '';
       return `o-statistic-option o-statistic-option__selected--${selected} ${graphColour}`;
     },
