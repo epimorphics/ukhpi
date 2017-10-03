@@ -1,12 +1,13 @@
 -# Partial for drawing the main presentation of a data view
 - visible = data_view.visible?
-%section.o-data-view{ class: visible ? 'o-data-view--open' : 'o-data-view--closed' }
+- node_id = "#{data_view.node_id}"
+%section.o-data-view{ class: visible ? 'o-data-view--open' : 'o-data-view--closed', id: node_id }
   %header
     %h2.o-heading--3
       = data_view.title
       - href = data_view.add_remove_theme_link(!visible)
       - visibility_action = visible ? 'hide' : 'reveal'
-      %a.o-data-view__hide-action{ href: href, class: visibility_action }
+      %a.o-data-view__hide-action{ href: "#{href}\##{node_id}", class: visibility_action }
         = visibility_action
 
   - if visible
@@ -46,4 +47,3 @@
                   = datum
 
   .o-data-view__vue-root.u-js-only{ data: data_view.as_js_attributes }
-    We are devo

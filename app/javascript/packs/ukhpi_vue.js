@@ -2,6 +2,7 @@ import Vue from 'vue';
 import ElementUI from 'element-ui';
 import Numeral from 'numeral';
 import DataView from './data-view.vue';
+import bindExternalEvents from './lib/bind-external-events';
 
 Vue.use(ElementUI);
 
@@ -25,4 +26,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const node = nodes.item(i);
     new Vue(DataView).$mount(node);
   }
+
+  bindExternalEvents();
 });

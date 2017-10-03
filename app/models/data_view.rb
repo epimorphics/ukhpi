@@ -87,6 +87,11 @@ class DataView
     }
   end
 
+  # @return A node ID for this data view, identifying the indicator and theme
+  def node_id
+    "#{indicator ? "#{indicator.slug}-" : ''}#{theme.slug}".tr('_', '-')
+  end
+
   private
 
   def title_with_indicator
