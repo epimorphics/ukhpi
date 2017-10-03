@@ -2,9 +2,20 @@
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
       <data-view-location :initial-location='location'></data-view-location>
-      <data-view-dates :initial-from-date='fromDate' :initial-to-date='toDate'></data-view-dates>
+      <data-view-dates
+        :initial-from-date='fromDate'
+        :initial-to-date='toDate'
+      >
+      </data-view-dates>
 
       <data-view-statistics :initial-statistics='theme.statistics'></data-view-statistics>
+    </div>
+    <div class='o-data-view__data-display'>
+      <data-view-table
+        :statistics='theme.statistics'
+        :indicator='indicator'
+      >
+      </data-view-table>
     </div>
   </div>
 
@@ -15,6 +26,7 @@ import kebabCase from 'kebab-case';
 import DataViewLocation from './components/data-view-location.vue';
 import DataViewDates from './components/data-view-dates.vue';
 import DataViewStatistics from './components/data-view-statistics.vue';
+import DataViewTable from './components/data-view-table.vue';
 import store from './store/index';
 import { INITIALISE } from './store/mutation-types';
 
@@ -32,6 +44,7 @@ export default {
     DataViewLocation,
     DataViewDates,
     DataViewStatistics,
+    DataViewTable,
   },
 
   beforeMount() {

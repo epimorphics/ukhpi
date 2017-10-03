@@ -24,7 +24,7 @@ export default class QueryResult {
   indexData(data) {
     this.sData = {};
 
-    data.each((v, k) => {
+    _.forEach(data, (v, k) => {
       const match = k.match(/^ukhpi:(.*)/);
       if (match) {
         this.sData[match[1]] = (v && _.isArray(v)) ? _.first(v) : v;
@@ -53,5 +53,28 @@ export default class QueryResult {
     }
 
     return this.date;
+  }
+
+  /** @return A simplified view of this data, suitable for injecting into a data table */
+  asTableData() {
+    const tableData = {};
+
+    _.forEach(this.json, (value, key) => {
+      let simpleValue = value;
+
+      if (simpleValue['@value']) {
+        simpleValue = simpleValue['@value'];
+      }
+      if (simpleValue['@id']) {
+        simpleValue = simpleValue['@id'];
+      }
+      if (simpleValue instanceof Array && simpleValue.length === 1) {
+        simpleValue = [simpleValue];
+      }
+
+      tableData[key] = simpleValue;
+    });
+
+    return tableData;
   }
 }
