@@ -14,18 +14,18 @@ $options-panel-grey: #eef1f6;
 
   &__hide-action {
     float: right;
+  }
 
-    &.hide::after {
-      content: '\f0aa';
-      font-size: 18px;
-      font-family: FontAwesome;
-    }
+  &--open .o-data-view__hide-action::after {
+    content: '\f0aa';
+    font-size: 18px;
+    font-family: FontAwesome;
+  }
 
-    &.reveal::after {
-      content: '\f0ab';
-      font-size: 18px;
-      font-family: FontAwesome;
-    }
+  &--closed .o-data-view__hide-action::after {
+    content: '\f0ab';
+    font-size: 18px;
+    font-family: FontAwesome;
   }
 
   .o-data-view__options {

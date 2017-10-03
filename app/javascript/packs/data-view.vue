@@ -39,6 +39,7 @@ import DataViewStatistics from './components/data-view-statistics.vue';
 import DataViewTable from './components/data-view-table.vue';
 import store from './store/index';
 import { INITIALISE } from './store/mutation-types';
+import bus from './lib/event-bus';
 
 export default {
   data: () => ({
@@ -74,6 +75,16 @@ export default {
 
   mounted() {
     this.checkStoreInitialised();
+    bus.$on('open-close-data-view', this.onOpenCloseDataView);
+  },
+
+  computed: {
+    /** @return The node ID that would have been assigned to this data view, given
+     * the indicator and theme */
+    nodeId() {
+      const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
+      return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
+    },
   },
 
   methods: {
@@ -94,6 +105,17 @@ export default {
     },
 
     onChangeTab() {
+    },
+
+    onOpenCloseDataView({ id, closing }) {
+      if (this.nodeId === id) {
+        const node = document.getElementById(id);
+        const cls = node.className.replace(
+          /o-data-view--(open|closed)/,
+          `o-data-view--${closing ? 'closed' : 'open'}`,
+        );
+        node.className = cls;
+      }
     },
   },
 
