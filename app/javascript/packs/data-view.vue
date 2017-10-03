@@ -11,11 +11,21 @@
       <data-view-statistics :initial-statistics='theme.statistics'></data-view-statistics>
     </div>
     <div class='o-data-view__data-display'>
-      <data-view-table
-        :statistics='theme.statistics'
-        :indicator='indicator'
+      <el-tabs
+        v-model='activeTab'
+        @tab-click='onChangeTab'
       >
-      </data-view-table>
+        <el-tab-pane label='View as data' name='data-tab'>
+          <data-view-table
+            :statistics='theme.statistics'
+            :indicator='indicator'
+          >
+          </data-view-table>
+        </el-tab-pane>
+        <el-tab-pane label='View as graphs' name='graphs-tab'>
+          todo
+        </el-tab-pane>
+      </el-tabs>
     </div>
   </div>
 
@@ -32,6 +42,7 @@ import { INITIALISE } from './store/mutation-types';
 
 export default {
   data: () => ({
+    activeTab: 'data-tab',
     theme: null,
     indicator: null,
     location: null,
@@ -80,6 +91,9 @@ export default {
         fromDate: this.fromDate,
         toDate: this.toDate,
       });
+    },
+
+    onChangeTab() {
     },
   },
 
