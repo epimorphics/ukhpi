@@ -1,5 +1,43 @@
 import _ from 'lodash';
 import Moment from 'moment';
+import Numeral from 'numeral';
+
+/** @return A simplified data value, suitable for display in a data table */
+function toTableDatum(value) {
+  let simpleValue = value;
+
+  if (simpleValue['@value']) {
+    simpleValue = simpleValue['@value'];
+  }
+  if (simpleValue['@id']) {
+    simpleValue = simpleValue['@id'];
+  }
+  if (simpleValue instanceof Array && simpleValue.length === 1) {
+    simpleValue = [simpleValue];
+  }
+
+  return simpleValue;
+}
+
+function formatTableDatum(prop, rawValue) {
+  const value = toTableDatum(rawValue);
+
+  if (!value || value.length === 0) {
+    return 'no value';
+  } else if (prop.match(/percentage/i)) {
+    return Numeral(value).divide(100).format('0.00%');
+  } else if (prop.match(/housePriceIndex/)) {
+    return Numeral(value).format('0.00');
+  } else if (prop.match(/average/)) {
+    return Numeral(value).format('$0,0');
+  } else if (prop.match(/volume/)) {
+    return Numeral(value).format('0,0');
+  } else if (prop.match(/refMonth/)) {
+    return Moment(value, 'YYYY-MM').format('MMM YYYY');
+  }
+
+  return value;
+}
 
 /** Model object encapsulating a single result */
 export default class QueryResult {
@@ -60,19 +98,7 @@ export default class QueryResult {
     const tableData = {};
 
     _.forEach(this.json, (value, key) => {
-      let simpleValue = value;
-
-      if (simpleValue['@value']) {
-        simpleValue = simpleValue['@value'];
-      }
-      if (simpleValue['@id']) {
-        simpleValue = simpleValue['@id'];
-      }
-      if (simpleValue instanceof Array && simpleValue.length === 1) {
-        simpleValue = [simpleValue];
-      }
-
-      tableData[key] = simpleValue;
+      tableData[key] = formatTableDatum(key, value);
     });
 
     return tableData;

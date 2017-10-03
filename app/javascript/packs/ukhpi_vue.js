@@ -1,8 +1,22 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
+import Numeral from 'numeral';
 import DataView from './data-view.vue';
 
 Vue.use(ElementUI);
+
+// locale settings
+Numeral.register('locale', 'gb', {
+  delimiters: {
+    thousands: ',',
+    decimal: '.',
+  },
+  currency: {
+    symbol: '£',
+  },
+  ordinal: () => '',
+});
+Numeral.locale('gb');
 
 document.addEventListener('DOMContentLoaded', () => {
   const nodes = document.querySelectorAll('.o-data-view__vue-root');
