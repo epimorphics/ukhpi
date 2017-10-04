@@ -1,6 +1,6 @@
 <template lang="html">
   <span v-if='location' class='o-data-view__js-options-location'>
-    <a href='#'>
+    <a href='#' @click='onChangeLocation'>
       {{ location.labels.en }}
       <i class='fa fa-edit'></i>
     </a>
@@ -21,7 +21,10 @@ export default {
     this.location = this.initialLocation;
   },
 
-  watch: {
+  methods: {
+    onChangeLocation() {
+      this.$message('This is how the user will change the location');
+    },
   },
 };
 </script>

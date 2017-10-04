@@ -1,6 +1,6 @@
 <template lang='html'>
   <span class='o-data-view__js-options-dates' v-if='fromDate'>
-    <a href='#'>
+    <a href='#' @click='onChangeDates'>
       {{ fromDateFormatted }} to {{ toDateFormatted }}
       <i class='fa fa-edit'></i>
     </a>
@@ -34,6 +34,12 @@ export default {
   mounted() {
     this.fromDate = Moment(this.initialFromDate.date);
     this.toDate = Moment(this.initialToDate.date);
+  },
+
+  methods: {
+    onChangeDates() {
+      this.$message('This is how the user will change the dates');
+    },
   },
 };
 </script>
