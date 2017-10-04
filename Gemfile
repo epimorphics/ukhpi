@@ -8,6 +8,7 @@ gem 'rails', '~> 5.1.3'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'haml-rails'
+gem 'webpacker'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -63,7 +64,6 @@ group :development, :test do
   gem 'oj'
   gem 'simplecov', require: false
   gem 'vcr'
-  gem 'webpacker'
 end
 
 group :development do
