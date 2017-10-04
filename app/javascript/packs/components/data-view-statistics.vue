@@ -2,6 +2,7 @@
   <div class='o-data-view__js-options-statistics'>
     <span
       v-for='(statistic, index) in statistics'
+      :key='statistic.slug'
       class='o-data-view__js-options-statistics'>
       <a
         :data-slug='statistic.slug'

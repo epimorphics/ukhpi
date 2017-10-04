@@ -10,6 +10,7 @@
       </el-table-column>
       <el-table-column
         v-for='column in columns'
+        :key='column.slug'
         :prop='columnProp(column)'
         :label='column.label'
       >
