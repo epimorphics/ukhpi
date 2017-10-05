@@ -1,8 +1,7 @@
-/** Data model encapsulating the results we got back from the server */
-
 import _ from 'lodash';
 import QueryResult from './query-result';
 
+/** Data model encapsulating the results we got back from the server */
 export default class QueryResults {
   constructor(data) {
     this.json = data;
@@ -28,18 +27,31 @@ export default class QueryResults {
     return this.results().length;
   }
 
-  /* @return The data in a particular category series */
-  series(indicator, category) {
-    const aspect = `ukhpi:${indicator}${category}`;
-    const s = this.results.map((r) => {
-      const val = r.value(aspect);
+  /* @return A projection of the statistics in this query result according to a
+   * theme, which defines a subset of statistics. Returns all theme statistics;
+   * does not restrict to currently-displayed only. */
+  projection(indicator, theme) {
+    const projection = {};
+
+    theme.statistics.forEach((statistic) => {
+      const pred = `ukhpi:${indicator ? indicator.root_name : ''}${statistic.root_name}`;
+      projection[statistic.slug] = this.series(pred);
+    });
+
+    return projection;
+  }
+
+  /* @return The data in a particular category series, as determined by the qname
+   * of the data-cube predicate */
+  series(pred) {
+    const s = this.results().map((r) => {
+      const val = r.value(pred);
 
       if (_.isFinite(val)) {
         return {
           x: r.periodDate().toDate(),
-          y: r.value(aspect),
-          ind: indicator,
-          cat: category,
+          y: r.value(pred),
+          pred,
         };
       }
 

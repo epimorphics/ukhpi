@@ -3,8 +3,9 @@ import Moment from 'moment';
 import Numeral from 'numeral';
 
 /** @return A simplified data value, suitable for display in a data table */
-function toTableDatum(value) {
-  let simpleValue = value;
+function toSimpleValue(value) {
+  // this is the recommended way to strip away the Vue observer wrapper
+  let simpleValue = JSON.parse(JSON.stringify(value));
 
   if (simpleValue['@value']) {
     simpleValue = simpleValue['@value'];
@@ -13,14 +14,14 @@ function toTableDatum(value) {
     simpleValue = simpleValue['@id'];
   }
   if (simpleValue instanceof Array && simpleValue.length === 1) {
-    simpleValue = [simpleValue];
+    simpleValue = _.first(simpleValue);
   }
 
   return simpleValue;
 }
 
 function formatTableDatum(prop, rawValue) {
-  const value = toTableDatum(rawValue);
+  const value = toSimpleValue(rawValue);
 
   if (!value || value.length === 0) {
     return 'no value';
@@ -43,45 +44,14 @@ function formatTableDatum(prop, rawValue) {
 export default class QueryResult {
   constructor(data) {
     this.json = data;
-    this.indexData(data);
   }
 
-  value(aspect) {
-    const val = this.json[aspect];
-    return _.isArray(val) ? _.first(val) : val;
-  }
-
-  valuesFor(slugs) {
-    return _.map(slugs, _.bind(this.valueFor, this));
-  }
-
-  valueFor(slug) {
-    return this.sData[slug];
-  }
-
-  indexData(data) {
-    this.sData = {};
-
-    _.forEach(data, (v, k) => {
-      const match = k.match(/^ukhpi:(.*)/);
-      if (match) {
-        this.sData[match[1]] = (v && _.isArray(v)) ? _.first(v) : v;
-      }
-    });
-  }
-
-  slug = (name) => {
-    const n = name.replace(/^ukhpi:/, '');
-    const nUpper = n.replace(/[a-z]/g, '');
-    return (n.slice(0, 1) + nUpper).toLocaleLowerCase();
+  value(pred) {
+    return toSimpleValue(this.json[pred]);
   }
 
   period() {
-    return this.json['ukhpi:refMonth']['@value'];
-  }
-
-  duration() {
-    return this.json['ukhpi:refPeriodDuration'][0];
+    return this.value('ukhpi:refMonth');
   }
 
   /** @return A momentJS object denoting the (start of the) period as a date */
@@ -91,6 +61,10 @@ export default class QueryResult {
     }
 
     return this.date;
+  }
+
+  duration() {
+    return this.value('ukhpi:refPeriodDuration');
   }
 
   /** @return A simplified view of this data, suitable for injecting into a data table */
