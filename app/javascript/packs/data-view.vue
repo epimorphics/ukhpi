@@ -89,7 +89,7 @@ export default {
     /** @return The node ID that would have been assigned to this data view, given
      * the indicator and theme */
     elementId() {
-      const indicatorSlug = this.indicator ? `${this.indicator.root_name}-` : '';
+      const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
       return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
     },
   },
