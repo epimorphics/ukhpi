@@ -1,0 +1,14 @@
+
+// D3/SVG colours ...
+
+@each $cssClass, $colour in $graph-colours {
+  .line.v-#{$cssClass} {
+    stroke: $colour;
+  }
+  .point.v-#{$cssClass} {
+    fill: $colour;
+  }
+  .bar.v-#{$cssClass} {
+    fill: $colour;
+  }
+}

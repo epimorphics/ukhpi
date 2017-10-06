@@ -15,15 +15,20 @@
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
+        <el-tab-pane label='View as graphs' name='graphs-tab'>
+          <data-view-graph
+            :theme='theme'
+            :indicator='indicator'
+            :elementId='elementId'
+          >
+          </data-view-graph>
+        </el-tab-pane>
         <el-tab-pane label='View as data' name='data-tab'>
           <data-view-table
             :statistics='theme.statistics'
             :indicator='indicator'
           >
           </data-view-table>
-        </el-tab-pane>
-        <el-tab-pane label='View as graphs' name='graphs-tab'>
-          todo
         </el-tab-pane>
       </el-tabs>
     </div>
@@ -37,13 +42,14 @@ import DataViewLocation from './components/data-view-location.vue';
 import DataViewDates from './components/data-view-dates.vue';
 import DataViewStatistics from './components/data-view-statistics.vue';
 import DataViewTable from './components/data-view-table.vue';
+import DataViewGraph from './components/data-view-graph.vue';
 import store from './store/index';
 import { INITIALISE } from './store/mutation-types';
 import bus from './lib/event-bus';
 
 export default {
   data: () => ({
-    activeTab: 'data-tab',
+    activeTab: 'graphs-tab',
     theme: null,
     indicator: null,
     location: null,
@@ -57,6 +63,7 @@ export default {
     DataViewDates,
     DataViewStatistics,
     DataViewTable,
+    DataViewGraph,
   },
 
   beforeMount() {
@@ -81,8 +88,8 @@ export default {
   computed: {
     /** @return The node ID that would have been assigned to this data view, given
      * the indicator and theme */
-    nodeId() {
-      const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
+    elementId() {
+      const indicatorSlug = this.indicator ? `${this.indicator.root_name}-` : '';
       return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
     },
   },
@@ -108,7 +115,7 @@ export default {
     },
 
     onOpenCloseDataView({ id, closing }) {
-      if (this.nodeId === id) {
+      if (this.elementId === id) {
         const node = document.getElementById(id);
         const cls = node.className.replace(
           /o-data-view--(open|closed)/,
