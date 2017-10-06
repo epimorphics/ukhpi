@@ -198,13 +198,14 @@ function drawAxes(graphConfig) {
 function drawPoints(series, index, graphConfig) {
   const { x, y } = graphConfig.scales;
   const datum = _.sample(series);
+  const cssClass = `point v-graph-${index}`;
 
   graphConfig.rootElem
-    .selectAll('.point')
+    .selectAll(cssClass)
     .data([datum])
     .enter()
     .append('path')
-    .attr('class', () => `point v-graph-${index}`)
+    .attr('class', cssClass)
     .attr('d', (d, i) => symbol().type(SERIES_MARKER[index])(d, i))
     .attr('transform', d => translateCmd(x(d.x), y(d.y)));
 }
