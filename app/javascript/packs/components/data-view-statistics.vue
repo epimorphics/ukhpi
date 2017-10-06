@@ -26,8 +26,8 @@ const MARKERS = [
   'Circle',
   'Diamond',
   'Square',
-  'TriangleDown',
-  'TriangleUp',
+  'Star',
+  'Triangle',
 ];
 
 export default {

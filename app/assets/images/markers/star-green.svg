@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="239.5316mm"
+   height="227.89156mm"
+   viewBox="0 0 239.53161 227.89155"
+   version="1.1"
+   id="svg8"
+   inkscape:version="0.92.1 r15371"
+   sodipodi:docname="star-green.svg"
+   inkscape:export-filename="/home/ian/workspace/hmlr/ukhpi/app/assets/images/markers/circle-fuschia.png"
+   inkscape:export-xdpi="6.5500002"
+   inkscape:export-ydpi="6.5500002">
+  <defs
+     id="defs2" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.35"
+     inkscape:cx="1006.6238"
+     inkscape:cy="-346.7215"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     inkscape:window-width="1920"
+     inkscape:window-height="1136"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0" />
+  <metadata
+     id="metadata5">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(453.74362,-10.922317)">
+    <rect
+       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.447;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="rect4485"
+       width="71.059525"
+       height="61.232143"
+       x="60.476189"
+       y="39.976189" />
+    <path
+       sodipodi:type="star"
+       style="opacity:1;fill:#006435;fill-opacity:1;stroke:#006435;stroke-width:1;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       id="path4529"
+       sodipodi:sides="5"
+       sodipodi:cx="-334.0217"
+       sodipodi:cy="136.70021"
+       sodipodi:r1="125.65913"
+       sodipodi:r2="37.38868"
+       sodipodi:arg1="0.94344899"
+       sodipodi:arg2="1.6329921"
+       inkscape:flatsided="false"
+       inkscape:rounded="0"
+       inkscape:randomized="0"
+       d="m -260.25988,238.43226 -76.08574,-64.41566 -71.63536,64.2722 37.75116,-92.26737 -83.26304,-48.268073 99.41723,7.391293 20.17597,-94.103506 23.69207,96.835436 95.73248,-9.89109 -84.77473,52.4563 z"
+       inkscape:transform-center-x="6.4897207"
+       inkscape:transform-center-y="-6.4897264" />
+  </g>
+</svg>

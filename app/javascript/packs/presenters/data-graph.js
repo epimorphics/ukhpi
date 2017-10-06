@@ -6,8 +6,8 @@ import { extent, bisector } from 'd3-array';
 import { format } from 'd3-format';
 import { scaleLinear, scaleTime } from 'd3-scale';
 import { mouse, select } from 'd3-selection';
-import { line, symbol, symbolCircle, symbolDiamond, symbolTriangleDown,
-  symbolTriangleUp, symbolSquare } from 'd3-shape';
+import { line, symbol, symbolCircle, symbolDiamond, symbolStar,
+  symbolTriangle, symbolSquare } from 'd3-shape';
 import { timeMonth } from 'd3-time';
 import { timeFormat } from 'd3-time-format';
 import { asCurrency } from '../lib/values';
@@ -16,8 +16,8 @@ const SERIES_MARKER = [
   symbolCircle,
   symbolDiamond,
   symbolSquare,
-  symbolTriangleDown,
-  symbolTriangleUp,
+  symbolStar,
+  symbolTriangle,
 ];
 
 const oneDecimalPlace = format('.2g');
