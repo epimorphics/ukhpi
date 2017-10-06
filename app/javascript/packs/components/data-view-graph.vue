@@ -62,12 +62,12 @@ export default {
     },
   },
 
+  mounted() {
+    this.$watch('$store.state.selectedStatistics', this.updateGraph, { deep: true });
+  },
+
   watch: {
     dataProjection() {
-      this.updateGraph();
-    },
-
-    selectedStatistics() {
       this.updateGraph();
     },
   },
