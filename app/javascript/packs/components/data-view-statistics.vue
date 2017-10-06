@@ -4,19 +4,31 @@
       v-for='(statistic, index) in statistics'
       :key='statistic.slug'
       class='o-data-view__js-options-statistics'>
-      <a
+      <button
         :data-slug='statistic.slug'
-        href='#' @click='onSelectStatistic'>
-        <span :class='selectedClassExpression(statistic, index)'>
-        </span>
+        @click='onSelectStatistic'
+      >
+        <img
+          :src='imageSrcPath(statistic, index, false)'
+          :srcset='imageSrcPath(statistic, index, true)'
+        />
         {{ statistic.label }}
-      </a>
+      </button>
     </span>
   </div>
 </template>
 
 <script>
 import { SELECT_STATISTIC } from '../store/mutation-types';
+import serverRoutes from '../store/server-routes.js.erb';
+
+const MARKERS = [
+  'circle-fuschia',
+  'diamond-light-blue',
+  'square-mellow-red',
+  'triangle-down-green',
+  'triangle-up-orange',
+];
 
 export default {
   data: () => ({
@@ -62,10 +74,10 @@ export default {
     },
 
     /** @return The CSS class for the status indicator */
-    selectedClassExpression({ slug }, index) {
+    imageSrcPath({ slug }, index, svg) {
       const selected = this.isSelectedStatistic(slug);
-      const graphColour = selected ? `v-graph-${index}` : '';
-      return `o-statistic-option o-statistic-option__selected--${selected} ${graphColour}`;
+      const imageRoot = selected ? MARKERS[index] : 'square-white';
+      return `${serverRoutes.assetsPath}/markers/${imageRoot}.${svg ? 'svg' : 'png'}`;
     },
   },
 };
