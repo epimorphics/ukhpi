@@ -26,8 +26,8 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-687.72672"
-     inkscape:cy="-122.01244"
+     inkscape:cx="15.130404"
+     inkscape:cy="-136.29815"
      inkscape:document-units="mm"
      inkscape:current-layer="layer1"
      showgrid="false"
@@ -56,7 +56,7 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(17.610402,-39.752689)">
+     transform="translate(203.57468,-35.972926)">
     <rect
        style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.447;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect4485"
@@ -65,19 +65,12 @@
        x="60.476189"
        y="39.976189" />
     <rect
-       style="opacity:1;fill:#ffffff;fill-opacity:1;stroke:none;stroke-width:0.447;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
-       id="rect4487"
-       width="71.059517"
-       height="61.23214"
-       x="60.476189"
-       y="39.976189" />
-    <rect
        style="opacity:1;fill:#df3034;fill-opacity:1;stroke:#df3034;stroke-width:0.447;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        id="rect5148"
        width="77.863091"
        height="77.863091"
-       x="-17.386902"
-       y="39.976189"
+       x="-203.35118"
+       y="36.196426"
        inkscape:export-xdpi="6.5500002"
        inkscape:export-ydpi="6.5500002" />
   </g>
