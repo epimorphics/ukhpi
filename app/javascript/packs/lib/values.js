@@ -1,38 +1,24 @@
 import _ from 'lodash';
-
-const DECIMAL_PLACES = 2;
+import Numeral from 'numeral';
 
 export function asCurrency(value) {
-  try {
-    const formattedValue = value.toLocaleString('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-    });
-
-    // we should be able to set maximumFractionDigits to 0 above, but
-    // this causes a crash in Firefox
-    return formattedValue.replace(/\.00$/, '');
-  } catch (e) {
-    // TODO Log.warn(`Failed to format value as currency: '${value}'`);
-    return '';
-  }
+  return Numeral(value).format('$0,0');
 }
 
-export function formatValue(aspect, value) {
+export function formatValue(indicator, value) {
   if (_.isNull(value) || _.isUndefined(value)) {
     return 'not available';
   }
 
-  switch (aspect.unitType) {
-    case 'percentage':
-      return `${value}%`;
-    case 'pound_sterling':
-      return asCurrency(parseInt(value, 10));
-    case 'integer':
-      return value.toFixed();
-    case 'decimal':
-      return value.toFixed(DECIMAL_PLACES);
-    default:
-      return value;
+  if (indicator.match(/index/i)) {
+    return Numeral(value).format('0.0');
+  } else if (indicator.match(/price/i)) {
+    return Numeral(value).format('$0,0'); // asCurrency(parseInt(value, 10));
+  } else if (indicator.match(/percent/i)) {
+    return Numeral(value / 100.0).format('%0.0');
+  } else if (indicator.match(/volume/)) {
+    return value.toFixed();
   }
+
+  return value;
 }

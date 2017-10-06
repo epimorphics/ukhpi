@@ -10,7 +10,7 @@ import { line, symbol, symbolCircle, symbolDiamond, symbolStar,
   symbolTriangle, symbolSquare } from 'd3-shape';
 import { timeMonth } from 'd3-time';
 import { timeFormat } from 'd3-time-format';
-import { asCurrency } from '../lib/values';
+import { asCurrency, formatValue } from '../lib/values';
 
 const SERIES_MARKER = [
   symbolCircle,
@@ -66,7 +66,7 @@ const GRAPH_OPTIONS = {
 };
 
 const GRAPH_PADDING = {
-  top: 10,
+  top: 20,
   right: 25,
   bottom: 30,
   left: 60,
@@ -95,6 +95,11 @@ function drawGraphRoot(graphConfig) {
 /** @return True if the given statistic is selected for display */
 function isSelectedStatistic(statistic, graphConfig) {
   return graphConfig.selectedStatistics[statistic.slug || statistic];
+}
+
+/** @return The currently visible statistics */
+function visibleStatistics(graphConfig) {
+  return graphConfig.theme.statistics.filter(stat => isSelectedStatistic(stat, graphConfig));
 }
 
 /** @return The range of values in the projection of the selected statistics */
@@ -237,9 +242,9 @@ function drawGraphLines(series, index, graphConfig) {
   }
 }
 
-const bisectDate = bisector(d => d.x);
+const bisectDate = bisector(d => d.x).left;
 
-function formatIndicator(statistic, value) {
+function formatStatistic(indicator, statistic, value) {
   const abbrev = {
     all: 'all ',
     det: 'det. ',
@@ -247,29 +252,31 @@ function formatIndicator(statistic, value) {
     ter: 'terr. ',
     fla: 'f/m. ',
   }[statistic.slug];
-  return (abbrev || statistic.label) + value; // formatValue(indicator + statistic, value);
+  return (abbrev || statistic.label) + formatValue(indicator + statistic, value);
 }
 
 function xTrackLabel(statistic, projection, graphConfig, d) {
   const series = projection[statistic.slug];
   const value = _.find(series, { x: d.x });
-  return formatIndicator(statistic, value && value.y);
+  return formatStatistic(graphConfig.indicatorId, statistic, value && value.y);
 }
 
-function onXTrackMouseMoveDraw(projection, graphConfig, xTrack) {
+/** Track mouse movement and update the overlay */
+function onXTrackMouseMove(projection, graphConfig, xTrack) {
   const aSeries = _.first(_.values(projection));
 
   const { x } = graphConfig.scales;
   const x0 = x.invert(mouse(graphConfig.rootElem.node())[0]);
+
   const i = bisectDate(aSeries, x0, 1);
   const d0 = aSeries[i - 1];
   const d1 = aSeries[i];
   const d = (d1 && (x0 - d0.x > d1.x - x0)) ? d1 : d0;
-  xTrack.attr('transform', translateCmd((GRAPH_PADDING.left + x(d.x)), -10));
+  xTrack.attr('transform', translateCmd(x(d.x), -10));
 
   const dateLabel = timeFormat('%b %Y')(d.x);
   const labeller = (() => (statistic => xTrackLabel(statistic, projection, graphConfig, d)))();
-  const label = `${dateLabel}: ${_.map(graphConfig.selectedStatistics, labeller).join(', ')}`;
+  const label = `${dateLabel}: ${_.map(visibleStatistics(graphConfig), labeller).join(', ')}`;
 
   const labelElem = xTrack.select('text');
   const txtLen = labelElem
@@ -286,7 +293,8 @@ function onXTrackMouseMoveDraw(projection, graphConfig, xTrack) {
   }
 }
 
-function drawOverlay(projection, graphConfig) {
+/** Prepare the elements necessary to draw the overlay, and set event listeners */
+function prepareOverlay(projection, graphConfig) {
   const xTrack = graphConfig
     .rootElem
     .append('g')
@@ -298,12 +306,12 @@ function drawOverlay(projection, graphConfig) {
     .attr('height', graphConfig.scales.height)
     .attr('width', 0.5)
     .attr('stroke-dasharray', '5,5')
-    .attr('y', GRAPH_PADDING.top + 10);
+    .attr('y', 10);
 
   xTrack
     .append('text')
     .attr('class', 'o-x-track__title')
-    .attr('y', 20)
+    .attr('y', 0)
     .append('dy', '0.35em');
 
   graphConfig
@@ -315,7 +323,7 @@ function drawOverlay(projection, graphConfig) {
     .on('mouseover', () => { xTrack.style('display', null); })
     .on('mouseout', () => { xTrack.style('display', 'none'); })
     .on('mousemove', (() =>
-      () => { onXTrackMouseMoveDraw(projection, graphConfig, xTrack); }
+      () => { onXTrackMouseMove(projection, graphConfig, xTrack); }
     )());
 }
 
@@ -327,8 +335,7 @@ export default function drawGraph(projection, options) {
   Object.assign(graphConfig, configureAxes(graphConfig));
 
   drawAxes(graphConfig);
-  const overlay = false;
-  if (overlay) { drawOverlay(projection, graphConfig); }
+  prepareOverlay(projection, graphConfig);
 
   _.each(_.keys(projection), (slug, index) => {
     const series = projection[slug];
