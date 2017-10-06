@@ -23,11 +23,11 @@ import { SELECT_STATISTIC } from '../store/mutation-types';
 import serverRoutes from '../store/server-routes.js.erb';
 
 const MARKERS = [
-  'circle-fuschia',
-  'diamond-light-blue',
-  'square-mellow-red',
-  'triangle-down-green',
-  'triangle-up-orange',
+  'Circle',
+  'Diamond',
+  'Square',
+  'TriangleDown',
+  'TriangleUp',
 ];
 
 export default {
@@ -76,8 +76,9 @@ export default {
     /** @return The CSS class for the status indicator */
     imageSrcPath({ slug }, index, svg) {
       const selected = this.isSelectedStatistic(slug);
-      const imageRoot = selected ? MARKERS[index] : 'square-white';
-      return `${serverRoutes.assetsPath}/markers/${imageRoot}.${svg ? 'svg' : 'png'}`;
+      const imageRoot = selected ? MARKERS[index] : 'SquareWhite';
+      const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`;
+      return serverRoutes[imagePathKey];
     },
   },
 };

@@ -1,6 +1,18 @@
 /** Routes to the server actions */
+<% helpers = ActionController::Base.helpers %>
 
 export default {
   browsePath: '<%= Rails.application.config.relative_url_root %>/browse',
-  assetsPath: '<%= Rails.application.config.relative_url_root %>/assets',
+  markerCircle: '<%= helpers.image_path("markers/circle-fuschia.png") %>',
+  markerCircleSvg: '<%= helpers.image_path("markers/circle-fuschia.svg") %>',
+  markerDiamond: '<%= helpers.image_path("markers/diamond-light-blue.png") %>',
+  markerDiamondSvg: '<%= helpers.image_path("markers/diamond-light-blue.svg") %>',
+  markerSquare: '<%= helpers.image_path("markers/square-mellow-red.png") %>',
+  markerSquareSvg: '<%= helpers.image_path("markers/square-mellow-red.svg") %>',
+  markerTriangleUp: '<%= helpers.image_path("markers/triangle-up-orange.png") %>',
+  markerTriangleUpSvg: '<%= helpers.image_path("markers/triangle-up-orange.svg") %>',
+  markerTriangleDown: '<%= helpers.image_path("markers/triangle-down-green.png") %>',
+  markerTriangleDownSvg: '<%= helpers.image_path("markers/triangle-down-green.svg") %>',
+  markerSquareWhite: '<%= helpers.image_path("markers/square-white.png") %>',
+  markerSquareWhiteSvg: '<%= helpers.image_path("markers/square-white.svg") %>',
 }
