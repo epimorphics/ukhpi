@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import ElementUI from 'element-ui';
+import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
 import DataView from './data-view.vue';
 import bindExternalEvents from './lib/bind-external-events';
 
-Vue.use(ElementUI);
+Vue.use(ElementUI, { locale });
 
 // locale settings
 Numeral.register('locale', 'gb', {

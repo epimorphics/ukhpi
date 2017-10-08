@@ -1,50 +1,115 @@
 <template lang='html'>
-  <span class='o-data-view__js-options-dates' v-if='fromDate'>
-    <a href='#' @click='onChangeDates'>
-      {{ fromDateFormatted }} to {{ toDateFormatted }}
-      <i class='fa fa-edit'></i>
-    </a>
-  </span>
+  <div class='o-data-view__js-options-dates'>
+    <span class='' v-if='fromDate'>
+      <a href='#' @click='onChangeDates'>
+        {{ fromDateFormatted }} to {{ toDateFormatted }}
+        <i class='fa fa-edit'></i>
+      </a>
+    </span>
+
+    <el-dialog
+      title='Change the date range'
+      :visible.sync='dialogVisible'
+      :show-close='true'
+    >
+      <el-row>
+        <el-col :span='12'>
+          <label>
+            From:
+            <el-date-picker
+              v-model='newFromDate'
+              type='month'
+              placeholder='Starting from'>
+            </el-date-picker>
+          </label>
+        </el-col>
+        <el-col :span='12'>
+          <label>
+            To:
+            <el-date-picker
+              v-model='newToDate'
+              type='month'
+              placeholder='Starting from'>
+            </el-date-picker>
+          </label>
+        </el-col>
+      </el-row>
+      <el-row>
+        <p v-if='validationMessage'>
+          <el-alert
+            :title='validationMessage'
+            type='warning'>
+          </el-alert>
+        </p>
+      </el-row>
+      <span slot='footer' class='dialog-footer'>
+        <el-button @click='dialogVisible = false'>Cancel</el-button>
+        <el-button type='primary' @click='onSaveChanges'>Confirm</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
 import Moment from 'moment';
+import { SET_DATES } from '../store/mutation-types';
 
 export default {
   data: () => ({
-    fromDate: null,
-    toDate: null,
+    newFromDate: null,
+    newToDate: null,
+    dialogVisible: false,
+    validationMessage: null,
   }),
 
-  props: [
-    'initialFromDate',
-    'initialToDate',
-  ],
-
   computed: {
+    fromDate() {
+      return Moment(this.$store.state.fromDate).toDate();
+    },
+
+    toDate() {
+      return Moment(this.$store.state.toDate).toDate();
+    },
+
     fromDateFormatted() {
-      return this.fromDate.format('MMM YYYY');
+      return Moment(this.fromDate).format('MMM YYYY');
     },
 
     toDateFormatted() {
-      return this.toDate.format('MMM YYYY');
+      return Moment(this.toDate).format('MMM YYYY');
     },
-  },
-
-  mounted() {
-    this.fromDate = Moment(this.initialFromDate.date);
-    this.toDate = Moment(this.initialToDate.date);
   },
 
   methods: {
     onChangeDates() {
-      this.$message('This is how the user will change the dates');
+      this.newFromDate = this.fromDate;
+      this.newToDate = this.toDate;
+      this.dialogVisible = true;
+    },
+
+    onSaveChanges() {
+      if (Moment(this.newToDate).isSameOrBefore(Moment(this.newFromDate))) {
+        this.validationMessage = '"To" date must be later than the "from" date';
+      } else {
+        const from = Moment(this.newFromDate).format('YYYY-MM-DD');
+        const to = Moment(this.newToDate).format('YYYY-MM-DD');
+        this.$store.commit(SET_DATES, { from, to });
+        this.dialogVisible = false;
+      }
+    },
+
+    updateFromDate(dateStr) {
+      this.fromDate = Moment(dateStr).date();
+    },
+
+    updateToDate(dateStr) {
+      this.toDate = Moment(dateStr).date();
     },
   },
 };
 </script>
 
-<style lang="scss">
+<style lang='scss'>
 .o-data-view__js-options-dates {
   float: right;
 }

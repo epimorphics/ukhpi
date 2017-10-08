@@ -41,11 +41,11 @@ export default {
     },
 
     fromMoment() {
-      return Moment(this.$store.state.fromDate.date);
+      return Moment(this.$store.state.fromDate);
     },
 
     toMoment() {
-      return Moment(this.$store.state.toDate.date);
+      return Moment(this.$store.state.toDate);
     },
 
     /** @return The duration of the selected dates, in months */
@@ -64,12 +64,10 @@ export default {
 
   mounted() {
     this.$watch('$store.state.selectedStatistics', this.updateGraph, { deep: true });
+    this.$watch('$store.state.queryResults', this.updateGraph, { deep: true });
   },
 
   watch: {
-    dataProjection() {
-      this.updateGraph();
-    },
   },
 
   methods: {

@@ -13,8 +13,8 @@ const debug = process.env.NODE_ENV !== 'production';
 function updateQueryResults(state) {
   const userSelections = {
     location: state.location.uri,
-    fromDate: state.fromDate,
-    toDate: state.toDate,
+    from: state.fromDate,
+    to: state.toDate,
   };
 
   getUkhpiData(userSelections);
@@ -34,12 +34,8 @@ export const mutations = {
     updateQueryResults(state);
   },
 
-  [types.SET_FROM_DATE](state, fromDate) {
+  [types.SET_DATES](state, { from: fromDate, to: toDate }) {
     state.fromDate = fromDate;
-    updateQueryResults(state);
-  },
-
-  [types.SET_TO_DATE](state, toDate) {
     state.toDate = toDate;
     updateQueryResults(state);
   },

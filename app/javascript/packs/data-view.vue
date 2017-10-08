@@ -2,11 +2,7 @@
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
       <data-view-location :initial-location='location'></data-view-location>
-      <data-view-dates
-        :initial-from-date='fromDate'
-        :initial-to-date='toDate'
-      >
-      </data-view-dates>
+      <data-view-dates></data-view-dates>
 
       <data-view-statistics :initial-statistics='theme.statistics'></data-view-statistics>
     </div>
@@ -106,8 +102,8 @@ export default {
     initialiseStore() {
       this.$store.commit(INITIALISE, {
         location: this.location,
-        fromDate: this.fromDate,
-        toDate: this.toDate,
+        fromDate: this.fromDate.date,
+        toDate: this.toDate.date,
       });
     },
 
