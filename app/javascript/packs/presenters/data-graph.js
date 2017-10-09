@@ -328,8 +328,6 @@ function prepareOverlay(projection, graphConfig) {
 }
 
 export default function drawGraph(projection, options) {
-  console.log(projection);
-  console.log(options);
   const graphConfig = Object.assign({}, GRAPH_OPTIONS[options.indicatorId], options);
 
   Object.assign(graphConfig, drawGraphRoot(graphConfig));
