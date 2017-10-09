@@ -13,7 +13,7 @@ class LocationRecord
   end
 
   def value_of(json)
-    (json && json['value']) || json
+    json&.fetch('value') || json
   end
 
   def uri
@@ -125,7 +125,7 @@ def write_regions_files(locations, all_types)
   location_names = []
   gss_index = {}
 
-  locations.each do |_uri, loc|
+  locations.each_value do |loc|
     loc.labels.each do |lang, txt|
       location_names << { value: loc.uri, label: txt, lang: lang } unless txt.empty?
     end
@@ -139,21 +139,16 @@ def write_regions_files(locations, all_types)
   puts 'Generating region files ... '
   # JavaScript module output
   open('regions-table.js', 'w') do |file|
-    file << "modulejs.define(\"regions-table\", [], function() {\n"
-    file << "\"use strict\";\n"
-    file << "  var locationNames = #{location_names.to_json};\n"
-    file << "  var types = #{all_types.to_a.sort.to_json};\n"
-    file << "  var locations = {\n"
+    file << "export const locationNames = #{location_names.to_json};\n"
+    file << "export const types = #{all_types.to_a.sort.to_json};\n"
+    file << "export const locations = {\n"
     sep = '  '
     locations.each do |uri, loc|
       file << "#{sep}\"#{uri}\": #{loc.to_json}"
       sep = ",\n  "
     end
     file << "\n};\n"
-    file << "  var gssIndex = #{gss_index.to_json};\n"
-    file << '  return {names: locationNames, types: types, ' \
-            "locations: locations, gssIndex: gssIndex };\n"
-    file << "});\n"
+    file << "export const gssIndex = #{gss_index.to_json};\n"
   end
 
   # Ruby module output
@@ -183,7 +178,7 @@ end
 # rubocop:disable Metrics/BlockLength
 namespace :ukhpi do
   desc 'Generate the regions files by SPARQL query'
-  task regions_sparql: %i[regions_query regions_generate move_region_files]
+  task regions: %i[regions_query regions_generate regions_files_lint move_region_files]
 
   # run the SPARQL query to generate the region results
   task regions_query: :environment do
@@ -248,10 +243,17 @@ namespace :ukhpi do
     write_regions_files(locations, all_types)
   end
 
+  # Use eslint in --fix mode to re-parse the JSON output and convert it to
+  # compliant ES2015
+  task regions_files_lint: :environment do
+    puts 'Linting generated files ...'
+    raise 'Failed to perform eslint step' unless system('eslint --fix regions-table.js')
+  end
+
   # Move the files to their correct locations
   task move_region_files: :environment do
     puts 'Moving region files ...'
-    File.rename('regions-table.js', 'app/assets/javascripts/regions-table.js')
+    File.rename('regions-table.js', 'app/javascript/packs/lib/regions-table.js')
     File.rename('regions-table.rb', 'app/models/regions-table.rb')
   end
 
