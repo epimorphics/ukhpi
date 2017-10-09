@@ -4,6 +4,7 @@
       title='Choose a different region or location'
       :visible.sync='showDialog'
       :show-close='true'
+      @close='notifyDialogClosed'
     >
       <el-row>
         <el-col :span='16'>
@@ -18,7 +19,7 @@
       <el-row>
         <el-col :span='8'>
           <label>
-            Location type:
+            Type of location:
             <el-select v-model='locationType'>
               <el-option value='country' label='Country' />
               <el-option value='la' label='Local authority' />
@@ -29,7 +30,7 @@
         </el-col>
         <el-col :span='16'>
           <label>
-            Location name:
+            Name:
             <el-autocomplete
               class='inline-input u-full-width'
               v-model='selectedLocation'
@@ -55,8 +56,12 @@
       </el-row>
 
       <span slot='footer' class='dialog-footer'>
-        <el-button @click='showDialog = false'>Cancel</el-button>
-        <el-button type='primary' @click='onSaveChanges'>Confirm</el-button>
+        <el-button @click='onHideDialog'>Cancel</el-button>
+        <el-button
+          type='primary'
+          @click='onSaveChanges'
+          :disabled='!allowConfirm'
+        >Confirm</el-button>
       </span>
     </el-dialog>
   </div>
@@ -65,6 +70,7 @@
 <script>
 import _ from 'lodash';
 import { locations } from '../lib/regions-table';
+import { SET_LOCATION } from '../store/mutation-types';
 
 export default {
   data: () => ({
@@ -87,6 +93,12 @@ export default {
     },
   },
 
+  computed: {
+    allowConfirm() {
+      return this.selectedLocation !== null && this.selectedLocation.length > 0;
+    },
+  },
+
   watch: {
     dialogVisible() {
       this.showDialog = this.dialogVisible;
@@ -98,10 +110,16 @@ export default {
       const loc = this.locationsIndex[this.locationType][this.selectedLocation];
       if (loc) {
         this.validationMessage = null;
+        this.$store.commit(SET_LOCATION, loc);
+        this.onHideDialog();
       } else {
         this.validationMessage =
           `Sorry, '${this.selectedLocation}' is not a recognised location of type '${this.locationType}'`;
       }
+    },
+
+    onHideDialog() {
+      this.showDialog = false;
     },
 
     queryLocation(query, cb) {
@@ -143,6 +161,11 @@ export default {
     /** User has selected an autocomplete option */
     clearValidation() {
       this.validationMessage = null;
+    },
+
+    /** Notify the parent container that the dialog has closed */
+    notifyDialogClosed() {
+      this.$emit('update:dialog-visible', false);
     },
   },
 

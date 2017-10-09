@@ -7,7 +7,10 @@
       </a>
     </span>
 
-    <select-location :dialogVisible.sync='dialogVisible'></select-location>
+    <select-location
+      :dialog-visible='dialogVisible'
+      @update:dialog-visible='val => dialogVisible = val'
+    ></select-location>
   </div>
 </template>
 
