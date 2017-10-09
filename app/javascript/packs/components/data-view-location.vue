@@ -10,15 +10,15 @@
 <script>
 export default {
   data: () => ({
-    location: null,
   }),
 
-  props: [
-    'initialLocation',
-  ],
+  computed: {
+    location() {
+      return this.$store.state.location;
+    },
+  },
 
   mounted() {
-    this.location = this.initialLocation;
   },
 
   methods: {
