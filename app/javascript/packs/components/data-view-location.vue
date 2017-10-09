@@ -1,15 +1,22 @@
 <template lang="html">
-  <span v-if='location' class='o-data-view__js-options-location'>
-    <a href='#' @click='onChangeLocation'>
-      {{ location.labels.en }}
-      <i class='fa fa-edit'></i>
-    </a>
-  </span>
+  <div  class='o-data-view__js-options-location'>
+    <span v-if='location'>
+      <a href='#' @click='onChangeLocation'>
+        {{ location.labels.en }}
+        <i class='fa fa-edit'></i>
+      </a>
+    </span>
+
+    <select-location :dialogVisible.sync='dialogVisible'></select-location>
+  </div>
 </template>
 
 <script>
+import SelectLocation from './select-location.vue';
+
 export default {
   data: () => ({
+    dialogVisible: false,
   }),
 
   computed: {
@@ -18,12 +25,16 @@ export default {
     },
   },
 
+  components: {
+    SelectLocation,
+  },
+
   mounted() {
   },
 
   methods: {
     onChangeLocation() {
-      this.$message('This is how the user will change the location');
+      this.dialogVisible = true;
     },
   },
 };

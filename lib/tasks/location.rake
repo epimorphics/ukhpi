@@ -111,6 +111,7 @@ class Location
   def json_attributes
     [
       "uri: \"#{uri}\"",
+      "labels: #{labels.to_json}",
       "gss: \"#{gss}\"",
       "container: \"#{container}\"",
       "container2: \"#{container2}\"",
@@ -139,7 +140,7 @@ def write_regions_files(locations, all_types)
   puts 'Generating region files ... '
   # JavaScript module output
   open('regions-table.js', 'w') do |file|
-    file << "export const locationNames = #{location_names.to_json};\n"
+    # file << "export const locationNames = #{location_names.to_json};\n"
     file << "export const types = #{all_types.to_a.sort.to_json};\n"
     file << "export const locations = {\n"
     sep = '  '
@@ -148,7 +149,7 @@ def write_regions_files(locations, all_types)
       sep = ",\n  "
     end
     file << "\n};\n"
-    file << "export const gssIndex = #{gss_index.to_json};\n"
+    # file << "export const gssIndex = #{gss_index.to_json};\n"
   end
 
   # Ruby module output
