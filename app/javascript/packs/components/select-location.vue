@@ -55,6 +55,12 @@
         </p>
       </el-row>
 
+      <el-row>
+        <div class='c-map'>
+          <div :id='mapElementId'></div>
+        </div>
+      </el-row>
+
       <span slot='footer' class='dialog-footer'>
         <el-button @click='onHideDialog'>Cancel</el-button>
         <el-button
@@ -69,6 +75,7 @@
 
 <script>
 import { locationNamed, locationsNamed } from '../lib/locations';
+import { showMap } from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
 
 export default {
@@ -84,17 +91,28 @@ export default {
       required: true,
       type: Boolean,
     },
+    elementId: {
+      required: true,
+      type: String,
+    },
   },
 
   computed: {
     allowConfirm() {
       return this.selectedLocation !== null && this.selectedLocation.length > 0;
     },
+    mapElementId() {
+      return `${this.elementId}__map`;
+    },
   },
 
   watch: {
     dialogVisible() {
       this.showDialog = this.dialogVisible;
+
+      if (this.dialogVisible) {
+        this.$nextTick(() => { showMap(this.mapElementId); });
+      }
     },
   },
 
@@ -129,6 +147,9 @@ export default {
     notifyDialogClosed() {
       this.$emit('update:dialog-visible', false);
     },
+  },
+
+  mounted() {
   },
 };
 </script>

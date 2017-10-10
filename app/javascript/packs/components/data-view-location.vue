@@ -9,6 +9,7 @@
 
     <select-location
       :dialog-visible='dialogVisible'
+      :element-id='elementId'
       @update:dialog-visible='val => dialogVisible = val'
     ></select-location>
   </div>
@@ -21,6 +22,13 @@ export default {
   data: () => ({
     dialogVisible: false,
   }),
+
+  props: {
+    elementId: {
+      required: true,
+      type: String,
+    },
+  },
 
   computed: {
     location() {

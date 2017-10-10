@@ -1,7 +1,7 @@
 <template lang="html">
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
-      <data-view-location></data-view-location>
+      <data-view-location :element-id='elementId'></data-view-location>
       <data-view-dates></data-view-dates>
 
       <data-view-statistics :initial-statistics='theme.statistics'></data-view-statistics>

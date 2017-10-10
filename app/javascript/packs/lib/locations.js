@@ -67,3 +67,19 @@ export function locationsNamed(locationType, locationName) {
 export function locationNamed(locationType, locationName) {
   return locationsOfType(locationType)[locationName];
 }
+
+/** @return The first feature to match the given location name */
+export function findLocationNamed(locationName) {
+  const matcher = new RegExp(locationName, 'i');
+  let result = null;
+
+  _.find(indexedLocations(), (typedLocations, locationType) =>
+    _.find(typedLocations, (location) => {
+      if (matcher.match(location.labels.en)) {
+        result = { location, locationType };
+      }
+      return result;
+    }));
+
+  return result;
+}
