@@ -59,6 +59,7 @@ const LA_MAP_ERRATA = [
 ];
 
 const featuresIndex = {};
+const backgroundLayer = Leaflet.layerGroup([]);
 
 /* Layer styling */
 
@@ -75,8 +76,8 @@ function standardRegionStyle() {
 
 function backgroundRegionStyle() {
   return {
-    fillColor: '#666666',
-    color: '#666666',
+    fillColor: '#999999',
+    color: '#999999',
     weight: 1,
     dashArray: '3',
     fillOpacity: 0.7,
@@ -91,22 +92,20 @@ function highlightRegionStyle() {
   };
 }
 
-function isBackgroundLayer(layer) {
-  return layer && _.get(layer, 'feature.properties.ISO') === 'GBR';
-}
-
-function defaultRegionStyle(layer) {
-  return (isBackgroundLayer(layer) ? backgroundRegionStyle : standardRegionStyle)(layer);
-}
-
 function selectedRegionStyle(layer) {
-  return _.extend(defaultRegionStyle(layer), {
+  return _.extend(standardRegionStyle(layer), {
     fillColor: '#C0C006',
     color: '#686',
     fillOpacity: 0.7,
     dashArray: '',
   });
 }
+
+/** Apply the given style to the given layer */
+function styleLayer(layer, style) {
+  layer.setStyle(style(layer));
+}
+
 
 /* Index of features */
 
@@ -170,7 +169,7 @@ function addToPartition(partitionTable, key, layer) {
 
 /** @return the feature set from loading the given GeoJSON structure */
 function loadGeoJson(json) {
-  return Leaflet.geoJson(json, { style: defaultRegionStyle /* , onEachFeature */ });
+  return Leaflet.geoJson(json, { style: standardRegionStyle /* , onEachFeature */ });
 }
 
 /** Update the index of GB and NI GeoJSON features */
@@ -182,6 +181,12 @@ function indexFeatures() {
     features.eachLayer((layer) => {
       _.each(indexKeysByLayerType(layer), (indexKey) => {
         addToPartition(featuresIndex, indexKey, layer);
+
+        // if this is a country, we also use it to build the background layer
+        if (indexKey === 'country') {
+          console.log('Adding to background layer');
+          backgroundLayer.addLayer(layer);
+        }
       });
     });
   });
@@ -213,11 +218,16 @@ let leafletMap = null;
 /** @return The Leaflet map object, creating a new one if necessary */
 function createMap(elementId = 'map') {
   if (!leafletMap) {
+    indexFeatures();
+
     leafletMap = Leaflet.map(elementId)
-      .setView([54.0072, -2], 5);
+      .setView([54.6, -2], 5);
     leafletMap
       .attributionControl
       .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
+    leafletMap
+      .addLayer(backgroundLayer);
+    backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundRegionStyle); });
   }
 
   return leafletMap;
