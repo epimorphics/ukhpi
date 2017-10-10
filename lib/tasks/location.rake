@@ -139,7 +139,7 @@ def write_regions_files(locations, all_types)
 
   puts 'Generating region files ... '
   # JavaScript module output
-  open('regions-table.js', 'w') do |file|
+  open('locations-data.js', 'w') do |file|
     # file << "export const locationNames = #{location_names.to_json};\n"
     file << "export const types = #{all_types.to_a.sort.to_json};\n"
     file << "export const locations = {\n"
