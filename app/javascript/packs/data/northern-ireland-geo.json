@@ -1,12 +1,6 @@
 {
 	"name" : "northern-ireland-geo",
 	"type" : "FeatureCollection",
-	"crs" : {
-		"type" : "name",
-		"properties" : {
-			"name" : "EPSG:29903"
-		}
-	},
 	"features" : [
 		{
 			"type" : "Feature",

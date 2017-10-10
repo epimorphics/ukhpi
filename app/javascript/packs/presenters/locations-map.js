@@ -113,7 +113,7 @@ function selectedRegionStyle(layer) {
 /** @return The location object denoted by the layer, looked up by name */
 function findLayerLocation(layer) {
   const { name } = layer.feature.properties;
-  const { location } = findLocationNamed(name);
+  const location = findLocationNamed(name);
 
   if (location) {
     return location.uri;
@@ -242,7 +242,7 @@ function removeLayer(layer, map) {
 
 /** Show the given feature group on the map */
 function showFeatureGroup(groupId, map) {
-  currentLayer = indexedFeatures[groupId];
+  currentLayer = indexedFeatures()[groupId];
   map.addLayer(currentLayer);
 }
 

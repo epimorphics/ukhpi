@@ -1,7 +1,11 @@
 /* Styles for the map selection view */
 
-.o-map {
-  min-height: 200px;
+.c-map {
+  min-height: 300px;
   width: 100%;
-  height: 100%;
+
+  .leaflet-container {
+    width: 640px;
+    height: 350px;
+  }
 }

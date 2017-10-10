@@ -8,6 +8,20 @@ const locationsIndex = {
   county: {},
 };
 
+const exceptions = {
+  'Sheffield City Region': 'Sheffield',
+  'Liverpool City Region': 'Liverpool',
+  'Tees Valley': null,
+  'Cambridgeshire and Peterborough': null,
+  'West of England': null,
+  'Kingston upon Hull, City of': 'City of Kingston upon Hull',
+  'Herefordshire, County of': 'Herefordshire',
+  'Bristol, City of': 'City of Bristol',
+  'Aberdeen City': 'City of Aberdeen',
+  'Dundee City': 'City of Dundee',
+  'Glasgow City': 'City of Glasgow',
+};
+
 let indexInitialised = false;
 
 /** Which inddex should this location go into? */
@@ -70,12 +84,13 @@ export function locationNamed(locationType, locationName) {
 
 /** @return The first feature to match the given location name */
 export function findLocationNamed(locationName) {
-  const matcher = new RegExp(locationName, 'i');
+  const normalisedName = exceptions[locationName] || locationName;
+  const matcher = new RegExp(normalisedName, 'i');
   let result = null;
 
   _.find(indexedLocations(), (typedLocations, locationType) =>
     _.find(typedLocations, (location) => {
-      if (matcher.match(location.labels.en)) {
+      if (matcher.test(location.labels.en)) {
         result = { location, locationType };
       }
       return result;
