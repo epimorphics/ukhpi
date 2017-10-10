@@ -68,8 +68,7 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import { locations } from '../lib/regions-table';
+import { locationNamed, locationsNamed } from '../lib/locations';
 import { SET_LOCATION } from '../store/mutation-types';
 
 export default {
@@ -77,12 +76,6 @@ export default {
     showDialog: false,
     locationType: 'country',
     selectedLocation: null,
-    locationsIndex: {
-      country: {},
-      la: {},
-      region: {},
-      county: {},
-    },
     validationMessage: null,
   }),
 
@@ -107,7 +100,7 @@ export default {
 
   methods: {
     onSaveChanges() {
-      const loc = this.locationsIndex[this.locationType][this.selectedLocation];
+      const loc = locationNamed(this.locationType, this.selectedLocation);
       if (loc) {
         this.validationMessage = null;
         this.$store.commit(SET_LOCATION, loc);
@@ -123,39 +116,8 @@ export default {
     },
 
     queryLocation(query, cb) {
-      const candidates = _.keys(this.locationsIndex[this.locationType]);
-      const regex = new RegExp(query, 'i');
-      const filtered = candidates.filter(candidate => candidate.match(regex));
-      const values = filtered.map(v => ({ value: v }));
-      cb(values);
-    },
-
-    /** Which inddex should this location go into? */
-    locationIndexType(location) {
-      const name = location.labels.en;
-
-      switch (location.type) {
-        case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion':
-          return (name === 'England' || name.match(/(wales|scotland|ireland)/i)) ? 'country' : 'region';
-
-        case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County':
-          return 'county';
-
-        default:
-          // assume all other types are synonyms for local authority
-          return 'la';
-      }
-    },
-
-    /** Create an inverted index of names to locations, that we can use in search */
-    indexLocations() {
-      const index = this.locationsIndex;
-      const vm = this;
-
-      _.each(Object.values(locations), (location) => {
-        const name = location.labels.en;
-        index[vm.locationIndexType(location)][name] = location;
-      });
+      const filtered = locationsNamed(this.locationType, query);
+      cb(filtered.map(v => ({ value: v })));
     },
 
     /** User has selected an autocomplete option */
@@ -167,10 +129,6 @@ export default {
     notifyDialogClosed() {
       this.$emit('update:dialog-visible', false);
     },
-  },
-
-  mounted() {
-    this.indexLocations();
   },
 };
 </script>
