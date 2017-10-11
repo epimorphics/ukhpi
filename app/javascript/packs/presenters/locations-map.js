@@ -68,7 +68,7 @@ const backgroundLayer = Leaflet.layerGroup([]);
 
 let featuresIndexInitialised = false;
 
-let currentSelections = [];
+let currentSelection = null;
 
 let leafletMap = null;
 
@@ -90,9 +90,18 @@ function findLayerLocation(layer) {
   return null;
 }
 
+/** @return the full list of currently selected location URIs. Non-null, but may be empty */
+function currentSelections() {
+  return currentSelection ? (LOCATION_EXPANSIONS[currentSelection] || [currentSelection]) : [];
+}
+
+/** @return true if the layer is currently selected */
+function isLayerSelected(layer) {
+  return _.includes(currentSelections(), layer.options.ukhpiURI);
+}
 
 /* Layer styling */
-function standardRegionStyle() {
+function standardLocationStyle() {
   return {
     fillColor: '#5A8006',
     weight: 1,
@@ -103,7 +112,7 @@ function standardRegionStyle() {
   };
 }
 
-function backgroundRegionStyle() {
+function backgroundLocationStyle() {
   return {
     fillColor: '#999999',
     color: '#999999',
@@ -113,7 +122,7 @@ function backgroundRegionStyle() {
   };
 }
 
-function highlightRegionStyle() {
+function highlightLocationStyle() {
   return {
     color: '#222',
     fillColor: '#ded',
@@ -121,8 +130,8 @@ function highlightRegionStyle() {
   };
 }
 
-function selectedRegionStyle(layer) {
-  return _.extend(standardRegionStyle(layer), {
+function selectedLocationStyle(layer) {
+  return _.extend(standardLocationStyle(layer), {
     fillColor: '#C0C006',
     color: '#686',
     fillOpacity: 0.7,
@@ -133,6 +142,20 @@ function selectedRegionStyle(layer) {
 /** Apply the given style to the given layer */
 function styleLayer(layer, style) {
   layer.setStyle(style(layer));
+}
+
+/** Work out which style to use for a layer */
+function determineStyle(layer) {
+  return (isLayerSelected(layer)) ? selectedLocationStyle : standardLocationStyle;
+}
+
+/** Update all current layer styles */
+function updateCurrentLayersStyle() {
+  if (currentLayer) {
+    currentLayer.eachLayer((layer) => {
+      styleLayer(layer, determineStyle(layer));
+    });
+  }
 }
 
 /* Event handling and region selection */
@@ -164,14 +187,14 @@ function onHighlightFeature(e) {
   const locationAndType = findLayerLocation(layer);
   const label = locationAndType.location.labels.en;
 
-  styleLayer(layer, highlightRegionStyle);
+  styleLayer(layer, highlightLocationStyle);
   showPopup(label, e.latlng);
 }
 
 /** Unhighlight a feature of the map */
 function onUnhighlightFeature(e) {
   const layer = e.target;
-  styleLayer(layer, standardRegionStyle);
+  styleLayer(layer, determineStyle(layer));
 }
 
 
@@ -205,6 +228,7 @@ function indexKeysByLayerType(layer) {
 
   if (locationAndType) {
     const { location } = locationAndType;
+    Object.assign(layer.options, { ukhpiURI: location.uri });
 
     // add a partition key based on hierarchy position
     if (location.container2 === ENGLAND) {
@@ -244,7 +268,7 @@ function addToPartition(partitionTable, key, layer) {
 
 /** @return the feature set from loading the given GeoJSON structure */
 function loadGeoJson(json) {
-  return Leaflet.geoJson(json, { style: standardRegionStyle, onEachFeature });
+  return Leaflet.geoJson(json, { style: standardLocationStyle, onEachFeature });
 }
 
 /** Update the index of GB and NI GeoJSON features */
@@ -282,7 +306,7 @@ function indexedFeatures() {
 /** Reset any selections back to empty */
 function resetSelection() {
   // const cs = currentSelections; TODO
-  currentSelections = [];
+  currentSelection = null;
   // unHighlightFeature(cs); TODO
 }
 
@@ -298,7 +322,7 @@ function createMap(elementId = 'map') {
       .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
     leafletMap
       .addLayer(backgroundLayer, { pane: 'tilePane' });
-    backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundRegionStyle); });
+    backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundLocationStyle); });
   }
 
   return leafletMap;
@@ -326,7 +350,6 @@ function showFeatureGroup(groupId, map) {
 }
 
 /** Display the map and optionally a feature group */
-/* eslint-disable import/prefer-default-export */
 export function showMap(elementId, featureGroupId) {
   const map = getMap(elementId);
 
@@ -336,6 +359,12 @@ export function showMap(elementId, featureGroupId) {
   }
 }
 
+/** Nominate a new location to be the currently selected location */
+export function setSelectedLocationMap(location) {
+  console.log('Setting selected location URI to ', location.uri);
+  currentSelection = location.uri;
+  updateCurrentLayersStyle();
+}
 
 /*
 ///////////////////////////////////////
@@ -369,7 +398,7 @@ function unHighlightFeatures(featureNames) {
 }
 
 function styleFor(layerName) {
-  return _.includes(this._currentSelections, layerName) ? selectedRegionStyle : defaultRegionStyle;
+  return _.includes(this._currentSelections, layerName) ? selectedLocationStyle : defaultLocationStyle;
 }
 
 function styleLayerNamed(layerName, style) {
@@ -391,13 +420,13 @@ function showSelectedLocations(locations) {
 
   if (this._currentSelections) {
     _.each(this._currentSelections, (selectedLayer) => {
-      sln(selectedLayer, defaultRegionStyle);
+      sln(selectedLayer, defaultLocationStyle);
     });
     this._currentSelections = [];
   }
 
   _.each(locations, (layer) => {
-    sln(layer, selectedRegionStyle);
+    sln(layer, selectedLocationStyle);
   });
 
   this._currentSelections = locations;

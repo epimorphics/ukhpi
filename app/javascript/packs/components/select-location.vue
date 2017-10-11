@@ -75,7 +75,7 @@
 
 <script>
 import { locationNamed, locationsNamed } from '../lib/locations';
-import { showMap } from '../presenters/locations-map';
+import { showMap, setSelectedLocationMap } from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
 
 export default {
@@ -101,8 +101,13 @@ export default {
     allowConfirm() {
       return this.selectedLocation !== null && this.selectedLocation.length > 0;
     },
+
     mapElementId() {
       return `${this.elementId}__map`;
+    },
+
+    selectedLocationData() {
+      return locationNamed(this.locationType, this.selectedLocation);
     },
   },
 
@@ -118,14 +123,19 @@ export default {
     locationType() {
       showMap(this.mapElementId, this.locationType);
     },
+
+    selectedLocationData() {
+      if (this.selectedLocationData) {
+        setSelectedLocationMap(this.selectedLocationData);
+      }
+    },
   },
 
   methods: {
     onSaveChanges() {
-      const loc = locationNamed(this.locationType, this.selectedLocation);
-      if (loc) {
+      if (this.selectedLocationData) {
         this.validationMessage = null;
-        this.$store.commit(SET_LOCATION, loc);
+        this.$store.commit(SET_LOCATION, this.selectedLocationData);
         this.onHideDialog();
       } else {
         this.validationMessage =

@@ -1,5 +1,5 @@
 /* Component for rendering the map outlines as means of selecting regions */
-
+/* eslint-disable */
 modulejs.define( "map-view", [
   "lib/lodash",
   "lib/jquery",
