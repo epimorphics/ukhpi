@@ -63,6 +63,34 @@ const LA_MAP_ERRATA = [
 const featuresIndex = {};
 const backgroundLayer = Leaflet.layerGroup([]);
 
+
+/* Module variables */
+
+let featuresIndexInitialised = false;
+
+let currentSelections = [];
+
+let leafletMap = null;
+
+let currentLayer = null;
+
+
+/* Utilities */
+
+/** @return The location object denoted by the layer, looked up by name */
+function findLayerLocation(layer) {
+  const { name, ukhpiID } = layer.feature.properties;
+  const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
+
+  if (location) {
+    return location;
+  }
+
+  console.log(`Could not find location named ${name}`);
+  return null;
+}
+
+
 /* Layer styling */
 function standardRegionStyle() {
   return {
@@ -107,21 +135,56 @@ function styleLayer(layer, style) {
   layer.setStyle(style(layer));
 }
 
+/* Event handling and region selection */
+
+/** Show a popup with the location label */
+function showPopup(label, point) {
+  if (label) {
+    const popup = Leaflet.popup({
+      offset: new Leaflet.Point(0, -10),
+      autoPan: false,
+    })
+      .setLatLng(point)
+      .setContent(label);
+
+    popup.openOn(leafletMap);
+    const hidePopup = (function onHidePopup(m, p) {
+      return function onClosePopup() { m.closePopup(p); };
+    }(leafletMap, popup));
+
+    _.delay(hidePopup, 2000);
+  } else {
+    leafletMap.closePopup();
+  }
+}
+
+/** Highlight a feature of the map */
+function onHighlightFeature(e) {
+  const layer = e.target;
+  const locationAndType = findLayerLocation(layer);
+  const label = locationAndType.location.labels.en;
+
+  styleLayer(layer, highlightRegionStyle);
+  showPopup(label, e.latlng);
+}
+
+/** Unhighlight a feature of the map */
+function onUnhighlightFeature(e) {
+  const layer = e.target;
+  styleLayer(layer, standardRegionStyle);
+}
+
+
+/** Bind event handlers when each feature is first loaded */
+function onEachFeature(feature, layer) {
+  layer.on({
+    mouseover: onHighlightFeature,
+    mouseout: onUnhighlightFeature,
+    // click: _.bind(this.onSelectFeature, this),
+  });
+}
 
 /* Index of features */
-
-/** @return The location object denoted by the layer, looked up by name */
-function findLayerLocation(layer) {
-  const { name, ukhpiID } = layer.feature.properties;
-  const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
-
-  if (location) {
-    return location;
-  }
-
-  console.log(`Could not find location named ${name}`);
-  return null;
-}
 
 /** @return An array of the index keys under which we should index this layer */
 function indexKeysByLayerType(layer) {
@@ -181,7 +244,7 @@ function addToPartition(partitionTable, key, layer) {
 
 /** @return the feature set from loading the given GeoJSON structure */
 function loadGeoJson(json) {
-  return Leaflet.geoJson(json, { style: standardRegionStyle /* , onEachFeature */ });
+  return Leaflet.geoJson(json, { style: standardRegionStyle, onEachFeature });
 }
 
 /** Update the index of GB and NI GeoJSON features */
@@ -206,8 +269,6 @@ function indexFeatures() {
   });
 }
 
-let featuresIndexInitialised = false;
-
 /** @return The indexed collection of Leaflet layers, ensuring it is only initialised once */
 function indexedFeatures() {
   if (!featuresIndexInitialised) {
@@ -218,16 +279,12 @@ function indexedFeatures() {
   return featuresIndex;
 }
 
-let currentSelections = [];
-
 /** Reset any selections back to empty */
 function resetSelection() {
   // const cs = currentSelections; TODO
   currentSelections = [];
   // unHighlightFeature(cs); TODO
 }
-
-let leafletMap = null;
 
 /** @return The Leaflet map object, creating a new one if necessary */
 function createMap(elementId = 'map') {
@@ -254,8 +311,6 @@ function getMap(elementId = 'map') {
   return map;
 }
 
-let currentLayer = null;
-
 /** Remove the given feature group from the map */
 function removeLayer(layer, map) {
   if (layer) {
@@ -276,10 +331,11 @@ export function showMap(elementId, featureGroupId) {
   const map = getMap(elementId);
 
   if (featureGroupId) {
-    removeLayer(currentLayer, map)
+    removeLayer(currentLayer, map);
     showFeatureGroup(featureGroupId, map);
   }
 }
+
 
 /*
 ///////////////////////////////////////
@@ -372,48 +428,6 @@ function onSelectLocation(e, uri) {
   this.showSelectedLocations(selected);
 }
 
-function onEachFeature(feature, layer) {
-  layer.on({
-    mouseover: _.bind(this.onHighlightFeature, this),
-    mouseout: _.bind(this.onUnhighlightFeature, this),
-    click: _.bind(this.onSelectFeature, this),
-  });
-}
-
-function onHighlightFeature(e) {
-  const layer = e.target;
-  const feature = layer.feature;
-
-  this.styleLayer(layer, highlightRegionStyle);
-  this.showPopup(_.get(feature, 'properties.ukhpiLabel'), e.latlng);
-}
-
-function showPopup(label, point) {
-  if (label) {
-    const popup = Leaflet.popup({
-      offset: new Leaflet.Point(0, -10),
-      autoPan: false,
-    })
-      .setLatLng(point)
-      .setContent(label);
-
-    popup.openOn(this._map);
-    const hidePopup = (function (m, p) {
-      return function () { m.closePopup(p); };
-    }(this._map, popup));
-
-    _.delay(hidePopup, 2000);
-  } else {
-    this._map.closePopup();
-  }
-}
-
-function onUnhighlightFeature(e) {
-  const layer = e.target;
-  const uri = layer.feature.properties.ukhpiURI;
-  const style = this.styleFor(uri);
-  this.styleLayer(layer, style);
-}
 
 function onSelectFeature(l) {
   const feature = l.target && l.target.feature;

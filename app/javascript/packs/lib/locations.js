@@ -20,6 +20,7 @@ const exceptions = {
   'Aberdeen City': 'City of Aberdeen',
   'Dundee City': 'City of Dundee',
   'Glasgow City': 'City of Glasgow',
+  'Outline of Northern Ireland': 'Northern Ireland'
 };
 
 let indexInitialised = false;
@@ -85,7 +86,7 @@ export function locationNamed(locationType, locationName) {
 /** @return The first feature to match the given location name */
 export function findLocationNamed(locationName) {
   const normalisedName = exceptions[locationName] || locationName;
-  const matcher = new RegExp(`^${normalisedName}\$`, 'i');
+  const matcher = new RegExp(`^${normalisedName}$`, 'i');
   let result = null;
 
   _.find(indexedLocations(), (typedLocations, locationType) =>
