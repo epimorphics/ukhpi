@@ -66,14 +66,20 @@ const backgroundLayer = Leaflet.layerGroup([]);
 
 /* Module variables */
 
+/** Guard flag so that we only initialise the features index once */
 let featuresIndexInitialised = false;
 
+/** The currently selected location URI, or null */
 let currentSelection = null;
 
+/** The root leaflet map object */
 let leafletMap = null;
 
+/** The currently displayed layerGroup (countries, counties, etc) */
 let currentLayer = null;
 
+/** Callback to notify Vue that user has selected a location via the map */
+let onSelectionCallback = null;
 
 /* Utilities */
 
@@ -197,13 +203,18 @@ function onUnhighlightFeature(e) {
   styleLayer(layer, determineStyle(layer));
 }
 
+/** Select a feature */
+function onSelectFeature(e) {
+  const layer = e.target;
+  onSelectionCallback(layer.options.ukhpiURI);
+}
 
 /** Bind event handlers when each feature is first loaded */
 function onEachFeature(feature, layer) {
   layer.on({
     mouseover: onHighlightFeature,
     mouseout: onUnhighlightFeature,
-    // click: _.bind(this.onSelectFeature, this),
+    click: onSelectFeature,
   });
 }
 
@@ -350,8 +361,9 @@ function showFeatureGroup(groupId, map) {
 }
 
 /** Display the map and optionally a feature group */
-export function showMap(elementId, featureGroupId) {
+export function showMap(elementId, featureGroupId, selectionCallback) {
   const map = getMap(elementId);
+  onSelectionCallback = selectionCallback;
 
   if (featureGroupId) {
     removeLayer(currentLayer, map);

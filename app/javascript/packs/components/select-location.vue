@@ -74,7 +74,8 @@
 </template>
 
 <script>
-import { locationNamed, locationsNamed } from '../lib/locations';
+import _ from 'lodash';
+import { locationNamed, locationsNamed, findLocationById } from '../lib/locations';
 import { showMap, setSelectedLocationMap } from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
 
@@ -116,7 +117,8 @@ export default {
       this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
-        this.$nextTick(() => { showMap(this.mapElementId, this.locationType); });
+        const cb = _.bind(this.onSelectLocationURI, this);
+        this.$nextTick(() => { showMap(this.mapElementId, this.locationType, cb); });
       }
     },
 
@@ -145,6 +147,11 @@ export default {
 
     onHideDialog() {
       this.showDialog = false;
+    },
+
+    onSelectLocationURI(uri) {
+      const locationAndType = findLocationById(uri, 'uri');
+      this.selectedLocation = locationAndType.location.labels.en;
     },
 
     queryLocation(query, cb) {

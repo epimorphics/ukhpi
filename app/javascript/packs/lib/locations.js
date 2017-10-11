@@ -101,12 +101,12 @@ export function findLocationNamed(locationName) {
 }
 
 /** @return The first feature to match the given ID */
-export function findLocationById(id) {
+export function findLocationById(id, prop = 'gss') {
   let result = null;
 
   _.find(indexedLocations(), (typedLocations, locationType) =>
     _.find(typedLocations, (location) => {
-      if (location.gss === id) {
+      if (location[prop] === id) {
         result = { location, locationType };
       }
       return result;
