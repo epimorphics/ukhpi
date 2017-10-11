@@ -5,12 +5,16 @@
 class UserCompareSelections
   include UserChoices
 
+  DEFAULT_INDICATOR = 'hpi'
+  DEFAULT_STATISTIC = 'all'
+  DEFAULT_LOCATIONS = ['http://landregistry.data.gov.uk/id/region/united-kingdom'].freeze
+
   USER_PARAMS_MODEL = {
-    'location' => Struct::UserParam.new(DEFAULT_REGION, true, nil),
+    'location' => Struct::UserParam.new(DEFAULT_LOCATIONS, true, nil),
     'from' => Struct::UserParam.new(Date.today.prev_year, false, nil),
     'to' => Struct::UserParam.new(Date.today, false, nil),
-    'st' => Struct::UserParam.new(DEFAULT_STATISTICS, false, nil),
-    'in' => Struct::UserParam.new(DEFAULT_INDICATORS, false, nil),
+    'st' => Struct::UserParam.new(DEFAULT_STATISTIC, false, nil),
+    'in' => Struct::UserParam.new(DEFAULT_INDICATOR, false, nil),
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),

@@ -8,4 +8,6 @@ Rails.application.routes.draw do
   resources :exploration, only: [:new]
   resources :download, only: [:new]
   resource :browse, only: %i[show edit], controller: :browse
+
+  resource :compare, only: %i[show], controller: :compare
 end
