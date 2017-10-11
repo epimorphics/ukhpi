@@ -115,7 +115,7 @@ function findLayerLocation(layer) {
   const location = findLocationNamed(name);
 
   if (location) {
-    return location.uri;
+    return location;
   }
 
   console.log(`Could not find location named ${name}`);
@@ -125,13 +125,15 @@ function findLayerLocation(layer) {
 /** @return An array of the index keys under which we should index this layer */
 function indexKeysByLayerType(layer) {
   const partitionKeys = [];
-  const location = findLayerLocation(layer);
+  const locationAndType = findLayerLocation(layer);
 
   if (layer.feature.properties.type.match(/countries|country/)) {
     partitionKeys.push('country');
   }
 
-  if (location) {
+  if (locationAndType) {
+    const { location } = locationAndType;
+    console.log(location);
     // add a partition key based on hierarchy position
     if (location.container2 === ENGLAND) {
       partitionKeys.push('county');
@@ -155,6 +157,7 @@ function indexKeysByLayerType(layer) {
     }
   }
 
+  console.log(layer.feature.properties.name, _.uniq(partitionKeys));
   return _.uniq(partitionKeys);
 }
 
@@ -184,7 +187,6 @@ function indexFeatures() {
 
         // if this is a country, we also use it to build the background layer
         if (indexKey === 'country') {
-          console.log('Adding to background layer');
           backgroundLayer.addLayer(layer);
         }
       });
@@ -218,7 +220,7 @@ let leafletMap = null;
 /** @return The Leaflet map object, creating a new one if necessary */
 function createMap(elementId = 'map') {
   if (!leafletMap) {
-    indexFeatures();
+    indexedFeatures();
 
     leafletMap = Leaflet.map(elementId)
       .setView([54.6, -2], 5);
@@ -253,6 +255,7 @@ function removeLayer(layer, map) {
 /** Show the given feature group on the map */
 function showFeatureGroup(groupId, map) {
   currentLayer = indexedFeatures()[groupId];
+  console.log('showFeaturesGroup', currentLayer);
   map.addLayer(currentLayer);
 }
 

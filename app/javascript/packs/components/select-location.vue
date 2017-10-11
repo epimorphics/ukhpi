@@ -114,6 +114,10 @@ export default {
         this.$nextTick(() => { showMap(this.mapElementId/* , this.locationType */); });
       }
     },
+
+    locationType() {
+      showMap(this.mapElementId, this.locationType);
+    },
   },
 
   methods: {
