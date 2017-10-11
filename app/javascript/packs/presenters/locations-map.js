@@ -1,10 +1,12 @@
 /* Component for rendering the map outlines as means of selecting regions */
 import _ from 'lodash';
 import Leaflet from 'leaflet';
+import cloneLayer from 'leaflet-clonelayer';
 
-import { findLocationNamed } from '../lib/locations';
-import gbFeaturesData from '../data/great-britain-geo.json';
-import niFeaturesData from '../data/northern-ireland-geo.json';
+import { findLocationNamed, findLocationById } from '../lib/locations';
+// import gbFeaturesData from '../data/great-britain-geo.json';
+// import niFeaturesData from '../data/northern-ireland-geo.json';
+import ukFeaturesData from '../data/uk-geo.json';
 
 const DEFAULT_LAYER = 'country';
 
@@ -62,7 +64,6 @@ const featuresIndex = {};
 const backgroundLayer = Leaflet.layerGroup([]);
 
 /* Layer styling */
-
 function standardRegionStyle() {
   return {
     fillColor: '#5A8006',
@@ -111,8 +112,8 @@ function styleLayer(layer, style) {
 
 /** @return The location object denoted by the layer, looked up by name */
 function findLayerLocation(layer) {
-  const { name } = layer.feature.properties;
-  const location = findLocationNamed(name);
+  const { name, ukhpiID } = layer.feature.properties;
+  const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
 
   if (location) {
     return location;
@@ -126,14 +127,22 @@ function findLayerLocation(layer) {
 function indexKeysByLayerType(layer) {
   const partitionKeys = [];
   const locationAndType = findLayerLocation(layer);
+  const props = layer.feature.properties;
+  let isCountry = false;
 
-  if (layer.feature.properties.type.match(/countries|country/)) {
+  if (props.type && props.type.match(/countries|country/)) {
     partitionKeys.push('country');
+    isCountry = true;
+  }
+
+  if (props.ukhpiType === 'country') {
+    partitionKeys.push('country');
+    isCountry = true;
   }
 
   if (locationAndType) {
     const { location } = locationAndType;
-    console.log(location);
+
     // add a partition key based on hierarchy position
     if (location.container2 === ENGLAND) {
       partitionKeys.push('county');
@@ -143,7 +152,7 @@ function indexKeysByLayerType(layer) {
       partitionKeys.push('county');
     }
 
-    if (_.includes(REGION_TYPES, location.type)) {
+    if (_.includes(REGION_TYPES, location.type) && !isCountry) {
       partitionKeys.push('region');
     }
 
@@ -157,14 +166,14 @@ function indexKeysByLayerType(layer) {
     }
   }
 
-  console.log(layer.feature.properties.name, _.uniq(partitionKeys));
   return _.uniq(partitionKeys);
 }
 
 /** Update the given partition table by assigning the `layer` to the category for `key` */
 function addToPartition(partitionTable, key, layer) {
   if (!_.has(partitionTable, key)) {
-    Object.assign(partitionTable, { [key]: Leaflet.layerGroup([]) });
+    const layerGroup = Leaflet.layerGroup([], { pane: 'overlayPane' });
+    Object.assign(partitionTable, { [key]: layerGroup });
   }
 
   partitionTable[key].addLayer(layer);
@@ -177,17 +186,20 @@ function loadGeoJson(json) {
 
 /** Update the index of GB and NI GeoJSON features */
 function indexFeatures() {
-  const gbFeatures = loadGeoJson(gbFeaturesData);
-  const niFeatures = loadGeoJson(niFeaturesData);
+  // const gbFeatures = loadGeoJson(gbFeaturesData);
+  // const niFeatures = loadGeoJson(niFeaturesData);
+  const ukFeatures = loadGeoJson(ukFeaturesData);
 
-  _.each([gbFeatures, niFeatures], (features) => {
+  _.each([ukFeatures], (features) => {
     features.eachLayer((layer) => {
       _.each(indexKeysByLayerType(layer), (indexKey) => {
         addToPartition(featuresIndex, indexKey, layer);
 
         // if this is a country, we also use it to build the background layer
         if (indexKey === 'country') {
-          backgroundLayer.addLayer(layer);
+          const bgLayer = cloneLayer(layer);
+          bgLayer.options.pane = 'tilePane';
+          backgroundLayer.addLayer(bgLayer);
         }
       });
     });
@@ -228,7 +240,7 @@ function createMap(elementId = 'map') {
       .attributionControl
       .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
     leafletMap
-      .addLayer(backgroundLayer);
+      .addLayer(backgroundLayer, { pane: 'tilePane' });
     backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundRegionStyle); });
   }
 
@@ -255,11 +267,11 @@ function removeLayer(layer, map) {
 /** Show the given feature group on the map */
 function showFeatureGroup(groupId, map) {
   currentLayer = indexedFeatures()[groupId];
-  console.log('showFeaturesGroup', currentLayer);
   map.addLayer(currentLayer);
 }
 
 /** Display the map and optionally a feature group */
+/* eslint-disable import/prefer-default-export */
 export function showMap(elementId, featureGroupId) {
   const map = getMap(elementId);
 

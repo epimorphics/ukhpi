@@ -98,3 +98,18 @@ export function findLocationNamed(locationName) {
 
   return result;
 }
+
+/** @return The first feature to match the given ID */
+export function findLocationById(id) {
+  let result = null;
+
+  _.find(indexedLocations(), (typedLocations, locationType) =>
+    _.find(typedLocations, (location) => {
+      if (location.gss === id) {
+        result = { location, locationType };
+      }
+      return result;
+    }));
+
+  return result;
+}
