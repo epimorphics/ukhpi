@@ -8,8 +8,6 @@ import { findLocationNamed, findLocationById } from '../lib/locations';
 // import niFeaturesData from '../data/northern-ireland-geo.json';
 import ukFeaturesData from '../data/uk-geo.json';
 
-const DEFAULT_LAYER = 'country';
-
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england';
 
 const LOCAL_AUTHORITY_TYPES = [
@@ -373,108 +371,6 @@ export function showMap(elementId, featureGroupId, selectionCallback) {
 
 /** Nominate a new location to be the currently selected location */
 export function setSelectedLocationMap(location) {
-  console.log('Setting selected location URI to ', location.uri);
   currentSelection = location.uri;
   updateCurrentLayersStyle();
 }
-
-/*
-///////////////////////////////////////
-
-function showLocationSelection(selectionType) {
-  $('.c-location-search').addClass('hidden');
-  $(`.c-location-search.${selectionType}`).removeClass('hidden');
-}
-
-
-// feature selection
-
-function findLayer(id) {
-  let found = null;
-  _.each(this._featuresPartition, (featureGroup) => {
-    featureGroup.eachLayer((layer) => {
-      const uri = _.get(layer, 'feature.properties.ukhpiURI');
-      found = (id === uri) ? layer : found;
-    });
-  });
-
-  return found;
-}
-
-
-function unHighlightFeatures(featureNames) {
-  const mv = this;
-  _.each(featureNames, function (featureName) {
-    this.styleLayerNamed(featureName, mv.styleFor(featureName));
-  });
-}
-
-function styleFor(layerName) {
-  return _.includes(this._currentSelections, layerName) ? selectedLocationStyle : defaultLocationStyle;
-}
-
-function styleLayerNamed(layerName, style) {
-  const layer = this.findLayer(layerName);
-
-  if (layer) {
-    this.styleLayer(layer, style);
-  } else {
-    Log.warn(`No layer for: ${layerName}`);
-  }
-}
-
-function styleLayer(layer, style) {
-  layer.setStyle(style(layer));
-}
-
-function showSelectedLocations(locations) {
-  const sln = _.bind(this.styleLayerNamed, this);
-
-  if (this._currentSelections) {
-    _.each(this._currentSelections, (selectedLayer) => {
-      sln(selectedLayer, defaultLocationStyle);
-    });
-    this._currentSelections = [];
-  }
-
-  _.each(locations, (layer) => {
-    sln(layer, selectedLocationStyle);
-  });
-
-  this._currentSelections = locations;
-}
-
-function setDefaultLocation(uri) {
-  this._defaultLocation = uri;
-}
-
-function onShowTab(e) {
-  const target = $(e.target).attr('href');
-  if (target === '#location') {
-    this.show(true);
-  }
-}
-
-function onRevealPreferences() {
-  this.show(true);
-}
-
-function onChangeLocationType(e, args) {
-  this.showLocationSelection(args.locationType);
-  _.defer(_.bind(this.showLayer, this), args.locationType, this._map);
-}
-
-function onSelectLocation(e, uri) {
-  const selected = LOCATION_EXPANSIONS[uri] || [uri];
-  this.showSelectedLocations(selected);
-}
-
-
-function onSelectFeature(l) {
-  const feature = l.target && l.target.feature;
-  if (feature) {
-    const uri = feature.properties.ukhpiURI;
-    $('body').trigger(Constants.EVENT_SELECTED_MAP, uri);
-  }
-}
-*/
