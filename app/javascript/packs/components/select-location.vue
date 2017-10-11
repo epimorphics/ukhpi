@@ -111,7 +111,7 @@ export default {
       this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
-        this.$nextTick(() => { showMap(this.mapElementId/* , this.locationType */); });
+        this.$nextTick(() => { showMap(this.mapElementId, this.locationType); });
       }
     },
 
