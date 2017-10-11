@@ -1,10 +1,24 @@
 .grid-row
   .column-full
     %article
+      %p
+        Quick links:
+        %a{ href: '#property_type' } <i class='fa fa-caret-right'></i> by property type
+        %a{ href: '#ftb_foo' } <i class='fa fa-caret-right'></i> by buyer status
+        %a{ href: '#cash_mortgage' } <i class='fa fa-caret-right'></i> by funding status
+        %a{ href: '#new_existing' } <i class='fa fa-caret-right'></i> by property status
+        %a{ href: '#volume' } <i class='fa fa-caret-right'></i> by sales volume
+
       %h1.o-heading--2
         = t('index.main_heading')
 
       .u-js-only.c-options-select
 
-      - @view_state.data_views.each do |data_view|
-        = render partial: 'data_view', locals: { data_view: data_view }
+      - @view_state.each_theme_with_views do |theme, data_views|
+        .o-ukhpi-theme
+          %h2.o-heading--3{ id: theme.slug }
+            = t(theme.slug)
+          %p.o-ukhpi-theme__intro.u-muted
+            = t("intro.#{theme.slug}")
+          - data_views.each do |data_view|
+            = render partial: 'data_view', locals: { data_view: data_view }

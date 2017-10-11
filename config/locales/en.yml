@@ -55,4 +55,11 @@ en:
   ftb_foo: "Buyer status"
   cash_mortgage: "Funding status"
   new_existing: "Property status"
-  sales_volume: "Total sales volume"
+  volume: "Total sales volume"
+
+  intro:
+    property_type: "Track the index, average price and both monthly and annual change for all property types or focus on one in particular."
+    ftb_foo: "Track the index, average price and both monthly and annual change by the type of buyer e.g First Time Buyer or Former Owner Occupier"
+    cash_mortgage: "Track the index, average price, both monthly and annual change and sales volumes by funding status e.g. Cash/Mortgage"
+    new_existing: "Track the index, average price, both monthly and annual change and sales volumes by funding by property status e.g. New/Existing"
+    volume: "Track sales volumes over time"
