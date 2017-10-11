@@ -8,8 +8,8 @@
 # standard set of statistics is presented if there is no information in the
 # user parameters yet. This functionality combines the previous
 # `models/UserPreferences` and `presenters/Aspects`
-class UserSelections # rubocop:disable Metrics/ClassLength
-  Struct.new('UserParam', :default_value, :'array?', :alias)
+class UserSelections
+  include UserChoices
 
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
   DEFAULT_STATISTICS = %w[all vol].freeze
@@ -44,10 +44,12 @@ class UserSelections # rubocop:disable Metrics/ClassLength
               .map { |k, v| v.array? ? { k => [] } : k }
               .freeze
 
-  attr_reader :params
-
   def initialize(params)
     @params = params[:__safe_params] || params.permit(*PERMITTED)
+  end
+
+  def user_params_model
+    USER_PARAMS_MODEL
   end
 
   def selected_location
@@ -94,63 +96,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
     params['form-action']
   end
 
-  # @return A new UserSelections object in which the parameter `param` has
-  # the value `val` instead of the current value. Does not change this
-  # UserSelections object
-  def with(param, val)
-    new_params =
-      if array_valued?(param)
-        new_values = (param_or_default(param) + [val]).uniq
-        @params.merge(param => new_values)
-      else
-        @params.merge(param => val)
-      end
-
-    UserSelections.new(__safe_params: new_params)
-  end
-
-  # @return A new UserSelections object in which the parameter `param` has
-  # been removed. Does not change this UserSelections object
-  def without(param, val)
-    if array_valued?(param)
-      new_values = param_or_default(param).reject { |v| v == val }
-      new_params = params.to_h.merge(param => new_values)
-    else
-      new_params = params.reject { |key, _val| key == param }
-    end
-
-    UserSelections.new(__safe_params: new_params)
-  end
-
   def clear_selected_location
     params['location'] = nil
-  end
-
-  private
-
-  # Return the param value for the given key, or if that is nil:
-  # * return the value of the alias key if that has a value (legacy support)
-  # * return the default value
-  def param_or_default(key)
-    return params[key] unless params[key].nil?
-    if (alt_key = alternative_key(key)) && params[alt_key]
-      return params[alt_key]
-    end
-
-    USER_PARAMS_MODEL[key].default_value
-  end
-
-  def alternative_key(k)
-    USER_PARAMS_MODEL
-      .find { |_key, value| value.alias == k }
-      &.first
-  end
-
-  def parse_date(date)
-    date.is_a?(String) ? Date.parse(date) : date
-  end
-
-  def array_valued?(param)
-    USER_PARAMS_MODEL[param]&.array?
   end
 end
