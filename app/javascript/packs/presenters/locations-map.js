@@ -79,7 +79,7 @@ let leafletMap = null;
 let currentLayer = null;
 
 /** Callback to notify Vue that user has selected a location via the map */
-let onSelectionCallback = null;
+let onSelectionCallback;
 
 /* Utilities */
 

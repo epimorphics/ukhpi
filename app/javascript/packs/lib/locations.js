@@ -23,6 +23,8 @@ const exceptions = {
   'Outline of Northern Ireland': 'Northern Ireland'
 };
 
+const UK_COUNTRIES = /(wales|scotland|ireland|great britain|united kingdom)/i;
+
 let indexInitialised = false;
 
 /** Which inddex should this location go into? */
@@ -31,7 +33,7 @@ function locationIndexType(location) {
 
   switch (location.type) {
     case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion':
-      return (name === 'England' || name.match(/(wales|scotland|ireland)/i)) ? 'country' : 'region';
+      return (name === 'England' || name.match(UK_COUNTRIES)) ? 'country' : 'region';
 
     case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County':
       return 'county';

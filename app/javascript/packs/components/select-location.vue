@@ -29,7 +29,19 @@
           </label>
         </el-col>
         <el-col :span='16'>
-          <label>
+          <label v-if='locationType === "country"'>
+            <br />
+            <el-select v-model='selectedLocation'>
+              <el-option value='United Kingdom'></el-option>
+              <el-option value='Great Britain'></el-option>
+              <el-option value='England and Wales'></el-option>
+              <el-option value='England'></el-option>
+              <el-option value='Wales'></el-option>
+              <el-option value='Scotland'></el-option>
+              <el-option value='Northern Ireland'></el-option>
+            </el-select>
+          </label>
+          <label v-else>
             Name:
             <el-autocomplete
               class='inline-input u-full-width'
@@ -123,7 +135,8 @@ export default {
     },
 
     locationType() {
-      showMap(this.mapElementId, this.locationType);
+      const cb = _.bind(this.onSelectLocationURI, this);
+      showMap(this.mapElementId, this.locationType, cb);
     },
 
     selectedLocationData() {
