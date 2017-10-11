@@ -1,5 +1,5 @@
 <template lang="html">
-  <div  class='o-data-view__js-options-location'>
+  <div  class='c-options-selection__location'>
     <span v-if='location'>
       <a href='#' @click='onChangeLocation'>
         {{ location.labels.en }}

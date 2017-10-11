@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div class='o-data-view__js-options-dates'>
+  <div class='c-options-selection__dates'>
     <span class='' v-if='fromDate'>
       <a href='#' @click='onChangeDates'>
         {{ fromDateFormatted }} to {{ toDateFormatted }}
@@ -110,7 +110,4 @@ export default {
 </script>
 
 <style lang='scss'>
-.o-data-view__js-options-dates {
-  float: right;
-}
 </style>

@@ -3,7 +3,8 @@
     %article
       %h1.o-heading--2
         = t('index.main_heading')
-        %span.js-heading-location
+
+      .u-js-only.c-options-select
 
       - @view_state.data_views.each do |data_view|
         = render partial: 'data_view', locals: { data_view: data_view }
