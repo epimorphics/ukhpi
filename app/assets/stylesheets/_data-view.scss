@@ -36,6 +36,15 @@ $options-panel-grey: #eef1f6;
   .o-data-view__options-statistics {
     font-size: 85%;
   }
+
+  &__location, &__location:visited {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  &__location:hover {
+    text-decoration: underline;
+  }
 }
 
 .js .o-data-view__hide-action {

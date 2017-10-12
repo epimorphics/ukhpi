@@ -9,6 +9,8 @@ require_dependency 'active_support/core_ext/module/delegation'
 # the renderer to draw the display
 # rubocop:disable Metrics/ClassLength
 class DataView
+  include Rails.application.routes.url_helpers
+
   attr_reader :user_selections
   attr_reader :query_result
   attr_reader :indicator
@@ -95,7 +97,13 @@ class DataView
   private
 
   def title_with_indicator
-    "#{I18n.t(indicator.label_key)}, by #{I18n.t(title_key).downcase}"
+    change_path = edit_browse_path(user_selections.params)
+    <<~TITLE
+      #{I18n.t(indicator.label_key)}
+      for <a href='#{change_path}' class='o-data-view__location'>#{location.label},</a>
+      by #{I18n.t(title_key).downcase}
+    TITLE
+      .html_safe
   end
 
   def title_without_indicator
@@ -158,5 +166,9 @@ class DataView
 
     twl.statistics = stats
     twl
+  end
+
+  def location
+    Regions.lookup_region(user_selections.selected_location)
   end
 end
