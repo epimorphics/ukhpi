@@ -17,6 +17,7 @@
 
 <script>
 import SelectLocation from './select-location.vue';
+import bus from '../lib/event-bus';
 
 export default {
   data: () => ({
@@ -41,6 +42,7 @@ export default {
   },
 
   mounted() {
+    bus.$on('change-location', this.onChangeLocation);
   },
 
   methods: {

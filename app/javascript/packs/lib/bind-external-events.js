@@ -29,6 +29,27 @@ function bindShowHideDataView() {
     });
 }
 
+function handleLocationClick(event) {
+  // notify Vue
+  bus.$emit('change-location');
+
+  // don't follow the link
+  if (event.preventDefault) {
+    event.preventDefault();
+  }
+
+  return false;
+}
+
+function bindChangeLocationLink() {
+  document
+    .querySelectorAll('.o-data-view__location')
+    .forEach((node) => {
+      node.onclick = handleLocationClick;
+    });
+}
+
 export default function bindExternalEvents() {
   bindShowHideDataView();
+  bindChangeLocationLink();
 }
