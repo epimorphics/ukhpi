@@ -19,7 +19,7 @@ module UserChoices
         @params.merge(param => val)
       end
 
-    UserSelections.new(__safe_params: new_params)
+    self.class.new(__safe_params: new_params)
   end
 
   # @return A new UserSelections object in which the parameter `param` has
@@ -32,7 +32,7 @@ module UserChoices
       new_params = params.reject { |key, _val| key == param }
     end
 
-    UserSelections.new(__safe_params: new_params)
+    self.class.new(__safe_params: new_params)
   end
 
   # Return the param value for the given key, or if that is nil:

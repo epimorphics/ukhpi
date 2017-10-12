@@ -28,6 +28,37 @@ class CompareLocationsPresenter
     user_compare_selections.without('location', location.gss).to_h
   end
 
+  def with_statistic(statistic, indicator)
+    with_stat = user_compare_selections.with('st', statistic.slug)
+    if indicator
+      with_stat.with('in', indicator.slug)
+    else
+      with_stat.without('in', user_compare_selections.selected_indicator)
+    end .to_h
+  end
+
+  def statistic_indicator_choices # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    rows = []
+
+    ukhpi.themes.each_value do |theme|
+      if theme.slug == 'volume'
+        theme.statistics.each { |stat| rows << [stat, [nil, nil, nil, nil, [stat, nil]]] }
+      else
+        theme.statistics.each do |stat|
+          row = ukhpi.indicators.map { |indic| [stat, indic] }
+          rows << [stat, row + [nil]]
+        end
+      end
+    end
+
+    rows
+  end
+
+  def current_selection?(stat, indicator)
+    (stat.slug == user_compare_selections.selected_statistic) &&
+      (!indicator || indicator.slug == user_compare_selections.selected_indicator)
+  end
+
   private
 
   def indicator
