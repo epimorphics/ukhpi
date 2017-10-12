@@ -37,7 +37,9 @@ $options-panel-grey: #eef1f6;
     font-size: 85%;
   }
 
-  &__location, &__location:visited {
+  a.o-data-view__location,
+  a.o-data-view__location:visited,
+  a.o-data-view__location:link {
     color: $black;
     text-decoration: none;
   }
