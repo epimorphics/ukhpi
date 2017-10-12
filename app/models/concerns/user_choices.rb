@@ -60,4 +60,8 @@ module UserChoices
   def array_valued?(param)
     user_params_model[param]&.array?
   end
+
+  def to_h
+    params.to_h
+  end
 end

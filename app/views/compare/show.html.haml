@@ -1,7 +1,14 @@
 .grid-row
   .column-full
-    %article
+    %article.c-compare
       %h1.o-heading--2
         = @view_state.headline_summary
 
-      .u-js-only.c-options-select
+      %p.c-compare__locations
+        Between:
+        %ul.c-compare__locations-list
+        - @view_state.selected_locations.each do |location|
+          %li.c-compare__location
+            = location.label
+            = link_to(@view_state.without_location(location)) do
+              %i.fa.fa-times

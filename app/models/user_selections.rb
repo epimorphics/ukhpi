@@ -88,10 +88,6 @@ class UserSelections
     param_or_default('thm')
   end
 
-  def to_h
-    params.to_h
-  end
-
   def action
     params['form-action']
   end

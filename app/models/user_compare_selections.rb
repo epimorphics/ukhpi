@@ -7,7 +7,7 @@ class UserCompareSelections
 
   DEFAULT_INDICATOR = 'hpi'
   DEFAULT_STATISTIC = 'all'
-  DEFAULT_LOCATIONS = ['http://landregistry.data.gov.uk/id/region/united-kingdom'].freeze
+  DEFAULT_LOCATIONS = %w[K02000001 S92000003].freeze
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_LOCATIONS, true, nil),

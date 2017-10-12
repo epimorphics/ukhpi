@@ -1,0 +1,16 @@
+/* Styles for the copmare locations view */
+
+.c-compare {
+  &__locations {
+    display: inline;
+  }
+
+  &__locations-list {
+    list-style: none;
+    display: inline-block;
+  }
+
+  &__location {
+    display: inline-block;
+  }
+}

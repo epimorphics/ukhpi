@@ -18,6 +18,16 @@ class CompareLocationsPresenter
     "Comparing #{ind} for #{stat}, #{from} to #{to}"
   end
 
+  def selected_locations
+    user_compare_selections.selected_locations.map do |location_id|
+      Regions.lookup_gss(location_id)
+    end
+  end
+
+  def without_location(location)
+    user_compare_selections.without('location', location.gss).to_h
+  end
+
   private
 
   def indicator
