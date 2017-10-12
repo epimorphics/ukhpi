@@ -1,7 +1,7 @@
 .grid-row
   .column-full
     %article.c-compare
-      %h1.o-heading--2
+      %h2.o-heading--2
         = @view_state.headline_summary
 
       %p.c-compare__locations
@@ -13,7 +13,28 @@
             = link_to(@view_state.without_location(location)) do
               %i.fa.fa-times
 
-      %table
+      %table.c-compare__results
+        %thead
+          %tr
+            %th{ scope: 'col' }
+              Date
+            - @view_state.query_results.keys.sort.each do |location_name|
+              %th{ scope: 'col' }
+                = location_name
+        %tbody
+          - @view_state.query_results_rows.each do |row|
+            %tr{ class: cycle('u-row-odd', 'u-row-even') }
+              %th{ scope: 'row' }
+                = row.shift
+              - row.each do |value|
+                %td
+                  = value
+
+      %h3.o-heading--3 Change view
+      %p
+        You can select a different comparison between the selected locations:
+
+      %table.c-compare__choices
         %thead
           %tr
             %th
@@ -31,7 +52,7 @@
           - @view_state.statistic_indicator_choices.each do |choices|
             - statistic = choices.first
             - cells = choices.second
-            %tr
+            %tr{ class: cycle('u-row-odd', 'u-row-even') }
               %th{ scope: 'row' }
                 = t(statistic.label_key)
               - cells.each do |stat, indicator|

@@ -13,4 +13,29 @@
   &__location {
     display: inline-block;
   }
+
+  table {
+    width: 100%;
+
+    td {
+      text-align: right;
+    }
+
+    th {
+      text-align: left;
+    }
+
+    th[scope='col'] {
+      text-align: center;
+    }
+    
+    .u-row-odd {
+      background-color: $grey-3;
+    }
+  }
+
+  .c-compare__choices td {
+    text-align: center;
+  }
+
 }

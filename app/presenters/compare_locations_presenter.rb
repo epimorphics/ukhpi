@@ -5,9 +5,11 @@
 class CompareLocationsPresenter
   include I18n
   attr_reader :user_compare_selections
+  attr_reader :query_results
 
-  def initialize(user_compare_selections)
+  def initialize(user_compare_selections, query_results)
     @user_compare_selections = user_compare_selections
+    @query_results = query_results
   end
 
   def headline_summary
@@ -59,6 +61,18 @@ class CompareLocationsPresenter
       (!indicator || indicator.slug == user_compare_selections.selected_indicator)
   end
 
+  def query_results_rows # rubocop:disable Metrics/AbcSize
+    data_by_columns = query_results.keys.sort.map do |location_name|
+      query_results[location_name]
+    end
+
+    pred = selected_statistic_uri
+
+    data_by_columns.transpose.map do |row|
+      [period_date(row.first)] + (row.map { |values| values.fetch(pred)&.first })
+    end
+  end
+
   private
 
   def indicator
@@ -81,5 +95,14 @@ class CompareLocationsPresenter
 
   def ukhpi
     @ukhpi ||= UkhpiDataCube.new
+  end
+
+  def selected_statistic_uri
+    "ukhpi:#{indicator&.root_name}#{statistic&.root_name}"
+  end
+
+  def period_date(row)
+    raw_date = row['ukhpi:refMonth']['@value']
+    Date.strptime(raw_date, '%Y-%m').strftime('%b %Y')
   end
 end
