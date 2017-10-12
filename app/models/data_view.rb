@@ -100,14 +100,19 @@ class DataView
     change_path = edit_browse_path(user_selections.params)
     <<~TITLE
       #{I18n.t(indicator.label_key)}
-      for <a href='#{change_path}' class='o-data-view__location'>#{location.label},</a>
+      for <a href='#{change_path}' class='o-data-view__location'>#{location.label}</a>,
       by #{I18n.t(title_key).downcase}
     TITLE
       .html_safe
   end
 
   def title_without_indicator
-    I18n.t(title_key)
+    change_path = edit_browse_path(user_selections.params)
+    <<~TITLE
+      #{I18n.t(title_key).downcase}
+      for <a href='#{change_path}' class='o-data-view__location'>#{location.label}</a>
+    TITLE
+      .html_safe
   end
 
   def title_key
