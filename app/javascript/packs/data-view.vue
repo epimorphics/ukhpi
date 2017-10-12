@@ -85,6 +85,10 @@ export default {
       const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
       return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
     },
+
+    selectedLocation() {
+      return this.$store.state.location;
+    },
   },
 
   methods: {
@@ -116,6 +120,14 @@ export default {
         );
         node.className = cls;
       }
+    },
+  },
+
+  watch: {
+    selectedLocation() {
+      document
+        .querySelector(`#${this.elementId} .o-data-view__location`)
+        .innerHTML = this.selectedLocation.labels.en;
     },
   },
 
