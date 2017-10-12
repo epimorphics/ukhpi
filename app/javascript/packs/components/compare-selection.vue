@@ -57,7 +57,7 @@ export default {
       const st = this.statistic.slug;
       const path = document.location.pathname.replace(/browse/, 'compare');
 
-      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&gss[]=${gss0}&gss[]=${gss1}`;
+      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}`;
     },
   },
 
