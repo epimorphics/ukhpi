@@ -23,6 +23,15 @@
           >
           </data-view-table>
         </el-tab-pane>
+        <el-tab-pane label='Compare with ...' name='compare-tab'>
+          <p v-if='selectedLocation'>
+            You can see how {{ selectedLocation.labels.en }} compares to
+            other places:
+            <el-button @click='onCompareSelect'>
+              select another location
+            </el-button>
+          </p>
+        </el-tab-pane>
       </el-tabs>
     </div>
   </div>
@@ -31,6 +40,7 @@
 
 <script>
 import kebabCase from 'kebab-case';
+import _ from 'lodash';
 import DataViewLocation from './components/data-view-location.vue';
 import DataViewDates from './components/data-view-dates.vue';
 import DataViewStatistics from './components/data-view-statistics.vue';
@@ -119,6 +129,19 @@ export default {
           `o-data-view--${closing ? 'closed' : 'open'}`,
         );
         node.className = cls;
+      }
+    },
+
+    onCompareSelect() {
+      const vm = this;
+      const statistic =
+        _.find(this.theme.statistics, stat => vm.$store.state.selectedStatistics[stat.slug]);
+
+      if (statistic) {
+        bus.$emit('select-comparison', {
+          indicator: this.indicator,
+          statistic,
+        });
       }
     },
   },

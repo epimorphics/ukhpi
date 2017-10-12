@@ -4,6 +4,7 @@ import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
 import DataView from './data-view.vue';
 import OptionsSelection from './components/options-selection.vue';
+import CompareSelection from './components/compare-selection.vue';
 import bindExternalEvents from './lib/bind-external-events';
 
 Vue.use(ElementUI, { locale });
@@ -33,6 +34,10 @@ document.addEventListener('DOMContentLoaded', () => {
   // add options selection component
   const optionsNode = document.querySelector('.c-options-select');
   new Vue(OptionsSelection).$mount(optionsNode);
+
+  // add comparison selection component
+  const compareNode = document.querySelector('.c-compare-select');
+  new Vue(CompareSelection).$mount(compareNode);
 
   bindExternalEvents();
 });

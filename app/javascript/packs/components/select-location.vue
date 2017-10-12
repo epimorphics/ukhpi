@@ -1,7 +1,7 @@
 <template lang='html'>
   <div class='o-select-location'>
     <el-dialog
-      title='Choose a different region or location'
+      :title='title'
       :visible.sync='showDialog'
       :show-close='true'
       @close='notifyDialogClosed'
@@ -9,9 +9,7 @@
       <el-row>
         <el-col :span='16'>
           <p>
-            To show UKHPI statistics for a different part of the UK, select the new
-            location by searching on the name, or by clicking a location on the map
-            below.
+            {{ prompt }}
           </p>
         </el-col>
       </el-row>
@@ -90,6 +88,7 @@ import _ from 'lodash';
 import { locationNamed, locationsNamed, findLocationById } from '../lib/locations';
 import { showMap, setSelectedLocationMap } from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
+import bus from '../lib/event-bus';
 
 export default {
   data: () => ({
@@ -106,6 +105,20 @@ export default {
     },
     elementId: {
       required: true,
+      type: String,
+    },
+    prompt: {
+      required: false,
+      type: String,
+      default: 'To show UKHPI statistics for a different part of the UK, select the new location by searching on the name, or by clicking a location on the map below.',
+    },
+    title: {
+      required: false,
+      type: String,
+      default: 'Choose a different region or location',
+    },
+    emitEvent: {
+      required: false,
       type: String,
     },
   },
@@ -150,7 +163,13 @@ export default {
     onSaveChanges() {
       if (this.selectedLocationData) {
         this.validationMessage = null;
-        this.$store.commit(SET_LOCATION, this.selectedLocationData);
+
+        if (this.emitEvent) {
+          bus.$emit(this.emitEvent, this.selectedLocationData);
+        } else {
+          this.$store.commit(SET_LOCATION, this.selectedLocationData);
+        }
+
         this.onHideDialog();
       } else {
         this.validationMessage =
