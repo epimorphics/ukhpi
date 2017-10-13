@@ -37,9 +37,9 @@ en:
   house_price_index: "House price index"
   hpi: "House price index"
   percentage_monthly_change: "Percentage change (monthly)"
-  pcm: "Percentage change (monthly)"
+  pmc: "Percentage change (monthly)"
   percentage_annual_change: "Percentage change (yearly)"
-  pca: "Percentage change (yearly)"
+  pac: "Percentage change (yearly)"
   average_price: "Average price"
   avg: "Average price"
 
