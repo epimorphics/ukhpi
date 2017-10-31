@@ -109,7 +109,7 @@ class DataView
   def title_without_indicator
     change_path = edit_browse_path(user_selections.params)
     <<~TITLE
-      #{I18n.t(title_key).downcase}
+      #{I18n.t(title_key)}
       in <a href='#{change_path}' class='o-data-view__location'>#{location.label}</a>
     TITLE
       .html_safe

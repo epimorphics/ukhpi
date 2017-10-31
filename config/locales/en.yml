@@ -60,6 +60,7 @@ en:
   cash_mortgage: "Funding status"
   new_existing: "Property status"
   volume: "Total sales volume"
+  sales_volume: "Total sales volume"
 
   intro:
     property_type: "Track the index, average price and both monthly and annual change for all property types or focus on one in particular."
