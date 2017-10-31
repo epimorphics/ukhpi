@@ -24,8 +24,8 @@ module UserChoices
 
   # @return A new UserSelections object in which the parameter `param` has
   # been removed. Does not change this UserSelections object
-  def without(param, val)
-    if array_valued?(param)
+  def without(param, val = nil)
+    if array_valued?(param) && val
       new_values = param_or_default(param).reject { |v| v == val }
       new_params = params.to_h.merge(param => new_values)
     else
