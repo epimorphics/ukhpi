@@ -57,12 +57,20 @@ export default {
   methods: {
     /**
      * Handler for the event of the user clicking to select or deselect a statistic.
-     * Actual state change happens by propagating a change to the Vuex store
+     * Actual state change happens by propagating a change to the Vuex store.
+     * Allows the click-target to be embedded within the button element, by walking
+     * up the DOM tree until we find the element with the statistic slug.
      */
     onSelectStatistic(event) {
-      const slug = event.toElement.attributes.getNamedItem('data-slug').value;
-      const selected = this.isSelectedStatistic(slug);
-      this.$store.commit(SELECT_STATISTIC, { slug, selected: !selected });
+      let slug;
+      let { target } = event;
+      do {
+        slug = target.attributes.getNamedItem('data-slug');
+        target = target.parentElement;
+      } while (!slug);
+
+      const selected = this.isSelectedStatistic(slug.value);
+      this.$store.commit(SELECT_STATISTIC, { slug: slug.value, selected: !selected });
     },
 
     findStatistic(slug) {
