@@ -47,7 +47,7 @@ import DataViewStatistics from './components/data-view-statistics.vue';
 import DataViewTable from './components/data-view-table.vue';
 import DataViewGraph from './components/data-view-graph.vue';
 import store from './store/index';
-import { INITIALISE } from './store/mutation-types';
+import { INITIALISE, SELECT_STATISTIC } from './store/mutation-types';
 import bus from './lib/event-bus';
 
 export default {
@@ -122,13 +122,43 @@ export default {
     },
 
     onOpenCloseDataView({ id, closing }) {
-      if (this.elementId === id) {
-        const node = document.getElementById(id);
-        const cls = node.className.replace(
-          /o-data-view--(open|closed)/,
-          `o-data-view--${closing ? 'closed' : 'open'}`,
-        );
-        node.className = cls;
+      if (this.elementId !== id) {
+        return;
+      }
+
+      if (!closing) {
+        this.ensureSomeSelectedStatisitics();
+      }
+      this.updateOpenCloseState(id, closing);
+    },
+
+    /** Set the CSS class of the section element according to whether we are opening or closing */
+    updateOpenCloseState(id, closing) {
+      const node = document.getElementById(id);
+      const cls = node.className.replace(
+        /o-data-view--(open|closed)/,
+        `o-data-view--${closing ? 'closed' : 'open'}`,
+      );
+      node.className = cls;
+    },
+
+    /** Ensure that at least one statistic is selected, or we will have an empty graph */
+    ensureSomeSelectedStatisitics() {
+      const stor = this.$store;
+      const selectedStats = stor.state.selectedStatistics;
+
+      const atLeastOneSelected =
+        this.theme
+          .statistics
+          .map(stat => selectedStats[stat.slug])
+          .includes(true);
+
+      if (!atLeastOneSelected) {
+        // if none are currently selected, select them all
+        this.theme.statistics.forEach(stat => stor.commit(
+          SELECT_STATISTIC,
+          { slug: stat.slug, selected: true },
+        ));
       }
     },
 

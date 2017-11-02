@@ -7,8 +7,13 @@
 <script>
 import Moment from 'moment';
 import drawGraph from '../presenters/data-graph';
+import bus from '../lib/event-bus';
 
 export default {
+  data: () => ({
+    redrawScheduled: false,
+  }),
+
   props: {
     indicator: {
       required: false,
@@ -65,6 +70,8 @@ export default {
   mounted() {
     this.$watch('$store.state.selectedStatistics', this.updateGraph, { deep: true });
     this.$watch('$store.state.queryResults', this.updateGraph, { deep: true });
+
+    bus.$on('open-close-data-view', this.onOpenCloseDataView);
   },
 
   watch: {
@@ -73,11 +80,22 @@ export default {
   methods: {
     updateGraph() {
       if (this.dataProjection && this.isVisible(this.graphElementId)) {
+        this.redrawGraphNextTick();
+      }
+    },
+
+    /** Ensures that only one redrawing of the graph is scheduled at once, even if
+     * called multiple times */
+    redrawGraphNextTick() {
+      if (!this.redrawScheduled) {
+        this.redrawScheduled = true;
         this.$nextTick(this.redrawGraph);
       }
     },
 
     redrawGraph() {
+      this.redrawScheduled = false;
+
       drawGraph(
         this.dataProjection,
         {
@@ -94,6 +112,12 @@ export default {
     isVisible(id) {
       const elem = document.getElementById(id);
       return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+    },
+
+    onOpenCloseDataView({ id, closing }) {
+      if (this.elementId === id && !closing) {
+        this.redrawGraphNextTick();
+      }
     },
   },
 };
