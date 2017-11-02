@@ -15,7 +15,7 @@
       <el-row>
         <el-col :span='12'>
           <label>
-            From:
+            Start:
             <el-date-picker
               v-model='newFromDate'
               type='month'
@@ -25,7 +25,7 @@
         </el-col>
         <el-col :span='12'>
           <label>
-            To:
+            End:
             <el-date-picker
               v-model='newToDate'
               type='month'
@@ -88,8 +88,8 @@ export default {
     },
 
     onSaveChanges() {
-      if (Moment(this.newToDate).isSameOrBefore(Moment(this.newFromDate))) {
-        this.validationMessage = '"To" date must be later than the "from" date';
+      if (Moment(this.newToDate).isBefore(Moment(this.newFromDate))) {
+        this.validationMessage = 'The start date must be earlier than the end date';
       } else {
         const from = Moment(this.newFromDate).format('YYYY-MM-DD');
         const to = Moment(this.newToDate).format('YYYY-MM-DD');
