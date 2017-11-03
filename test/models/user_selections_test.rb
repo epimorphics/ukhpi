@@ -124,5 +124,15 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections1.selected_indicators.must_include 'percentageMonthlyChange'
       end
     end
+
+    describe '#summary' do
+      it 'should produce a summary of the preferences including the theme' do
+        selections = user_selections('thm' => ['property_type'],
+                                     'from' => '2017-01',
+                                     'to' => '2017-10',
+                                     'location' => 'http://landregistry.data.gov.uk/id/region/england')
+        selections.summary.must_equal 'property_type England from 2017-01 to 2017-10'
+      end
+    end
   end
 end

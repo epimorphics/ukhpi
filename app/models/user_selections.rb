@@ -95,4 +95,37 @@ class UserSelections
   def clear_selected_location
     params['location'] = nil
   end
+
+  def summary
+    templates = {
+      thm: '%s',
+      location: '%s',
+      from: 'from %s',
+      to: 'to %s'
+    }
+
+    apply_templates(templates, @params).join(' ')
+  end
+
+  private
+
+  def apply_templates(templates, params)
+    templates.map do |k, template|
+      if (value = params[k])
+        template % format_summary_value(value)
+      end
+    end .compact
+  end
+
+  def format_summary_value(value)
+    if (r = Regions.lookup_region(value))
+      r.label
+    elsif value.is_a?(Date)
+      value.strftime('%B %Y')
+    elsif value.is_a?(Array)
+      value.map(&method(:format_summary_value)).join(' ')
+    else
+      value.to_s
+    end
+  end
 end
