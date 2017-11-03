@@ -75,6 +75,11 @@ class UkhpiDataCube
     INDICATORS
   end
 
+  # @return A given indicator by name
+  def indicator(slug)
+    indicators.find { |ind| ind.slug == slug }
+  end
+
   # Invoke a block with each indicator as an argument
   def each_indicator(&block)
     indicators.each(&block)
