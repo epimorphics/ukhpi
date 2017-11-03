@@ -1,4 +1,1 @@
-<%= @download_state.column_names.join( "," )%>
-<% @download_state.rows.each do |row| %>
-<%= raw( row.join( "," ) ) %>
-<% end %>
+<%= download_presenter.column_names.join( "," )%>
