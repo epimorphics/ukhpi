@@ -26,7 +26,57 @@ class DownloadPresenter
     (fixed_labels + selected_labels).map { |label| "\"#{label}\"" }
   end
 
+  # @return An array of rows of data matching the selected columns
+  def rows
+    row_preds = row_predicates
+    static_values = static_row_values
+
+    query_command.results.map do |result|
+      as_row(result, static_values, row_preds)
+    end
+  end
+
   private
+
+  # @return An array of the predicates used to project a result to a download row
+  def row_predicates
+    fixed_predicates = FIXED_COLUMNS.map { |c| c[:pred] }
+    selected_predicates = map_user_selectable_columns do |ind_stat|
+      "ukhpi:#{ind_stat[:ind]&.root_name}#{ind_stat[:stat].root_name}"
+    end
+
+    fixed_predicates + selected_predicates
+  end
+
+  # @return A map of values that do not change from row to row
+  def static_row_values
+    sample_row = @query_command.results&.first
+    return {} unless sample_row
+
+    {
+      'static:regionName' => region_name(sample_row),
+      'static:regionURI' => region_uri(sample_row),
+      'static:regionGSS' => region_gss(sample_row),
+      'static:reportingPeriod' => reporting_period_label(sample_row)
+    }
+  end
+
+  # Given an array of predicates, a result and some static data return a single
+  # row of the download that contains just the results matching the predicates.
+  def as_row(result, static_values, preds)
+    preds.map { |pred| format_value(result[pred] || static_values[pred]) }
+  end
+
+  def format_value(val)
+    v = val
+
+    if v.is_a?(Hash)
+      v = v['@value'] if v['@value']
+      v = v['@id'] if v['@id']
+    end
+
+    v
+  end
 
   # Map the given block over the selected columns
   def map_user_selectable_columns(&block)
