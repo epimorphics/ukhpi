@@ -36,6 +36,16 @@ class DownloadPresenter
     end
   end
 
+  # @return The embedded user selections
+  def user_selections
+    query_command.user_selections
+  end
+
+  # @return The embedded results
+  def results
+    query_command.results
+  end
+
   private
 
   # @return An array of the predicates used to project a result to a download row
