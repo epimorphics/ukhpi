@@ -1,0 +1,20 @@
+.o-data-view-download {
+  background-color: white;
+  padding: 5px;
+  font-size: 90%;
+
+  li {
+    margin-bottom: 15px;
+  }
+
+  &__button {
+    @extend .el-button;
+    @extend .el-button--small;
+    @extend .el-button--primary;
+    text-decoration: none;
+  }
+
+  &__button, &__button:visited, &__button:link {
+    color: white;
+  }
+}

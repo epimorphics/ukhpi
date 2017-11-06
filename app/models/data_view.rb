@@ -78,10 +78,12 @@ class DataView
 
   # @return A Hash of the attributes needed to convey the key parameters of
   # this data view to JavaScript code
-  def as_js_attributes
+  def as_js_attributes # rubocop:disable Metrics/AbcSize
     {
       indicator: indicator.to_json,
+      indicator_name: indicator && I18n.t(indicator.label_key).to_json,
       theme: theme_with_labels.to_json,
+      theme_name: I18n.t(theme.slug).to_json,
       location: Locations.lookup_location(selected_location).to_json,
       from_date: { date: user_selections.from_date }.to_json,
       to_date: { date: user_selections.to_date }.to_json,

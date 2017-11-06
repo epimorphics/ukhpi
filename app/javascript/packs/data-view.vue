@@ -23,6 +23,15 @@
           >
           </data-view-table>
         </el-tab-pane>
+        <el-tab-pane label='Download this data' name='download-tab'>
+          <data-view-download
+            :theme='theme'
+            :themeName='themeName'
+            :indicator='indicator'
+            :indicatorName='indicatorName'
+          >
+          </data-view-download>
+        </el-tab-pane>
         <el-tab-pane label='Compare with ...' name='compare-tab'>
           <p v-if='selectedLocation'>
             You can see how {{ selectedLocation.labels.en }} compares to
@@ -46,6 +55,7 @@ import DataViewDates from './components/data-view-dates.vue';
 import DataViewStatistics from './components/data-view-statistics.vue';
 import DataViewTable from './components/data-view-table.vue';
 import DataViewGraph from './components/data-view-graph.vue';
+import DataViewDownload from './components/data-view-download.vue';
 import store from './store/index';
 import { INITIALISE, SELECT_STATISTIC } from './store/mutation-types';
 import bus from './lib/event-bus';
@@ -54,7 +64,9 @@ export default {
   data: () => ({
     activeTab: 'graphs-tab',
     theme: null,
+    themeName: null,
     indicator: null,
+    indicatorName: null,
     location: null,
     fromDate: null,
     toDate: null,
@@ -67,6 +79,7 @@ export default {
     DataViewStatistics,
     DataViewTable,
     DataViewGraph,
+    DataViewDownload,
   },
 
   beforeMount() {
