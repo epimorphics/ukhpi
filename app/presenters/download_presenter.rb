@@ -138,6 +138,6 @@ class DownloadPresenter
   end
 
   def all_themes
-    ukhpi.themes.map(&:slug)
+    ukhpi.themes.values.map(&:slug)
   end
 end
