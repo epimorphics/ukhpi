@@ -75,7 +75,7 @@ class DataViewsPresenter
   # @return An arry of the UKHPI statistics themes (e.g. sales volume) that *do not* get
   # qualified by the UKHPI indicators (e.g. `index`, `averagePrice`)
   def non_qualified_themes
-    [:volume]
+    %i[volume volume_funding_status volume_property_status]
   end
 
   def ukhpi

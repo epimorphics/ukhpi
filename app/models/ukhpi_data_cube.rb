@@ -38,6 +38,16 @@ class UkhpiDataCube
 
     volume: Struct::UkhpiTheme.new('volume', [
       Struct::UkhpiStatistic.new('vol', 'salesVolume', 'sales_volume')
+    ]),
+
+    volume_funding_status: Struct::UkhpiTheme.new('volume_funding_status', [
+      Struct::UkhpiStatistic.new('vcs', 'salesVolumeCash', 'sales_volume_cash'),
+      Struct::UkhpiStatistic.new('vmg', 'salesVolumeMortgage', 'sales_volume_mortgage')
+    ]),
+
+    volume_property_status: Struct::UkhpiTheme.new('volume_property_status', [
+      Struct::UkhpiStatistic.new('vnw', 'salesVolumeNewBuild', 'sales_volume_new_build'),
+      Struct::UkhpiStatistic.new('vex', 'salesVolumeExistingProperty', 'sales_volume_existing')
     ])
   }.freeze
 

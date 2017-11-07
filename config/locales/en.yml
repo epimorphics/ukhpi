@@ -61,6 +61,13 @@ en:
   new_existing: "Property status"
   volume: "Total sales volume"
   sales_volume: "Total sales volume"
+  volume_property_status: "Sales volume by property status"
+  volume_funding_status: "Sales volume by funding status"
+
+  sales_volume_cash: "Cash-sales volume"
+  sales_volume_mortgage: "Mortgage-sales volume"
+  sales_volume_new_build: "New-build sales volume"
+  sales_volume_existing: "Existing-property sales volume"
 
   intro:
     property_type: "Track the index, average price and both monthly and annual change for all property types or focus on one in particular."
@@ -68,3 +75,5 @@ en:
     cash_mortgage: "Track the index, average price, both monthly and annual change and sales volumes by funding status e.g. Cash/Mortgage"
     new_existing: "Track the index, average price, both monthly and annual change and sales volumes by funding by property status e.g. New/Existing"
     volume: "Track sales volumes over time"
+    volume_property_status: "Sales volume for new buildings vs. existing properties"
+    volume_funding_status: "Sales volume for cash sales vs. mortgage sales"
