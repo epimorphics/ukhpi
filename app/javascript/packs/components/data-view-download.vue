@@ -7,7 +7,7 @@
         </p>
         <ul>
           <li>
-            Only data for <strong>{{ indicatorName }}</strong>:
+            Download only data for <strong>{{ indicatorName }}</strong>:
             <a class='o-data-view-download__button' :href='downloadUrl("csv", true)'>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
@@ -16,11 +16,11 @@
             </a>
           </li>
           <li>
-            All statistics for <strong>{{ themeName }}</strong>:
-            <a class='o-data-view-download__button' :href='downloadUrl("csv", false)'>
+            Download all statistics for <strong>{{ themeName }}</strong>:
+            <a class='o-data-view-download__button' :href='downloadUrl("csv", false)' download>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
-            <a class='o-data-view-download__button' :href='downloadUrl("json", false)'>
+            <a class='o-data-view-download__button' :href='downloadUrl("json", false)' download>
               download JSON <i class='fa fa-external-link'></i>
             </a>
           </li>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+const Routes = require('../lib/routes.js.erb');
+
 export default {
   props: {
     indicator: {
@@ -65,7 +67,16 @@ export default {
 
   methods: {
     downloadUrl(mediaType, onlyIndicator) {
-      return 'foo';
+      const options = {
+        format: mediaType,
+        'thm[]': this.theme.slug,
+      };
+
+      if (onlyIndicator && this.indicator) {
+        options['in[]'] = this.indicator.slug;
+      }
+
+      return `${Routes.newDownloadPath(options)}`;
     },
   },
 };
