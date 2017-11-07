@@ -8,10 +8,11 @@ class BrowseController < ApplicationController
 
   def show
     user_selections = UserSelections.new(params)
-    query_command = QueryCommand.new(user_selections)
-    query_command.perform_query
+    command = query_command.new(user_selections)
+    Rails.logger.debug("command = #{command.inspect}")
+    command.perform_query
 
-    @view_state = DataViewsPresenter.new(user_selections, query_command.results)
+    @view_state = DataViewsPresenter.new(user_selections, command.results)
 
     respond_to do |format|
       format.html
@@ -24,7 +25,12 @@ class BrowseController < ApplicationController
     process_form_action(@view_state)
   end
 
-  # private
+  private
+
+  # @return The appropriate query command class
+  def query_command
+    params[:explain] ? ExplainQueryCommand : QueryCommand
+  end
 
   # Look at the `action` parameter, which may be set by various action buttons
   # on the form, to determine whether we need to do any processing before

@@ -17,7 +17,7 @@ function updateQueryResults(state) {
     to: state.toDate,
   };
 
-  getUkhpiData(userSelections);
+  getUkhpiData(userSelections, true);
 }
 
 export const mutations = {

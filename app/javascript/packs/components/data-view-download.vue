@@ -29,7 +29,7 @@
           You can also download
           <a href=''>all UKHPI data for the selected location and period</a>,
           or <br />
-          <a href=''>try the SPARQL query</a>
+          <a :href='qonsolePath'>try the SPARQL query</a>
         </p>
         <p class='u-muted'>
           This data is licensed under the terms of the
@@ -65,7 +65,23 @@ export default {
     },
   },
 
+  computed: {
+    /**
+    * The path to the qonsole application
+    * @return {String} The path
+    */
+    qonsolePath() {
+      return `${window.location.pathname.replace(/\/[^/]*$/, '/qonsole')}?query=_localstore`;
+    },
+  },
+
   methods: {
+    /**
+     * Calculate the URL for downloading a particular slice of the data
+     * @param  {String} mediaType     Desired media type, e.g. json
+     * @param  {Boolean} onlyIndicator If true, download only the current indicator
+     * @return {String}               The download URL
+     */
     downloadUrl(mediaType, onlyIndicator) {
       const options = {
         format: mediaType,

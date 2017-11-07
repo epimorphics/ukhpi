@@ -4,16 +4,11 @@
 # only that it asks the DsAPI to explain its query strategy, rather than performing
 # the query.
 class ExplainQueryCommand < QueryCommand
-  attr_reader :explanation
-
-  def initialize(prefs)
-    super
-  end
-
   # Explain the given query, and stash the results. Return time taken in ms.
   def execute_query(service, query)
     start = Time.now
     @results = api_service(service).explain(query)
+    Rails.logger.debug("Query explanation: #{@results}")
     (Time.now - start) * MILLISECONDS
   end
 
