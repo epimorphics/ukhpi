@@ -53,10 +53,10 @@ class UkhpiDataCube
 
   INDICATORS =
     [
-      Struct::UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
       Struct::UkhpiIndicator.new('avg', 'averagePrice',           'average_price'),
+      Struct::UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change'),
       Struct::UkhpiIndicator.new('pmc', 'percentageChange',       'percentage_monthly_change'),
-      Struct::UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change')
+      Struct::UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index')
     ].freeze
 
   attr_reader :dsd
