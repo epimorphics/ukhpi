@@ -1,6 +1,20 @@
+/* Adjustments to Element defaults */
+
 @font-face {
     font-family: element-icons;
     src: asset-url('fonts/element-icons.woff') format('woff'), asset-url('fonts/element-icons.ttf') format('truetype');
     font-weight: 400;
     font-style: normal
+}
+
+.el-tabs__item {
+  color: $black;
+
+  &.is-active {
+    color: $black;
+  }
+
+  &:hover {
+    color: #20a0ff;
+  }
 }

@@ -8,7 +8,7 @@
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane label='View as graphs' name='graphs-tab'>
+        <el-tab-pane label='See data as graphs' name='graphs-tab'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -16,7 +16,7 @@
           >
           </data-view-graph>
         </el-tab-pane>
-        <el-tab-pane label='View as data' name='data-tab'>
+        <el-tab-pane label='See data as tables' name='data-tab'>
           <data-view-table
             :statistics='theme.statistics'
             :indicator='indicator'
@@ -32,7 +32,7 @@
           >
           </data-view-download>
         </el-tab-pane>
-        <el-tab-pane label='Compare with ...' name='compare-tab'>
+        <el-tab-pane label='Compare with location ...' name='compare-tab'>
           <p v-if='selectedLocation'>
             You can see how {{ selectedLocation.labels.en }} compares to
             other places:
