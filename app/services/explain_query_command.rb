@@ -8,7 +8,6 @@ class ExplainQueryCommand < QueryCommand
   def execute_query(service, query)
     start = Time.now
     @results = api_service(service).explain(query)
-    Rails.logger.debug("Query explanation: #{@results}")
     (Time.now - start) * MILLISECONDS
   end
 
