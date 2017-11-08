@@ -1,14 +1,14 @@
 <template lang="html">
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='theme.statistics'></data-view-statistics>
+      <data-view-statistics :initial-statistics='availableStatistics'></data-view-statistics>
     </div>
     <div class='o-data-view__data-display'>
       <el-tabs
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane label='See data as graphs' name='graphs-tab'>
+        <el-tab-pane label='See data graph' name='graphs-tab'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -16,9 +16,9 @@
           >
           </data-view-graph>
         </el-tab-pane>
-        <el-tab-pane label='See data as tables' name='data-tab'>
+        <el-tab-pane label='See data table' name='data-tab'>
           <data-view-table
-            :statistics='theme.statistics'
+            :statistics='availableStatistics'
             :indicator='indicator'
           >
           </data-view-table>
@@ -26,9 +26,7 @@
         <el-tab-pane label='Download this data' name='download-tab'>
           <data-view-download
             :theme='theme'
-            :themeName='themeName'
             :indicator='indicator'
-            :indicatorName='indicatorName'
           >
           </data-view-download>
         </el-tab-pane>
@@ -64,9 +62,7 @@ export default {
   data: () => ({
     activeTab: 'graphs-tab',
     theme: null,
-    themeName: null,
     indicator: null,
-    indicatorName: null,
     location: null,
     fromDate: null,
     toDate: null,
@@ -111,6 +107,14 @@ export default {
 
     selectedLocation() {
       return this.$store.state.location;
+    },
+
+    isVolumeIndicator() {
+      return this.indicator.isVolume;
+    },
+
+    availableStatistics() {
+      return this.theme.statistics.filter(this.statisticIsAvailable);
     },
   },
 
@@ -168,9 +172,9 @@ export default {
 
       if (!atLeastOneSelected) {
         // if none are currently selected, select them all
-        this.theme.statistics.forEach(stat => stor.commit(
+        this.availableStatistics.forEach(stat => stor.commit(
           SELECT_STATISTIC,
-          { slug: stat.slug, selected: true },
+          { slug: stat.slug, isSelected: true },
         ));
       }
     },
@@ -178,7 +182,7 @@ export default {
     onCompareSelect() {
       const vm = this;
       const statistic =
-        _.find(this.theme.statistics, stat => vm.$store.state.selectedStatistics[stat.slug]);
+        _.find(this.availableStatistics, stat => vm.$store.state.selectedStatistics[stat.slug]);
 
       if (statistic) {
         bus.$emit('select-comparison', {
@@ -186,6 +190,14 @@ export default {
           statistic,
         });
       }
+    },
+
+    /** A statistic is available if it's not the volume indicator, or it is and a given
+     * statistic does have a sales volume (which not all do).
+     * @return True if the statistic should be available for this indicator
+     */
+    statisticIsAvailable(stat) {
+      return !this.isVolumeIndicator || stat.hasVolume;
     },
   },
 

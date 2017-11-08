@@ -12,7 +12,9 @@ class DataViewsPresenter
   end
 
   def data_views
-    @data_views ||= (qualified_data_views + non_qualified_data_views).flatten
+    @data_views ||= ukhpi.themes.each_key.map do |theme_name|
+      as_data_views(ukhpi.theme(theme_name), true)
+    end .flatten
   end
 
   def to_json(_options = {})
@@ -22,60 +24,29 @@ class DataViewsPresenter
     )
   end
 
-  def each_theme_with_views(&block) # rubocop:disable Metrics/MethodLength
+  def each_theme_with_views(&block)
     first = true
 
-    qualified_themes.each do |theme_name|
+    ukhpi.themes.each_key do |theme_name|
       theme = ukhpi.theme(theme_name)
-      data_views = as_data_views(ukhpi.indicators, theme, first)
+      data_views = as_data_views(theme, first)
       first = false
 
       block.yield(theme, data_views)
-    end
-
-    non_qualified_themes.each do |theme_name|
-      theme = ukhpi.theme(theme_name)
-      block.yield(theme, as_data_views([nil], theme, false))
     end
   end
 
   private
 
-  # @return An array of the data views that are qualified by indicators
-  def qualified_data_views
-    qualified_themes.map do |theme_name|
-      as_data_views(ukhpi.indicators, ukhpi.theme(theme_name), true)
-    end
-  end
-
-  # @return An array of the data views that are not qualified by indicators
-  def non_qualified_data_views
-    non_qualified_themes.map do |theme_name|
-      as_data_views([nil], ukhpi.theme(theme_name), false)
-    end
-  end
-
   # @return An array of data view objects
-  def as_data_views(indicators, theme, is_first)
-    data_views = indicators.map do |indicator|
+  def as_data_views(theme, is_first)
+    data_views = theme.indicators.map do |indicator|
       DataView.new(user_selections: user_selections, query_result: query_result,
                    indicator: indicator, theme: theme)
     end
 
     data_views.first.first = is_first
     data_views
-  end
-
-  # @return An arry of the UKHPI statistics themes (e.g. property type) that *do* get
-  # qualified by the UKHPI indicators (e.g. `index`, `averagePrice`)
-  def qualified_themes
-    ukhpi.themes.keys - non_qualified_themes
-  end
-
-  # @return An arry of the UKHPI statistics themes (e.g. sales volume) that *do not* get
-  # qualified by the UKHPI indicators (e.g. `index`, `averagePrice`)
-  def non_qualified_themes
-    %i[volume volume_funding_status volume_property_status]
   end
 
   def ukhpi

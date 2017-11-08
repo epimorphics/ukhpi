@@ -7,56 +7,39 @@ class UkhpiDataCube
   CONFIG_DIR = 'dsapi'
   DSD_FILE = 'UKHPI-dsd.ttl'
 
-  Struct.new('UkhpiTheme', :slug, :statistics)
-  Struct.new('UkhpiStatistic', :slug, :root_name, :label_key)
-  Struct.new('UkhpiIndicator', :slug, :root_name, :label_key)
-
   # rubocop:disable Layout/IndentArray
   THEMES = {
-    property_type: Struct::UkhpiTheme.new('property_type', [
-      Struct::UkhpiStatistic.new('all', '',               'all_property_types'),
-      Struct::UkhpiStatistic.new('det', 'Detached',       'detached_houses'),
-      Struct::UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses'),
-      Struct::UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses'),
-      Struct::UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes')
+    property_type: UkhpiTheme.new('property_type', [
+      UkhpiStatistic.new('all', '',               'all_property_types', true),
+      UkhpiStatistic.new('det', 'Detached',       'detached_houses', false),
+      UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses', false),
+      UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses', false),
+      UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes', false)
     ]),
 
-    ftb_foo: Struct::UkhpiTheme.new('ftb_foo', [
-      Struct::UkhpiStatistic.new('ftb', 'FirstTimeBuyer',      'first_time_buyers'),
-      Struct::UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers')
+    buyer_status: UkhpiTheme.new('buyer_status', [
+      UkhpiStatistic.new('ftb', 'FirstTimeBuyer',      'first_time_buyers', false),
+      UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers', false)
     ]),
 
-    cash_mortgage: Struct::UkhpiTheme.new('cash_mortgage', [
-      Struct::UkhpiStatistic.new('cas', 'Cash',     'cash_purchases'),
-      Struct::UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases')
+    funding_status: UkhpiTheme.new('funding_status', [
+      UkhpiStatistic.new('cas', 'Cash',     'cash_purchases', true),
+      UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases', true)
     ]),
 
-    new_existing: Struct::UkhpiTheme.new('new_existing', [
-      Struct::UkhpiStatistic.new('new', 'NewBuild',         'new_build'),
-      Struct::UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties')
-    ]),
-
-    volume: Struct::UkhpiTheme.new('volume', [
-      Struct::UkhpiStatistic.new('vol', 'salesVolume', 'sales_volume')
-    ]),
-
-    volume_funding_status: Struct::UkhpiTheme.new('volume_funding_status', [
-      Struct::UkhpiStatistic.new('vcs', 'salesVolumeCash', 'sales_volume_cash'),
-      Struct::UkhpiStatistic.new('vmg', 'salesVolumeMortgage', 'sales_volume_mortgage')
-    ]),
-
-    volume_property_status: Struct::UkhpiTheme.new('volume_property_status', [
-      Struct::UkhpiStatistic.new('vnw', 'salesVolumeNewBuild', 'sales_volume_new_build'),
-      Struct::UkhpiStatistic.new('vex', 'salesVolumeExistingProperty', 'sales_volume_existing')
+    property_status: UkhpiTheme.new('property_status', [
+      UkhpiStatistic.new('new', 'NewBuild',         'new_build', true),
+      UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true)
     ])
   }.freeze
 
   INDICATORS =
     [
-      Struct::UkhpiIndicator.new('avg', 'averagePrice',           'average_price'),
-      Struct::UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change'),
-      Struct::UkhpiIndicator.new('pmc', 'percentageChange',       'percentage_monthly_change'),
-      Struct::UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index')
+      UkhpiIndicator.new('avg', 'averagePrice',           'average_price'),
+      UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change'),
+      UkhpiIndicator.new('pmc', 'percentageChange',       'percentage_monthly_change'),
+      UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
+      UkhpiIndicator.new('vol', 'salesVolume',            'sales_volume')
     ].freeze
 
   attr_reader :dsd

@@ -27,7 +27,7 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
 
         hash = UkhpiIndicator.new('foo', 'r', 'average_price').to_h(user_selections)
         hash[:slug].must_equal 'foo'
-        hash[:root_name].must_equal 'r'
+        hash[:rootName].must_equal 'r'
         hash[:label].must_equal 'Average price'
         hash[:isVolume].must_equal false
         hash[:isSelected].must_equal true

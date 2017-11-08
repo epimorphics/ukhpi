@@ -45,7 +45,7 @@ export const mutations = {
   },
 
   [types.SELECT_STATISTIC](state, stat) {
-    Vue.set(state.selectedStatistics, stat.slug, stat.selected);
+    Vue.set(state.selectedStatistics, stat.slug, stat.isSelected);
   },
 };
 

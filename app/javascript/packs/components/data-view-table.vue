@@ -62,7 +62,7 @@ export default {
     },
 
     columnProp(stat) {
-      return `ukhpi:${this.indicator ? this.indicator.root_name : ''}${stat.root_name}`;
+      return `ukhpi:${this.indicator ? this.indicator.rootName : ''}${stat.rootName}`;
     },
   },
 };

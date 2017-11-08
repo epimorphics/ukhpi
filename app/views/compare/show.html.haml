@@ -1,11 +1,12 @@
 .grid-row
   .column-full
     %article.c-compare
-      %h2.o-heading--2
-        = @view_state.headline_summary
+      %h2.o-heading--2 Compare UKHPI statistics across locations
 
-      %p.c-compare__locations
-        Between:
+      %p.c-compare-locations
+        = @view_state.headline_summary
+        %br
+        for:
         %ul.c-compare__locations-list
         - @view_state.selected_locations.each do |location|
           %li.c-compare__location

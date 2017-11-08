@@ -36,7 +36,7 @@ class UkhpiIndicator
   def to_h(user_selections)
     {
       slug: slug,
-      root_name: root_name,
+      rootName: root_name,
       label: label,
       isVolume: volume?,
       isSelected: selected?(user_selections)

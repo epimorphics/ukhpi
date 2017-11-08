@@ -50,7 +50,7 @@ export default {
     this.statistics = this.initialStatistics;
 
     this.initialStatistics.forEach((stat) => {
-      store.commit(SELECT_STATISTIC, { slug: stat.slug, selected: stat.selected });
+      store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
     });
   },
 
@@ -70,7 +70,7 @@ export default {
       } while (!slug);
 
       const selected = this.isSelectedStatistic(slug.value);
-      this.$store.commit(SELECT_STATISTIC, { slug: slug.value, selected: !selected });
+      this.$store.commit(SELECT_STATISTIC, { slug: slug.value, isSelected: !selected });
     },
 
     findStatistic(slug) {

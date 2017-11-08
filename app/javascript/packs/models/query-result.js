@@ -4,6 +4,10 @@ import Numeral from 'numeral';
 
 /** @return A simplified data value, suitable for display in a data table */
 function toSimpleValue(value) {
+  if (_.isUndefined(value)) {
+    return value;
+  }
+
   // this is the recommended way to strip away the Vue observer wrapper
   let simpleValue = JSON.parse(JSON.stringify(value));
 

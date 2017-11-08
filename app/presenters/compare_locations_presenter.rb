@@ -13,11 +13,11 @@ class CompareLocationsPresenter
   end
 
   def headline_summary
-    ind = I18n.t(indicator.slug).downcase
+    ind = I18n.t(indicator.slug)
     stat = I18n.t(statistic.label_key).downcase
     from = user_compare_selections.from_date.strftime('%b %Y')
     to = user_compare_selections.to_date.strftime('%b %Y')
-    "Comparing #{ind} for #{stat}, #{from} to #{to}"
+    "<strong>#{ind}</strong> for <strong>#{stat}</strong>, #{from} to #{to}".html_safe
   end
 
   def selected_locations

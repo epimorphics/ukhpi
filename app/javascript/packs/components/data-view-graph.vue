@@ -101,7 +101,7 @@ export default {
         {
           dateRange: this.dateRange,
           elementId: this.graphElementId,
-          indicatorId: this.indicator ? this.indicator.root_name : 'salesVolume',
+          indicatorId: this.indicator ? this.indicator.rootName : 'salesVolume',
           period: this.period,
           selectedStatistics: this.selectedStatistics,
           theme: this.theme,

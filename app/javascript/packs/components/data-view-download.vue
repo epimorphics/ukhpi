@@ -7,7 +7,7 @@
         </p>
         <ul>
           <li>
-            Download only data for <strong>{{ indicatorName }}</strong>:
+            Download only data for <strong>{{ indicator.label }}</strong>:
             <a class='o-data-view-download__button' :href='downloadUrl("csv", true)'>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
@@ -16,7 +16,7 @@
             </a>
           </li>
           <li>
-            Download all statistics for <strong>{{ themeName }}</strong>:
+            Download all statistics for <strong>{{ theme.label }}</strong>:
             <a class='o-data-view-download__button' :href='downloadUrl("csv", false)' download>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
@@ -51,17 +51,9 @@ export default {
       required: false,
       type: Object,
     },
-    indicatorName: {
-      required: false,
-      type: String,
-    },
     theme: {
       required: true,
       type: Object,
-    },
-    themeName: {
-      required: true,
-      type: String,
     },
   },
 

@@ -34,7 +34,7 @@ export default class QueryResults {
     const projection = {};
 
     theme.statistics.forEach((statistic) => {
-      const pred = `ukhpi:${indicator ? indicator.root_name : ''}${statistic.root_name}`;
+      const pred = `ukhpi:${indicator ? indicator.rootName : ''}${statistic.rootName}`;
       projection[statistic.slug] = this.series(pred);
     });
 
