@@ -15,44 +15,33 @@
       </el-row>
 
       <el-row>
-        <el-col :span='8'>
+        <el-col :span='24'>
           <label>
-            Type of location:
-            <el-select v-model='locationType'>
-              <el-option value='country' label='Country' />
-              <el-option value='la' label='Local authority' />
-              <el-option value='region' label='Region (England only)' />
-              <el-option value='county' label='County (England only)' />
-            </el-select>
+            Search locations:
+            <el-input v-model='searchInput' @change='onSearchInput'>
+            </el-input>
           </label>
         </el-col>
-        <el-col :span='16'>
-          <label v-if='locationType === "country"'>
-            <br />
-            <el-select v-model='selectedLocation'>
-              <el-option value='United Kingdom'></el-option>
-              <el-option value='Great Britain'></el-option>
-              <el-option value='England and Wales'></el-option>
-              <el-option value='England'></el-option>
-              <el-option value='Wales'></el-option>
-              <el-option value='Scotland'></el-option>
-              <el-option value='Northern Ireland'></el-option>
-            </el-select>
-          </label>
-          <label v-else>
-            Name:
-            <el-autocomplete
-              class='inline-input u-full-width'
-              v-model='selectedLocation'
-              :fetch-suggestions='queryLocation'
-              :trigger-on-focus='false'
-              :select-when-unmatched='false'
-              @input='clearValidation'
-            >
-            </el-autocomplete>
-          </label>
-        </el-col>
-        <el-col :span='8'>
+        <el-col :span='24'>
+          <el-popover
+            placement='bottom'
+            title='Search results'
+            width='400'
+            trigger='manual'
+            v-model='searchResultsVisible'
+          >
+            <ul v-for='result in searchResults'>
+              <li>
+                <el-button type='text' @click='onSelectResult'>
+                  {{ result.labels.en }}
+                </el-button>
+                ({{ result | locationTypeLabel }})
+              </li>
+            </ul>
+          </el-popover>
+          <p v-if='manyResults > 0'>
+            ... plus {{ manyResults }} more.
+          </p>
         </el-col>
       </el-row>
 
@@ -67,6 +56,15 @@
 
       <el-row>
         <div class='c-map'>
+          <div>
+            Show on map:
+            <el-radio-group v-model='locationType'>
+              <el-radio-button label='country'>Countries</el-radio-button>
+              <el-radio-button label='la'>Local authorities</el-radio-button>
+              <el-radio-button label='region'>Regions of England</el-radio-button>
+              <el-radio-button label='county'>Counties of England</el-radio-button>
+            </el-radio-group>
+          </div>
           <div :id='mapElementId'></div>
         </div>
       </el-row>
@@ -85,10 +83,12 @@
 
 <script>
 import _ from 'lodash';
-import { locationNamed, locationsNamed, findLocationById } from '../lib/locations';
+import { locationIndexType, locationsNamed, findLocationById } from '../lib/locations';
 import { showMap, setSelectedLocationMap } from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
 import bus from '../lib/event-bus';
+
+const MAX_RESULTS = 10;
 
 export default {
   data: () => ({
@@ -96,6 +96,10 @@ export default {
     locationType: 'country',
     selectedLocation: null,
     validationMessage: null,
+    searchInput: '',
+    manyResults: 0,
+    searchResults: [],
+    searchResultsVisible: false,
   }),
 
   props: {
@@ -125,15 +129,11 @@ export default {
 
   computed: {
     allowConfirm() {
-      return this.selectedLocation !== null && this.selectedLocation.length > 0;
+      return this.selectedLocation;
     },
 
     mapElementId() {
       return `${this.elementId}__map`;
-    },
-
-    selectedLocationData() {
-      return locationNamed(this.locationType, this.selectedLocation);
     },
   },
 
@@ -142,6 +142,7 @@ export default {
       this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
+        this.resetDialog();
         const cb = _.bind(this.onSelectLocationURI, this);
         this.$nextTick(() => { showMap(this.mapElementId, this.locationType, cb); });
       }
@@ -152,22 +153,34 @@ export default {
       showMap(this.mapElementId, this.locationType, cb);
     },
 
-    selectedLocationData() {
-      if (this.selectedLocationData) {
-        setSelectedLocationMap(this.selectedLocationData);
+    selectedLocation() {
+      if (this.selectedLocation) {
+        this.locationType = locationIndexType(this.selectedLocation);
+        this.$nextTick(() => { setSelectedLocationMap(this.selectedLocation); });
       }
+    },
+
+    searchResults() {
+      this.searchResultsVisible = this.searchResults && this.searchResults.length > 0;
     },
   },
 
   methods: {
+    resetDialog() {
+      this.selectedLocation = null;
+      this.searchInput = '';
+      this.manyResults = 0;
+      this.searchResults = [];
+    },
+
     onSaveChanges() {
-      if (this.selectedLocationData) {
+      if (this.selectedLocation) {
         this.validationMessage = null;
 
         if (this.emitEvent) {
-          bus.$emit(this.emitEvent, this.selectedLocationData);
+          bus.$emit(this.emitEvent, this.selectedLocation);
         } else {
-          this.$store.commit(SET_LOCATION, this.selectedLocationData);
+          this.$store.commit(SET_LOCATION, this.selectedLocation);
         }
 
         this.onHideDialog();
@@ -183,12 +196,26 @@ export default {
 
     onSelectLocationURI(uri) {
       const locationAndType = findLocationById(uri, 'uri');
-      this.selectedLocation = locationAndType.location.labels.en;
+      this.selectedLocation = locationAndType.location;
+      this.searchInput = locationAndType.location.labels.en;
     },
 
-    queryLocation(query, cb) {
-      const filtered = locationsNamed(this.locationType, query);
-      cb(filtered.map(v => ({ value: v })));
+    isExactMatch(term, results) {
+      return results &&
+             results.find(result => result.labels.en === term);
+    },
+
+    onSearchInput(term) {
+      const filtered = locationsNamed(term);
+      const match = this.isExactMatch(term, filtered);
+
+      if (match) {
+        this.$set(this, 'selectedLocation', match);
+        this.$set(this, 'searchResults', []);
+      } else if (filtered) {
+        this.manyResults = filtered.length - MAX_RESULTS;
+        this.searchResults = filtered.slice(0, MAX_RESULTS);
+      }
     },
 
     /** User has selected an autocomplete option */
@@ -199,6 +226,18 @@ export default {
     /** Notify the parent container that the dialog has closed */
     notifyDialogClosed() {
       this.$emit('update:dialog-visible', false);
+    },
+
+    onSelectResult(event) {
+      this.searchInput = event.target.innerText;
+      this.onSearchInput(this.searchInput);
+    },
+  },
+
+  filters: {
+    locationTypeLabel(location) {
+      const typeName = locationIndexType(location);
+      return typeName === 'la' ? 'local authority' : typeName;
     },
   },
 

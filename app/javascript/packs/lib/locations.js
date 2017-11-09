@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import { locations } from '../data/locations-data';
 
+const locationsList = _.values(locations);
+
 const locationsIndex = {
   country: {},
   la: {},
@@ -20,7 +22,7 @@ const exceptions = {
   'Aberdeen City': 'City of Aberdeen',
   'Dundee City': 'City of Dundee',
   'Glasgow City': 'City of Glasgow',
-  'Outline of Northern Ireland': 'Northern Ireland'
+  'Outline of Northern Ireland': 'Northern Ireland',
 };
 
 const UK_COUNTRIES = /(wales|scotland|ireland|great britain|united kingdom)/i;
@@ -28,7 +30,7 @@ const UK_COUNTRIES = /(wales|scotland|ireland|great britain|united kingdom)/i;
 let indexInitialised = false;
 
 /** Which inddex should this location go into? */
-function locationIndexType(location) {
+export function locationIndexType(location) {
   const name = location.labels.en;
 
   switch (location.type) {
@@ -73,16 +75,19 @@ export function locationsOfType(locationType) {
 }
 
 /** @return Locations whose name matches the given string */
-export function locationsNamed(locationType, locationName) {
-  const candidates = _.values(locationsOfType(locationType));
-  const candidateNames = candidates.map(candidate => candidate.labels.en);
+export function locationsNamed(locationName) {
+  if (!locationName || locationName.length <= 1) {
+    return null;
+  }
+
   const regex = new RegExp(locationName, 'i');
-  return candidateNames.filter(name => name.match(regex));
+  return locationsList.filter(location => location.labels.en.match(regex));
 }
 
 /** @return the location matching the given name */
-export function locationNamed(locationType, locationName) {
-  return locationsOfType(locationType)[locationName];
+export function locationNamed(locationName) {
+  const matchedLocations = locationsNamed(locationName);
+  return (matchedLocations && matchedLocations.length === 1) ? matchedLocations[0] : null;
 }
 
 /** @return The first feature to match the given location name */
