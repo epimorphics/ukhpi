@@ -11,6 +11,7 @@ class UserCompareSelections
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_LOCATIONS, true, nil),
+    'location-term' => Struct::UserParam.new('', false, nil),
     'from' => Struct::UserParam.new(Date.today.prev_year, false, nil),
     'to' => Struct::UserParam.new(Date.today, false, nil),
     'st' => Struct::UserParam.new(DEFAULT_STATISTIC, false, nil),
@@ -51,6 +52,14 @@ class UserCompareSelections
 
   def selected_indicator
     param_or_default('in')
+  end
+
+  def search_term
+    @search_term ||= params[:'location-term']
+  end
+
+  def search?
+    params[:'form-action'] == 'search'
   end
 
   def to_h

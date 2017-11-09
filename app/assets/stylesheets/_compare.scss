@@ -7,11 +7,18 @@
 
   &__locations-list {
     list-style: none;
-    display: inline-block;
   }
 
   &__location {
-    display: inline-block;
+    display: block;
+  }
+
+  .c-compare__locations-prompt {
+    float: left
+  }
+
+  .c-compare__locations-list {
+    margin-left: 10em;
   }
 
   table {
@@ -28,7 +35,7 @@
     th[scope='col'] {
       text-align: center;
     }
-    
+
     .u-row-odd {
       background-color: $grey-3;
     }

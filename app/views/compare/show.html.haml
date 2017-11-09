@@ -3,63 +3,66 @@
     %article.c-compare
       %h2.o-heading--2 Compare UKHPI statistics across locations
 
-      %p.c-compare-locations
-        = @view_state.headline_summary
-        %br
-        for:
+      %form.c-compare__form{action: compare_path, method: 'get' }
+        %p
+          Compare
+          %select{ name: 'in' }
+            - UkhpiDataCube::INDICATORS.each do |indicator|
+              %option{ value: indicator.slug, selected: @view_state.selected_indicator == indicator.slug }
+                = indicator.label
+          for
+          %select{ name: 'st' }
+            - UkhpiDataCube::THEMES.each_value do |theme|
+              %optgroup{ label: theme.label }
+                - theme.statistics.each do |stat|
+                  %option{ value: stat.slug, selected: @view_state.selected_statistic == stat.slug }
+                    = stat.label
+          from
+          %input{ type: 'date', name: 'from', value: @view_state.from_date }
+          to
+          %input{ type: 'date', name: 'to', value: @view_state.to_date }
+
+        %p.c-compare__locations-prompt
+          Between:
         %ul.c-compare__locations-list
-        - @view_state.selected_locations.each do |location|
-          %li.c-compare__location
-            = location.label
-            = link_to(@view_state.without_location(location)) do
-              %i.fa.fa-times
+          - @view_state.selected_locations.each do |location|
+            %li.c-compare__location
+              = location.label
+              = link_to(@view_state.without_location(location)) do
+                %i.fa.fa-times
+              %input{ type: 'hidden', name: 'location[]', value: location.gss }
 
-      %table.c-compare__results
-        %thead
-          %tr
-            %th{ scope: 'col' }
-              Date
-            - @view_state.query_results.keys.sort.each do |location_name|
+          %li.c-compare__add-location
+            Add another location:
+            %input{ type: 'text', name: 'location-term', value: @view_state.search_term }
+            %button{ type: 'submit', value: 'search', name: 'form-action' }
+              Search
+
+        - if @view_state.search_results
+          %p Search results:
+          %ul.c-compare__search_results
+            - @view_state.search_results.each do |location|
+              %li
+                %a{ href: compare_path(@view_state.with_location(location)) }
+                  = location.label
+        %p
+          %button{ type: 'submit' }
+            Update comparison
+
+      - if !@view_state.search?
+        %table.c-compare__results
+          %thead
+            %tr
               %th{ scope: 'col' }
-                = location_name
-        %tbody
-          - @view_state.query_results_rows.each do |row|
-            %tr{ class: cycle('u-row-odd', 'u-row-even') }
-              %th{ scope: 'row' }
-                = row.shift
-              - row.each do |value|
-                %td
-                  = value
-
-      %h3.o-heading--3 Change view
-      %p
-        You can select a different comparison between the selected locations:
-
-      %table.c-compare__choices
-        %thead
-          %tr
-            %th
-            %th{ scope: 'col' }
-              house price index
-            %th{ scope: 'col' }
-              average price
-            %th{ scope: 'col' }
-              \% monthly change
-            %th{ scope: 'col' }
-              \% yearly change
-            %th{ scope: 'col' }
-              volume
-        %tbody
-          - @view_state.statistic_indicator_choices.each do |choices|
-            - statistic = choices.first
-            - cells = choices.second
-            %tr{ class: cycle('u-row-odd', 'u-row-even') }
-              %th{ scope: 'row' }
-                = t(statistic.label_key)
-              - cells.each do |stat, indicator|
-                %td.c-compare__selection
-                  - if stat && @view_state.current_selection?(stat, indicator)
-                    %i.fa.fa-check.c-compare__selection--current
-                  - elsif stat
-                    = link_to(@view_state.with_statistic(stat, indicator)) do
-                      %i.fa.fa-square-o
+                Date
+              - @view_state.query_results.keys.sort.each do |location_name|
+                %th{ scope: 'col' }
+                  = location_name
+          %tbody
+            - @view_state.query_results_rows.each do |row|
+              %tr{ class: cycle('u-row-odd', 'u-row-even') }
+                %th{ scope: 'row' }
+                  = row.shift
+                - row.each do |value|
+                  %td
+                    = value

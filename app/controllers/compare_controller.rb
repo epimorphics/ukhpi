@@ -7,7 +7,7 @@ class CompareController < ApplicationController
 
   def show
     user_compare_selections = UserCompareSelections.new(params)
-    query_results = perform_query(user_compare_selections)
+    query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
     @view_state = CompareLocationsPresenter.new(user_compare_selections, query_results)
   end
