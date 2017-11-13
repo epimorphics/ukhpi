@@ -37,6 +37,10 @@
             {{ location.labels.en }}
             <button @click='onRemoveLocation(location)'><i class='fa fa-close'></i></button>
           </li>
+          <li>
+            <button @click='onAddLocation'><i class='fa fa-circle-plus'></i></button>
+            <compare-additional-location></compare-additional-location>
+          </li>
         </ul>
       </el-col>
     </el-row>
@@ -50,6 +54,8 @@ import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
   SET_COMPARE_INDICATOR, SET_DATES } from '../store/mutation-types';
 
 import DataViewDates from './data-view-dates.vue';
+import CompareAdditionalLocation from './compare-additional-location.vue';
+import bus from '../lib/event-bus';
 
 export default {
   data: () => ({
@@ -61,6 +67,7 @@ export default {
 
   components: {
     DataViewDates,
+    CompareAdditionalLocation,
   },
 
   mounted() {
@@ -125,6 +132,10 @@ export default {
     onRemoveLocation(toRemoveLocation) {
       const newLocations = this.locations.filter(location => location.gss !== toRemoveLocation.gss);
       this.$store.commit(SET_COMPARE_LOCATIONS, newLocations);
+    },
+
+    onAddLocation() {
+      bus.$emit('select-comparison', { statistic: this.statistic, indicator: this.indicator });
     },
   },
 };
