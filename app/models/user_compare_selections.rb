@@ -35,7 +35,9 @@ class UserCompareSelections
   end
 
   def selected_locations
-    param_or_default('location')
+    param_or_default('location').map do |location_id|
+      Locations.lookup_gss(location_id)
+    end
   end
 
   def from_date
