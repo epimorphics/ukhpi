@@ -1,0 +1,16 @@
+import Vue from 'vue';
+import Router from 'vue-router';
+import SingleLocation from '../components/single-location.vue';
+
+Vue.use(Router);
+
+export default new Router({
+  routes: [
+    {
+      path: '<%= Rails.application.config.relative_url_root %>/browse',
+      name: 'single-location',
+      component: SingleLocation,
+    },
+  ],
+  mode: 'history',
+});

@@ -12,8 +12,8 @@
       %h1.o-heading--2
         = t('index.main_heading')
 
-      .u-js-only.c-options-select
-      .u-js-only.c-compare-select
+      #application
+        %router-view
 
       - @view_state.each_theme_with_views do |theme, data_views|
         .o-ukhpi-theme

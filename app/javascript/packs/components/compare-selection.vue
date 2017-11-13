@@ -28,7 +28,8 @@ export default {
     },
 
     prompt() {
-      return `Select an area to compare against ${this.selectedLocation.labels.en}`;
+      const label = this.selectedLocation ? this.selectedLocation.labels.en : '';
+      return `Select an area to compare against ${label}`;
     },
   },
 

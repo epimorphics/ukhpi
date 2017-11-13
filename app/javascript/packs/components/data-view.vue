@@ -48,15 +48,15 @@
 <script>
 import kebabCase from 'kebab-case';
 import _ from 'lodash';
-import DataViewLocation from './components/data-view-location.vue';
-import DataViewDates from './components/data-view-dates.vue';
-import DataViewStatistics from './components/data-view-statistics.vue';
-import DataViewTable from './components/data-view-table.vue';
-import DataViewGraph from './components/data-view-graph.vue';
-import DataViewDownload from './components/data-view-download.vue';
-import store from './store/index';
-import { INITIALISE, SELECT_STATISTIC } from './store/mutation-types';
-import bus from './lib/event-bus';
+import DataViewLocation from './data-view-location.vue';
+import DataViewDates from './data-view-dates.vue';
+import DataViewStatistics from './data-view-statistics.vue';
+import DataViewTable from './data-view-table.vue';
+import DataViewGraph from './data-view-graph.vue';
+import DataViewDownload from './data-view-download.vue';
+import store from '../store/index';
+import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
+import bus from '../lib/event-bus';
 
 export default {
   data: () => ({
