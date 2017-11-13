@@ -1,12 +1,15 @@
+import 'babel-polyfill';
 import Vue from 'vue';
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
+
 import DataView from './data-view.vue';
 import OptionsSelection from './components/options-selection.vue';
 import CompareSelection from './components/compare-selection.vue';
 import bindExternalEvents from './lib/bind-external-events';
 
+// Use Element.IO
 Vue.use(ElementUI, { locale });
 
 // locale settings
