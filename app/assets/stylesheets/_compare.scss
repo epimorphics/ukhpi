@@ -46,3 +46,29 @@
   }
 
 }
+
+.c-compare__selections {
+  .c-compare__locations {
+    list-style: none;
+
+    li {
+      display: inline-block;
+      min-height: 2em;
+      min-width: 8em;
+      border: 1px solid $grey-2;
+      border-radius: 5px;
+      text-align: center;
+      padding-top: 6px;
+      margin-right: 0.5em;
+      margin-top: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+    }
+
+    &--modify {
+      border: 0;
+      background-color: white;
+      cursor: pointer;
+    }
+  }
+}

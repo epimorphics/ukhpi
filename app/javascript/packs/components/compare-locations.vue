@@ -32,13 +32,17 @@
     <el-row>
       <el-col :span='24'>
         For locations:
-        <ul class='compare__locations'>
+        <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
             {{ location.labels.en }}
-            <button @click='onRemoveLocation(location)'><i class='fa fa-close'></i></button>
+            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'>
+              <i class='fa fa-times-circle fa-2x'></i>
+            </button>
           </li>
-          <li>
-            <button @click='onAddLocation'><i class='fa fa-circle-plus'></i></button>
+          <li v-if='showAddLocationButton'>
+            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'>
+              <i class='fa fa-plus-circle fa-2x'></i>
+            </button>
             <compare-additional-location></compare-additional-location>
           </li>
         </ul>
@@ -56,6 +60,8 @@ import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
 import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
 import bus from '../lib/event-bus';
+
+const MAX_LOCATIONS = 5;
 
 export default {
   data: () => ({
@@ -111,6 +117,12 @@ export default {
 
     locations() {
       return this.$store.state.compareLocations;
+    },
+
+    /** We can still add a location if the current list is strictly less than
+     * the ultimate limit, giving room for one last addition */
+    showAddLocationButton() {
+      return this.locations.length < MAX_LOCATIONS;
     },
   },
 
