@@ -25,6 +25,8 @@
             </el-option>
           </el-option-group>
         </el-select>
+        from
+        <data-view-dates />
       </el-col>
     </el-row>
   </div>
@@ -36,6 +38,8 @@ import _ from 'lodash';
 import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
   SET_COMPARE_INDICATOR, SET_DATES } from '../store/mutation-types';
 
+import DataViewDates from './data-view-dates.vue';
+
 export default {
   data: () => ({
     locations: [],
@@ -44,6 +48,10 @@ export default {
     indicators: [],
     themes: [],
   }),
+
+  components: {
+    DataViewDates,
+  },
 
   mounted() {
     const node = document.querySelector('.c-location-compare__data');
