@@ -147,7 +147,7 @@ export default {
     },
 
     onAddLocation() {
-      bus.$emit('select-comparison', { statistic: this.statistic, indicator: this.indicator });
+      bus.$emit('select-comparison');
     },
   },
 };

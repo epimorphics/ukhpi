@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import _ from 'lodash';
 import SelectLocation from './select-location.vue';
 import store from '../store/index';
 import { SET_COMPARE_LOCATIONS } from '../store/mutation-types';
@@ -43,7 +44,8 @@ export default {
 
     onAdditionalLocation(location) {
       const newLocations = this.$store.state.compareLocations.concat([location]);
-      this.$store.commit(SET_COMPARE_LOCATIONS, newLocations);
+      const uniqLocations = _.uniqBy(newLocations, 'gss');
+      this.$store.commit(SET_COMPARE_LOCATIONS, uniqLocations);
     },
   },
 
