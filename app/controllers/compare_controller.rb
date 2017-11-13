@@ -18,8 +18,8 @@ class CompareController < ApplicationController
     query_results = {}
     base_selection = UserSelections.new(
       __safe_params: {
-        from: user_compare_selections.from_date,
-        to: user_compare_selections.to_date
+        'from' => user_compare_selections.from_date,
+        'to' => user_compare_selections.to_date
       }
     )
 
