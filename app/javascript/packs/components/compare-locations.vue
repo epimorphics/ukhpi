@@ -1,10 +1,38 @@
 <template lang='html'>
   <div class='c-compare__selections'>
+    <el-row>
+      <el-col :span='24'>
+        Compare
+        <el-select v-model='indicator'>
+          <el-option
+            v-for="item in indicators"
+            :key="item.slug"
+            :label="item.label"
+            :value="item.slug">
+          </el-option>
+        </el-select>
+        for
+        <el-select v-model='statistic'>
+          <el-option-group
+            v-for="theme in themes"
+            :key="theme.slug"
+            :label="theme.label">
+            <el-option
+              v-for="item in theme.statistics"
+              :key="item.slug"
+              :label="item.label"
+              :value="item.slug">
+            </el-option>
+          </el-option-group>
+        </el-select>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
 <script>
 import kebabCase from 'kebab-case';
+import _ from 'lodash';
 
 export default {
   data: () => ({
@@ -14,7 +42,7 @@ export default {
     statistic: null,
     indicator: null,
     indicators: [],
-    themes: {},
+    themes: [],
   }),
 
   beforeMount() {
@@ -37,19 +65,27 @@ export default {
     }
   },
 
+  computed: {
+    statistics() {
+      function statWithGroup(theme, stat) {
+        return Object.assign({ theme: theme.label }, stat);
+      }
+
+      function themeStats(theme) {
+        return theme.statistics.map(stat => statWithGroup(theme, stat));
+      }
+
+      return _.flatten(this.themes.map(themeStats));
+    },
+  },
+
   watch: {
     indicators() {
-      this.indicator = this.indicators.find(indicator => indicator.isSelected);
+      this.indicator = this.indicators.find(indicator => indicator.isSelected).slug;
     },
 
-    themes() {
-      this.themes.forEach((theme) => {
-        theme.statistics.forEach((statistic) => {
-          if (statistic.isSelected) {
-            this.statistic = statistic;
-          }
-        });
-      });
+    statistics() {
+      this.statistic = this.statistics.find(statistic => statistic.isSelected).slug;
     },
   },
 };
