@@ -73,6 +73,16 @@ class UkhpiDataCube
     indicators.find { |ind| ind.slug == slug }
   end
 
+  # @return A given statistic by name
+  def statistic(slug)
+    statistics.find { |stat| stat.slug == slug }
+  end
+
+  # @return A flat array of all statistics
+  def statistics
+    THEMES.values.map(&:statistics).flatten
+  end
+
   # Invoke a block with each indicator as an argument
   def each_indicator(&block)
     indicators.each(&block)
