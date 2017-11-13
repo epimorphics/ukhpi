@@ -23,8 +23,7 @@ class CompareController < ApplicationController
       }
     )
 
-    user_compare_selections.selected_locations.each do |location_id|
-      location = Regions.lookup_gss(location_id)
+    user_compare_selections.selected_locations.each do |location|
       query_results[location.label] = query_with(base_selection, location)
     end
 

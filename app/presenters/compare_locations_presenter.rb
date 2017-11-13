@@ -4,7 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
+class CompareLocationsPresenter
   include I18n
   include LocationsTable
 
@@ -22,6 +22,8 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :to_date, to: :user_compare_selections
   delegate :search_term, to: :user_compare_selections
   delegate :'search?', to: :user_compare_selections
+  delegate :as_json, to: :user_compare_selections
+  delegate :selected_locations, to: :user_compare_selections
 
   def headline_summary
     ind = I18n.t(indicator.slug)
@@ -29,12 +31,6 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     from = user_compare_selections.from_date.strftime('%b %Y')
     to = user_compare_selections.to_date.strftime('%b %Y')
     "<strong>#{ind}</strong> for <strong>#{stat}</strong>, #{from} to #{to}".html_safe
-  end
-
-  def selected_locations
-    user_compare_selections.selected_locations.map do |location_id|
-      Regions.lookup_gss(location_id)
-    end
   end
 
   def without_location(location)
