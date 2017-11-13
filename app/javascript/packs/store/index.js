@@ -11,6 +11,11 @@ const debug = process.env.NODE_ENV !== 'production';
 /* eslint-disable no-param-reassign, no-multi-spaces */
 
 function updateQueryResults(state) {
+  // TODO
+  if (!state.location) {
+    return null;
+  }
+  
   const userSelections = {
     location: state.location.uri,
     from: state.fromDate,
@@ -47,6 +52,22 @@ export const mutations = {
   [types.SELECT_STATISTIC](state, stat) {
     Vue.set(state.selectedStatistics, stat.slug, stat.isSelected);
   },
+
+  [types.SET_COMPARE_LOCATIONS](state, locations) {
+    state.compareLocations = locations;
+  },
+
+  [types.SET_COMPARE_STATISTIC](state, statistic) {
+    state.compareStatistic = statistic;
+  },
+
+  [types.SET_COMPARE_INDICATOR](state, indicator) {
+    state.compareIndicator = indicator;
+  },
+
+  [types.SET_COMPARE_RESULTS](state, results) {
+    state.compareResults = results;
+  },
 };
 
 export const getters = {
@@ -63,6 +84,10 @@ export default new Vuex.Store({
     toDate: null,
     queryResults: null,
     selectedStatistics: {},
+    compareLocations: [],
+    compareStatistic: null,
+    compareIndicator: null,
+    compareResults: null,
   },
   mutations,
   getters,
