@@ -67,4 +67,20 @@ class UserCompareSelections
   def to_h
     params.to_h
   end
+
+  def as_json
+    {
+      from: from_date,
+      to: to_date,
+      statistic: ukhpi_data_cube.statistic(selected_statistic).to_json,
+      indicator: ukhpi_data_cube.indicator(selected_indicator).to_json,
+      locations: selected_locations.map(&:to_json)
+    }
+  end
+
+  private
+
+  def ukhpi_data_cube
+    @ukhpi_data_cube ||= UkhpiDataCube.new
+  end
 end
