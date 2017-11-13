@@ -37,4 +37,13 @@ class Location
   def gss?(gss)
     @gss == gss
   end
+
+  def to_h
+    {
+      uri: uri,
+      labels: @labels,
+      type: type,
+      gss: gss
+    }
+  end
 end

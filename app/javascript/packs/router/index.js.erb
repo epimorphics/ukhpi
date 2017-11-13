@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import SingleLocation from '../components/single-location.vue';
+import CompareLocations from '../components/compare-locations.vue';
 
 Vue.use(Router);
 
@@ -11,6 +12,11 @@ export default new Router({
       name: 'single-location',
       component: SingleLocation,
     },
+    {
+      path: '<%= Rails.application.config.relative_url_root %>/compare',
+      name: 'compare-locations',
+      component: CompareLocations,
+    }
   ],
   mode: 'history',
 });

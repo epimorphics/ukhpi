@@ -50,7 +50,10 @@
             %button{ type: 'submit' }
               Update comparison
 
-      .c-location-compare--js.u-js-only{ data: @view_state.as_json }
+      #application
+        %router-view
+
+      .c-location-compare__data.u-js-only{ data: @view_state.as_json }
 
       - if !@view_state.search?
         %table.c-compare__results

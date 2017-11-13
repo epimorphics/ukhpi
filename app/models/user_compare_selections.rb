@@ -52,8 +52,16 @@ class UserCompareSelections
     param_or_default('st')
   end
 
+  def selected_statistics
+    [selected_statistic]
+  end
+
   def selected_indicator
     param_or_default('in')
+  end
+
+  def selected_indicators
+    [selected_indicator]
   end
 
   def search_term
@@ -68,13 +76,17 @@ class UserCompareSelections
     params.to_h
   end
 
-  def as_json
+  def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     {
-      from: from_date,
-      to: to_date,
-      statistic: ukhpi_data_cube.statistic(selected_statistic).to_json,
-      indicator: ukhpi_data_cube.indicator(selected_indicator).to_json,
-      locations: selected_locations.map(&:to_json)
+      from: { date: from_date }.to_json,
+      to: { date: to_date }.to_json,
+      indicators: ukhpi_data_cube.indicators.map do |indicator|
+        indicator.to_h(self)
+      end.to_json,
+      locations: selected_locations.map(&:to_h).to_json,
+      themes: ukhpi_data_cube.themes.map do |_slug, theme|
+        theme.to_h(self)
+      end.to_json
     }
   end
 
