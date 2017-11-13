@@ -29,6 +29,17 @@
         <data-view-dates />
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span='24'>
+        For locations:
+        <ul class='compare__locations'>
+          <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
+            {{ location.labels.en }}
+            <button @click='onRemoveLocation(location)'><i class='fa fa-close'></i></button>
+          </li>
+        </ul>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -42,7 +53,6 @@ import DataViewDates from './data-view-dates.vue';
 
 export default {
   data: () => ({
-    locations: [],
     statistic: null,
     indicator: null,
     indicators: [],
@@ -91,6 +101,10 @@ export default {
 
       return _.flatten(this.themes.map(themeStats));
     },
+
+    locations() {
+      return this.$store.state.compareLocations;
+    },
   },
 
   watch: {
@@ -104,6 +118,13 @@ export default {
       const selStatistic = this.statistics.find(statistic => statistic.isSelected).slug;
       this.statistic = selStatistic;
       this.$store.commit(SET_COMPARE_STATISTIC, selStatistic);
+    },
+  },
+
+  methods: {
+    onRemoveLocation(toRemoveLocation) {
+      const newLocations = this.locations.filter(location => location.gss !== toRemoveLocation.gss);
+      this.$store.commit(SET_COMPARE_LOCATIONS, newLocations);
     },
   },
 };
