@@ -75,7 +75,7 @@ class Locations
   end
 
   def self.lookup_gss(gss)
-    locations.values.find { |loc| loc.is_gss?(gss) }
+    locations.values.find { |loc| loc.gss?(gss) }
   end
 
   def self.each_location(&block)
