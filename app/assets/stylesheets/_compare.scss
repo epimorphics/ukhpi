@@ -51,7 +51,7 @@
   .c-compare__locations {
     list-style: none;
 
-    li {
+    .c-compare__location {
       display: inline-block;
       min-height: 2em;
       min-width: 8em;
@@ -69,6 +69,18 @@
       border: 0;
       background-color: white;
       cursor: pointer;
+    }
+
+  }
+
+  .c-options-selection__dates {
+    a, a:visited {
+      color: $black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
     }
   }
 }

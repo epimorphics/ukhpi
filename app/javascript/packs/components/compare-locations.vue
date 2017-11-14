@@ -47,7 +47,7 @@
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
           </li>
-          <li v-if='showAddLocationButton'>
+          <li v-if='showAddLocationButton' class='c-compare__location'>
             <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'>
               <i class='fa fa-plus-circle fa-2x'></i>
             </button>
@@ -118,8 +118,8 @@ export default {
     }
 
     this.$store.commit(INITIALISE, {
-      fromDate: initialData.fromDate,
-      toDate: initialData.toDate,
+      fromDate: initialData.from,
+      toDate: initialData.to,
       compareLocations: initialData.locations,
     });
     this.themes = initialData.themes;
