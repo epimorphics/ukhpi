@@ -100,14 +100,16 @@ export default {
     valueFormatter(row, col, value) {
       const ind = this.indicator.slug;
       let format = '0,0';
+      let scale = 1;
 
       if (ind === 'avg') {
         format = '$0,0.';
       } else if (ind === 'pac' || ind === 'pmc') {
         format = '0.0%';
+        scale = 100;
       }
 
-      return Numeral(value).format(format);
+      return Numeral(value / scale).format(format);
     },
   },
 };
