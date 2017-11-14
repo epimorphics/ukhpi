@@ -51,7 +51,7 @@
   .c-compare__locations {
     list-style: none;
 
-    .c-compare__location {
+    >.c-compare__location {
       display: inline-block;
       min-height: 2em;
       min-width: 8em;

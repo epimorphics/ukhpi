@@ -30,8 +30,8 @@
             trigger='manual'
             v-model='searchResultsVisible'
           >
-            <ul v-for='result in searchResults'>
-              <li>
+            <ul v-for='result in searchResults' class='o-search-location__results'>
+              <li class='o-search-location__result'>
                 <el-button type='text' @click='onSelectResult'>
                   {{ result.labels.en }}
                 </el-button>
