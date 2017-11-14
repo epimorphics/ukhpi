@@ -1,5 +1,8 @@
 <template lang='html'>
   <div class='o-compare__table'>
+    <h2 class='o-heading--3'>
+      {{ tableCaption }}
+    </h2>
     <el-table
       :data='tableData'
     >
@@ -57,6 +60,28 @@ export default {
 
     compareResults() {
       return this.$store.state.compareResults;
+    },
+
+    tableCaption() {
+      const indLabel = this.indicator.label.toLocaleLowerCase();
+      const statLabel = this.statistic.label.toLocaleLowerCase();
+      let locLabel = '';
+
+      switch (this.locations.length) {
+        case 0:
+          locLabel = 'zero locations';
+          break;
+        case 1:
+          locLabel = 'one location';
+          break;
+        case 2:
+          locLabel = 'two locations';
+          break;
+        default:
+          locLabel = `${this.locations.length} locations`;
+      }
+
+      return `Comparison of ${indLabel} of ${statLabel} for ${locLabel}`;
     },
   },
 
