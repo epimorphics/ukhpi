@@ -28,6 +28,14 @@
         from
         <data-view-dates />
       </el-col>
+      <el-col :span='24'>
+        <el-alert
+          type='warning'
+          :title='illegalIndicatorStatisticCombo'
+          v-if='illegalIndicatorStatisticCombo'
+        >
+        </el-alert>
+      </el-col>
     </el-row>
     <el-row>
       <el-col :span='24'>
@@ -149,6 +157,14 @@ export default {
      * the ultimate limit, giving room for one last addition */
     showAddLocationButton() {
       return this.locations.length < MAX_LOCATIONS;
+    },
+
+    illegalIndicatorStatisticCombo() {
+      if (this.indicatorSlug === 'vol' && !this.statistic.hasVolume) {
+        return 'Sorry, that combination of indicator and statistic is not available.';
+      }
+
+      return null;
     },
   },
 
