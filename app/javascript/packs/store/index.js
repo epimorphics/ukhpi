@@ -10,26 +10,49 @@ const debug = process.env.NODE_ENV !== 'production';
 /* Vuex's recommended style breaks an Airbnb eslint rule, so disable it for this file */
 /* eslint-disable no-param-reassign, no-multi-spaces */
 
-function updateQueryResults(state) {
-  // TODO
-  if (!state.location) {
-    return null;
-  }
-  
-  const userSelections = {
+function updateSingleLocationResults(state) {
+  const query = {
     location: state.location.uri,
     from: state.fromDate,
     to: state.toDate,
   };
 
-  getUkhpiData(userSelections, true);
+  getUkhpiData(query, { explain: true, action: types.SET_UKHPI_QUERY_RESULTS });
+}
+
+function updateMultipleLocationResults(state) {
+  const baseQuery = {
+    from: state.fromDate,
+    to: state.toDate,
+  };
+
+  const baseOptions = {
+    action: types.ADD_COMPARISON_RESULTS,
+    explain: false,
+  };
+
+  state.compareResults = {};
+
+  return state.compareLocations.reduce((promise, location) => {
+    const query = Object.assign({ location: location.uri }, baseQuery);
+    const options = Object.assign({ locationGss: location.gss }, baseOptions);
+
+    if (promise) {
+      return promise.then(() => { getUkhpiData(query, options); });
+    }
+
+    return getUkhpiData(query, options);
+  }, null);
+}
+
+function updateQueryResults(state) {
+  const updateFn = state.location ? updateSingleLocationResults : updateMultipleLocationResults;
+  return updateFn(state);
 }
 
 export const mutations = {
   [types.INITIALISE](state, initialState) {
-    state.location = initialState.location;
-    state.fromDate = initialState.fromDate;
-    state.toDate = initialState.toDate;
+    Object.assign(state, initialState);
 
     updateQueryResults(state);
   },
@@ -46,7 +69,7 @@ export const mutations = {
   },
 
   [types.SET_UKHPI_QUERY_RESULTS](state, queryResults) {
-    state.queryResults = queryResults;
+    state.queryResults = queryResults.results;
   },
 
   [types.SELECT_STATISTIC](state, stat) {
@@ -55,6 +78,7 @@ export const mutations = {
 
   [types.SET_COMPARE_LOCATIONS](state, locations) {
     state.compareLocations = locations;
+    updateQueryResults(state);
   },
 
   [types.SET_COMPARE_STATISTIC](state, statistic) {
@@ -65,8 +89,8 @@ export const mutations = {
     state.compareIndicator = indicator;
   },
 
-  [types.SET_COMPARE_RESULTS](state, results) {
-    state.compareResults = results;
+  [types.ADD_COMPARISON_RESULTS](state, results) {
+    state.compareResults[results.locationGss] = results.results;
   },
 };
 

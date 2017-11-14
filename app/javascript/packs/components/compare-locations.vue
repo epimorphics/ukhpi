@@ -55,7 +55,7 @@
 import kebabCase from 'kebab-case';
 import _ from 'lodash';
 import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
-  SET_COMPARE_INDICATOR, SET_DATES } from '../store/mutation-types';
+  SET_COMPARE_INDICATOR, INITIALISE } from '../store/mutation-types';
 
 import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
@@ -96,8 +96,11 @@ export default {
       }
     }
 
-    this.$store.commit(SET_DATES, initialData);
-    this.$store.commit(SET_COMPARE_LOCATIONS, initialData.locations);
+    this.$store.commit(INITIALISE, {
+      fromDate: initialData.fromDate,
+      toDate: initialData.toDate,
+      compareLocations: initialData.locations,
+    });
     this.themes = initialData.themes;
     this.indicators = initialData.indicators;
   },

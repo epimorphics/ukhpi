@@ -4,7 +4,6 @@ import Axios from 'axios';
 import store from './index';
 import bus from '../lib/event-bus';
 import Routes from '../lib/routes.js.erb';
-import { SET_UKHPI_QUERY_RESULTS } from './mutation-types';
 import QueryResults from '../models/query-results';
 import setSessionStore from '../lib/session-store';
 
@@ -23,7 +22,7 @@ function onError(error) {
 }
 
 /** Get the query results from the server. @return The promise object */
-function fetchQueryResults(userSelections) {
+function fetchQueryResults(userSelections, options) {
   return Axios.get(
     Routes.browsePath(),
     {
@@ -33,7 +32,10 @@ function fetchQueryResults(userSelections) {
       },
     },
   ).then((response) => {
-    store.commit(SET_UKHPI_QUERY_RESULTS, new QueryResults(response.data));
+    store.commit(
+      options.action,
+      Object.assign({ results: new QueryResults(response.data) }, options),
+    );
   }).catch((error) => {
     onError(error);
   });
@@ -61,13 +63,18 @@ function fetchQueryExplanation(userSelections) {
 /**
  * Get the server data corresponding to an updated set of user selections
  * @param  {Object} userSelections Location and dates
+ * @param {Boolean} options.explain If true, also run the explain query
+ * @param {String} options.action The store action to perform with a successful result
+ * @return {Promise} The promise object created by the call
  */
-export default function getUkhpiData(userSelections, explain) {
-  const promise = fetchQueryResults(userSelections);
+export default function getUkhpiData(userSelections, options) {
+  const promise = fetchQueryResults(userSelections, options);
 
-  if (explain) {
+  if (options.explain) {
     promise.then(() => {
-      fetchQueryExplanation(userSelections);
+      fetchQueryExplanation(userSelections, options);
     });
   }
+
+  return promise;
 }
