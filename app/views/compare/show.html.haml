@@ -50,13 +50,8 @@
             %button{ type: 'submit' }
               Update comparison
 
-      #application
-        %router-view
-
-      .c-location-compare__data.u-js-only{ data: @view_state.as_json }
-
       - if !@view_state.search?
-        %table.c-compare__results
+        %table.c-compare__results.u-js-hidden
           %thead
             %tr
               %th{ scope: 'col' }
@@ -72,3 +67,8 @@
                 - row.each do |value|
                   %td
                     = value
+
+      #application
+        %router-view
+
+      .c-location-compare__data.u-js-only{ data: @view_state.as_json }

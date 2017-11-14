@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from './mutation-types';
 import getUkhpiData from './server-comms';
+import bus from '../lib/event-bus';
 
 Vue.use(Vuex);
 
@@ -38,11 +39,16 @@ function updateMultipleLocationResults(state) {
     const options = Object.assign({ locationGss: location.gss }, baseOptions);
 
     if (promise) {
-      return promise.then(() => { getUkhpiData(query, options); });
+      return promise.then(() => {
+        getUkhpiData(query, options);
+      });
     }
 
     return getUkhpiData(query, options);
-  }, null);
+  }, null)
+    .then(() => {
+      bus.$emit('compare-results-updated');
+    });
 }
 
 function updateQueryResults(state) {
@@ -90,7 +96,7 @@ export const mutations = {
   },
 
   [types.ADD_COMPARISON_RESULTS](state, results) {
-    state.compareResults[results.locationGss] = results.results;
+    Vue.set(state.compareResults, results.locationGss, results.results);
   },
 };
 

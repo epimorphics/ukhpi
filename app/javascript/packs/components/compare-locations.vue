@@ -3,7 +3,7 @@
     <el-row>
       <el-col :span='24'>
         Compare
-        <el-select v-model='indicator'>
+        <el-select v-model='indicatorSlug'>
           <el-option
             v-for="item in indicators"
             :key="item.slug"
@@ -12,7 +12,7 @@
           </el-option>
         </el-select>
         for
-        <el-select v-model='statistic'>
+        <el-select v-model='statisticSlug'>
           <el-option-group
             v-for="theme in themes"
             :key="theme.slug"
@@ -48,6 +48,17 @@
         </ul>
       </el-col>
     </el-row>
+    <el-row>
+      <el-col :span='24'>
+        <compare-locations-table
+          v-if='statisticSlug && indicatorSlug'
+          :statistic='statistic'
+          :indicator='indicator'
+          :locations='locations'
+        >
+        </compare-locations-table>
+      </el-col>
+    </el-row>
   </div>
 </template>
 
@@ -59,14 +70,15 @@ import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
 
 import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
+import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
 
 const MAX_LOCATIONS = 5;
 
 export default {
   data: () => ({
-    statistic: null,
-    indicator: null,
+    statisticSlug: null,
+    indicatorSlug: null,
     indicators: [],
     themes: [],
   }),
@@ -74,6 +86,7 @@ export default {
   components: {
     DataViewDates,
     CompareAdditionalLocation,
+    CompareLocationsTable,
   },
 
   mounted() {
@@ -106,6 +119,16 @@ export default {
   },
 
   computed: {
+    statistic() {
+      const slug = this.statisticSlug;
+      return this.statistics.find(stat => stat.slug === slug);
+    },
+
+    indicator() {
+      const slug = this.indicatorSlug;
+      return this.indicators.find(ind => ind.slug === slug);
+    },
+
     statistics() {
       function statWithGroup(theme, stat) {
         return Object.assign({ theme: theme.label }, stat);
@@ -132,13 +155,13 @@ export default {
   watch: {
     indicators() {
       const selIndicator = this.indicators.find(indicator => indicator.isSelected).slug;
-      this.indicator = selIndicator;
+      this.indicatorSlug = selIndicator;
       this.$store.commit(SET_COMPARE_INDICATOR, selIndicator);
     },
 
     statistics() {
       const selStatistic = this.statistics.find(statistic => statistic.isSelected).slug;
-      this.statistic = selStatistic;
+      this.statisticSlug = selStatistic;
       this.$store.commit(SET_COMPARE_STATISTIC, selStatistic);
     },
   },
