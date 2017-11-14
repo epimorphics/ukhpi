@@ -89,10 +89,12 @@ export const mutations = {
 
   [types.SET_COMPARE_STATISTIC](state, statistic) {
     state.compareStatistic = statistic;
+    updateQueryResults(state);
   },
 
   [types.SET_COMPARE_INDICATOR](state, indicator) {
     state.compareIndicator = indicator;
+    updateQueryResults(state);
   },
 
   [types.ADD_COMPARISON_RESULTS](state, results) {

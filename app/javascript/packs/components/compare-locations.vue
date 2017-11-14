@@ -164,6 +164,14 @@ export default {
       this.statisticSlug = selStatistic;
       this.$store.commit(SET_COMPARE_STATISTIC, selStatistic);
     },
+
+    indicatorSlug() {
+      this.$store.commit(SET_COMPARE_INDICATOR, this.indicatorSlug);
+    },
+
+    statisticSlug() {
+      this.$store.commit(SET_COMPARE_STATISTIC, this.statisticSlug);
+    },
   },
 
   methods: {

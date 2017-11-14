@@ -107,6 +107,8 @@ export default {
       } else if (ind === 'pac' || ind === 'pmc') {
         format = '0.0%';
         scale = 100;
+      } else if (ind === 'hpi') {
+        format = '0,0.0';
       }
 
       return Numeral(value / scale).format(format);
