@@ -4,8 +4,8 @@ import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
 
-import router from './router/index.js.erb';
-import store from './store/index';
+import router from '../router/index.js.erb';
+import store from '../store/index';
 
 // Use Element.IO
 Vue.use(ElementUI, { locale });
