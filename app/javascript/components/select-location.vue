@@ -84,7 +84,7 @@
 <script>
 import _ from 'lodash';
 import { locationIndexType, locationsNamed, findLocationById } from '../lib/locations';
-import { showMap, setSelectedLocationMap } from '../presenters/locations-map';
+import LocationsMap from '../presenters/locations-map';
 import { SET_LOCATION } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 
@@ -100,6 +100,7 @@ export default {
     manyResults: 0,
     searchResults: [],
     searchResultsVisible: false,
+    leafletMap: null,
   }),
 
   props: {
@@ -142,21 +143,23 @@ export default {
       this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
+        this.leafletMap = this.leafletMap || new LocationsMap(this.mapElementId);
+
         this.resetDialog();
         const cb = _.bind(this.onSelectLocationURI, this);
-        this.$nextTick(() => { showMap(this.mapElementId, this.locationType, cb); });
+        this.$nextTick(() => { this.leafletMap.showMap(this.locationType, cb); });
       }
     },
 
     locationType() {
       const cb = _.bind(this.onSelectLocationURI, this);
-      showMap(this.mapElementId, this.locationType, cb);
+      this.leafletMap.showMap(this.locationType, cb);
     },
 
     selectedLocation() {
       if (this.selectedLocation) {
         this.locationType = locationIndexType(this.selectedLocation);
-        this.$nextTick(() => { setSelectedLocationMap(this.selectedLocation); });
+        this.$nextTick(() => { this.leafletMap.setSelectedLocationMap(this.selectedLocation); });
       }
     },
 

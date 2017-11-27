@@ -58,319 +58,340 @@ const LA_MAP_ERRATA = [
   'http://landregistry.data.gov.uk/id/region/tyne-and-wear',
 ];
 
-const featuresIndex = {};
-const backgroundLayer = Leaflet.layerGroup([]);
+/* eslint-disable max-len, class-methods-use-this */
+export default class LocationsMap {
+  constructor(elementId) {
+    this.elementId = elementId;
 
+    this.featuresIndex = {};
+    this.backgroundLayer = Leaflet.layerGroup([]);
 
-/* Module variables */
+    /** Guard flag so that we only initialise the features index once */
+    this.featuresIndexInitialised = false;
 
-/** Guard flag so that we only initialise the features index once */
-let featuresIndexInitialised = false;
+    /** The currently selected location URI, or null */
+    this.currentSelection = null;
 
-/** The currently selected location URI, or null */
-let currentSelection = null;
+    /** The root leaflet map object */
+    this.leafletMap = null;
 
-/** The root leaflet map object */
-let leafletMap = null;
+    /** The currently displayed layerGroup (countries, counties, etc) */
+    this.currentLayer = null;
 
-/** The currently displayed layerGroup (countries, counties, etc) */
-let currentLayer = null;
-
-/** Callback to notify Vue that user has selected a location via the map */
-let onSelectionCallback;
-
-/* Utilities */
-
-/** @return The location object denoted by the layer, looked up by name */
-function findLayerLocation(layer) {
-  const { name, ukhpiID } = layer.feature.properties;
-  const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
-
-  if (location) {
-    return location;
+    /** Callback to notify Vue that user has selected a location via the map */
+    this.onSelectionCallback = null;
   }
 
-  console.log(`Could not find location named ${name}`);
-  return null;
-}
 
-/** @return the full list of currently selected location URIs. Non-null, but may be empty */
-function currentSelections() {
-  return currentSelection ? (LOCATION_EXPANSIONS[currentSelection] || [currentSelection]) : [];
-}
+  /** @return The location object denoted by the layer, looked up by name */
+  findLayerLocation(layer) {
+    const { name, ukhpiID } = layer.feature.properties;
+    const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
 
-/** @return true if the layer is currently selected */
-function isLayerSelected(layer) {
-  return _.includes(currentSelections(), layer.options.ukhpiURI);
-}
+    if (location) {
+      return location;
+    }
 
-/* Layer styling */
-function standardLocationStyle() {
-  return {
-    fillColor: '#5A8006',
-    weight: 1,
-    opacity: 1,
-    color: 'white',
-    dashArray: '3',
-    fillOpacity: 0.7,
-  };
-}
+    console.log(`Could not find location named ${name}`);
+    return null;
+  }
 
-function backgroundLocationStyle() {
-  return {
-    fillColor: '#999999',
-    color: '#999999',
-    weight: 1,
-    dashArray: '3',
-    fillOpacity: 0.7,
-  };
-}
+  /** @return the full list of currently selected location URIs. Non-null, but may be empty */
+  currentSelections() {
+    return this.currentSelection ? (LOCATION_EXPANSIONS[this.currentSelection] || [this.currentSelection]) : [];
+  }
 
-function highlightLocationStyle() {
-  return {
-    color: '#222',
-    fillColor: '#ded',
-    weight: 2,
-  };
-}
+  /** @return true if the layer is currently selected */
+  isLayerSelected(layer) {
+    return _.includes(this.currentSelections(), layer.options.ukhpiURI);
+  }
 
-function selectedLocationStyle(layer) {
-  return _.extend(standardLocationStyle(layer), {
-    fillColor: '#C0C006',
-    color: '#686',
-    fillOpacity: 0.7,
-    dashArray: '',
-  });
-}
+  /* Layer styling */
+  standardLocationStyle() {
+    return {
+      fillColor: '#5A8006',
+      weight: 1,
+      opacity: 1,
+      color: 'white',
+      dashArray: '3',
+      fillOpacity: 0.7,
+    };
+  }
 
-/** Apply the given style to the given layer */
-function styleLayer(layer, style) {
-  layer.setStyle(style(layer));
-}
+  backgroundLocationStyle() {
+    return {
+      fillColor: '#999999',
+      color: '#999999',
+      weight: 1,
+      dashArray: '3',
+      fillOpacity: 0.7,
+    };
+  }
 
-/** Work out which style to use for a layer */
-function determineStyle(layer) {
-  return (isLayerSelected(layer)) ? selectedLocationStyle : standardLocationStyle;
-}
+  highlightLocationStyle() {
+    return {
+      color: '#222',
+      fillColor: '#ded',
+      weight: 2,
+    };
+  }
 
-/** Update all current layer styles */
-function updateCurrentLayersStyle() {
-  if (currentLayer) {
-    currentLayer.eachLayer((layer) => {
-      styleLayer(layer, determineStyle(layer));
+  selectedLocationStyle(layer) {
+    return _.extend(this.standardLocationStyle(layer), {
+      fillColor: '#C0C006',
+      color: '#686',
+      fillOpacity: 0.7,
+      dashArray: '',
     });
   }
-}
 
-/* Event handling and region selection */
-
-/** Show a popup with the location label */
-function showPopup(label, point) {
-  if (label) {
-    const popup = Leaflet.popup({
-      offset: new Leaflet.Point(0, -10),
-      autoPan: false,
-    })
-      .setLatLng(point)
-      .setContent(label);
-
-    popup.openOn(leafletMap);
-    const hidePopup = (function onHidePopup(m, p) {
-      return function onClosePopup() { m.closePopup(p); };
-    }(leafletMap, popup));
-
-    _.delay(hidePopup, 2000);
-  } else {
-    leafletMap.closePopup();
-  }
-}
-
-/** Highlight a feature of the map */
-function onHighlightFeature(e) {
-  const layer = e.target;
-  const locationAndType = findLayerLocation(layer);
-  const label = locationAndType.location.labels.en;
-
-  styleLayer(layer, highlightLocationStyle);
-  showPopup(label, e.latlng);
-}
-
-/** Unhighlight a feature of the map */
-function onUnhighlightFeature(e) {
-  const layer = e.target;
-  styleLayer(layer, determineStyle(layer));
-}
-
-/** Select a feature */
-function onSelectFeature(e) {
-  const layer = e.target;
-  onSelectionCallback(layer.options.ukhpiURI);
-}
-
-/** Bind event handlers when each feature is first loaded */
-function onEachFeature(feature, layer) {
-  layer.on({
-    mouseover: onHighlightFeature,
-    mouseout: onUnhighlightFeature,
-    click: onSelectFeature,
-  });
-}
-
-/* Index of features */
-
-/** @return An array of the index keys under which we should index this layer */
-function indexKeysByLayerType(layer) {
-  const partitionKeys = [];
-  const locationAndType = findLayerLocation(layer);
-  const props = layer.feature.properties;
-  let isCountry = false;
-
-  if (props.type && props.type.match(/countries|country/)) {
-    partitionKeys.push('country');
-    isCountry = true;
+  /** Apply the given style to the given layer */
+  styleLayer(layer, style) {
+    layer.setStyle(style(layer));
   }
 
-  if (props.ukhpiType === 'country') {
-    partitionKeys.push('country');
-    isCountry = true;
+  /** Work out which style to use for a layer */
+  determineStyle(layer) {
+    return _.bind(
+      this.isLayerSelected(layer) ? this.selectedLocationStyle : this.standardLocationStyle,
+      this,
+    );
   }
 
-  if (locationAndType) {
-    const { location } = locationAndType;
-    Object.assign(layer.options, { ukhpiURI: location.uri });
+  /** Update all current layer styles */
+  updateCurrentLayersStyle() {
+    const determineStyle = _.bind(this.determineStyle, this);
+    const styleLayer = _.bind(this.styleLayer, this);
 
-    // add a partition key based on hierarchy position
-    if (location.container2 === ENGLAND) {
-      partitionKeys.push('county');
+    if (this.currentLayer) {
+      this.currentLayer.eachLayer((layer) => {
+        styleLayer(layer, determineStyle(layer));
+      });
+    }
+  }
+
+  /* Event handling and region selection */
+
+  /** Show a popup with the location label */
+  showPopup(label, point) {
+    if (label) {
+      const popup = Leaflet.popup({
+        offset: new Leaflet.Point(0, -10),
+        autoPan: false,
+      })
+        .setLatLng(point)
+        .setContent(label);
+
+      popup.openOn(this.leafletMap);
+      const hidePopup = (function onHidePopup(m, p) {
+        return function onClosePopup() { m.closePopup(p); };
+      }(this.leafletMap, popup));
+
+      _.delay(hidePopup, 2000);
+    } else {
+      this.leafletMap.closePopup();
+    }
+  }
+
+  /** Highlight a feature of the map */
+  onHighlightFeature(e) {
+    const layer = e.target;
+    const locationAndType = this.findLayerLocation(layer);
+    const label = locationAndType.location.labels.en;
+
+    this.styleLayer(layer, this.highlightLocationStyle);
+    this.showPopup(label, e.latlng);
+  }
+
+  /** Unhighlight a feature of the map */
+  onUnhighlightFeature(e) {
+    const layer = e.target;
+    const determineStyle = _.bind(this.determineStyle, this);
+    this.styleLayer(layer, determineStyle(layer));
+  }
+
+  /** Select a feature */
+  onSelectFeature(e) {
+    const layer = e.target;
+    this.onSelectionCallback(layer.options.ukhpiURI);
+  }
+
+  /** Bind event handlers when each feature is first loaded */
+  onEachFeature(feature, layer) {
+    const onHighlightFeature = _.bind(this.onHighlightFeature, this);
+    const onUnhighlightFeature = _.bind(this.onUnhighlightFeature, this);
+    const onSelectFeature = _.bind(this.onSelectFeature, this);
+
+    layer.on({
+      mouseover: onHighlightFeature,
+      mouseout: onUnhighlightFeature,
+      click: onSelectFeature,
+    });
+  }
+
+  /* Index of features */
+
+  /** @return An array of the index keys under which we should index this layer */
+  indexKeysByLayerType(layer) {
+    const partitionKeys = [];
+    const locationAndType = this.findLayerLocation(layer);
+    const props = layer.feature.properties;
+    let isCountry = false;
+
+    if (props.type && props.type.match(/countries|country/)) {
+      partitionKeys.push('country');
+      isCountry = true;
     }
 
-    if (_.includes(COUNTY_TYPES, location.type)) {
-      partitionKeys.push('county');
+    if (props.ukhpiType === 'country') {
+      partitionKeys.push('country');
+      isCountry = true;
     }
 
-    if (_.includes(REGION_TYPES, location.type) && !isCountry) {
-      partitionKeys.push('region');
-    }
+    if (locationAndType) {
+      const { location } = locationAndType;
+      Object.assign(layer.options, { ukhpiURI: location.uri });
 
-    if (location.container3 === ENGLAND) {
-      partitionKeys.push('la');
-    }
+      // add a partition key based on hierarchy position
+      if (location.container2 === ENGLAND) {
+        partitionKeys.push('county');
+      }
 
-    if (_.includes(LOCAL_AUTHORITY_TYPES, location.type) &&
+      if (_.includes(COUNTY_TYPES, location.type)) {
+        partitionKeys.push('county');
+      }
+
+      if (_.includes(REGION_TYPES, location.type) && !isCountry) {
+        partitionKeys.push('region');
+      }
+
+      if (location.container3 === ENGLAND) {
+        partitionKeys.push('la');
+      }
+
+      if (_.includes(LOCAL_AUTHORITY_TYPES, location.type) &&
       !_.includes(LA_MAP_ERRATA, location.uri)) {
-      partitionKeys.push('la');
+        partitionKeys.push('la');
+      }
     }
+
+    return _.uniq(partitionKeys);
   }
 
-  return _.uniq(partitionKeys);
-}
+  /** Update the given partition table by assigning the `layer` to the category for `key` */
+  addToPartition(partitionTable, key, layer) {
+    if (!_.has(partitionTable, key)) {
+      const layerGroup = Leaflet.layerGroup([], { pane: 'overlayPane' });
+      Object.assign(partitionTable, { [key]: layerGroup });
+    }
 
-/** Update the given partition table by assigning the `layer` to the category for `key` */
-function addToPartition(partitionTable, key, layer) {
-  if (!_.has(partitionTable, key)) {
-    const layerGroup = Leaflet.layerGroup([], { pane: 'overlayPane' });
-    Object.assign(partitionTable, { [key]: layerGroup });
+    partitionTable[key].addLayer(layer);
   }
 
-  partitionTable[key].addLayer(layer);
-}
+  /** @return the feature set from loading the given GeoJSON structure */
+  loadGeoJson(json) {
+    const onEachFeature = _.bind(this.onEachFeature, this);
+    return Leaflet.geoJson(json, {
+      style: this.standardLocationStyle,
+      onEachFeature,
+    });
+  }
 
-/** @return the feature set from loading the given GeoJSON structure */
-function loadGeoJson(json) {
-  return Leaflet.geoJson(json, { style: standardLocationStyle, onEachFeature });
-}
+  /** Update the index of GB and NI GeoJSON features */
+  indexFeatures() {
+    // const gbFeatures = loadGeoJson(gbFeaturesData);
+    // const niFeatures = loadGeoJson(niFeaturesData);
+    const ukFeatures = this.loadGeoJson(ukFeaturesData);
+    const { featuresIndex, backgroundLayer, addToPartition } = this;
 
-/** Update the index of GB and NI GeoJSON features */
-function indexFeatures() {
-  // const gbFeatures = loadGeoJson(gbFeaturesData);
-  // const niFeatures = loadGeoJson(niFeaturesData);
-  const ukFeatures = loadGeoJson(ukFeaturesData);
+    _.each([ukFeatures], (features) => {
+      features.eachLayer((layer) => {
+        _.each(this.indexKeysByLayerType(layer), (indexKey) => {
+          addToPartition(featuresIndex, indexKey, layer);
 
-  _.each([ukFeatures], (features) => {
-    features.eachLayer((layer) => {
-      _.each(indexKeysByLayerType(layer), (indexKey) => {
-        addToPartition(featuresIndex, indexKey, layer);
-
-        // if this is a country, we also use it to build the background layer
-        if (indexKey === 'country') {
-          const bgLayer = cloneLayer(layer);
-          bgLayer.options.pane = 'tilePane';
-          backgroundLayer.addLayer(bgLayer);
-        }
+          // if this is a country, we also use it to build the background layer
+          if (indexKey === 'country') {
+            const bgLayer = cloneLayer(layer);
+            bgLayer.options.pane = 'tilePane';
+            backgroundLayer.addLayer(bgLayer);
+          }
+        });
       });
     });
-  });
-}
-
-/** @return The indexed collection of Leaflet layers, ensuring it is only initialised once */
-function indexedFeatures() {
-  if (!featuresIndexInitialised) {
-    indexFeatures();
-    featuresIndexInitialised = true;
   }
 
-  return featuresIndex;
-}
+  /** @return The indexed collection of Leaflet layers, ensuring it is only initialised once */
+  indexedFeatures() {
+    if (!this.featuresIndexInitialised) {
+      this.indexFeatures();
+      this.featuresIndexInitialised = true;
+    }
 
-/** Reset any selections back to empty */
-function resetSelection() {
-  // const cs = currentSelections; TODO
-  currentSelection = null;
-  // unHighlightFeature(cs); TODO
-}
-
-/** @return The Leaflet map object, creating a new one if necessary */
-function createMap(elementId = 'map') {
-  if (!leafletMap) {
-    indexedFeatures();
-
-    leafletMap = Leaflet.map(elementId)
-      .setView([54.6, -2], 5);
-    leafletMap
-      .attributionControl
-      .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
-    leafletMap
-      .addLayer(backgroundLayer, { pane: 'tilePane' });
-    backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundLocationStyle); });
+    return this.featuresIndex;
   }
 
-  return leafletMap;
-}
-
-/** @return The Leaflet map object, ensuring that it is reset */
-function getMap(elementId = 'map') {
-  const map = createMap(elementId);
-  resetSelection();
-  return map;
-}
-
-/** Remove the given feature group from the map */
-function removeLayer(layer, map) {
-  if (layer) {
-    map.removeLayer(layer);
-    map.closePopup();
+  /** Reset any selections back to empty */
+  resetSelection() {
+    // const cs = currentSelections; TODO
+    this.currentSelection = null;
+    // unHighlightFeature(cs); TODO
   }
-}
 
-/** Show the given feature group on the map */
-function showFeatureGroup(groupId, map) {
-  currentLayer = indexedFeatures()[groupId];
-  map.addLayer(currentLayer);
-}
+  /** @return The Leaflet map object, creating a new one if necessary */
+  createMap() {
+    if (!this.leafletMap) {
+      this.indexedFeatures();
 
-/** Display the map and optionally a feature group */
-export function showMap(elementId, featureGroupId, selectionCallback) {
-  const map = getMap(elementId);
-  onSelectionCallback = selectionCallback;
+      this.leafletMap = Leaflet.map(this.elementId)
+        .setView([54.6, -2], 5);
+      this.leafletMap
+        .attributionControl
+        .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
+      this.leafletMap
+        .addLayer(this.backgroundLayer, { pane: 'tilePane' });
 
-  if (featureGroupId) {
-    removeLayer(currentLayer, map);
-    showFeatureGroup(featureGroupId, map);
+      const { styleLayer, backgroundLocationStyle } = this;
+      this.backgroundLayer.eachLayer((layer) => { styleLayer(layer, backgroundLocationStyle); });
+    }
+
+    return this.leafletMap;
   }
-}
 
-/** Nominate a new location to be the currently selected location */
-export function setSelectedLocationMap(location) {
-  currentSelection = location.uri;
-  updateCurrentLayersStyle();
+  /** @return The Leaflet map object, ensuring that it is reset */
+  getMap() {
+    const map = this.createMap(this.elementId);
+    this.resetSelection();
+    return map;
+  }
+
+  /** Remove the given feature group from the map */
+  removeLayer(layer, map) {
+    if (layer) {
+      map.removeLayer(layer);
+      map.closePopup();
+    }
+  }
+
+  /** Show the given feature group on the map */
+  showFeatureGroup(groupId, map) {
+    this.currentLayer = this.indexedFeatures()[groupId];
+    map.addLayer(this.currentLayer);
+  }
+
+  /** Display the map and optionally a feature group */
+  showMap(featureGroupId, selectionCallback) {
+    const map = this.getMap();
+    this.onSelectionCallback = selectionCallback;
+
+    if (featureGroupId) {
+      this.removeLayer(this.currentLayer, map);
+      this.showFeatureGroup(featureGroupId, map);
+    }
+  }
+
+  /** Nominate a new location to be the currently selected location */
+  setSelectedLocationMap(location) {
+    this.currentSelection = location.uri;
+    this.updateCurrentLayersStyle();
+  }
 }
