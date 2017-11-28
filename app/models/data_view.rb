@@ -165,6 +165,6 @@ class DataView
   end
 
   def location
-    Regions.lookup_region(user_selections.selected_location)
+    Locations.lookup_location(user_selections.selected_location)
   end
 end
