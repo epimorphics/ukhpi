@@ -49,7 +49,7 @@ class LocationRecord
   end
 end
 
-# Encapsulates a particular location or region
+# Encapsulates a particular location
 class Location
   attr_reader :uri, :labels, :container, :container2, :container3, :gss
 
@@ -96,7 +96,7 @@ class Location
   end
 
   def to_ruby
-    'Region.new(' \
+    'Location.new(' \
       "#{uri.inspect}, " \
       "#{@labels.inspect}, " \
       "#{preferred_type.inspect}, " \
@@ -122,7 +122,7 @@ class Location
 end
 
 # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-def write_regions_files(locations, all_types)
+def write_locations_files(locations, all_types)
   location_names = []
   gss_index = {}
 
@@ -137,7 +137,7 @@ def write_regions_files(locations, all_types)
 
   location_names.sort! { |l0, l1| l0[:label] <=> l1[:label] }
 
-  puts 'Generating region files ... '
+  puts 'Generating location files ... '
   # JavaScript module output
   open('locations-data.js', 'w') do |file|
     # file << "export const locationNames = #{location_names.to_json};\n"
@@ -153,9 +153,9 @@ def write_regions_files(locations, all_types)
   end
 
   # Ruby module output
-  open('regions-table.rb', 'w') do |file|
+  open('locations-data.rb', 'w') do |file|
     file << "# rubocop:disable all\n"
-    file << "module RegionsTable\n"
+    file << "module LocationsTable\n"
     file << "  def location_names\n"
     file << "    #{location_names.inspect}\n"
     file << "  end\n"
@@ -178,11 +178,11 @@ end
 
 # rubocop:disable Metrics/BlockLength
 namespace :ukhpi do
-  desc 'Generate the regions files by SPARQL query'
-  task regions: %i[regions_query regions_generate regions_files_lint move_region_files]
+  desc 'Generate the locations files by SPARQL query'
+  task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
 
-  # run the SPARQL query to generate the region results
-  task regions_query: :environment do
+  # run the SPARQL query to generate the locations results
+  task locations_query: :environment do
     query = "
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix qb: <http://purl.org/linked-data/cube#>
@@ -222,8 +222,8 @@ namespace :ukhpi do
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
 
-  # Generate the regions modules in JavaScript and Ruby
-  task regions_generate: :environment do
+  # Generate the locations modules in JavaScript and Ruby
+  task locations_generate: :environment do
     puts 'Loading query results ...'
     sresults = JSON.parse(IO.read('query-results.json'))
     locations = {}
@@ -241,21 +241,21 @@ namespace :ukhpi do
       end
     end
 
-    write_regions_files(locations, all_types)
+    write_locations_files(locations, all_types)
   end
 
   # Use eslint in --fix mode to re-parse the JSON output and convert it to
   # compliant ES2015
-  task regions_files_lint: :environment do
+  task locations_files_lint: :environment do
     puts 'Linting generated files ...'
-    raise 'Failed to perform eslint step' unless system('eslint --fix regions-table.js')
+    raise 'Failed to perform eslint step' unless system('eslint --fix locations-data.js')
   end
 
   # Move the files to their correct locations
-  task move_region_files: :environment do
-    puts 'Moving region files ...'
-    File.rename('regions-table.js', 'app/javascript/packs/lib/regions-table.js')
-    File.rename('regions-table.rb', 'app/models/regions-table.rb')
+  task move_locations_files: :environment do
+    puts 'Moving locations files ...'
+    File.rename('locations-data.js', 'app/javascript/data/locations-data.js')
+    File.rename('locations-data.rb', 'app/models/locations_table.rb')
   end
 
   desc 'SPARQL-describe the given URI'
