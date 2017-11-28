@@ -204,7 +204,7 @@ export default {
   watch: {
     selectedLocation() {
       document
-        .querySelector(`#${this.elementId} .o-data-view__location`)
+        .querySelector(`#${this.elementId} .o-data-view__location-name`)
         .innerHTML = this.selectedLocation.labels.en;
     },
   },

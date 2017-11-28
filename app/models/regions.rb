@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'regions-table'
+require_dependency 'regions-table'
 
 # Encapsulates the regions that observations can apply to
 class Regions

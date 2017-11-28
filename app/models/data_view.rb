@@ -101,7 +101,7 @@ class DataView
     <<~TITLE
       #{I18n.t(indicator.label_key)}
       by #{I18n.t(title_key).downcase}
-      in <a href='#{change_path}' class='o-data-view__location'>#{location.label}</a>
+      in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
       .html_safe
   end
@@ -110,9 +110,14 @@ class DataView
     change_path = edit_browse_path(user_selections.params)
     <<~TITLE
       #{I18n.t(title_key)}
-      in <a href='#{change_path}' class='o-data-view__location'>#{location.label}</a>
+      in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
       .html_safe
+  end
+
+  def title_location
+    icon = "<i class='fa fa-pencil-square-o'></i>"
+    "<span class='o-data-view__location-name'>#{location.label}</span> #{icon}"
   end
 
   def title_key
