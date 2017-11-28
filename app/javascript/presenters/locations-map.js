@@ -4,9 +4,9 @@ import Leaflet from 'leaflet';
 import cloneLayer from 'leaflet-clonelayer';
 
 import { findLocationNamed, findLocationById } from '../lib/locations';
-// import gbFeaturesData from '../data/great-britain-geo.json';
-// import niFeaturesData from '../data/northern-ireland-geo.json';
-import ukFeaturesData from '../data/uk-geo.json';
+import gbFeaturesData from '../data/ONS-Geographies.json';
+import niFeaturesData from '../data/OSNI-Geographies.json';
+// import ukFeaturesData from '../data/uk-geo.json';
 
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england';
 
@@ -85,15 +85,8 @@ export default class LocationsMap {
 
   /** @return The location object denoted by the layer, looked up by name */
   findLayerLocation(layer) {
-    const { name, ukhpiID } = layer.feature.properties;
-    const location = name ? findLocationNamed(name) : findLocationById(ukhpiID);
-
-    if (location) {
-      return location;
-    }
-
-    console.log(`Could not find location named ${name}`);
-    return null;
+    const { name, code } = layer.feature.properties;
+    return findLocationById(code) || findLocationNamed(name);
   }
 
   /** @return the full list of currently selected location URIs. Non-null, but may be empty */
@@ -120,7 +113,7 @@ export default class LocationsMap {
 
   backgroundLocationStyle() {
     return {
-      fillColor: '#999999',
+      fillColor: '#5A8006',
       color: '#999999',
       weight: 1,
       dashArray: '3',
@@ -299,12 +292,12 @@ export default class LocationsMap {
 
   /** Update the index of GB and NI GeoJSON features */
   indexFeatures() {
-    // const gbFeatures = loadGeoJson(gbFeaturesData);
-    // const niFeatures = loadGeoJson(niFeaturesData);
-    const ukFeatures = this.loadGeoJson(ukFeaturesData);
+    const gbFeatures = this.loadGeoJson(gbFeaturesData);
+    const niFeatures = this.loadGeoJson(niFeaturesData);
+    // const ukFeatures = this.loadGeoJson(ukFeaturesData);
     const { featuresIndex, backgroundLayer, addToPartition } = this;
 
-    _.each([ukFeatures], (features) => {
+    _.each([gbFeatures, niFeatures], (features) => {
       features.eachLayer((layer) => {
         _.each(this.indexKeysByLayerType(layer), (indexKey) => {
           addToPartition(featuresIndex, indexKey, layer);
