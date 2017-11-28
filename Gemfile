@@ -43,6 +43,7 @@ gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
 gem 'govuk_template'
 gem 'js-routes'
+gem 'sentry-raven'
 
 gem 'faraday'
 gem 'faraday_middleware'
