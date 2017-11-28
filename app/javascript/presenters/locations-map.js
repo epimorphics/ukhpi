@@ -6,13 +6,11 @@ import cloneLayer from 'leaflet-clonelayer';
 import { findLocationNamed, findLocationById } from '../lib/locations';
 import gbFeaturesData from '../data/ONS-Geographies.json';
 import niFeaturesData from '../data/OSNI-Geographies.json';
-// import ukFeaturesData from '../data/uk-geo.json';
 
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england';
 
 const LOCAL_AUTHORITY_TYPES = [
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  // "http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough",
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict',
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -294,7 +292,6 @@ export default class LocationsMap {
   indexFeatures() {
     const gbFeatures = this.loadGeoJson(gbFeaturesData);
     const niFeatures = this.loadGeoJson(niFeaturesData);
-    // const ukFeatures = this.loadGeoJson(ukFeaturesData);
     const { featuresIndex, backgroundLayer, addToPartition } = this;
 
     _.each([gbFeatures, niFeatures], (features) => {
