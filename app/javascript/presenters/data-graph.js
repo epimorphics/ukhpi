@@ -20,6 +20,12 @@ const SERIES_MARKER = [
   symbolTriangle,
 ];
 
+/** Move line markers this many days along the x-axis, per series */
+const MARKER_OFFSET = {
+  mult: 6,
+  constant: 2,
+};
+
 const oneDecimalPlace = format('.2g');
 
 const GRAPH_OPTIONS = {
@@ -201,18 +207,27 @@ function drawAxes(graphConfig) {
 
 /** Draw a marker to distinguish a series other than by colour */
 function drawPoints(series, index, graphConfig) {
-  const { x, y } = graphConfig.scales;
-  const datum = _.sample(series);
+  const { scales } = graphConfig;
+  const datum = series[0];
+  if (!datum) {
+    return;
+  }
+
+  // create a point that progressively further from the y-axis
+  const { x, y } = datum;
+  const x0 = new Date(x);
+  x0.setDate(x0.getDate() + (index * MARKER_OFFSET.mult) + MARKER_OFFSET.constant);
+
   const cssClass = `point v-graph-${index}`;
 
   graphConfig.rootElem
     .selectAll(cssClass)
-    .data([datum])
+    .data([{ x: x0, y }])
     .enter()
     .append('path')
     .attr('class', cssClass)
     .attr('d', (d, i) => symbol().type(SERIES_MARKER[index])(d, i))
-    .attr('transform', d => translateCmd(x(d.x), y(d.y)));
+    .attr('transform', d => translateCmd(scales.x(d.x), scales.y(d.y)));
 }
 
 /** Draw an SVG path representing the selected indicator as a line */
