@@ -280,7 +280,7 @@ GEM
     websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
-    yajl-ruby (1.3.0)
+    yajl-ruby (1.3.1)
 
 PLATFORMS
   ruby
@@ -333,4 +333,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   1.12.5
+   1.15.3
