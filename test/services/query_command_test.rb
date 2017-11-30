@@ -29,15 +29,15 @@ end
 
 # Unit tests on the QueryCommand class
 class QueryCommandTest < ActiveSupport::TestCase
-  let :user_selections do
+  let(:user_selections) do
     user_selections = mock
     user_selections.expects(:from_date).returns(Date.new(2015, 1, 1))
     user_selections.expects(:to_date).returns(Date.new(2016, 6, 1))
-    user_selections.expects(:selected_region).returns('http://fubar.com/foo')
+    user_selections.expects(:selected_location).returns('http://fubar.com/foo')
     user_selections
   end
 
-  let :qc { QueryCommand.new(user_selections) }
+  let(:qc) { QueryCommand.new(user_selections) }
 
   describe 'QueryCommand' do
     describe '#initialize' do

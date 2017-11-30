@@ -17,12 +17,12 @@ class BrowseEditViewState
   delegate :selected_themes, to: :user_selections
 
   def location_type_options
-    Regions.location_search_options
+    Locations.location_search_options
   end
 
   def selected_location_label
     loc = selected_location
-    loc && Regions.region_label(loc)
+    loc && Locations.location_label(loc)
   end
 
   def add_matched_locations(locations)

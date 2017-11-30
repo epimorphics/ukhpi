@@ -4,13 +4,13 @@ require 'test_helper'
 
 # Unit tests on the DownloadPresenter class
 class DownloadPresenterTest < ActiveSupport::TestCase
-  let :user_selections do
+  let(:user_selections) do
     UserSelections.new(ActionController::Parameters.new(
                          location: 'http://landregistry.data.gov.uk/id/region/england',
                          thm: ['property_type']
     ))
   end
-  let :query_results do
+  let(:query_results) do
     [
       {
         'ukhpi:averagePriceSA' => [229_454],
@@ -74,13 +74,13 @@ class DownloadPresenterTest < ActiveSupport::TestCase
       }
     ]
   end
-  let :query_command do
+  let(:query_command) do
     stub(
       user_selections: user_selections,
       results: query_results
     )
   end
-  let :presenter { DownloadPresenter.new(query_command) }
+  let(:presenter) { DownloadPresenter.new(query_command) }
 
   describe 'DownloadPresenter' do
     describe '#column_names' do

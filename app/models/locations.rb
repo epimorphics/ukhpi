@@ -60,18 +60,18 @@ class Locations
 
   # legacy watermark
 
-  def self.match(region_name, params)
-    rtype = validate_region_type(params[:rt])
+  def self.match(location_name, params)
+    rtype = validate_location_type(params[:rt])
     locations.select do |_uri, loc|
-      loc.matches_name?(region_name, rtype)
+      loc.matches_name?(location_name, rtype)
     end
   end
 
-  def self.validate_region_type(region_type)
-    !region_type ||
-      types.include?(region_type) ||
-      raise(ArgumentError, "Not a valid region type: #{region_type}")
-    region_type
+  def self.validate_location_type(location_type)
+    !location_type ||
+      types.include?(location_type) ||
+      raise(ArgumentError, "Not a valid region type: #{location_type}")
+    location_type
   end
 
   def self.lookup_gss(gss)
