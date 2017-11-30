@@ -34,8 +34,7 @@ export default {
     // // add comparison selection component
     // const compareNode = document.querySelector('.c-compare-select');
     // new Vue(CompareSelection).$mount(compareNode);
-
-    bindExternalEvents();
+    Vue.nextTick(bindExternalEvents);
   },
 };
 </script>

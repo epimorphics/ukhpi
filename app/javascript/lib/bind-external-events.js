@@ -3,7 +3,27 @@
 
 import bus from './event-bus';
 
+/** Prevent default behaviour of event, with support for IE which just has to be different! */
+function eventPreventDefault(event) {
+  if (event.preventDefault) {
+    event.preventDefault();
+  } else {
+    event.returnValue = false;
+  }
+}
+
+/**
+ * Call forEach in a way that doesn't blow up IE11
+ * This weirdness with slice is because IE11 doesn't do forEach on the return
+ * value from querySelectorAll. See:
+ * https://stackoverflow.com/questions/412447/for-each-javascript-support-in-ie
+ */
+function ieSafeForEach(nodes, fn) {
+  [].slice.call(nodes).forEach(fn);
+}
+
 function handleShowHideClick(event) {
+  eventPreventDefault(event);
   // notify Vue
   let node = event.target;
   while (!node.id) {
@@ -13,40 +33,35 @@ function handleShowHideClick(event) {
   const closing = node.classList.contains('o-data-view--open');
   bus.$emit('open-close-data-view', { id: node.id, closing });
 
-  // don't follow the link
-  if (event.preventDefault) {
-    event.preventDefault();
-  }
-
   return false;
 }
 
 function bindShowHideDataView() {
-  document
-    .querySelectorAll('.o-data-view__hide-action')
-    .forEach((node) => {
-      node.onclick = handleShowHideClick;
-    });
+  const nodes = document.querySelectorAll('.o-data-view__hide-action');
+
+  // this weirdness with slice is because IE11 doesn't do forEach on the return
+  // value from querySelectorAll
+  ieSafeForEach(nodes, (node) => {
+    node.removeEventListener('click');
+    node.addEventListener('click', handleShowHideClick, false);
+  });
 }
 
 function handleLocationClick(event) {
   // notify Vue
   bus.$emit('change-location');
 
-  // don't follow the link
-  if (event.preventDefault) {
-    event.preventDefault();
-  }
-
+  eventPreventDefault(event);
   return false;
 }
 
 function bindChangeLocationLink() {
-  document
-    .querySelectorAll('.o-data-view__location')
-    .forEach((node) => {
-      node.onclick = handleLocationClick;
-    });
+  const nodes = document.querySelectorAll('.o-data-view__location');
+
+  ieSafeForEach(nodes, (node) => {
+    node.removeEventListener('click');
+    node.addEventListener('click', handleLocationClick, false);
+  });
 }
 
 export default function bindExternalEvents() {
