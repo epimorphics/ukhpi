@@ -1,11 +1,9 @@
 # frozen_string_literal: true
 
 Rails.application.routes.draw do
-  mount RailsClientLogger::Engine, at: 'logger'
   root 'landing#index'
   resources :landing, only: [:index]
-  get '/explore', to: 'exploration#index'
-  resources :exploration, only: [:new]
+  get '/explore', to: 'browse#index'
   resources :download, only: [:new]
   resource :browse, only: %i[show edit], controller: :browse
 
