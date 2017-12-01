@@ -194,6 +194,10 @@ function drawAxes(graphConfig) {
     .attr('class', 'y axis')
     .call(graphConfig.axes.y);
 
+  if (_.isNaN(graphConfig.scales.y(0))) {
+    return;
+  }
+
   if (graphConfig.symmetricalYAxis) {
     graphConfig.rootElem
       .append('svg:line')
@@ -279,6 +283,9 @@ function xTrackLabel(statistic, projection, graphConfig, d) {
 /** Track mouse movement and update the overlay */
 function onXTrackMouseMove(projection, graphConfig, xTrack) {
   const aSeries = _.first(_.values(projection));
+  if (_.isEmpty(aSeries)) {
+    return;
+  }
 
   const { x } = graphConfig.scales;
   const x0 = x.invert(mouse(graphConfig.rootElem.node())[0]);
@@ -342,7 +349,23 @@ function prepareOverlay(projection, graphConfig) {
     )());
 }
 
+/** Generate a warning when there is no data to display */
+function warnNoData(graphConfig) {
+  const label = graphConfig.theme.label.toLocaleLowerCase();
+  graphConfig
+    .rootElem
+    .append('text')
+    .attr('x', 35)
+    .attr('y', 50)
+    .text(`Sorry, there is no ${label} data available for this location`)
+    .attr('font-size', '15px')
+    .attr('font-style', 'italic')
+    .attr('fill', '#303030');
+}
+
 export default function drawGraph(projection, options) {
+  let nPoints = 0;
+
   const graphConfig = Object.assign({}, GRAPH_OPTIONS[options.indicatorId], options);
 
   Object.assign(graphConfig, drawGraphRoot(graphConfig));
@@ -355,8 +378,13 @@ export default function drawGraph(projection, options) {
   _.each(_.keys(projection), (slug, index) => {
     const series = projection[slug];
 
-    if (isSelectedStatistic(slug, graphConfig)) {
+    if (series.length > 0 && isSelectedStatistic(slug, graphConfig)) {
       drawGraphLines(series, index, graphConfig);
+      nPoints += series.length;
     }
   });
+
+  if (nPoints === 0) {
+    warnNoData(graphConfig);
+  }
 }
