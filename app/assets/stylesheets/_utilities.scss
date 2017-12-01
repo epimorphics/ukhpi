@@ -16,6 +16,10 @@
   width: 100%;
 }
 
+.u-text-center, .u-text-centre {
+  text-align: center;
+}
+
 /* Hide content that is going to be managed instead by JavaScript */
 .js .u-js-hidden {
   display: none;

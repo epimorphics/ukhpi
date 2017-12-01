@@ -1,117 +1,111 @@
-%h1.heading-large UK House Price Index
+%section#main.c-landing-page
+  %h1.heading-large UK House Price Index
 
-%p
-  Use the search tool to find house price trends in the UK:
-
-%p.c-cta
-  = link_to "search the UK house price index", explore_path, class: "c-search-tool"
-
-
-%h2.heading-medium
-  Current index
-
-.c-current-figures.panel.panel-border-wide
   %p
-    As of
-    %span.c-headline-figure
-      = @landing_state.period
-    the average house price in the UK is
-    %span.c-headline-figure
-      = succeed "," do
-        = number_to_currency( @landing_state.average_price, locale: "en-GB", precision: 0 )
-    and the index stands at
-    %span.c-headline-figure
-      = succeed "." do
-        = @landing_state.house_price_index
-    Property prices have
-    %span.c-headline-figure
-      = @landing_state.percentage_monthly_change
-    compared to the
-    %span
-      previous month,
-    and
-    %span.c-headline-figure
-      = @landing_state.percentage_annual_change
-    compared to the
-    %span
-      previous year.
+    Use the search tool to find house price trends in the UK:
+
+  %p.c-cta
+    = link_to "search the UK house price index", browse_path, class: "c-search-tool"
 
 
-%h2.heading-medium About the House Price Index
+  %h2.heading-medium
+    Current index
 
-%p
-  The UK House Price Index (HPI) uses house sales data from
-  = succeed "," do
-    = link_to "HM Land Registry", "//www.gov.uk/government/organisations/land-registry"
-  = succeed "," do
-    = link_to "Registers of Scotland", "//www.ros.gov.uk/"
-  and
-  = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
-  and is calculated by the
-  = succeed "." do
-    = link_to "Office of National Statistics", "//ons.gov.uk"
-  The index applies a statistical method, called a
-  = succeed "," do
-    = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
-  to the various sources of data on property price and attributes
-  to produce estimates of the change in house prices each period.
-
-%p
-  The index is published monthly, with Northern Ireland figures updated quarterly.
-
-%h2.heading-medium Downloading House Price Index Data
-
-%p
-  Using the
-  = link_to "search tool", explore_path, class: ""
-  you can identify a specific subset of house price index data you're interested
-  in, and then download it. Alternatively, you can
-  = link_to "https://www.gov.uk/guidance/uk-house-price-index" do
-    %strong download all of the data
-  in comma-separated (CSV) format.
-
-%h2.heading-medium
-  UK House Price Index Linked-Data
-
-%p
-  We publish this data in
-  = link_to( "linked data", "https://en.wikipedia.org/wiki/Linked_data" )
-  format, aiming for
-  = succeed "." do
-    %a{ href: "http://5stardata.info/en/"} five-star rating
-
-%p
-  To try out your own
-  %a{ href: "https://en.wikipedia.org/wiki/SPARQL"} queries
-  against our linked-data publications, use
-  = succeed "." do
-    %a{ href: "/app/qonsole"} the SPARQL query form
-  We have included some example queries
-  with the form, and you can generate output in a variety of different formats.
-
-%p
-  If you want to see, and run, the SPARQL query that is used to generate the report
-  created in the search tool, use the <code>show SPARQL query</code> button.
-
-%p
-  Links to other sources of open data are provided under the Open Government Licence
-  (ONS) and Open Data Licence (OS). HM Land Registry is not responsible for the
-  content or reliability of any linked websites.
-
-.c-logos
-  .col-lg-3.col-md-6.col-xs-12.text-center
+  .c-current-figures.panel.panel-border-wide
     %p
+      As of
+      %span.c-headline-figure
+        = @landing_state.period
+      the average house price in the UK is
+      %span.c-headline-figure
+        = succeed "," do
+          = number_to_currency( @landing_state.average_price, locale: "en-GB", precision: 0 )
+      and the index stands at
+      %span.c-headline-figure
+        = succeed "." do
+          = @landing_state.house_price_index
+      Property prices have
+      %span.c-headline-figure
+        = @landing_state.percentage_monthly_change
+      compared to the
+      %span
+        previous month,
+      and
+      %span.c-headline-figure
+        = @landing_state.percentage_annual_change
+      compared to the
+      %span
+        previous year.
+
+
+  %h2.heading-medium About the House Price Index
+
+  %p
+    The UK House Price Index (HPI) uses house sales data from
+    = succeed "," do
+      = link_to "HM Land Registry", "//www.gov.uk/government/organisations/land-registry"
+    = succeed "," do
+      = link_to "Registers of Scotland", "//www.ros.gov.uk/"
+    and
+    = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
+    and is calculated by the
+    = succeed "." do
+      = link_to "Office of National Statistics", "//ons.gov.uk"
+    The index applies a statistical method, called a
+    = succeed "," do
+      = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
+    to the various sources of data on property price and attributes
+    to produce estimates of the change in house prices each period.
+
+  %p
+    The index is published monthly, with Northern Ireland figures updated quarterly.
+
+  %h2.heading-medium Downloading House Price Index Data
+
+  %p
+    Using the
+    = link_to "search tool", browse_path, class: ""
+    you can identify a specific subset of house price index data you're interested
+    in, and then download it. Alternatively, you can
+    = link_to "https://www.gov.uk/guidance/uk-house-price-index" do
+      %strong download all of the data
+    in comma-separated (CSV) format.
+
+  %h2.heading-medium
+    UK House Price Index Linked-Data
+
+  %p
+    We publish this data in
+    = link_to( "linked data", "https://en.wikipedia.org/wiki/Linked_data" )
+    format, aiming for
+    = succeed "." do
+      %a{ href: "http://5stardata.info/en/"} five-star rating
+
+  %p
+    To try out your own
+    %a{ href: "https://en.wikipedia.org/wiki/SPARQL"} queries
+    against our linked-data publications, use
+    = succeed "." do
+      %a{ href: "/app/qonsole"} the SPARQL query form
+    We have included some example queries
+    with the form, and you can generate output in a variety of different formats.
+
+  %p
+    If you want to see, and run, the SPARQL query that is used to generate the report
+    created in the search tool, use the <code>show SPARQL query</code> button.
+
+  %p
+    Links to other sources of open data are provided under the Open Government Licence
+    (ONS) and Open Data Licence (OS). HM Land Registry is not responsible for the
+    content or reliability of any linked websites.
+
+  .c-logos
+    %p.u-text-center
       = link_to "//www.gov.uk/government/organisations/land-registry" do
         = image_tag( "hm_lr_logo.png")
-  .col-lg-3.col-md-6.col-xs-12.text-center
-    %p
       = link_to "//www.ros.gov.uk/" do
         = image_tag( "ros_logo.png" )
-  .col-lg-3.col-md-6.col-xs-12.text-center
-    %p
       = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
         = image_tag( "lps-identity.png" )
-  .col-lg-3.col-md-6.col-xs-12.text-center
-    %p
       = link_to "//ons.gov.uk" do
         = image_tag( "ons_logo.png" )
