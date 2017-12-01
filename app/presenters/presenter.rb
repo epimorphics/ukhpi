@@ -59,7 +59,7 @@ class Presenter
     @aspects ||= Aspects.new(@cmd.prefs)
   end
 
-  def lookup_region(r)
-    Regions.lookup_region(r)
+  def lookup_location(r)
+    Locations.lookup_location(r)
   end
 end

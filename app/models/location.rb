@@ -30,8 +30,8 @@ class Location
     @labels[lang]
   end
 
-  def <=>(other_region, lang = :en)
-    label(lang) <=> other_region.label(lang)
+  def <=>(other_location, lang = :en)
+    label(lang) <=> other_location.label(lang)
   end
 
   def gss?(gss)

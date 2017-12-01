@@ -30,20 +30,20 @@ module DownloadFormatter
     }
   ].freeze
 
-  def region_uri(row)
+  def location_uri(row)
     row['ukhpi:refRegion']['@id']
   end
 
-  def region(row)
-    Regions.lookup_region(region_uri(row))
+  def location(row)
+    Locations.lookup_location(location_uri(row))
   end
 
-  def region_name(row)
-    region(row).label
+  def location_name(row)
+    location(row).label
   end
 
-  def region_gss(row)
-    region(row).gss
+  def location_gss(row)
+    location(row).gss
   end
 
   def ref_month(row)

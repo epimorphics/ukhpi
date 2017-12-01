@@ -22,7 +22,7 @@ class UserSelectionsPresenter
   # key identifying information
   def as_title
     templates = {
-      region: '%s',
+      location: '%s',
       from: 'from %s',
       to: 'to %s'
     }
@@ -58,7 +58,7 @@ class UserSelectionsPresenter
   end
 
   def format_selection_value(value)
-    if (r = Regions.lookup_region(value))
+    if (r = Locations.lookup_location(value))
       r.label
     elsif value.is_a?(Date)
       value.strftime('%B %Y')

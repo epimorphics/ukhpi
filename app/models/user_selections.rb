@@ -118,7 +118,7 @@ class UserSelections
   end
 
   def format_summary_value(value)
-    if (r = Regions.lookup_region(value))
+    if (r = Locations.lookup_location(value))
       r.label
     elsif value.is_a?(Date)
       value.strftime('%B %Y')

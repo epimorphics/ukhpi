@@ -64,9 +64,9 @@ class DownloadPresenter
     return {} unless sample_row
 
     {
-      'static:regionName' => region_name(sample_row),
-      'static:regionURI' => region_uri(sample_row),
-      'static:regionGSS' => region_gss(sample_row),
+      'static:regionName' => location_name(sample_row),
+      'static:regionURI' => location_uri(sample_row),
+      'static:regionGSS' => location_gss(sample_row),
       'static:reportingPeriod' => reporting_period_label(sample_row)
     }
   end
