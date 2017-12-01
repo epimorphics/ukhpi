@@ -63,7 +63,7 @@ export default {
     * @return {String} The path
     */
     qonsolePath() {
-      return `${window.location.pathname.replace(/\/[^/]*$/, '/qonsole')}?query=_localstore`;
+      return `${window.location.pathname.replace(/\/[^/]*\/[^/]*$/, '/qonsole')}?query=_localstore`;
     },
   },
 
