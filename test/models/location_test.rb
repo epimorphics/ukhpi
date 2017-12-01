@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'location'
 
 # Unit tests on the Location class
 class RegionTest < ActiveSupport::TestCase
@@ -83,9 +84,9 @@ class RegionTest < ActiveSupport::TestCase
     describe 'sorting' do
       it 'should sort by label' do
         regions = [
-          Region.new('http://foo.bar/a', { en: 'A' }, nil, nil, nil),
-          Region.new('http://foo.bar/c', { en: 'C' }, nil, nil, nil),
-          Region.new('http://foo.bar/b', { en: 'B' }, nil, nil, nil)
+          Location.new('http://foo.bar/a', { en: 'A' }, nil, nil, nil),
+          Location.new('http://foo.bar/c', { en: 'C' }, nil, nil, nil),
+          Location.new('http://foo.bar/b', { en: 'B' }, nil, nil, nil)
         ]
         regions.sort!
         regions[0].label.must_equal 'A'

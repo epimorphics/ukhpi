@@ -40,7 +40,8 @@ class QueryCommand
   # Construct the DsAPI query that matches the given user constraints
   def build_query
     query = add_date_range_constraint(base_query)
-    add_location_constraint(query)
+    query1 = add_location_constraint(query)
+    add_sort(query1)
   end
 
   def api_service(service)
@@ -69,6 +70,10 @@ class QueryCommand
   def add_location_constraint(query)
     value = DataServicesApi::Value.uri(location_uri)
     query.eq('ukhpi:refRegion', value)
+  end
+
+  def add_sort(query)
+    query.sort(:up, 'ukhpi:refMonth')
   end
 
   def month_year_value(date)

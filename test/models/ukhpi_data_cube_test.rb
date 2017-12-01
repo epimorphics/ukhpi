@@ -5,7 +5,7 @@
 require 'test_helper'
 
 class DataModelTest < ActiveSupport::TestCase
-  let :cube { UkhpiDataCube.new }
+  let(:cube) { UkhpiDataCube.new }
 
   it 'should load the DSD' do
     cube.dsd.graph.wont_be_nil
@@ -47,22 +47,22 @@ class DataModelTest < ActiveSupport::TestCase
 
   describe '#themes' do
     it 'should return a Hash of the themes' do
-      cube.themes.keys.length.must_be :>=, 5
+      cube.themes.keys.length.must_be :>=, 4
       cube.themes.keys.first.must_equal :property_type
     end
   end
 
   describe '#theme' do
     it 'should return a theme object' do
-      cube.theme(:property_type).first.slug.must_equal 'all'
+      cube.theme(:property_type).statistics.first.slug.must_equal 'all'
     end
   end
 
   describe '#each_theme' do
     it 'should iterate over the themes' do
       arr = []
-      cube.each_theme { |_theme_key, theme| arr << theme.is_a?(Array) }
-      arr.length.must_be :>=, 5
+      cube.each_theme { |_theme_key, theme| arr << theme.is_a?(UkhpiTheme) }
+      arr.length.must_be :>=, 4
       arr.wont_include false
     end
   end

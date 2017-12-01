@@ -2,7 +2,7 @@
 
 # Controller for the action of downloading UKHPI data in a variety of data formats
 # (csv, json, RDF etc)
-class DownloadController < ExplorationController
+class DownloadController < ApplicationController
   def new
     user_selections = UserSelections.new(params)
     query_command = QueryCommand.new(user_selections)

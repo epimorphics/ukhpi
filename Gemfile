@@ -22,22 +22,7 @@ gem 'data_services_api', git: 'git@github.com:epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 
 gem 'font-awesome-rails'
-gem 'rails-client-logger'
 gem 'sass-rails', '~> 5.0'
-
-# gem 'bootstrap-sass'
-# gem 'bootstrap3-datetimepicker-rails'
-# gem 'd3-rails'
-# gem 'jquery-datatables-rails'
-# gem 'jquery-rails'
-# gem 'jquery-ui-rails'
-# gem 'leaflet-rails', github: 'axyjo/leaflet-rails'
-# gem 'lodash-rails'
-# gem 'modernizr-rails'
-# gem 'modulejs-rails'
-# gem 'momentjs-rails'
-# gem 'rails-html-sanitizer'
-# gem 'spinjs-rails'
 
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
@@ -73,10 +58,4 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  # Region boundary generation
-  gem 'rgeo', github: 'ijdickinson/rgeo'
-  gem 'rgeo-geojson'
-  gem 'rgeo-shapefile'
-  gem 'simplify_rb'
 end

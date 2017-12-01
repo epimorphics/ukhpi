@@ -4,10 +4,10 @@ require 'test_helper'
 
 # Unit tests on the UserSelectionsPresenter class
 class UserSelectionsPresenterTest < ActiveSupport::TestCase
-  let :selections do
+  let(:selections) do
     UserSelections.new(
       ActionController::Parameters.new(
-        'region' => 'http://landregistry.data.gov.uk/id/region/wales',
+        'location' => 'http://landregistry.data.gov.uk/id/region/wales',
         'from' => Date.new(2017, 2, 3),
         'to' => Date.new(2017, 8, 31),
         'in' => %w[averagePrice housePriceIndex]
@@ -15,14 +15,14 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
     )
   end
 
-  let :presenter { UserSelectionsPresenter.new(selections) }
+  let(:presenter) { UserSelectionsPresenter.new(selections) }
 
   describe '#UserSelectionsPresenter' do
     describe '#as_url_search_string' do
       it 'should translate the selections to a well-formed search string' do
         presenter.as_url_search_string.must_equal 'from=2017-02-03&'\
           'in%5B%5D=averagePrice&in%5B%5D=housePriceIndex&'\
-          'region=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Fwales&'\
+          'location=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Fwales&'\
           'to=2017-08-31'
       end
     end

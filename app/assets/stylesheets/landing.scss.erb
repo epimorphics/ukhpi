@@ -2,36 +2,46 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.c-logos {
-  margin-top: 48px;
-  img {
-    max-height: 50px;
-    max-width: 200px;
-    margin-right: 20px;
+.c-landing-page {
+  a {
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
-}
 
-.c-headline-figure {
-  font-weight: bold;
-}
-
-.c-current-figures {
-  p {
-    border-left: 8px solid $lr-green-dark;
-    padding-left: 12px;
-    margin-left: -12px;
+  .c-logos {
+    margin-top: 48px;
+    img {
+      max-height: 50px;
+      max-width: 200px;
+      margin-right: 20px;
+    }
   }
-}
 
-.c-cta {
-  margin-top: 20px;
-  margin-bottom: 40px;
-  text-align: center;
-}
+  .c-headline-figure {
+    font-weight: bold;
+  }
 
-.c-search-tool {
-  @extend .button;
-  @extend .button-start;
+  .c-current-figures {
+    p {
+      border-left: 8px solid $lr-green-dark;
+      padding-left: 12px;
+      margin-left: -12px;
+    }
+  }
 
-  background-image: url(<%= asset_path 'icon-pointer.png' %>);
+  .c-cta {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .c-search-tool {
+    @extend .button;
+    @extend .button-start;
+
+    background-image: url(<%= asset_path 'icon-pointer.png' %>);
+  }
 }

@@ -4,11 +4,11 @@ require 'test_helper'
 
 # Unit tests on the DataViewsPresenter class
 class DataViewsPresenterTest < ActiveSupport::TestCase
-  let :user_selections do
+  let(:user_selections) do
     UserSelections.new(ActionController::Parameters.new)
   end
-  let :query_result { nil }
-  let :presenter { DataViewsPresenter.new(user_selections, query_result) }
+  let(:query_result) { nil }
+  let(:presenter) { DataViewsPresenter.new(user_selections, query_result) }
 
   describe 'DataViewPresenter' do
     describe '#data_views' do
