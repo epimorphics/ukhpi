@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   root 'landing#index'
   resources :landing, only: [:index]
-  get '/explore', to: 'browse#index'
+  get '/explore', to: redirect('/browse')
   resources :download, only: [:new]
   resource :browse, only: %i[show edit], controller: :browse
 
