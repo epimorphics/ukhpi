@@ -40,8 +40,8 @@ class QueryCommand
   # Construct the DsAPI query that matches the given user constraints
   def build_query
     query = add_date_range_constraint(base_query)
-    add_location_constraint(query)
-    # add_sort(query)
+    query1 = add_location_constraint(query)
+    add_sort(query1)
   end
 
   def api_service(service)
