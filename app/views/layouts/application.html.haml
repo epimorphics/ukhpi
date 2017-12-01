@@ -3,7 +3,6 @@
   %head
     %title UK House Price Index
     %meta{ charset: 'utf-8' }
-    = javascript_include_tag :modernizr
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
@@ -12,14 +11,8 @@
       %link{ rel: 'canonical', href: "//#{request.host_with_port}#{@preferences.as_path(:view)}" }
 
     /[if lt IE 9]
-      = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
-      = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js'
-      = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js'
-      = javascript_include_tag '//cdn.jsdelivr.net/lodash/4.9.0/lodash.js'
       :javascript
         window.isIE8 = true;
-
-    = javascript_include_tag 'application'
 
   %body.government.website.lr.ppd-standard-report
 
