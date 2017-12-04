@@ -18,7 +18,11 @@
         <el-col :span='24'>
           <label>
             Search locations:
-            <el-input v-model='searchInput' @change='onSearchInput'>
+            <el-input
+              v-model='searchInput'
+              @change='onSearchInput'
+              @keyup.native='onSearchKeyUp'
+            >
             </el-input>
           </label>
         </el-col>
@@ -204,8 +208,15 @@ export default {
     },
 
     isExactMatch(term, results) {
+      const termLC = term.toLocaleLowerCase();
       return results &&
-             results.find(result => result.labels.en === term);
+             results.find(result => result.labels.en.toLocaleLowerCase() === termLC);
+    },
+
+    setFoundLocation(location) {
+      this.$set(this, 'selectedLocation', location);
+      this.$set(this, 'searchResults', []);
+      this.$set(this, 'searchInput', location.labels.en);
     },
 
     onSearchInput(term) {
@@ -213,11 +224,33 @@ export default {
       const match = this.isExactMatch(term, filtered);
 
       if (match) {
-        this.$set(this, 'selectedLocation', match);
-        this.$set(this, 'searchResults', []);
+        this.setFoundLocation(match);
       } else if (filtered) {
         this.manyResults = filtered.length - MAX_RESULTS;
         this.searchResults = filtered.slice(0, MAX_RESULTS);
+      }
+    },
+
+    onSearchKeyUp(event) {
+      if (event.code === 'Enter') {
+        if (this.selectedLocation) {
+          // enter acts as confirm if we have a selected location
+          this.onSaveChanges();
+        } else {
+          // enter can short-cut making a selection from the list
+          let match = null;
+
+          if (this.searchResults.length === 1) {
+            // have exactly one search result
+            [match] = this.searchResults;
+          } else {
+            match = this.isExactMatch(this.searchInput, this.searchResults);
+          }
+
+          if (match) {
+            this.setFoundLocation(match);
+          }
+        }
       }
     },
 
