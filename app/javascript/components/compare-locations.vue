@@ -65,6 +65,15 @@
           :locations='locations'
         >
         </compare-locations-table>
+        <span class='c-compare__download'>
+          Download this data as:
+          <a href='#' class='c-compare__download-link c-compare__download-csv'>
+            CSV (spreadsheet) <i class='fa fa-external-link'></i>
+          </a>
+          <a href='#' class='c-compare__download-link c-compare__download-json'>
+            JSON <i class='fa fa-external-link'></i>
+          </a>
+        </span>
       </el-col>
     </el-row>
   </div>
@@ -73,6 +82,7 @@
 <script>
 import kebabCase from 'kebab-case';
 import _ from 'lodash';
+import Moment from 'moment';
 import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
   SET_COMPARE_INDICATOR, INITIALISE } from '../store/mutation-types';
 
@@ -80,6 +90,7 @@ import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
 import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
+import Routes from '../lib/routes.js.erb';
 
 const MAX_LOCATIONS = 5;
 
@@ -124,6 +135,8 @@ export default {
     });
     this.themes = initialData.themes;
     this.indicators = initialData.indicators;
+
+    this.updateDownloadURL();
   },
 
   computed: {
@@ -153,6 +166,10 @@ export default {
       return this.$store.state.compareLocations;
     },
 
+    locationSlugs() {
+      return this.$store.state.compareLocations.map(loc => loc.gss);
+    },
+
     /** We can still add a location if the current list is strictly less than
      * the ultimate limit, giving room for one last addition */
     showAddLocationButton() {
@@ -165,6 +182,14 @@ export default {
       }
 
       return null;
+    },
+
+    toDateISO() {
+      return Moment(this.$store.state.toDate).format('YYYY-MM-DD');
+    },
+
+    fromDateISO() {
+      return Moment(this.$store.state.fromDate).format('YYYY-MM-DD');
     },
   },
 
@@ -188,6 +213,24 @@ export default {
     statisticSlug() {
       this.$store.commit(SET_COMPARE_STATISTIC, this.statisticSlug);
     },
+
+    // when the selections change, morph the data download URL...
+
+    fromDate() {
+      this.updateDownloadURL();
+    },
+    toDate() {
+      this.updateDownloadURL();
+    },
+    indicator() {
+      this.updateDownloadURL();
+    },
+    statistic() {
+      this.updateDownloadURL();
+    },
+    locations() {
+      this.updateDownloadURL();
+    },
   },
 
   methods: {
@@ -198,6 +241,25 @@ export default {
 
     onAddLocation() {
       bus.$emit('select-comparison');
+    },
+
+    updateDownloadURL() {
+      const pathOptions = {
+        from: this.fromDateISO,
+        to: this.toDateISO,
+        st: this.statistic.slug,
+        in: this.indicator.slug,
+        location: this.locationSlugs,
+      };
+
+      const hrefJson = Routes.newDownloadPath(Object.assign({ format: 'json' }, pathOptions));
+      const hrefCsv = Routes.newDownloadPath(Object.assign({ format: 'csv' }, pathOptions));
+
+      let anchorElement = document.querySelector('.c-compare__download-json');
+      anchorElement.setAttribute('href', hrefJson);
+
+      anchorElement = document.querySelector('.c-compare__download-csv');
+      anchorElement.setAttribute('href', hrefCsv);
     },
   },
 };

@@ -65,6 +65,14 @@ export default {
     qonsolePath() {
       return `${window.location.pathname.replace(/\/[^/]*\/[^/]*$/, '/qonsole')}?query=_localstore`;
     },
+
+    fromDate() {
+      return this.$store.state.fromDate;
+    },
+
+    toDate() {
+      return this.$store.state.toDate;
+    },
   },
 
   methods: {
@@ -78,6 +86,8 @@ export default {
       const options = {
         format: mediaType,
         'thm[]': this.theme.slug,
+        from: this.fromDate,
+        to: this.toDate,
       };
 
       if (onlyIndicator && this.indicator) {

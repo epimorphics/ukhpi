@@ -5,10 +5,10 @@
 class DownloadPresenter
   include DownloadFormatter
 
-  attr_reader :query_command
+  attr_reader :query_commands
 
-  def initialize(query_command)
-    @query_command = query_command
+  def initialize(query_commands)
+    @query_commands = query_commands.is_a?(Array) ? query_commands : [query_commands]
   end
 
   # @return an Array of the column names for the selected columns in
@@ -31,19 +31,31 @@ class DownloadPresenter
     row_preds = row_predicates
     static_values = static_row_values
 
-    query_command.results.map do |result|
+    results.map do |result|
       as_row(result, static_values, row_preds)
     end
   end
 
   # @return The embedded user selections
   def user_selections
-    query_command.user_selections
+    query_commands.first.user_selections
   end
 
   # @return The embedded results
   def results
-    query_command.results
+    unless @results
+      @results = []
+
+      query_commands.each do |query_command|
+        query_command.perform_query unless query_command.results
+        byebug unless @results && query_command.results
+        @results.concat(query_command.results)
+      end
+
+      # TODO will need to sort this list as well
+    end
+
+    @results
   end
 
   private
@@ -60,7 +72,7 @@ class DownloadPresenter
 
   # @return A map of values that do not change from row to row
   def static_row_values
-    sample_row = @query_command.results&.first
+    sample_row = results&.first
     return {} unless sample_row
 
     {
@@ -116,7 +128,7 @@ class DownloadPresenter
   end
 
   def selected_indicators
-    query_command.user_selections.selected_indicators
+    user_selections.selected_indicators
   end
 
   # @return True if the given statistic is one that is modified by adding one
@@ -129,7 +141,7 @@ class DownloadPresenter
   def selected_themes
     return @selected_themes if @selected_themes
 
-    themes = query_command.user_selections.params['thm'] || all_themes
+    themes = user_selections.params['thm'] || all_themes
     @selected_themes = themes.map { |theme_slug| ukhpi.theme(theme_slug) }
   end
 
