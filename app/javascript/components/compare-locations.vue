@@ -247,8 +247,8 @@ export default {
       const pathOptions = {
         from: this.fromDateISO,
         to: this.toDateISO,
-        st: this.statistic.slug,
-        in: this.indicator.slug,
+        st: [this.statistic.slug],
+        in: [this.indicator.slug],
         location: this.locationSlugs,
       };
 

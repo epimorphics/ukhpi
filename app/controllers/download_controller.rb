@@ -23,7 +23,7 @@ class DownloadController < ApplicationController
   end
 
   def download_multiple_locations
-    pparams = params.permit('from', 'to', 'in', 'st', 'location' => [])
+    pparams = params.permit(*UserSelections::PERMITTED, location: [])
     location_gss = pparams.delete('location')
     locations = location_gss.map { |gss| Locations.lookup_gss(gss).uri }
 
@@ -56,9 +56,15 @@ class DownloadController < ApplicationController
   end
 
   def synthesise_filename(query_commands, extension)
-    summary = query_commands.first.user_selections.summary
-    file_root = summary.downcase.gsub(/\s|[[:punct:]]/, '-')
-    comparison = query_commands.length > 1 ? 'comparison-' : ''
+    comparison = ''
+    qc = query_commands
+
+    if query_commands.respond_to?(:first)
+      qc = query_commands.first
+      comparison = 'comparison-'
+    end
+
+    file_root = qc.user_selections.summary.downcase.gsub(/\s|[[:punct:]]/, '-')
     "ukhpi-#{comparison}#{file_root}.#{extension}"
   end
 

@@ -12,7 +12,7 @@ class UserSelections
   include UserChoices
 
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
-  DEFAULT_STATISTICS = %w[all vol].freeze
+  DEFAULT_STATISTICS = %w[all].freeze
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
   DEFAULT_REGION_TYPE = 'country'
@@ -99,6 +99,8 @@ class UserSelections
   def summary
     templates = {
       thm: '%s',
+      st: '%s',
+      in: '%s',
       location: '%s',
       from: 'from %s',
       to: 'to %s'
