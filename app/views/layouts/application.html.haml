@@ -14,16 +14,19 @@
       :javascript
         window.isIE8 = true;
 
-  %body.government.website.lr.ppd-standard-report
+  %body.government.website.hmlr
 
-    %header.with-proposition.lr-header#global-header{ role: 'banner' }
+    %header.with-proposition.c-hmlr-header#global-header{ role: 'banner' }
       .header-wrapper
         .header-global
           .header-logo
-            %h1.title-bar--h1
-              %a.content{ href: '/app/ukhpi', title: 'UK HPI' }
-                = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'))
-              UK House Price Index
+            %a.content{ href: '/app/ukhpi', title: 'UK HPI' }
+              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'))
+        .header-proposition
+          .content
+            %nav#proposition-menu
+              %a#proposition-name{ href: '/app/ukhpi' }
+                %strong UK House Price Index
 
     .o-lr-top-bar
 
