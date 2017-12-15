@@ -105,6 +105,7 @@ export default {
           period: this.period,
           selectedStatistics: this.selectedStatistics,
           theme: this.theme,
+          location: this.$store.state.location,
         },
       );
     },

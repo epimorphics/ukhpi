@@ -23,6 +23,9 @@ def validate_json(json) # rubocop:disable Metrics/MethodLength
       { "ukhpi:refRegion": {
         "@eq": { "@id": 'http://fubar.com/foo' }
       } }
+    ],
+    '@sort' => [
+      { '@up' => 'ukhpi:refMonth' }
     ]
   )
 end
