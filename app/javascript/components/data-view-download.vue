@@ -4,32 +4,45 @@
       <el-col :span='18'>
         <p>
           You can download this data, so that you can process it further yourself.
+          You can also <a :href='qonsolePath'>try the SPARQL query</a>.
         </p>
         <ul>
           <li>
-            Download only data for <strong>{{ indicator.label }}</strong>:
-            <a class='o-data-view-download__button' :href='downloadUrl("csv", true)'>
+            Download only <strong>{{ indicatorName }}</strong>
+            by <strong>{{ themeName }}</strong>
+            in {{ locationName }}:
+            <br />
+            <a class='o-data-view-download__button' :href='downloadUrl("csv", true, true)'>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
-            <a class='o-data-view-download__button' :href='downloadUrl("json", true)'>
+            <a class='o-data-view-download__button' :href='downloadUrl("json", true, true)'>
               download JSON <i class='fa fa-external-link'></i>
             </a>
           </li>
           <li>
-            Download all statistics for <strong>{{ theme.label }}</strong>:
-            <a class='o-data-view-download__button' :href='downloadUrl("csv", false)' download>
+            Download <strong>all</strong> of index, average and percentage change
+            by <strong>{{ themeName }}</strong>
+            in {{ locationName }}:
+            <br />
+            <a class='o-data-view-download__button' :href='downloadUrl("csv", true, false)' download>
               download CSV/spreadsheet <i class='fa fa-external-link'></i>
             </a>
-            <a class='o-data-view-download__button' :href='downloadUrl("json", false)' download>
+            <a class='o-data-view-download__button' :href='downloadUrl("json", true, false)' download>
               download JSON <i class='fa fa-external-link'></i>
             </a>
           </li>
         </ul>
         <p>
-          You can also download
-          <a href=''>all UKHPI data for the selected location and period</a>,
-          or <br />
-          <a :href='qonsolePath'>try the SPARQL query</a>
+          Download
+          <strong>all UKHPI data</strong> for {{ locationName }} for this period:
+          <br />
+          <a class='o-data-view-download__button' :href='downloadUrl("csv", false, false)' download>
+            download CSV/spreadsheet <i class='fa fa-external-link'></i>
+          </a>
+          <a class='o-data-view-download__button' :href='downloadUrl("json", false, false)' download>
+            download JSON <i class='fa fa-external-link'></i>
+          </a>
+
         </p>
         <p class='u-muted'>
           This data is licensed under the terms of the
@@ -73,24 +86,48 @@ export default {
     toDate() {
       return this.$store.state.toDate;
     },
+
+    locationUri() {
+      return this.$store.state.location.uri;
+    },
+
+    locationName() {
+      if (!this.$store.state.location) {
+        return null;
+      }
+      return this.$store.state.location.labels.en;
+    },
+
+    themeName() {
+      return this.theme ? this.theme.label.toLocaleLowerCase() : '';
+    },
+
+    indicatorName() {
+      return this.indicator ? this.indicator.label.toLocaleLowerCase() : '';
+    },
   },
 
   methods: {
     /**
      * Calculate the URL for downloading a particular slice of the data
      * @param  {String} mediaType     Desired media type, e.g. json
-     * @param  {Boolean} onlyIndicator If true, download only the current indicator
+     * @param {String} withTheme If true, include the theme as a constraint
+     * @param  {Boolean} withIndicator If true, include the indicator as a constraint
      * @return {String}               The download URL
      */
-    downloadUrl(mediaType, onlyIndicator) {
+    downloadUrl(mediaType, withTheme, withIndicator) {
       const options = {
         format: mediaType,
-        'thm[]': this.theme.slug,
         from: this.fromDate,
         to: this.toDate,
+        location: this.locationUri,
       };
 
-      if (onlyIndicator && this.indicator) {
+      if (withTheme && this.theme) {
+        options['thm[]'] = this.theme.slug;
+      }
+
+      if (withIndicator && this.indicator) {
         options['in[]'] = this.indicator.slug;
       }
 
