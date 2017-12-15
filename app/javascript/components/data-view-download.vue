@@ -88,14 +88,13 @@ export default {
     },
 
     locationUri() {
-      return this.$store.state.location.uri;
+      const { location } = this.$store.state;
+      return location ? location.uri : '';
     },
 
     locationName() {
-      if (!this.$store.state.location) {
-        return null;
-      }
-      return this.$store.state.location.labels.en;
+      const { location } = this.$store.state;
+      return location ? location.labels.en : '';
     },
 
     themeName() {
