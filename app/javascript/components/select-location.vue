@@ -251,6 +251,8 @@ export default {
             this.setFoundLocation(match);
           }
         }
+      } else {
+        this.onSearchInput(this.searchInput);
       }
     },
 
