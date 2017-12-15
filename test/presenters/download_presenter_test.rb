@@ -91,7 +91,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
       end
 
       it 'should provide an accessor for the underlying results' do
-        presenter.results.must_be_same_as query_results
+        presenter.results.length.must_equal 1
       end
 
       it 'should provide an accessor for the underlying user selections' do
@@ -106,7 +106,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
         row.first.must_equal 'England'
         row.second.must_equal 'http://landregistry.data.gov.uk/id/region/england'
         row[5].must_equal 'monthly'
-        row[7].must_equal [231_049]
+        row[7].must_equal 231_049
       end
     end
   end
