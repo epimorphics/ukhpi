@@ -247,10 +247,11 @@ export default {
       const pathOptions = {
         from: this.fromDateISO,
         to: this.toDateISO,
-        st: [this.statistic.slug],
-        in: [this.indicator.slug],
         location: this.locationSlugs,
       };
+
+      if (this.statistic) { pathOptions['st[]'] = this.statistic.slug; }
+      if (this.indicator) { pathOptions['in[]'] = this.indicator.slug; }
 
       const hrefJson = Routes.newDownloadPath(Object.assign({ format: 'json' }, pathOptions));
       const hrefCsv = Routes.newDownloadPath(Object.assign({ format: 'csv' }, pathOptions));
