@@ -352,12 +352,14 @@ function prepareOverlay(projection, graphConfig) {
 /** Generate a warning when there is no data to display */
 function warnNoData(graphConfig) {
   const label = graphConfig.theme.label.toLocaleLowerCase();
+  const location = graphConfig.location.labels.en;
+
   graphConfig
     .rootElem
     .append('text')
     .attr('x', 35)
     .attr('y', 50)
-    .text(`Sorry, there is no ${label} data available for this location`)
+    .text(`Sorry, there is no ${label} data available for ${location}. Please select a different location.`)
     .attr('font-size', '15px')
     .attr('font-style', 'italic')
     .attr('fill', '#303030');
