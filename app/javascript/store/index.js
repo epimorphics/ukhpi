@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import * as types from './mutation-types';
 import getUkhpiData from './server-comms';
+import { initialiseNavigationState, pushNavigationState } from './navigation-state';
 import bus from '../lib/event-bus';
 
 Vue.use(Vuex);
@@ -60,17 +61,27 @@ export const mutations = {
   [types.INITIALISE](state, initialState) {
     Object.assign(state, initialState);
 
+    initialiseNavigationState();
+    pushNavigationState(state);
+    updateQueryResults(state);
+  },
+
+  [types.REINITIALISE](state, initialState) {
+    Object.assign(state, initialState);
+
     updateQueryResults(state);
   },
 
   [types.SET_LOCATION](state, location) {
     state.location = location;
+    pushNavigationState(state);
     updateQueryResults(state);
   },
 
   [types.SET_DATES](state, { from: fromDate, to: toDate }) {
     state.fromDate = fromDate;
     state.toDate = toDate;
+    pushNavigationState(state);
     updateQueryResults(state);
   },
 
@@ -84,16 +95,19 @@ export const mutations = {
 
   [types.SET_COMPARE_LOCATIONS](state, locations) {
     state.compareLocations = locations;
+    pushNavigationState(state);
     updateQueryResults(state);
   },
 
   [types.SET_COMPARE_STATISTIC](state, statistic) {
     state.compareStatistic = statistic;
+    pushNavigationState(state);
     updateQueryResults(state);
   },
 
   [types.SET_COMPARE_INDICATOR](state, indicator) {
     state.compareIndicator = indicator;
+    pushNavigationState(state);
     updateQueryResults(state);
   },
 
