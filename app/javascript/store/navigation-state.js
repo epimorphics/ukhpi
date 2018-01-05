@@ -3,51 +3,41 @@
  */
 
 import _ from 'lodash';
+import QueryString from 'query-string';
+import Moment from 'moment';
 import store from './index';
 import { REINITIALISE } from './mutation-types';
 
 /** Mappers from store state to navigation state */
 const navigationStateFields = {
-  location: state => ({ location: state.location && state.location.uri }),
+  location: state => ({ location: state.location.uri }),
+  fromDate: state => ({ from: Moment(state.fromDate).format('YYYY-MM-DD') }),
+  toDate: state => ({ to: Moment(state.toDate).format('YYYY-MM-DD') }),
+  compareIndicator: state => ({ in: state.compareIndicator }),
+  compareStatistic: state => ({ st: state.compareStatistic }),
+  compareLocations: state => ({ location: state.compareLocations.map(location => location.gss) }),
 };
-
-/**
- * Given a key and value, serialise as a URL parameter. The wrinkle here is that
- * array-valued keys are serialised as `key[]=v0&key[]=v1`
- * @param  {[type]} key   [description]
- * @param  {[type]} value [description]
- * @return {[String]} Serialize key-value as URL param(s)
- */
-function serialiseKeyValue(key, value) {
-  if (_.isArray(value)) {
-    const multiKey = encodeURIComponent(`${key}[]`);
-    return value.map(v => `${multiKey}=${encodeURIComponent(v)}`).join('&');
-  }
-
-  return `${key}=${encodeURIComponent(value)}`;
-}
-
-function serialiseState(state) {
-  return _.map(state, (value, key) => serialiseKeyValue(key, value)).join('&');
-}
 
 /**
  * Calculate an object representing the current navigation state
  * @return The current navigation state as an object
  */
 function currentNavigationState(state) {
-  const navState = _.pick(state, Object.keys(navigationStateFields));
-  const serialState = {};
+  const navState = {}; // just the relevant parts of the Vuex state
+  const urlState = {}; // relevant state variables translated to URL query string form
 
   _.forEach(state, (value, key) => {
-    if (navigationStateFields[key]) {
-      Object.assign(serialState, navigationStateFields[key](state));
+    if (!_.isEmpty(value) && navigationStateFields[key]) {
+      Object.assign(navState, { [key]: value });
+      Object.assign(urlState, navigationStateFields[key](state));
     }
   });
 
+  const queryStr = QueryString.stringify(urlState, { arrayFormat: 'bracket' });
+
   return {
     navState,
-    url: `${window.location.pathname}?${serialiseState(serialState)}`,
+    url: `${window.location.pathname}?${queryStr}`,
   };
 }
 
@@ -56,11 +46,15 @@ function currentNavigationState(state) {
  * @param  {[type]} state [description]
  * @return {[type]}       [description]
  */
-export function pushNavigationState(state) {
+export function pushNavigationState(state, replace = false) {
   const { navState, url } = currentNavigationState(state);
 
-  if (window.history && window.history.state !== navState) {
-    window.history.pushState(navState, 'ukhpi navigation', url);
+  if (window.history && !_.isEqual(window.history.state, navState)) {
+    if (replace) {
+      window.history.replaceState(navState, 'ukhpi navigation', url);
+    } else {
+      window.history.pushState(navState, 'ukhpi navigation', url);
+    }
   }
 }
 

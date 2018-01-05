@@ -62,7 +62,7 @@ export const mutations = {
     Object.assign(state, initialState);
 
     initialiseNavigationState();
-    pushNavigationState(state);
+    pushNavigationState(state, true);
     updateQueryResults(state);
   },
 

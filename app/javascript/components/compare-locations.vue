@@ -132,6 +132,8 @@ export default {
       fromDate: initialData.from,
       toDate: initialData.to,
       compareLocations: initialData.locations,
+      compareIndicator: initialData.in,
+      compareStatistic: initialData.st,
     });
     this.themes = initialData.themes;
     this.indicators = initialData.indicators;
@@ -191,6 +193,13 @@ export default {
     fromDateISO() {
       return Moment(this.$store.state.fromDate).format('YYYY-MM-DD');
     },
+
+    selectedStatIndicator() {
+      return {
+        stat: this.$store.state.compareStatistic,
+        ind: this.$store.state.compareIndicator,
+      };
+    },
   },
 
   watch: {
@@ -212,6 +221,19 @@ export default {
 
     statisticSlug() {
       this.$store.commit(SET_COMPARE_STATISTIC, this.statisticSlug);
+    },
+
+    /** When the statistic and indicator change in the store, update the data
+     * (but only if there is a difference). This typically occurs when the store
+     * is updated via the 'back' operation */
+    selectedStatIndicator() {
+      const { stat, ind } = this.selectedStatIndicator;
+      if (this.statisticSlug !== stat) {
+        this.statisticSlug = stat;
+      }
+      if (this.indicatorSlug !== ind) {
+        this.indicatorSlug = ind;
+      }
     },
 
     // when the selections change, morph the data download URL...
