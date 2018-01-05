@@ -3,6 +3,7 @@
  */
 
 export const INITIALISE = 'INITIALISE';
+export const REINITIALISE = 'REINITIALISE';
 
 export const SET_LOCATION = 'SET_LOCATION';
 export const SET_DATES = 'SET_DATES';

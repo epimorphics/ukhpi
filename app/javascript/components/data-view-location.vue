@@ -1,10 +1,14 @@
 <template lang="html">
   <div  class='c-options-selection__location'>
     <span v-if='location'>
-      <a href='#' @click='onChangeLocation'>
+      <el-button
+        @click='onChangeLocation'
+        class='c-options-selection__button'
+        title='select a diffent location'
+      >
         {{ location.labels.en }}
         <i class='fa fa-edit'></i>
-      </a>
+      </el-button>
     </span>
 
     <select-location

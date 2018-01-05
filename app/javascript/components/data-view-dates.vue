@@ -1,10 +1,14 @@
 <template lang='html'>
   <div class='c-options-selection__dates'>
     <span class='' v-if='fromDate'>
-      <a href='#' @click='onChangeDates'>
+      <el-button
+        @click='onChangeDates'
+        class='c-options-selection__button'
+        title='change start or end date'
+      >
         {{ fromDateFormatted }} to {{ toDateFormatted }}
         <i class='fa fa-edit'></i>
-      </a>
+      </el-button>
     </span>
 
     <el-dialog

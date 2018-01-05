@@ -83,6 +83,8 @@ class UserCompareSelections
       indicators: ukhpi_data_cube.indicators.map do |indicator|
         indicator.to_h(self)
       end.to_json,
+      st: selected_statistic.to_json,
+      in: selected_indicator.to_json,
       locations: selected_locations.map(&:to_h).to_json,
       themes: ukhpi_data_cube.themes.map do |_slug, theme|
         theme.to_h(self)

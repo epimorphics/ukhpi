@@ -26,6 +26,7 @@
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
     "path-complete-extname": "^0.1.0",
+    "query-string": "^5.0.1",
     "rails-erb-loader": "^5.2.1",
     "raven-js": "^3.20.1",
     "vue": "^2.4.4",

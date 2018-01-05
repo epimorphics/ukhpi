@@ -203,9 +203,10 @@ export default {
 
   watch: {
     selectedLocation() {
+      const newLabel = this.selectedLocation.labels.en;
       document
-        .querySelector(`#${this.elementId} .o-data-view__location-name`)
-        .innerHTML = this.selectedLocation.labels.en;
+        .querySelectorAll(`#${this.elementId} .o-data-view__location-name`)
+        .forEach((node) => { node.innerHTML = newLabel; }); // eslint-disable-line no-param-reassign
     },
   },
 
