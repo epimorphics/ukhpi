@@ -48,6 +48,7 @@ group :development, :test do
   gem 'mocha'
   gem 'nokogiri'
   gem 'oj'
+  gem 'rubocop', require: false
   gem 'simplecov', require: false
   gem 'vcr'
 end

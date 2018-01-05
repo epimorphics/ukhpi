@@ -303,6 +303,7 @@ DEPENDENCIES
   oj
   rails (~> 5.1.3)
   rdf-turtle
+  rubocop
   sass-rails (~> 5.0)
   sentry-raven
   simplecov
