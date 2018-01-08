@@ -38,12 +38,13 @@ the ssh access credentials will need to be in your `~/.ssh/config`.
 
 In the 2017 update, we're extending the display to present all of the underlying
 statistics calculated by ONS. In addition to the figures by property type
-(all, detached houses, semi-detached, terraced and flat/maisonette) and sales
-volume, there are also figures for property status (new build vs. existing),
+(all, detached houses, semi-detached, terraced and flat/maisonette),
+there are also figures for property status (new build vs. existing),
 buyer status (first-time buyer or not), and funding status (paid cash or bought
-with a mortgage).  For each of these figures, except the sales volume, multiple
+with a mortgage).  For each of these figures, multiple
 indicators are calculated: the statistical index, the percentage change (monthly
-and annual) and the average price.
+and annual) and the average price. For some of the statistics, a sales volume
+indicator is also available.
 
 We represent these as follows:
 
@@ -53,6 +54,7 @@ We represent these as follows:
 |  | average price | All property types |
 |  | % monthly change | All property types |
 |  | % annual change | All property types |
+|  | sales volume | All property types |
 |  | index | Detached houses |
 |  | average price | Detached houses |
 |  | % monthly change | Detached houses |
@@ -81,23 +83,22 @@ We represent these as follows:
 |  | average price | Cash purchases |
 |  | % monthly change | Cash purchases |
 |  | % annual change | Cash purchases |
+|  | sales volume | Cash purchases |
 |  | index | Mortgage purchases |
 |  | average price | Mortgage purchases |
 |  | % monthly change | Mortgage purchases |
 |  | % annual change | Mortgage purchases |
+|  | sales volume | Mortgage purchases |
 | Property status | index | New build |
 |  | average price | New build |
 |  | % monthly change | New build |
 |  | % annual change | New build |
+|  | sales volume | New build
 |  | index | Existing properties |
 |  | average price | Existing properties |
 |  | % monthly change | Existing properties |
 |  | % annual change | Existing properties |
-| Total sales volume | | Total sales volume |
-|  |  | Sales volume cash |
-|  |  | Sales volume mortgage |
-|  |  | Sales volume new build|
-|  |  | Sales volume existing building|
+|  | sales volume | Existing properties
 
 ## Rake tasks
 
@@ -119,18 +120,18 @@ commonly useful ones are:
 * *`ukhpi:describe[uri]`* <br />
   A convenient way to perform a SPARQL describe for the given URI
 
-* *`ukhpi:regions_sparql`* <br />
+* *`ukhpi:locations`* <br />
   This task uses a SPARQL query to list all of the geographical regions in the UKHPI
   data, and their containment hierarchy, and generate cached versions of that data as
-  code. In particular, it regenerates `app/assets/javascripts/regions-table.js` and
-  `app/models/regions-table.rb`. This task should be re-run if and when the regions
+  code. In particular, it regenerates `app/javascript/data/locations-data.js` and
+  `app/models/locations_table.rb`. This task should be re-run if and when the regions
   data from LR is changed in the triple store.
 
 Note that, by default, SPARQL queries will be run against the dev triple store.
 To direct the query against a different SPARQL endpoint, change the `SERVER` environment
 variable:
 
-    SERVER="http://lr-pres-staging-c.epimorphics.net/landregistry/query" rake ukhpi:regions_sparql
+    SERVER="http://lr-pres-staging-c.epimorphics.net/landregistry/query" rake ukhpi:locations
 
 # Deployment
 

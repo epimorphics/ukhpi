@@ -16,3 +16,8 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   Exclude:
     - test/**/*
+    - lib/tasks/location.rake
+
+Metrics/MethodLength:
+  Exclude:
+    - lib/tasks/location.rake
