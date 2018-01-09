@@ -1,6 +1,7 @@
 /** Component for showing the queried index data as a set of graphs */
 
 import _ from 'lodash';
+import Raven from 'raven-js';
 import { axisBottom, axisLeft } from 'd3-axis';
 import { extent, bisector } from 'd3-array';
 import { format } from 'd3-format';
@@ -257,7 +258,7 @@ function drawGraphLines(series, index, graphConfig) {
       drawLine(series, index, graphConfig);
       break;
     default:
-      // TODO Log.warn(`Unknown graph type: ${options.graphType}`);
+      Raven.captureMessage(`Unknown graph type: ${graphConfig.graphType}`);
   }
 }
 
