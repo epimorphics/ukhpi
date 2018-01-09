@@ -77,7 +77,7 @@ class UserSelections
   end
 
   def selected_statistics(options = {})
-    if all?(options, 'st')
+    if all?(options, %w[st in thm])
       UkhpiDataCube.new.statistics.map(&:slug)
     else
       param_or_default('st')
@@ -85,7 +85,7 @@ class UserSelections
   end
 
   def selected_indicators(options = {})
-    if all?(options, 'in')
+    if all?(options, %w[st in thm])
       UkhpiDataCube.new.indicators.map(&:slug)
     else
       param_or_default('in')
@@ -139,7 +139,10 @@ class UserSelections
     end
   end
 
-  def all?(options, param)
-    options[:all] && !params[param]
+  # Return true if: `options[:all]` is `true`, and all of the params in
+  # `check_params` have no value in the current `params`
+  def all?(options, check_params)
+    options[:all] &&
+      check_params.map { |p| params[p] } .compact.empty?
   end
 end

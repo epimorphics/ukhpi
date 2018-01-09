@@ -82,6 +82,19 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   end
   let(:presenter) { DownloadPresenter.new(query_command) }
 
+  let(:user_selections_all) do
+    UserSelections.new(ActionController::Parameters.new(
+                         location: 'http://landregistry.data.gov.uk/id/region/england'
+    ))
+  end
+  let(:query_command_all) do
+    stub(
+      user_selections: user_selections_all,
+      results: query_results
+    )
+  end
+  let(:presenter_all) { DownloadPresenter.new(query_command_all) }
+
   describe 'DownloadPresenter' do
     describe '#column_names' do
       it 'should correctly create an array of column names' do
@@ -90,14 +103,26 @@ class DownloadPresenterTest < ActiveSupport::TestCase
         presenter.column_names.last.must_equal '"Percentage change (yearly) Flats and maisonettes"'
       end
 
+      it 'should correctly create an array of all column names when no stats are selected' do
+        presenter_all.column_names.length.must_be :>=, 61
+        presenter.column_names.first.must_equal '"Name"'
+        presenter.column_names.last.must_equal '"Percentage change (yearly) Flats and maisonettes"'
+      end
+    end
+
+    describe '#results' do
       it 'should provide an accessor for the underlying results' do
         presenter.results.length.must_equal 1
       end
+    end
 
+    describe '#user_selections' do
       it 'should provide an accessor for the underlying user selections' do
         presenter.user_selections.must_be_same_as user_selections
       end
+    end
 
+    describe '#rows' do
       it 'should present the data in rows suitable for rendering' do
         rows = presenter.rows
         row = rows.first

@@ -42,6 +42,7 @@ en:
   pac: "Percentage change (yearly)"
   average_price: "Average price"
   avg: "Average price"
+  vol: "Sales volume"
 
   overall_indices: "All property types"
   all_property_types: "All property types"

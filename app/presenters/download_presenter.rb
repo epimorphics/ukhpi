@@ -95,13 +95,13 @@ class DownloadPresenter
   end
 
   def selected_statistics
-    user_selections.selected_statistics.map do |slug|
+    user_selections.selected_statistics(all: true).map do |slug|
       ukhpi.statistic(slug)
     end
   end
 
   def selected_indicators
-    user_selections.selected_indicators.map do |slug|
+    user_selections.selected_indicators(all: true).map do |slug|
       ukhpi.indicator(slug)
     end
   end
