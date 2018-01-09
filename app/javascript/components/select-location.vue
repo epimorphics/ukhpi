@@ -22,6 +22,7 @@
               v-model='searchInput'
               @change='onSearchInput'
               @keyup.native='onSearchKeyUp'
+              :autofocus='true'
             >
             </el-input>
           </label>
