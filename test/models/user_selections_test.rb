@@ -25,6 +25,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
       it 'should access the selected indicator from the params' do
         selections = user_selections('in' => ['test-in'])
         selections.selected_indicators.must_equal(['test-in'])
+        selections.selected_indicators(all: true).must_equal(['test-in'])
       end
 
       it 'should recognise a legacy parameter' do
@@ -36,6 +37,11 @@ class UserSelectionsTest < ActiveSupport::TestCase
         user_selections({}).selected_indicators.length.must_be :>=, 2
         user_selections({}).selected_indicators.must_include 'hpi'
       end
+
+      it 'should return all indicators if the all flag is true and no indicators are selected' do
+        user_selections({}).selected_indicators(all: true).length.must_be :>=, 5
+        user_selections({}).selected_indicators(all: true).must_include 'hpi'
+      end
     end
 
     describe '#selected_location' do
@@ -45,6 +51,23 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should retrieve the default value' do
         user_selections({}).selected_location.must_equal 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+      end
+    end
+
+    describe '#selected_statistics' do
+      it 'should return the selected statistics if they are specified' do
+        user_selections(st: ['fla']).selected_statistics.must_equal ['fla']
+        user_selections(st: ['fla']).selected_statistics(all: true).must_equal ['fla']
+      end
+
+      it 'should return the default statistics if they are not specified' do
+        user_selections({}).selected_statistics.must_equal ['all']
+      end
+
+      it 'should allow returning all statistics if none are specified' do
+        statistics = user_selections({}).selected_statistics(all: true)
+        statistics.length.must_be :>=, 10
+        statistics.must_include 'all'
       end
     end
 

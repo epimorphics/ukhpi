@@ -76,12 +76,20 @@ class UserSelections
     param_or_default('explain') == 'true'
   end
 
-  def selected_statistics
-    param_or_default('st')
+  def selected_statistics(options = {})
+    if all?(options, 'st')
+      UkhpiDataCube.new.statistics.map(&:slug)
+    else
+      param_or_default('st')
+    end
   end
 
-  def selected_indicators
-    param_or_default('in')
+  def selected_indicators(options = {})
+    if all?(options, 'in')
+      UkhpiDataCube.new.indicators.map(&:slug)
+    else
+      param_or_default('in')
+    end
   end
 
   def selected_themes
@@ -129,5 +137,9 @@ class UserSelections
     else
       value.to_s
     end
+  end
+
+  def all?(options, param)
+    options[:all] && !params[param]
   end
 end
