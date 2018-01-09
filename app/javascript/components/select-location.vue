@@ -7,7 +7,7 @@
       @close='notifyDialogClosed'
     >
       <el-row>
-        <el-col :span='16'>
+        <el-col :span='24'>
           <p>
             {{ prompt }}
           </p>
@@ -120,7 +120,7 @@ export default {
     prompt: {
       required: false,
       type: String,
-      default: 'To show UKHPI statistics for a different part of the UK, select the new location by searching on the name, or by clicking a location on the map below.',
+      default: 'To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map.',
     },
     title: {
       required: false,

@@ -3,10 +3,15 @@
 .c-map {
   min-height: 300px;
   width: 100%;
+  margin-top: 10px;
 
   .leaflet-container {
     width: 100%;
     min-width: 400px;
     height: 350px;
+  }
+
+  .el-radio-button__inner {
+    font-size: 13px;
   }
 }
