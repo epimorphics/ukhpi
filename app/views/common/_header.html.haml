@@ -15,9 +15,9 @@
 
           %ul#proposition-links
             %li
-              %a{ href: browse_path } browse
+              %a{ href: browse_path, class: active_class(browse_path) } browse
             %li
-              %a{ href: compare_path } compare locations
+              %a{ href: compare_path, class: active_class(compare_path) } compare locations
             %li
               %a{ href: '/app/qonsole' } SPARQL query
             %li

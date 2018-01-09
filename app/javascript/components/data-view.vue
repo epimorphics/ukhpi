@@ -57,6 +57,7 @@ import DataViewDownload from './data-view-download.vue';
 import store from '../store/index';
 import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
 import bus from '../lib/event-bus';
+import safeForEach from '../lib/safe-foreach';
 
 export default {
   data: () => ({
@@ -204,9 +205,10 @@ export default {
   watch: {
     selectedLocation() {
       const newLabel = this.selectedLocation.labels.en;
-      document
-        .querySelectorAll(`#${this.elementId} .o-data-view__location-name`)
-        .forEach((node) => { node.innerHTML = newLabel; }); // eslint-disable-line no-param-reassign
+      const nodes = document.querySelectorAll(`#${this.elementId} .o-data-view__location-name`);
+      safeForEach(nodes, (node) => {
+        node.innerHTML = newLabel; // eslint-disable-line no-param-reassign
+      });
     },
   },
 

@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 
 import bus from './event-bus';
+import safeForEach from './safe-foreach';
 
 /** Prevent default behaviour of event, with support for IE which just has to be different! */
 function eventPreventDefault(event) {
@@ -10,16 +11,6 @@ function eventPreventDefault(event) {
   } else {
     event.returnValue = false;
   }
-}
-
-/**
- * Call forEach in a way that doesn't blow up IE11
- * This weirdness with slice is because IE11 doesn't do forEach on the return
- * value from querySelectorAll. See:
- * https://stackoverflow.com/questions/412447/for-each-javascript-support-in-ie
- */
-function ieSafeForEach(nodes, fn) {
-  [].slice.call(nodes).forEach(fn);
 }
 
 function handleShowHideClick(event) {
@@ -41,7 +32,7 @@ function bindShowHideDataView() {
 
   // this weirdness with slice is because IE11 doesn't do forEach on the return
   // value from querySelectorAll
-  ieSafeForEach(nodes, (node) => {
+  safeForEach(nodes, (node) => {
     node.removeEventListener('click');
     node.addEventListener('click', handleShowHideClick, false);
   });
@@ -58,7 +49,7 @@ function handleLocationClick(event) {
 function bindChangeLocationLink() {
   const nodes = document.querySelectorAll('.o-data-view__location');
 
-  ieSafeForEach(nodes, (node) => {
+  safeForEach(nodes, (node) => {
     node.removeEventListener('click');
     node.addEventListener('click', handleLocationClick, false);
   });

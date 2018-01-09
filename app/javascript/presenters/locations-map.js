@@ -322,9 +322,7 @@ export default class LocationsMap {
 
   /** Reset any selections back to empty */
   resetSelection() {
-    // const cs = currentSelections; TODO
     this.currentSelection = null;
-    // unHighlightFeature(cs); TODO
   }
 
   /** @return The Leaflet map object, creating a new one if necessary */
