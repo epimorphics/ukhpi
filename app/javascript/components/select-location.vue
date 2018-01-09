@@ -221,8 +221,9 @@ export default {
     },
 
     onSearchInput(term) {
-      const filtered = locationsNamed(term);
-      const match = this.isExactMatch(term, filtered);
+      const trimmedTerm = term.trim();
+      const filtered = locationsNamed(trimmedTerm);
+      const match = this.isExactMatch(trimmedTerm, filtered);
 
       if (match) {
         this.setFoundLocation(match);
