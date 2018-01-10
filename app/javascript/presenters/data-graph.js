@@ -11,6 +11,7 @@ import { line, symbol, symbolCircle, symbolDiamond, symbolStar,
   symbolTriangle, symbolSquare } from 'd3-shape';
 import { timeMonth } from 'd3-time';
 import { timeFormat } from 'd3-time-format';
+import { interpolateNumber } from 'd3-interpolate';
 import { asCurrency, formatValue } from '../lib/values';
 
 const SERIES_MARKER = [
@@ -76,7 +77,7 @@ const GRAPH_PADDING = {
   top: 20,
   right: 25,
   bottom: 30,
-  left: 60,
+  left: 65,
 };
 GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right;
 GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
@@ -154,11 +155,13 @@ function createScales(graphConfig) {
 /** Create x and y axes, given the scales and options for tick formatting etc */
 function createAxes(scales, graphConfig) {
   let xAxis = axisBottom(scales.x)
+    .tickPadding(5)
     .tickFormat(timeFormat('%b %Y'));
   xAxis = xAxis.ticks(Math.min(graphConfig.period, MIN_XAXIS_MONTHS));
 
   let yAxis = axisLeft(scales.y)
     .ticks(graphConfig.ticksCount)
+    .tickPadding(8)
     .tickSizeInner(-1 * scales.width);
 
   if (graphConfig.tickFormat) {
@@ -202,7 +205,7 @@ function drawAxes(graphConfig) {
   if (graphConfig.symmetricalYAxis) {
     graphConfig.rootElem
       .append('svg:line')
-      .attr('class', 'x axis supplemental')
+      .attr('class', 'y axis supplemental')
       .attr('x1', 0)
       .attr('x2', graphConfig.scales.width)
       .attr('y1', graphConfig.scales.y(0))
@@ -213,21 +216,24 @@ function drawAxes(graphConfig) {
 /** Draw a marker to distinguish a series other than by colour */
 function drawPoints(series, index, graphConfig) {
   const { scales } = graphConfig;
-  const datum = series[0];
-  if (!datum) {
+  if (series.length < 2) {
     return;
   }
+  const { x: x0, y: y0 } = series[0];
+  const { y: y1 } = series[1];
+  const interpolation = interpolateNumber(y0, y1);
 
   // create a point that progressively further from the y-axis
-  const { x, y } = datum;
-  const x0 = new Date(x);
-  x0.setDate(x0.getDate() + (index * MARKER_OFFSET.mult) + MARKER_OFFSET.constant);
+  const xDelta = new Date(x0);
+  const delta = (index * MARKER_OFFSET.mult) + MARKER_OFFSET.constant;
+  const iDelta = delta / 31; // interpolation requires a number on [0, 1.0]
+  xDelta.setDate(xDelta.getDate() + delta);
 
   const cssClass = `point v-graph-${index}`;
 
   graphConfig.rootElem
     .selectAll(cssClass)
-    .data([{ x: x0, y }])
+    .data([{ x: xDelta, y: interpolation(iDelta) }])
     .enter()
     .append('path')
     .attr('class', cssClass)
