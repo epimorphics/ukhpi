@@ -77,7 +77,7 @@ const GRAPH_PADDING = {
   top: 20,
   right: 25,
   bottom: 30,
-  left: 60,
+  left: 65,
 };
 GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right;
 GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom;
@@ -155,11 +155,13 @@ function createScales(graphConfig) {
 /** Create x and y axes, given the scales and options for tick formatting etc */
 function createAxes(scales, graphConfig) {
   let xAxis = axisBottom(scales.x)
+    .tickPadding(5)
     .tickFormat(timeFormat('%b %Y'));
   xAxis = xAxis.ticks(Math.min(graphConfig.period, MIN_XAXIS_MONTHS));
 
   let yAxis = axisLeft(scales.y)
     .ticks(graphConfig.ticksCount)
+    .tickPadding(8)
     .tickSizeInner(-1 * scales.width);
 
   if (graphConfig.tickFormat) {
@@ -203,7 +205,7 @@ function drawAxes(graphConfig) {
   if (graphConfig.symmetricalYAxis) {
     graphConfig.rootElem
       .append('svg:line')
-      .attr('class', 'x axis supplemental')
+      .attr('class', 'y axis supplemental')
       .attr('x1', 0)
       .attr('x2', graphConfig.scales.width)
       .attr('y1', graphConfig.scales.y(0))
