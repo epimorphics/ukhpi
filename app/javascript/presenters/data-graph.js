@@ -216,18 +216,21 @@ function drawAxes(graphConfig) {
 /** Draw a marker to distinguish a series other than by colour */
 function drawPoints(series, index, graphConfig) {
   const { scales } = graphConfig;
-  if (series.length < 2) {
+  if (series.length < 1) {
     return;
   }
   const { x: x0, y: y0 } = series[0];
-  const { y: y1 } = series[1];
+  const { y: y1 } = series.length > 1 ? series[1] : series[0];
   const interpolation = interpolateNumber(y0, y1);
 
   // create a point that progressively further from the y-axis
   const xDelta = new Date(x0);
   const delta = (index * MARKER_OFFSET.mult) + MARKER_OFFSET.constant;
   const iDelta = delta / 31; // interpolation requires a number on [0, 1.0]
-  xDelta.setDate(xDelta.getDate() + delta);
+
+  if (series.length > 1) {
+    xDelta.setDate(xDelta.getDate() + delta);
+  }
 
   const cssClass = `point v-graph-${index}`;
 
