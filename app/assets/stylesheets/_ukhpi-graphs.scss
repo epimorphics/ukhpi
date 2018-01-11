@@ -69,6 +69,12 @@
     font-size: 11px;
     fill: #555;
   }
+
+  .o-x-axis-click-target {
+    fill: white;
+    fill-opacity: 0;
+    cursor: pointer;
+  }
 }
 
 .o-graph-note {

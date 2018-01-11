@@ -13,6 +13,7 @@ import { timeMonth } from 'd3-time';
 import { timeFormat } from 'd3-time-format';
 import { interpolateNumber } from 'd3-interpolate';
 import { asCurrency, formatValue } from '../lib/values';
+import bus from '../lib/event-bus';
 
 const SERIES_MARKER = [
   symbolCircle,
@@ -211,6 +212,15 @@ function drawAxes(graphConfig) {
       .attr('y1', graphConfig.scales.y(0))
       .attr('y2', graphConfig.scales.y(0));
   }
+
+  // add a clickable region for changing the dates
+  graphConfig.rootElem
+    .append('rect')
+    .attr('height', 20)
+    .attr('width', graphConfig.scales.width + GRAPH_PADDING.right)
+    .attr('transform', translateCmd(0, graphConfig.scales.height))
+    .attr('class', 'o-x-axis-click-target')
+    .on('click', () => bus.$emit('change-dates'));
 }
 
 /** Draw a marker to distinguish a series other than by colour */
