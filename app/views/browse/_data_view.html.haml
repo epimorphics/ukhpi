@@ -27,7 +27,7 @@
         - data_view.each_statistic do |stat|
           %label
             - checked = data_view.statistic_selected?(stat)
-            %input{ type: 'checkbox', value: stat.slug, readonly: true, checked: checked }
+            %input{ type: 'checkbox', value: stat.slug, checked: checked }
             %a{ href: data_view.add_remove_statistic(!checked, stat) }
               = t(stat.label_key)
 
