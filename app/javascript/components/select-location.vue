@@ -43,11 +43,12 @@
                 ({{ result | locationTypeLabel }})
               </li>
             </ul>
+            <p v-if='manyResults > 0'>
+              ... plus {{ manyResults }} more.
+            </p>
           </el-popover>
-          <p v-if='manyResults > 0'>
-            ... plus {{ manyResults }} more.
-          </p>
         </el-col>
+        <el-alert type='warning' :title='noMatch' v-if='noMatch'></el-alert>
       </el-row>
 
       <el-row>
@@ -106,6 +107,7 @@ export default {
     searchResults: [],
     searchResultsVisible: false,
     leafletMap: null,
+    noMatch: false,
   }),
 
   props: {
@@ -170,6 +172,11 @@ export default {
 
     searchResults() {
       this.searchResultsVisible = this.searchResults && this.searchResults.length > 0;
+      if (this.searchResults && this.searchResults.length === 0 && this.searchInput.length > 1) {
+        this.noMatch = `Sorry, no locations match '${this.searchInput}'.`;
+      } else {
+        this.noMatch = null;
+      }
     },
   },
 
