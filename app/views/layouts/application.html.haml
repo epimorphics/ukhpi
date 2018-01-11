@@ -1,15 +1,19 @@
 !!! html
 %html{ 'lang' => 'en', 'xml:lang' => 'en', 'xmlns' => 'http://www.w3.org/1999/xhtml' }
   %head
-    %title UK House Price Index
     %meta{ charset: 'utf-8' }
+    %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
+    %title UK House Price Index
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
 
     - if @preferences
-      %link{ rel: 'canonical', href: "//#{request.host_with_port}#{@preferences.as_path(:view)}" }
+      %link{ rel: 'canonical', href: '//#{request.host_with_port}#{@preferences.as_path(:view)}' }
 
+    %link{ rel:'license', href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
+    
     /[if lt IE 9]
       :javascript
         window.isIE8 = true;
