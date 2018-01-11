@@ -86,10 +86,21 @@ export default {
   },
 
   watch: {
+    /**
+     * When the compareResults change, because we have new data in the Vuex store,
+     * calculate the table data. The table data consists of the values from the data
+     * series for the selected predicate (formed from selected statistic and indicator),
+     * plus the series dates. To accurately calculate the series dates, we need to ensure
+     * that we're taking dates from the longest available series, because some statistics
+     * lag in some locations so we can have partial series in some cases.
+     */
     compareResults() {
       const tSeries = _.mapValues(this.compareResults, qResults => qResults.series(this.pred));
-      const dates = _.map(_.first(_.values(tSeries)), datum => ({ date: new Date(datum.x) }));
+      const longestSeries = _.last(_.sortBy(_.values(tSeries), series => series.length));
+
+      const dates = _.map(longestSeries, datum => ({ date: new Date(datum.x) }));
       const tData = _.map(tSeries, (series, gss) => _.map(series, datum => ({ [gss]: datum.y })));
+
       this.tableData = _.map(_.zip(dates, ...tData), row => _.assign({}, ...row));
     },
   },
