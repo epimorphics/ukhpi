@@ -16,7 +16,7 @@
     - if @preferences
       %link{ rel: 'canonical', href: "//#{request.host_with_port}#{@preferences.as_path(:view)}" }
 
-    %link{ rel:'license', href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
+    %link{ rel:'license', href: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
 
     /[if lt IE 9]
       = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
