@@ -57,6 +57,7 @@
 <script>
 import Moment from 'moment';
 import { SET_DATES } from '../store/mutation-types';
+import bus from '../lib/event-bus';
 
 export default {
   data: () => ({
@@ -109,6 +110,10 @@ export default {
     updateToDate(dateStr) {
       this.toDate = Moment(dateStr).date();
     },
+  },
+
+  mounted() {
+    bus.$on('change-dates', this.onChangeDates);
   },
 };
 </script>
