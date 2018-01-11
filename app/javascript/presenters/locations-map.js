@@ -331,7 +331,7 @@ export default class LocationsMap {
       this.indexedFeatures();
 
       this.leafletMap = Leaflet.map(this.elementId)
-        .setView([54.6, -2], 5);
+        .setView([54.85, -2], 5);
       this.leafletMap
         .attributionControl
         .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
