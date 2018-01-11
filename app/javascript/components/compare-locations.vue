@@ -5,23 +5,25 @@
         Compare
         <el-select v-model='indicatorSlug'>
           <el-option
-            v-for="item in indicators"
-            :key="item.slug"
-            :label="item.label"
-            :value="item.slug">
+            v-for='item in indicators'
+            :key='item.slug'
+            :label='item.label'
+            :value='item.slug'
+            :disabled='isDisabledIndicator(item.slug)'>
           </el-option>
         </el-select>
         for
         <el-select v-model='statisticSlug'>
           <el-option-group
-            v-for="theme in themes"
-            :key="theme.slug"
-            :label="theme.label">
+            v-for='theme in themes'
+            :key='theme.slug'
+            :label='theme.label'>
             <el-option
-              v-for="item in theme.statistics"
-              :key="item.slug"
-              :label="item.label"
-              :value="item.slug">
+              v-for='item in theme.statistics'
+              :key='item.slug'
+              :label='item.label'
+              :value='item.slug'
+              :disabled='isDisabledStatistic(item.slug)'>
             </el-option>
           </el-option-group>
         </el-select>
@@ -91,6 +93,7 @@ import CompareAdditionalLocation from './compare-additional-location.vue';
 import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
 import Routes from '../lib/routes.js.erb';
+import unavailable from '../models/ukhpi-cube-metadata';
 
 const MAX_LOCATIONS = 5;
 
@@ -283,6 +286,26 @@ export default {
 
       anchorElement = document.querySelector('.c-compare__download-csv');
       anchorElement.setAttribute('href', hrefCsv);
+    },
+
+    /**
+     * Check if an indicator should be shown as disabled, because the combination
+     * of the indicator with the currently selected statistic is unavailable
+     * @param  {String}  ind indicator slug
+     * @return {Boolean}     True if the indicator should be shown as disabled
+     */
+    isDisabledIndicator(ind) {
+      return unavailable(this.statisticSlug, ind);
+    },
+
+    /**
+     * Check if a statistic should be shown as disabled, because the combination
+     * of the statistic with the currently selected indicator is unavailable
+     * @param  {String}  ind statistic slug
+     * @return {Boolean}     True if the statistic should be shown as disabled
+     */
+    isDisabledStatistic(stat) {
+      return unavailable(stat, this.indicatorSlug);
     },
   },
 };
