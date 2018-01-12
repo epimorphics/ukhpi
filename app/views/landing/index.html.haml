@@ -14,24 +14,24 @@
   .c-current-figures.panel.panel-border-wide
     %p
       As of
-      %span.c-headline-figure
+      %span.c-headline-figure.c-headline-figure__period
         = @landing_state.period
       the average house price in the UK is
-      %span.c-headline-figure
+      %span.c-headline-figure.c-headline-figure__average-price
         = succeed "," do
           = number_to_currency( @landing_state.average_price, locale: "en-GB", precision: 0 )
       and the index stands at
-      %span.c-headline-figure
+      %span.c-headline-figure.c-headline-figure__house-price-index
         = succeed "." do
           = @landing_state.house_price_index
       Property prices have
-      %span.c-headline-figure
+      %span.c-headline-figure.c-headline-figure__monthly-change
         = @landing_state.percentage_monthly_change
       compared to the
       %span
         previous month,
       and
-      %span.c-headline-figure
+      %span.c-headline-figure.c-headline-figure__annual-change
         = @landing_state.percentage_annual_change
       compared to the
       %span
