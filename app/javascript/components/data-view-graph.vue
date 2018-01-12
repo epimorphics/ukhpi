@@ -62,7 +62,7 @@ export default {
     dateRange() {
       return [
         this.fromMoment.startOf('month').toDate(),
-        this.toMoment.endOf('month').toDate(),
+        this.toMoment.startOf('month').toDate(),
       ];
     },
   },
