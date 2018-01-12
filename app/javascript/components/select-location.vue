@@ -172,7 +172,8 @@ export default {
 
     searchResults() {
       this.searchResultsVisible = this.searchResults && this.searchResults.length > 0;
-      if (this.searchResults && this.searchResults.length === 0 && this.searchInput.length > 1) {
+      if (this.searchResults && this.searchResults.length === 0 &&
+          this.searchInput.length > 1 && !this.selectedLocation) {
         this.noMatch = `Sorry, no locations match '${this.searchInput}'.`;
       } else {
         this.noMatch = null;
@@ -223,8 +224,11 @@ export default {
 
     setFoundLocation(location) {
       this.$set(this, 'selectedLocation', location);
-      this.$set(this, 'searchResults', []);
-      this.$set(this, 'searchInput', location.labels.en);
+
+      if (location) {
+        this.$set(this, 'searchResults', []);
+        this.$set(this, 'searchInput', location.labels.en);
+      }
     },
 
     onSearchInput(term) {
@@ -232,9 +236,9 @@ export default {
       const filtered = locationsNamed(trimmedTerm);
       const match = this.isExactMatch(trimmedTerm, filtered);
 
-      if (match) {
-        this.setFoundLocation(match);
-      } else if (filtered) {
+      this.setFoundLocation(match);
+
+      if (!match && filtered) {
         this.manyResults = filtered.length - MAX_RESULTS;
         this.searchResults = filtered.slice(0, MAX_RESULTS);
       }
