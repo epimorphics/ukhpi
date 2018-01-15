@@ -116,8 +116,9 @@ function calculateValueRange(projection, graphConfig) {
   let [min, max] = [0.0, 1.0];
 
   _.each(graphConfig.theme.statistics, (statistic) => {
-    if (isSelectedStatistic(statistic, graphConfig)) {
-      const yDomain = projection[statistic.slug].map(datum => datum.y);
+    const projected = projection[statistic.slug];
+    if (isSelectedStatistic(statistic, graphConfig) && projected.length > 0) {
+      const yDomain = projected.map(datum => datum.y);
       const [lo, hi] = extent(yDomain);
       min = Math.min(min, lo);
       max = Math.max(max, hi);
