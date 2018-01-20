@@ -77,5 +77,8 @@ Rails.application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # Disable logging of the rendering of partials
+  config.action_view.logger = nil
+
   config.relative_url_root = '/app/ukhpi'
 end
