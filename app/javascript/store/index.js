@@ -39,14 +39,10 @@ function updateMultipleLocationResults(state) {
     const query = Object.assign({ location: location.uri }, baseQuery);
     const options = Object.assign({ locationGss: location.gss }, baseOptions);
 
-    if (promise) {
-      return promise.then(() => {
-        getUkhpiData(query, options);
-      });
-    }
-
-    return getUkhpiData(query, options);
-  }, null)
+    return promise.then(() => {
+      getUkhpiData(query, options);
+    });
+  }, Promise.resolve())
     .then(() => {
       bus.$emit('compare-results-updated');
     });

@@ -59,7 +59,7 @@
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span='24'>
+      <el-col :span='24' v-if='oneOrMoreLocations'>
         <compare-locations-table
           v-if='statisticSlug && indicatorSlug'
           :statistic='statistic'
@@ -76,6 +76,11 @@
             JSON <i class='fa fa-external-link'></i>
           </a>
         </span>
+      </el-col>
+      <el-col :span='24' v-else>
+        <p>
+          <em>Please select one or more locations</em>
+        </p>
       </el-col>
     </el-row>
   </div>
@@ -165,6 +170,10 @@ export default {
       }
 
       return _.flatten(this.themes.map(themeStats));
+    },
+
+    oneOrMoreLocations() {
+      return this.locations.length > 0;
     },
 
     locations() {
