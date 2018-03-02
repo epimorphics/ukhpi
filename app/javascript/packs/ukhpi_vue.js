@@ -9,6 +9,10 @@ import RavenVue from 'raven-js/plugins/vue';
 import router from '../router/index.js.erb';
 import store from '../store/index';
 
+// Issue https://github.com/epimorphics/ukhpi/issues/169
+// Add fix for IE Edge
+import '../lib/ie-d3-fix';
+
 // Use Element.IO
 Vue.use(ElementUI, { locale });
 
