@@ -21,6 +21,10 @@ module DownloadFormatter
       pred: 'ukhpi:refMonth'
     ),
     DownloadColumn.new(
+      label: 'Pivotable date',
+      format: ->(row) { "#{row['ukhpi:refMonth']}-01" }
+    ),
+    DownloadColumn.new(
       label: 'Sales volume',
       pred: 'ukhpi:salesVolume'
     ),
