@@ -22,7 +22,7 @@ module DownloadFormatter
     ),
     DownloadColumn.new(
       label: 'Pivotable date',
-      format: ->(row) { "#{row['ukhpi:refMonth']}-01" }
+      format: ->(row) { "#{row['ukhpi:refMonth']['@value']}-01" }
     ),
     DownloadColumn.new(
       label: 'Sales volume',
