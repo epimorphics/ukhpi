@@ -58,8 +58,11 @@ import store from '../store/index';
 import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 import safeForEach from '../lib/safe-foreach';
+import AvailableStatistics from '../mixins/available-statistics';
 
 export default {
+  mixins: [AvailableStatistics],
+  
   data: () => ({
     activeTab: 'graphs-tab',
     theme: null,
@@ -108,14 +111,6 @@ export default {
 
     selectedLocation() {
       return this.$store.state.location;
-    },
-
-    isVolumeIndicator() {
-      return this.indicator.isVolume;
-    },
-
-    availableStatistics() {
-      return this.theme.statistics.filter(this.statisticIsAvailable);
     },
   },
 
@@ -191,14 +186,6 @@ export default {
           statistic,
         });
       }
-    },
-
-    /** A statistic is available if it's not the volume indicator, or it is and a given
-     * statistic does have a sales volume (which not all do).
-     * @return True if the statistic should be available for this indicator
-     */
-    statisticIsAvailable(stat) {
-      return !this.isVolumeIndicator || stat.hasVolume;
     },
   },
 

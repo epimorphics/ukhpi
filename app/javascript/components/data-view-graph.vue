@@ -82,18 +82,19 @@ export default {
 
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
 
-    console.log('data-view-graph mounted()', this.zoom);
     if (this.zoom) {
       this.updateGraph();
     }
   },
 
   watch: {
+    indicator() {
+      this.redrawGraphNextTick();
+    },
   },
 
   methods: {
     updateGraph() {
-      console.log('updateGraph, zoom =', this.zoom);
       if (this.dataProjection && this.isVisible(this.graphElementId)) {
         this.redrawGraphNextTick();
       }
@@ -122,13 +123,14 @@ export default {
           selectedStatistics: this.selectedStatistics,
           theme: this.theme,
           location: this.$store.state.location,
+          zoom: this.zoom,
         },
       );
     },
 
     isVisible(id) {
       const elem = document.getElementById(id);
-      return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+      return elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
     },
 
     onOpenCloseDataView({ id, closing }) {

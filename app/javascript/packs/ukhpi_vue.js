@@ -30,10 +30,10 @@ Numeral.register('locale', 'gb', {
 Numeral.locale('gb');
 
 // Sentry.io logging
-Raven
-  .config('https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669')
-  .addPlugin(RavenVue, Vue)
-  .install();
+// Raven
+//   .config('https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669')
+//   .addPlugin(RavenVue, Vue)
+//   .install();
 
 document.addEventListener('DOMContentLoaded', () => {
   /* eslint-disable no-new */

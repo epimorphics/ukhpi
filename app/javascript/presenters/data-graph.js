@@ -377,7 +377,11 @@ function prepareOverlay(projection, graphConfig) {
       () => { onXTrackMouseMove(projection, graphConfig, xTrack); }
     )())
     .on('click', (() =>
-      () => { onGraphZoom({ projection, graphConfig }); }
+      () => {
+        if (!graphConfig.zoom) {
+          onGraphZoom({ projection, graphConfig });
+        }
+      }
     )());
 }
 

@@ -5,7 +5,13 @@
       :title='dialogTitle'
       :show-close='true'
       width='80%'
+      top='10vh'
+      @close='onCloseDialog'
     >
+    <div class='o-data-view__js-options'>
+      <data-view-statistics :initial-statistics='availableStatistics'></data-view-statistics>
+    </div>
+
     <data-view-graph
       :elementId='elementId'
       :theme='theme'
@@ -19,8 +25,12 @@
 <script>
 import bus from '../lib/event-bus';
 import DataViewGraph from './data-view-graph.vue';
+import DataViewStatistics from './data-view-statistics.vue';
+import AvailableStatistics from '../mixins/available-statistics';
 
 export default {
+  mixins: [AvailableStatistics],
+
   data: () => ({
     graphConfig: {},
     showZoomedGraph: false,
@@ -52,13 +62,16 @@ export default {
 
   components: {
     DataViewGraph,
+    DataViewStatistics,
   },
 
   methods: {
     onZoomGraph(config) {
-      console.log('onZoomGraph');
       this.graphConfig = config.graphConfig;
       this.showZoomedGraph = true;
+    },
+
+    onCloseDialog() {
     },
   },
 
