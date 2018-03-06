@@ -1,5 +1,5 @@
 <template lang='html'>
-  <div class='o-data-view__graph'>
+  <div :class='rootCssClass'>
     <svg :id='graphElementId'></svg>
   </div>
 </template>
@@ -27,11 +27,20 @@ export default {
       required: true,
       type: String,
     },
+    zoom: {
+      required: false,
+      type: Boolean,
+      default: false,
+    },
   },
 
   computed: {
     graphElementId() {
       return `${this.elementId}-graph`;
+    },
+
+    rootCssClass() {
+      return `o-data-view__graph${this.zoom ? ' u-graph-zoomed' : ''}`;
     },
 
     /** The data projection is the slice of the query results matching the statistics
@@ -72,9 +81,16 @@ export default {
     this.$watch('$store.state.queryResults', this.updateGraph, { deep: true });
 
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
+
+    if (this.zoom) {
+      this.updateGraph();
+    }
   },
 
   watch: {
+    indicator() {
+      this.redrawGraphNextTick();
+    },
   },
 
   methods: {
@@ -102,17 +118,19 @@ export default {
           dateRange: this.dateRange,
           elementId: this.graphElementId,
           indicatorId: this.indicator ? this.indicator.rootName : 'salesVolume',
+          indicator: this.indicator,
           period: this.period,
           selectedStatistics: this.selectedStatistics,
           theme: this.theme,
           location: this.$store.state.location,
+          zoom: this.zoom,
         },
       );
     },
 
     isVisible(id) {
       const elem = document.getElementById(id);
-      return !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
+      return elem && !!(elem.offsetWidth || elem.offsetHeight || elem.getClientRects().length);
     },
 
     onOpenCloseDataView({ id, closing }) {

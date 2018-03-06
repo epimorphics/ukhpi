@@ -282,6 +282,14 @@ function drawGraphLines(series, index, graphConfig) {
   }
 }
 
+/* Showing the zoom view */
+
+function onGraphZoom(options) {
+  bus.$emit('zoomGraph', options);
+}
+
+/* Drawing the overlay showing detailed figures */
+
 const bisectDate = bisector(d => d.x).left;
 
 function formatStatistic(indicator, statistic, value) {
@@ -367,6 +375,13 @@ function prepareOverlay(projection, graphConfig) {
     .on('mouseout', () => { xTrack.style('display', 'none'); })
     .on('mousemove', (() =>
       () => { onXTrackMouseMove(projection, graphConfig, xTrack); }
+    )())
+    .on('click', (() =>
+      () => {
+        if (!graphConfig.zoom) {
+          onGraphZoom({ projection, graphConfig });
+        }
+      }
     )());
 }
 

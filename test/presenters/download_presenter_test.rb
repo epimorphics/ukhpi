@@ -98,7 +98,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   describe 'DownloadPresenter' do
     describe '#column_names' do
       it 'should correctly create an array of column names' do
-        presenter.column_names.length.must_equal 26
+        presenter.column_names.length.must_be :>=, 26
         presenter.column_names.first.must_equal '"Name"'
         presenter.column_names.last.must_equal '"Percentage change (yearly) Flats and maisonettes"'
       end
@@ -130,8 +130,8 @@ class DownloadPresenterTest < ActiveSupport::TestCase
         rows.length.must_equal 1
         row.first.must_equal 'England'
         row.second.must_equal 'http://landregistry.data.gov.uk/id/region/england'
-        row[5].must_equal 'monthly'
-        row[7].must_equal 231_049
+        row[6].must_equal 'monthly'
+        row[8].must_equal 231_049
       end
     end
   end

@@ -33,7 +33,7 @@ function bindShowHideDataView() {
   // this weirdness with slice is because IE11 doesn't do forEach on the return
   // value from querySelectorAll
   safeForEach(nodes, (node) => {
-    node.removeEventListener('click');
+    node.setAttribute('href', '#');
     node.addEventListener('click', handleShowHideClick, false);
   });
 }
@@ -50,7 +50,7 @@ function bindChangeLocationLink() {
   const nodes = document.querySelectorAll('.o-data-view__location');
 
   safeForEach(nodes, (node) => {
-    node.removeEventListener('click');
+    node.setAttribute('href', '#');
     node.addEventListener('click', handleLocationClick, false);
   });
 }
