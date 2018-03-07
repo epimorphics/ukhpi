@@ -1,7 +1,9 @@
 # frozen-string-literal: true
 
 # A presenter for the printable view, based on the download view presenter
-class PrintPresenter < DownloadPresenter
+class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
+  include ActionView::Helpers::NumberHelper
+
   PRINT_COLUMNS = [
     DownloadColumn.new(
       label: 'Name',
@@ -13,13 +15,21 @@ class PrintPresenter < DownloadPresenter
     ),
     DownloadColumn.new(
       label: 'Reporting period',
-      format: ->(row) { row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly' }
+      format: lambda do |row|
+        val = row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly'
+        "<div class='u-text-centre'>#{val}</div>".html_safe
+      end
     ),
     DownloadColumn.new(
       label: 'Sales volume',
-      pred: 'ukhpi:salesVolume'
+      format: lambda do |row|
+        val = row['ukhpi:salesVolume'].first
+        "<div class='u-text-right'>#{val}</div>".html_safe
+      end
     )
   ].freeze
+
+  SALES_VOLUME_COL = PRINT_COLUMNS.map(&:label).index('Sales volume')
 
   def locations
     @locations ||=
@@ -99,10 +109,34 @@ class PrintPresenter < DownloadPresenter
   end
 
   def columns
-    @columns ||= PRINT_COLUMNS + user_selection_columns
+    return @columns if @columns
+
+    @columns = PRINT_COLUMNS + user_selection_columns
+    @columns.delete_at(SALES_VOLUME_COL) if selected_indicators.map(&:slug).include?('vol')
+    @columns
   end
 
   def user_selection_columns
     selected_statistics.map(&method(:statistic_indicator_columns)).flatten
+  end
+
+  # @return An array of the given statistic paired with the currently selected
+  # indicators
+  def statistic_indicator_columns(stat) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    selected_indicators.map do |ind|
+      DownloadColumn.new(
+        ind: ind,
+        stat: stat,
+        sep: '<br />',
+        format: lambda do |row|
+          val = row["ukhpi:#{ind&.root_name}#{stat.root_name}"].first
+          val = "#{val}%" if ind&.root_name&.match?(/percent/i)
+          if ind&.root_name&.match?(/average/i)
+            val = number_to_currency(val.to_i, locale: :'en-GB', precision: 0)
+          end
+          "<div class='u-text-right'>#{val}</div>".html_safe
+        end
+      )
+    end
   end
 end
