@@ -19,7 +19,7 @@
     <div class='o-data-view__table-print u-text-right'>
       <a :href='printUrl' target='_' class='el-button el-button--primary'
       >
-        Print this data
+        Print this table
       </a>
     </div>
   </div>
