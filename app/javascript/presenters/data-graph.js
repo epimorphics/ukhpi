@@ -133,6 +133,12 @@ function calculateValueRange(projection, graphConfig) {
   return [min, max];
 }
 
+/* Showing the zoom view */
+
+function onGraphZoom(options) {
+  bus.$emit('zoomGraph', options);
+}
+
 /** Create a pair of scales to range across the height and width of the viewport
  * for the root node, minus the surrounding padding */
 function createScales(graphConfig) {
@@ -224,6 +230,25 @@ function drawAxes(graphConfig) {
     .attr('transform', translateCmd(0, graphConfig.scales.height))
     .attr('class', 'o-x-axis-click-target')
     .on('click', () => bus.$emit('change-dates'));
+
+  // add a symbol suggesting zoom
+  if (!graphConfig.zoom) {
+    graphConfig.rootElem
+      .append('text')
+      .attr('font-family', 'FontAwesome')
+      .attr('font-size', 18)
+      .attr('fill', '#666')
+      .attr('transform', `translate(${GRAPH_PADDING.left * -0.95},0)`)
+      .on('click', (() =>
+        () => {
+          if (!graphConfig.zoom) {
+            onGraphZoom({ graphConfig });
+          }
+        }
+      )())
+      .style('cursor', 'pointer')
+      .text(() => '\uf00e');
+  }
 }
 
 /** Draw a marker to distinguish a series other than by colour */
@@ -282,12 +307,6 @@ function drawGraphLines(series, index, graphConfig) {
     default:
       Raven.captureMessage(`Unknown graph type: ${graphConfig.graphType}`);
   }
-}
-
-/* Showing the zoom view */
-
-function onGraphZoom(options) {
-  bus.$emit('zoomGraph', options);
 }
 
 /* Drawing the overlay showing detailed figures */
@@ -381,7 +400,7 @@ function prepareOverlay(projection, graphConfig) {
     .on('click', (() =>
       () => {
         if (!graphConfig.zoom) {
-          onGraphZoom({ projection, graphConfig });
+          onGraphZoom({ graphConfig });
         }
       }
     )());
