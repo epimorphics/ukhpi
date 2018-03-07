@@ -206,12 +206,14 @@ function drawAxes(graphConfig) {
 
   if (graphConfig.symmetricalYAxis) {
     graphConfig.rootElem
-      .append('svg:line')
+      .append('line')
       .attr('class', 'y axis supplemental')
       .attr('x1', 0)
       .attr('x2', graphConfig.scales.width)
       .attr('y1', graphConfig.scales.y(0))
-      .attr('y2', graphConfig.scales.y(0));
+      .attr('y2', graphConfig.scales.y(0))
+      .attr('stroke', '#666')
+      .style('stroke-width', 0.6);
   }
 
   // add a clickable region for changing the dates
