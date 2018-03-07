@@ -1,0 +1,43 @@
+!!! html
+%html{ 'lang' => 'en', 'xml:lang' => 'en', 'xmlns' => 'http://www.w3.org/1999/xhtml' }
+  %head
+    %meta{ charset: 'utf-8' }
+    %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
+    %title UK House Price Index
+    = stylesheet_link_tag 'application', media: 'all'
+    = csrf_meta_tags
+    = render partial: 'common/favicons'
+
+    - if @preferences
+      %link{ rel: 'canonical', href: '//#{request.host_with_port}#{@preferences.as_path(:view)}' }
+
+    %link{ rel:'license', href: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
+
+    /[if lt IE 9]
+      :javascript
+        window.isIE8 = true;
+
+  %body.government.website.hmlr
+
+    %header.with-proposition.c-hmlr-header#global-header
+      .header-wrapper
+        .header-global
+          .header-logo
+            %a.content{ href: '/app/ukhpi', title: 'UK HPI' }
+              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'))
+        .header-proposition
+          .content
+            %nav#proposition-menu
+              %a#proposition-name{ href: '/app/ukhpi' }
+                %strong UK House Price Index
+
+    .o-lr-top-bar
+
+
+    = render partial: 'common/flash_message'
+
+    %main
+      = yield
+
+    = render partial: 'common/footer'
