@@ -1,0 +1,24 @@
+%section.o-print-view
+  %header
+    %h2.o-heading--3
+      = @view_state.indicator_summary
+      by
+      = @view_state.theme_summary.downcase
+      in
+      = @view_state.locations_summary
+    %p
+      = @view_state.dates_summary
+
+  .o-data-view__data-table
+    %table
+      %thead
+        %tr
+          - @view_state.column_names.each do |col|
+            %th{ scope: 'col' }
+              = col
+      %tbody
+        - @view_state.rows.each do |row|
+          %tr
+            - row.each do |datum|
+              %td
+                = datum

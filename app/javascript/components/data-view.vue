@@ -20,6 +20,7 @@
           <data-view-table
             :statistics='availableStatistics'
             :indicator='indicator'
+            :theme='theme'
           >
           </data-view-table>
         </el-tab-pane>
@@ -62,7 +63,7 @@ import AvailableStatistics from '../mixins/available-statistics';
 
 export default {
   mixins: [AvailableStatistics],
-  
+
   data: () => ({
     activeTab: 'graphs-tab',
     theme: null,

@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $HOST can be passed in as an argument, or default to staging server
-HOST=${HOST:-LR-Pres-1-b}
+HOST=${HOST:-lr-ppd-dev-pres-1}
 tomcat=`service --status-all | grep tomcat | sed -e 's/.*\(tomcat.*\)/\1/'`
 
 if service $tomcat status | grep 'Active: active'
@@ -27,7 +27,7 @@ function cleanup_ssh_tunnel() {
 while true; do
   ssh_running=`ps -fC ssh | grep "$HOST"`
   if [[ "${ssh_running:-null}" = null ]];then
-    echo "Starting ssh tunnel"
+    echo "Starting ssh tunnel to $HOST"
     ssh -f $HOST -L 8080:localhost:8080 -N
   fi
   sleep 5

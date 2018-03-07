@@ -14,8 +14,9 @@ class DownloadColumn
 
     ind_key = options[:ind]&.slug
     stat_key = options[:stat].label_key
+    sep = options[:sep] || ' '
 
-    ind_key ? "#{I18n.t(ind_key)} #{I18n.t(stat_key)}" : I18n.t(stat_key)
+    ind_key ? "#{I18n.t(ind_key)}#{sep}#{I18n.t(stat_key)}".html_safe : I18n.t(stat_key)
   end
 
   def format_value(row)

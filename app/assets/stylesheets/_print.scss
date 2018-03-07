@@ -2,40 +2,35 @@
 
 @media print {
   .u-print-hidden {
-    display: none;
+    display: none !important;
   }
 
   .u-page-break-before {
     page-break-before: always;
   }
 
-  img, svg {
-    page-break-before: auto;
-    page-break-after: auto;
-    page-break-inside: avoid;
-  }
-
-  a[href]:after {
-    content: none !important;
-  }
-
-  figure {
-    min-height: 350px;
-    .c-map--small {
-      min-height: 350px !important;
-    }
-  }
-
-  .o-print-header {
-    font-size: 20px;
-    span {
-      margin-top: 15px;
-      margin-right: 20px;
-    }
-  }
-
-  .o-footer a {
-    text-decoration: none;
+  footer a {
+    text-decoration: none !important;
   }
 }
 
+.o-print-view {
+  table {
+    width: 100%;
+
+    td {
+      border-bottom: 1px solid #ccc;
+      line-height: 1.5;
+    }
+  }
+}
+
+.o-data-view__table-print {
+  a {
+    margin: 5px;
+  }
+
+  a, a:visited {
+    color: white;
+  }
+}
