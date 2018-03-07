@@ -4,6 +4,8 @@
 # (csv, json, RDF etc)
 class DownloadController < ApplicationController
   def new
+    return unless validate_params?
+
     if params[:location].is_a?(Array)
       download_multiple_locations
     else
@@ -83,5 +85,10 @@ class DownloadController < ApplicationController
 
   def internet_explorer?
     request.env['HTTP_USER_AGENT'].match?(/msie/i)
+  end
+
+  # Check that we have the params we expect
+  def validate_params?
+    true # TODO: add validation
   end
 end
