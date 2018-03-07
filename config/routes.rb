@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   resource :browse, only: %i[show edit], controller: :browse
 
   resource :compare, only: %i[show], controller: :compare
+  resource :print, only: %i[show], controller: :print
 end
