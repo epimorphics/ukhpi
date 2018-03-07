@@ -100,13 +100,15 @@ class DownloadPresenterTest < ActiveSupport::TestCase
       it 'should correctly create an array of column names' do
         presenter.column_names.length.must_be :>=, 26
         presenter.column_names.first.must_equal '"Name"'
-        presenter.column_names.last.must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        presenter.column_names[-2].must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        presenter.column_names.last.must_equal '"Pivotable date"'
       end
 
       it 'should correctly create an array of all column names when no stats are selected' do
         presenter_all.column_names.length.must_be :>=, 61
         presenter.column_names.first.must_equal '"Name"'
-        presenter.column_names.last.must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        presenter.column_names[-2].must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        presenter.column_names.last.must_equal '"Pivotable date"'
       end
     end
 
@@ -130,8 +132,9 @@ class DownloadPresenterTest < ActiveSupport::TestCase
         rows.length.must_equal 1
         row.first.must_equal 'England'
         row.second.must_equal 'http://landregistry.data.gov.uk/id/region/england'
-        row[6].must_equal 'monthly'
-        row[8].must_equal 231_049
+        row[5].must_equal 'monthly'
+        row[7].must_equal 231_049
+        row.last.must_equal '2016-11-01'
       end
     end
   end

@@ -49,7 +49,7 @@ class DownloadPresenter
   private
 
   def columns
-    @columns ||= FIXED_COLUMNS + user_selection_columns
+    @columns ||= FIXED_COLUMNS + user_selection_columns + SUPPLEMENTARY_COLUMNS
   end
 
   def user_selection_columns
