@@ -20,7 +20,6 @@ class QueryCommand
   # API service endpoint
   def perform_query(service = nil)
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
-    Rails.logger.debug query.to_json
     time_taken = execute_query(service, query)
     Rails.logger.debug(format("query took %.1f ms\n", time_taken))
   end
