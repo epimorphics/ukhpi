@@ -9,7 +9,7 @@
       @close='onCloseDialog'
     >
     <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='availableStatistics'></data-view-statistics>
+      <data-view-statistics :initial-statistics='availableStatistics' :zoom='true'></data-view-statistics>
     </div>
 
     <data-view-graph

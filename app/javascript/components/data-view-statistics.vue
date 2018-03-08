@@ -40,21 +40,30 @@ export default {
       type: Array,
       required: true,
     },
+    zoom: {
+      type: Boolean,
+      required: true,
+    },
   },
 
   getters: {
   },
 
   mounted() {
-    const store = this.$store;
     this.statistics = this.initialStatistics;
-
-    this.initialStatistics.forEach((stat) => {
-      store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
-    });
+    if (!this.zoom) {
+      this.syncSelectedStatisticsToStore();
+    }
   },
 
   methods: {
+    syncSelectedStatisticsToStore() {
+      const store = this.$store;
+      this.initialStatistics.forEach((stat) => {
+        store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
+      });
+    },
+
     /**
      * Handler for the event of the user clicking to select or deselect a statistic.
      * Actual state change happens by propagating a change to the Vuex store.

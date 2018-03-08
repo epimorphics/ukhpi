@@ -1,7 +1,7 @@
 <template lang="html">
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='availableStatistics'></data-view-statistics>
+      <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
     </div>
     <div class='o-data-view__data-display'>
       <el-tabs
