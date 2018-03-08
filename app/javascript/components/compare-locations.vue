@@ -67,12 +67,17 @@
           :locations='locations'
         >
         </compare-locations-table>
+        <span class='c-compare__print'>
+          <a :href='printUrl' target='_' class='c-compare__print-link o-print-action'>
+            <i class='fa fa-print'></i> Print this table
+          </a>
+        </span>
         <span class='c-compare__download'>
           Download this data as:
-          <a href='#' class='c-compare__download-link c-compare__download-csv'>
+          <a :href='downloadUrlCsv' class='c-compare__download-link c-compare__download-csv'>
             CSV (spreadsheet) <i class='fa fa-external-link'></i>
           </a>
-          <a href='#' class='c-compare__download-link c-compare__download-json'>
+          <a :href='downloadUrlJson' class='c-compare__download-link c-compare__download-json'>
             JSON <i class='fa fa-external-link'></i>
           </a>
         </span>
@@ -145,8 +150,6 @@ export default {
     });
     this.themes = initialData.themes;
     this.indicators = initialData.indicators;
-
-    this.updateDownloadURL();
   },
 
   computed: {
@@ -212,6 +215,43 @@ export default {
         ind: this.$store.state.compareIndicator,
       };
     },
+
+    pathOptions() {
+      const options = {
+        from: this.fromDateISO,
+        to: this.toDateISO,
+        location: this.locationSlugs,
+      };
+
+      if (this.statistic) { options['st[]'] = this.statistic.slug; }
+      if (this.indicator) { options['in[]'] = this.indicator.slug; }
+
+      return options;
+    },
+
+    downloadUrlJson() {
+      return Routes.newDownloadPath(Object.assign({ format: 'json' }, this.pathOptions));
+    },
+
+    downloadUrlCsv() {
+      return Routes.newDownloadPath(Object.assign({ format: 'csv' }, this.pathOptions));
+    },
+
+    printUrl() {
+      const options = { print: true };
+      Object.assign(options, this.pathOptions);
+
+      // this is a horrible hack, it has to do with the expectations on params for the
+      // compare and download controllers
+      Object.assign(options, {
+        'st[]': null,
+        'in[]': null,
+        st: this.statistic.slug,
+        in: this.indicator.slug,
+      });
+
+      return Routes.comparePath(options);
+    },
   },
 
   watch: {
@@ -247,24 +287,6 @@ export default {
         this.indicatorSlug = ind;
       }
     },
-
-    // when the selections change, morph the data download URL...
-
-    fromDate() {
-      this.updateDownloadURL();
-    },
-    toDate() {
-      this.updateDownloadURL();
-    },
-    indicator() {
-      this.updateDownloadURL();
-    },
-    statistic() {
-      this.updateDownloadURL();
-    },
-    locations() {
-      this.updateDownloadURL();
-    },
   },
 
   methods: {
@@ -275,26 +297,6 @@ export default {
 
     onAddLocation() {
       bus.$emit('select-comparison');
-    },
-
-    updateDownloadURL() {
-      const pathOptions = {
-        from: this.fromDateISO,
-        to: this.toDateISO,
-        location: this.locationSlugs,
-      };
-
-      if (this.statistic) { pathOptions['st[]'] = this.statistic.slug; }
-      if (this.indicator) { pathOptions['in[]'] = this.indicator.slug; }
-
-      const hrefJson = Routes.newDownloadPath(Object.assign({ format: 'json' }, pathOptions));
-      const hrefCsv = Routes.newDownloadPath(Object.assign({ format: 'csv' }, pathOptions));
-
-      let anchorElement = document.querySelector('.c-compare__download-json');
-      anchorElement.setAttribute('href', hrefJson);
-
-      anchorElement = document.querySelector('.c-compare__download-csv');
-      anchorElement.setAttribute('href', hrefCsv);
     },
 
     /**

@@ -6,13 +6,30 @@ class CompareController < ApplicationController
   layout 'webpack_application'
 
   def show
+    if params.delete(:print)
+      render_print
+    else
+      render_interactive
+    end
+  end
+
+  private
+
+  def setup_view_state
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
     @view_state = CompareLocationsPresenter.new(user_compare_selections, query_results)
   end
 
-  private
+  def render_interactive
+    setup_view_state
+  end
+
+  def render_print
+    setup_view_state
+    render 'compare/print', layout: 'print'
+  end
 
   def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength
     query_results = {}

@@ -12,15 +12,23 @@
   footer a {
     text-decoration: none !important;
   }
+
+  .o-print-view__data-table {
+    font-size: 14px;
+  }
 }
 
 .o-print-view {
   table {
-    width: 100%;
+    border-collapse: collapse;
+
+    td, th {
+      padding-left: 50px;
+      border-bottom: 1px solid #ccc;
+    }
 
     td {
-      border-bottom: 1px solid #ccc;
-      line-height: 1.5;
+      line-height: 1.75;
     }
   }
 }
@@ -33,4 +41,9 @@
   a, a:visited {
     color: white;
   }
+}
+
+.o-print-action {
+  font-size: 16px;
+  padding-top: 15px;
 }

@@ -6,7 +6,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
 
   PRINT_COLUMNS = [
     DownloadColumn.new(
-      label: 'Name',
+      label: 'Location',
       format: ->(row) { Locations.lookup_location(row['ukhpi:refRegion']['@id']).label }
     ),
     DownloadColumn.new(
@@ -14,7 +14,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
       format: ->(row) { Date.parse("#{row['ukhpi:refMonth']['@value']}-01").strftime('%B %Y') }
     ),
     DownloadColumn.new(
-      label: 'Reporting period',
+      label: 'Reporting<br />period'.html_safe,
       format: lambda do |row|
         val = row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly'
         "<div class='u-text-centre'>#{val}</div>".html_safe
@@ -122,7 +122,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
 
   # @return An array of the given statistic paired with the currently selected
   # indicators
-  def statistic_indicator_columns(stat) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def statistic_indicator_columns(stat) # rubocop:disable Metrics/MethodLength
     selected_indicators.map do |ind|
       DownloadColumn.new(
         ind: ind,
@@ -130,11 +130,9 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
         sep: '<br />',
         format: lambda do |row|
           val = row["ukhpi:#{ind&.root_name}#{stat.root_name}"].first
-          val = "#{val}%" if ind&.root_name&.match?(/percent/i)
-          if ind&.root_name&.match?(/average/i)
-            val = number_to_currency(val.to_i, locale: :'en-GB', precision: 0)
-          end
-          "<div class='u-text-right'>#{val}</div>".html_safe
+          ValueFormatter.format(val,
+                                slug: ind&.root_name,
+                                template: "<div class='u-text-right'>%<formatted>s</div>")
         end
       )
     end

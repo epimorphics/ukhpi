@@ -33,6 +33,14 @@ class CompareLocationsPresenter
     "<strong>#{ind}</strong> for <strong>#{stat}</strong>, #{from} to #{to}".html_safe
   end
 
+  def locations_summary
+    if (1..2).cover?(selected_locations.length)
+      selected_locations.map(&:label).join(' and ')
+    else
+      "#{selected_locations.length} locations"
+    end
+  end
+
   def without_location(location)
     user_compare_selections.without('location', location.gss).to_h
   end
@@ -94,6 +102,12 @@ class CompareLocationsPresenter
       .without('location-term')
       .without('form-action')
       .to_h
+  end
+
+  def format(val)
+    ValueFormatter.format(val,
+                          slug: indicator.label,
+                          template: "<div class='u-text-right'>%<formatted>s</div>")
   end
 
   private
