@@ -6,12 +6,12 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
 
   PRINT_COLUMNS = [
     DownloadColumn.new(
-      label: 'Location',
-      format: ->(row) { Locations.lookup_location(row['ukhpi:refRegion']['@id']).label }
-    ),
-    DownloadColumn.new(
-      label: 'Period',
-      format: ->(row) { Date.parse("#{row['ukhpi:refMonth']['@value']}-01").strftime('%B %Y') }
+      label: '',
+      format: lambda do |row|
+        Date.parse("#{row['ukhpi:refMonth']['@value']}-01")
+            .strftime('%b&nbsp;%Y') # rubocop:disable Style/FormatStringToken
+            .html_safe
+      end
     ),
     DownloadColumn.new(
       label: 'Reporting<br />period'.html_safe,

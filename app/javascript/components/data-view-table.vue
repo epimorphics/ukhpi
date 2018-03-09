@@ -16,8 +16,8 @@
       >
       </el-table-column>
     </el-table>
-    <div class='o-data-view__table-print u-text-right'>
-      <a :href='printUrl' target='_' class='el-button el-button--primary'
+    <div class='o-data-view__table-print'>
+      <a :href='printUrl' target='_' class='o-print-action'
       >
         <i class='fa fa-print'></i> Print this table
       </a>
@@ -52,11 +52,12 @@ export default {
 
   computed: {
     printUrl() {
+      const vm = this;
       const location = this.$store.state.location || {};
       const params = {
         in: [this.indicator.slug],
         st: this.statistics
-          .filter(stat => stat.isSelected)
+          .filter(stat => vm.isSelectedStatistic(stat.slug))
           .map(stat => stat.slug),
         thm: [this.theme.slug],
         from: this.$store.state.fromDate,

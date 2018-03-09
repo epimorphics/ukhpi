@@ -44,6 +44,11 @@
 }
 
 .o-print-action {
+  color: $link-colour !important;
   font-size: 16px;
   padding-top: 15px;
+
+  &:visited {
+    color: $link-colour !important;
+  }
 }
