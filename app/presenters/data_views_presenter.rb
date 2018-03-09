@@ -36,6 +36,10 @@ class DataViewsPresenter
     end
   end
 
+  def explain?
+    user_selections.explain?
+  end
+
   private
 
   # @return An array of data view objects

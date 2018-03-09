@@ -8,15 +8,16 @@ class BrowseController < ApplicationController
 
   def show
     user_selections = UserSelections.new(params)
-    command = query_command.new(user_selections)
-    Rails.logger.debug("command = #{command.inspect}")
-    command.perform_query
 
-    @view_state = DataViewsPresenter.new(user_selections, command.results)
+    if explain_html?(user_selections)
+      redirect_to_html_view(user_selections)
+    else
+      setup_view_state(user_selections)
 
-    respond_to do |format|
-      format.html
-      format.json { render json: @view_state }
+      respond_to do |format|
+        format.html
+        format.json { render json: @view_state }
+      end
     end
   end
 
@@ -30,6 +31,28 @@ class BrowseController < ApplicationController
   # @return The appropriate query command class
   def query_command
     params[:explain] ? ExplainQueryCommand : QueryCommand
+  end
+
+  # Return true if the user has requested the explain-results action, but also
+  # HTML rendering. This usually is GooogleBot being a pest
+  def explain_html?(user_selections)
+    user_selections.explain? && request.format.html?
+  end
+
+  def redirect_to_html_view(user_selections)
+    url_params = user_selections.params
+    url_params.delete('explain')
+    redirect_to({
+      controller: :browse,
+      action: :show,
+    }.merge(url_params))
+  end
+
+  def setup_view_state(user_selections)
+    command = query_command.new(user_selections)
+    command.perform_query
+
+    @view_state = DataViewsPresenter.new(user_selections, command.results)
   end
 
   # Look at the `action` parameter, which may be set by various action buttons
