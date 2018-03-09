@@ -72,13 +72,15 @@ class DownloadPresenter
   # @return An array of the given statistic paired with the currently selected
   # indicators
   def statistic_indicator_columns(stat)
-    selected_indicators.map do |ind|
-      DownloadColumn.new(
-        ind: ind,
-        stat: stat,
-        pred: "ukhpi:#{ind&.root_name}#{stat.root_name}"
-      )
-    end
+    selected_indicators
+      .select { |ind| !ind.volume? || stat.volume? }
+      .map do |ind|
+        DownloadColumn.new(
+          ind: ind,
+          stat: stat,
+          pred: "ukhpi:#{ind&.root_name}#{stat.root_name}"
+        )
+      end
   end
 
   # Return truthy if the user selections include a named theme
