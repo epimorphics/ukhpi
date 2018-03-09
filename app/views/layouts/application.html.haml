@@ -5,6 +5,7 @@
     %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     %title UK House Price Index
+    = render partial: 'common/google-analytics'
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
@@ -56,4 +57,3 @@
           = yield
 
     = render partial: 'common/footer'
-    = render partial: 'common/google-analytics'
