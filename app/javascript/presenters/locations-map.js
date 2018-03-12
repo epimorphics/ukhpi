@@ -2,6 +2,7 @@
 import _ from 'lodash';
 import Leaflet from 'leaflet';
 import cloneLayer from 'leaflet-clonelayer';
+import '../lib/leaflet-rrose';
 
 import { findLocationNamed, findLocationById } from '../lib/locations';
 import gbFeaturesData from '../data/ONS-Geographies.json';
@@ -166,8 +167,8 @@ export default class LocationsMap {
   /** Show a popup with the location label */
   showPopup(label, point) {
     if (label) {
-      const popup = Leaflet.popup({
-        offset: new Leaflet.Point(0, -10),
+      const popup = new Leaflet.Rrose({
+        offset: new Leaflet.Point(0, 0),
         autoPan: false,
       })
         .setLatLng(point)
@@ -330,8 +331,11 @@ export default class LocationsMap {
     if (!this.leafletMap) {
       this.indexedFeatures();
 
-      this.leafletMap = Leaflet.map(this.elementId)
-        .setView([54.85, -2], 5);
+      this.leafletMap = Leaflet.map(this.elementId, {
+        zoomDelta: 0.5,
+        zoomSnap: 0,
+      })
+        .setView([55.7, -2], 4.7);
       this.leafletMap
         .attributionControl
         .setPrefix(`Open Government License &copy; Crown copyright ${new Date().getFullYear()}`);
