@@ -68,7 +68,7 @@
                   = row.shift
                 - row.each do |value|
                   %td
-                    = value
+                    = ValueFormatter.format(value, slug: @view_state.indicator.label)
 
       #application
         %router-view

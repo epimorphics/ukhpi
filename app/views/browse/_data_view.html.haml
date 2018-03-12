@@ -42,7 +42,7 @@
                 = col[:label]
         %tbody
           - table_data[:data].each do |row|
-            %tr
+            %tr{ class: cycle('u-row-odd', 'u-row-even') }
               - row.each_with_index do |datum, i|
                 - if i.zero?
                   %td

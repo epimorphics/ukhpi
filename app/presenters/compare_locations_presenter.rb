@@ -110,12 +110,12 @@ class CompareLocationsPresenter
                           template: "<div class='u-text-right'>%<formatted>s</div>")
   end
 
-  private
-
   def indicator
     selected = user_compare_selections.selected_indicator
     ukhpi.indicators.find { |indic| indic.slug == selected }
   end
+
+  private
 
   def statistic
     selected = user_compare_selections.selected_statistic
