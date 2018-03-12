@@ -140,6 +140,6 @@ class CompareLocationsPresenter
 
   def period_date(row)
     raw_date = row['ukhpi:refMonth']['@value']
-    Date.strptime(raw_date, '%Y-%m').strftime('%b %Y')
+    ValueFormatter.month_year(raw_date)
   end
 end

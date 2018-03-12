@@ -8,9 +8,9 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
     DownloadColumn.new(
       label: '',
       format: lambda do |row|
-        Date.parse("#{row['ukhpi:refMonth']['@value']}-01")
-            .strftime('%b&nbsp;%Y') # rubocop:disable Style/FormatStringToken
-            .html_safe
+        ValueFormatter.month_year(row['ukhpi:refMonth']['@value'])
+          .tr(' ', '&nbsp;')
+          .html_safe
       end
     ),
     DownloadColumn.new(

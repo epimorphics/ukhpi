@@ -45,4 +45,8 @@ class ValueFormatter
       include ActionView::Helpers::NumberHelper
     end .new.number_to_currency(val, options)
   end
+
+  def self.month_year(date)
+    Date.strptime(date, '%Y-%m').strftime('%b %Y') # rubocop:disable Style/FormatStringToken
+  end
 end

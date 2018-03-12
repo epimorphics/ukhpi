@@ -1,6 +1,7 @@
 -# Partial for drawing the main presentation of a data view
 - visible = data_view.visible?
 - node_id = data_view.node_id.to_s
+
 %section.o-data-view{ class: visible ? 'o-data-view--open' : 'o-data-view--closed', id: node_id }
   %header
     %h2.o-heading--3
@@ -42,8 +43,12 @@
         %tbody
           - table_data[:data].each do |row|
             %tr
-              - row.each do |datum|
-                %td
-                  = datum
+              - row.each_with_index do |datum, i|
+                - if i.zero?
+                  %td
+                    = ValueFormatter.month_year(datum)
+                - else
+                  %td
+                    = ValueFormatter.format(datum, slug: data_view.indicator.label)
 
   .o-data-view__vue-root.u-js-only{ data: data_view.as_js_attributes }
