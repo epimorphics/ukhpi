@@ -9,6 +9,9 @@
   %button{ type: 'submit', value: 'search', name: 'form-action' }
     Search
 
+- if view_state.user_selections.selected_location
+  %input{ type: :hidden, name: :location, value: view_state.user_selections.selected_location }
+
 %h3.o-heading--3 Dates
 
 %p
