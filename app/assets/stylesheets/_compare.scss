@@ -22,29 +22,12 @@
   }
 
   table {
-    width: 100%;
-
-    td {
-      text-align: right;
-    }
-
-    th {
-      text-align: left;
-    }
-
-    th[scope='col'] {
-      text-align: center;
-    }
-
-    .u-row-odd {
-      background-color: $grey-3;
-    }
+    @extend .u-simple-table;
   }
 
   .c-compare__choices td {
     text-align: center;
   }
-
 }
 
 .c-compare__selections {

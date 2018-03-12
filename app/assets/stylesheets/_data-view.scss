@@ -46,6 +46,10 @@ $options-panel-grey: #eef1f6;
   a.o-data-view__location:hover {
     text-decoration: underline;
   }
+
+  table {
+    @extend .u-simple-table;
+  }
 }
 
 .js .o-data-view__hide-action {

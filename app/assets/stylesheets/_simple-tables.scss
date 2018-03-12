@@ -1,0 +1,23 @@
+/* Very simple table layout for non-JS views. Table must function correctly if these
+ * styles are switched off. */
+
+.u-simple-table {
+  width: 100%;
+  background-color: white;
+
+  td {
+    text-align: right;
+  }
+
+  th {
+    text-align: left;
+  }
+
+  th[scope='col'] {
+    text-align: center;
+  }
+
+  .u-row-odd {
+    background-color: $grey-3;
+  }
+}
