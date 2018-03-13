@@ -315,13 +315,13 @@ const bisectDate = bisector(d => d.x).left;
 
 function formatStatistic(indicator, statistic, value) {
   const abbrev = {
-    all: 'all ',
-    det: 'det. ',
-    sem: 's.det. ',
-    ter: 'terr. ',
-    fla: 'f/m. ',
+    all: 'all',
+    det: 'det.',
+    sem: 'semi-det.',
+    ter: 'terr.',
+    fla: 'flat/mais.',
   }[statistic.slug];
-  return (abbrev || statistic.label) + formatValue(indicator + statistic, value);
+  return `${abbrev || statistic.label} ${formatValue(indicator + statistic, value)}`;
 }
 
 function xTrackLabel(statistic, projection, graphConfig, d) {
