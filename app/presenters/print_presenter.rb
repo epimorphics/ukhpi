@@ -9,7 +9,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
       label: '',
       format: lambda do |row|
         ValueFormatter.month_year(row['ukhpi:refMonth']['@value'])
-          .tr(' ', '&nbsp;')
+          .gsub(' ', '&nbsp;')
           .html_safe
       end
     ),
