@@ -11,6 +11,7 @@
         <img
           :src='imageSrcPath(statistic, index, false)'
           :srcset='imageSrcPath(statistic, index, true)'
+          :alt='`marker image for ${statistic.label}`'
         />
         {{ statistic.label }}
       </button>
