@@ -2,6 +2,7 @@
   <div class='o-data-view__table'>
     <el-table
       :data='tableData'
+      stripe
     >
       <el-table-column
         prop='ukhpi:refMonth'

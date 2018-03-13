@@ -9,8 +9,12 @@
     text-align: right;
   }
 
-  th {
+  td:first-child {
     text-align: left;
+  }
+
+  th {
+    text-align: center;
   }
 
   th[scope='col'] {
