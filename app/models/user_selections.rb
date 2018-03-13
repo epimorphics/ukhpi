@@ -8,7 +8,7 @@
 # standard set of statistics is presented if there is no information in the
 # user parameters yet. This functionality combines the previous
 # `models/UserPreferences` and `presenters/Aspects`
-class UserSelections
+class UserSelections # rubocop:disable Metrics/ClassLength
   include UserChoices
 
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze

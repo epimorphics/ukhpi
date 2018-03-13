@@ -47,6 +47,6 @@ class ValueFormatter
   end
 
   def self.month_year(date)
-    Date.strptime(date, '%Y-%m').strftime('%b %Y') # rubocop:disable Style/FormatStringToken
+    Date.strptime(date, '%Y-%m').strftime('%b %Y')
   end
 end

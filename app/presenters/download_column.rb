@@ -9,7 +9,7 @@ class DownloadColumn
     @options = options
   end
 
-  def label
+  def label # rubocop:disable Metrics/AbcSize
     return options[:label] if options[:label]
 
     ind_key = options[:ind]&.slug

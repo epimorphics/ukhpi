@@ -44,7 +44,7 @@ class BrowseController < ApplicationController
     url_params.delete('explain')
     redirect_to({
       controller: :browse,
-      action: :show,
+      action: :show
     }.merge(url_params))
   end
 

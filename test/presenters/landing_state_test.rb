@@ -31,7 +31,7 @@ class LandingStateTest < ActiveSupport::TestCase
 
     result_hash = ls.result
     result_hash.wont_be_nil
-    result_hash.keys.each do |k|
+    result_hash.each_key do |k|
       k.must_be_kind_of Symbol
     end
   end

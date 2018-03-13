@@ -41,6 +41,7 @@ class UkhpiDataCube
       UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
       UkhpiIndicator.new('vol', 'salesVolume',            'sales_volume')
     ].freeze
+  # rubocop:enable Layout/IndentArray
 
   attr_reader :dsd
 

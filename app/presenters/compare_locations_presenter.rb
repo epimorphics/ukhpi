@@ -4,7 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter
+class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include I18n
   include LocationsTable
 
@@ -30,6 +30,7 @@ class CompareLocationsPresenter
     stat = I18n.t(statistic.label_key).downcase
     from = user_compare_selections.from_date.strftime('%b %Y')
     to = user_compare_selections.to_date.strftime('%b %Y')
+
     "<strong>#{ind}</strong> for <strong>#{stat}</strong>, #{from} to #{to}".html_safe
   end
 

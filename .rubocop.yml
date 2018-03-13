@@ -2,6 +2,7 @@ AllCops:
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
+    - 'node_modules/**/*'
 
 # Customize rules
 Metrics/LineLength:
@@ -16,8 +17,11 @@ Metrics/ClassLength:
 Metrics/BlockLength:
   Exclude:
     - test/**/*
-    - lib/tasks/location.rake
+    - lib/tasks/**/*
 
 Metrics/MethodLength:
   Exclude:
     - lib/tasks/location.rake
+
+Style/FormatStringToken:
+  Enabled: false

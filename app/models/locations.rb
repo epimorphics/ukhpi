@@ -27,6 +27,7 @@ class Locations
       'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
     ])
   }.freeze
+  # rubocop:enable Layout/IndentArray
 
   # @return The Location with the given URI, if it exists
   def self.lookup_location(uri)

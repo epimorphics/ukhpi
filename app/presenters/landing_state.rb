@@ -22,7 +22,7 @@ class LandingState
     month = result[:"ukhpi:refMonth"]
     if month
       ref_month = to_value(month)
-      date = DateTime.strptime(ref_month.value, '%Y-%m')
+      date = Date.strptime(ref_month.value, '%Y-%m')
       date.strftime('%B %Y')
     else
       'Latest period not available'
