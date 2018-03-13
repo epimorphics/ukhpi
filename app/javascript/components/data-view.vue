@@ -8,7 +8,7 @@
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane label='See data graph' name='graphs-tab'>
+        <el-tab-pane label='See data graph' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -16,7 +16,7 @@
           >
           </data-view-graph>
         </el-tab-pane>
-        <el-tab-pane label='See data table' name='data-tab'>
+        <el-tab-pane label='See data table' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-table
             :statistics='availableStatistics'
             :indicator='indicator'
@@ -24,14 +24,14 @@
           >
           </data-view-table>
         </el-tab-pane>
-        <el-tab-pane label='Download this data' name='download-tab'>
+        <el-tab-pane label='Download this data' :name='`download-tab${indicator.slug}-${theme.slug}`'>
           <data-view-download
             :theme='theme'
             :indicator='indicator'
           >
           </data-view-download>
         </el-tab-pane>
-        <el-tab-pane label='Compare with location ...' name='compare-tab'>
+        <el-tab-pane label='Compare with location ...' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
           <p v-if='selectedLocation'>
             You can see how {{ selectedLocation.labels.en }} compares to
             other places:
@@ -65,7 +65,7 @@ export default {
   mixins: [AvailableStatistics],
 
   data: () => ({
-    activeTab: 'graphs-tab',
+    activeTab: '',
     theme: null,
     indicator: null,
     location: null,
@@ -100,6 +100,8 @@ export default {
   mounted() {
     this.checkStoreInitialised();
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
+
+    this.activeTab = `graphs-tab-${this.indicator.slug}-${this.theme.slug}`;
   },
 
   computed: {
