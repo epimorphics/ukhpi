@@ -105,7 +105,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
       end
 
       it 'should correctly create an array of all column names when no stats are selected' do
-        presenter_all.column_names.length.must_be :>=, 61
+        presenter_all.column_names.length.must_be :>=, 56
         presenter.column_names.first.must_equal '"Name"'
         presenter.column_names[-2].must_equal '"Percentage change (yearly) Flats and maisonettes"'
         presenter.column_names.last.must_equal '"Pivotable date"'
