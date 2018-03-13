@@ -168,7 +168,7 @@ export default class LocationsMap {
   showPopup(label, point) {
     if (label) {
       const popup = new Leaflet.Rrose({
-        offset: new Leaflet.Point(0, 0),
+        offset: new Leaflet.Point(0, -10),
         autoPan: false,
       })
         .setLatLng(point)
@@ -179,7 +179,7 @@ export default class LocationsMap {
         return function onClosePopup() { m.closePopup(p); };
       }(this.leafletMap, popup));
 
-      _.delay(hidePopup, 2000);
+      _.delay(hidePopup, 1500);
     } else {
       this.leafletMap.closePopup();
     }
