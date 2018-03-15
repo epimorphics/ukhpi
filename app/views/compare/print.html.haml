@@ -19,7 +19,7 @@
             - row.each_with_index do |col, i|
               %td
                 - if i.zero?
-                  = col
+                  = col.gsub(' ', '&nbsp;').html_safe
                 -else
                   = @view_state.format(col)
 
