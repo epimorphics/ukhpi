@@ -8,22 +8,26 @@
       .c-location-compare--non-js.u-js-hidden
         %form.c-compare__form{action: compare_path, method: 'get' }
           %p
-            Compare
-            %select{ name: 'in' }
+            %label{ for: 'select-in' } Compare
+            %select#select-in{ name: 'in' }
               - UkhpiDataCube::INDICATORS.each do |indicator|
                 %option{ value: indicator.slug, selected: @view_state.selected_indicator == indicator.slug }
                   = indicator.label
-            for
-            %select{ name: 'st' }
+            %label{ for: 'select-st' } for
+            %select#select-st{ name: 'st' }
               - UkhpiDataCube::THEMES.each_value do |theme|
                 %optgroup{ label: theme.label }
                   - theme.statistics.each do |stat|
                     %option{ value: stat.slug, selected: @view_state.selected_statistic == stat.slug }
                       = stat.label
-            from
-            %input{ type: 'date', name: 'from', value: @view_state.from_date }
-            to
-            %input{ type: 'date', name: 'to', value: @view_state.to_date }
+            %label{ for: 'from-date' }
+              from
+              %span.u-sr-only dd/mm/yyyy day two digits, month two digits, year four digits
+            %input#from-date{ type: 'date', name: 'from', value: @view_state.from_date }
+            %label{ for: 'to-date' }
+              to
+              %span.u-sr-only dd/mm/yyyy day two digits, month two digits, year four digits
+            %input#to-date{ type: 'date', name: 'to', value: @view_state.to_date }
 
           %p.c-compare__locations-prompt
             Between:

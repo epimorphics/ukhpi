@@ -19,7 +19,7 @@
       <el-row>
         <el-col :span='12'>
           <label>
-            Start:
+            Start<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:
             <el-date-picker
               v-model='newFromDate'
               type='month'
@@ -29,7 +29,7 @@
         </el-col>
         <el-col :span='12'>
           <label>
-            End:
+            End<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:
             <el-date-picker
               v-model='newToDate'
               type='month'

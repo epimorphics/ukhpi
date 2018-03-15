@@ -15,11 +15,11 @@
 %h3.o-heading--3 Dates
 
 %p
-  = label_tag(:from, 'From:')
+  = label_tag(:from, "From<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:".html_safe)
   = date_field_tag(:from, view_state.user_selections.from_date)
 
 %p
-  = label_tag(:to, 'To:')
+  = label_tag(:to, "To<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:".html_safe)
   = date_field_tag(:to, view_state.user_selections.to_date)
 
 %h3.o-heading--3 Displayed indicators
