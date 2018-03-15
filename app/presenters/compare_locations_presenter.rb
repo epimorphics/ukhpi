@@ -85,7 +85,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     pred = selected_statistic_uri
 
     data_by_columns.transpose.map do |row|
-      [period_date(row.first)] + (row.map { |values| values.fetch(pred)&.first })
+      [period_date(row.first)] + (row.map { |values| values.fetch(pred, nil)&.first })
     end
   end
 

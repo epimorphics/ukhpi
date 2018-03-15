@@ -3,7 +3,7 @@
 # Format values in a consistent way
 class ValueFormatter
   def self.format(value, options)
-    formatted = formatter(options).call(value)
+    formatted = (value.nil? ? nil_formatter : formatter(options)).call(value)
     if options.key?(:template)
       Kernel.format(options[:template], formatted: formatted)
     else
@@ -22,6 +22,10 @@ class ValueFormatter
     when /percent/ then percent_formatter
     else index_formatter
     end
+  end
+
+  def self.nil_formatter
+    ->(_val) { '' }
   end
 
   def self.default_formatter
