@@ -116,6 +116,14 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     ukhpi.indicators.find { |indic| indic.slug == selected }
   end
 
+  def unavailable_statistic_indicator?
+    if indicator.volume? && !statistic.volume?
+      "We're sorry, #{indicator.label.downcase} is not available for #{statistic.label}."
+    else
+      false
+    end
+  end
+
   private
 
   def statistic

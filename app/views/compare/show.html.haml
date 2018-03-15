@@ -53,22 +53,26 @@
               Update comparison
 
       - if !@view_state.search?
-        %table.c-compare__results.u-js-hidden
-          %thead
-            %tr
-              %th{ scope: 'col' }
-                Date
-              - @view_state.query_results.keys.sort.each do |location_name|
+        - if (msg = @view_state.unavailable_statistic_indicator?)
+          %p
+            = msg
+        - else
+          %table.c-compare__results.u-js-hidden
+            %thead
+              %tr
                 %th{ scope: 'col' }
-                  = location_name
-          %tbody
-            - @view_state.query_results_rows.each do |row|
-              %tr{ class: cycle('u-row-odd', 'u-row-even') }
-                %th{ scope: 'row' }
-                  = row.shift
-                - row.each do |value|
-                  %td
-                    = ValueFormatter.format(value, slug: @view_state.indicator.label)
+                  Date
+                - @view_state.query_results.keys.sort.each do |location_name|
+                  %th{ scope: 'col' }
+                    = location_name
+            %tbody
+              - @view_state.query_results_rows.each do |row|
+                %tr{ class: cycle('u-row-odd', 'u-row-even') }
+                  %th{ scope: 'row' }
+                    = row.shift
+                  - row.each do |value|
+                    %td
+                      = ValueFormatter.format(value, slug: @view_state.indicator.label)
 
       #application
         %router-view
