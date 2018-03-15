@@ -32,6 +32,11 @@ export default {
       type: Boolean,
       default: false,
     },
+    timestamp: {
+      required: false,
+      type: Number,
+      default: 0,
+    },
   },
 
   computed: {
@@ -79,6 +84,7 @@ export default {
   mounted() {
     this.$watch('$store.state.selectedStatistics', this.updateGraph, { deep: true });
     this.$watch('$store.state.queryResults', this.updateGraph, { deep: true });
+    this.$watch('timestamp', this.updateGraph);
 
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
 
