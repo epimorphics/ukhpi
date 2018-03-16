@@ -12,12 +12,7 @@ class BrowseController < ApplicationController
     if explain_html?(user_selections)
       redirect_to_html_view(user_selections)
     else
-      setup_view_state(user_selections)
-
-      respond_to do |format|
-        format.html
-        format.json { render json: @view_state }
-      end
+      render_view_state(setup_view_state(user_selections))
     end
   end
 
@@ -52,7 +47,22 @@ class BrowseController < ApplicationController
     command = query_command.new(user_selections)
     command.perform_query
 
-    @view_state = DataViewsPresenter.new(user_selections, command.results)
+    DataViewsPresenter.new(user_selections, command.results)
+  rescue ArgumentError => e
+    { error: e.message }
+  end
+
+  def render_view_state(view_state)
+    if view_state.respond_to?(:'[]') && view_state[:error]
+      render plain: "Bad request: #{view_state[:error]}", status: :bad_request
+    else
+      @view_state = view_state
+
+      respond_to do |format|
+        format.html
+        format.json { render json: @view_state }
+      end
+    end
   end
 
   # Look at the `action` parameter, which may be set by various action buttons
