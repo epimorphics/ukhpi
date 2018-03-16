@@ -3,12 +3,16 @@
 # Format values in a consistent way
 class ValueFormatter
   def self.format(value, options)
-    formatted = (value.nil? ? nil_formatter : formatter(options)).call(value)
+    formatted = (empty?(value) ? nil_formatter : formatter(options)).call(value)
     if options.key?(:template)
       Kernel.format(options[:template], formatted: formatted)
     else
       formatted
     end .html_safe
+  end
+
+  def self.empty?(value)
+    value.nil? || (value.respond_to?(:'empty?') && value.empty?)
   end
 
   def self.formatter(options)
