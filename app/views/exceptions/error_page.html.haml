@@ -1,0 +1,49 @@
+%article.u-clear
+  - if status == 400
+    %h1.o-heading--1 Request not understood
+    %p
+      We're sorry, but the request you made was not understood. If you are requesting
+      data via a script or program, please check the URL parameters. If you see this
+      message as a result of using the HPI or PPD applications, please let us
+      know so that we can correct the problem.
+
+  - elsif status == 404
+    %h1.o-heading--1 Page not found
+
+    %p
+      We're sorry, but the web page you requested is not present on our server.
+      Please check the spelling of the page address (URL). If you require further
+      assistance, please see the contact details below.
+
+  - else
+    %h1.o-heading--1 Application error
+
+    %p
+      We're very sorry, but the request you just made resulted in an internal
+      error in the UKHPI application. If this problem persists, please use one of the contact
+      methods below to report the problem to us so that we can resolve it and
+      help you get the data you require.
+
+  - if sentry_code
+    %h2.o-heading--3 Reference code
+    %p
+      If you need to contact support staff about this issue, please use the following
+      code to identify the problem:
+      %code
+        = sentry_code
+
+  %h2.o-heading--2 Who to contact
+  %p
+    If you are unable to access the data, please
+    %a{ href: 'http://site.landregistry.gov.uk/contact-us/form' }
+      fill in our contact form.
+
+  %p
+    For general transaction data enquiries, email
+    %a{ href: 'mailto:DRO@landregistry.gov.uk' }
+      DRO@landregistry.gov.uk
+
+  %p
+    For general price paid data enquiries, contact
+    %a{ href: 'mailto:commercial.services@landregistry.gov.uk.' }
+      commercial.services@landregistry.gov.uk.
