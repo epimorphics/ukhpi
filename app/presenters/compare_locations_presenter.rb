@@ -77,15 +77,11 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
       (!indicator || indicator.slug == user_compare_selections.selected_indicator)
   end
 
-  def query_results_rows # rubocop:disable Metrics/AbcSize
-    data_by_columns = query_results.keys.sort.map do |location_name|
-      query_results[location_name]
-    end
-
+  def query_results_rows
     pred = selected_statistic_uri
 
     data_by_columns.transpose.map do |row|
-      [period_date(row.first)] + (row.map { |values| values.fetch(pred, nil)&.first })
+      [period_date(row)] + (row.map { |values| values&.fetch(pred, nil)&.first })
     end
   end
 
@@ -148,7 +144,24 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def period_date(row)
-    raw_date = row['ukhpi:refMonth']['@value']
+    sample_value = row.compact.first
+    raw_date = sample_value['ukhpi:refMonth']['@value']
     ValueFormatter.month_year(raw_date)
+  end
+
+  def data_by_columns
+    by_columns = query_results.keys.sort.map do |location_name|
+      query_results[location_name]
+    end
+
+    ensure_even_row_lengths(by_columns)
+  end
+
+  def ensure_even_row_lengths(by_columns)
+    max_results = by_columns.map(&:length).max
+
+    by_columns.each do |results|
+      results.unshift(nil) while results.length < max_results
+    end
   end
 end

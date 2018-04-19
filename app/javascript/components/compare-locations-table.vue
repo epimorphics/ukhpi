@@ -31,6 +31,27 @@ import _ from 'lodash';
 import Moment from 'moment';
 import Numeral from 'numeral';
 
+/**
+ * Helper to normalise data series to a given reference set of dates. If a series
+ * does not have entries for all of the given dates, add blank entries.
+ *
+ * Post-condition: each series in tSeries will have a dated entry for every
+ * date in dates, and each series in tSeries will be sorted in ascending order
+ * of date.
+ */
+function ensureSeriesDates(dates, tSeries) {
+  _.each(tSeries, (series) => {
+    _.each(dates, (date) => {
+      const dateValue = date.date.valueOf();
+      if (!_.find(series, datum => datum.x.valueOf() === dateValue)) {
+        series.push({ x: date.date });
+      }
+    });
+
+    series.sort((datum0, datum1) => datum0.x.valueOf() - datum1.x.valueOf());
+  });
+}
+
 export default {
   data: () => ({
     tableData: [],
@@ -99,6 +120,7 @@ export default {
       const longestSeries = _.last(_.sortBy(_.values(tSeries), series => series.length));
 
       const dates = _.map(longestSeries, datum => ({ date: new Date(datum.x) }));
+      ensureSeriesDates(dates, tSeries);
       const tData = _.map(tSeries, (series, gss) => _.map(series, datum => ({ [gss]: datum.y })));
 
       this.tableData = _.map(_.zip(dates, ...tData), row => _.assign({}, ...row));
@@ -112,6 +134,11 @@ export default {
       const ind = this.indicator.slug;
       let format = '0,0';
       let scale = 1;
+
+      if (_.isUndefined(value)) {
+        // return "<span class='o-no-data'>no data</span>";
+        return this.$createElement('span', { class: 'o-no-data' }, ['no data']);
+      }
 
       if (ind === 'avg') {
         format = '$0,0.';
