@@ -50,6 +50,7 @@ group :development, :test do
   gem 'oj'
   gem 'rubocop', require: false
   gem 'simplecov', require: false
+  gem 'tzinfo-data'
   gem 'vcr'
 end
 
