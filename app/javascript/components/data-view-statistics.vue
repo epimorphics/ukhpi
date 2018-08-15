@@ -51,13 +51,23 @@ export default {
   },
 
   mounted() {
-    this.statistics = this.initialStatistics;
-    if (!this.zoom) {
-      this.syncSelectedStatisticsToStore();
-    }
+    this.initStatistics();
+  },
+
+  watch: {
+    initialStatistics() {
+      this.initStatistics();
+    },
   },
 
   methods: {
+    initStatistics() {
+      this.statistics = this.initialStatistics;
+      if (!this.zoom) {
+        this.syncSelectedStatisticsToStore();
+      }
+    },
+
     syncSelectedStatisticsToStore() {
       const store = this.$store;
       this.initialStatistics.forEach((stat) => {

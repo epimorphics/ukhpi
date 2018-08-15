@@ -44,7 +44,7 @@ export default {
       const root = this.graphConfig.elementId && this.graphConfig.elementId.replace(/-graph/, '');
       if (root) {
         const node = document.querySelector(`#${root} h2`);
-        return node && node.innerText.replace(/ hide *$/, '');
+        return node && node.innerText.replace(/hide *$/, '');
       }
 
       return '';
