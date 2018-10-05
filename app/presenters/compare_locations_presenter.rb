@@ -55,28 +55,6 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     end .to_h
   end
 
-  def statistic_indicator_choices # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    rows = []
-
-    ukhpi.themes.each_value do |theme|
-      if theme.slug == 'volume'
-        theme.statistics.each { |stat| rows << [stat, [nil, nil, nil, nil, [stat, nil]]] }
-      else
-        theme.statistics.each do |stat|
-          row = ukhpi.indicators.map { |indic| [stat, indic] }
-          rows << [stat, row + [nil]]
-        end
-      end
-    end
-
-    rows
-  end
-
-  def current_selection?(stat, indicator)
-    (stat.slug == user_compare_selections.selected_statistic) &&
-      (!indicator || indicator.slug == user_compare_selections.selected_indicator)
-  end
-
   def query_results_rows
     pred = selected_statistic_uri
 
@@ -91,14 +69,6 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     @search_results ||= locations.values.select do |location|
       location.matches_name?(search_term, nil)
     end
-  end
-
-  def with_location(location)
-    user_compare_selections
-      .with('location[]', location.gss)
-      .without('location-term')
-      .without('form-action')
-      .to_h
   end
 
   def format(val)
