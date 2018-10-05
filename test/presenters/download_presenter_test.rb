@@ -8,7 +8,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
     UserSelections.new(ActionController::Parameters.new(
                          location: 'http://landregistry.data.gov.uk/id/region/england',
                          thm: ['property_type']
-    ))
+                       ))
   end
   let(:query_results) do
     [
@@ -85,7 +85,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   let(:user_selections_all) do
     UserSelections.new(ActionController::Parameters.new(
                          location: 'http://landregistry.data.gov.uk/id/region/england'
-    ))
+                       ))
   end
   let(:query_command_all) do
     stub(
