@@ -6,7 +6,7 @@
         Select up to five locations to compare any UKHPI statistic, for a range of dates.
 
       .c-location-compare--non-js.u-js-hidden
-        %form.c-compare__form{action: compare_path, method: 'get' }
+        %form.c-compare__form{ action: compare_path, method: 'get' }
           %p
             %label{ for: 'select-in' } Compare
             %select#select-in{ name: 'in' }
@@ -56,7 +56,7 @@
             %button{ type: 'submit' }
               Update comparison
 
-      - if !@view_state.search?
+      - unless @view_state.search?
         - if (msg = @view_state.unavailable_statistic_indicator?)
           %p
             = msg
@@ -66,9 +66,9 @@
               %tr
                 %th{ scope: 'col' }
                   Date
-                - @view_state.query_results.keys.sort.each do |location_name|
+                - @view_state.selected_locations.each do |loc|
                   %th{ scope: 'col' }
-                    = location_name
+                    = loc.label
             %tbody
               - @view_state.query_results_rows.each do |row|
                 %tr{ class: cycle('u-row-odd', 'u-row-even') }

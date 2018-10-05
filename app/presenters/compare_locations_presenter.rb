@@ -150,7 +150,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def data_by_columns
-    by_columns = query_results.keys.sort.map do |location_name|
+    by_columns = query_results.keys.map do |location_name|
       query_results[location_name]
     end
 

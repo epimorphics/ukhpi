@@ -20,7 +20,7 @@
               %td
                 - if i.zero?
                   = col.gsub(' ', '&nbsp;').html_safe
-                -else
+                - else
                   = @view_state.format(col)
 
 = render partial: 'common/print-on-dom-ready'
