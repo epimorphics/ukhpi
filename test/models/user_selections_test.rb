@@ -157,5 +157,12 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections.summary.must_equal 'property_type England from 2017-01 to 2017-10'
       end
     end
+
+    describe '#valid?' do
+      it 'should report the empty model is valid' do
+        selections = user_selections({})
+        selections.valid?.must_equal(true)
+      end
+    end
   end
 end

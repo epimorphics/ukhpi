@@ -47,9 +47,9 @@ module UserChoices
     user_params_model[key].default_value
   end
 
-  def alternative_key(k)
+  def alternative_key(key)
     user_params_model
-      .find { |_key, value| value.alias == k }
+      .find { |_key, value| value.alias == key }
       &.first
   end
 

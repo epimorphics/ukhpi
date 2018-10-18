@@ -10,6 +10,7 @@
 # `models/UserPreferences` and `presenters/Aspects`
 class UserSelections # rubocop:disable Metrics/ClassLength
   include UserChoices
+  include UserSelectionValidations
 
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
   DEFAULT_STATISTICS = %w[all].freeze
