@@ -9,6 +9,10 @@ class BrowseController < ApplicationController
   def show
     user_selections = UserSelections.new(params)
 
+    unless user_selections.valid?
+      raise ActionController::BadRequest.new(e: RuntimeError.new(user_selections.errors.join(', ')))
+    end
+
     if explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
