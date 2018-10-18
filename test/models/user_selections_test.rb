@@ -163,6 +163,64 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections = user_selections({})
         selections.valid?.must_equal(true)
       end
+
+      it 'should report that a correctly formatted from date is valid' do
+        selections = user_selections(
+          'from' => '2017-01-01'
+        )
+        selections.valid?.must_equal(true)
+      end
+
+      it 'should report that an incorrectly formatted from date is invalid' do
+        selections = user_selections(
+          'from' => '2017-01'
+        )
+        selections.valid?.must_equal(false)
+        selections.errors.must_include('incorrect or missing "from" date')
+      end
+
+      it 'should report that an incorrectly formatted to date is invalid' do
+        selections = user_selections(
+          'to' => '2017-01'
+        )
+        selections.valid?.must_equal(false)
+        selections.errors.must_include('incorrect or missing "to" date')
+      end
+
+      it 'should report that a correct location URI is valid' do
+        selections = user_selections(
+          location: 'http://landregistry.data.gov.uk/id/region/united-kingdom'
+        )
+        selections.valid?.must_equal(true)
+      end
+
+      it 'should report that an incorrect location URI is invalid' do
+        selections = user_selections(
+          location: 'http://landregistry.data.gov.uk/id/region/'
+        )
+        selections.valid?.must_equal(false)
+        selections.errors.must_include('unrecognised location')
+      end
+
+      it 'should report that a correctly stated indicator is valid' do
+        selections = user_selections('in' => %w[pac pmc])
+        selections.valid?.must_equal(true)
+      end
+
+      it 'should report that an incorrectly stated indicator is not valid' do
+        selections = user_selections('in' => %w[pmc percentageMonthlyWombles])
+        selections.valid?.must_equal(false)
+      end
+
+      it 'should report that a correctly stated statistic is valid' do
+        selections = user_selections('st' => %w[det sem])
+        selections.valid?.must_equal(true)
+      end
+
+      it 'should report that an incorrectly stated statistic is not valid' do
+        selections = user_selections('st' => %w[det percentageMonthlyWombles])
+        selections.valid?.must_equal(false)
+      end
     end
   end
 end
