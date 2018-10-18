@@ -9,7 +9,7 @@ class BrowseController < ApplicationController
   def show
     user_selections = UserSelections.new(params)
 
-    if explain_html?(user_selections)
+    if explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
       render_view_state(setup_view_state(user_selections))
@@ -28,15 +28,17 @@ class BrowseController < ApplicationController
     params[:explain] ? ExplainQueryCommand : QueryCommand
   end
 
-  # Return true if the user has requested the explain-results action, but also
-  # HTML rendering. This usually is GooogleBot being a pest
-  def explain_html?(user_selections)
-    user_selections.explain? && request.format.html?
+  # Return true if the user has requested the explain-results action, but not with Mime
+  # type JSON. JSON is the normal case for explain. Other cases, such as explain with HTML
+  # type, are usually search bots being a pest
+  def explain_non_json?(user_selections)
+    user_selections.explain? && !request.format.json?
   end
 
   def redirect_to_html_view(user_selections)
     url_params = user_selections.params
     url_params.delete('explain')
+
     redirect_to({
       controller: :browse,
       action: :show
