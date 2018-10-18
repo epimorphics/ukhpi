@@ -47,7 +47,10 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   end
 
   def with_location(location)
-    user_compare_selections.with('location', location.gss).to_h
+    user_compare_selections
+      .without('location-term')
+      .with('location', location.gss)
+      .to_h
   end
 
   def with_statistic(statistic, indicator)
