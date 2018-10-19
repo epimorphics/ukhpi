@@ -11,7 +11,10 @@ class ExceptionsController < ApplicationController
 
     sentry_code = maybe_report_to_sentry(exception, status_code)
 
-    render :error_page, locals: { status: status_code, sentry_code: sentry_code }, layout: true
+    render :error_page,
+           locals: { status: status_code, sentry_code: sentry_code },
+           layout: true,
+           status: status_code
   end
 
   private

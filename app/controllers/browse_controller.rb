@@ -9,11 +9,9 @@ class BrowseController < ApplicationController
   def show
     user_selections = UserSelections.new(params)
 
-    unless user_selections.valid?
-      raise ActionController::BadRequest.new(e: RuntimeError.new(user_selections.errors.join(', ')))
-    end
-
-    if explain_non_json?(user_selections)
+    if !user_selections.valid?
+      render_bad_request
+    elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
       render_view_state(setup_view_state(user_selections))
@@ -128,5 +126,12 @@ class BrowseController < ApplicationController
       controller: :browse,
       action: :show
     }.merge(new_params))
+  end
+
+  def render_bad_request
+    render 'exceptions/error_page',
+           locals: { status: 400, sentry_code: nil },
+           layout: true,
+           status: 400
   end
 end
