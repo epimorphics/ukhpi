@@ -53,8 +53,16 @@ module UserChoices
       &.first
   end
 
+  # Recognise a date. Accepts ISO-8601 strings or Date objects.
+  # Dates that match YYYY-MM will be transformed to YYYY-MM-01.
+  # @param date Either an ISO0-8601 date string, or a date object
   def parse_date(date)
-    date.is_a?(String) ? Date.parse(date) : date
+    if date.is_a?(Date)
+      date
+    else
+      date_str = date.to_s.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{date}-01" : date.to_s
+      Date.parse(date_str)
+    end
   end
 
   def array_valued?(param)

@@ -173,15 +173,23 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should report that an incorrectly formatted from date is invalid' do
         selections = user_selections(
-          'from' => '2017-01'
+          'from' => '2017-0'
         )
         selections.valid?.must_equal(false)
         selections.errors.must_include('incorrect or missing "from" date')
       end
 
+      it 'should allow a YYYY-MM date as valid' do
+        selections = user_selections(
+          'from' => '2017-01'
+        )
+        selections.valid?.must_equal(true)
+        selections.errors.must_be_empty
+      end
+
       it 'should report that an incorrectly formatted to date is invalid' do
         selections = user_selections(
-          'to' => '2017-01'
+          'to' => '2017-0'
         )
         selections.valid?.must_equal(false)
         selections.errors.must_include('incorrect or missing "to" date')
