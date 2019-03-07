@@ -196,7 +196,7 @@ export const locations = {
     uri: 'http://landregistry.data.gov.uk/id/region/dover', labels: { en: 'Dover' }, gss: 'E07000108', container: 'http://landregistry.data.gov.uk/id/region/kent', container2: 'http://landregistry.data.gov.uk/id/region/south-east', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
   'http://landregistry.data.gov.uk/id/region/shepway': {
-    uri: 'http://landregistry.data.gov.uk/id/region/shepway', labels: { en: 'Shepway' }, gss: 'E07000112', container: 'http://landregistry.data.gov.uk/id/region/kent', container2: 'http://landregistry.data.gov.uk/id/region/south-east', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+    uri: 'http://landregistry.data.gov.uk/id/region/shepway', labels: { en: 'Folkestone and Hythe', cy: 'Folkestone A Hythe' }, gss: 'E07000112', container: 'http://landregistry.data.gov.uk/id/region/kent', container2: 'http://landregistry.data.gov.uk/id/region/south-east', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
   'http://landregistry.data.gov.uk/id/region/ashford': {
     uri: 'http://landregistry.data.gov.uk/id/region/ashford', labels: { en: 'Ashford' }, gss: 'E07000105', container: 'http://landregistry.data.gov.uk/id/region/kent', container2: 'http://landregistry.data.gov.uk/id/region/south-east', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
@@ -539,6 +539,12 @@ export const locations = {
   },
   'http://landregistry.data.gov.uk/id/region/outer-london': {
     uri: 'http://landregistry.data.gov.uk/id/region/outer-london', labels: { en: 'Outer London', cy: 'Llundain Allanol' }, gss: 'E13000002', container: 'http://landregistry.data.gov.uk/id/region/london', container2: 'http://landregistry.data.gov.uk/id/region/england', container3: 'http://landregistry.data.gov.uk/id/region/england-and-wales', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/',
+  },
+  'http://landregistry.data.gov.uk/id/region/scotland': {
+    uri: 'http://landregistry.data.gov.uk/id/region/scotland', labels: { cy: 'Yr Alban', en: 'Scotland' }, gss: 'S92000003', container: 'http://landregistry.data.gov.uk/id/region/great-britain', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
+  },
+  'http://landregistry.data.gov.uk/id/region/united-kingdom': {
+    uri: 'http://landregistry.data.gov.uk/id/region/united-kingdom', labels: { en: 'United Kingdom', cy: 'Y Deyrnas Unedig' }, gss: 'K02000001', container: '', container2: '', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
   },
   'http://landregistry.data.gov.uk/id/region/north-warwickshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/north-warwickshire', labels: { en: 'North Warwickshire', cy: 'Gogledd Swydd Warwick' }, gss: 'E07000218', container: 'http://landregistry.data.gov.uk/id/region/warwickshire', container2: 'http://landregistry.data.gov.uk/id/region/west-midlands-region', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
@@ -1182,35 +1188,17 @@ export const locations = {
   'http://landregistry.data.gov.uk/id/region/haringey': {
     uri: 'http://landregistry.data.gov.uk/id/region/haringey', labels: { en: 'Haringey' }, gss: 'E09000014', container: 'http://landregistry.data.gov.uk/id/region/inner-london', container2: 'http://landregistry.data.gov.uk/id/region/london', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
   },
-  'http://landregistry.data.gov.uk/id/region/stirling': {
-    uri: 'http://landregistry.data.gov.uk/id/region/stirling', labels: { en: 'Stirling' }, gss: 'S12000030', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
-  },
-  'http://landregistry.data.gov.uk/id/region/scotland': {
-    uri: 'http://landregistry.data.gov.uk/id/region/scotland', labels: { cy: 'Yr Alban', en: 'Scotland' }, gss: 'S92000003', container: 'http://landregistry.data.gov.uk/id/region/great-britain', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
-  },
-  'http://landregistry.data.gov.uk/id/region/belfast': {
-    uri: 'http://landregistry.data.gov.uk/id/region/belfast', labels: { en: 'Belfast' }, gss: 'N09000003', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/northern-ireland': {
-    uri: 'http://landregistry.data.gov.uk/id/region/northern-ireland', labels: { en: 'Northern Ireland', cy: 'Gogledd Iwerddon' }, gss: 'N92000001', container: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container2: '', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
-  },
   'http://landregistry.data.gov.uk/id/region/city-of-london': {
     uri: 'http://landregistry.data.gov.uk/id/region/city-of-london', labels: { en: 'City of London', cy: 'Dinas Llundain' }, gss: 'E09000001', container: 'http://landregistry.data.gov.uk/id/region/inner-london', container2: 'http://landregistry.data.gov.uk/id/region/london', container3: 'http://landregistry.data.gov.uk/id/region/england', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
+  },
+  'http://landregistry.data.gov.uk/id/region/stirling': {
+    uri: 'http://landregistry.data.gov.uk/id/region/stirling', labels: { en: 'Stirling' }, gss: 'S12000030', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/clackmannanshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/clackmannanshire', labels: { en: 'Clackmannanshire', cy: 'Swydd Clackmannan' }, gss: 'S12000005', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/aberdeenshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/aberdeenshire', labels: { en: 'Aberdeenshire', cy: 'Swydd Aberdeen' }, gss: 'S12000034', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
-  },
-  'http://landregistry.data.gov.uk/id/region/fermanagh-and-omagh': {
-    uri: 'http://landregistry.data.gov.uk/id/region/fermanagh-and-omagh', labels: { en: 'Fermanagh and Omagh', cy: 'Fermanagh Ac Omagh' }, gss: 'N09000006', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/united-kingdom': {
-    uri: 'http://landregistry.data.gov.uk/id/region/united-kingdom', labels: { en: 'United Kingdom', cy: 'Y Deyrnas Unedig' }, gss: 'K02000001', container: '', container2: '', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
-  },
-  'http://landregistry.data.gov.uk/id/region/north-down-and-ards': {
-    uri: 'http://landregistry.data.gov.uk/id/region/north-down-and-ards', labels: { en: 'Ards and North Down', cy: 'Ards A Gogledd Down' }, gss: 'N09000011', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
   'http://landregistry.data.gov.uk/id/region/south-ayrshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/south-ayrshire', labels: { en: 'South Ayrshire', cy: 'De Swydd Ayr' }, gss: 'S12000028', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -1224,17 +1212,8 @@ export const locations = {
   'http://landregistry.data.gov.uk/id/region/renfrewshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/renfrewshire', labels: { en: 'Renfrewshire', cy: 'Swydd Renfrew' }, gss: 'S12000038', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
-  'http://landregistry.data.gov.uk/id/region/armagh-banbridge-and-craigavon': {
-    uri: 'http://landregistry.data.gov.uk/id/region/armagh-banbridge-and-craigavon', labels: { en: 'Armagh City Banbridge and Craigavon', cy: 'Dinas Armagh Banbridge A Craigavon' }, gss: 'N09000002', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
   'http://landregistry.data.gov.uk/id/region/east-lothian': {
     uri: 'http://landregistry.data.gov.uk/id/region/east-lothian', labels: { en: 'East Lothian', cy: 'Dwyrain Lothian' }, gss: 'S12000010', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
-  },
-  'http://landregistry.data.gov.uk/id/region/derry-and-strabane': {
-    uri: 'http://landregistry.data.gov.uk/id/region/derry-and-strabane', labels: { en: 'Derry City and Strabane', cy: 'Dinas Derry A Strabane' }, gss: 'N09000005', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/newry-mourne-and-down': {
-    uri: 'http://landregistry.data.gov.uk/id/region/newry-mourne-and-down', labels: { en: 'Newry Mourne and Down', cy: 'Newry Mourne A Down' }, gss: 'N09000010', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
   'http://landregistry.data.gov.uk/id/region/midlothian': {
     uri: 'http://landregistry.data.gov.uk/id/region/midlothian', labels: { en: 'Midlothian' }, gss: 'S12000019', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -1247,21 +1226,6 @@ export const locations = {
   },
   'http://landregistry.data.gov.uk/id/region/west-dunbartonshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/west-dunbartonshire', labels: { en: 'West Dunbartonshire', cy: 'Gorllewin Swydd Dunbarton' }, gss: 'S12000039', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
-  },
-  'http://landregistry.data.gov.uk/id/region/lisburn-and-castlereagh': {
-    uri: 'http://landregistry.data.gov.uk/id/region/lisburn-and-castlereagh', labels: { en: 'Lisburn and Castlereagh', cy: 'Lisburn A Castlereagh' }, gss: 'N09000007', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/antrim-and-newtownabbey': {
-    uri: 'http://landregistry.data.gov.uk/id/region/antrim-and-newtownabbey', labels: { en: 'Antrim and Newtownabbey', cy: 'Antrim A Newtownabbey' }, gss: 'N09000001', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/mid-and-east-antrim': {
-    uri: 'http://landregistry.data.gov.uk/id/region/mid-and-east-antrim', labels: { en: 'Mid and East Antrim', cy: 'Canol A Dwyrain Antrim' }, gss: 'N09000008', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/causeway-coast-and-glens': {
-    uri: 'http://landregistry.data.gov.uk/id/region/causeway-coast-and-glens', labels: { en: 'Causeway Coast and Glens', cy: "Arfordir Y Sarn A'r Glynnoedd" }, gss: 'N09000004', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-  },
-  'http://landregistry.data.gov.uk/id/region/mid-ulster': {
-    uri: 'http://landregistry.data.gov.uk/id/region/mid-ulster', labels: { en: 'Mid Ulster', cy: 'Canolbarth Ulster' }, gss: 'N09000009', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
   'http://landregistry.data.gov.uk/id/region/argyll-and-bute': {
     uri: 'http://landregistry.data.gov.uk/id/region/argyll-and-bute', labels: { en: 'Argyll and Bute', cy: 'Argyll A Bute' }, gss: 'S12000035', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -1279,7 +1243,7 @@ export const locations = {
     uri: 'http://landregistry.data.gov.uk/id/region/north-lanarkshire', labels: { en: 'North Lanarkshire', cy: 'Gogledd Swydd Lanark' }, gss: 'S12000044', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/perth-and-kinross': {
-    uri: 'http://landregistry.data.gov.uk/id/region/perth-and-kinross', labels: { en: 'Perth and Kinross', cy: 'Perth A Kinross' }, gss: 'S12000024', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
+    uri: 'http://landregistry.data.gov.uk/id/region/perth-and-kinross', labels: { en: 'Perth and Kinross', cy: 'Perth A Kinross' }, gss: 'S12000048', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/east-ayrshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/east-ayrshire', labels: { en: 'East Ayrshire', cy: 'Dwyrain Swydd Ayr' }, gss: 'S12000008', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -1300,7 +1264,7 @@ export const locations = {
     uri: 'http://landregistry.data.gov.uk/id/region/na-h-eileanan-siar', labels: { en: 'Na h-Eileanan siar', cy: 'Eilean Siar' }, gss: 'S12000013', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/fife': {
-    uri: 'http://landregistry.data.gov.uk/id/region/fife', labels: { en: 'Fife' }, gss: 'S12000015', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
+    uri: 'http://landregistry.data.gov.uk/id/region/fife', labels: { en: 'Fife' }, gss: 'S12000047', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   },
   'http://landregistry.data.gov.uk/id/region/east-dunbartonshire': {
     uri: 'http://landregistry.data.gov.uk/id/region/east-dunbartonshire', labels: { en: 'East Dunbartonshire', cy: 'Dwyrain Swydd Dunbarton' }, gss: 'S12000045', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
@@ -1322,5 +1286,41 @@ export const locations = {
   },
   'http://landregistry.data.gov.uk/id/region/moray': {
     uri: 'http://landregistry.data.gov.uk/id/region/moray', labels: { en: 'Moray' }, gss: 'S12000020', container: 'http://landregistry.data.gov.uk/id/region/scotland', container2: 'http://landregistry.data.gov.uk/id/region/great-britain', container3: 'http://landregistry.data.gov.uk/id/region/united-kingdom', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
+  },
+  'http://landregistry.data.gov.uk/id/region/belfast': {
+    uri: 'http://landregistry.data.gov.uk/id/region/belfast', labels: { en: 'Belfast' }, gss: 'N09000003', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/northern-ireland': {
+    uri: 'http://landregistry.data.gov.uk/id/region/northern-ireland', labels: { en: 'Northern Ireland', cy: 'Gogledd Iwerddon' }, gss: 'N92000001', container: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container2: '', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion',
+  },
+  'http://landregistry.data.gov.uk/id/region/fermanagh-and-omagh': {
+    uri: 'http://landregistry.data.gov.uk/id/region/fermanagh-and-omagh', labels: { en: 'Fermanagh and Omagh', cy: 'Fermanagh Ac Omagh' }, gss: 'N09000006', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/north-down-and-ards': {
+    uri: 'http://landregistry.data.gov.uk/id/region/north-down-and-ards', labels: { en: 'Ards and North Down', cy: 'Ards A Gogledd Down' }, gss: 'N09000011', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/armagh-banbridge-and-craigavon': {
+    uri: 'http://landregistry.data.gov.uk/id/region/armagh-banbridge-and-craigavon', labels: { en: 'Armagh City Banbridge and Craigavon', cy: 'Dinas Armagh Banbridge A Craigavon' }, gss: 'N09000002', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/derry-and-strabane': {
+    uri: 'http://landregistry.data.gov.uk/id/region/derry-and-strabane', labels: { en: 'Derry City and Strabane', cy: 'Dinas Derry A Strabane' }, gss: 'N09000005', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/newry-mourne-and-down': {
+    uri: 'http://landregistry.data.gov.uk/id/region/newry-mourne-and-down', labels: { en: 'Newry Mourne and Down', cy: 'Newry Mourne A Down' }, gss: 'N09000010', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/lisburn-and-castlereagh': {
+    uri: 'http://landregistry.data.gov.uk/id/region/lisburn-and-castlereagh', labels: { en: 'Lisburn and Castlereagh', cy: 'Lisburn A Castlereagh' }, gss: 'N09000007', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/antrim-and-newtownabbey': {
+    uri: 'http://landregistry.data.gov.uk/id/region/antrim-and-newtownabbey', labels: { en: 'Antrim and Newtownabbey', cy: 'Antrim A Newtownabbey' }, gss: 'N09000001', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/mid-and-east-antrim': {
+    uri: 'http://landregistry.data.gov.uk/id/region/mid-and-east-antrim', labels: { en: 'Mid and East Antrim', cy: 'Canol A Dwyrain Antrim' }, gss: 'N09000008', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/causeway-coast-and-glens': {
+    uri: 'http://landregistry.data.gov.uk/id/region/causeway-coast-and-glens', labels: { en: 'Causeway Coast and Glens', cy: "Arfordir Y Sarn A'r Glynnoedd" }, gss: 'N09000004', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+  },
+  'http://landregistry.data.gov.uk/id/region/mid-ulster': {
+    uri: 'http://landregistry.data.gov.uk/id/region/mid-ulster', labels: { en: 'Mid Ulster', cy: 'Canolbarth Ulster' }, gss: 'N09000009', container: 'http://landregistry.data.gov.uk/id/region/northern-ireland', container2: 'http://landregistry.data.gov.uk/id/region/united-kingdom', container3: '', type: 'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   },
 };
