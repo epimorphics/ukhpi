@@ -1,7 +1,45 @@
 %section#main.c-changelog
   %h1.heading-large UK House Price Index: change history
 
-  %h2 August 2017 &ndash; Northern Ireland changes
+  %h2.heading-medium April 2019 &ndash; UK and Scotland changes
+  %p
+    One of the England regions has officially changed name, and two of the Scotland
+    regions have changed ONS GSS code since this service was first set up. While
+    users of the app will see the new name reflected in the location search
+    and the map selector, users who utilise the SPARQL query function should
+    be aware that the data URI for a re-named area has not changed.
+
+  %p The new local authority name is:
+
+  %ul.list.list-bullet
+    %li
+      Folkestone and Hythe (formerly Shepway),
+      %br
+      the URI remains:
+      %code http://landregistry.data.gov.uk/id/region/shepway
+
+  %p In Scotland:
+  %ul.list.list-bullet
+    %li
+      Fife
+      %br
+      ONS GSS code: S12000047 (formerly S12000015),
+      %br
+      the URI remains
+      %code http://landregistry.data.gov.uk/doc/region/fife
+    %li
+      Perth and Kinross
+      %br
+      ONS GSS code: S12000048 (formerly S12000024),
+      %br
+      the URI remains
+      %code
+        http://landregistry.data.gov.uk/doc/region/perth-and-kinross
+
+  %p Date of change: 17th April 2019
+
+
+  %h2.heading-medium August 2017 &ndash; Northern Ireland changes
   %p
     Three of the Northern Ireland regions have officially
     changed name since this service

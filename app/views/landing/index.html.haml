@@ -121,16 +121,42 @@
     created in the search tool, use the <code>show SPARQL query</code> button.
 
   %p
-    <strong>Note</strong> The Office of National Statistics are updating the region codes for some regions.
-    These changes will be made to the Feb 2019 data.
-    Specifically:
+    %strong Note
+    One of the England regions has officially changed name, and two of the Scotland
+    regions have changed ONS GSS code since this service was first set up. While
+    users of the app will see the new name reflected in the location search
+    and the map selector, users who utilise the SPARQL query function should
+    be aware that the data URI for a re-named area has not changed.
+
+  %p The new local authority name is:
 
   %ul.list.list-bullet
     %li
-      The region of 'Shepway' (ONS Code E070001122) will change to 'Folkestone and Hythe'
-      which will affect the UK HPI Regions used by HMLR
+      Folkestone and Hythe (formerly Shepway),
+      %br
+      the URI remains
+      %code http://landregistry.data.gov.uk/id/region/shepway
+
+  %p In Scotland:
+  %ul.list.list-bullet
     %li
-      there are changes to the area codes for Fife, Perth and Kinross.
+      Fife
+      %br
+      ONS GSS Code: S12000047 (formerly S12000015),
+      %br
+      the URI remains
+      %code http://landregistry.data.gov.uk/doc/region/fife
+    %li
+      Perth and Kinross
+      %br
+      ONS GSS Code: S12000048 (formerly S12000024),
+      %br
+      the URI remains
+      %code
+        http://landregistry.data.gov.uk/doc/region/perth-and-kinross
+
+  %p
+    %strong Date of change: 17th April 2019
 
   %p
     Links to other sources of open data are provided under the Open Government Licence
