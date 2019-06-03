@@ -36,7 +36,7 @@ class Presenter
   end
 
   def preference(key)
-    prefs && prefs.send(key)
+    prefs&.send(key)
   end
 
   def query_results
@@ -59,7 +59,7 @@ class Presenter
     @aspects ||= Aspects.new(@cmd.prefs)
   end
 
-  def lookup_location(r)
-    Locations.lookup_location(r)
+  def lookup_location(loc)
+    Locations.lookup_location(loc)
   end
 end

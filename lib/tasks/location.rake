@@ -53,34 +53,34 @@ end
 class Location
   attr_reader :uri, :labels, :container, :container2, :container3, :gss
 
-  def initialize(lr)
-    @uri = lr.uri
-    @container = lr.container
-    @container2 = lr.container2
-    @container3 = lr.container3
+  def initialize(location_record)
+    @uri = location_record.uri
+    @container = location_record.container
+    @container2 = location_record.container2
+    @container3 = location_record.container3
     @labels = {}
     @types = []
 
-    update_from(lr)
+    update_from(location_record)
   end
 
-  def update_from(lr)
-    add_type(lr.type) if lr.type
-    add_label(lr)
+  def update_from(location_record)
+    add_type(location_record.type) if location_record.type
+    add_label(location_record)
 
-    return unless lr.same
+    return unless location_record.same
 
-    @same = lr.same
+    @same = location_record.same
     match = @same.match(/([A-Z]\d+)$/)
     @gss = match[1] if match
   end
 
-  def add_type(t)
-    @types << t
+  def add_type(typ)
+    @types << typ
   end
 
-  def add_label(lr)
-    @labels[lr.lang.to_sym] = lr.label
+  def add_label(location_record)
+    @labels[location_record.lang.to_sym] = location_record.label
   end
 
   def preferred_type
@@ -104,7 +104,7 @@ class Location
       "\"#{gss}\")"
   end
 
-  def to_json
+  def to_json(_opts)
     "{#{json_attributes}}"
   end
 

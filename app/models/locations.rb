@@ -7,27 +7,24 @@ class Locations
   extend LocationsTable
 
   Struct.new('LocationSearchType', :label, :rdf_types)
-
-  # rubocop:disable Layout/IndentArray
   LOCATION_SEARCH_TYPES = {
     'country' => Struct::LocationSearchType.new('Country', [
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion'
-    ]),
+                                                  'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion'
+                                                ]),
     'local_authority' => Struct::LocationSearchType.new('Local authority', [
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough',
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict',
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority'
-    ]),
+                                                          'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough',
+                                                          'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
+                                                          'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
+                                                          'http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict',
+                                                          'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority'
+                                                        ]),
     'england_region' => Struct::LocationSearchType.new('Region (England only)', [
-      'http://landregistry.data.gov.uk/def/ukhpi/Region'
-    ]),
+                                                         'http://landregistry.data.gov.uk/def/ukhpi/Region'
+                                                       ]),
     'england_county' => Struct::LocationSearchType.new('County (England only)', [
-      'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
-    ])
+                                                         'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
+                                                       ])
   }.freeze
-  # rubocop:enable Layout/IndentArray
 
   # @return The Location with the given URI, if it exists
   def self.lookup_location(uri)

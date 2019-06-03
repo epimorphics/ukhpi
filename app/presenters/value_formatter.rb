@@ -17,6 +17,7 @@ class ValueFormatter
 
   def self.formatter(options)
     return formatter_by_slug(options[:slug]) if options.key?(:slug)
+
     default_formatter
   end
 

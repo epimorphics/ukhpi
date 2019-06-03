@@ -4,34 +4,34 @@
 class UkhpiDataCube
   include CubeDataModel::Vocabularies
 
+  # rubocop:disable Metrics/LineLength
   CONFIG_DIR = 'dsapi'
   DSD_FILE = 'UKHPI-dsd.ttl'
-
-  # rubocop:disable Layout/IndentArray
   THEMES = {
     property_type: UkhpiTheme.new('property_type', [
-      UkhpiStatistic.new('all', '',               'all_property_types', true),
-      UkhpiStatistic.new('det', 'Detached',       'detached_houses', false),
-      UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses', false),
-      UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses', false),
-      UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes', false)
-    ]),
+                                    UkhpiStatistic.new('all', '', 'all_property_types', true),
+                                    UkhpiStatistic.new('det', 'Detached',       'detached_houses', false),
+                                    UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses', false),
+                                    UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses', false),
+                                    UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes', false)
+                                  ]),
 
     buyer_status: UkhpiTheme.new('buyer_status', [
-      UkhpiStatistic.new('ftb', 'FirstTimeBuyer',      'first_time_buyers', false),
-      UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers', false)
-    ]),
+                                   UkhpiStatistic.new('ftb', 'FirstTimeBuyer', 'first_time_buyers', false),
+                                   UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers', false)
+                                 ]),
 
     funding_status: UkhpiTheme.new('funding_status', [
-      UkhpiStatistic.new('cas', 'Cash',     'cash_purchases', true),
-      UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases', true)
-    ]),
+                                     UkhpiStatistic.new('cas', 'Cash', 'cash_purchases', true),
+                                     UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases', true)
+                                   ]),
 
     property_status: UkhpiTheme.new('property_status', [
-      UkhpiStatistic.new('new', 'NewBuild',         'new_build', true),
-      UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true)
-    ])
+                                      UkhpiStatistic.new('new', 'NewBuild', 'new_build', true),
+                                      UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true)
+                                    ])
   }.freeze
+  # rubocop:enable Metrics/LineLength
 
   INDICATORS =
     [
@@ -41,7 +41,6 @@ class UkhpiDataCube
       UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
       UkhpiIndicator.new('vol', 'salesVolume',            'sales_volume')
     ].freeze
-  # rubocop:enable Layout/IndentArray
 
   attr_reader :dsd
 

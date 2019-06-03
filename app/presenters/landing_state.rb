@@ -55,8 +55,8 @@ class LandingState
     @result[key.to_sym] ? @result[key.to_sym].first : 'unknown'
   end
 
-  def to_value(v)
-    DataServicesApi::Value.new(v.symbolize_keys)
+  def to_value(val)
+    DataServicesApi::Value.new(val.symbolize_keys)
   end
 
   def format_percentage(change)

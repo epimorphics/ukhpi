@@ -148,7 +148,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
       it 'should correctly generate a summary headline' do
         presenter
           .headline_summary
-          .must_equal '<strong>House price index</strong> for <strong>all property types</strong>, Oct 2017 to Oct 2018'
+          .must_match %r{<strong>House price index</strong> for <strong>all property types</strong>, ... \d{4} to ... \d{4}}
       end
     end
 
