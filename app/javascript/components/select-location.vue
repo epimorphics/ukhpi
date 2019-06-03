@@ -107,7 +107,7 @@ export default {
     searchResults: [],
     searchResultsVisible: false,
     leafletMap: null,
-    noMatch: false,
+    noMatch: false
   }),
 
   props: {
@@ -175,8 +175,6 @@ export default {
       if (this.searchResults && this.searchResults.length === 0 &&
           this.searchInput.length > 1 && !this.selectedLocation) {
         this.noMatch = `Sorry, no locations match '${this.searchInput}'.`;
-      } else {
-        this.noMatch = null;
       }
     },
   },
@@ -187,6 +185,7 @@ export default {
       this.searchInput = '';
       this.manyResults = 0;
       this.searchResults = [];
+      this.noMatch = null
     },
 
     onSaveChanges() {
@@ -214,12 +213,18 @@ export default {
       const locationAndType = findLocationById(uri, 'uri');
       this.selectedLocation = locationAndType.location;
       this.searchInput = locationAndType.location.labels.en;
+      this.noMatch = null;
+    },
+
+    isForthcomingLocation(location) {
+      return !_.isEmpty(location.message)
     },
 
     isExactMatch(term, results) {
       const termLC = term.toLocaleLowerCase();
-      return results &&
-             results.find(result => result.labels.en.toLocaleLowerCase() === termLC);
+      const location = results && results.find(result => result.labels.en.toLocaleLowerCase() === termLC);
+
+      return location && !this.isForthcomingLocation(location) ? location : null
     },
 
     setFoundLocation(location) {
@@ -228,6 +233,16 @@ export default {
       if (location) {
         this.$set(this, 'searchResults', []);
         this.$set(this, 'searchInput', location.labels.en);
+      }
+    },
+
+    showForthcoming(results) {
+      console.log("showForthcoming", results)
+      if (results.length === 1 && this.isForthcomingLocation(results[0])) {
+        this.manyResults = 0
+        this.searchResults = null
+        this.noMatch = results[0].message
+        console.log("shown Forthcoming")
       }
     },
 
@@ -241,10 +256,13 @@ export default {
       if (!match && filtered) {
         this.manyResults = filtered.length - MAX_RESULTS;
         this.searchResults = filtered.slice(0, MAX_RESULTS);
+        this.showForthcoming(filtered)
       }
     },
 
     onSearchKeyUp(event) {
+      this.noMatch = null
+
       if (event.code === 'Enter') {
         if (this.selectedLocation) {
           // enter acts as confirm if we have a selected location
