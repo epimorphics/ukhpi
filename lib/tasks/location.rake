@@ -47,11 +47,15 @@ class LocationRecord
   def type
     value_of @json['type']
   end
+
+  def message
+    value_of(@json['message'])
+  end
 end
 
 # Encapsulates a particular location
 class Location
-  attr_reader :uri, :labels, :container, :container2, :container3, :gss
+  attr_reader :uri, :labels, :container, :container2, :container3, :gss, :message
 
   def initialize(location_record)
     @uri = location_record.uri
@@ -60,6 +64,7 @@ class Location
     @container3 = location_record.container3
     @labels = {}
     @types = []
+    @message = location_record.message
 
     update_from(location_record)
   end
@@ -104,7 +109,7 @@ class Location
       "\"#{gss}\")"
   end
 
-  def to_json(_opts)
+  def to_json(_opts = nil)
     "{#{json_attributes}}"
   end
 
@@ -116,7 +121,8 @@ class Location
       "container: \"#{container}\"",
       "container2: \"#{container2}\"",
       "container3: \"#{container3}\"",
-      "type: \"#{preferred_type}\""
+      "type: \"#{preferred_type}\"",
+      "message: \"#{message}\""
     ].join(', ')
   end
 end
@@ -175,6 +181,18 @@ def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSiz
   end
 end
 
+def process_location_data(location_data, locations, all_types)
+  lr = LocationRecord.new(location_data)
+  loc = locations[lr.uri]
+  all_types << lr.type
+
+  if loc
+    loc.update_from(lr)
+  else
+    locations[lr.uri] = Location.new(lr)
+  end
+end
+
 namespace :ukhpi do
   desc 'Generate the locations files by SPARQL query'
   task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
@@ -228,16 +246,15 @@ namespace :ukhpi do
     all_types = Set.new
 
     sresults['results']['bindings'].each do |result|
-      lr = LocationRecord.new(result)
-      loc = locations[lr.uri]
-      all_types << lr.type
-
-      if loc
-        loc.update_from(lr)
-      else
-        locations[lr.uri] = Location.new(lr)
-      end
+      process_location_data(result, locations, all_types)
     end
+
+    # add exceptions
+    YAML
+      .load_file('data/location-exceptions.yml')
+      .each do |location_ex|
+        process_location_data(location_ex, locations, all_types)
+      end
 
     write_locations_files(locations, all_types)
   end

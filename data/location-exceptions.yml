@@ -1,0 +1,73 @@
+# The locations in this file are exceptions or additions to the standard
+# list of locations available in the data. These locations can be used to,
+# for example, add a placeholder for a location that will be available
+# in the data in future
+
+# Exceptional locations should be represented in the following format:
+# -
+#   label:
+#     value: name, e.g. Dorset Unitary Authority
+#     xml:lang: en
+#   refRegion:
+#     value: URL, e.g. http://landregistry.data.gov.uk/id/region/dorset-unitary-authority
+#   selectable: false
+#   type:
+#     value: http://landregistry.data.gov.uk/id/forthcoming
+#   message:
+#     value: Message to users, e.g: We're sorry, but UKHPI statistics for Dorset Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+
+-
+  label:
+    value: Dorset Unitary Authority
+    xml:lang: en
+  refRegion:
+    value: http://landregistry.data.gov.uk/id/region/dorset-unitary-authority
+  selectable: false
+  type:
+    value: http://landregistry.data.gov.uk/id/forthcoming
+  message:
+    value: We're sorry, but UKHPI statistics for Dorset Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+-
+  label:
+    value: Bournemouth, Christchurch and Poole Unitary Authority
+    xml:lang: en
+  refRegion:
+    value: http://landregistry.data.gov.uk/id/region/bournemouth-christchurch-and-poole-unitary-authority
+  selectable: false
+  type:
+    value: http://landregistry.data.gov.uk/id/forthcoming
+  message:
+    value: We're sorry, but UKHPI statistics for Bournemouth, Christchurch and Poole Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+-
+  label:
+    value: West Suffolk District Council
+    xml:lang: en
+  refRegion:
+    value: http://landregistry.data.gov.uk/id/region/west-suffolk-district-council
+  selectable: false
+  type:
+    value: http://landregistry.data.gov.uk/id/forthcoming
+  message:
+    value: We're sorry, but UKHPI statistics for West Suffolk District Council are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+-
+  label:
+    value: East Suffolk District Council
+    xml:lang: en
+  refRegion:
+    value: http://landregistry.data.gov.uk/id/region/east-suffolk-district-council
+  selectable: false
+  type:
+    value: http://landregistry.data.gov.uk/id/forthcoming
+  message:
+    value: We're sorry, but UKHPI statistics for East Suffolk District Council are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+-
+  label:
+    value: Somerset West and Taunton
+    xml:lang: en
+  refRegion:
+    value: http://landregistry.data.gov.uk/id/region/somerset-west-and-taunton
+  selectable: false
+  type:
+    value: http://landregistry.data.gov.uk/id/forthcoming
+  message:
+    value: We're sorry, but UKHPI statistics for Somerset West and Taunton are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
