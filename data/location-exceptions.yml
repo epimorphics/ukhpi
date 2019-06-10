@@ -14,11 +14,11 @@
 #   type:
 #     value: http://landregistry.data.gov.uk/id/forthcoming
 #   message:
-#     value: Message to users, e.g: We're sorry, but UKHPI statistics for Dorset Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+#     value: Message to users, e.g: We're sorry, but UKHPI statistics for Dorset Unitary Authority are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020.
 
 -
   label:
-    value: Dorset Unitary Authority
+    value: Dorset Council unitary authority
     xml:lang: en
   refRegion:
     value: http://landregistry.data.gov.uk/id/region/dorset-unitary-authority
@@ -26,7 +26,7 @@
   type:
     value: http://landregistry.data.gov.uk/id/forthcoming
   message:
-    value: We're sorry, but UKHPI statistics for Dorset Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+    value: "We're sorry, but UKHPI statistics for Dorset Council unitary Authority are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020. Until then, the data will remain under the names of the previous local authorities: East Dorset, North Dorset, Purbeck, West Dorset, Weymouth and Portland"
 -
   label:
     value: Bournemouth, Christchurch and Poole Unitary Authority
@@ -37,7 +37,7 @@
   type:
     value: http://landregistry.data.gov.uk/id/forthcoming
   message:
-    value: We're sorry, but UKHPI statistics for Bournemouth, Christchurch and Poole Unitary Authority are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+    value: "We're sorry, but UKHPI statistics for Bournemouth, Christchurch and Poole Unitary Authority are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020. Until then, the data will remain under the names of the previous local authorities: Bournemouth, Christchurch, Poole"
 -
   label:
     value: West Suffolk District Council
@@ -48,7 +48,7 @@
   type:
     value: http://landregistry.data.gov.uk/id/forthcoming
   message:
-    value: We're sorry, but UKHPI statistics for West Suffolk District Council are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+    value: "We're sorry, but UKHPI statistics for West Suffolk District Council are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020. Until then, the data will remain under the names of the previous local authorities: Suffolk Coastal, Waveney"
 -
   label:
     value: East Suffolk District Council
@@ -59,7 +59,7 @@
   type:
     value: http://landregistry.data.gov.uk/id/forthcoming
   message:
-    value: We're sorry, but UKHPI statistics for East Suffolk District Council are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+    value: "We're sorry, but UKHPI statistics for East Suffolk District Council are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020. Until then, the data will remain under the names of the previous local authorities: Taunton Deane, West Somerset"
 -
   label:
     value: Somerset West and Taunton
@@ -70,4 +70,4 @@
   type:
     value: http://landregistry.data.gov.uk/id/forthcoming
   message:
-    value: We're sorry, but UKHPI statistics for Somerset West and Taunton are not yet available. Statistics for this location will become available after the ONS master regions table is updated in Feb 2020.
+    value: "We're sorry, but UKHPI statistics for Somerset West and Taunton are not yet available. Statistics for this location will become available after the Office for National Statistics master regions table is updated in Feb 2020. Until then, the data will remain under the names of the previous local authorities: Forest Heath, St Edmondsbury"
