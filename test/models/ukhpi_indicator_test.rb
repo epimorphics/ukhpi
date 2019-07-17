@@ -16,7 +16,7 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
 
     describe '#volume?' do
       it 'should return correctly whether or not this is a volume indicator' do
-        refute UkhpiIndicator.new('foo', 'foo_r', 'foo_l').volume?
+        assert_not UkhpiIndicator.new('foo', 'foo_r', 'foo_l').volume?
         assert UkhpiIndicator.new('vol', 'foo_r', 'foo_l').volume?
       end
     end

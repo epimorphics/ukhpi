@@ -53,9 +53,9 @@ class QueryCommand
 
   # Run the given query, and stash the results. Return time taken in ms.
   def execute_query(service, query)
-    start = Time.now
+    start = Time.zone.now
     @results = api_service(service).query(query)
-    (Time.now - start) * MILLISECONDS
+    (Time.zone.now - start) * MILLISECONDS
   end
 
   def add_date_range_constraint(query)

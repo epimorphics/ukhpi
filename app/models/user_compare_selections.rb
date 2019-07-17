@@ -12,8 +12,8 @@ class UserCompareSelections
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_LOCATIONS, true, nil),
     'location-term' => Struct::UserParam.new('', false, nil),
-    'from' => Struct::UserParam.new(Date.today.prev_year, false, nil),
-    'to' => Struct::UserParam.new(Date.today, false, nil),
+    'from' => Struct::UserParam.new(Time.zone.today.prev_year, false, nil),
+    'to' => Struct::UserParam.new(Time.zone.today, false, nil),
     'st' => Struct::UserParam.new(DEFAULT_STATISTIC, false, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATOR, false, nil),
 
@@ -72,9 +72,7 @@ class UserCompareSelections
     params[:'form-action'] == 'search'
   end
 
-  def to_h
-    params.to_h
-  end
+  delegate :to_h, to: :params
 
   def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     {

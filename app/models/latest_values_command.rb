@@ -43,7 +43,7 @@ class LatestValuesCommand
 
     Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
     Rails.logger.debug query.to_json
-    start = Time.now
+    start = Time.zone.now
     begin
       @results = hpi.query(query)
     rescue RuntimeError => e
@@ -51,7 +51,7 @@ class LatestValuesCommand
       success = false
     end
 
-    Rails.logger.debug(format("query took %.1f ms\n", ((Time.now - start) * 1000.0)))
+    Rails.logger.debug(format("query took %.1f ms\n", ((Time.zone.now - start) * 1000.0)))
     success
   end
 
@@ -60,7 +60,7 @@ class LatestValuesCommand
   end
 
   def default_month_year_value
-    DataServicesApi::Value.year_month(Time.now.year - 2, 1)
+    DataServicesApi::Value.year_month(Time.zone.now.year - 2, 1)
   end
 
   def add_location_constraint(query)

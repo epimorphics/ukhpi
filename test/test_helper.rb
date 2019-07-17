@@ -36,7 +36,7 @@ module MiniTest
     end
 
     def assert_not_truthy(proposition)
-      assert !proposition
+      assert_not proposition
     end
   end
 end

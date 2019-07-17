@@ -129,7 +129,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections1 = selections0.without('location', 'does not matter')
         selections0.selected_location.must_equal 'test-region-0'
         assert selections0.params.key?('location')
-        refute selections1.params.key?('location')
+        assert_not selections1.params.key?('location')
       end
 
       it 'should create a new user preferences value without the given value for array values' do

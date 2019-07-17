@@ -63,7 +63,7 @@ class QueryCommandTest < ActiveSupport::TestCase
   describe '#query_command?' do
     it 'should report its type correctly' do
       assert qc.query_command?
-      refute qc.explain_query_command?
+      assert_not qc.explain_query_command?
     end
   end
 end

@@ -108,7 +108,7 @@ class UkhpiDataCube
   end
 
   def read_data_model
-    file = File.join(Rails.root, 'config', CONFIG_DIR, DSD_FILE)
+    file = Rails.root.join('config', CONFIG_DIR, DSD_FILE)
     @@model = RDF::Graph.load(file, format: :ttl) # rubocop:disable Style/ClassVars
   end
 end

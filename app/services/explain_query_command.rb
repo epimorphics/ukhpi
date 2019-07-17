@@ -6,9 +6,9 @@
 class ExplainQueryCommand < QueryCommand
   # Explain the given query, and stash the results. Return time taken in ms.
   def execute_query(service, query)
-    start = Time.now
+    start = Time.zone.now
     @results = api_service(service).explain(query)
-    (Time.now - start) * MILLISECONDS
+    (Time.zone.now - start) * MILLISECONDS
   end
 
   def query_command?

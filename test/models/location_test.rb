@@ -54,30 +54,30 @@ class RegionTest < ActiveSupport::TestCase
     describe '#matches_name?' do
       it 'should match the name and type' do
         assert region.matches_name?('foo', [BOROUGH_TYPE], :en)
-        refute region.matches_name?('bar', [BOROUGH_TYPE], :en)
+        assert_not region.matches_name?('bar', [BOROUGH_TYPE], :en)
 
-        refute region.matches_name?('foo', [COUNTY_TYPE], :en)
+        assert_not region.matches_name?('foo', [COUNTY_TYPE], :en)
         assert region.matches_name?('foo', [COUNTY_TYPE, BOROUGH_TYPE], :en)
       end
 
       it 'should fail to match the name and different lang' do
-        refute region.matches_name?('foo', [COUNTY_TYPE], :en)
-        refute region.matches_name?('bar', [COUNTY_TYPE], :en)
+        assert_not region.matches_name?('foo', [COUNTY_TYPE], :en)
+        assert_not region.matches_name?('bar', [COUNTY_TYPE], :en)
       end
 
       it 'should match a partial name and type' do
         assert region.matches_name?('fo', [BOROUGH_TYPE], :en)
-        refute region.matches_name?('ba', [BOROUGH_TYPE], :en)
+        assert_not region.matches_name?('ba', [BOROUGH_TYPE], :en)
       end
 
       it 'should allow the region type to be omitted' do
         assert region.matches_name?('foo', [], :en)
-        refute region.matches_name?('bar', [], :en)
+        assert_not region.matches_name?('bar', [], :en)
       end
 
       it 'should ignore case when matching' do
         assert region.matches_name?('FOO', [], :en)
-        refute region.matches_name?('BaR', [], :en)
+        assert_not region.matches_name?('BaR', [], :en)
       end
     end
 

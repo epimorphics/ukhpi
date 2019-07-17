@@ -17,7 +17,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
     describe '#volume?' do
       it 'should correctly return whether or not a statistic admits a volumne indicator' do
         assert UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', true).volume?
-        refute UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', false).volume?
+        assert_not UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', false).volume?
       end
     end
 
@@ -25,7 +25,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
       it 'should correctly determine whether a statistic is selected' do
         user_selections = stub(selected_statistics: ['foo'])
         assert UkhpiStatistic.new('foo', 'foo_r', 'a', true).selected?(user_selections)
-        refute UkhpiStatistic.new('bar', 'bar_r', 'b', false).selected?(user_selections)
+        assert_not UkhpiStatistic.new('bar', 'bar_r', 'b', false).selected?(user_selections)
       end
     end
 

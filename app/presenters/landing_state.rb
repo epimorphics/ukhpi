@@ -11,7 +11,7 @@ class LandingState
 
   def result
     unless @result
-      results = latest.results && !latest.results.empty? ? latest.results.first : {}
+      results = latest.results.present? ? latest.results.first : {}
       @result = to_value(results)
     end
 
