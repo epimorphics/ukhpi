@@ -14,11 +14,7 @@ Rails.application.config.content_security_policy do |policy|
 
 #   # Specify URI for violation reports
 #   # policy.report_uri "/csp-violation-report-endpoint"
-  if Rails.env.development?
-    policy.script_src :self, :https, :unsafe_eval, :unsafe_inline
-  else
-    policy.script_src :self, :https, :unsafe_inline
-  end
+  policy.script_src :self, :https, :unsafe_inline
 end
 
 # If you are using UJS then enable automatic nonce generation
