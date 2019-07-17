@@ -59,7 +59,7 @@ class Locations
   # legacy watermark
 
   def self.match(location_name, params)
-    rtype = validate_location_type(params[:rt])
+    rtype = Array(validate_location_type(params[:rt]))
     locations.select do |_uri, loc|
       loc.matches_name?(location_name, rtype)
     end
