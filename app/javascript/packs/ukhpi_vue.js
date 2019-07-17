@@ -1,5 +1,5 @@
-import 'babel-polyfill';
-import Vue from 'vue';
+import '@babel/polyfill';
+import Vue from 'vue/dist/vue.esm';
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';

@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import Vue from 'vue';
+import Vue from 'vue/dist/vue.esm';
 import DataView from './data-view.vue';
 import OptionsSelection from './options-selection.vue';
 import CompareSelection from './compare-selection.vue';
