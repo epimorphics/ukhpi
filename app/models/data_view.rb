@@ -102,7 +102,7 @@ class DataView # rubocop:disable Metrics/ClassLength
       by #{I18n.t(title_key).downcase}
       in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
-      .html_safe
+      .html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def title_without_indicator
@@ -111,7 +111,7 @@ class DataView # rubocop:disable Metrics/ClassLength
       #{I18n.t(title_key)}
       in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
-      .html_safe
+      .html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def title_location

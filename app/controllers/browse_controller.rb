@@ -132,6 +132,6 @@ class BrowseController < ApplicationController
     render 'exceptions/error_page',
            locals: { status: 400, sentry_code: nil },
            layout: true,
-           status: 400
+           status: :bad_request
   end
 end

@@ -36,9 +36,7 @@ class DataViewsPresenter
     end
   end
 
-  def explain?
-    user_selections.explain?
-  end
+  delegate :explain?, to: :user_selections
 
   private
 

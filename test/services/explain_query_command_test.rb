@@ -40,7 +40,7 @@ class QueryCommandTest < ActiveSupport::TestCase
 
   describe '#query_command?' do
     it 'should report its type correctly' do
-      refute eqc.query_command?
+      assert_not eqc.query_command?
       assert eqc.explain_query_command?
     end
   end

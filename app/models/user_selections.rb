@@ -23,8 +23,10 @@ class UserSelections # rubocop:disable Metrics/ClassLength
     'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
     'location-type' => Struct::UserParam.new(DEFAULT_REGION_TYPE, false, nil),
     'location-term' => Struct::UserParam.new('', false, nil),
-    'from' => Struct::UserParam.new(Date.today.beginning_of_month.prev_year.prev_month, false, nil),
-    'to' => Struct::UserParam.new(Date.today.beginning_of_month.prev_month, false, nil),
+    'from' => Struct::UserParam.new(
+      Time.zone.today.beginning_of_month.prev_year.prev_month, false, nil
+    ),
+    'to' => Struct::UserParam.new(Time.zone.today.beginning_of_month.prev_month, false, nil),
     'explain' => Struct::UserParam.new(false, false, nil),
     'st' => Struct::UserParam.new(DEFAULT_STATISTICS, true, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATORS, true, nil),

@@ -27,3 +27,7 @@ Metrics/MethodLength:
 
 Style/FormatStringToken:
   Enabled: false
+
+Rails/OutputSafety:
+  Exclude:
+    - app/presenters/*.rb

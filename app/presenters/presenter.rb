@@ -47,13 +47,9 @@ class Presenter
     @cmd.explanation
   end
 
-  def visible_aspects
-    aspects.visible_aspects
-  end
+  delegate :visible_aspects, to: :aspects
 
-  def aspect(key)
-    aspects.aspect(key)
-  end
+  delegate :aspect, to: :aspects
 
   def aspects
     @aspects ||= Aspects.new(@cmd.prefs)

@@ -23,7 +23,7 @@ class Location
   end
 
   def rdf_type?(rdf_types)
-    rdf_types.nil? || rdf_types.empty? || rdf_types.include?(type)
+    rdf_types.blank? || rdf_types.include?(type)
   end
 
   def label(lang = :en)

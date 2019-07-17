@@ -69,7 +69,5 @@ module UserChoices
     user_params_model[param]&.array?
   end
 
-  def to_h
-    params.to_h
-  end
+  delegate :to_h, to: :params
 end
