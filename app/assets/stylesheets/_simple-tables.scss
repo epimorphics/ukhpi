@@ -17,8 +17,12 @@
     text-align: center;
   }
 
-  th[scope='col'] {
-    text-align: center;
+  th.u-left {
+    text-align: left;
+  }
+
+  th.u-right {
+    text-align: right;
   }
 
   .u-row-odd {

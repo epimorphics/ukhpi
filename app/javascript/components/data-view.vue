@@ -13,6 +13,7 @@
             :theme='theme'
             :indicator='indicator'
             :elementId='elementId'
+            :key='`data-view-graph-${theme}-${indicator}-${elementId}`'
           >
           </data-view-graph>
         </el-tab-pane>
@@ -21,6 +22,7 @@
             :statistics='availableStatistics'
             :indicator='indicator'
             :theme='theme'
+            :key='`data-view-table-${theme}-${indicator}-${elementId}`'
           >
           </data-view-table>
         </el-tab-pane>

@@ -1,28 +1,31 @@
 <template lang='html'>
   <div class='o-compare__table'>
+    <h1>wombles</h1>
     <h2 class='o-heading--3'>
-      {{ tableCaption }}
+      {{ tableCaption }}!
     </h2>
-    <el-table
-      :data='tableData'
-    >
-      <el-table-column
-        prop='date'
-        label='Date'
-        align='left'
-        :formatter='dateFormatter'
-      >
-      </el-table-column>
-      <el-table-column
-        v-for='location in locations'
-        :key='location.gss'
-        :prop='location.gss'
-        :label='location.labels.en'
-        align='right'
-        :formatter='valueFormatter'
-      >
-      </el-table-column>
-    </el-table>
+    <table class='o-data-table'>
+      <thead>
+        <tr>
+          <th class='u-left' scope='col'>Date</th>
+          <th v-for='location in locations'
+              :key='`th-${location.gss}`'
+              class='u-right'
+              scope='col'
+          >
+            {{ location.labels.en }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for='(row, rowIndex) in tableData' :key='`row-${rowIndex}`'>
+          <td class='u-left'>{{ dateFormatter(row['date']) }}</td>
+          <td v-for='(location, colIndex) in locations' :key='`td-${colIndex}-${rowIndex}`' class='u-right'>
+            {{ valueFormatter(row[location.gss]) }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 
@@ -128,15 +131,14 @@ export default {
   },
 
   methods: {
-    dateFormatter: (row, column, date) => Moment(date).format('MMM YYYY'),
+    dateFormatter: (date) => Moment(date).format('MMM YYYY'),
 
-    valueFormatter(row, col, value) {
+    valueFormatter(value) {
       const ind = this.indicator.slug;
       let format = '0,0';
       let scale = 1;
 
       if (_.isUndefined(value)) {
-        // return "<span class='o-no-data'>no data</span>";
         return this.$createElement('span', { class: 'o-no-data' }, ['no data']);
       }
 
@@ -151,7 +153,7 @@ export default {
 
       return Numeral(value / scale).format(format);
     },
-  },
+  }
 };
 </script>
 

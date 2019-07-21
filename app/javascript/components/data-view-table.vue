@@ -1,22 +1,27 @@
 <template lang='html'>
   <div class='o-data-view__table'>
-    <el-table
-      :data='tableData'
-      stripe
-    >
-      <el-table-column
-        prop='ukhpi:refMonth'
-        label='Date'
-      >
-      </el-table-column>
-      <el-table-column
-        v-for='column in columns'
-        :key='column.slug'
-        :prop='columnProp(column)'
-        :label='column.label'
-      >
-      </el-table-column>
-    </el-table>
+    <table class='o-data-table'>
+      <thead>
+        <tr>
+          <th class='u-left' scope='col'>Date</th>
+          <th v-for='column in columns'
+              :key='`th-${column.slug}`'
+              class='u-right'
+              scope='col'
+          >
+            {{ column.label }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for='(row, rowIndex) in tableData' :key='`row-${rowIndex}`'>
+          <td class='u-left'>{{ row['ukhpi:refMonth'] }}</td>
+          <td v-for='(column, colIndex) in columns' :key='`td-${colIndex}-${rowIndex}`' class='u-right'>
+            {{ row[columnProp(column)] }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
     <div class='o-data-view__table-print'>
       <a :href='printUrl' target='_' class='o-print-action'
       >
@@ -95,7 +100,7 @@ export default {
     columnProp(stat) {
       return `ukhpi:${this.indicator ? this.indicator.rootName : ''}${stat.rootName}`;
     },
-  },
+  }
 };
 </script>
 
