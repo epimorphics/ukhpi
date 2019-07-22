@@ -1,8 +1,7 @@
 <template lang='html'>
   <div class='o-compare__table'>
-    <h1>wombles</h1>
     <h2 class='o-heading--3'>
-      {{ tableCaption }}!
+      {{ tableCaption }}
     </h2>
     <table class='o-data-table'>
       <thead>
