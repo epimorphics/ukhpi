@@ -34,21 +34,14 @@
 }
 
 .o-data-view__table-print {
+  display: flex;
+
   a {
     margin: 5px;
   }
 
-  a, a:visited {
-    color: white;
-  }
-}
-
-.o-print-action {
-  color: $link-colour !important;
-  font-size: 16px;
-  padding-top: 15px;
-
-  &:visited {
-    color: $link-colour !important;
+  .o-print-action {
+    font-size: 16px;
+    margin-top: 15px;
   }
 }
