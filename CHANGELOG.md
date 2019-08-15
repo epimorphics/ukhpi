@@ -1,9 +1,14 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.1 2019-08-15
+- Fix for GH-206 to resolve over-large orange background on print button
+
 ## 1.2.0 2019-07-17
 - Following build issues, the entire webpacker subsystem has been
   upgraded. This seems sufficient to warrant bumping the minor
   version number.
+- Fix GH-205 to fix regression in data tables introduced by the build
+  and dependency changes.
 
 ## 1.1.1 2019-07-17
 - Update Rubygem and NPM dependencies to address CVEs
