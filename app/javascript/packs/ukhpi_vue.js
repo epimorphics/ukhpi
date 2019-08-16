@@ -1,10 +1,9 @@
-import '@babel/polyfill';
 import Vue from 'vue/dist/vue.esm';
 import ElementUI from 'element-ui';
 import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
-import Raven from 'raven-js';
-import RavenVue from 'raven-js/plugins/vue';
+import * as Sentry from '@sentry/browser';
+import * as Integrations from '@sentry/integrations';
 
 import router from '../router/index.js.erb';
 import store from '../store/index';
@@ -31,12 +30,10 @@ Numeral.locale('gb');
 
 document.addEventListener('DOMContentLoaded', () => {
   // Sentry.io logging
-  Raven
-    .config('https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669', {
-      environment: window.ukhpi.environment,
-    })
-    .addPlugin(RavenVue, Vue)
-    .install();
+  Sentry.init({
+    dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+  });
 
   /* eslint-disable no-new */
   new Vue({
