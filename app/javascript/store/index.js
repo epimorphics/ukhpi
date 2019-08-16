@@ -86,7 +86,11 @@ export const mutations = {
   },
 
   [types.SELECT_STATISTIC](state, stat) {
-    Vue.set(state.selectedStatistics, stat.slug, stat.isSelected);
+    state.selectedStatistics = Object.assign(
+      {},
+      state.selectedStatistics,
+      { [stat.slug]: stat.isSelected },
+    );
   },
 
   [types.SET_COMPARE_LOCATIONS](state, locations) {
@@ -108,7 +112,15 @@ export const mutations = {
   },
 
   [types.ADD_COMPARISON_RESULTS](state, results) {
-    Vue.set(state.compareResults, results.locationGss, results.results);
+    try {
+      state.compareResults = Object.assign(
+        {},
+        state.compareResults,
+        { [results.locationGss]: results.results },
+      );
+    } catch (e) {
+      debugger;
+    }
   },
 };
 
