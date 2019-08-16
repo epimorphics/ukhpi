@@ -138,7 +138,7 @@ export default {
       let scale = 1;
 
       if (_.isUndefined(value)) {
-        return this.$createElement('span', { class: 'o-no-data' }, ['no data']);
+        return 'no data';
       }
 
       if (ind === 'avg') {
