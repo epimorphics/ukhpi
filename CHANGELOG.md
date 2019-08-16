@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.2 2019-08-16
+- Fix for GH-207: Sentry warning about circular data structures
+- updated Sentr SDK to the new browser API
+
 ## 1.2.1 2019-08-15
 - Fix for GH-206 to resolve over-large orange background on print button
 
