@@ -4,6 +4,8 @@ import locale from 'element-ui/lib/locale/lang/en';
 import Numeral from 'numeral';
 import * as Sentry from '@sentry/browser';
 import * as Integrations from '@sentry/integrations';
+import 'core-js/stable';
+import 'regenerator-runtime/runtime';
 
 import router from '../router/index.js.erb';
 import store from '../store/index';
