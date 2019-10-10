@@ -41,16 +41,16 @@ class DsdTest < ActiveSupport::TestCase
   end
 
   it 'should return a collection of components' do
-    dsd.components.length.must_equal 2
+    _(dsd.components.length).must_equal 2
   end
 
   it 'should return a collection of only dimensions' do
-    dsd.dimensions.length.must_equal 1
-    dsd.dimensions.first.uri.must_equal 'http://landregistry.data.gov.uk/def/ukhpi/refRegion'
+    _(dsd.dimensions.length).must_equal 1
+    _(dsd.dimensions.first.uri).must_equal 'http://landregistry.data.gov.uk/def/ukhpi/refRegion'
   end
 
   it 'should return a collection of only measures' do
-    dsd.measures.length.must_equal 1
-    dsd.measures.first.uri.must_equal 'http://landregistry.data.gov.uk/def/ukhpi/averagePrice'
+    _(dsd.measures.length).must_equal 1
+    _(dsd.measures.first.uri).must_equal 'http://landregistry.data.gov.uk/def/ukhpi/averagePrice'
   end
 end

@@ -8,9 +8,9 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
     describe '#initialize' do
       it 'should provide access to the initialised values' do
         ind = UkhpiIndicator.new('foo', 'foo_root', 'average_price')
-        ind.slug.must_equal 'foo'
-        ind.root_name.must_equal 'foo_root'
-        ind.label.must_equal 'Average price'
+        _(ind.slug).must_equal 'foo'
+        _(ind.root_name).must_equal 'foo_root'
+        _(ind.label).must_equal 'Average price'
       end
     end
 
@@ -26,14 +26,14 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
         user_selections = stub(selected_indicators: ['foo'])
 
         hash = UkhpiIndicator.new('foo', 'r', 'average_price').to_h(user_selections)
-        hash[:slug].must_equal 'foo'
-        hash[:rootName].must_equal 'r'
-        hash[:label].must_equal 'Average price'
-        hash[:isVolume].must_equal false
-        hash[:isSelected].must_equal true
+        _(hash[:slug]).must_equal 'foo'
+        _(hash[:rootName]).must_equal 'r'
+        _(hash[:label]).must_equal 'Average price'
+        _(hash[:isVolume]).must_equal false
+        _(hash[:isSelected]).must_equal true
 
         hash = UkhpiIndicator.new('bar', 'r', 'average_price').to_h(user_selections)
-        hash[:isSelected].must_equal false
+        _(hash[:isSelected]).must_equal false
       end
     end
   end

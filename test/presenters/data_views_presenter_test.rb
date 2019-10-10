@@ -13,9 +13,9 @@ class DataViewsPresenterTest < ActiveSupport::TestCase
   describe 'DataViewPresenter' do
     describe '#data_views' do
       it 'should create the right number of views' do
-        presenter.data_views.must_be_kind_of(Array)
-        presenter.data_views.length.must_be :>=, 17
-        presenter.data_views.each { |view| view.must_be_kind_of DataView }
+        _(presenter.data_views).must_be_kind_of(Array)
+        _(presenter.data_views.length).must_be :>=, 17
+        presenter.data_views.each { |view| _(view).must_be_kind_of DataView }
       end
     end
   end

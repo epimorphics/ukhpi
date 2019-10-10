@@ -18,31 +18,31 @@ class CubeResourceTest < ActiveSupport::TestCase
 
   describe 'CubeResource' do
     it 'should return the label' do
-      resource.label.must_equal 'I am Groot'
+      _(resource.label).must_equal 'I am Groot'
     end
 
     it 'should return the comment' do
-      resource.comment.must_equal 'watch this!'
+      _(resource.comment).must_equal 'watch this!'
     end
 
     it 'should return the range of the resource' do
-      resource.range.to_s.must_equal 'http://test.test/q'
+      _(resource.range.to_s).must_equal 'http://test.test/q'
     end
 
     it 'should calculate a slug for the resource' do
-      resource.slug.must_equal 'tr'
+      _(resource.slug).must_equal 'tr'
     end
 
     it 'should extract the local name' do
-      resource.local_name.must_equal 'testResource'
+      _(resource.local_name).must_equal 'testResource'
     end
 
     it 'should return the URI' do
-      resource.uri.must_equal 'http://test.test/testResource'
+      _(resource.uri).must_equal 'http://test.test/testResource'
     end
 
     it 'should return the qname' do
-      resource.qname.must_equal 'ukhpi:testResource'
+      _(resource.qname).must_equal 'ukhpi:testResource'
     end
   end
 end

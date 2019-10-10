@@ -26,21 +26,21 @@ class CubeComponentTest < ActiveSupport::TestCase
 
   describe 'CubeComponent' do
     it 'should return values for the "is-dimension?" and "is-measure?" test when asked' do
-      dimension.dimension?.must_equal true
-      dimension.measure?.must_equal false
+      _(dimension.dimension?).must_equal true
+      _(dimension.measure?).must_equal false
 
-      measure.dimension?.must_equal false
-      measure.measure?.must_equal true
+      _(measure.dimension?).must_equal false
+      _(measure.measure?).must_equal true
     end
 
     it 'should return a dimension on request' do
-      dimension.dimension.must_be_kind_of CubeDataModel::CubeDimension
-      measure.dimension.must_be_nil
+      _(dimension.dimension).must_be_kind_of CubeDataModel::CubeDimension
+      _(measure.dimension).must_be_nil
     end
 
     it 'should return a measure on request' do
-      dimension.measure.must_be_nil
-      measure.measure.must_be_kind_of CubeDataModel::CubeMeasure
+      _(dimension.measure).must_be_nil
+      _(measure.measure).must_be_kind_of CubeDataModel::CubeMeasure
     end
   end
 end

@@ -8,9 +8,9 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', true)
-        stat.slug.must_equal 'foo'
-        stat.root_name.must_equal 'foo_r'
-        stat.label.must_equal 'All property types'
+        _(stat.slug).must_equal 'foo'
+        _(stat.root_name).must_equal 'foo_r'
+        _(stat.label).must_equal 'All property types'
       end
     end
 
@@ -36,11 +36,11 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
                .new('foo', 'foo_r', 'all_property_types', true)
                .to_h(user_selections)
 
-        hash[:slug].must_equal 'foo'
-        hash[:rootName].must_equal 'foo_r'
-        hash[:label].must_equal 'All property types'
-        hash[:hasVolume].must_equal true
-        hash[:isSelected].must_equal true
+        _(hash[:slug]).must_equal 'foo'
+        _(hash[:rootName]).must_equal 'foo_r'
+        _(hash[:label]).must_equal 'All property types'
+        _(hash[:hasVolume]).must_equal true
+        _(hash[:isSelected]).must_equal true
       end
 
       it 'should serialize the statistic to a hash correctly when not selected' do
@@ -49,7 +49,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
                .new('bar', 'foo_r', 'all_property_types', true)
                .to_h(user_selections)
 
-        hash[:isSelected].must_equal false
+        _(hash[:isSelected]).must_equal false
       end
     end
   end

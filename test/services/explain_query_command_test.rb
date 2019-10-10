@@ -25,7 +25,7 @@ class QueryCommandTest < ActiveSupport::TestCase
   describe 'QueryCommand' do
     describe '#initialize' do
       it 'constructs a query correctly' do
-        eqc.query.to_json.wont_be_nil
+        _(eqc.query.to_json).wont_be_nil
       end
     end
 

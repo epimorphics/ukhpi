@@ -30,52 +30,52 @@ class LandingStateTest < ActiveSupport::TestCase
     ls = mock_landing_state([mock_latest_value_data])
 
     result_hash = ls.result
-    result_hash.wont_be_nil
+    _(result_hash).wont_be_nil
     result_hash.each_key do |k|
-      k.must_be_kind_of Symbol
+      _(k).must_be_kind_of Symbol
     end
   end
 
   it 'returns nil when no result is available' do
     ls = mock_landing_state([])
-    ls.result.must_equal({})
+    _(ls.result).must_equal({})
 
     ls = mock_landing_state(nil)
-    ls.result.must_equal({})
+    _(ls.result).must_equal({})
   end
 
   it 'returns the latest month if defined' do
     ls = mock_landing_state([mock_latest_value_data])
-    ls.period.must_equal 'January 2016'
+    _(ls.period).must_equal 'January 2016'
   end
 
   it 'returns an appropriate message if the latest period is not available' do
     ls = mock_landing_state([])
-    ls.period.must_equal 'Latest period not available'
+    _(ls.period).must_equal 'Latest period not available'
   end
 
   it 'returns the latest value of the house price index' do
     ls = mock_landing_state([mock_latest_value_data])
-    ls.house_price_index.must_equal 1234
+    _(ls.house_price_index).must_equal 1234
   end
 
   it 'returns the latest value of the average price index' do
     ls = mock_landing_state([mock_latest_value_data])
-    ls.average_price.must_equal 12_345
+    _(ls.average_price).must_equal 12_345
   end
 
   it 'returns the latest value of the monthly change index' do
     ls = mock_landing_state([mock_latest_value_data])
-    ls.percentage_monthly_change.must_equal 'risen by 10.0%'
+    _(ls.percentage_monthly_change).must_equal 'risen by 10.0%'
   end
 
   it 'returns the latest value of the annual change index' do
     ls = mock_landing_state([mock_latest_value_data])
-    ls.percentage_annual_change.must_equal 'fallen by 10.0%'
+    _(ls.percentage_annual_change).must_equal 'fallen by 10.0%'
   end
 
   it 'notes when prices have stayed the same' do
     ls = mock_landing_state([{ "ukhpi:percentageAnnualChange": [0] }])
-    ls.percentage_annual_change.must_equal 'remained the same'
+    _(ls.percentage_annual_change).must_equal 'remained the same'
   end
 end

@@ -11,7 +11,7 @@ class MockService
 end
 
 def validate_json(json) # rubocop:disable Metrics/MethodLength
-  json.must_match_json_expression(
+  _(json).must_match_json_expression(
     "@and":
     [
       { "ukhpi:refMonth": {
@@ -46,7 +46,7 @@ class QueryCommandTest < ActiveSupport::TestCase
     describe '#initialize' do
       it 'constructs a query correctly' do
         json = qc.query.to_json
-        json.wont_be_nil
+        _(json).wont_be_nil
         validate_json(json)
       end
     end

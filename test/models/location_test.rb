@@ -18,36 +18,36 @@ class RegionTest < ActiveSupport::TestCase
   describe 'Location' do
     describe '#uri' do
       it 'should return the URI' do
-        region.uri.must_equal 'http://foo.bar/bam'
+        _(region.uri).must_equal 'http://foo.bar/bam'
       end
     end
 
     describe '#type' do
       it 'should return the type' do
-        region.type.must_equal 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'
+        _(region.type).must_equal 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'
       end
     end
 
     describe '#parent' do
       it 'should return the parent' do
-        region.parent.must_equal 'http://foo.bar/parent'
+        _(region.parent).must_equal 'http://foo.bar/parent'
       end
     end
 
     describe '#gss' do
       it 'should return the GSS code' do
-        region.gss.must_equal 'D12345678'
+        _(region.gss).must_equal 'D12345678'
       end
     end
 
     describe '#label' do
       it 'should allow the label to be selected by language' do
-        region.label(:en).must_equal 'foo'
-        region.label(:cy).must_equal 'bar'
+        _(region.label(:en)).must_equal 'foo'
+        _(region.label(:cy)).must_equal 'bar'
       end
 
       it 'should default to the English language label' do
-        region.label.must_equal 'foo'
+        _(region.label).must_equal 'foo'
       end
     end
 
@@ -89,9 +89,9 @@ class RegionTest < ActiveSupport::TestCase
           Location.new('http://foo.bar/b', { en: 'B' }, nil, nil, nil)
         ]
         regions.sort!
-        regions[0].label.must_equal 'A'
-        regions[1].label.must_equal 'B'
-        regions[2].label.must_equal 'C'
+        _(regions[0].label).must_equal 'A'
+        _(regions[1].label).must_equal 'B'
+        _(regions[2].label).must_equal 'C'
       end
     end
   end

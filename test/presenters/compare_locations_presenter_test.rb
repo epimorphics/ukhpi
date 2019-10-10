@@ -146,16 +146,14 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
   describe 'CompareLocationsPresenter' do
     describe '#headline_summary' do
       it 'should correctly generate a summary headline' do
-        presenter
-          .headline_summary
+        _(presenter.headline_summary)
           .must_match %r{<strong>House price index</strong> for <strong>all property types</strong>, ... \d{4} to ... \d{4}}
       end
     end
 
     describe '#locations_summary' do
       it 'should correctly summarise the locations' do
-        presenter
-          .locations_summary
+        _(presenter.locations_summary)
           .must_equal 'United Kingdom and Nottinghamshire'
       end
     end
@@ -164,8 +162,8 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
       it 'should present the user selections without the location' do
         mock_location = mock('location', gss: 'K02000001')
         selections = presenter.without_location(mock_location)
-        selections['location'].length.must_equal 1
-        selections['location'].must_include 'E10000024'
+        _(selections['location'].length).must_equal 1
+        _(selections['location']).must_include 'E10000024'
       end
     end
 
@@ -175,29 +173,29 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
         mock_indicator = mock('indicator', slug: 'pac')
         selections = presenter.with_statistic(mock_statistic, mock_indicator)
 
-        selections['st'].must_equal 'ftb'
-        selections['in'].must_equal 'pac'
+        _(selections['st']).must_equal 'ftb'
+        _(selections['in']).must_equal 'pac'
       end
     end
 
     describe '#query_results_rows' do
       it 'convert the results to an array of rows' do
         rows = presenter.query_results_rows
-        rows.length.must_equal 1
-        rows.first.first.must_equal 'Jul 2018'
-        rows.first[1].must_be_close_to 121.38
+        _(rows.length).must_equal 1
+        _(rows.first.first).must_equal 'Jul 2018'
+        _(rows.first[1]).must_be_close_to 121.38
       end
     end
 
     describe '#format' do
       it 'should format a value' do
-        presenter.format(1234.56).must_equal "<div class='u-text-right'>1234.6</div>"
+        _(presenter.format(1234.56)).must_equal "<div class='u-text-right'>1234.6</div>"
       end
     end
 
     describe '#indicator' do
       it 'should look up the indicator being used' do
-        presenter.indicator.label_key.must_equal 'house_price_index'
+        _(presenter.indicator.label_key).must_equal 'house_price_index'
       end
     end
   end

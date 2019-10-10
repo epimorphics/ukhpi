@@ -20,7 +20,7 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
   describe '#UserSelectionsPresenter' do
     describe '#as_url_search_string' do
       it 'should translate the selections to a well-formed search string' do
-        presenter.as_url_search_string.must_equal 'from=2017-02-03&'\
+        _(presenter.as_url_search_string).must_equal 'from=2017-02-03&'\
           'in%5B%5D=averagePrice&in%5B%5D=housePriceIndex&'\
           'location=http%3A%2F%2Flandregistry.data.gov.uk%2Fid%2Fregion%2Fwales&'\
           'to=2017-08-31'
@@ -29,7 +29,7 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
 
     describe '#as_title' do
       it 'should translate the selections into a readable title' do
-        presenter.as_title.must_equal 'Wales from February 2017 to August 2017'
+        _(presenter.as_title).must_equal 'Wales from February 2017 to August 2017'
       end
     end
   end

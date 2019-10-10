@@ -98,29 +98,29 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   describe 'DownloadPresenter' do
     describe '#column_names' do
       it 'should correctly create an array of column names' do
-        presenter.column_names.length.must_be :>=, 26
-        presenter.column_names.first.must_equal '"Name"'
-        presenter.column_names[-2].must_equal '"Percentage change (yearly) Flats and maisonettes"'
-        presenter.column_names.last.must_equal '"Pivotable date"'
+        _(presenter.column_names.length).must_be :>=, 26
+        _(presenter.column_names.first).must_equal '"Name"'
+        _(presenter.column_names[-2]).must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        _(presenter.column_names.last).must_equal '"Pivotable date"'
       end
 
       it 'should correctly create an array of all column names when no stats are selected' do
-        presenter_all.column_names.length.must_be :>=, 56
-        presenter.column_names.first.must_equal '"Name"'
-        presenter.column_names[-2].must_equal '"Percentage change (yearly) Flats and maisonettes"'
-        presenter.column_names.last.must_equal '"Pivotable date"'
+        _(presenter_all.column_names.length).must_be :>=, 56
+        _(presenter.column_names.first).must_equal '"Name"'
+        _(presenter.column_names[-2]).must_equal '"Percentage change (yearly) Flats and maisonettes"'
+        _(presenter.column_names.last).must_equal '"Pivotable date"'
       end
     end
 
     describe '#results' do
       it 'should provide an accessor for the underlying results' do
-        presenter.results.length.must_equal 1
+        _(presenter.results.length).must_equal 1
       end
     end
 
     describe '#user_selections' do
       it 'should provide an accessor for the underlying user selections' do
-        presenter.user_selections.must_be_same_as user_selections
+        _(presenter.user_selections).must_be_same_as user_selections
       end
     end
 
@@ -129,12 +129,12 @@ class DownloadPresenterTest < ActiveSupport::TestCase
         rows = presenter.rows
         row = rows.first
 
-        rows.length.must_equal 1
-        row.first.must_equal 'England'
-        row.second.must_equal 'http://landregistry.data.gov.uk/id/region/england'
-        row[5].must_equal 'monthly'
-        row[7].must_equal 231_049
-        row.last.must_equal '2016-11-01'
+        _(rows.length).must_equal 1
+        _(row.first).must_equal 'England'
+        _(row.second).must_equal 'http://landregistry.data.gov.uk/id/region/england'
+        _(row[5]).must_equal 'monthly'
+        _(row[7]).must_equal 231_049
+        _(row.last).must_equal '2016-11-01'
       end
     end
   end
