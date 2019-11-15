@@ -1,0 +1,7 @@
+language: ruby
+rvm:
+  - 2.4.6
+script: bundle exec rails -t
+before_install:
+  - gem install bundler -v 2.0.2
+  - yarn install
