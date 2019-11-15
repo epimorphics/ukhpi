@@ -11,6 +11,8 @@ Metrics/LineLength:
   Max: 100
   Exclude:
     - bin/**/*
+    - config/**/*
+    - test/**/*
 
 Metrics/ClassLength:
   Exclude:

@@ -3,7 +3,6 @@
 require 'test_helper'
 
 # Unit tests on the CompareLocationsPresenter class
-# rubocop:disable Metrics/LineLength
 class CompareLocationsPresenterTest < ActiveSupport::TestCase
   let(:user_selections) do
     UserCompareSelections.new(ActionController::Parameters.new(
@@ -200,4 +199,3 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
     end
   end
 end
-# rubocop:enable Metrics/LineLength

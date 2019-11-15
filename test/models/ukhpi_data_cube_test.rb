@@ -22,7 +22,7 @@ class DataModelTest < ActiveSupport::TestCase
 
   it 'should retrieve the comments for each component' do
     comments = cube.dsd.measures.map(&:comment)
-    _(comments).must_include('The percentage change in the average house price compared to the same period twelve months earlier.') # rubocop:disable Metrics/LineLength
+    _(comments).must_include('The percentage change in the average house price compared to the same period twelve months earlier.')
   end
 
   it 'should separate out the dimensions' do
