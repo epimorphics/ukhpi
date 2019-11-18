@@ -34,7 +34,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Sentry.io logging
   Sentry.init({
     dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
-    integrations: [new Integrations.Vue({ Vue, attachProps: true })]
+    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+    release: window.ukhpi.version || 'unknown-version'
+  })
+  Sentry.configureScope(scope => {
+    scope.setTag('app', 'ukhpi-js')
   })
 
   /* eslint-disable no-new */
