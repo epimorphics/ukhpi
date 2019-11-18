@@ -4,6 +4,6 @@
  * value from querySelectorAll. See:
  * https://stackoverflow.com/questions/412447/for-each-javascript-support-in-ie
  */
-export default function safeForEach(nodes, fn) {
-  [].slice.call(nodes).forEach(fn);
+export default function safeForEach (nodes, fn) {
+  [].slice.call(nodes).forEach(fn)
 }

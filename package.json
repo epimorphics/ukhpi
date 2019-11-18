@@ -43,9 +43,12 @@
   "devDependencies": {
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
-    "eslint-config-airbnb-base": "13.2.0",
+    "eslint-config-standard": "^14.1.0",
     "eslint-plugin-html": "6.0.0",
     "eslint-plugin-import": "^2.18.1",
+    "eslint-plugin-node": "^10.0.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.1",
     "postcss-smart-import": "^0.7.6",
     "webpack-dev-server": "^3.7.2"
   },

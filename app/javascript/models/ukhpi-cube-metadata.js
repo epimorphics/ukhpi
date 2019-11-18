@@ -1,7 +1,7 @@
 /** Meta-knowledge that we have about the UKHPI data cube. Includes:
  * * which combinations of indicators and statistics are not available
  */
-import _ from 'lodash';
+import _ from 'lodash'
 
 const unavailableStatInd = [
   { statistic: 'det', indicator: 'vol' },
@@ -9,8 +9,8 @@ const unavailableStatInd = [
   { statistic: 'ter', indicator: 'vol' },
   { statistic: 'fla', indicator: 'vol' },
   { statistic: 'ftb', indicator: 'vol' },
-  { statistic: 'foo', indicator: 'vol' },
-];
+  { statistic: 'foo', indicator: 'vol' }
+]
 
 /**
  * Return true if the given combination of statistic and indicator is not available
@@ -18,6 +18,6 @@ const unavailableStatInd = [
  * @param  {String} ind  Indicator slug
  * @return {Boolean}      True if indicator+statistic combination is not available
  */
-export default function unavailable(stat, ind) {
-  return !!_.find(unavailableStatInd, { statistic: stat, indicator: ind });
+export default function unavailable (stat, ind) {
+  return !!_.find(unavailableStatInd, { statistic: stat, indicator: ind })
 }

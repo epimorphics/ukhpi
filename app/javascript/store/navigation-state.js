@@ -2,11 +2,11 @@
  * Helpers to save the current navigation state to the browser URL
  */
 
-import _ from 'lodash';
-import QueryString from 'query-string';
-import Moment from 'moment';
-import store from './index';
-import { REINITIALISE } from './mutation-types';
+import _ from 'lodash'
+import QueryString from 'query-string'
+import Moment from 'moment'
+import store from './index'
+import { REINITIALISE } from './mutation-types'
 
 /** Mappers from store state to navigation state */
 const navigationStateFields = {
@@ -15,30 +15,30 @@ const navigationStateFields = {
   toDate: state => ({ to: Moment(state.toDate).format('YYYY-MM-DD') }),
   compareIndicator: state => ({ in: state.compareIndicator }),
   compareStatistic: state => ({ st: state.compareStatistic }),
-  compareLocations: state => ({ location: state.compareLocations.map(location => location.gss) }),
-};
+  compareLocations: state => ({ location: state.compareLocations.map(location => location.gss) })
+}
 
 /**
  * Calculate an object representing the current navigation state
  * @return The current navigation state as an object
  */
-function currentNavigationState(state) {
-  const navState = {}; // just the relevant parts of the Vuex state
-  const urlState = {}; // relevant state variables translated to URL query string form
+function currentNavigationState (state) {
+  const navState = {} // just the relevant parts of the Vuex state
+  const urlState = {} // relevant state variables translated to URL query string form
 
   _.forEach(state, (value, key) => {
     if (!_.isEmpty(value) && navigationStateFields[key]) {
-      Object.assign(navState, { [key]: value });
-      Object.assign(urlState, navigationStateFields[key](state));
+      Object.assign(navState, { [key]: value })
+      Object.assign(urlState, navigationStateFields[key](state))
     }
-  });
+  })
 
-  const queryStr = QueryString.stringify(urlState, { arrayFormat: 'bracket' });
+  const queryStr = QueryString.stringify(urlState, { arrayFormat: 'bracket' })
 
   return {
     navState,
-    url: `${window.location.pathname}?${queryStr}`,
-  };
+    url: `${window.location.pathname}?${queryStr}`
+  }
 }
 
 /**
@@ -46,14 +46,14 @@ function currentNavigationState(state) {
  * @param  {[type]} state [description]
  * @return {[type]}       [description]
  */
-export function pushNavigationState(state, replace = false) {
-  const { navState, url } = currentNavigationState(state);
+export function pushNavigationState (state, replace = false) {
+  const { navState, url } = currentNavigationState(state)
 
   if (window.history && !_.isEqual(window.history.state, navState)) {
     if (replace) {
-      window.history.replaceState(navState, 'ukhpi navigation', url);
+      window.history.replaceState(navState, 'ukhpi navigation', url)
     } else {
-      window.history.pushState(navState, 'ukhpi navigation', url);
+      window.history.pushState(navState, 'ukhpi navigation', url)
     }
   }
 }
@@ -63,14 +63,14 @@ export function pushNavigationState(state, replace = false) {
  * re-init the Vuex store.
  * @return {[type]} [description]
  */
-function onPopState(event) {
-  store.commit(REINITIALISE, event.state);
+function onPopState (event) {
+  store.commit(REINITIALISE, event.state)
 }
 
 /**
  * Set up a handler for browser back events.
  * @return {[type]} [description]
  */
-export function initialiseNavigationState() {
-  window.onpopstate = onPopState;
+export function initialiseNavigationState () {
+  window.onpopstate = onPopState
 }
