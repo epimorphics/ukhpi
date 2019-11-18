@@ -5,5 +5,6 @@ node_js:
   - 12.5.0
 script: bundle exec rails -t
 before_install:
+  - sudo apt-get install -y nodejs
   - gem install bundler -v 2.0.2
   - yarn install
