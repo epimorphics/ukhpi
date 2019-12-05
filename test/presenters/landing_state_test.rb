@@ -66,12 +66,12 @@ class LandingStateTest < ActiveSupport::TestCase
 
   it 'returns the latest value of the monthly change index' do
     ls = mock_landing_state([mock_latest_value_data])
-    _(ls.percentage_monthly_change).must_equal 'risen by 10.0%%'
+    _(ls.percentage_monthly_change).must_equal 'risen by 10.0%'
   end
 
   it 'returns the latest value of the annual change index' do
     ls = mock_landing_state([mock_latest_value_data])
-    _(ls.percentage_annual_change).must_equal 'fallen by 10.0%%'
+    _(ls.percentage_annual_change).must_equal 'fallen by 10.0%'
   end
 
   it 'notes when prices have stayed the same' do
