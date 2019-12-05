@@ -42,7 +42,7 @@ class ValueFormatter
   end
 
   def self.percent_formatter
-    ->(val) { Kernel.format('%.1f%', val) }
+    ->(val) { Kernel.format('%.1f%%', val) }
   end
 
   def self.index_formatter
