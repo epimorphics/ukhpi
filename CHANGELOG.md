@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.5 - 2019-12-05
+
+- Fix regression in use of unprotected `%` character in calls
+  to `String.format` in Ruby 2.6
+
 ## 1.2.4 - 2019-10-10
 
 - general update of gem versions
