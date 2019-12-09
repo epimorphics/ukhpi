@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.6 - 2019-12-09
+
+- Add `ActionController::BadRequest` to the list of exceptions that
+  Sentry will ignore
+
 ## 1.2.5 - 2019-12-05
 
 - Fix regression in use of unprotected `%` character in calls

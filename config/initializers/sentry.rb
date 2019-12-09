@@ -6,4 +6,5 @@ Raven.configure do |config|
   config.environments = %w[production test]
   config.release = Version::VERSION
   config.tags = { app: 'ukhpi' }
+  config.excluded_exceptions += ['ActionController::BadRequest']
 end
