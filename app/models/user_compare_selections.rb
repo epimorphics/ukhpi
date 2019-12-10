@@ -36,7 +36,9 @@ class UserCompareSelections
 
   def selected_locations
     param_or_default('location').map do |location_id|
-      Locations.lookup_gss(location_id)
+      location = Locations.lookup_gss(location_id)
+      location ||
+        raise(ActionController::BadRequest, "Location code not understood: #{location_id}")
     end
   end
 
