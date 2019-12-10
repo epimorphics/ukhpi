@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.7 - 2019-12-10
+
+- Ensure that a badly coded GSS code for the location results in a
+  `BadArgument` error and hence an HTTP 400 response
+
 ## 1.2.6 - 2019-12-09
 
 - Add `ActionController::BadRequest` to the list of exceptions that
