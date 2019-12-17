@@ -128,10 +128,18 @@ class BrowseController < ApplicationController
     }.merge(new_params))
   end
 
-  def render_bad_request
-    render 'exceptions/error_page',
-           locals: { status: 400, sentry_code: nil },
-           layout: true,
-           status: :bad_request
+  def render_bad_request # rubocop:disable Metrics/MethodLength
+    respond_to do |format|
+      format.html do
+        render 'exceptions/error_page',
+               locals: { status: 400, sentry_code: nil },
+               layout: true,
+               status: :bad_request
+      end
+
+      format.json do
+        render(json: { status: 'bad request' }, status: :bad_request)
+      end
+    end
   end
 end

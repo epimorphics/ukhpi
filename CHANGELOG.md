@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.8 - 2019-12-17
+
+- Do not error if the user requests MIME type JSON but sends
+  an incorrectly encoded request
+
 ## 1.2.7 - 2019-12-10
 
 - Ensure that a badly coded GSS code for the location results in a
