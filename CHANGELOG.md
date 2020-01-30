@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.9
+
+- Update the link to download all data in CSV (GH-215)
+
 ## 1.2.8 - 2019-12-17
 
 - Do not error if the user requests MIME type JSON but sends
