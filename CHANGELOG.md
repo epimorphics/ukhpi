@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.2.10
+
+- Update `rack` gem in response to CVE-2019-16782
+
 ## 1.2.9
 
 - Update the link to download all data in CSV (GH-215)
