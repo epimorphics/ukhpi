@@ -5,8 +5,9 @@ import cloneLayer from 'leaflet-clonelayer'
 import '../lib/leaflet-rrose'
 
 import { findLocationNamed, findLocationById } from '../lib/locations'
-import gbFeaturesData from '../data/ONS-Geographies.json'
-import niFeaturesData from '../data/OSNI-Geographies.json'
+import gbFeaturesData from '../data/ONS-Geographies-2020.json'
+// import gbFeaturesData from '../data/ONS-Geographies.json'
+// import niFeaturesData from '../data/OSNI-Geographies.json'
 
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england'
 
@@ -291,10 +292,10 @@ export default class LocationsMap {
   /** Update the index of GB and NI GeoJSON features */
   indexFeatures () {
     const gbFeatures = this.loadGeoJson(gbFeaturesData)
-    const niFeatures = this.loadGeoJson(niFeaturesData)
+    // const niFeatures = this.loadGeoJson(niFeaturesData)
     const { featuresIndex, backgroundLayer, addToPartition } = this
 
-    _.each([gbFeatures, niFeatures], (features) => {
+    _.each([gbFeatures], (features) => {
       features.eachLayer((layer) => {
         _.each(this.indexKeysByLayerType(layer), (indexKey) => {
           addToPartition(featuresIndex, indexKey, layer)
