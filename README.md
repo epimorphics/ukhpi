@@ -5,17 +5,17 @@ of Land Registry (England and Wales), Registers of Scotland, Land and Property
 Services (Northern Ireland) and the UK Office for National Statistics.
 
 Development work was carried out by [Epimorphics Ltd](http://www.epimorphics.com),
-funded by [Land Registry](https://www.gov.uk/government/organisations/land-registry).
+funded by [HM Land Registry](https://www.gov.uk/government/organisations/land-registry).
 
 Code in this repository is open-source under the MIT license. The UKHPI data
 itself is freely available under the terms of the
 [Open Government License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 
-# Developer notes
+## Developer notes
 
-## Installation dependencies
+### Installation dependencies
 
-Currently depends on Ruby version 2.4.x, since that matches the production
+Currently depends on Ruby version 2.6.5, since that matches the production
 environment. Local Ruby version is specified by `.ruby-version`, assuming
 that [rbenv](https://github.com/rbenv/rbenv) is used.
 
@@ -26,7 +26,7 @@ To install on dev machine:
     bundle install
     yarn install
 
-## Local data service
+### Local data service
 
 The application assumes that a Fuseki instance is running on `localhost:8080`. In
 development, either start a local Fuseki instance, or, more usually, ssh tunnel
@@ -34,7 +34,7 @@ to one of the data servers. A predefined script for tunnelling one of the remote
 data servers to localhost 8080 is provided in `bin/sr-tunnel-daemon`. A copy of
 the ssh access credentials will need to be in your `~/.ssh/config`.
 
-## Outline domain model
+### Outline domain model
 
 In the 2017 update, we're extending the display to present all of the underlying
 statistics calculated by ONS. In addition to the figures by property type
@@ -100,27 +100,29 @@ We represent these as follows:
 |  | % annual change | Existing properties |
 |  | sales volume | Existing properties
 
-## Rake tasks
+### Rails script tasks
 
-Some development tasks are handled by automated Rake scripts. All Rake tasks code is
-in `./lib/tasks/*.rake`. You can list all of the tasks with `rake -T`. The mostly
+Some development tasks are handled by automated Rails task scripts. All tasks code is
+in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`. The mostly
 commonly useful ones are:
 
-* *`test`* <br />
+* *`test`*\
   Run the test suite
 
-* *`ukhpi:aspects`* <br />
+* *`ukhpi:aspects`*\
   Generate a JavaScript description of the DSD aspects, as described by the
   `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
 
-* *boundaries tasks* <br />
-  A number of tasks releated to generating simplified GEOJSON files from the Shapefiles downloaded
-  from ONS. These tasks do not generally need to be re-run
+* *boundaries tasks*\
+  A number of tasks releated to generating simplified GeoJSON files from the Shapefiles downloaded
+  from ONS. These tasks will need to be re-run when the boundaries change,
+  e.g. when local authorities are merged or split to form new unitary authorities.
+  See below for more details.
 
-* *`ukhpi:describe[uri]`* <br />
+* *`ukhpi:describe[uri]`*\
   A convenient way to perform a SPARQL describe for the given URI
 
-* *`ukhpi:locations`* <br />
+* *`ukhpi:locations`*\
   This task uses a SPARQL query to list all of the geographical regions in the UKHPI
   data, and their containment hierarchy, and generate cached versions of that data as
   code. In particular, it regenerates `app/javascript/data/locations-data.js` and
@@ -131,9 +133,9 @@ Note that, by default, SPARQL queries will be run against the dev triple store.
 To direct the query against a different SPARQL endpoint, change the `SERVER` environment
 variable:
 
-    SERVER="http://lr-pres-staging-c.epimorphics.net/landregistry/query" rake ukhpi:locations
+    SERVER="http://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
 
-# Deployment
+## Deployment
 
 Deployment configuration is not managed by this repo, but is stored in the Chef recipes
 and configurations. To update a development server, the desired changes should be merged
@@ -142,4 +144,48 @@ from the feature branch (or master if appropriate) into the `dev` branch. Then r
 deploy from the `staging` branch and production servers from the `production` branch.
 
 Note that updating production servers means that each server has to be dropped out of
-the load balancer pool while `chef-client` runs.
+the load balancer pool while `chef-client` runs. The easiest way to achieve this is
+to run the Chef task from the DMS. Log in to the `lr-controller` with your username
+and password. To add a new user to the `lr-controller`, ask
+[Dave](mailto:dave.reynolds@epimorphics.com) or
+[Brian](mailto:brian.mcbride@epimorphics.com) at Epimorphics.
+
+## Updating geographies
+
+Many years, the boundaries of UK local authorities change. Sometimes mutliple adjacent
+authorities merge to for a new unitary authority, or sometimes a unitary authority
+is split off from an existing LA (e.g. City of Plymouth). In this case, we need to
+update two data sources with the application, and coordinate this change with HMLR
+(and, by extension, ONS)
+
+In 2020, we updated the app due to various changes in LA boundaries, including the
+creation of the Bournemouth, Christchurch and Poole UA. The timeline of these changes
+was fairly typical, so I'm documenting it here for future reference:
+
+* April 2019: new boundaries go into effect
+* Feb 2020: ONS perform their (single) yearly update of location tables
+* March 2020: HMLR provided Epimorphics with a collection of test data, including
+  the new regions table, as Turtle (`.ttl`) files
+* March 2020: we loaded the test data into a dev server, in order to re-run
+  the `rails ukhpi:locations` task. This updates the cached Ruby and Javascript
+  locations tables, to save the application having to query the API every time
+  a location is referred to
+* In order to update the map UI in UKHPI, we need to regenerate the `ONS-Geographies`
+  GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has an FME script on
+  his system that automates this. The basic process is: find and download the
+  relevant shapefile from the ONS geographies portal, then run the script to
+  convert the shapefile GeoJSON, simplifying the outlines along the way. We
+  need to simplify the outlines, because otherwise the generated GeoJSON file
+  is enormous. Doing the simplification in FME means that there are no gaps
+  between adjacent authorities as the outlines are compressed. Once the initial
+  GeoJSON file is produced, there is a simple shellscript to regularise the
+  property names in the GeoJSON. See `bin/ons-geojson-cleanup`. The core issue
+  is that the application code expects the GSS code for a location to be `code`
+  and the location name to be `name`. In the ONS shapefile, the GSS code can be,
+  for example, `rgn18cd` and the name `rgn18nm`. Rather than have the code
+  adapt to these (I'm assuming they may change each year), it was easier to have
+  a data-cleansing task. It could have been a rake task, but there are some
+  Linux command utilities that do the job very easily. The code will need to
+  be changed to reference the new GeoJSON file, i.e.
+  `app/javascript/data/ONS-Geographies-$YEAR.json`.
+* Finally, the application is published on `dev` for the Plymouth team to test.
