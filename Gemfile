@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '< 6.0.0'
+gem 'rails', '~> 6.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -22,7 +22,7 @@ gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
 # gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
 
 gem 'font-awesome-rails'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails'
 
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
@@ -42,13 +42,14 @@ group :development, :test do
   gem 'haml-lint'
   gem 'json_expressions'
   gem 'm'
-  gem 'minitest-rails-capybara'
+  gem 'minitest-rails', '~> 6.0'
   gem 'minitest-reporters'
-  gem 'minitest-spec-rails'
+  # gem 'minitest-spec-rails'
   gem 'mocha'
   gem 'nokogiri'
   gem 'oj'
   gem 'rubocop', require: false
+  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'tzinfo-data'
   gem 'vcr'
@@ -56,7 +57,7 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 3.0'
+  gem 'web-console'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
