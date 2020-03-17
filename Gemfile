@@ -32,6 +32,7 @@ gem 'sentry-raven'
 
 gem 'faraday'
 gem 'faraday_middleware'
+gem 'puma'
 gem 'yajl-ruby', require: 'yajl'
 
 gem 'rdf-turtle'
