@@ -65,9 +65,9 @@ class LandingState
     elsif change == 0.0
       'remained the same'
     elsif change.positive?
-      format("risen by %.1f%%", change.abs)
+      format('risen by %.1f%%', change.abs)
     else
-      format("fallen by %.1f%%", change.abs)
+      format('fallen by %.1f%%', change.abs)
     end
   end
 end

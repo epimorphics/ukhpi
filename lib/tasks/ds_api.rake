@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-# rubocop:disable Metrics/LineLength
+# rubocop:disable Layout/LineLength
 namespace :ukhpi do
   desc 'Create the DSAPI config file from the current DSD'
   task dsapi_config: :environment do
@@ -49,4 +49,4 @@ namespace :ukhpi do
     end
   end
 end
-# rubocop:enable Metrics/LineLength
+# rubocop:enable Layout/LineLength
