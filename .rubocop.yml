@@ -7,7 +7,7 @@ AllCops:
     - 'node_modules/**/*'
 
 # Customize rules
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
   Exclude:
     - bin/**/*
@@ -33,3 +33,12 @@ Style/FormatStringToken:
 Rails/OutputSafety:
   Exclude:
     - app/presenters/*.rb
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true

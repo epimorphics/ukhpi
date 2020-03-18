@@ -4,7 +4,7 @@
 class UkhpiDataCube
   include CubeDataModel::Vocabularies
 
-  # rubocop:disable Metrics/LineLength
+  # rubocop:disable Layout/LineLength
   CONFIG_DIR = 'dsapi'
   DSD_FILE = 'UKHPI-dsd.ttl'
   THEMES = {
@@ -31,7 +31,7 @@ class UkhpiDataCube
                                       UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true)
                                     ])
   }.freeze
-  # rubocop:enable Metrics/LineLength
+  # rubocop:enable Layout/LineLength
 
   INDICATORS =
     [
