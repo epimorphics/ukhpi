@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.3.0
+
+- Updated to latest version of locations and boundaries
+  of local authorities
+
 ## 1.2.10
 
 - Update `rack` gem in response to CVE-2019-16782

@@ -4,6 +4,10 @@ require 'set'
 require 'json'
 require 'csv'
 
+# Constants
+
+NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm package?'
+
 # Helper classes
 
 # Value class encapsulating a JSON location record
@@ -230,7 +234,7 @@ namespace :ukhpi do
       }
       }"
 
-    squery = (ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki') + '/bin/s-query'
+    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/apache-jena-fuseki'}/bin/s-query"
     server = ENV['SERVER'] || 'http://landregistry.data.gov.uk/landregistry/query'
 
     puts "Running SPARQL query against server #{server}..."
@@ -263,7 +267,7 @@ namespace :ukhpi do
   # compliant ES2015
   task locations_files_lint: :environment do
     puts 'Linting generated files ...'
-    raise 'Failed to perform eslint step' unless system('eslint --fix locations-data.js')
+    raise NO_ESLINT unless system('eslint --fix locations-data.js')
   end
 
   # Move the files to their correct locations

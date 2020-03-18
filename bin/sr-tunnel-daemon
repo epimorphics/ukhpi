@@ -2,13 +2,6 @@
 
 # $HOST can be passed in as an argument, or default to staging server
 HOST=${HOST:-lr-ppd-dev-pres-1}
-tomcat=`service --status-all | grep tomcat | sed -e 's/.*\(tomcat.*\)/\1/'`
-
-if service $tomcat status | grep 'Active: active'
-then
-  echo "Warning: local $tomcat service is still running - aborting"
-  exit 1
-fi
 
 # handle control-c and kill the tunnel process
 trap cleanup_ssh_tunnel INT
