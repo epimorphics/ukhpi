@@ -29,3 +29,21 @@
     background-color: $grey-3;
   }
 }
+
+.u-documentation-table {
+  @extend .u-simple-table;
+
+  th {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  td {
+    text-align: left;
+  }
+
+  td, th {
+    padding: 0.25em 0.25em 0.25em 0;
+    border-bottom: 1px solid $grey-3;
+  }
+}
