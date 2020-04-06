@@ -254,11 +254,12 @@ namespace :ukhpi do
     end
 
     # add exceptions
-    YAML
-      .load_file('data/location-exceptions.yml')
-      .each do |location_ex|
+    location_exceptions = YAML.load_file('data/location-exceptions.yml')
+    if location_exceptions.present?
+      location_exceptions.each do |location_ex|
         process_location_data(location_ex, locations, all_types)
       end
+    end
 
     write_locations_files(locations, all_types)
   end

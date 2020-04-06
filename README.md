@@ -133,7 +133,7 @@ Note that, by default, SPARQL queries will be run against the dev triple store.
 To direct the query against a different SPARQL endpoint, change the `SERVER` environment
 variable:
 
-    SERVER="http://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
+    SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
 
 ## Deployment
 
