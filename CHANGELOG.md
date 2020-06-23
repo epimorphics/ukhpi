@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.3.1
+
+- Update `package.json` to constrain the version of `@babel/preset-env` to avoid
+  build regression. GH-229
+
 ## 1.3.0
 
 - Updated to latest version of locations and boundaries
