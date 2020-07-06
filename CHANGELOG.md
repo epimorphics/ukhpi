@@ -1,5 +1,11 @@
 # Changes to the UKHPI app by version and date
 
+## 1.3.2 - 2020-07-6
+
+- Update various gem dependencies to resolve CVE warnings
+- Remove old warning about Bournemouth, Christchurch and Poole as client
+  indicated it is no longer relevant
+
 ## 1.3.1
 
 - Update `package.json` to constrain the version of `@babel/preset-env` to avoid
