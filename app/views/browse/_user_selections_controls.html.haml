@@ -64,8 +64,8 @@
     %li
       - id = "indicator-#{indicator.slug}"
       - checked = view_state.selected_param?(:indicator, indicator.slug)
-      = label_tag(:'indicator[]', for: id) do
-        = check_box_tag(:'indicator[]', indicator.slug, checked, id: id)
+      = label_tag(:'in[]', for: id) do
+        = check_box_tag(:'in[]', indicator.slug, checked, id: id)
         = indicator.label
 
 %p

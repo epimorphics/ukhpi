@@ -52,6 +52,11 @@ en:
         statistics_heading: "* Statistics"
         indicators_heading: "* Indicators"
 
+      search_results:
+        title: "* Search results"
+        summary: "* Locations matching search term <code>%{sterm}</code> of type <code>%{stype}</code>:"
+        more: "* &hellip; and %{n_more} more"
+
   theme:
     property_type: "* Type of property"
     buyer_status: "* Buyer status"
