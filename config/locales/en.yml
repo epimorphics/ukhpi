@@ -34,6 +34,24 @@ en:
 
       main_heading: "* House Price Statistics"
 
+    edit:
+      heading: "* Change your selections"
+      prompt: "* Use this page to change the UKHPI statistics that are displayed on the main browse page."
+      location_heading: "* Location"
+      currently_selected: "* The currently selected location is:"
+      select_other: "* To select another location, search for the location name below."
+
+      form:
+        location_type: "* Location type"
+        search_prompt: "* Search for a location"
+        dates_prompt: "* Dates"
+        dates_format_sr: "* dd/mm/yyyy day two digits, month two digits, year four digits"
+        displayed_indicators_heading: "* Displayed indicators"
+        indicators_prompt: "* You can select which of the UKHPI statistics are visible on the browse page."
+        themes_heading: "* Themes"
+        statistics_heading: "* Statistics"
+        indicators_heading: "* Indicators"
+
   theme:
     property_type: "* Type of property"
     buyer_status: "* Buyer status"
@@ -83,6 +101,7 @@ en:
     in: "* in"
     for: "* for"
     to: "* to"
+    from: "* from"
 
   action:
     change: "* change"
@@ -93,7 +112,8 @@ en:
     sparql: "* SPARQL query"
     user_guide: "* user guide"
     about: "* about UKHPI"
-
+    search: "* search"
+    show_result: "* show result"
 
 # old-------------
 
