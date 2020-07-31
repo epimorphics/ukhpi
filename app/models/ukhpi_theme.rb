@@ -23,7 +23,7 @@ class UkhpiTheme
 
   # @return The label for this theme
   def label
-    I18n.t(slug)
+    I18n.t("theme.#{slug}")
   end
 
   # @return The state of this theme, serialised to a Hash

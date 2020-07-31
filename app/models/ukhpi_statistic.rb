@@ -21,7 +21,7 @@ class UkhpiStatistic
 
   # @return The label for this statistic
   def label
-    I18n.t(label_key)
+    I18n.t("statistic.#{label_key}")
   end
 
   # @return True if this statistic is selected in the user selections

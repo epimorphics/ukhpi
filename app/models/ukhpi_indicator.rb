@@ -22,7 +22,7 @@ class UkhpiIndicator
 
   # @return The label for this indicator
   def label
-    I18n.t(label_key)
+    I18n.t("indicator.#{label_key}")
   end
 
   # @return True if this indicator is selected in the given user selections

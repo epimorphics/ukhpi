@@ -96,9 +96,11 @@ class DataView # rubocop:disable Metrics/ClassLength
   def title_with_indicator
     change_path = edit_browse_path(user_selections.params)
     <<~TITLE
-      #{I18n.t(indicator.label_key)}
-      by #{I18n.t(title_key).downcase}
-      in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
+      #{indicator.label}
+      #{I18n.t('preposition.by')}
+      #{theme.label.downcase}
+      #{I18n.t('preposition.in')}
+      <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
       .html_safe # rubocop:disable Rails/OutputSafety
   end
@@ -106,8 +108,9 @@ class DataView # rubocop:disable Metrics/ClassLength
   def title_without_indicator
     change_path = edit_browse_path(user_selections.params)
     <<~TITLE
-      #{I18n.t(title_key)}
-      in <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
+      #{indicator.label}
+      #{I18n.t('preposition.in')}
+      <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
     TITLE
       .html_safe # rubocop:disable Rails/OutputSafety
   end
@@ -131,10 +134,10 @@ class DataView # rubocop:disable Metrics/ClassLength
   end
 
   def as_table_columns
-    [{ label: 'Date', pred: 'ukhpi:refMonth' }] +
+    [{ label: I18n.t('label.date'), pred: 'ukhpi:refMonth' }] +
       theme.statistics.map do |statistic|
         if statistic_selected?(statistic)
-          { label: I18n.t(statistic.label_key), pred: pred_name(statistic) }
+          { label: I18n.t("statistic.#{statistic.label_key}"), pred: pred_name(statistic) }
         end
       end.compact
   end

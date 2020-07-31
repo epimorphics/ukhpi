@@ -2,7 +2,7 @@
   .header-wrapper
     .header-global
       .header-logo
-        %a.content{ href: '/app/ukhpi', title: 'Go to the UK HPI homepage' }
+        %a.content{ href: '/app/ukhpi', title: t('common.header.home_link') }
           = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: '')
 
 
@@ -11,27 +11,31 @@
         %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
         %nav#proposition-menu
           %a#proposition-name{ href: '/app/ukhpi' }
-            UK House Price Index
+            = t('common.header.app_title')
 
           %ul#proposition-links
             %li
-              %a{ href: browse_path, class: active_class(browse_path) } browse
+              %a{ href: browse_path, class: active_class(browse_path) }
+                = t('action.browse')
             %li
-              %a{ href: compare_path, class: active_class(compare_path) } compare locations
+              %a{ href: compare_path, class: active_class(compare_path) }
+                = t('action.compare_locations')
             %li
-              %a{ href: '/app/qonsole' } SPARQL query
+              %a{ href: '/app/qonsole' }
+                = t('action.sparql')
             %li
-              %a{ href: '/app/doc/ukhpi-user-guide' } user guide
+              %a{ href: '/app/doc/ukhpi-user-guide' }
+                = t('action.user_guide')
             %li
-              %a{ href: '/app/doc/ukhpi' } about UKHPI
+              %a{ href: '/app/doc/ukhpi' }
+                = t('action.about')
 
 .o-lr-top-bar
 
 .container.o-container
   .o-beta-banner
     %p
-      %strong.o-beta-tag BETA
+      %strong.o-beta-tag
+        = t('common.header.beta_tag')
       %span.text-muted
-        This is a new service – your
-        <a rel="external" href="mailto:data.services@landregistry.gov.uk">feedback</a>
-        will help us to improve it.
+        = t('common.header.feedback_request').html_safe
