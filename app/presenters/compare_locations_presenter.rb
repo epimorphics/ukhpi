@@ -8,8 +8,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include I18n
   include LocationsTable
 
-  attr_reader :user_compare_selections
-  attr_reader :query_results
+  attr_reader :user_compare_selections, :query_results
 
   def initialize(user_compare_selections, query_results)
     @user_compare_selections = user_compare_selections
@@ -59,7 +58,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
       with_stat.with('in', indicator.slug)
     else
       with_stat.without('in', user_compare_selections.selected_indicator)
-    end .to_h
+    end.to_h
   end
 
   def query_results_rows

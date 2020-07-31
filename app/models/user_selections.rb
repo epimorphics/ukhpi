@@ -127,7 +127,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
       if (value = params[k])
         template % format_summary_value(value)
       end
-    end .compact
+    end.compact
   end
 
   def format_summary_value(value)
@@ -146,6 +146,6 @@ class UserSelections # rubocop:disable Metrics/ClassLength
   # `check_params` have no value in the current `params`
   def all?(options, check_params)
     options[:all] &&
-      check_params.map { |p| params[p] } .compact.empty?
+      check_params.map { |p| params[p] }.compact.empty?
   end
 end

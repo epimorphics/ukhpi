@@ -4,8 +4,7 @@
 # various statistics in the overall dataset. Example themes include
 # 'property type' and 'buyer status'
 class UkhpiTheme
-  attr_reader :slug
-  attr_reader :statistics
+  attr_reader :slug, :statistics
 
   def initialize(slug, statistics)
     @slug = slug

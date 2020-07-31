@@ -4,8 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Adapter mapping the view state in a browse controller to the browse view
 class BrowseEditViewState
-  attr_reader :user_selections
-  attr_reader :matched_locations
+  attr_reader :user_selections, :matched_locations
 
   def initialize(params)
     @user_selections = UserSelections.new(params)
@@ -56,7 +55,7 @@ class BrowseEditViewState
     case param_type
     when :indicator then user_selections.selected_indicators
     when :statistic then user_selections.selected_statistics
-    end .include?(value_slug)
+    end.include?(value_slug)
   end
 
   def selected_theme?(theme)

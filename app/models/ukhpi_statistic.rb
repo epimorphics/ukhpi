@@ -5,9 +5,7 @@
 # price or percentage annual change to denote measures in the statistical
 # data cube.
 class UkhpiStatistic
-  attr_reader :slug
-  attr_reader :root_name
-  attr_reader :label_key
+  attr_reader :slug, :root_name, :label_key
 
   def initialize(slug, root_name, label_key, volume)
     @slug = slug

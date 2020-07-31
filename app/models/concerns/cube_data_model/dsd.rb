@@ -5,8 +5,7 @@ module CubeDataModel
   class DSD
     include CubeDataModel::Vocabularies
 
-    attr_reader :graph
-    attr_reader :root
+    attr_reader :graph, :root
 
     def initialize(graph, root)
       @graph = graph

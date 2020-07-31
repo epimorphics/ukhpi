@@ -6,9 +6,7 @@ class QueryCommand
 
   MILLISECONDS = 1000.0
 
-  attr_reader :user_selections
-  attr_reader :results
-  attr_reader :query
+  attr_reader :user_selections, :results, :query
 
   def initialize(user_selections)
     @user_selections = user_selections

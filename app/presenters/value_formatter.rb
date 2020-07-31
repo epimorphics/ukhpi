@@ -8,7 +8,7 @@ class ValueFormatter
       Kernel.format(options[:template], formatted: formatted)
     else
       formatted
-    end .html_safe
+    end.html_safe
   end
 
   def self.empty?(value)
@@ -52,7 +52,7 @@ class ValueFormatter
   def self.number_to_currency(val, options)
     Class.new do
       include ActionView::Helpers::NumberHelper
-    end .new.number_to_currency(val, options)
+    end.new.number_to_currency(val, options)
   end
 
   def self.month_year(date)

@@ -1,4 +1,6 @@
-# UKHPI Rails application
+# UKHPI open data application
+
+![Rails CI test](https://github.com/epimorphics/ukhpi/workflows/Rails%20CI%20test/badge.svg)
 
 This is the repo for the application that presents UKHPI open data on behalf
 of Land Registry (England and Wales), Registers of Scotland, Land and Property
