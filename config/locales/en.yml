@@ -57,6 +57,11 @@ en:
         summary: "* Locations matching search term <code>%{sterm}</code> of type <code>%{stype}</code>:"
         more: "* &hellip; and %{n_more} more"
 
+  compare:
+    show:
+      heading: "* Compare UKHPI statistics across locations"
+      prompt: "* Select up to five locations to compare any UKHPI statistic, for a range of dates."
+
   theme:
     property_type: "* Type of property"
     buyer_status: "* Buyer status"
@@ -107,6 +112,7 @@ en:
     for: "* for"
     to: "* to"
     from: "* from"
+    between: "* between"
 
   action:
     change: "* change"
@@ -119,6 +125,8 @@ en:
     about: "* about UKHPI"
     search: "* search"
     show_result: "* show result"
+    compare: "* compare"
+    update_comparison: "* update comparison"
 
 # old-------------
 
