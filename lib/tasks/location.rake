@@ -101,7 +101,7 @@ class Location
   def admin_geo_type(types)
     types.select do |t|
       t =~ /admingeo/
-    end .uniq
+    end.uniq
   end
 
   def to_ruby
@@ -131,7 +131,7 @@ class Location
   end
 end
 
-def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSize
+def write_locations_files(locations, all_types)
   location_names = []
   gss_index = {}
 

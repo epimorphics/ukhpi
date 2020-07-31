@@ -7,9 +7,7 @@
 # apply to all statistics: there is no 'volume' indicator for property types
 # other than 'all property types'.
 class UkhpiIndicator
-  attr_reader :slug
-  attr_reader :root_name
-  attr_reader :label_key
+  attr_reader :slug, :root_name, :label_key
 
   def initialize(slug, root_name, label_key)
     @slug = slug

@@ -10,10 +10,8 @@ require_dependency 'active_support/core_ext/module/delegation'
 class DataView # rubocop:disable Metrics/ClassLength
   include Rails.application.routes.url_helpers
 
-  attr_reader :user_selections
-  attr_reader :query_result
-  attr_reader :indicator
-  attr_reader :theme
+  attr_reader :user_selections, :query_result, :indicator, :theme
+
   attr_accessor :first
 
   def initialize(user_selections:, query_result:, indicator:, theme:)
@@ -138,7 +136,7 @@ class DataView # rubocop:disable Metrics/ClassLength
         if statistic_selected?(statistic)
           { label: I18n.t(statistic.label_key), pred: pred_name(statistic) }
         end
-      end .compact
+      end.compact
   end
 
   def pred_name(statistic)

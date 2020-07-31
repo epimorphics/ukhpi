@@ -54,7 +54,7 @@ class UserSelectionsPresenter
       if (value = params[key])
         template % format_selection_value(value)
       end
-    end .compact
+    end.compact
   end
 
   def format_selection_value(value)

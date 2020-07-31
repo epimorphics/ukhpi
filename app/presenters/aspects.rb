@@ -32,8 +32,8 @@ class Aspects
 
   def initialize(prefs)
     @prefs = prefs
-    @aspects = all_measures.each_with_object({}) do |measure, hash|
-      hash[measure.local_name.to_sym] = measure
+    @aspects = all_measures.index_by do |measure|
+      measure.local_name.to_sym
     end
   end
 

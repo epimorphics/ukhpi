@@ -3,8 +3,7 @@
 # Presenter object that calculates the set of `DataView`s that should be
 # created from a given `UserSelection`.
 class DataViewsPresenter
-  attr_reader :user_selections
-  attr_reader :query_result
+  attr_reader :user_selections, :query_result
 
   def initialize(user_selections, query_result)
     @user_selections = user_selections
@@ -14,7 +13,7 @@ class DataViewsPresenter
   def data_views
     @data_views ||= ukhpi.themes.each_key.map do |theme_name|
       as_data_views(ukhpi.theme(theme_name), true)
-    end .flatten
+    end.flatten
   end
 
   def to_json(_options = {})
