@@ -4,6 +4,7 @@
 # each other
 class UserCompareSelections
   include UserChoices
+  include UserLanguage
 
   DEFAULT_INDICATOR = 'hpi'
   DEFAULT_STATISTIC = 'all'
@@ -16,6 +17,7 @@ class UserCompareSelections
     'to' => Struct::UserParam.new(Time.zone.today, false, nil),
     'st' => Struct::UserParam.new(DEFAULT_STATISTIC, false, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATOR, false, nil),
+    'lang' => Struct::UserParam.new(:en, false, nil),
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),

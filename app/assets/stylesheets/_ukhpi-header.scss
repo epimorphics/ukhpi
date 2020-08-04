@@ -40,3 +40,9 @@
 .u-active {
   border-bottom: 2px solid $black;
 }
+
+.o-secondary-banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}

@@ -33,9 +33,20 @@
 .o-lr-top-bar
 
 .container.o-container
-  .o-beta-banner
-    %p
+  .o-secondary-banner
+    .o-secondary-banner__phase-tag
       %strong.o-beta-tag
         = t('common.header.beta_tag')
       %span.text-muted
         = t('common.header.feedback_request').html_safe
+
+    .o-secondary-banner__lang-select
+      - if @view_state.user_selections.english?
+        English
+      - else
+        = link_to('English', @view_state.user_selections.alternative_language_params.params)
+      |
+      - if @view_state.user_selections.welsh?
+        Cymraeg
+      - else
+        = link_to('Cymraeg', @view_state.user_selections.alternative_language_params.params)

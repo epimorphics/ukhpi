@@ -1,0 +1,6 @@
+cy:
+  common:
+    header:
+      home_link: "!!! Go to the UK HPI homepage"
+      app_title: "!!! UK House Price Index"
+      beta_tag: "!!! BETA"

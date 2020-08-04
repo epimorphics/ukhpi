@@ -230,5 +230,52 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections.valid?).must_equal(false)
       end
     end
+
+    describe 'language handling' do
+      it 'should return English as the default' do
+        selections = user_selections({})
+        assert selections.english?
+        assert_not selections.welsh?
+      end
+
+      it 'should return Welsh when that language is selected' do
+        selections = user_selections('lang' => 'cy')
+        assert_not selections.english?
+        assert selections.welsh?
+      end
+
+      it 'should return English when that language is selected' do
+        selections = user_selections('lang' => 'en')
+        assert selections.english?
+        assert_not selections.welsh?
+      end
+
+      it 'should ignore other languages' do
+        selections = user_selections('lang' => 'fr')
+        assert selections.english?
+        assert_not selections.welsh?
+      end
+
+      it 'should generate the correct Welsh language options' do
+        selections = user_selections(
+          'from' => '2017-01'
+        )
+
+        alt_params = selections.alternative_language_params
+        _(alt_params.params['from']).must_equal('2017-01')
+        _(alt_params.params['lang']).must_equal('cy')
+      end
+
+      it 'should generate the correct English language options' do
+        selections = user_selections(
+          'from' => '2017-01',
+          'lang' => 'cy'
+        )
+
+        alt_params = selections.alternative_language_params
+        _(alt_params.params['from']).must_equal('2017-01')
+        _(alt_params.params['lang']).must_equal('en')
+      end
+    end
   end
 end

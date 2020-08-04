@@ -9,6 +9,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include LocationsTable
 
   attr_reader :user_compare_selections, :query_results
+  alias user_selections user_compare_selections
 
   def initialize(user_compare_selections, query_results)
     @user_compare_selections = user_compare_selections
