@@ -26,8 +26,8 @@ class Location
     rdf_types.blank? || rdf_types.include?(type)
   end
 
-  def label(lang = :en)
-    @labels[lang]
+  def label(lang = I18n.locale)
+    @labels[lang] || @labels[:en]
   end
 
   def <=>(other_location, lang = :en)
