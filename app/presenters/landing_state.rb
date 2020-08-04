@@ -2,9 +2,10 @@
 
 # Presenter for the state needed to drive the landing page
 class LandingState
-  attr_reader :latest
+  attr_reader :latest, :user_selections
 
-  def initialize(lvc = LatestValuesCommand)
+  def initialize(user_selections, lvc = LatestValuesCommand)
+    @user_selections = user_selections
     @latest = lvc.new
     @latest.perform_query
   end

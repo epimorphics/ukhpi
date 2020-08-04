@@ -15,31 +15,23 @@
 
           %ul#proposition-links
             %li
-              %a{ href: browse_path, class: active_class(browse_path) }
-                = t('action.browse')
+              = link_to(t('action.browse'), browse_path(lang: I18n.locale), class: active_class(browse_path))
             %li
-              %a{ href: compare_path, class: active_class(compare_path) }
-                = t('action.compare_locations')
+              = link_to(t('action.compare_locations'), compare_path(lang: I18n.locale), class: active_class(compare_path))
             %li
-              %a{ href: '/app/qonsole' }
-                = t('action.sparql')
+              = link_to(t('action.sparql'), '/app/qonsole')
             %li
-              %a{ href: '/app/doc/ukhpi-user-guide' }
-                = t('action.user_guide')
+              = link_to(t('action.user_guide'), '/app/doc/ukhpi-user-guide')
             %li
-              %a{ href: '/app/doc/ukhpi' }
-                = t('action.about')
+              = link_to(t('action.about'),about_index_path(lang: I18n.locale), class: active_class(about_index_path))
+            %li
+              = link_to(t('action.changelog'), changelog_index_path(lang: I18n.locale), class: active_class(changelog_index_path))
 
 .o-lr-top-bar
 
 .container.o-container
   .o-secondary-banner
-    .o-secondary-banner__phase-tag
-      %strong.o-beta-tag
-        = t('common.header.beta_tag')
-      %span.text-muted
-        = t('common.header.feedback_request').html_safe
-
+    %div
     .o-secondary-banner__lang-select
       - if @view_state.user_selections.english?
         English
