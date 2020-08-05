@@ -14,6 +14,12 @@ import store from '../store/index'
 // Add fix for IE Edge
 import '../lib/ie-d3-fix'
 
+// set up internationalization support
+import VueI18n from 'vue-i18n'
+import i18n from 'lang'
+
+Vue.use(VueI18n)
+
 // Use Element.IO
 Vue.use(ElementUI, { locale })
 
@@ -46,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* eslint-disable no-new */
   new Vue({
     router,
-    store
+    store,
+    i18n
   }).$mount('#application')
 })

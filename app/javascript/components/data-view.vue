@@ -26,7 +26,7 @@
           >
           </data-view-table>
         </el-tab-pane>
-        <el-tab-pane label='Download this data' :name='`download-tab${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.download")' :name='`download-tab${indicator.slug}-${theme.slug}`'>
           <data-view-download
             :theme='theme'
             :indicator='indicator'
@@ -62,9 +62,12 @@ import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 import safeForEach from '../lib/safe-foreach';
 import AvailableStatistics from '../mixins/available-statistics';
+import i18n from 'lang'
 
 export default {
   mixins: [AvailableStatistics],
+
+  i18n,
 
   data: () => ({
     activeTab: '',

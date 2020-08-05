@@ -129,6 +129,10 @@ en:
     compare: "* compare"
     update_comparison: "* update comparison"
 
+  js:
+    action:
+      download: "* Download this data"
+
 # old-------------
 
   index:
