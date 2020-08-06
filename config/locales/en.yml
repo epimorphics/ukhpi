@@ -132,7 +132,12 @@ en:
   js:
     action:
       download: "* Download this data"
+      data_graph: "* See data graph"
+      data_table: "* See data table"
+      compare: "* Compare with location ..."
 
+    graph:
+      no_data: "* Sorry, there is no %{label} data available for %{location}. Please select a different location."
 # old-------------
 
   index:

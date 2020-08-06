@@ -8,7 +8,7 @@
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane label='See data graph' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -17,7 +17,7 @@
           >
           </data-view-graph>
         </el-tab-pane>
-        <el-tab-pane label='See data table' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.data_table")' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-table
             :statistics='availableStatistics'
             :indicator='indicator'
@@ -33,7 +33,7 @@
           >
           </data-view-download>
         </el-tab-pane>
-        <el-tab-pane label='Compare with location ...' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.compare")' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
           <p v-if='selectedLocation'>
             You can see how {{ selectedLocation.labels.en }} compares to
             other places:
