@@ -6,7 +6,11 @@ Vue.use(VueI18n)
 const localeEn = require('../../../config/locales/en.yml')
 const localeCy = require('../../../config/locales/cy.yml')
 
+// The locale is passed via the window.ukhpi structure
+// directly from Rails
+const currentLocale = window.ukhpi.locale || 'en'
+
 export default new VueI18n({
-  locale: 'en',
+  locale: currentLocale,
   messages: { ...localeEn, ...localeCy }
 })

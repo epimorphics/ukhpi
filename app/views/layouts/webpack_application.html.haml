@@ -11,6 +11,7 @@
       window.ukhpi = window.ukhpi || {};
       window.ukhpi.environment = '#{ENV["DEPLOYMENT_ENVIRONMENT"] || Rails.env}';
       window.ukhpi.version = '#{Version::VERSION}';
+      window.ukhpi.locale = '#{I18n.locale}';
 
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
