@@ -135,9 +135,41 @@ en:
       data_graph: "* See data graph"
       data_table: "* See data table"
       compare: "* Compare with location ..."
+      select_location: "* select a diffent location"
+      cancel: "* cancel"
+      confirm: "* confirm"
 
     graph:
       no_data: "* Sorry, there is no %{label} data available for %{location}. Please select a different location."
+
+    location:
+      results: "* Search results"
+      many_results: "* ... plus ${manyResults} more."
+      show_on_map: "* Show on map:"
+      type_countries: "* Countries"
+      type_las: "* Local authorities"
+      type_regions_england: "* Regions of England"
+      type_counties_england: "* Counties of England"
+      default_title: "* Choose a different region or location"
+      default_prompt: "* To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map."
+      search_locations_label: "* Search locations:"
+
+    data_table:
+      date: "* Date"
+
+    download:
+      prompt: "* You can download this data, so that you can process it further yourself. You can also <a href='%{qonsolePath}'>try the SPARQL query</a>."
+      selected: "* Download only <strong>%{indicatorName}</strong> by <strong>%{themeName}</strong> in %{locationName}:"
+      all: "* Download <strong>all UKHPI data</strong> for %{locationName} for this period:"
+      theme: "* Download <strong>all</strong> of index, average and percentage change by <strong>%{themeName}</strong> in %{locationName}:"
+      csv_prompt: "* download CSV/spreadsheet"
+      json_prompt: "* download JSON"
+      license: "* This data is licensed under the terms of the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government License</a>."
+
+    compare:
+      prompt: "* You can see how %{selectedLocationLabel} compares to other places:"
+      select_action: "* select another location"
+
 # old-------------
 
   index:

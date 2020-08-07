@@ -3,7 +3,7 @@
     <table class='o-data-table'>
       <thead>
         <tr>
-          <th class='u-left' scope='col'>Date</th>
+          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
           <th v-for='column in columns'
               :key='`th-${column.slug}`'
               class='u-right'

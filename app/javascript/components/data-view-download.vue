@@ -2,53 +2,44 @@
   <div class='o-data-view-download'>
     <el-row>
       <el-col :span='18'>
-        <p>
-          You can download this data, so that you can process it further yourself.
-          You can also <a :href='qonsolePath'>try the SPARQL query</a>.
-        </p>
+        <p
+          v-html="$t('js.download.prompt', { qonsolePath: this.qonsolePath })"
+        />
+
         <ul>
           <li>
-            Download only <strong>{{ indicatorName }}</strong>
-            by <strong>{{ themeName }}</strong>
-            in {{ locationName }}:
+            <span v-html="$t('js.download.selected', { themeName: this.themeName, indicatorName: this.indicatorName, locationName: this.locationName })" />
             <br />
             <a class='o-data-view-download__button' :href='downloadUrl("csv", true, true)'>
-              download CSV/spreadsheet <i class='fa fa-external-link'></i>
+              {{ $t('js.download.csv_prompt')}} <i class='fa fa-external-link'></i>
             </a>
             <a class='o-data-view-download__button' :href='downloadUrl("json", true, true)'>
-              download JSON <i class='fa fa-external-link'></i>
+              {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
             </a>
           </li>
           <li>
-            Download <strong>all</strong> of index, average and percentage change
-            by <strong>{{ themeName }}</strong>
-            in {{ locationName }}:
+            <span v-html="$t('js.download.theme', { themeName: this.themeName, locationName: this.locationName })" />
             <br />
             <a class='o-data-view-download__button' :href='downloadUrl("csv", true, false)' download>
-              download CSV/spreadsheet <i class='fa fa-external-link'></i>
+              {{ $t('js.download.csv_prompt')}} <i class='fa fa-external-link'></i>
             </a>
             <a class='o-data-view-download__button' :href='downloadUrl("json", true, false)' download>
-              download JSON <i class='fa fa-external-link'></i>
+              {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
             </a>
           </li>
         </ul>
         <p>
-          Download
-          <strong>all UKHPI data</strong> for {{ locationName }} for this period:
+          <span v-html="$t('js.download.all', { locationName: this.locationName })" />
           <br />
           <a class='o-data-view-download__button' :href='downloadUrl("csv", false, false)' download>
-            download CSV/spreadsheet <i class='fa fa-external-link'></i>
+              {{ $t('js.download.csv_prompt')}} <i class='fa fa-external-link'></i>
           </a>
           <a class='o-data-view-download__button' :href='downloadUrl("json", false, false)' download>
-            download JSON <i class='fa fa-external-link'></i>
+              {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
           </a>
 
         </p>
-        <p class='u-muted'>
-          This data is licensed under the terms of the
-          <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>
-            Open Government License
-          </a>.
+        <p class='u-muted' v-html="$t('js.download.license')">
         </p>
       </el-col>
     </el-row>
@@ -87,6 +78,10 @@ export default {
       return this.$store.state.toDate;
     },
 
+    currentLocale () {
+      return window.ukhpi.locale
+    },
+
     locationUri() {
       const { location } = this.$store.state;
       return location ? location.uri : '';
@@ -94,7 +89,7 @@ export default {
 
     locationName() {
       const { location } = this.$store.state;
-      return location ? location.labels.en : '';
+      return location ? location.labels[this.currentLocale] : '';
     },
 
     themeName() {

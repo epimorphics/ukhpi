@@ -35,10 +35,9 @@
         </el-tab-pane>
         <el-tab-pane :label='$t("js.action.compare")' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
           <p v-if='selectedLocation'>
-            You can see how {{ selectedLocation.labels.en }} compares to
-            other places:
+            {{ $t('js.compare.prompt', { selectedLocationLabel: this.selectedLocationLabel }) }}
             <el-button @click='onCompareSelect'>
-              select another location
+              {{ $t('js.compare.select_action') }}
             </el-button>
           </p>
         </el-tab-pane>
@@ -120,6 +119,14 @@ export default {
     selectedLocation() {
       return this.$store.state.location;
     },
+
+    selectedLocationLabel () {
+      return this.selectedLocation.labels[this.currentLocale]
+    },
+
+    currentLocale () {
+      return window.ukhpi.locale
+    }
   },
 
   methods: {
@@ -199,8 +206,8 @@ export default {
 
   watch: {
     selectedLocation() {
-      const newLabel = this.selectedLocation.labels.en;
-      const nodes = document.querySelectorAll(`#${this.elementId} .o-data-view__location-name`);
+      const newLabel = this.selectedLocationLabel;
+      const nodes = document.querySelectorAll(`.o-data-view__location-name`);
       safeForEach(nodes, (node) => {
         node.innerHTML = newLabel; // eslint-disable-line no-param-reassign
       });

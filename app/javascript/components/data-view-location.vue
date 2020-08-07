@@ -4,9 +4,9 @@
       <el-button
         @click='onChangeLocation'
         class='c-options-selection__button'
-        title='select a diffent location'
+        :title='$t("js.action.select_location")'
       >
-        {{ location.labels.en }}
+        {{ location.labels[currentLocale] }}
         <i class='fa fa-edit'></i>
       </el-button>
     </span>
@@ -39,6 +39,10 @@ export default {
     location() {
       return this.$store.state.location;
     },
+
+    currentLocale () {
+      return window.ukhpi.locale
+    }
   },
 
   components: {
