@@ -25,7 +25,7 @@
     <div class='o-data-view__table-print'>
       <a :href='printUrl' target='_' class='o-print-action'
       >
-        <i class='fa fa-print'></i> Print this table
+        <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
       </a>
     </div>
   </div>

@@ -6,13 +6,13 @@
     <table class='o-data-table'>
       <thead>
         <tr>
-          <th class='u-left' scope='col'>Date</th>
+          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
           <th v-for='location in locations'
               :key='`th-${location.gss}`'
               class='u-right'
               scope='col'
           >
-            {{ location.labels.en }}
+            {{ location.labels[currentLocale] }}
           </th>
         </tr>
       </thead>
@@ -77,6 +77,10 @@ export default {
   },
 
   computed: {
+    currentLocale () {
+      return window.ukhpi.locale
+    },
+
     pred() {
       return `ukhpi:${this.indicator.rootName}${this.statistic.rootName}`;
     },
@@ -92,19 +96,19 @@ export default {
 
       switch (this.locations.length) {
         case 0:
-          locLabel = 'zero locations';
+          locLabel = this.$t('js.compare.zero_locations')
           break;
         case 1:
-          locLabel = 'one location';
+          locLabel = this.$t('js.compare.one_locations')
           break;
         case 2:
-          locLabel = 'two locations';
+          locLabel = this.$t('js.compare.two_locations')
           break;
         default:
-          locLabel = `${this.locations.length} locations`;
+          locLabel = this.$t('js.compare.n_locations', { num: this.locations.length })
       }
 
-      return `Comparison of ${indLabel} of ${statLabel} for ${locLabel}`;
+      return this.$t('js.compare.title', { indLabel, statLabel, locLabel });
     },
   },
 

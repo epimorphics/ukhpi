@@ -2,7 +2,7 @@
   <div class='c-compare__selections'>
     <el-row>
       <el-col :span='24'>
-        Compare
+        {{ $t('js.compare.compare_action') }}
         <el-select v-model='indicatorSlug'>
           <el-option
             v-for='item in indicators'
@@ -12,7 +12,7 @@
             :disabled='isDisabledIndicator(item.slug)'>
           </el-option>
         </el-select>
-        for
+        {{ $t('preposition.for') }}
         <el-select v-model='statisticSlug'>
           <el-option-group
             v-for='theme in themes'
@@ -27,7 +27,7 @@
             </el-option>
           </el-option-group>
         </el-select>
-        from
+        {{ $t('preposition.from') }}
         <data-view-dates />
       </el-col>
       <el-col :span='24'>
@@ -41,10 +41,10 @@
     </el-row>
     <el-row>
       <el-col :span='24'>
-        For locations:
+        {{ $t('js.compare.for_locations') }}
         <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
-            {{ location.labels.en }}
+            {{ location.labels[currentLocale] }}
             <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'>
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
@@ -69,16 +69,16 @@
         </compare-locations-table>
         <span class='c-compare__print'>
           <a :href='printUrl' target='_' class='c-compare__print-link o-print-action'>
-            <i class='fa fa-print'></i> Print this table
+            <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
           </a>
         </span>
         <span class='c-compare__download'>
-          Download this data as:
+          {{ $t('js.action.download_data_as') }}
           <a :href='downloadUrlCsv' class='c-compare__download-link c-compare__download-csv'>
-            CSV (spreadsheet) <i class='fa fa-external-link'></i>
+            {{ $t('js.compare.csv_format') }} <i class='fa fa-external-link'></i>
           </a>
           <a :href='downloadUrlJson' class='c-compare__download-link c-compare__download-json'>
-            JSON <i class='fa fa-external-link'></i>
+            {{ $t('js.compare.json_format') }} <i class='fa fa-external-link'></i>
           </a>
         </span>
       </el-col>
@@ -153,6 +153,10 @@ export default {
   },
 
   computed: {
+    currentLocale () {
+      return window.ukhpi.locale
+    },
+
     statistic() {
       const slug = this.statisticSlug;
       return this.statistics.find(stat => stat.slug === slug);

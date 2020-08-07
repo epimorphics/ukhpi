@@ -138,6 +138,8 @@ en:
       select_location: "* select a diffent location"
       cancel: "* cancel"
       confirm: "* confirm"
+      print_table: "* print this table"
+      download_data_as: "* Download this data as:"
 
     graph:
       no_data: "* Sorry, there is no %{label} data available for %{location}. Please select a different location."
@@ -169,6 +171,19 @@ en:
     compare:
       prompt: "* You can see how %{selectedLocationLabel} compares to other places:"
       select_action: "* select another location"
+      compare_action: "* Compare"
+      dates_from: "* Starting from"
+      dates_to: "* up until"
+      validation_dates: "* The start date must be earlier than the end date"
+      for_locations: "* For locations:"
+      title: "* Comparison of %{indLabel} of %{statLabel} for %{locLabel}"
+      zero_locations: "* zero locations"
+      one_locations: "* one location"
+      two_locations: "* two locations"
+      n_locations: "* %{num} locations"
+      csv_format: "* CSV (spreadsheet)"
+      json_format: "* JSON"
+
 
 # old-------------
 

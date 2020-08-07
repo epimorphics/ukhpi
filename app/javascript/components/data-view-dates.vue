@@ -6,7 +6,9 @@
         class='c-options-selection__button'
         title='change start or end date'
       >
-        {{ fromDateFormatted }} to {{ toDateFormatted }}
+        {{ fromDateFormatted }}
+        {{ $t('preposition.to') }}
+        {{ toDateFormatted }}
         <i class='fa fa-edit'></i>
       </el-button>
     </span>
@@ -23,7 +25,7 @@
             <el-date-picker
               v-model='newFromDate'
               type='month'
-              placeholder='Starting from'>
+              :placeholder='$t("js.compare.dates_from")'>
             </el-date-picker>
           </label>
         </el-col>
@@ -33,7 +35,7 @@
             <el-date-picker
               v-model='newToDate'
               type='month'
-              placeholder='Starting from'>
+              :placeholder='$t("js.compare.dates_to")'>
             </el-date-picker>
           </label>
         </el-col>
@@ -94,7 +96,7 @@ export default {
 
     onSaveChanges() {
       if (Moment(this.newToDate).isBefore(Moment(this.newFromDate))) {
-        this.validationMessage = 'The start date must be earlier than the end date';
+        this.validationMessage = $t('js.compare.validation_dates');
       } else {
         const from = Moment(this.newFromDate).format('YYYY-MM-DD');
         const to = Moment(this.newToDate).format('YYYY-MM-DD');
