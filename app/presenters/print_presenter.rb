@@ -14,14 +14,15 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
       end
     ),
     DownloadColumn.new(
-      label: 'Reporting<br />period'.html_safe,
+      label: I18n.t('browse.print.reporting_period').html_safe,
       format: lambda do |row|
-        val = row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly'
+        key = row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly'
+        val = I18n.t("browse.print.#{key}")
         "<div class='u-text-centre'>#{val}</div>".html_safe
       end
     ),
     DownloadColumn.new(
-      label: 'Sales volume',
+      label: I18n.t('statistic.volume'),
       format: lambda do |row|
         val = row['ukhpi:salesVolume'].first
         "<div class='u-text-right'>#{val}</div>".html_safe
@@ -29,7 +30,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
     )
   ].freeze
 
-  SALES_VOLUME_COL = PRINT_COLUMNS.map(&:label).index('Sales volume')
+  SALES_VOLUME_COL = 2 # PRINT_COLUMNS.map(&:label).index('Sales volume')
 
   def locations
     @locations ||=
@@ -41,9 +42,9 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
     if locations.one?
       locations.first.label
     elsif locations.length == 2
-      "#{locations.first.label} and #{locations[1].label}"
+      "#{locations.first.label} #{I18n.t('connectives.and')} #{locations[1].label}"
     else
-      "#{locations.length} locations"
+      I18n.t('compare.print.locations_summary', num_locattions: locations.length)
     end
   end
 
@@ -56,7 +57,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
   def indicator_summary
     indicators
       .map(&:label)
-      .join(' and ')
+      .join(I18n.t('connective.and'))
   end
 
   def statistics
@@ -68,7 +69,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
   def statistic_summary
     statistics
       .map(&:label)
-      .join(' and ')
+      .join(I18n.t('connective.and'))
   end
 
   def themes
@@ -80,7 +81,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
   def theme_summary
     themes
       .map(&:label)
-      .join(' and ')
+      .join(I18n.t('connective.and'))
   end
 
   def dates

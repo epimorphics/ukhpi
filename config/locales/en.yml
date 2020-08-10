@@ -32,6 +32,9 @@ en:
         volume_property_status: "* Sales volume for new buildings vs. existing properties"
         volume_funding_status: "* Sales volume for cash sales vs. mortgage sales"
 
+    print:
+      reporting_period: "* Reporting<br />period"
+
       main_heading: "* House Price Statistics"
 
     edit:
@@ -61,6 +64,12 @@ en:
     show:
       heading: "* Compare UKHPI statistics across locations"
       prompt: "* Select up to five locations to compare any UKHPI statistic, for a range of dates."
+    print:
+      locations_summary: "* #{n_locations} locations"
+      unavailable: "* We're sorry, #{indicator_name} is not available for #{statistic_name}."
+      date: "* Date"
+      quarterly: "* quarterly"
+      monthly: "* monthly"
 
   theme:
     property_type: "* Type of property"
@@ -128,6 +137,9 @@ en:
     show_result: "* show result"
     compare: "* compare"
     update_comparison: "* update comparison"
+
+  connective:
+    and: "* and"
 
   js:
     action:

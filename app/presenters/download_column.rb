@@ -12,8 +12,8 @@ class DownloadColumn
   def label # rubocop:disable Metrics/AbcSize
     return options[:label] if options[:label]
 
-    ind_key = options[:ind]&.slug
-    stat_key = options[:stat].label_key
+    ind_key = "indicator.#{options[:ind]&.slug}"
+    stat_key = "statistic.#{options[:stat].label_key}"
     sep = options[:sep] || ' '
 
     ind_key ? "#{I18n.t(ind_key)}#{sep}#{I18n.t(stat_key)}".html_safe : I18n.t(stat_key)
