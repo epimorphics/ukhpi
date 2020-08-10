@@ -28,12 +28,8 @@ export default {
     },
 
     prompt() {
-      const label = this.selectedLocation ? this.selectedLocation.labels.en : '';
+      const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : '';
       return `Select an area to compare against ${label}`;
-    },
-
-    currentLocale () {
-      return window.ukhpi.locale
     }
   },
 
@@ -62,7 +58,7 @@ export default {
       const st = this.statistic.slug;
       const path = document.location.pathname.replace(/browse/, 'compare');
 
-      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}&lang=${this.currentLocale}`;
+      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}&lang=${this.$locale}`;
     },
   },
 

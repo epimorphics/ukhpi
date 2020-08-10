@@ -6,7 +6,7 @@
         class='c-options-selection__button'
         :title='$t("js.action.select_location")'
       >
-        {{ location.labels[currentLocale] }}
+        {{ location.labels[$locale] }}
         <i class='fa fa-edit'></i>
       </el-button>
     </span>
@@ -38,10 +38,6 @@ export default {
   computed: {
     location() {
       return this.$store.state.location;
-    },
-
-    currentLocale () {
-      return window.ukhpi.locale
     }
   },
 

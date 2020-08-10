@@ -4,7 +4,8 @@
     %meta{ charset: 'utf-8' }
     %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
-    %title UK House Price Index
+    %title
+      = I18n.t('common.header.app_title')
     = render partial: 'common/google-analytics'
     :javascript
       document.querySelector('html').classList.add('js');

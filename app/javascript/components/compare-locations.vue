@@ -44,7 +44,7 @@
         {{ $t('js.compare.for_locations') }}
         <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
-            {{ location.labels[currentLocale] }}
+            {{ location.labels[$locale] }}
             <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'>
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
@@ -153,10 +153,6 @@ export default {
   },
 
   computed: {
-    currentLocale () {
-      return window.ukhpi.locale
-    },
-
     statistic() {
       const slug = this.statisticSlug;
       return this.statistics.find(stat => stat.slug === slug);
@@ -253,6 +249,8 @@ export default {
         st: this.statistic.slug,
         in: this.indicator.slug,
       });
+
+      options.lang = window.ukhpi.locale
 
       return Routes.comparePath(options);
     },

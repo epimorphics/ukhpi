@@ -12,7 +12,7 @@
               class='u-right'
               scope='col'
           >
-            {{ location.labels[currentLocale] }}
+            {{ location.labels[$locale] }}
           </th>
         </tr>
       </thead>
@@ -77,10 +77,6 @@ export default {
   },
 
   computed: {
-    currentLocale () {
-      return window.ukhpi.locale
-    },
-
     pred() {
       return `ukhpi:${this.indicator.rootName}${this.statistic.rootName}`;
     },

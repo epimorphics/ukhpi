@@ -121,11 +121,7 @@ export default {
     },
 
     selectedLocationLabel () {
-      return this.selectedLocation.labels[this.currentLocale]
-    },
-
-    currentLocale () {
-      return window.ukhpi.locale
+      return this.selectedLocation.labels[this.$locale]
     }
   },
 

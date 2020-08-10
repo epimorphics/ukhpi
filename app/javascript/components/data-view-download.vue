@@ -78,10 +78,6 @@ export default {
       return this.$store.state.toDate;
     },
 
-    currentLocale () {
-      return window.ukhpi.locale
-    },
-
     locationUri() {
       const { location } = this.$store.state;
       return location ? location.uri : '';
@@ -89,7 +85,7 @@ export default {
 
     locationName() {
       const { location } = this.$store.state;
-      return location ? location.labels[this.currentLocale] : '';
+      return location ? location.labels[this.$locale] : '';
     },
 
     themeName() {

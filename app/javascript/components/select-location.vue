@@ -38,7 +38,7 @@
             <ul v-for='result in searchResults' class='o-search-location__results'>
               <li class='o-search-location__result'>
                 <el-button type='text' @click='onSelectResult'>
-                  {{ result.labels[this.currentLocale] }}
+                  {{ result.labels[$locale] }}
                 </el-button>
                 ({{ result | locationTypeLabel }})
               </li>
@@ -142,10 +142,6 @@ export default {
 
     mapElementId() {
       return `${this.elementId}__map`;
-    },
-
-    currentLocale () {
-      return window.ukhpi.locale
     }
   },
 
@@ -216,7 +212,7 @@ export default {
     onSelectLocationURI(uri) {
       const locationAndType = findLocationById(uri, 'uri');
       this.selectedLocation = locationAndType.location;
-      this.searchInput = locationAndType.location.labels.en;
+      this.searchInput = locationAndType.location.labels[this.$locale];
       this.noMatch = null;
     },
 
@@ -226,7 +222,7 @@ export default {
 
     isExactMatch(term, results) {
       const termLC = term.toLocaleLowerCase();
-      const location = results && results.find(result => result.labels.en.toLocaleLowerCase() === termLC);
+      const location = results && results.find(result => result.labels[this.$locale].toLocaleLowerCase() === termLC);
 
       return location && !this.isForthcomingLocation(location) ? location : null
     },
@@ -236,7 +232,7 @@ export default {
 
       if (location) {
         this.$set(this, 'searchResults', []);
-        this.$set(this, 'searchInput', location.labels.en);
+        this.$set(this, 'searchInput', location.labels[this.$locale]);
       }
     },
 

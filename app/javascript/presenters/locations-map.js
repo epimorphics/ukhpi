@@ -187,7 +187,7 @@ export default class LocationsMap {
   onHighlightFeature (e) {
     const layer = e.target
     const locationAndType = this.findLayerLocation(layer)
-    const label = locationAndType.location.labels.en
+    const label = locationAndType.location.labels[this.$locale]
 
     this.styleLayer(layer, this.highlightLocationStyle)
     this.showPopup(label, e.latlng)

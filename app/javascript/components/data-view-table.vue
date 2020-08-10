@@ -69,6 +69,7 @@ export default {
         from: this.$store.state.fromDate,
         to: this.$store.state.toDate,
         location: location.uri,
+        lang: this.$locale
       };
 
       return `${Routes.printPath(params)}`;
