@@ -9,7 +9,7 @@ class UserLanguageSelection
   DEFAULT_LANGUAGE = 'en'
 
   USER_PARAMS_MODEL = {
-    'lang' => Struct::UserParam.new(DEFAULT_LANGUAGE, false, nil),
+    'lang' => Struct::UserParam.new(DEFAULT_LANGUAGE, false, nil)
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL

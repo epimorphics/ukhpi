@@ -97,7 +97,11 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
 
   def unavailable_statistic_indicator?
     if indicator.volume? && !statistic.volume?
-      I18n.t('compare.print.unavailable', indicator_name: indicator.label.downcase, statistic_name: statistic.label)
+      I18n.t(
+        'compare.print.unavailable',
+        indicator_name: indicator.label.downcase,
+        statistic_name: statistic.label
+      )
     else
       false
     end
