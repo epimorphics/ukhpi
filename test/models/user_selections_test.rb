@@ -240,8 +240,13 @@ class UserSelectionsTest < ActiveSupport::TestCase
 
       it 'should return Welsh when that language is selected' do
         selections = user_selections('lang' => 'cy')
+        current_locale = I18n.locale
+        I18n.locale = :cy # simulate controller action
+
         assert_not selections.english?
         assert selections.welsh?
+      ensure
+        I18n.locale = current_locale
       end
 
       it 'should return English when that language is selected' do
@@ -256,7 +261,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
         assert_not selections.welsh?
       end
 
-      it 'should generate the correct Welsh language options' do
+      it 'should generate the correct options to switch to Welsh language' do
         selections = user_selections(
           'from' => '2017-01'
         )
@@ -266,15 +271,19 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(alt_params.params['lang']).must_equal('cy')
       end
 
-      it 'should generate the correct English language options' do
+      it 'should generate the correct options to switch to English language' do
         selections = user_selections(
           'from' => '2017-01',
           'lang' => 'cy'
         )
+        current_locale = I18n.locale
+        I18n.locale = :cy # this is what the controller would do
 
         alt_params = selections.alternative_language_params
         _(alt_params.params['from']).must_equal('2017-01')
         _(alt_params.params['lang']).must_equal('en')
+      ensure
+        I18n.locale = current_locale
       end
     end
   end

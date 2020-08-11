@@ -23,7 +23,7 @@ class LandingStateTest < ActiveSupport::TestCase
     lv = mock
     lv.expects(:new).returns(lvc)
 
-    LandingState.new(lv)
+    LandingState.new({}, lv)
   end
 
   it 'returns the result when one is available' do
