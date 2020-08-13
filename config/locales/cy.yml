@@ -64,6 +64,9 @@ cy:
     show:
       heading: "[cy] Compare UKHPI statistics across locations"
       prompt: "[cy] Select up to five locations to compare any UKHPI statistic, for a range of dates."
+      add_location: "[cy] Add another location:"
+      search_results: "[cy] Search results:"
+
     print:
       locations_summary: "[cy] #{n_locations} locations"
       unavailable: "[cy] We're sorry, #{indicator_name} is not available for #{statistic_name}."
@@ -181,6 +184,7 @@ cy:
       license: "[cy] This data is licensed under the terms of the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government License</a>."
 
     compare:
+      action_prompt: "[cy] Select an area to compare against %{location}"
       prompt: "[cy] You can see how %{selectedLocationLabel} compares to other places:"
       select_action: "[cy] select another location"
       compare_action: "[cy] Compare"
@@ -196,6 +200,11 @@ cy:
       csv_format: "[cy] CSV (spreadsheet)"
       json_format: "[cy] JSON"
 
+    dates_picker:
+      select_dates: "[cy] change start or end date"
+      date_range_prompt: "[cy] Change the date range"
+      start: "[cy] Start:"
+      end: "[cy] End:"
 
 # old-------------
 

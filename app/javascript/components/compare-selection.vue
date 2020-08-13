@@ -29,7 +29,7 @@ export default {
 
     prompt() {
       const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : '';
-      return `Select an area to compare against ${label}`;
+      return this.$t('js.compare.action_prompt', { location: label });
     }
   },
 

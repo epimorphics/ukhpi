@@ -45,13 +45,14 @@
                 %input{ type: 'hidden', name: 'location[]', value: location.gss }
 
             %li.c-compare__add-location
-              Add another location:
+              = t('compare.show.add_location')
               %input{ type: 'text', name: 'location-term', value: @view_state.search_term }
               %button{ type: 'submit', value: 'search', name: 'form-action' }
                 = t('action.search')
 
           - if @view_state.search_results
-            %p Search results:
+            %p
+              = t('compare.show.search_results')
             %ul.c-compare__search_results
               - @view_state.search_results.each do |location|
                 %li

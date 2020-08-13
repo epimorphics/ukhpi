@@ -4,7 +4,7 @@
       <el-button
         @click='onChangeDates'
         class='c-options-selection__button'
-        title='change start or end date'
+        :title='$t("js.dates_picker.select_dates")'
       >
         {{ fromDateFormatted }}
         {{ $t('preposition.to') }}
@@ -14,14 +14,14 @@
     </span>
 
     <el-dialog
-      title='Change the date range'
+      :title='$t("js.dates_picker.date_range_prompt")'
       :visible.sync='dialogVisible'
       :show-close='true'
     >
       <el-row>
         <el-col :span='12'>
           <label>
-            Start<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:
+            {{ $t("js.dates_picker.start") }}<span class='u-sr-only'>{{ $t('browse.edit.form.dates_format_sr') }}</span>:
             <el-date-picker
               v-model='newFromDate'
               type='month'
@@ -31,7 +31,7 @@
         </el-col>
         <el-col :span='12'>
           <label>
-            End<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:
+            {{ $t("js.dates_picker.end") }}<span class='u-sr-only'>{{ $t('browse.edit.form.dates_format_sr') }}</span>:
             <el-date-picker
               v-model='newToDate'
               type='month'
@@ -49,8 +49,8 @@
         </p>
       </el-row>
       <span slot='footer' class='dialog-footer'>
-        <el-button @click='dialogVisible = false'>Cancel</el-button>
-        <el-button type='primary' @click='onSaveChanges'>Confirm</el-button>
+        <el-button @click='dialogVisible = false'>{{ $t("js.action.cancel") }}</el-button>
+        <el-button type='primary' @click='onSaveChanges'>{{ $t("js.action.confirm") }}</el-button>
       </span>
     </el-dialog>
   </div>
