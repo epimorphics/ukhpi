@@ -50,6 +50,10 @@ class LandingState
     format_percentage(first_value('ukhpi:percentageAnnualChange'))
   end
 
+  def locale_partial
+    "index_#{I18n.locale}"
+  end
+
   private
 
   def first_value(key)
