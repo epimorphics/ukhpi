@@ -1,5 +1,11 @@
 # Changes to the UKHPI app by version and date
 
+## 1.4.0 - 2020-08-13 (Ian)
+
+- Beginning the process of moving to a Docker-based deployment pattern
+  by adding an initial Dockerfile and adding some build support via a
+  Makefile.
+
 ## 1.3.2 - 2020-07-6
 
 - Update various gem dependencies to resolve CVE warnings

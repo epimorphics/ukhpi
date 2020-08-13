@@ -17,7 +17,7 @@ itself is freely available under the terms of the
 
 ### Installation dependencies
 
-Currently depends on Ruby version 2.6.5, since that matches the production
+Currently depends on Ruby version 2.6.x, since that matches the production
 environment. Local Ruby version is specified by `.ruby-version`, assuming
 that [rbenv](https://github.com/rbenv/rbenv) is used.
 
@@ -139,18 +139,11 @@ variable:
 
 ## Deployment
 
-Deployment configuration is not managed by this repo, but is stored in the Chef recipes
-and configurations. To update a development server, the desired changes should be merged
-from the feature branch (or master if appropriate) into the `dev` branch. Then run
-`sudo chef-client` on the server that needs to be updated. Similarly, staging servers
-deploy from the `staging` branch and production servers from the `production` branch.
+We are moving to a new deployment pattern, based around Docker files. The `Makefile`
+provides a list of make targets to create and run a Docker image for UKHPI. Run
+`make help` to get a list of available targets.
 
-Note that updating production servers means that each server has to be dropped out of
-the load balancer pool while `chef-client` runs. The easiest way to achieve this is
-to run the Chef task from the DMS. Log in to the `lr-controller` with your username
-and password. To add a new user to the `lr-controller`, ask
-[Dave](mailto:dave.reynolds@epimorphics.com) or
-[Brian](mailto:brian.mcbride@epimorphics.com) at Epimorphics.
+More details on the new deployment process will be added in future.
 
 ## Updating geographies
 
