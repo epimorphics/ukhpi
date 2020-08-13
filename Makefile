@@ -35,8 +35,8 @@ prod: image
 
 test: image
 	@-docker stop ${APP} 2> /dev/null || true
-	@docker run -d --rm --name ${APP} -p3000:3000 -e FSA_DATA_DOT_FOOD_API_URL=${FSA_DATA_DOT_FOOD_API_URL} -e RAILS_ENV=development ${IMAGE}:${APP_VERSION}
-	@docker exec -it -e FSA_DATA_DOT_FOOD_API_URL=${FSA_DATA_DOT_FOOD_API_URL} -e RAILS_ENV=test ${APP} ./bin/rails test
+	@docker run -d --rm --name ${APP} --network=host -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=development ${IMAGE}:${APP_VERSION}
+	@docker exec -it -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=test ${APP} ./bin/rails test
 	@docker stop ${APP}
 
 tag: image
