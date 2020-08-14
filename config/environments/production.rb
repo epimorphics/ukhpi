@@ -80,5 +80,15 @@ Rails.application.configure do
   # Disable logging of the rendering of partials
   config.action_view.logger = nil
 
-  config.relative_url_root = '/app/ukhpi'
+  if ENV['RAILS_LOG_TO_STDOUT'].present?
+    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger.formatter = config.log_formatter
+    config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  end
+
+  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || ''
+
+  # API location can be specified in the environment
+  # But defaults to the dev service
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
 end
