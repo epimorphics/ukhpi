@@ -86,7 +86,7 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || ''
+  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/app/ukhpi'
 
   # API location can be specified in the environment
   # But defaults to the dev service
