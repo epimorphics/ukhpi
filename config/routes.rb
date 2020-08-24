@@ -10,4 +10,5 @@ Rails.application.routes.draw do
   resource :compare, only: %i[show], controller: :compare
   resource :print, only: %i[show], controller: :print
   resources :changelog, only: %i[index]
+  resources :about, only: %i[index]
 end

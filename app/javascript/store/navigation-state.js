@@ -34,10 +34,11 @@ function currentNavigationState (state) {
   })
 
   const queryStr = QueryString.stringify(urlState, { arrayFormat: 'bracket' })
+  const queryLangStr = `${queryStr}&lang=${window.ukhpi.locale}`
 
   return {
     navState,
-    url: `${window.location.pathname}?${queryStr}`
+    url: `${window.location.pathname}?${queryLangStr}`
   }
 }
 

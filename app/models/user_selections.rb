@@ -11,6 +11,7 @@
 class UserSelections # rubocop:disable Metrics/ClassLength
   include UserChoices
   include UserSelectionValidations
+  include UserLanguage
 
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
   DEFAULT_STATISTICS = %w[all].freeze
@@ -18,6 +19,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
   DEFAULT_REGION_TYPE = 'country'
   DEFAULT_THEMES = %w[property_type volume].freeze
+  DEFAULT_LANGUAGE = 'en'
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
@@ -31,6 +33,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
     'st' => Struct::UserParam.new(DEFAULT_STATISTICS, true, nil),
     'in' => Struct::UserParam.new(DEFAULT_INDICATORS, true, nil),
     'thm' => Struct::UserParam.new(DEFAULT_THEMES, true, nil),
+    'lang' => Struct::UserParam.new(DEFAULT_LANGUAGE, false, nil),
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),

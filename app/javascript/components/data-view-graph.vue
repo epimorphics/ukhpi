@@ -130,6 +130,7 @@ export default {
           theme: this.theme,
           location: this.$store.state.location,
           zoom: this.zoom,
+          i18n: this._i18n
         },
       );
     },

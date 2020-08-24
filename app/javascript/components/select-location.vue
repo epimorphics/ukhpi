@@ -17,7 +17,7 @@
       <el-row>
         <el-col :span='24'>
           <label>
-            Search locations:
+            {{ $t('js.location.search_locations_label') }}
             <el-input
               v-model='searchInput'
               @change='onSearchInput'
@@ -30,7 +30,7 @@
         <el-col :span='24'>
           <el-popover
             placement='bottom'
-            title='Search results'
+            :title='$t("js.location.results")'
             width='400'
             trigger='manual'
             v-model='searchResultsVisible'
@@ -38,13 +38,13 @@
             <ul v-for='result in searchResults' class='o-search-location__results'>
               <li class='o-search-location__result'>
                 <el-button type='text' @click='onSelectResult'>
-                  {{ result.labels.en }}
+                  {{ result.labels[$locale] }}
                 </el-button>
                 ({{ result | locationTypeLabel }})
               </li>
             </ul>
             <p v-if='manyResults > 0'>
-              ... plus {{ manyResults }} more.
+              {{ $t("js.location.many_results", { manyResults }) }}
             </p>
           </el-popover>
         </el-col>
@@ -63,12 +63,12 @@
       <el-row>
         <div class='c-map'>
           <div>
-            Show on map:
+            {{ $t("js.location.show_on_map") }}
             <el-radio-group v-model='locationType'>
-              <el-radio-button label='country'>Countries</el-radio-button>
-              <el-radio-button label='la'>Local authorities</el-radio-button>
-              <el-radio-button label='region'>Regions of England</el-radio-button>
-              <el-radio-button label='county'>Counties of England</el-radio-button>
+              <el-radio-button label='country'>{{ $t("js.location.type_countries") }}</el-radio-button>
+              <el-radio-button label='la'>{{ $t("js.location.type_las") }}</el-radio-button>
+              <el-radio-button label='region'>{{ $t("js.location.type_regions_england") }}</el-radio-button>
+              <el-radio-button label='county'>{{ $t("js.location.type_counties_england") }}</el-radio-button>
             </el-radio-group>
           </div>
           <div :id='mapElementId'></div>
@@ -76,12 +76,12 @@
       </el-row>
 
       <span slot='footer' class='dialog-footer'>
-        <el-button @click='onHideDialog'>Cancel</el-button>
+        <el-button @click='onHideDialog'>{{ $t('js.action.cancel') }}</el-button>
         <el-button
           type='primary'
           @click='onSaveChanges'
           :disabled='!allowConfirm'
-        >Confirm</el-button>
+        >{{ $t('js.action.confirm') }}</el-button>
       </span>
     </el-dialog>
   </div>
@@ -122,12 +122,12 @@ export default {
     prompt: {
       required: false,
       type: String,
-      default: 'To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map.',
+      default: function () { return this.$t('js.location.default_prompt')},
     },
     title: {
       required: false,
       type: String,
-      default: 'Choose a different region or location',
+      default: function () { return this.$t('js.location.default_title') },
     },
     emitEvent: {
       required: false,
@@ -142,7 +142,7 @@ export default {
 
     mapElementId() {
       return `${this.elementId}__map`;
-    },
+    }
   },
 
   watch: {
@@ -212,7 +212,7 @@ export default {
     onSelectLocationURI(uri) {
       const locationAndType = findLocationById(uri, 'uri');
       this.selectedLocation = locationAndType.location;
-      this.searchInput = locationAndType.location.labels.en;
+      this.searchInput = locationAndType.location.labels[this.$locale];
       this.noMatch = null;
     },
 
@@ -222,7 +222,7 @@ export default {
 
     isExactMatch(term, results) {
       const termLC = term.toLocaleLowerCase();
-      const location = results && results.find(result => result.labels.en.toLocaleLowerCase() === termLC);
+      const location = results && results.find(result => result.labels[this.$locale].toLocaleLowerCase() === termLC);
 
       return location && !this.isForthcomingLocation(location) ? location : null
     },
@@ -232,7 +232,7 @@ export default {
 
       if (location) {
         this.$set(this, 'searchResults', []);
-        this.$set(this, 'searchInput', location.labels.en);
+        this.$set(this, 'searchInput', location.labels[this.$locale]);
       }
     },
 

@@ -1,12 +1,10 @@
-%h3.o-heading--3 Search results
+%h3.o-heading--3
+  = t('browse.edit.search_results.title')
 %p
-  Locations matching search term
-  %code
-    = view_state.user_selections.location_search_term
-  of type
-  = succeed ':' do
-    %code
-      = view_state.user_selections.location_search_type
+  - sterm = view_state.user_selections.location_search_term
+  - stype = view_state.user_selections.location_search_type
+  = t('browse.edit.search_results.summary', sterm: sterm, stype: stype).html_safe
+
 %ul
   - view_state.matched_locations[0..9].each do |location|
     %li
@@ -14,4 +12,5 @@
         = location.label
   - if view_state.matched_locations.length > 10
     %li
-      &hellip; and #{view_state.matched_locations.length - 10} more
+      - n_more = view_state.matched_locations.length - 10
+      = t('browse.edit.search_results.more', n_more: n_more).html_safe

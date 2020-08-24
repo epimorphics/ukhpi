@@ -9,7 +9,7 @@
       %thead
         %tr
           %th{ scope: 'col' }
-            Date
+            = I18n.t('compare.print.date')
           - @view_state.selected_locations.each do |loc|
             %th{ scope: 'col' }
               = loc.label

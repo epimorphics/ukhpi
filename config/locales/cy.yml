@@ -1,0 +1,222 @@
+cy:
+  common:
+    header:
+      home_link: "[cy] Go to the UK HPI homepage"
+      app_title: "[cy] UK House Price Index"
+      beta_tag: "[cy] BETA"
+      feedback_request: "[cy] Found a problem or have a suggestion? Your <a rel='external' href='mailto:data.services@landregistry.gov.uk'>feedback</a> will help us to improve this service."
+
+    footer:
+      crown_copyright: "[cy] Crown copyright "
+      personal_info: "[cy] Personal Information Charter"
+      public_data: "[cy] HM Land Registry Public Data"
+      ogl: "[cy] Open Government Licence"
+      ogl_statement: "[cy] All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
+      application_release: "[cy] Application release"
+
+  browse:
+    show:
+      quick_link:
+        prompt: "[cy] Quick links:"
+        by_property_type: "[cy] by property type"
+        by_buyer_status: "[cy] by buyer status"
+        by_funding_status: "[cy] by funding status"
+        by_property_status: "[cy] by property status"
+
+      intro:
+        property_type: "[cy] Track the index, average price and both monthly and annual change for all property types or focus on one in particular."
+        buyer_status: "[cy] Track the index, average price and both monthly and annual change by the type of buyer e.g First Time Buyer or Former Owner Occupier"
+        funding_status: "[cy] Track the index, average price, both monthly and annual change and sales volumes by funding status e.g. Cash/Mortgage"
+        property_status: "[cy] Track the index, average price, both monthly and annual change and sales volumes by funding by property status e.g. New/Existing"
+        volume: "[cy] Track sales volumes over time"
+        volume_property_status: "[cy] Sales volume for new buildings vs. existing properties"
+        volume_funding_status: "[cy] Sales volume for cash sales vs. mortgage sales"
+
+    print:
+      reporting_period: "[cy] Reporting<br />period"
+
+      main_heading: "[cy] House Price Statistics"
+
+    edit:
+      heading: "[cy] Change your selections"
+      prompt: "[cy] Use this page to change the UKHPI statistics that are displayed on the main browse page."
+      location_heading: "[cy] Location"
+      currently_selected: "[cy] The currently selected location is:"
+      select_other: "[cy] To select another location, search for the location name below."
+
+      form:
+        location_type: "[cy] Location type"
+        search_prompt: "[cy] Search for a location"
+        dates_prompt: "[cy] Dates"
+        dates_format_sr: "[cy] dd/mm/yyyy day two digits, month two digits, year four digits"
+        displayed_indicators_heading: "[cy] Displayed indicators"
+        indicators_prompt: "[cy] You can select which of the UKHPI statistics are visible on the browse page."
+        themes_heading: "[cy] Themes"
+        statistics_heading: "[cy] Statistics"
+        indicators_heading: "[cy] Indicators"
+
+      search_results:
+        title: "[cy] Search results"
+        summary: "[cy] Locations matching search term <code>%{sterm}</code> of type <code>%{stype}</code>:"
+        more: "[cy] &hellip; and %{n_more} more"
+
+  compare:
+    show:
+      heading: "[cy] Compare UKHPI statistics across locations"
+      prompt: "[cy] Select up to five locations to compare any UKHPI statistic, for a range of dates."
+      add_location: "[cy] Add another location:"
+      search_results: "[cy] Search results:"
+
+    print:
+      locations_summary: "[cy] #{n_locations} locations"
+      unavailable: "[cy] We're sorry, #{indicator_name} is not available for #{statistic_name}."
+      date: "[cy] Date"
+      quarterly: "[cy] quarterly"
+      monthly: "[cy] monthly"
+
+  theme:
+    property_type: "[cy] Type of property"
+    buyer_status: "[cy] Buyer status"
+    funding_status: "[cy] Funding status"
+    property_status: "[cy] Property status"
+
+  statistic:
+    overall_indices: "[cy] All property types"
+    all_property_types: "[cy] All property types"
+    detached_houses: "[cy] Detached houses"
+    semi_detached_houses: "[cy] Semi-detached houses"
+    terraced_houses: "[cy] Terraced houses"
+    flats_and_maisonettes: "[cy] Flats and maisonettes"
+    new_build: "[cy] New build"
+    existing_properties: "[cy] Existing properties"
+    cash_purchases: "[cy] Cash purchases"
+    mortgage_purchases: "[cy] Mortgage purchases"
+    first_time_buyers: "[cy] First-time buyers"
+    former_owner_occupiers: "[cy] Former owner-occupiers"
+    volume: "[cy] Sales volume"
+    sales_volume: "[cy] Sales volume"
+    volume_property_status: "[cy] Sales volume by property status"
+    volume_funding_status: "[cy] Sales volume by funding status"
+
+  indicator:
+    house_price_index: "[cy] House price index"
+    hpi: "[cy] House price index"
+    percentage_monthly_change: "[cy] Percentage change (monthly)"
+    pmc: "[cy] Percentage change (monthly)"
+    percentage_annual_change: "[cy] Percentage change (yearly)"
+    pac: "[cy] Percentage change (yearly)"
+    average_price: "[cy] Average price"
+    avg: "[cy] Average price"
+    vol: "[cy] Sales volume"
+    sales_volume: "[cy] Sales volume"
+
+    sales_volume_cash: "[cy] Cash-sales volume"
+    sales_volume_mortgage: "[cy] Mortgage-sales volume"
+    sales_volume_new_build: "[cy] New-build sales volume"
+    sales_volume_existing: "[cy] Existing-property sales volume"
+
+  label:
+    date: "[cy] Date"
+
+  preposition:
+    by: "[cy] by"
+    in: "[cy] in"
+    for: "[cy] for"
+    to: "[cy] to"
+    from: "[cy] from"
+    between: "[cy] between"
+
+  action:
+    change: "[cy] change"
+    hide: "[cy] hide"
+    reveal: "[cy] reveal"
+    browse: "[cy] browse"
+    compare_locations: "[cy] compare locations"
+    sparql: "[cy] SPARQL query"
+    user_guide: "[cy] user guide"
+    about: "[cy] about UKHPI"
+    search: "[cy] search"
+    changelog: "[cy] change history"
+    show_result: "[cy] show result"
+    compare: "[cy] compare"
+    update_comparison: "[cy] update comparison"
+
+  connective:
+    and: "[cy] and"
+
+  js:
+    action:
+      download: "[cy] Download this data"
+      data_graph: "[cy] See data graph"
+      data_table: "[cy] See data table"
+      compare: "[cy] Compare with location ..."
+      select_location: "[cy] select a diffent location"
+      cancel: "[cy] cancel"
+      confirm: "[cy] confirm"
+      print_table: "[cy] print this table"
+      download_data_as: "[cy] Download this data as:"
+
+    graph:
+      no_data: "[cy] Sorry, there is no %{label} data available for %{location}. Please select a different location."
+
+    location:
+      results: "[cy] Search results"
+      many_results: "[cy] ... plus ${manyResults} more."
+      show_on_map: "[cy] Show on map:"
+      type_countries: "[cy] Countries"
+      type_las: "[cy] Local authorities"
+      type_regions_england: "[cy] Regions of England"
+      type_counties_england: "[cy] Counties of England"
+      default_title: "[cy] Choose a different region or location"
+      default_prompt: "[cy] To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map."
+      search_locations_label: "[cy] Search locations:"
+
+    data_table:
+      date: "[cy] Date"
+
+    download:
+      prompt: "[cy] You can download this data, so that you can process it further yourself. You can also <a href='%{qonsolePath}'>try the SPARQL query</a>."
+      selected: "[cy] Download only <strong>%{indicatorName}</strong> by <strong>%{themeName}</strong> in %{locationName}:"
+      all: "[cy] Download <strong>all UKHPI data</strong> for %{locationName} for this period:"
+      theme: "[cy] Download <strong>all</strong> of index, average and percentage change by <strong>%{themeName}</strong> in %{locationName}:"
+      csv_prompt: "[cy] download CSV/spreadsheet"
+      json_prompt: "[cy] download JSON"
+      license: "[cy] This data is licensed under the terms of the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government License</a>."
+
+    compare:
+      action_prompt: "[cy] Select an area to compare against %{location}"
+      prompt: "[cy] You can see how %{selectedLocationLabel} compares to other places:"
+      select_action: "[cy] select another location"
+      compare_action: "[cy] Compare"
+      dates_from: "[cy] Starting from"
+      dates_to: "[cy] up until"
+      validation_dates: "[cy] The start date must be earlier than the end date"
+      for_locations: "[cy] For locations:"
+      title: "[cy] Comparison of %{indLabel} of %{statLabel} for %{locLabel}"
+      zero_locations: "[cy] zero locations"
+      one_locations: "[cy] one location"
+      two_locations: "[cy] two locations"
+      n_locations: "[cy] %{num} locations"
+      csv_format: "[cy] CSV (spreadsheet)"
+      json_format: "[cy] JSON"
+
+    dates_picker:
+      select_dates: "[cy] change start or end date"
+      date_range_prompt: "[cy] Change the date range"
+      start: "[cy] Start:"
+      end: "[cy] End:"
+
+# old-------------
+
+  index:
+    exception_preamble: "[cy] There was a problem with your search:"
+    multpiple_search_preamble: "[cy] More than one location matches your search terms. Select an alternative below, or change your search term:"
+    show_all_results: "[cy] Showing %d results"
+    show_some_results: "[cy] Showing %d of %d results"
+    location: "[cy] Location"
+    from: "[cy] From"
+    to: "[cy] To"
+
+  search_state:
+    reveal_button_caption: "[cy] customise your search"
+    revealing_button_caption: "[cy] hide"

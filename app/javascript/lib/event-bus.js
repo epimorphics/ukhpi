@@ -8,7 +8,7 @@
  * ```
  */
 
-import Vue from 'vue'
+import Vue from 'vue/dist/vue.esm'
 
 const bus = new Vue()
 export default bus

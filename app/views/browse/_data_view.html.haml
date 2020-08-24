@@ -7,21 +7,21 @@
     %h2.o-heading--3
       = data_view.title
       - href = data_view.add_remove_theme_link(!visible)
-      - visibility_action = visible ? 'hide' : 'reveal'
+      - visibility_action = t("action.#{visible ? 'hide' : 'reveal'}")
       %a.o-data-view__hide-action{ href: "#{href}\##{node_id}", class: visibility_action }
         = visibility_action
 
   - if visible
     .o-data-view__options.u-js-hidden
-      For
+      = t('preposition.for').titlecase
       = succeed ',' do
         = data_view.selected_location_label
 
       = data_view.from_date.strftime('%b %Y')
-      to
+      = t('preposition.to')
       = data_view.to_date.strftime('%b %Y')
 
-      = link_to('change', edit_browse_path(data_view.user_selections.params))
+      = link_to(t('action.change'), edit_browse_path(data_view.user_selections.params))
 
       %br
       %span.o-data-view__options-statistics
@@ -30,7 +30,7 @@
             - checked = data_view.statistic_selected?(stat)
             %input{ type: 'checkbox', value: stat.slug, checked: checked }
             %a{ href: data_view.add_remove_statistic(!checked, stat) }
-              = t(stat.label_key)
+              = stat.label
 
     .o-data-view__data-table.u-js-hidden
       - table_data = data_view.as_table_data

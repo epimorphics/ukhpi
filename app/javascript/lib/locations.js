@@ -31,7 +31,7 @@ let indexInitialised = false
 
 /** Which inddex should this location go into? */
 export function locationIndexType (location) {
-  const name = location.labels.en
+  const name = location.labels[window.ukhpi.locale]
 
   switch (location.type) {
     case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion':
@@ -48,8 +48,9 @@ export function locationIndexType (location) {
 
 /** Create an inverted index of names to locations, that we can use in search */
 function indexLocations () {
+  const locale = window.ukhpi.locale
   _.each(Object.values(locations), (location) => {
-    const name = location.labels.en
+    const name = location.labels[locale]
     locationsIndex[locationIndexType(location)][name] = location
   })
 }
@@ -80,8 +81,9 @@ export function locationsNamed (locationName) {
     return null
   }
 
+  const locale = window.ukhpi.locale
   const regex = new RegExp(locationName, 'i')
-  return locationsList.filter(location => location.labels.en.match(regex))
+  return locationsList.filter(location => location.labels[locale] && location.labels[locale].match(regex))
 }
 
 /** @return the location matching the given name */
@@ -94,11 +96,12 @@ export function locationNamed (locationName) {
 export function findLocationNamed (locationName) {
   const normalisedName = exceptions[locationName] || locationName
   const matcher = new RegExp(`^${normalisedName}$`, 'i')
+  const locale = window.ukhpi.locale
   let result = null
 
   _.find(indexedLocations(), (typedLocations, locationType) =>
     _.find(typedLocations, (location) => {
-      if (matcher.test(location.labels.en)) {
+      if (matcher.test(location.labels[locale])) {
         result = { location, locationType }
       }
       return result

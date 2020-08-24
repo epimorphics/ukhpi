@@ -4,7 +4,8 @@
     %meta{ charset: 'utf-8' }
     %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
-    %title UK House Price Index
+    %title
+      = I18n.t('common.header.app_title')
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
@@ -30,10 +31,10 @@
           .content
             %nav#proposition-menu
               %a#proposition-name{ href: '/app/ukhpi' }
-                %strong UK House Price Index
+                %strong
+                  = I18n.t('common.header.app_title')
 
     .o-lr-top-bar
-
 
     = render partial: 'common/flash_message'
 

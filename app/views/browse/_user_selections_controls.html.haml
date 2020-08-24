@@ -1,33 +1,36 @@
 %p
-  = label_tag(:'location-type', 'Location type')
+  = label_tag(:'location-type', t('browse.edit.form.location_type'))
   = select_tag(:'location-type', options_for_select(view_state.location_type_options))
 
 %p
-  = label_tag(:'location-term', 'Search for a location')
+  = label_tag(:'location-term', t('browse.edit.form.search_prompt'))
   = text_field_tag(:'location-term')
 
   %button{ type: 'submit', value: 'search', name: 'form-action' }
-    Search
+    = t('action.search')
 
 - if view_state.user_selections.selected_location
   %input{ type: :hidden, name: :location, value: view_state.user_selections.selected_location }
 
-%h3.o-heading--3 Dates
+%h3.o-heading--3
+  = t('browse.edit.form.dates_prompt')
 
 %p
-  = label_tag(:from, "From<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:".html_safe)
+  = label_tag(:from, "#{t('preposition.from').titlecase}<span class='u-sr-only'> #{t('browse.edit.form.dates_format_sr')}</span>:".html_safe)
   = date_field_tag(:from, view_state.user_selections.from_date)
 
 %p
-  = label_tag(:to, "To<span class='u-sr-only'>dd/mm/yyyy day two digits, month two digits, year four digits</span>:".html_safe)
+  = label_tag(:to, "#{t('preposition.to')}<span class='u-sr-only'> #{t('browse.edit.form.dates_format_sr')}</span>:".html_safe)
   = date_field_tag(:to, view_state.user_selections.to_date)
 
-%h3.o-heading--3 Displayed indicators
+%h3.o-heading--3
+  = t('browse.edit.form.displayed_indicators_heading')
 
 %p
-  You can select which of the UKHPI statistics are visible on the browse page.
+  = t('browse.edit.form.indicators_prompt')
 
-%h4.o-heading--4 Themes
+%h4.o-heading--4
+  = t('browse.edit.form.themes_heading')
 
 %ul
   - view_state.data_cube.each_theme do |_key, theme|
@@ -36,33 +39,35 @@
       - checked = view_state.selected_theme?(theme)
       = label_tag(:'thm[]', for: :id) do
         = check_box_tag(:'thm[]', theme.slug, checked, id: id)
-        = t(theme.slug)
+        = theme.label
 
-%h4.o-heading--4 Statistics
+%h4.o-heading--4
+  = t('browse.edit.form.statistics_heading')
 
 %ul
   - view_state.data_cube.each_theme do |theme_key, theme|
     %li
-      = t(theme_key)
+      = theme.label
     - theme.statistics.each do |statistic|
       %li
         - id = "statistic-#{statistic.slug}"
         - checked = view_state.selected_param?(:statistic, statistic.slug)
         = label_tag(:'st[]', for: id) do
           = check_box_tag(:'st[]', statistic.slug, checked, id: id)
-          = t(statistic.label_key)
+          = statistic.label
 
-%h4.o-heading--4 Indicator
+%h4.o-heading--4
+  = t('browse.edit.form.indicators_heading')
 
 %ul
   - view_state.data_cube.indicators.each do |indicator|
     %li
       - id = "indicator-#{indicator.slug}"
       - checked = view_state.selected_param?(:indicator, indicator.slug)
-      = label_tag(:'indicator[]', for: id) do
-        = check_box_tag(:'indicator[]', indicator.slug, checked, id: id)
-        = t(indicator.label_key)
+      = label_tag(:'in[]', for: id) do
+        = check_box_tag(:'in[]', indicator.slug, checked, id: id)
+        = indicator.label
 
 %p
   %button{ type: 'submit', value: 'view', name: 'form-action' }
-    Show result
+    = t('action.show_result')

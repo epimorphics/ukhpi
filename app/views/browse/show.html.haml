@@ -2,14 +2,22 @@
   .column-full
     %article
       %p
-        Quick links:
-        %a{ href: '#property_type' } <i class='fa fa-caret-right'></i> by property type
-        %a{ href: '#buyer_status' } <i class='fa fa-caret-right'></i> by buyer status
-        %a{ href: '#funding_status' } <i class='fa fa-caret-right'></i> by funding status
-        %a{ href: '#property_status' } <i class='fa fa-caret-right'></i> by property status
+        =t('browse.show.quick_link.prompt')
+        %a{ href: '#property_type' }
+          <i class='fa fa-caret-right'></i>
+          = t('browse.show.quick_link.by_property_type')
+        %a{ href: '#buyer_status' }
+          <i class='fa fa-caret-right'></i>
+          = t('browse.show.quick_link.by_buyer_status')
+        %a{ href: '#funding_status' }
+          <i class='fa fa-caret-right'></i>
+          =t('browse.show.quick_link.by_funding_status')
+        %a{ href: '#property_status' }
+          <i class='fa fa-caret-right'></i>
+          = t('browse.show.quick_link.by_property_status')
 
       %h1.o-heading--2
-        = t('index.main_heading')
+        = t('browse.show.main_heading')
 
       #application
         %router-view
@@ -17,8 +25,8 @@
       - @view_state.each_theme_with_views do |theme, data_views|
         .o-ukhpi-theme
           %h2.o-heading--3{ id: theme.slug }
-            = t(theme.slug)
+            = t("theme.#{theme.slug}")
           %p.o-ukhpi-theme__intro.u-muted
-            = t("intro.#{theme.slug}")
+            = t("browse.show.intro.#{theme.slug}")
           - data_views.each do |data_view|
             = render partial: 'data_view', locals: { data_view: data_view }

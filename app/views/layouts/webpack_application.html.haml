@@ -4,13 +4,15 @@
     %meta{ charset: 'utf-8' }
     %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
-    %title UK House Price Index
+    %title
+      = I18n.t('common.header.app_title')
     = render partial: 'common/google-analytics'
     :javascript
       document.querySelector('html').classList.add('js');
       window.ukhpi = window.ukhpi || {};
       window.ukhpi.environment = '#{ENV["DEPLOYMENT_ENVIRONMENT"] || Rails.env}';
       window.ukhpi.version = '#{Version::VERSION}';
+      window.ukhpi.locale = '#{I18n.locale}';
 
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags

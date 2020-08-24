@@ -9,6 +9,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include LocationsTable
 
   attr_reader :user_compare_selections, :query_results
+  alias user_selections user_compare_selections
 
   def initialize(user_compare_selections, query_results)
     @user_compare_selections = user_compare_selections
@@ -24,20 +25,26 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :as_json, to: :user_compare_selections
   delegate :selected_locations, to: :user_compare_selections
 
-  def headline_summary
-    ind = I18n.t(indicator.slug)
-    stat = I18n.t(statistic.label_key).downcase
+  def headline_summary # rubocop:disable Metrics/AbcSize
+    ind = I18n.t("indicator.#{indicator.slug}")
+    stat = I18n.t("statistic.#{statistic.label_key}").downcase
     from = user_compare_selections.from_date.strftime('%b %Y')
     to = user_compare_selections.to_date.strftime('%b %Y')
 
-    "<strong>#{ind}</strong> for <strong>#{stat}</strong>, #{from} to #{to}".html_safe
+    <<~HEADLINE
+      <strong>#{ind}</strong>
+      #{I18n.t('preposition.for')}
+      <strong>#{stat}</strong>,
+      #{from} #{I18n.t('preposition.to')} #{to}
+    HEADLINE
+      .html_safe
   end
 
   def locations_summary
     if (1..2).cover?(selected_locations.length)
-      selected_locations.map(&:label).join(' and ')
+      selected_locations.map(&:label).join(" #{I18n.t('connective.and')} ")
     else
-      "#{selected_locations.length} locations"
+      I18n.t('compare.print.locations_summary', n_locations: selected_locations.length)
     end
   end
 
@@ -90,7 +97,11 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
 
   def unavailable_statistic_indicator?
     if indicator.volume? && !statistic.volume?
-      "We're sorry, #{indicator.label.downcase} is not available for #{statistic.label}."
+      I18n.t(
+        'compare.print.unavailable',
+        indicator_name: indicator.label.downcase,
+        statistic_name: statistic.label
+      )
     else
       false
     end

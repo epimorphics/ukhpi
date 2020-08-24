@@ -1,20 +1,21 @@
-%h2.o-heading--2 Change your selections
+%h2.o-heading--2
+  = t('browse.edit.heading')
 
 %p
-  Use this page to change the UKHPI statistics that are displayed on the main
-  browse page.
+  = t('browse.edit.prompt')
 
 = form_tag(edit_browse_path, method: :get) do
 
-  %h3.o-heading--3 Location
+  %h3.o-heading--3
+    = t('browse.edit.location_heading')
 
   - if @view_state.selected_location
     %p
-      The currently selected location is:
+      = t('browse.edit.currently_selected')
       = succeed '.' do
         %strong
           = @view_state.selected_location_label
-      To select another location, search for the location name below.
+      = t('browse.edit.select_other')
 
   - if @view_state.matched_locations
     = render partial: 'matching_locations', locals: { view_state: @view_state }

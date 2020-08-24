@@ -28,9 +28,9 @@ export default {
     },
 
     prompt() {
-      const label = this.selectedLocation ? this.selectedLocation.labels.en : '';
-      return `Select an area to compare against ${label}`;
-    },
+      const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : '';
+      return this.$t('js.compare.action_prompt', { location: label });
+    }
   },
 
   components: {
@@ -58,7 +58,7 @@ export default {
       const st = this.statistic.slug;
       const path = document.location.pathname.replace(/browse/, 'compare');
 
-      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}`;
+      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}&lang=${this.$locale}`;
     },
   },
 

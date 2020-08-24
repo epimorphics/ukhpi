@@ -2,7 +2,7 @@
   .header-wrapper
     .header-global
       .header-logo
-        %a.content{ href: '/app/ukhpi', title: 'Go to the UK HPI homepage' }
+        %a.content{ href: '/app/ukhpi', title: t('common.header.home_link') }
           = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: '')
 
 
@@ -11,27 +11,34 @@
         %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
         %nav#proposition-menu
           %a#proposition-name{ href: '/app/ukhpi' }
-            UK House Price Index
+            = t('common.header.app_title')
 
           %ul#proposition-links
             %li
-              %a{ href: browse_path, class: active_class(browse_path) } browse
+              = link_to(t('action.browse'), browse_path(lang: I18n.locale), class: active_class(browse_path))
             %li
-              %a{ href: compare_path, class: active_class(compare_path) } compare locations
+              = link_to(t('action.compare_locations'), compare_path(lang: I18n.locale), class: active_class(compare_path))
             %li
-              %a{ href: '/app/qonsole' } SPARQL query
+              = link_to(t('action.sparql'), '/app/qonsole')
             %li
-              %a{ href: '/app/doc/ukhpi-user-guide' } user guide
+              = link_to(t('action.user_guide'), '/app/doc/ukhpi-user-guide')
             %li
-              %a{ href: '/app/doc/ukhpi' } about UKHPI
+              = link_to(t('action.about'),about_index_path(lang: I18n.locale), class: active_class(about_index_path))
+            %li
+              = link_to(t('action.changelog'), changelog_index_path(lang: I18n.locale), class: active_class(changelog_index_path))
 
 .o-lr-top-bar
 
 .container.o-container
-  .o-beta-banner
-    %p
-      %strong.o-beta-tag BETA
-      %span.text-muted
-        This is a new service – your
-        <a rel="external" href="mailto:data.services@landregistry.gov.uk">feedback</a>
-        will help us to improve it.
+  .o-secondary-banner
+    %div
+    .o-secondary-banner__lang-select
+      - if @view_state.user_selections.english?
+        English
+      - else
+        = link_to('English', @view_state.user_selections.alternative_language_params.params)
+      |
+      - if @view_state.user_selections.welsh?
+        Cymraeg
+      - else
+        = link_to('Cymraeg', @view_state.user_selections.alternative_language_params.params)

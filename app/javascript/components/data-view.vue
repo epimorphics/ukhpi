@@ -8,7 +8,7 @@
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane label='See data graph' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -17,7 +17,7 @@
           >
           </data-view-graph>
         </el-tab-pane>
-        <el-tab-pane label='See data table' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.data_table")' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-table
             :statistics='availableStatistics'
             :indicator='indicator'
@@ -26,19 +26,18 @@
           >
           </data-view-table>
         </el-tab-pane>
-        <el-tab-pane label='Download this data' :name='`download-tab${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.download")' :name='`download-tab${indicator.slug}-${theme.slug}`'>
           <data-view-download
             :theme='theme'
             :indicator='indicator'
           >
           </data-view-download>
         </el-tab-pane>
-        <el-tab-pane label='Compare with location ...' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :label='$t("js.action.compare")' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
           <p v-if='selectedLocation'>
-            You can see how {{ selectedLocation.labels.en }} compares to
-            other places:
+            {{ $t('js.compare.prompt', { selectedLocationLabel: this.selectedLocationLabel }) }}
             <el-button @click='onCompareSelect'>
-              select another location
+              {{ $t('js.compare.select_action') }}
             </el-button>
           </p>
         </el-tab-pane>
@@ -62,9 +61,12 @@ import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 import safeForEach from '../lib/safe-foreach';
 import AvailableStatistics from '../mixins/available-statistics';
+import i18n from 'lang'
 
 export default {
   mixins: [AvailableStatistics],
+
+  i18n,
 
   data: () => ({
     activeTab: '',
@@ -117,6 +119,10 @@ export default {
     selectedLocation() {
       return this.$store.state.location;
     },
+
+    selectedLocationLabel () {
+      return this.selectedLocation.labels[this.$locale]
+    }
   },
 
   methods: {
@@ -196,8 +202,8 @@ export default {
 
   watch: {
     selectedLocation() {
-      const newLabel = this.selectedLocation.labels.en;
-      const nodes = document.querySelectorAll(`#${this.elementId} .o-data-view__location-name`);
+      const newLabel = this.selectedLocationLabel;
+      const nodes = document.querySelectorAll(`.o-data-view__location-name`);
       safeForEach(nodes, (node) => {
         node.innerHTML = newLabel; // eslint-disable-line no-param-reassign
       });

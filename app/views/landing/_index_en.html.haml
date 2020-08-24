@@ -1,0 +1,196 @@
+%section#main.c-landing-page.u-lang--en
+  %h1.heading-large UK House Price Index
+
+  %p
+    Use the search tool to find house price trends in the UK:
+
+  %p.c-cta
+    = link_to "search the UK house price index", browse_path, class: "c-search-tool"
+
+
+  %h2.heading-medium
+    Current index
+
+  .c-current-figures.panel.panel-border-wide
+    %p
+      As of
+      %span.c-headline-figure.c-headline-figure__period
+        = @view_state.period
+      the average house price in the UK is
+      %span.c-headline-figure.c-headline-figure__average-price
+        = succeed "," do
+          = number_to_currency( @view_state.average_price, locale: "en-GB", precision: 0 )
+      and the index stands at
+      %span.c-headline-figure.c-headline-figure__house-price-index
+        = succeed "." do
+          = @view_state.house_price_index
+      Property prices have
+      %span.c-headline-figure.c-headline-figure__monthly-change
+        = @view_state.percentage_monthly_change
+      compared to the
+      %span
+        previous month,
+      and
+      %span.c-headline-figure.c-headline-figure__annual-change
+        = @view_state.percentage_annual_change
+      compared to the
+      %span
+        previous year.
+
+
+  %h2.heading-medium About the House Price Index
+
+  %p
+    The UK House Price Index (HPI) uses house sales data from
+    = succeed "," do
+      = link_to "HM Land Registry", "//www.gov.uk/government/organisations/land-registry"
+    = succeed "," do
+      = link_to "Registers of Scotland", "//www.ros.gov.uk/"
+    and
+    = link_to "Land and Property Services Northern Ireland", "//www.finance-ni.gov.uk/land-property-services-lps"
+    and is calculated by the
+    = succeed "." do
+      = link_to "Office for National Statistics", "//ons.gov.uk"
+    The index applies a statistical method, called a
+    = succeed "," do
+      = link_to "hedonic regression model", "//www.ons.gov.uk/economy/inflationandpriceindices/methodologies/developmentofasingleofficialhousepriceindex"
+    to the various sources of data on property price and attributes
+    to produce estimates of the change in house prices each period.
+
+  %p
+    The index is published monthly, with Northern Ireland figures updated quarterly.
+
+  %p
+    It is advised that low number of sales transactions in some local authorities can
+    lead to volatility in the estimates at these levels. Geographies with low number
+    of sales transactions should be analysed in the context of their longer-term trends
+    rather than focusing on monthly movements. Our
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/' }
+      guidance page
+    provides further detail about our data and its quality.
+
+  %p
+    Historic data within this tool is derived. Under the UK HPI, data is
+    available from 1995 for England and Wales, 2004 for Scotland and
+    2005 for Northern Ireland. A longer back-series has been derived by
+    using the historic path of the Office for National Statistics HPI to
+    construct a series back to 1968.
+
+  %h2.heading-medium Help and support
+  %p
+    There is a
+    = link_to('user guide', '/app/doc/ukhpi-user-guide')
+    for this service, and you can
+    = succeed('.') do
+      = link_to('read more about UKHPI linked-data', '/app/doc/ukhpi')
+    For further assistance, please
+    = mail_to('data.services@landregistry.gov.uk', 'send us an email')
+
+  %h2.heading-medium Downloading House Price Index Data
+
+  %p
+    Using the
+    = link_to "search tool", browse_path, class: ""
+    you can identify a specific subset of house price index data you're interested
+    in, and then download it. If you would like to
+    %strong
+      download all of the UKHPI data in comma-separated (CSV) format,
+    please see the
+    = link_to "https://www.gov.uk/government/collections/uk-house-price-index-reports" do
+      %strong
+        UK House Price Index reports page.
+
+  %h2.heading-medium
+    UK House Price Index Linked-Data
+
+  %p
+    We publish this data in
+    = link_to( "linked data", "https://en.wikipedia.org/wiki/Linked_data" )
+    format, aiming for
+    = succeed "." do
+      %a{ href: "http://5stardata.info/en/"} five-star rating
+
+  %p
+    To try out your own
+    %a{ href: "https://en.wikipedia.org/wiki/SPARQL"} queries
+    against our linked-data publications, use
+    = succeed "." do
+      %a{ href: "/app/qonsole"} the SPARQL query form
+    We have included some example queries
+    with the form, and you can generate output in a variety of different formats.
+
+  %p
+    If you want to see, and run, the SPARQL query that is used to generate the report
+    created in the search tool, use the <code>show SPARQL query</code> button.
+
+  %h2.heading-medium Changes to local authority geography April 2020
+  %p
+    A change to the geography of some local authorities will be made in
+    the February 2020 release (release date 22&nbsp;April&nbsp;2020). The changes
+    are in line with the updates given by ONS Geography. These include:
+
+  %ul.list.list-bullet
+    %li
+      Bournemouth (E06000028), Christchurch (E07000048) and Poole (E06000029)
+      will merge to create a new local authority “Bournemouth, Christchurch and Poole” (E06000058).
+    %li
+      East Dorset (E07000049), North Dorset (E07000050), Purbeck (E07000051),
+      West Dorset (E07000052) and Weymouth and Portland (E07000053)
+      will merge to create a new local authority “Dorset” (E06000059).
+    %li
+      Taunton Deane (E07000190) and West Somerset (E07000191) will
+      merge to create a new local authority “Somerset West and Taunton” (E07000246).
+    %li
+      Forest Heath (E07000201) and St Edmundsbury (E07000204) will
+      merge to create a new local authority “West Suffolk” (E07000245).
+    %li
+      Suffolk Coastal (E07000205) and Waveney (E07000206) will merge
+      to create a new local authority “East Suffolk” (E07000244).
+    %li
+      There will be a minor local authority district boundary change
+      to City of Glasgow, its geography code will change from S12000046 to S12000049.
+    %li
+      There will be a minor local authority district boundary change to North
+      Lanarkshire, its geography code will change from S12000044 to S12000050.
+
+  %p
+    Following this, in our April 2020 release (to be released on 17&nbsp;June&nbsp;2020) the following change will be made:
+
+  %ul.list.list-bullet
+    %li
+      Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000006) and
+      Wycombe (E07000007) will merge to create a new local authority “Buckinghamshire” (E06000060).
+
+  %p
+    Full details of the affected geographies can be found in
+    = link_to('the changelog', changelog_index_path)
+
+  %p
+    Links to other sources of open data are provided under the Open Government Licence
+    (ONS) and Open Data Licence (OS). HM Land Registry is not responsible for the
+    content or reliability of any linked websites.
+
+  %h2.heading-medium Contact details
+  %p
+    Email
+    %a{ href: 'mailto:data.services@landregistry.gov.uk' }
+      data.services@landregistry.gov.uk
+    <br />
+    Telephone
+    %a{ href: 'tel:+44-300-006-0478'}
+      0300 006 0478
+    <br />
+    %a{ href: 'https://help.landregistry.gov.uk/app/contactus_general/' }
+      Contact form
+
+
+  .c-logos
+    %p.u-text-center
+      = link_to "//www.gov.uk/government/organisations/land-registry" do
+        = image_tag( "hm_lr_logo.png")
+      = link_to "//www.ros.gov.uk/" do
+        = image_tag( "ros_logo.png" )
+      = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
+        = image_tag( "lps-identity.png" )
+      = link_to "//ons.gov.uk" do
+        = image_tag( "ons_logo.png" )

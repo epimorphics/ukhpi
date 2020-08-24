@@ -36,6 +36,7 @@
     "rails-erb-loader": "^5.5.2",
     "regenerator-runtime": "^0.13.3",
     "vue": "^2.6.11",
+    "vue-i18n": "^8.20.0",
     "vue-loader": "^15.7.1",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.6.10",
@@ -51,7 +52,8 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "postcss-smart-import": "^0.7.6",
-    "webpack-dev-server": "^3.7.2"
+    "webpack-dev-server": "^3.7.2",
+    "yaml-loader": "^0.6.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

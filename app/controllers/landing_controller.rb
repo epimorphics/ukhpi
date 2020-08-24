@@ -3,6 +3,6 @@
 # :nodoc:
 class LandingController < ApplicationController
   def index
-    @landing_state = LandingState.new
+    @view_state = LandingState.new(UserLanguageSelection.new(params))
   end
 end

@@ -14,6 +14,12 @@ import store from '../store/index'
 // Add fix for IE Edge
 import '../lib/ie-d3-fix'
 
+// set up internationalization support
+import VueI18n from 'vue-i18n'
+import i18n from 'lang'
+
+Vue.use(VueI18n)
+
 // Use Element.IO
 Vue.use(ElementUI, { locale })
 
@@ -31,19 +37,22 @@ Numeral.register('locale', 'gb', {
 Numeral.locale('gb')
 
 document.addEventListener('DOMContentLoaded', () => {
-  // Sentry.io logging
-  Sentry.init({
-    dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
-    integrations: [new Integrations.Vue({ Vue, attachProps: true })],
-    release: window.ukhpi.version || 'unknown-version'
-  })
-  Sentry.configureScope(scope => {
-    scope.setTag('app', 'ukhpi-js')
-  })
+  if (process.env.NODE_ENV === 'production') {
+    // Sentry.io logging
+    Sentry.init({
+      dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+      integrations: [new Integrations.Vue({ Vue, attachProps: true })],
+      release: window.ukhpi.version || 'unknown-version'
+    })
+    Sentry.configureScope(scope => {
+      scope.setTag('app', 'ukhpi-js')
+    })
+  }
 
   /* eslint-disable no-new */
   new Vue({
     router,
-    store
+    store,
+    i18n
   }).$mount('#application')
 })

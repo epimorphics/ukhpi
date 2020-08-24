@@ -1,3 +1,9 @@
+.o-feedback
+  .container.o-container
+    .row
+      %p.text-muted
+        = t('common.header.feedback_request').html_safe
+
 %footer#footer.footer.group.js-footer
   .container.o-container.footer-wrapper
     .footer-meta
@@ -5,20 +11,23 @@
         %h2.o-footer--h2.hidden.u-print-hidden Support links
         %ul.list-inline
           %li
-            %a{:href => "http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm"} &copy; Crown copyright #{Time.now.year}
+            %a{:href => "http://www.nationalarchives.gov.uk/information-management/our-services/crown-copyright.htm"}
+              &copy;
+              = t('common.footer.crown_copyright')
+              = Time.now.year
           %li.u-print-hidden
-            %a{:href => "https://www.gov.uk/government/organisations/land-registry/about/personal-information-charter"} Personal Information Charter
+            %a{:href => "https://www.gov.uk/government/organisations/land-registry/about/personal-information-charter"}
+              = t('common.footer.personal_info')
           %li.u-print-hidden
-            %a{:href => "https://www.gov.uk/land-registry-public-data"} HM Land Registry Public Data
+            %a{:href => "https://www.gov.uk/land-registry-public-data"}
+              = t('common.footer.public_data')
         .ogl.open-government-licence
           %p.logo.u-print-hidden
             %a{:href => "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3", rel:"license"}
-              Open Government Licence
+              = t('common.footer.ogl')
           %p
-            All content is available under the
-            %a{:href => "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3"} Open Government Licence v3.0
-            except where otherwise stated
+            = t('common.footer.ogl_statement').html_safe
         .clearfix
         %p.u-muted--footer
-          Application release
+          = t('common.footer.application_release')
           = Version::VERSION

@@ -1,19 +1,22 @@
 .grid-row
   .column-full
     %article.c-compare
-      %h2.o-heading--2 Compare UKHPI statistics across locations
+      %h2.o-heading--2
+        = t('compare.show.heading')
       %p.u-muted
-        Select up to five locations to compare any UKHPI statistic, for a range of dates.
+        = t('compare.show.prompt')
 
       .c-location-compare--non-js.u-js-hidden
         %form.c-compare__form{ action: compare_path, method: 'get' }
           %p
-            %label{ for: 'select-in' } Compare
+            %label{ for: 'select-in' }
+              = t('action.compare').titlecase
             %select#select-in{ name: 'in' }
               - UkhpiDataCube::INDICATORS.each do |indicator|
                 %option{ value: indicator.slug, selected: @view_state.selected_indicator == indicator.slug }
                   = indicator.label
-            %label{ for: 'select-st' } for
+            %label{ for: 'select-st' }
+              = t('preposition.for')
             %select#select-st{ name: 'st' }
               - UkhpiDataCube::THEMES.each_value do |theme|
                 %optgroup{ label: theme.label }
@@ -21,16 +24,18 @@
                     %option{ value: stat.slug, selected: @view_state.selected_statistic == stat.slug }
                       = stat.label
             %label{ for: 'from-date' }
-              from
-              %span.u-sr-only dd/mm/yyyy day two digits, month two digits, year four digits
+              = t('preposition.from')
+              %span.u-sr-only
+                = t('browse.edit.form.dates_format_sr')
             %input#from-date{ type: 'date', name: 'from', value: @view_state.from_date }
             %label{ for: 'to-date' }
-              to
-              %span.u-sr-only dd/mm/yyyy day two digits, month two digits, year four digits
+              = t('preposition.to')
+              %span.u-sr-only
+                = t('browse.edit.form.dates_format_sr')
             %input#to-date{ type: 'date', name: 'to', value: @view_state.to_date }
 
           %p.c-compare__locations-prompt
-            Between:
+            = t('preposition.between').titlecase
           %ul.c-compare__locations-list
             - @view_state.selected_locations.each do |location|
               %li.c-compare__location
@@ -40,13 +45,14 @@
                 %input{ type: 'hidden', name: 'location[]', value: location.gss }
 
             %li.c-compare__add-location
-              Add another location:
+              = t('compare.show.add_location')
               %input{ type: 'text', name: 'location-term', value: @view_state.search_term }
               %button{ type: 'submit', value: 'search', name: 'form-action' }
-                Search
+                = t('action.search')
 
           - if @view_state.search_results
-            %p Search results:
+            %p
+              = t('compare.show.search_results')
             %ul.c-compare__search_results
               - @view_state.search_results.each do |location|
                 %li
@@ -54,7 +60,7 @@
                     = location.label
           %p
             %button{ type: 'submit' }
-              Update comparison
+              = t('action.update_comparison')
 
       - unless @view_state.search?
         - if (msg = @view_state.unavailable_statistic_indicator?)
@@ -65,7 +71,7 @@
             %thead
               %tr
                 %th{ scope: 'col' }
-                  Date
+                  = t('label.date')
                 - @view_state.selected_locations.each do |loc|
                   %th{ scope: 'col' }
                     = loc.label

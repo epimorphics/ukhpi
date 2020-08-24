@@ -3,7 +3,7 @@
     <table class='o-data-table'>
       <thead>
         <tr>
-          <th class='u-left' scope='col'>Date</th>
+          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
           <th v-for='column in columns'
               :key='`th-${column.slug}`'
               class='u-right'
@@ -25,7 +25,7 @@
     <div class='o-data-view__table-print'>
       <a :href='printUrl' target='_' class='o-print-action'
       >
-        <i class='fa fa-print'></i> Print this table
+        <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
       </a>
     </div>
   </div>
@@ -69,6 +69,7 @@ export default {
         from: this.$store.state.fromDate,
         to: this.$store.state.toDate,
         location: location.uri,
+        lang: this.$locale
       };
 
       return `${Routes.printPath(params)}`;
