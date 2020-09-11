@@ -94,7 +94,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
 
   def dates_summary
     dates
-      .map { |date| date.strftime('%B %Y') }
+      .map { |date| I18n.l(date, format: '%B %Y') }
       .join(' &ndash; ')
       .html_safe
   end

@@ -1,11 +1,15 @@
 import Vue from 'vue/dist/vue.esm'
 import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import localeEn from 'element-ui/lib/locale/lang/en'
+import localeElementCy from '../lang/element-ui-cy'
+import localeD3Cy from '../lang/d3-timeformat-cy.json'
 import Numeral from 'numeral'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
+import moment from 'moment'
+import { timeFormatDefaultLocale } from 'd3-time-format'
 
 import router from '../router/index.js.erb'
 import store from '../store/index'
@@ -21,7 +25,7 @@ import i18n from 'lang'
 Vue.use(VueI18n)
 
 // Use Element.IO
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeElementCy })
 
 // locale settings
 Numeral.register('locale', 'gb', {
@@ -35,6 +39,14 @@ Numeral.register('locale', 'gb', {
   ordinal: () => ''
 })
 Numeral.locale('gb')
+
+// other i18n settings: moment.js
+moment.locale(i18n.locale)
+
+// other i18n settings: D3.js
+if (i18n.locale === 'cy') {
+  timeFormatDefaultLocale(localeD3Cy)
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   if (process.env.NODE_ENV === 'production') {

@@ -1,7 +1,8 @@
 <template lang='html'>
   <div class='c-options-selection'>
     <data-view-location :element-id='elementId'></data-view-location>
-    for <data-view-dates></data-view-dates>
+    {{ $t('preposition.for') }}
+    <data-view-dates></data-view-dates>
     <data-view-graph-zoomed></data-view-graph-zoomed>
   </div>
 </template>

@@ -32,10 +32,10 @@ en:
         volume_property_status: "Sales volume for new buildings vs. existing properties"
         volume_funding_status: "Sales volume for cash sales vs. mortgage sales"
 
+      main_heading: "House Price Statistics"
+
     print:
       reporting_period: "Reporting<br />period"
-
-      main_heading: "House Price Statistics"
 
     edit:
       heading: "Change your selections"

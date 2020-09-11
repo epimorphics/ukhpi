@@ -1,0 +1,55 @@
+{
+  "dateTime": "%a %e %b %X %Y",
+  "date": "%d/%m/%Y",
+  "time": "%H:%M:%S",
+  "periods": [
+    "AM",
+    "PM"
+  ],
+  "days": [
+    "Dydd Sul",
+    "Dydd Llun",
+    "Dydd Mawrth",
+    "Dydd Mercher",
+    "Dydd Iau",
+    "Dydd Gwener",
+    "Dydd Sadwrn"
+  ],
+  "shortDays": [
+    "Sul",
+    "Llun",
+    "Maw",
+    "Mer",
+    "Iau",
+    "Gwe",
+    "Sad"
+  ],
+  "months": [
+    "Ionawr",
+    "Chwefror",
+    "Mawrth",
+    "Ebrill",
+    "Mai",
+    "Mehefin",
+    "Gorffennaf",
+    "Awst",
+    "Medi",
+    "Hydref",
+    "Tachwedd",
+    "Rhagfyr"
+  ],
+  "shortMonths": [
+    "Ion",
+    "Chw",
+    "Maw",
+    "Ebr",
+    "Mai",
+    "Meh",
+    "Gor",
+    "Awst",
+    "Med",
+    "Hyd",
+    "Tach",
+    "Rha"
+  ]
+}
