@@ -1,11 +1,13 @@
 import Vue from 'vue/dist/vue.esm'
 import ElementUI from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import localeEn from 'element-ui/lib/locale/lang/en'
+import localeCy from '../lang/element-ui-cy'
 import Numeral from 'numeral'
 import * as Sentry from '@sentry/browser'
 import * as Integrations from '@sentry/integrations'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
+import moment from 'moment'
 
 import router from '../router/index.js.erb'
 import store from '../store/index'
@@ -21,7 +23,7 @@ import i18n from 'lang'
 Vue.use(VueI18n)
 
 // Use Element.IO
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeCy })
 
 // locale settings
 Numeral.register('locale', 'gb', {
@@ -35,6 +37,8 @@ Numeral.register('locale', 'gb', {
   ordinal: () => ''
 })
 Numeral.locale('gb')
+
+moment.locale(i18n.locale)
 
 document.addEventListener('DOMContentLoaded', () => {
   if (process.env.NODE_ENV === 'production') {
