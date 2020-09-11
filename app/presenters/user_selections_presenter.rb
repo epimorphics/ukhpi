@@ -61,7 +61,7 @@ class UserSelectionsPresenter
     if (r = Locations.lookup_location(value))
       r.label
     elsif value.is_a?(Date)
-      value.strftime('%B %Y')
+      I18n.l(value, format: '%B %Y')
     else
       value.to_s
     end

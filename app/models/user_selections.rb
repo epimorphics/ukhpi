@@ -137,7 +137,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
     if (r = Locations.lookup_location(value))
       r.label
     elsif value.is_a?(Date)
-      value.strftime('%B %Y')
+      I18n.l(value, format: '%B %Y')
     elsif value.is_a?(Array)
       value.map(&method(:format_summary_value)).join(' ')
     else

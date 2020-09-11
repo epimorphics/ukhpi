@@ -17,9 +17,9 @@
       = succeed ',' do
         = data_view.selected_location_label
 
-      = data_view.from_date.strftime('%b %Y')
+      = l(data_view.from_date, format: '%b %Y')
       = t('preposition.to')
-      = data_view.to_date.strftime('%b %Y')
+      = l(data_view.to_date, format: '%b %Y')
 
       = link_to(t('action.change'), edit_browse_path(data_view.user_selections.params))
 

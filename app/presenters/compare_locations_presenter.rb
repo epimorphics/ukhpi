@@ -28,8 +28,8 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   def headline_summary # rubocop:disable Metrics/AbcSize
     ind = I18n.t("indicator.#{indicator.slug}")
     stat = I18n.t("statistic.#{statistic.label_key}").downcase
-    from = user_compare_selections.from_date.strftime('%b %Y')
-    to = user_compare_selections.to_date.strftime('%b %Y')
+    from = I18n.l(user_compare_selections.from_date, format: '%b %Y')
+    to = I18n.l(user_compare_selections.to_date, format: '%b %Y')
 
     <<~HEADLINE
       <strong>#{ind}</strong>

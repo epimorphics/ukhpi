@@ -24,7 +24,7 @@ class LandingState
     if month
       ref_month = to_value(month)
       date = Date.strptime(ref_month.value, '%Y-%m')
-      date.strftime('%B %Y')
+      I18n.l(date, format: '%B %Y')
     else
       'Latest period not available'
     end
