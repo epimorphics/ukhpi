@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.0 - 2020-09-14 (Ian)
+
+- Added Welsh language mode for UKHPI
+
 ## 1.4.0 - 2020-08-13 (Ian)
 
 - Beginning the process of moving to a Docker-based deployment pattern
