@@ -1,0 +1,184 @@
+%h1 UK House Price Index Linked Data
+
+%h2
+  What does the House Price Index Dataset consist of?
+
+%p
+  The UK House Price Index (UK HPI) captures changes in the value of residential properties.
+%p
+  The UK HPI uses sales data collected on residential housing transactions, whether for cash or with a mortgage. Properties have been included:
+%ul.list.list-bullet
+  %li in England and Wales since January 1995,
+  %li in Scotland since January 2004 and
+  %li in Northern Ireland since January 2005.
+
+%p
+  Data is available at a national and regional level, as well as counties, local authorities and London boroughs
+
+%p
+  The UK HPI dataset contains information on more than 441 areas in England, Scotland, Northern Ireland and Wales.
+  Please note that we do not publish HPI information for The Isles of Scilly due to its low monthly sales volumes.
+%p
+  For each area we publish a UK
+  %em House Price Index
+  figure. This was set at a base of 100 in January 2015, and reflects the change in
+  value of residential property since then. We also have figures for the average price of all properties in an area,
+  for each of four property types, sales volumes, and the percentage change from the previous month and year.
+  Please note that sales volume data is not available for the most-recent two months.
+
+%p
+  For more information on the UK HPI, including why some data is not available for recent months,
+  read about the UK HPI or use the direct links below:
+
+%ul
+  %li
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/about-the-uk-house-price-index#calculating-the-uk-hpi' }
+      Calculating the UK HPI
+  %li
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/about-the-uk-house-price-index#monthly-revision' }
+      Revisions to the UK HPI data
+  %li
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/about-the-uk-house-price-index#the-difference-between-the-uk-hpi-and-others' }
+      The difference between the UK HPI and others
+  %li
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/about-the-uk-house-price-index#searching-the-uk-house-price-index' }
+      Searching the UK House Price Index
+  %li
+    %a{ href: 'https://www.gov.uk/government/publications/about-the-uk-house-price-index/about-the-uk-house-price-index#uk-house-price-index-release-dates' }
+      Calendar release dates
+
+%p
+  In June 2016 the UK HPI linked data dataset contains approximately four million triples for 441 regions in
+  England, Scotland, Northern Ireland and Wales. The triple store is refreshed in each month with data
+  from the current month and a refresh of the previous two months.
+%p
+  The linked data version of UK HPI dataset is generated from the published files and contains additional information to describe each of the reported regions, this information includes links to linked datasets published by the
+  = link_to "Ordnance Survey", "http://data.ordnancesurvey.co.uk/"
+  and the
+  = link_to "http://www.ons.gov.uk/" do
+    = succeed "." do
+      Office of National Statistics
+%p
+  Please note that links to other sources of open, linked data are provided under the
+  = link_to "Open Government License", "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
+  (ONS data) and
+  = link_to "Open Data License", "http://www.ordnancesurvey.co.uk/docs/licences/os-opendata-licence.pdf"
+  (OS data). HM Land Registry is not responsible for the content or reliability of any linked websites.
+
+%h2 How is the House Price Index Dataset published?
+%p
+  The UK house price index dataset is available in several forms from the HM Land Registry:
+%ul.list.list-bullet
+  %li
+    interactively, using the
+    = link_to("/app/ukhpi", 'aria-label' => 'Explore the UK house price index') do
+      = succeed "." do
+        Search the UK House Price Index tool
+    This tool also includes options to download the data in CSV or Turtle and to generate downloadable files from SPARQL queries in JSON, XML, plain text or as a table.
+  %li
+    for download in
+    = link_to "https://www.gov.uk/guidance/uk-house-price-index" do
+      = succeed "." do
+        CSV form or as an Excel Worksheet
+
+%p
+  The UK house price index dataset is also available in full as a 5* linked dataset which is free to use under the terms of the OGL.
+
+%h2 Linked Data Overview
+%p
+  Each month UK HPI data is updated for all of Great Britain, there is a monthly value for Northern Ireland data which is updated quarterly. The UK HPI data is converted into linked data form and this replaces the previous named graph in the triplestore, graphs are named UKHPI-yyyy-mm. This process runs alongside the normal publication of UK HPI data. Publication dates are available on the Publication timetable
+
+%h3 Vocabularies
+%p
+  The publication of the House Price Index Dataset as
+  %a{:href => "http://linkeddata.org/"} linked data
+  requires the creation of reusable
+  %a{:href => "http://www.w3.org/TR/rdf-schema/"} RDFS
+  or
+  %a{:href => "http://www.w3.org/TR/owl2-overview/"} OWL
+  vocabularies, one HM Land Registry vocabulary and two Ordnance Survey vocabularies. In addition, the data is
+  encoded as an
+  = succeed "." do
+    %a{:href => "http://www.w3.org/TR/vocab-data-cube/"} RDF data cube
+%dl.list
+  %dt
+    Data Cube
+    %a{:href => "http://purl.org/linked-data/cube"} http://purl.org/linked-data/cube
+  %dd{ style: "margin-left: 1.5em; margin-bottom: 0.5em"}
+    A recommendation from the W3C for representing sets of multi-dimensional statistical data in RDF as a hypercube.
+  %dt
+    HM Land Registry HPI
+    %a{:href => "http://landregistry.data.gov.uk/def/hpi"} http://landregistry.data.gov.uk/def/hpi
+  %dd{ style: "margin-left: 1.5em; margin-bottom: 0.5em"}
+    The HM Land Registry HPI vocabulary is used to describe the House Price Index Dataset produced each month. The vocabulary contains terms that are used by Land Registry to describe things that are used within the House Price Index dataset.
+  %dt
+    OS Spatial Relations
+    %a{:href => "http://data.ordnancesurvey.co.uk/ontology/spatialrelations/"} http://landregistry.data.gov.uk/def/hpi
+  %dd{ style: "margin-left: 1.5em; margin-bottom: 0.5em"}
+    This Ordnance Survey vocabulary is used to describe basic spatial relations
+  %dt
+    OS Admingeo
+    %a{:href => "http://data.ordnancesurvey.co.uk/ontology/admingeo/"} http://data.ordnancesurvey.co.uk/ontology/admingeo/
+  %dd{ style: "margin-left: 1.5em; margin-bottom: 0.5em"}
+    This Ordnance Survey vocabulary is used to describe the administrative and voting area geography of Great Britain.
+
+%h3 UKHPI Data
+%p
+  UKHPI Data is stored as a named graph in a data cube with two dimensions and a variety of measures.
+  The
+  = link_to "Data Structure Definition (DSD)", controller: :doc, action: :ukhpi_dsd
+  file defines this structure, and can be used by both data users
+  and programs to understand how the data is structured.
+
+%h2 The UK House Price Index reporting tool
+%p
+  The
+  = link_to("report tool", "/app/ukhpi", 'aria-label' => 'Explore the UK house price index')
+  is the easiest way to query the UKHouse Price Index dataset. It allows the easy creation of queries using a form and results can be downloaded in various forms. The report builder can also be used to generate SPARQL queries that can be amended and re-run as required.
+%p
+  Please note that when choosing the CSV option for downloaded data then only the data items shown in the result on screen will be included in the CSV. For Turtle downloads all data items will be included as will the result from the SPARQL query if re-run.
+
+%h2 SPARQL
+%p
+  Alongside the report builder we have created a
+  = link_to "SPARQL query page", "/app/qonsole"
+  that you can use to try out some example SPARQL queries or create your own.
+%p
+  We also have made a SPARQL endpoint available. You can use the following URL address in
+  your own scripts, applications and SPARQL query tools:
+%pre
+  http://landregistry.data.gov.uk/landregistry/query
+
+%h2 Via the API
+%p
+  It is possible to query the UKHPI dataset directly through an
+  %em application programming interface (API).
+  This largely removes the need to know how to use SPARQL as long as the structure of the data is known. Using the example transaction above we know that there is data for the North east of England. With that information we can enter this URL into a web browser
+%pre
+  = link_to "http://landregistry.data.gov.uk/data/ukhpi/region/north-east", "/data/ukhpi/region/north-east"
+
+%p
+  Note that this query will return all data for that region from the current month back to January 1995. Because HM Land Registry do not publish Sales Volumes with the same frequency as other data there will be no Sales Volume figure for the first two months displayed. By default a count of the results generated for the query is displayed on screen.
+%p
+  There are options to generate the data displayed for download in another format, for example csv, note that the results will be limited to the same number of results displayed on screen.
+%p
+  Similarly other areas can be queried. In the following example, figures for all of England and Wales are shown:
+%pre
+  = link_to "http://landregistry.data.gov.uk/data/ukhpi/region/england-and-wales", "/data/ukhpi/region/england-and-wales"
+
+%p
+  The query can be extended to give specific months:
+%pre
+  = link_to "http://landregistry.data.gov.uk/data/ukhpi/region/england-and-wales/month/2014-01", "/data/ukhpi/region/england-and-wales/month/2014-01"
+
+%p
+  It is also possible to select ranges and sort the data returned. The following example returns
+  figures for England and Wales where the monthly change is between 1% and 10%, sorted on the reporting period:
+%pre
+  = link_to "http://landregistry.data.gov.uk/data/ukhpi/region/england-and-wales?max-percentageChange=10&min-percentageChange=1&_page=0&_sort=refMonth", "/data/ukhpi/region/england-and-wales?max-percentageChange=10&min-percentageChange=1&_page=0&_sort=refMonth"
+
+
+%p
+  It is possible to change the results displayed using the
+  %code customise your search
+  button at the top of the page and the filters on the page allow easy sorting or filtering of results.

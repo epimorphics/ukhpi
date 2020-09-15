@@ -21,9 +21,9 @@
             %li
               = link_to(t('action.sparql'), '/app/qonsole')
             %li
-              = link_to(t('action.user_guide'), '/app/doc/ukhpi-user-guide')
+              = link_to(t('action.user_guide'), doc_ukhpi_user_guide_path(lang: I18n.locale))
             %li
-              = link_to(t('action.about'),about_index_path(lang: I18n.locale), class: active_class(about_index_path))
+              = link_to(t('action.about'), doc_index_path(lang: I18n.locale), class: active_class(doc_index_path))
             %li
               = link_to(t('action.changelog'), changelog_index_path(lang: I18n.locale), class: active_class(changelog_index_path))
 
