@@ -144,6 +144,12 @@ en:
   connective:
     and: "and"
 
+  landing:
+    change:
+      risen: "risen by"
+      fallen: "fallen by"
+      same: "remained the same"
+
   js:
     action:
       download: "Download this data"

@@ -68,11 +68,11 @@ class LandingState
     if change == 'unknown'
       change
     elsif change == 0.0
-      'remained the same'
+      I18n.t('landing.change.same')
     elsif change.positive?
-      format('risen by %.1f%%', change.abs)
+      format('%s %.1f%%', I18n.t('landing.change.risen'), change.abs)
     else
-      format('fallen by %.1f%%', change.abs)
+      format('%s %.1f%%', I18n.t('landing.change.fallen'), change.abs)
     end
   end
 end

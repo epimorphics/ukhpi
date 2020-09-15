@@ -144,6 +144,12 @@ cy:
   connective:
     and: "a"
 
+  landing:
+    change:
+      risen: "[cy] risen by"
+      fallen: "[cy] fallen by"
+      same: "[cy] remained the same"
+
   js:
     action:
       download: "Lawrlwytho’r data hwn"
