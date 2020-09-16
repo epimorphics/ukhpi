@@ -1,5 +1,14 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.1 - 2020-09-16 (Ian)
+
+- Fix for GH-248: missing local authorities when using Welsh language
+  mode. The change is to ensure that in the compiled `locations-data.js`
+  and `locations_table.rb` files, we always have two labels (Welsh and
+  English) for locations, even if it means re-using the English label.
+  This is correct for Welsh LA's (e.g. Gwynedd), and a convenient
+  approximation for English LA's that don't have an existing Welsh translation.
+
 ## 1.5.0 - 2020-09-14 (Ian)
 
 - Added Welsh language mode for UKHPI
