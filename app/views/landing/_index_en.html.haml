@@ -181,11 +181,11 @@
 
   .c-logos
     %p.u-text-center
-      = link_to "//www.gov.uk/government/organisations/land-registry" do
-        = image_tag( "hm_lr_logo.png")
-      = link_to "//www.ros.gov.uk/" do
-        = image_tag( "ros_logo.png" )
-      = link_to "//www.finance-ni.gov.uk/land-property-services-lps" do
-        = image_tag( "lps-identity.png" )
-      = link_to "//ons.gov.uk" do
-        = image_tag( "ons_logo.png" )
+      = link_to("//www.gov.uk/government/organisations/land-registry", 'aria-label' => 'go to HM Land Registry home page') do
+        = image_tag("hm_lr_logo.png", alt: 'HM Land Registry')
+      = link_to("//www.ros.gov.uk/", 'aria-label' => 'Go to Registers of Scotland home page') do
+        = image_tag("ros_logo.png", alt: 'Registers of Scotland')
+      = link_to("//www.finance-ni.gov.uk/land-property-services-lps", 'aria-label' => 'Go to Land and Property Services home page') do
+        = image_tag("lps-identity.png", alt: 'Land and Propert Services')
+      = link_to("//ons.gov.uk", 'aria-label' => 'Go to ONS home page') do
+        = image_tag("ons_logo.png", alt: 'Office for National Statistics')
