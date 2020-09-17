@@ -149,6 +149,7 @@ cy:
       risen: "[cy] risen by"
       fallen: "[cy] fallen by"
       same: "[cy] remained the same"
+    not_available: "[cy] Latest period not available"
 
   js:
     action:
