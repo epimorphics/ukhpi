@@ -59,7 +59,7 @@ end
 
 # Encapsulates a particular location
 class Location
-  attr_reader :uri, :labels, :container, :container2, :container3, :gss, :message
+  attr_reader :uri, :container, :container2, :container3, :gss, :message
 
   def initialize(location_record)
     @uri = location_record.uri
@@ -102,6 +102,14 @@ class Location
     types.select do |t|
       t =~ /admingeo/
     end.uniq
+  end
+
+  # Post-condition invariant: there should be two labels, one English and
+  # one Welsh. If the Welsh label is missing, assume we re-use the English
+  def labels
+    @labels[:cy] = @labels[:en] unless @labels.key?(:cy)
+
+    @labels
   end
 
   def to_ruby
@@ -235,7 +243,7 @@ namespace :ukhpi do
       }"
 
     squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/apache-jena-fuseki'}/bin/s-query"
-    server = ENV['SERVER'] || 'http://landregistry.data.gov.uk/landregistry/query'
+    server = ENV['SERVER'] || 'https://landregistry.data.gov.uk/landregistry/query'
 
     puts "Running SPARQL query against server #{server}..."
     puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'

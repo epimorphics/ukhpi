@@ -56,4 +56,10 @@ class LocationsTest < ActiveSupport::TestCase
   it 'returns nil if the lookup URI does not match anything' do
     _(Locations.lookup_location('http')).must_be_nil
   end
+
+  it 'ensures that we have a Welsh name for all Welsh LAs' do
+    loc = Locations.lookup_location('http://landregistry.data.gov.uk/id/region/gwynedd')
+    _(loc.label(:en)).must_equal 'Gwynedd'
+    _(loc.label(:cy)).must_equal 'Gwynedd'
+  end
 end
