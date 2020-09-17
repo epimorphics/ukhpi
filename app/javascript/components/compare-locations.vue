@@ -2,31 +2,35 @@
   <div class='c-compare__selections'>
     <el-row>
       <el-col :span='24'>
-        {{ $t('js.compare.compare_action') }}
-        <el-select v-model='indicatorSlug'>
-          <el-option
-            v-for='item in indicators'
-            :key='item.slug'
-            :label='item.label'
-            :value='item.slug'
-            :disabled='isDisabledIndicator(item.slug)'>
-          </el-option>
-        </el-select>
-        {{ $t('preposition.for') }}
-        <el-select v-model='statisticSlug'>
-          <el-option-group
-            v-for='theme in themes'
-            :key='theme.slug'
-            :label='theme.label'>
+        <label>
+          {{ $t('js.compare.compare_action') }}
+          <el-select v-model='indicatorSlug'>
             <el-option
-              v-for='item in theme.statistics'
+              v-for='item in indicators'
               :key='item.slug'
               :label='item.label'
               :value='item.slug'
-              :disabled='isDisabledStatistic(item.slug)'>
+              :disabled='isDisabledIndicator(item.slug)'>
             </el-option>
-          </el-option-group>
-        </el-select>
+          </el-select>
+        </label>
+        <label>
+          {{ $t('preposition.for') }}
+          <el-select v-model='statisticSlug'>
+            <el-option-group
+              v-for='theme in themes'
+              :key='theme.slug'
+              :label='theme.label'>
+              <el-option
+                v-for='item in theme.statistics'
+                :key='item.slug'
+                :label='item.label'
+                :value='item.slug'
+                :disabled='isDisabledStatistic(item.slug)'>
+              </el-option>
+            </el-option-group>
+          </el-select>
+        </label>
         {{ $t('preposition.from') }}
         <data-view-dates />
       </el-col>
