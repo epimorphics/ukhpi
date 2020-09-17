@@ -64,6 +64,22 @@
   }
 }
 
+.c-compare__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.c-compare__download {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  flex-grow: 0;
+  align-items: center;
+}
+
 .o-no-data {
   font-style: italic;
   color: $grey-2;

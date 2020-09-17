@@ -49,12 +49,12 @@
         <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
             {{ location.labels[$locale] }}
-            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'>
+            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify' title='remove' aria-label='remove location'>
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
           </li>
           <li v-if='showAddLocationButton' class='c-compare__location'>
-            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'>
+            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation' title='add location' aria-label='add location'>
               <i class='fa fa-plus-circle fa-2x'></i>
             </button>
             <compare-additional-location></compare-additional-location>
@@ -71,20 +71,27 @@
           :locations='locations'
         >
         </compare-locations-table>
-        <span class='c-compare__print'>
-          <a :href='printUrl' target='_' class='c-compare__print-link o-print-action'>
-            <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
-          </a>
-        </span>
-        <span class='c-compare__download'>
-          {{ $t('js.action.download_data_as') }}
-          <a :href='downloadUrlCsv' class='c-compare__download-link c-compare__download-csv'>
-            {{ $t('js.compare.csv_format') }} <i class='fa fa-external-link'></i>
-          </a>
-          <a :href='downloadUrlJson' class='c-compare__download-link c-compare__download-json'>
-            {{ $t('js.compare.json_format') }} <i class='fa fa-external-link'></i>
-          </a>
-        </span>
+        <div class='c-compare__actions'>
+          <div class='c-compare__print'>
+            <a :href='printUrl' target='_' class='c-compare__print-link o-print-action'>
+              <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
+            </a>
+          </div>
+          <div class='c-compare__download'>
+            <div>
+              {{ $t('js.action.download_data_as') }}
+              &nbsp;
+            </div>
+            <div>
+              <a :href='downloadUrlCsv' class='c-compare__download-link c-compare__download-csv'>
+                {{ $t('js.compare.csv_format') }} <i class='fa fa-external-link'></i>
+              </a>
+              <a :href='downloadUrlJson' class='c-compare__download-link c-compare__download-json'>
+                {{ $t('js.compare.json_format') }} <i class='fa fa-external-link'></i>
+              </a>
+            </div>
+          </div>
+        </div>
       </el-col>
       <el-col :span='24' v-else>
         <p>
