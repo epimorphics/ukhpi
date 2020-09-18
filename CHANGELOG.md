@@ -1,5 +1,14 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.3 - 2020-09-18 (Ian)
+
+Updates to Welsh localization based on testing
+
+- migrated some UKHPI documents (e.g changelog, about) into the
+  UKHPI repo
+- missing entries from message catalogue
+- added a framework for consonant mutations and other grammar rule fixes
+
 ## 1.5.2 - 2020-09-17 (Ian)
 
 A collection of fixes for various reported WCAG violations:
