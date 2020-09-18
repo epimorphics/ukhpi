@@ -14,6 +14,9 @@ class Mutation
   end
 
   def apply(options)
-    options[:source]&.sub(pattern, replacement)
+    GrammarAction.new(
+      options,
+      options[:source]&.sub(pattern, replacement)
+    )
   end
 end

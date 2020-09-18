@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-Mutation = Struct.new(:pattern, :replacement)
-
 MUTATIONS = {
   'o' =>
     [
@@ -17,19 +15,21 @@ MUTATIONS = {
 
 # Assistance with formulating correct Welsh grammar
 class WelshGrammar
+  def self.apply(options)
+    mutate(options)
+  end
+
   def self.mutate(options)
     result = nil
 
-    if I18n.locale == 'cy'
+    if I18n.locale == :cy
       result = mutate_prefix(options[:assuming_prefix], options) if options[:assuming_prefix]
     end
 
     result || GrammarAction.identity_action(options)
   end
 
-  private
-
-  def mutate_prefix(prefix, options)
+  def self.mutate_prefix(prefix, options)
     return nil unless (mutations = MUTATIONS[prefix])
 
     mutations
