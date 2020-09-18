@@ -9,7 +9,7 @@
     .header-proposition
       .content
         %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
-        %nav#proposition-menu
+        %nav#proposition-menu{ 'aria-label' => 'application menu' }
           %a#proposition-name{ href: '/app/ukhpi' }
             = t('common.header.app_title')
 
@@ -31,8 +31,7 @@
 
 .container.o-container
   .o-secondary-banner
-    %div
-    .o-secondary-banner__lang-select
+    %nav.o-secondary-banner__lang-select{ 'aria-label' => 'language selector' }
       - if @view_state.user_selections.english?
         English
       - else

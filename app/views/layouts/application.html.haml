@@ -29,4 +29,10 @@
         .col-md-12
           = yield
 
+      .row
+        .o-feedback
+          %p.text-muted
+            = t('common.header.feedback_request').html_safe
+
+
     = render partial: 'common/footer'

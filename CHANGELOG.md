@@ -1,5 +1,19 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.2 - 2020-09-17 (Ian)
+
+A collection of fixes for various reported WCAG violations:
+
+- fixed colour contrast in the footer
+- added missing alt-text and aria roles on images and links
+- ensure that all content is contained in landmarks
+- ensure that all form elements have labels
+- ensure that every page has an h1 element
+- fix colour contrast issue in buttons by switching colour to
+  GDS green
+- fixed missing aria labels on buttons
+- added focus-trapping and auto-focus for modal dialogues
+
 ## 1.5.1 - 2020-09-16 (Ian)
 
 - Fix for GH-248: missing local authorities when using Welsh language

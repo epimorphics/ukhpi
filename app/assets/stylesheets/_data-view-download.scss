@@ -8,9 +8,8 @@
   }
 
   &__button {
-    @extend .el-button;
-    @extend .el-button--small;
-    @extend .el-button--primary;
+    @extend .button;
+    font-size: 1.5rem;
     text-decoration: none;
   }
 
@@ -19,15 +18,7 @@
   }
 }
 
-.c-compare__download {
-  @extend .u-pull-right;
-  margin-top: 15px;
-}
-
 .c-compare__download-link {
-  @extend .el-button;
-  @extend .el-button--small;
-  @extend .el-button--primary;
-
-  color: white !important;
+  @extend .button;
+  font-size: 1.5rem;
 }
