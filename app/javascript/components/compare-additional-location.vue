@@ -4,7 +4,7 @@
     :element-id='elementId'
     @update:dialog-visible='val => dialogVisible = val'
     :prompt='prompt'
-    title='Choose another location'
+    :title='$t("js.action.choose_another_location")'
     emit-event='additional-location-selected'
   ></select-location>
 </template>

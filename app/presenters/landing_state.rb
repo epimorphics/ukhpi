@@ -24,9 +24,17 @@ class LandingState
     if month
       ref_month = to_value(month)
       date = Date.strptime(ref_month.value, '%Y-%m')
-      I18n.l(date, format: '%B %Y')
+
+      # Uncomfortable choice here: we know that, in the Welsh translation, the
+      # month will be preceded by 'O' (i.e. 'From'), which will trigger a mutation
+      # for some month names. The mutation will only happen in Welsh-lang mode, but
+      # we have to allow for that case so we apply the Grammar -> GrammarAction
+      # transform even in English mode (where it's not really needed)
+      Grammar
+        .apply(source: I18n.l(date, format: '%B %Y'), assuming_prefix: 'o')
+        .result
     else
-      'Latest period not available'
+      I18n.t('landing.not_available')
     end
   end
 
@@ -68,11 +76,11 @@ class LandingState
     if change == 'unknown'
       change
     elsif change == 0.0
-      'remained the same'
+      I18n.t('landing.change.same')
     elsif change.positive?
-      format('risen by %.1f%%', change.abs)
+      format('%s %.1f%%', I18n.t('landing.change.risen'), change.abs)
     else
-      format('fallen by %.1f%%', change.abs)
+      format('%s %.1f%%', I18n.t('landing.change.fallen'), change.abs)
     end
   end
 end

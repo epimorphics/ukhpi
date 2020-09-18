@@ -12,9 +12,9 @@ import OptionsSelection from './options-selection.vue';
 import CompareSelection from './compare-selection.vue';
 import bindExternalEvents from '../lib/bind-external-events';
 
-function locationButton(title) {
+function locationButton(title, action) {
   return `<button type='button' class='el-button c-options-selection__button o-data-view__location'
-         title='select a diffent location'>
+         title='${action}'>
          <span class='o-data-view__location-name'>${title}</span>
          <i class='fa fa-edit'></i></span></button>`;
 }
@@ -31,7 +31,7 @@ export default {
     for (let i = 0; i < nodes.length; i += 1) {
       const node = nodes.item(i);
       const locationName = node.querySelector('.o-data-view__location-name').innerHTML;
-      node.outerHTML = locationButton(locationName);
+      node.outerHTML = locationButton(locationName, this.$t('js.action.select_location'));
     }
 
     // add DataView components

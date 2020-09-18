@@ -10,6 +10,10 @@ module UserLanguage
     I18n.locale == :cy
   end
 
+  def language_slug
+    I18n.locale.to_s
+  end
+
   def alternative_language_params
     with('lang', english? ? 'cy' : 'en')
   end
