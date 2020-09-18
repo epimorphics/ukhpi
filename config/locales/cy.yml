@@ -9,9 +9,10 @@ cy:
     footer:
       crown_copyright: "Hawlfraint y Goron "
       personal_info: "Siarter Gwybodaeth Bersonol"
+      personal_info_url: "//www.gov.uk/government/organisations/land-registry/about/personal-information-charter.cy"
       public_data: "Data Cyhoeddus Cofrestrfa Tir EM"
       ogl: "Trwydded Llywodraeth Agored"
-      ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
+      ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='//www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
       application_release: "Cyhoeddiad ap"
 
   browse:
@@ -162,6 +163,7 @@ cy:
       confirm: "cadarnhau"
       print_table: "argraffu’r tabl hwn"
       download_data_as: "Lawrlwytho’r data hwn fel:"
+      choose_another_location: "Dewiswch leoliad arall"
 
     graph:
       no_data: "Mae’n flin gennym, nid yw data %{label} ar gael ar gyfer %{location}. Dewiswch leoliad gwahanol."

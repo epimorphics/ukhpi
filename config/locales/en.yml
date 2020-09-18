@@ -9,6 +9,7 @@ en:
     footer:
       crown_copyright: "Crown copyright "
       personal_info: "Personal Information Charter"
+      personal_info_url: "https://www.gov.uk/government/organisations/land-registry/about/personal-information-charter"
       public_data: "HM Land Registry Public Data"
       ogl: "Open Government Licence"
       ogl_statement: "All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
@@ -162,6 +163,7 @@ en:
       confirm: "confirm"
       print_table: "print this table"
       download_data_as: "Download this data as:"
+      choose_another_location: "Choose another location"
 
     graph:
       no_data: "Sorry, there is no %{label} data available for %{location}. Please select a different location."
