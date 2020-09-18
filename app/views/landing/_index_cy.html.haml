@@ -72,7 +72,9 @@
     ar gyfer y gwasanaeth hwn, a gallwch
     = succeed('.') do
       = link_to('ddarllen rhagor am ddata cysylltiedig â Mynegai Prisiau Tai y DU', '/app/doc/ukhpi')
-    I gael rhagor o gymorth, anfonwch ebost atom.
+    I gael rhagor o gymorth,
+    = succeed '.' do
+      = mail_to('data.services@landregistry.gov.uk', 'anfonwch ebost atom')
 
   %h2.heading-medium
     Lawrlwytho Data’r Mynegai Prisiau Tai
@@ -149,8 +151,9 @@
       a Wycombe (E07000007) yn uno i greu awdurdod lleol newydd &quot;Swydd Buckingham&quot;
       (E06000060).
   %p
-    Mae manylion llawn yr ardaloedd daearyddol yr effeithir arnynt i’w gweld yn y cofnod
-    newidiadau.
+    Mae manylion llawn yr ardaloedd daearyddol yr effeithir arnynt i’w gweld yn y
+    = succeed '.' do
+      = link_to('cofnod newidiadau', changelog_index_path(lang: 'cy'))
   %p
     Darperir cysylltau i ffynonellau eraill o ddata agored o dan y Drwydded Llywodraeth Agored
     (Y Swyddfa Ystadegau Gwladol) a’r Drwydded Data Agored (yr Arolwg Ordnans). Nid yw
@@ -167,5 +170,16 @@
     %a{ href: 'tel:+44-300-006-0478'}
       0300 006 0478
     %br
-    %a{ href: 'https://help.landregistry.gov.uk/app/contactus_general/' }
+    %a{ href: '//help.landregistry.gov.uk/app/contactus_general_enq_w/' }
       Ffurflen gysylltu
+
+  .c-logos
+    %p.u-text-center
+      = link_to("//www.gov.uk/government/organisations/land-registry.cy", 'aria-label' => '[cy] go to HM Land Registry home page') do
+        = image_tag("hm_lr_logo.png", alt: '[cy] HM Land Registry')
+      = link_to("//www.ros.gov.uk/", 'aria-label' => '[cy] Go to Registers of Scotland home page') do
+        = image_tag("ros_logo.png", alt: '[cy] Registers of Scotland')
+      = link_to("//www.finance-ni.gov.uk/land-property-services-lps", 'aria-label' => '[cy] Go to Land and Property Services home page') do
+        = image_tag("lps-identity.png", alt: '[cy] Land and Propert Services')
+      = link_to("//cy.ons.gov.uk", 'aria-label' => '[cy] Go to ONS home page') do
+        = image_tag("ons_logo.png", alt: '[cy] Office for National Statistics')
