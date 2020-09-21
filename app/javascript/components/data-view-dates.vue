@@ -87,11 +87,11 @@ export default {
     },
 
     fromDateFormatted() {
-      return Moment(this.fromDate).format('MMM YYYY');
+      return Moment(this.fromDate).format('MMMM YYYY');
     },
 
     toDateFormatted() {
-      return Moment(this.toDate).format('MMM YYYY');
+      return Moment(this.toDate).format('MMMM YYYY');
     },
   },
 

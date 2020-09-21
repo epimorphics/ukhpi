@@ -41,17 +41,17 @@ export default {
       },
       months: {
         jan: 'Ion',
-        feb: 'Chw',
+        feb: 'Chwef',
         mar: 'Maw',
         apr: 'Ebr',
         may: 'Mai',
         jun: 'Meh',
         jul: 'Gor',
         aug: 'Awst',
-        sep: 'Med',
+        sep: 'Medi',
         oct: 'Hyd',
         nov: 'Tach',
-        dec: 'Rha'
+        dec: 'Rhag'
       }
     }
   }
