@@ -1,0 +1,22 @@
+.u-off-canvas {
+  position: absolute;
+  left: -999rem;
+  top: -999rem;
+
+  @media print {
+    display: none;
+  }
+}
+
+.u-off-canvas--focusable {
+  &:focus {
+    left: 0;
+    top: 0;
+  }
+}
+
+.c-skip-to-main {
+  background: white;
+  padding: 1rem;
+  z-index: 9999;
+}

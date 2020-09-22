@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.4 - 2020-09-22 (Ian)
+
+- added skip-to-main-content link
+
 ## 1.5.3 - 2020-09-18 (Ian)
 
 Updates to Welsh localization based on testing
