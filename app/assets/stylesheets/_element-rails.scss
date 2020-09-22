@@ -23,3 +23,35 @@
   word-break: normal;
   -ms-word-break: normal;
 }
+
+.el-button--default {
+  background-color: $grey-8;
+}
+
+.el-button--primary {
+  background-color: $dark-blue;
+}
+
+.el-date-editor {
+  color: $black;
+}
+
+table.el-month-table {
+  td .cell {
+    color: $black;
+  }
+
+  td.current .cell {
+    color: $black;
+    background-color: $yellow-50;
+  }
+
+  td.current .cell:not(.disabled) {
+    color: $black;
+  }
+}
+
+.el-select-dropdown__item.selected {
+  background-color: $dark-blue;
+  color: white;
+}

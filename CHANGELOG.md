@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.5 - 2020-09-22 (Ian)
+
+- Fix WCAG colour contrast issue, and improve visual consistency by
+  picking dark blue as the primary action colour
+
 ## 1.5.4 - 2020-09-22 (Ian)
 
 - added skip-to-main-content link
