@@ -48,4 +48,6 @@ Rails.application.configure do
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
+
+  config.accessibility_document_path = '/doc/accessibility'
 end

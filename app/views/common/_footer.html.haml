@@ -16,7 +16,7 @@
             %a{:href => "https://www.gov.uk/land-registry-public-data"}
               = t('common.footer.public_data')
           %li.u-print-hidden
-            = link_to('Accessibility', "#{Rails.application.config.relative_url_root || '/'}doc/accessibility")
+            = link_to('Accessibility', Rails.application.config.accessibility_document_path)
         .ogl.open-government-licence
           %p.logo.u-print-hidden
             %a{:href => "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3", rel:"license"}
