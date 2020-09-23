@@ -18,6 +18,6 @@ class ApplicationController < ActionController::Base
       params['lang'] ||
       http_accept_language.compatible_language_from(I18n.available_locales)
 
-    I18n.locale = user_locale if user_locale
+    I18n.locale = user_locale user_locale if Rails.application.config.welsh_language_enabled
   end
 end
