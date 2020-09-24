@@ -108,7 +108,7 @@ export default {
 
     onSaveChanges() {
       if (Moment(this.newToDate).isBefore(Moment(this.newFromDate))) {
-        this.validationMessage = $t('js.compare.validation_dates');
+        this.validationMessage = this.$t('js.compare.validation_dates');
       } else {
         const from = Moment(this.newFromDate).format('YYYY-MM-DD');
         const to = Moment(this.newToDate).format('YYYY-MM-DD');
