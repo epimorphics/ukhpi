@@ -12,7 +12,8 @@ cy:
       personal_info_url: "//www.gov.uk/government/organisations/land-registry/about/personal-information-charter.cy"
       public_data: "Data Cyhoeddus Cofrestrfa Tir EM"
       ogl: "Trwydded Llywodraeth Agored"
-      ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='//www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
+      ogl_url: "https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/"
+      ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='//www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
       application_release: "Cyhoeddiad ap"
 
   browse:

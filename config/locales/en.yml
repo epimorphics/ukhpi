@@ -12,6 +12,7 @@ en:
       personal_info_url: "https://www.gov.uk/government/organisations/land-registry/about/personal-information-charter"
       public_data: "HM Land Registry Public Data"
       ogl: "Open Government Licence"
+      ogl_url: "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
       ogl_statement: "All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
       application_release: "Application release"
 
