@@ -1,5 +1,13 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.7 - 2020-09-24 (Ian)
+
+- Fix problem `$t is not defined`, GH-263
+
+## 1.5.6 - 2020-09-23 (Ian)
+
+- Added accessibility statement
+
 ## 1.5.5 - 2020-09-22 (Ian)
 
 - Fix WCAG colour contrast issue, and improve visual consistency by
