@@ -147,10 +147,10 @@ cy:
 
   landing:
     change:
-      risen: "[cy] risen by"
-      fallen: "[cy] fallen by"
-      same: "[cy] remained the same"
-    not_available: "[cy] Latest period not available"
+      risen: "wedi codi gan"
+      fallen: "wedi gostwng gan"
+      same: "yn parhau yr un fath"
+    not_available: "Y cyfnod diweddaraf ddim ar gael"
 
   js:
     action:

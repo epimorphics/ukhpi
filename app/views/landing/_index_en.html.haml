@@ -15,7 +15,8 @@
     %p
       As of
       %span.c-headline-figure.c-headline-figure__period
-        = @view_state.period
+        = succeed ',' do
+          = @view_state.period
       the average house price in the UK is
       %span.c-headline-figure.c-headline-figure__average-price
         = succeed "," do
