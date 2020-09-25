@@ -62,6 +62,7 @@ import bus from '../lib/event-bus';
 import safeForEach from '../lib/safe-foreach';
 import AvailableStatistics from '../mixins/available-statistics';
 import i18n from 'lang'
+import { mutateName } from 'lang/welsh-name-mutations'
 
 export default {
   mixins: [AvailableStatistics],
@@ -203,10 +204,14 @@ export default {
   watch: {
     selectedLocation() {
       const newLabel = this.selectedLocationLabel;
-      const nodes = document.querySelectorAll(`.o-data-view__location-name`);
-      safeForEach(nodes, (node) => {
-        node.innerHTML = newLabel; // eslint-disable-line no-param-reassign
-      });
+      const locale = i18n.currentLocale
+      const { name, preposition } = mutateName(newLabel, 'yn', window.ukhpi.locale)
+
+      let nodes = document.querySelectorAll(`.o-data-view__location-name`);
+      safeForEach(nodes, node => { node.innerHTML = name }) // eslint-disable-line no-param-reassign
+
+      nodes = document.querySelectorAll(`.o-data-view__location-preposition`);
+      safeForEach(nodes, node => { node.innerHTML = preposition }) // eslint-disable-line no-param-reassign
     },
   },
 

@@ -30,9 +30,12 @@ class Mutation
 
     leading_upper = leading_uppercase_char?(match[1])
     replacement = replacement_pattern.sub('\1', match[2])
-    replacement_corrected = replacement_with_correct_case(replacement, leading_upper)
+    replacement_corrected_case = replacement_with_correct_case(replacement, leading_upper)
 
-    source.sub(prefixed_pattern(prefix), "#{new_prefix || prefix}#{(new_prefix || prefix) && ' '}#{replacement_corrected}")
+    source.sub(
+      prefixed_pattern(prefix),
+      "#{replacement_prefix(prefix)}#{replacement_corrected_case}"
+    )
   end
 
   def prefixed_pattern(prefix)
@@ -46,5 +49,11 @@ class Mutation
   def replacement_with_correct_case(replacement, leading_upper)
     replacement_first_char = leading_upper ? replacement.chr.upcase : replacement.chr.downcase
     replacement.sub(/.(.*)/, "#{replacement_first_char}\\1")
+  end
+
+  def replacement_prefix(prefix)
+    return '' unless prefix
+
+    "#{new_prefix || prefix} "
   end
 end

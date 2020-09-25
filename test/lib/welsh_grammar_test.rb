@@ -32,6 +32,14 @@ class WelshGrammarTest < ActiveSupport::TestCase
         _(result.result).must_equal('Fai')
       end
 
+      it 'should mutate a placenmame with an assumed prefix' do
+        I18n.locale = :cy
+
+        result = WelshGrammar.mutate(source: 'Gwynedd', assuming_prefix: 'yn')
+        _(result.result).must_equal('Ngwynedd')
+        _(result.prefix).must_equal('yng')
+      end
+
       it 'should mutate if the prefix is "yn"' do
         I18n.locale = :cy
 
