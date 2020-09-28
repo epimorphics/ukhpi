@@ -70,7 +70,7 @@ en:
       search_results: "Search results:"
 
     print:
-      locations_summary: "#{n_locations} locations"
+      locations_summary: "%{n_locations} locations"
       unavailable: "We're sorry, #{indicator_name} is not available for #{statistic_name}."
       date: "Date"
       quarterly: "quarterly"

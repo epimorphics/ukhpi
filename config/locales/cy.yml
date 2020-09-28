@@ -70,7 +70,7 @@ cy:
       search_results: "Canlyniadau chwilio:"
 
     print:
-      locations_summary: "#{n_locations} lleoliad"
+      locations_summary: "%{n_locations} lleoliad"
       unavailable: "Mae’n flin gennym, nid yw #{indicator_name} ar gael ar gyfer #{statistic_name}."
       date: "Dyddiad"
       quarterly: "chwarterol"
