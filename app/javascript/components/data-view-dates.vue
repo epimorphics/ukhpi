@@ -88,7 +88,11 @@ export default {
     },
 
     fromDateFormatted() {
-      return Moment(this.fromDate).format('MMM YYYY');
+      return mutateName(
+        Moment(this.fromDate).format('MMM YYYY'),
+        this.$t('preposition.to'),
+        window.ukhpi.locale
+      ).name
     },
 
     toDateFormatted() {
