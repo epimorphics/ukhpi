@@ -202,7 +202,7 @@ cy:
       dates_to: "hyd at"
       validation_dates: "Rhaid i’r dyddiad dechrau fod yn gynharach na’r dyddiad diwedd"
       for_locations: "Ar gyfer lleoliadau:"
-      title: "Cymharu %{indLabel} o %{statLabel} ar gyfer %{locLabel}"
+      title: "Cymharu %{indLabel} %{statLabel} ar gyfer %{locLabel}"
       zero_locations: "dim lleoliadau"
       one_locations: "un lleoliad"
       two_locations: "dau leoliad"
