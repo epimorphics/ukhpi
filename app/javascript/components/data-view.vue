@@ -205,7 +205,7 @@ export default {
     selectedLocation() {
       const newLabel = this.selectedLocationLabel;
       const locale = i18n.currentLocale
-      const { name, preposition } = mutateName(newLabel, 'yn', window.ukhpi.locale)
+      const { name, preposition } = mutateName(newLabel, this.$t('preposition.in'), window.ukhpi.locale)
 
       let nodes = document.querySelectorAll(`.o-data-view__location-name`);
       safeForEach(nodes, node => { node.innerHTML = name }) // eslint-disable-line no-param-reassign

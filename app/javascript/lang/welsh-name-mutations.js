@@ -38,13 +38,7 @@ const MUTATIONS = {
 }
 
 function mutateWelshName (name, preposition) {
-  let result = { name, preposition }
-
-  if (MUTATIONS[preposition]) {
-    result = mutate(name, preposition, MUTATIONS[preposition])
-  }
-
-  return result
+  return mutate(name, preposition, MUTATIONS[preposition] || [])
 }
 
 function mutate (name, preposition, mutations) {

@@ -12,6 +12,10 @@ class GrammarAction
   end
 
   def self.identity_action(options)
-    GrammarAction.new(options, options[:source])
+    GrammarAction.new(
+      options,
+      options[:source],
+      prefix: options[:prefix] || options[:assuming_prefix]
+    )
   end
 end

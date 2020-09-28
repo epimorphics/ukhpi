@@ -18,8 +18,9 @@ class Mutation
   # already returned `true`
   def apply(options, prefix = nil)
     result = case_preserving_replace(options[:source], prefix)
+    prefix = new_prefix || options[:prefix] || options[:assuming_prefix]
 
-    GrammarAction.new(options, result, prefix: new_prefix || options[:prefix])
+    GrammarAction.new(options, result, prefix: prefix)
   end
 
   def case_preserving_replace(source, prefix)

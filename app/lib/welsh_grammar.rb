@@ -54,7 +54,6 @@ class WelshGrammar
       mutate_prefix(options[:assuming_prefix], options)
     elsif options[:prefix]
       mutate_prefix(options[:prefix], options)
-      # result.update_result(/#{options[:prefix]} /, result.prefix)
     end
   end
 

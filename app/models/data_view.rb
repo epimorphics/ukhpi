@@ -121,6 +121,7 @@ class DataView # rubocop:disable Metrics/ClassLength
     icon = "<i class='fa fa-pencil-square-o'></i>"
     mut_label = WelshGrammar
                 .apply(source: location.label, assuming_prefix: I18n.t('preposition.in'))
+
     {
       html: "<span class='o-data-view__location-name'>#{mut_label.result}</span> #{icon}",
       preposition: mut_label.prefix
