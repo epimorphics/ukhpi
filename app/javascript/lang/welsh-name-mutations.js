@@ -17,7 +17,7 @@ const MUTATIONS = {
     [/M(.*)/, 'F$1', 'i'],
     [/G(.*)/, '$1', 'i'],
     [/T(.*)/, 'D$1', 'i'],
-    [/Rh(.*)/, 'r$1', 'i'],
+    [/Rh(.*)/, 'R$1', 'i'],
     [/B(.*)/, 'F$1', 'i'],
     [/C(.*)/, 'G$1', 'i'],
     [/D(.*)/, 'Dd$1', 'i'],
@@ -45,7 +45,10 @@ function mutate (name, preposition, mutations) {
   for (const rule of mutations) {
     if (name.match(rule[0])) {
       return {
-        name: name.replace(rule[0], rule[1]),
+        name:
+          name
+            .replace(rule[0], rule[1])
+            .replace(/^\w/, char => char.toLocaleUpperCase()),
         preposition: rule[2]
       }
     }
