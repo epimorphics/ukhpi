@@ -19,7 +19,7 @@
 
       = l(data_view.from_date, format: '%b %Y')
       = t('preposition.to')
-      = l(data_view.to_date, format: '%b %Y')
+      = WelshGrammar.mutate(source: l(data_view.to_date, format: '%b %Y'), prefix: t('preposition.to')).result
 
       = link_to(t('action.change'), edit_browse_path(data_view.user_selections.params))
 

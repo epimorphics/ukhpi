@@ -14,17 +14,18 @@
     %p
       O
       %span.c-headline-figure.c-headline-figure__period
-        = @view_state.period
+        = succeed ',' do
+          = @view_state.period
       %span.c-headline-figure.c-headline-figure__average-price
         = number_to_currency( @view_state.average_price, locale: "en-GB", precision: 0 )
       yw pris tŷ cyfartalog yn y DU, ac mae’r mynegai yn sefyll ar
       %span.c-headline-figure.c-headline-figure__house-price-index
         = succeed "." do
           = @view_state.house_price_index
-      Mae prisiau eiddo wedi cwympo gan
+      Mae prisiau eiddo
       %span.c-headline-figure.c-headline-figure__monthly-change
         = @view_state.percentage_monthly_change
-      o’i gymharu â’r mis blaenorol, ac wedi codi gan
+      o’i gymharu â’r mis blaenorol, ac
       %span.c-headline-figure.c-headline-figure__annual-change
         = @view_state.percentage_annual_change
       o’i gymharu â’r flwyddyn flaenorol.

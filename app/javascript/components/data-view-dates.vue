@@ -64,6 +64,7 @@ import Moment from 'moment';
 import { FocusTrap } from 'focus-trap-vue'
 import { SET_DATES } from '../store/mutation-types';
 import bus from '../lib/event-bus';
+import { mutateName } from 'lang/welsh-name-mutations'
 
 export default {
   components: {
@@ -87,11 +88,19 @@ export default {
     },
 
     fromDateFormatted() {
-      return Moment(this.fromDate).format('MMM YYYY');
+      return mutateName(
+        Moment(this.fromDate).format('MMM YYYY'),
+        this.$t('preposition.to'),
+        window.ukhpi.locale
+      ).name
     },
 
     toDateFormatted() {
-      return Moment(this.toDate).format('MMM YYYY');
+      return mutateName(
+        Moment(this.toDate).format('MMM YYYY'),
+        this.$t('preposition.to'),
+        window.ukhpi.locale
+      ).name
     },
   },
 

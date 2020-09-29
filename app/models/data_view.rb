@@ -95,29 +95,37 @@ class DataView # rubocop:disable Metrics/ClassLength
 
   def title_with_indicator
     change_path = edit_browse_path(user_selections.params)
+    title_location_translated = title_location
     <<~TITLE
       #{indicator.label}
       #{I18n.t('preposition.by')}
       #{theme.label.downcase}
-      #{I18n.t('preposition.in')}
-      <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
+      <span class='o-data-view__location-preposition'>#{title_location_translated[:preposition]}</span>
+      <a href='#{change_path}' class='o-data-view__location'>#{title_location_translated[:html]}</a>
     TITLE
       .html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def title_without_indicator
     change_path = edit_browse_path(user_selections.params)
+    title_location_translated = title_location
     <<~TITLE
       #{indicator.label}
-      #{I18n.t('preposition.in')}
-      <a href='#{change_path}' class='o-data-view__location'>#{title_location}</a>
+      <span class='o-data-view__location-preposition'>#{title_location_translated[:preposition]}</span>
+      <a href='#{change_path}' class='o-data-view__location'>#{title_location_translated[:html]}</a>
     TITLE
       .html_safe # rubocop:disable Rails/OutputSafety
   end
 
   def title_location
     icon = "<i class='fa fa-pencil-square-o'></i>"
-    "<span class='o-data-view__location-name'>#{location.label}</span> #{icon}"
+    mut_label = WelshGrammar
+                .apply(source: location.label, assuming_prefix: I18n.t('preposition.in'))
+
+    {
+      html: "<span class='o-data-view__location-name'>#{mut_label.result}</span> #{icon}",
+      preposition: mut_label.prefix
+    }
   end
 
   def title_key

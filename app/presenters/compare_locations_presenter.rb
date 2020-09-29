@@ -30,12 +30,13 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     stat = I18n.t("statistic.#{statistic.label_key}").downcase
     from = I18n.l(user_compare_selections.from_date, format: '%b %Y')
     to = I18n.l(user_compare_selections.to_date, format: '%b %Y')
+    to_mutated = WelshGrammar.mutate(source: to, assuming_prefix: I18n.t('preposition.to'))
 
     <<~HEADLINE
       <strong>#{ind}</strong>
       #{I18n.t('preposition.for')}
       <strong>#{stat}</strong>,
-      #{from} #{I18n.t('preposition.to')} #{to}
+      #{from} #{I18n.t('preposition.to')} #{to_mutated.result}
     HEADLINE
       .html_safe
   end
