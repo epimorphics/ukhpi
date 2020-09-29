@@ -75,7 +75,7 @@ class LandingState
   def format_percentage(change)
     if change == 'unknown'
       change
-    elsif change == 0.0
+    elsif change <= 0.0001
       I18n.t('landing.change.same')
     elsif change.positive?
       format('%s %.1f%%', I18n.t('landing.change.risen'), change.abs)
