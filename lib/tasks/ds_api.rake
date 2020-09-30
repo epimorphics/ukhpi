@@ -5,9 +5,9 @@ namespace :ukhpi do
   desc 'Create the DSAPI config file from the current DSD'
   task dsapi_config: :environment do
     ukhpi_data_cube = UkhpiDataCube.new
-    FILENAME = 'config/dsapi/ukhpi.ttl'
+    filename = 'config/dsapi/ukhpi.ttl'
 
-    File.open(FILENAME, 'w') do |file|
+    File.open(filename, 'w') do |file|
       file << <<~PREFIXES
         @prefix owl:   <http://www.w3.org/2002/07/owl#> .
         @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .

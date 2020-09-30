@@ -1,5 +1,12 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.8 - 2020-09-29 (Ian)
+
+- Update Rails and JS dependencies
+- Various additional Welsh translation fixes, including support for
+  consonant mutations (nb: this is a retrospective entry for the
+  previous PR)
+
 ## 1.5.7 - 2020-09-24 (Ian)
 
 - Fix problem `$t is not defined`, GH-263
