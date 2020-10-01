@@ -173,7 +173,7 @@ en:
 
     location:
       results: "Search results"
-      many_results: "... plus ${manyResults} more."
+      many_results: "... plus %{manyResults} more."
       show_on_map: "Show on map:"
       type_countries: "Countries"
       type_las: "Local authorities"
@@ -182,6 +182,11 @@ en:
       default_title: "Choose a different region or location"
       default_prompt: "To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map."
       search_locations_label: "Search locations:"
+      type:
+        la: 'local authority'
+        county: 'county'
+        country: 'country'
+        region: 'region'
 
     data_table:
       date: "Date"
