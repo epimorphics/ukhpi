@@ -142,6 +142,8 @@ cy:
     show_result: "dangos canlyniad"
     compare: "cymharu"
     update_comparison: "diweddaru cymhariaeth"
+    add_location: "ychwanegu lleoliad"
+    remove: "dileu"
 
   connective:
     and: "a"

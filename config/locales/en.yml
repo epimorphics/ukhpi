@@ -142,6 +142,8 @@ en:
     show_result: "show result"
     compare: "compare"
     update_comparison: "update comparison"
+    add_location: "add location"
+    remove: "remove"
 
   connective:
     and: "and"
