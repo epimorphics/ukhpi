@@ -89,7 +89,7 @@ export default {
 
     fromDateFormatted() {
       return mutateName(
-        Moment(this.fromDate).format('MMM YYYY'),
+        Moment(this.fromDate).format('MMMM YYYY'),
         this.$t('preposition.to'),
         window.ukhpi.locale
       ).name
@@ -97,7 +97,7 @@ export default {
 
     toDateFormatted() {
       return mutateName(
-        Moment(this.toDate).format('MMM YYYY'),
+        Moment(this.toDate).format('MMMM YYYY'),
         this.$t('preposition.to'),
         window.ukhpi.locale
       ).name
