@@ -142,6 +142,8 @@ cy:
     show_result: "dangos canlyniad"
     compare: "cymharu"
     update_comparison: "diweddaru cymhariaeth"
+    add_location: "ychwanegu lleoliad"
+    remove: "dileu"
 
   connective:
     and: "a"
@@ -171,7 +173,7 @@ cy:
 
     location:
       results: "Canlyniadau chwilio"
-      many_results: "... a ${manyResults} arall"
+      many_results: "... a %{manyResults} arall"
       show_on_map: "Dangos ar fap:"
       type_countries: "Gwledydd"
       type_las: "Awdurdodau lleol"
@@ -180,6 +182,11 @@ cy:
       default_title: "Dewiswch ranbarth neu leoliad gwahanol"
       default_prompt: "I weld ystadegau Mynegai Prisiau Tai y DU ar gyfer rhan wahanol o’r DU, chwiliwch am y lleoliad newydd yn ôl enw, neu cliciwch ar leoliad ar y map."
       search_locations_label: "Lleoliadau chwilio:"
+      type:
+        la: 'awdurdod lleol'
+        county: 'sir'
+        country: 'wlad'
+        region: 'rhanbarth'
 
     data_table:
       date: "Dyddiad"

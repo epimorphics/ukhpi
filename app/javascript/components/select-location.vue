@@ -42,7 +42,7 @@
                   <el-button type='text' @click='onSelectResult'>
                     {{ result.labels[$locale] }}
                   </el-button>
-                  ({{ result | locationTypeLabel }})
+                  ({{ locationTypeLabel(result) }})
                 </li>
               </ul>
               <p v-if='manyResults > 0'>
@@ -101,6 +101,8 @@ import bus from '../lib/event-bus';
 const MAX_RESULTS = 10;
 
 export default {
+  name: 'select-location',
+
   components: {
     FocusTrap
   },
@@ -313,13 +315,11 @@ export default {
       this.searchInput = event.target.innerText;
       this.onSearchInput(this.searchInput);
     },
-  },
 
-  filters: {
-    locationTypeLabel(location) {
+    locationTypeLabel (location) {
       const typeName = locationIndexType(location);
-      return typeName === 'la' ? 'local authority' : typeName;
-    },
+      return this.$t(`js.location.type.${typeName}`)
+    }
   },
 
   mounted() {
