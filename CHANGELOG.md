@@ -1,5 +1,11 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.9 - 2020-10-02 (Ian)
+
+- Additional fixes to the Welsh language localisation, including some
+  corrections to Welsh mutations
+- added Welsh version of accessibility statement
+
 ## 1.5.8 - 2020-09-29 (Ian)
 
 - Update Rails and JS dependencies
