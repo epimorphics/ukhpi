@@ -15,6 +15,7 @@ en:
       ogl_url: "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
       ogl_statement: "All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
       application_release: "Application release"
+      accessibility: "Accessibility"
 
   browse:
     show:

@@ -15,6 +15,7 @@ cy:
       ogl_url: "https://www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/"
       ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='//www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
       application_release: "Cyhoeddiad ap"
+      accessibility: "Hygyrchedd"
 
   browse:
     show:
