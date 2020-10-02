@@ -86,6 +86,18 @@ class WelshGrammarTest < ActiveSupport::TestCase
         result = WelshGrammar.mutate(source: 'yn dxxyy', prefix: 'yn')
         _(result.result).must_equal('yn nxxyy')
       end
+
+      it 'should mutate correctly if there are spaces in the name' do
+        I18n.locale = :cy
+
+        result = WelshGrammar.mutate(source: 'Gorllewin Berkshire', assuming_prefix: 'yn')
+        _(result.prefix).must_equal('yng')
+        _(result.result).must_equal('Ngorllewin Berkshire')
+
+        result = WelshGrammar.mutate(source: 'yn Gorllewin Berkshire', prefix: 'yn')
+        _(result.prefix).must_equal('yng')
+        _(result.result).must_equal('yng Ngorllewin Berkshire')
+      end
     end
   end
 end
