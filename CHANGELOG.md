@@ -1,5 +1,35 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.9 - 2020-10-02 (Ian)
+
+- Additional fixes to the Welsh language localisation, including some
+  corrections to Welsh mutations
+- added Welsh version of accessibility statement
+
+## 1.5.8 - 2020-09-29 (Ian)
+
+- Update Rails and JS dependencies
+- Various additional Welsh translation fixes, including support for
+  consonant mutations (nb: this is a retrospective entry for the
+  previous PR)
+
+## 1.5.7 - 2020-09-24 (Ian)
+
+- Fix problem `$t is not defined`, GH-263
+
+## 1.5.6 - 2020-09-23 (Ian)
+
+- Added accessibility statement
+
+## 1.5.5 - 2020-09-22 (Ian)
+
+- Fix WCAG colour contrast issue, and improve visual consistency by
+  picking dark blue as the primary action colour
+
+## 1.5.4 - 2020-09-22 (Ian)
+
+- added skip-to-main-content link
+
 ## 1.5.3 - 2020-09-18 (Ian)
 
 Updates to Welsh localization based on testing

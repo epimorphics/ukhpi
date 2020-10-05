@@ -64,6 +64,7 @@ import Moment from 'moment';
 import { FocusTrap } from 'focus-trap-vue'
 import { SET_DATES } from '../store/mutation-types';
 import bus from '../lib/event-bus';
+import { mutateName } from 'lang/welsh-name-mutations'
 
 export default {
   components: {
@@ -87,11 +88,19 @@ export default {
     },
 
     fromDateFormatted() {
-      return Moment(this.fromDate).format('MMMM YYYY');
+      return mutateName(
+        Moment(this.fromDate).format('MMMM YYYY'),
+        this.$t('preposition.to'),
+        window.ukhpi.locale
+      ).name
     },
 
     toDateFormatted() {
-      return Moment(this.toDate).format('MMMM YYYY');
+      return mutateName(
+        Moment(this.toDate).format('MMMM YYYY'),
+        this.$t('preposition.to'),
+        window.ukhpi.locale
+      ).name
     },
   },
 
@@ -108,7 +117,7 @@ export default {
 
     onSaveChanges() {
       if (Moment(this.newToDate).isBefore(Moment(this.newFromDate))) {
-        this.validationMessage = $t('js.compare.validation_dates');
+        this.validationMessage = this.$t('js.compare.validation_dates');
       } else {
         const from = Moment(this.newFromDate).format('YYYY-MM-DD');
         const to = Moment(this.newToDate).format('YYYY-MM-DD');

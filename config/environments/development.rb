@@ -43,4 +43,9 @@ Rails.application.configure do
   # API location can be specified in the environment
   # But defaults to the dev service
   config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
+
+  # feature flag for showing the Welsh language switch affordance
+  config.welsh_language_enabled = true
+
+  config.accessibility_document_path = '/doc/accessibility'
 end

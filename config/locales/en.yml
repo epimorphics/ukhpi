@@ -12,8 +12,10 @@ en:
       personal_info_url: "https://www.gov.uk/government/organisations/land-registry/about/personal-information-charter"
       public_data: "HM Land Registry Public Data"
       ogl: "Open Government Licence"
+      ogl_url: "http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
       ogl_statement: "All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
       application_release: "Application release"
+      accessibility: "Accessibility"
 
   browse:
     show:
@@ -69,7 +71,7 @@ en:
       search_results: "Search results:"
 
     print:
-      locations_summary: "#{n_locations} locations"
+      locations_summary: "%{n_locations} locations"
       unavailable: "We're sorry, #{indicator_name} is not available for #{statistic_name}."
       date: "Date"
       quarterly: "quarterly"
@@ -141,6 +143,8 @@ en:
     show_result: "show result"
     compare: "compare"
     update_comparison: "update comparison"
+    add_location: "add location"
+    remove: "remove"
 
   connective:
     and: "and"
@@ -170,7 +174,7 @@ en:
 
     location:
       results: "Search results"
-      many_results: "... plus ${manyResults} more."
+      many_results: "... plus %{manyResults} more."
       show_on_map: "Show on map:"
       type_countries: "Countries"
       type_las: "Local authorities"
@@ -179,6 +183,11 @@ en:
       default_title: "Choose a different region or location"
       default_prompt: "To see UKHPI statistics for a different part of the UK, search for the new location by name, or click a location on the map."
       search_locations_label: "Search locations:"
+      type:
+        la: 'local authority'
+        county: 'county'
+        country: 'country'
+        region: 'region'
 
     data_table:
       date: "Date"

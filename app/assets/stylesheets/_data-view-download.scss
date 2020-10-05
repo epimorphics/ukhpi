@@ -13,12 +13,14 @@
     text-decoration: none;
   }
 
-  &__button, &__button:visited, &__button:link {
+  &__button, &__button:visited, &__button:link, &__button:focus, &__button:link:focus {
     color: white;
+    background-color: $dark-blue;
   }
 }
 
 .c-compare__download-link {
   @extend .button;
+  background-color: $dark-blue;
   font-size: 1.5rem;
 }

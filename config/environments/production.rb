@@ -81,7 +81,7 @@ Rails.application.configure do
   config.action_view.logger = nil
 
   if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new(STDOUT)
+    logger           = ActiveSupport::Logger.new($stdout)
     logger.formatter = config.log_formatter
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
@@ -91,4 +91,9 @@ Rails.application.configure do
   # API location can be specified in the environment
   # But defaults to the dev service
   config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
+
+  # feature flag for showing the Welsh language switch affordance
+  config.welsh_language_enabled = ENV['DEPLOYMENT_ENVIRONMENT'] == 'dev'
+
+  config.accessibility_document_path = '/accessibility'
 end
