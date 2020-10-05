@@ -67,8 +67,18 @@ import bus from '../lib/event-bus';
 import { mutateName } from 'lang/welsh-name-mutations'
 
 export default {
+  name: 'data-view-dates',
+
   components: {
     FocusTrap
+  },
+
+  props: {
+    prefix: {
+      required: false,
+      type: String,
+      default: () => ''
+    }
   },
 
   data: () => ({
@@ -88,11 +98,15 @@ export default {
     },
 
     fromDateFormatted() {
-      return mutateName(
-        Moment(this.fromDate).format('MMMM YYYY'),
-        this.$t('preposition.to'),
-        window.ukhpi.locale
-      ).name
+      if (this.prefix) {
+        return mutateName(
+          Moment(this.fromDate).format('MMMM YYYY'),
+          this.$t(this.prefix),
+          window.ukhpi.locale
+        ).name
+      }
+
+      return Moment(this.fromDate).format('MMMM YYYY')
     },
 
     toDateFormatted() {

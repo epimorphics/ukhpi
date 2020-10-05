@@ -32,7 +32,7 @@
           </el-select>
         </label>
         {{ $t('preposition.from') }}
-        <data-view-dates />
+        <data-view-dates prefix='preposition.from' />
       </el-col>
       <el-col :span='24'>
         <el-alert
