@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.10 - 2020-10-05 (Ian)
+
+- Some additional Welsh language refinements, in particular date abbreviations
+
 ## 1.5.9 - 2020-10-02 (Ian)
 
 - Additional fixes to the Welsh language localisation, including some
