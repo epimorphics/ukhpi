@@ -2,10 +2,10 @@
   %header
     %h2.o-heading--3
       = @view_state.indicator_summary
-      by
+      = I18n.t('preposition.by')
       = @view_state.theme_summary.downcase
-      in
-      = @view_state.locations_summary
+      -# = I18n.t('preposition.in')
+      = @view_state.in_location
     %p
       = @view_state.dates_summary
 

@@ -12,7 +12,7 @@
               class='u-right'
               scope='col'
           >
-            {{ location.labels[$locale] }}
+            {{ location.labels[$locale] || location.labels.en }}
           </th>
         </tr>
       </thead>
@@ -130,7 +130,7 @@ export default {
   },
 
   methods: {
-    dateFormatter: (date) => Moment(date).format('MMM YYYY'),
+    dateFormatter: (date) => Moment(date).format('MMMM YYYY'),
 
     valueFormatter(value) {
       const ind = this.indicator.slug;

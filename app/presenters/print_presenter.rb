@@ -38,14 +38,11 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
       .map { |uri| Locations.lookup_location(uri) }
   end
 
-  def locations_summary # rubocop:disable Metrics/AbcSize
-    if locations.one?
-      locations.first.label
-    elsif locations.length == 2
-      "#{locations.first.label} #{I18n.t('connectives.and')} #{locations[1].label}"
-    else
-      I18n.t('compare.print.locations_summary', num_locattions: locations.length)
-    end
+  def in_location
+    in_loc = "#{I18n.t('preposition.in')} #{locations.first.label}"
+    WelshGrammar
+      .apply(source: in_loc, prefix: I18n.t('preposition.in'))
+      .result
   end
 
   def indicators

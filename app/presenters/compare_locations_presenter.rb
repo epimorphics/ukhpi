@@ -25,18 +25,22 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :as_json, to: :user_compare_selections
   delegate :selected_locations, to: :user_compare_selections
 
-  def headline_summary # rubocop:disable Metrics/AbcSize
+  def headline_summary # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     ind = I18n.t("indicator.#{indicator.slug}")
     stat = I18n.t("statistic.#{statistic.label_key}").downcase
-    from = I18n.l(user_compare_selections.from_date, format: '%b %Y')
-    to = I18n.l(user_compare_selections.to_date, format: '%b %Y')
+    from = I18n.l(user_compare_selections.from_date, format: '%B %Y')
+    from_mutated = WelshGrammar.mutate(source: from, assuming_prefix: I18n.t('preposition.from'))
+    to = I18n.l(user_compare_selections.to_date, format: '%B %Y')
     to_mutated = WelshGrammar.mutate(source: to, assuming_prefix: I18n.t('preposition.to'))
 
     <<~HEADLINE
       <strong>#{ind}</strong>
       #{I18n.t('preposition.for')}
       <strong>#{stat}</strong>,
-      #{from} #{I18n.t('preposition.to')} #{to_mutated.result}
+      #{from_mutated.prefix}
+      #{from_mutated.result}
+      #{to_mutated.prefix}
+      #{to_mutated.result}
     HEADLINE
       .html_safe
   end

@@ -112,15 +112,11 @@ export const mutations = {
   },
 
   [types.ADD_COMPARISON_RESULTS] (state, results) {
-    try {
-      state.compareResults = Object.assign(
-        {},
-        state.compareResults,
-        { [results.locationGss]: results.results }
-      )
-    } catch (e) {
-      debugger
-    }
+    state.compareResults = Object.assign(
+      {},
+      state.compareResults,
+      { [results.locationGss]: results.results }
+    )
   }
 }
 

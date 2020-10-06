@@ -104,10 +104,14 @@ class Location
     end.uniq
   end
 
+  def in_wales?
+    [container, container2, container3].include?('http://landregistry.data.gov.uk/id/region/wales')
+  end
+
   # Post-condition invariant: there should be two labels, one English and
   # one Welsh. If the Welsh label is missing, assume we re-use the English
   def labels
-    @labels[:cy] = @labels[:en] unless @labels.key?(:cy)
+    @labels[:cy] = @labels[:en] if in_wales? && !@labels.key?(:cy)
 
     @labels
   end

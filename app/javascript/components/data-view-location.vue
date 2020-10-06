@@ -6,7 +6,7 @@
         class='c-options-selection__button'
         :title='$t("js.action.select_location")'
       >
-        {{ location.labels[$locale] }}
+        {{ location.labels[$locale] || location.labels.en }}
         <i class='fa fa-edit'></i>
       </el-button>
     </span>

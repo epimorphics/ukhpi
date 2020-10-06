@@ -39,6 +39,8 @@ en:
 
     print:
       reporting_period: "Reporting<br />period"
+      monthly: "monthly"
+      quarterly: "quarterly"
 
     edit:
       heading: "Change your selections"

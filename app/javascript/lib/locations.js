@@ -31,7 +31,7 @@ let indexInitialised = false
 
 /** Which inddex should this location go into? */
 export function locationIndexType (location) {
-  const name = location.labels[window.ukhpi.locale]
+  const name = location.labels[window.ukhpi.locale] || location.labels.en
 
   switch (location.type) {
     case 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion':
@@ -50,7 +50,7 @@ export function locationIndexType (location) {
 function indexLocations () {
   const locale = window.ukhpi.locale
   _.each(Object.values(locations), (location) => {
-    const name = location.labels[locale]
+    const name = location.labels[locale] || location.labels.en
     locationsIndex[locationIndexType(location)][name] = location
   })
 }
@@ -81,9 +81,12 @@ export function locationsNamed (locationName) {
     return null
   }
 
-  const locale = window.ukhpi.locale
   const regex = new RegExp(locationName, 'i')
-  return locationsList.filter(location => location.labels[locale] && location.labels[locale].match(regex))
+  const locale = window.ukhpi.locale
+  const locationsLocale = locationsList.filter(location => location.labels[locale] && location.labels[locale].match(regex))
+  const locationsEn = locationsList.filter(location => location.labels.en.match(regex))
+
+  return _.union(locationsLocale || [], locationsEn || [])
 }
 
 /** @return the location matching the given name */
@@ -101,7 +104,7 @@ export function findLocationNamed (locationName) {
 
   _.find(indexedLocations(), (typedLocations, locationType) =>
     _.find(typedLocations, (location) => {
-      if (matcher.test(location.labels[locale])) {
+      if (matcher.test(location.labels[locale] || location.labels.en)) {
         result = { location, locationType }
       }
       return result

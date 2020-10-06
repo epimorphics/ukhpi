@@ -58,8 +58,9 @@ const LA_MAP_ERRATA = [
 
 /* eslint-disable max-len, class-methods-use-this */
 export default class LocationsMap {
-  constructor (elementId) {
+  constructor (elementId, locale) {
     this.elementId = elementId
+    this.locale = locale
 
     this.featuresIndex = {}
     this.backgroundLayer = Leaflet.layerGroup([])
@@ -187,7 +188,7 @@ export default class LocationsMap {
   onHighlightFeature (e) {
     const layer = e.target
     const locationAndType = this.findLayerLocation(layer)
-    const label = locationAndType.location.labels[this.$locale]
+    const label = locationAndType.location.labels[this.locale] || locationAndType.location.labels.en
 
     this.styleLayer(layer, this.highlightLocationStyle)
     this.showPopup(label, e.latlng)

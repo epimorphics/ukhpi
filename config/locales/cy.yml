@@ -39,6 +39,8 @@ cy:
 
     print:
       reporting_period: "Cyfnod<br />adrodd"
+      quarterly: "chwarterol"
+      monthly: "misol"
 
     edit:
       heading: "Newid eich dewisiadau"
