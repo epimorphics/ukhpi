@@ -3,6 +3,6 @@
 module Version
   MAJOR = 1
   MINOR = 5
-  REVISION = 10
+  REVISION = 11
   VERSION = "#{MAJOR}.#{MINOR}.#{REVISION}"
 end

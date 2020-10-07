@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.11 - 2020-10-07 (Ian)
+
+- Adjust the map UI to make the role of the layer selector (countries,
+  counties LA's etc) clearer
+
 ## 1.5.10 - 2020-10-05 (Ian)
 
 - Some additional Welsh language refinements, in particular date abbreviations
