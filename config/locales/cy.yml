@@ -173,6 +173,12 @@ cy:
 
     graph:
       no_data: "Mae’n flin gennym, nid yw data %{label} ar gael ar gyfer %{location}. Dewiswch leoliad gwahanol."
+      abbrev:
+        all: "pob"
+        det: "gwahân"
+        sem: "pâr"
+        ter: "teras"
+        fla: "fflat/deu"
 
     location:
       results: "Canlyniadau chwilio"
