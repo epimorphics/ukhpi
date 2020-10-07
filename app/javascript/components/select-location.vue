@@ -64,16 +64,20 @@
 
         <el-row>
           <div class='c-map'>
-            <div>
-              {{ $t("js.location.show_on_map") }}
-              <el-radio-group v-model='locationType'>
-                <el-radio-button label='country'>{{ $t("js.location.type_countries") }}</el-radio-button>
-                <el-radio-button label='la'>{{ $t("js.location.type_las") }}</el-radio-button>
-                <el-radio-button label='region'>{{ $t("js.location.type_regions_england") }}</el-radio-button>
-                <el-radio-button label='county'>{{ $t("js.location.type_counties_england") }}</el-radio-button>
-              </el-radio-group>
+            <div :id='mapElementId' class='c-map__map'></div>
+            <div class='c-map__controls'>
+              <div class='c-map__prompt'>
+                {{ $t("js.location.show_on_map") }}
+              </div>
+              <nav aria-label="show location type">
+                <el-radio-group v-model='locationType'>
+                  <el-radio-button label='country'>{{ $t("js.location.type_countries") }}</el-radio-button>
+                  <el-radio-button label='la'>{{ $t("js.location.type_las") }}</el-radio-button>
+                  <el-radio-button label='region'>{{ $t("js.location.type_regions_england") }}</el-radio-button>
+                  <el-radio-button label='county'>{{ $t("js.location.type_counties_england") }}</el-radio-button>
+                </el-radio-group>
+              </nav>
             </div>
-            <div :id='mapElementId'></div>
           </div>
         </el-row>
 
