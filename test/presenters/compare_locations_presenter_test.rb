@@ -146,7 +146,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
     describe '#headline_summary' do
       it 'should correctly generate a summary headline' do
         _(presenter.headline_summary)
-          .must_match %r{<strong>House price index</strong>\s+for\s+<strong>all property types</strong>,\s+... \d{4} to ... \d{4}\s+}
+          .must_match %r{<strong>House price index</strong>\s+for\s+<strong>all property types</strong>,\sfrom\s+[[:word:]]+\s\d{4}\sto\s[[:word:]]+\s\d{4}\s+}
       end
     end
 
@@ -181,7 +181,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
       it 'convert the results to an array of rows' do
         rows = presenter.query_results_rows
         _(rows.length).must_equal 1
-        _(rows.first.first).must_equal 'Jul 2018'
+        _(rows.first.first).must_equal 'July 2018'
         _(rows.first[1]).must_be_close_to 121.38
       end
     end
