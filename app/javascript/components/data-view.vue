@@ -122,7 +122,11 @@ export default {
     },
 
     selectedLocationLabel () {
-      return this.selectedLocation.labels[this.$locale]
+      return this.selectedLocation.labels[this.$locale] || this.selectedLocation.labels.en
+    },
+
+    selectedLocationLabelWelsh () {
+      return this.selectedLocation.labels.cy
     }
   },
 
@@ -203,14 +207,22 @@ export default {
 
   watch: {
     selectedLocation() {
-      const newLabel = this.selectedLocationLabel;
-      const locale = i18n.currentLocale
-      const { name, preposition } = mutateName(newLabel, this.$t('preposition.in'), window.ukhpi.locale)
+      let name = this.selectedLocationLabel;
+      let preposition = this.$t('preposition.in')
 
-      let nodes = document.querySelectorAll(`.o-data-view__location-name`);
+      // we only want to perform Welsh consonant mutation IF the location has a given
+      // Welsh name. If we're in Welsh language mode, but showing a location with no
+      // given Welsh name, we use the English name instead but we *don't* do mutation.
+      if (window.ukhpi.locale === 'cy' && this.selectedLocationLabelWelsh) {
+        const mutated = mutateName(this.selectedLocationLabelWelsh, preposition, 'cy')
+        name = mutated.name
+        preposition = mutated.preposition
+      }
+
+      let nodes = document.querySelectorAll('.o-data-view__location-name');
       safeForEach(nodes, node => { node.innerHTML = name }) // eslint-disable-line no-param-reassign
 
-      nodes = document.querySelectorAll(`.o-data-view__location-preposition`);
+      nodes = document.querySelectorAll('.o-data-view__location-preposition');
       safeForEach(nodes, node => { node.innerHTML = preposition }) // eslint-disable-line no-param-reassign
     },
   },

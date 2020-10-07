@@ -39,6 +39,8 @@ en:
 
     print:
       reporting_period: "Reporting<br />period"
+      monthly: "monthly"
+      quarterly: "quarterly"
 
     edit:
       heading: "Change your selections"
@@ -171,6 +173,12 @@ en:
 
     graph:
       no_data: "Sorry, there is no %{label} data available for %{location}. Please select a different location."
+      abbrev:
+        all: "all"
+        det: "det."
+        sem: "semi-det."
+        ter: "terr."
+        fla: "flat/mais."
 
     location:
       results: "Search results"

@@ -40,7 +40,7 @@
               <ul v-for='result in searchResults' class='o-search-location__results'>
                 <li class='o-search-location__result'>
                   <el-button type='text' @click='onSelectResult'>
-                    {{ result.labels[$locale] }}
+                    {{ result.labels[$locale] || result.labels.en }}
                   </el-button>
                   ({{ locationTypeLabel(result) }})
                 </li>
@@ -160,7 +160,7 @@ export default {
       this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
-        this.leafletMap = this.leafletMap || new LocationsMap(this.mapElementId);
+        this.leafletMap = this.leafletMap || new LocationsMap(this.mapElementId, this.$locale);
 
         this.resetDialog();
         const cb = _.bind(this.onSelectLocationURI, this);
@@ -226,7 +226,7 @@ export default {
     onSelectLocationURI(uri) {
       const locationAndType = findLocationById(uri, 'uri');
       this.selectedLocation = locationAndType.location;
-      this.searchInput = locationAndType.location.labels[this.$locale];
+      this.searchInput = locationAndType.location.labels[this.$locale] || locationAndType.location.labels.en;
       this.noMatch = null;
     },
 
@@ -235,8 +235,12 @@ export default {
     },
 
     isExactMatch(term, results) {
+      const locale = this.$locale
       const termLC = term.toLocaleLowerCase();
-      const location = results && results.find(result => result.labels[this.$locale].toLocaleLowerCase() === termLC);
+
+      const location = results && results.find(result => {
+        return (result.labels[locale] || result.labels.en).toLocaleLowerCase() === termLC
+      });
 
       return location && !this.isForthcomingLocation(location) ? location : null
     },
@@ -246,17 +250,15 @@ export default {
 
       if (location) {
         this.$set(this, 'searchResults', []);
-        this.$set(this, 'searchInput', location.labels[this.$locale]);
+        this.$set(this, 'searchInput', location.labels[this.$locale] || location.labels.en);
       }
     },
 
     showForthcoming(results) {
-      console.log("showForthcoming", results)
       if (results.length === 1 && this.isForthcomingLocation(results[0])) {
         this.manyResults = 0
         this.searchResults = null
         this.noMatch = results[0].message
-        console.log("shown Forthcoming")
       }
     },
 

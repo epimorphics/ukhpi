@@ -16,6 +16,7 @@ import { timeFormat } from 'd3-time-format'
 import { interpolateNumber } from 'd3-interpolate'
 import { asCurrency, formatValue } from '../lib/values'
 import bus from '../lib/event-bus'
+import VueI18n from 'lang'
 
 const SERIES_MARKER = [
   symbolCircle,
@@ -316,14 +317,12 @@ function drawGraphLines (series, index, graphConfig) {
 const bisectDate = bisector(d => d.x).left
 
 function formatStatistic (indicator, statistic, value) {
-  const abbrev = {
-    all: 'all',
-    det: 'det.',
-    sem: 'semi-det.',
-    ter: 'terr.',
-    fla: 'flat/mais.'
-  }[statistic.slug]
-  return `${abbrev || statistic.label} ${formatValue(indicator + statistic, value)}`
+  let label = statistic.label
+  if (['all', 'sem', 'det', 'ter', 'fla'].includes(statistic.slug)) {
+    label = VueI18n.t(`js.graph.abbrev.${statistic.slug}`)
+  }
+
+  return `${label} ${formatValue(indicator + statistic, value)}`
 }
 
 function xTrackLabel (statistic, projection, graphConfig, d) {

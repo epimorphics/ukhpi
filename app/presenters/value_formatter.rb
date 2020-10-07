@@ -56,6 +56,6 @@ class ValueFormatter
   end
 
   def self.month_year(date)
-    I18n.l(Date.strptime(date, '%Y-%m'), format: '%b %Y')
+    I18n.l(Date.strptime(date, '%Y-%m'), format: '%B %Y')
   end
 end

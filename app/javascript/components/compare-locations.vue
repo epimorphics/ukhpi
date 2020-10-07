@@ -32,7 +32,7 @@
           </el-select>
         </label>
         {{ $t('preposition.from') }}
-        <data-view-dates />
+        <data-view-dates prefix='preposition.from' />
       </el-col>
       <el-col :span='24'>
         <el-alert
@@ -48,7 +48,7 @@
         {{ $t('js.compare.for_locations') }}
         <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
-            {{ location.labels[$locale] }}
+            {{ location.labels[$locale] || location.labels.en }}
             <button @click='onRemoveLocation(location)' class='c-compare__locations--modify' :title="$t('action.remove')" :aria-label="$t('action.remove')">
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
