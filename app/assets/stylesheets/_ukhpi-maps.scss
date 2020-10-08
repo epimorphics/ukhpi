@@ -36,19 +36,21 @@
   }
 }
 
-/* Add some responsivity to the el-dialog width */
-.el-dialog {
-  width: 100%;
-}
-
-@media screen and (min-width: 800px) {
+/* Add some responsivity to the location-selection dialog width */
+.o-select-location {
   .el-dialog {
-    width: 75%;
+    width: 100%;
   }
-}
 
-@media screen and (min-width: 1024px) {
-  .el-dialog {
-    width: 50%;
+  @media screen and (min-width: 800px) {
+    .el-dialog {
+      width: 75%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .el-dialog {
+      width: 50%;
+    }
   }
 }
