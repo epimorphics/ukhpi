@@ -4,14 +4,53 @@
   min-height: 300px;
   width: 100%;
   margin-top: 10px;
+  display: flex;
+
+  &__controls {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0.75rem;
+    background-color: #ddd;
+  }
+
+  .el-radio-group {
+    display: flex;
+    flex-direction: column;
+
+    .el-radio-button__inner {
+      width: 100%;
+      border: 0;
+      border-radius: 0;
+    }
+  }
 
   .leaflet-container {
     width: 100%;
-    min-width: 400px;
+    min-width: 300px;
     height: 360px;
   }
 
   .el-radio-button__inner {
     font-size: 13px;
+  }
+}
+
+/* Add some responsivity to the location-selection dialog width */
+.o-select-location {
+  .el-dialog {
+    width: 100%;
+  }
+
+  @media screen and (min-width: 800px) {
+    .el-dialog {
+      width: 75%;
+    }
+  }
+
+  @media screen and (min-width: 1024px) {
+    .el-dialog {
+      width: 50%;
+    }
   }
 }

@@ -69,12 +69,12 @@
     Cymorth a chefnogaeth
   %p
     Ceir
-    = link_to('canllaw defnyddwyr', doc_ukhpi_user_guide_path(lang: 'cy')
+    = link_to('canllaw defnyddwyr', doc_ukhpi_user_guide_path(lang: 'cy'))
     ar gyfer y gwasanaeth hwn, a gallwch
     = succeed('.') do
-      = link_to('ddarllen rhagor am ddata cysylltiedig â Mynegai Prisiau Tai y DU', ukhpi_doc_path(lang: 'cy')
+      = link_to('ddarllen rhagor am ddata cysylltiedig â Mynegai Prisiau Tai y DU', ukhpi_doc_path(lang: 'cy'))
     I gael rhagor o gymorth,
-    = succeed '.' do
+    = succeed('.') do
       = mail_to('data.services@landregistry.gov.uk', 'anfonwch ebost atom')
 
   %h2.heading-medium
