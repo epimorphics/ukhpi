@@ -119,12 +119,16 @@ class DataView # rubocop:disable Metrics/ClassLength
 
   def title_location
     icon = "<i class='fa fa-pencil-square-o'></i>"
-    mut_label = WelshGrammar
-                .apply(source: location.label, assuming_prefix: I18n.t('preposition.in'))
+
+    llabel = if location.welsh_name?
+               WelshGrammar.apply(source: location.label, assuming_prefix: I18n.t('preposition.in'))
+             else
+               OpenStruct.new(result: location.label, prefix: I18n.t('preposition.in'))
+             end
 
     {
-      html: "<span class='o-data-view__location-name'>#{mut_label.result}</span> #{icon}",
-      preposition: mut_label.prefix
+      html: "<span class='o-data-view__location-name'>#{llabel.result}</span> #{icon}",
+      preposition: llabel.prefix
     }
   end
 
