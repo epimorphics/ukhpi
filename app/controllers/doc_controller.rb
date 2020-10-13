@@ -6,6 +6,10 @@ class DocController < ApplicationController
     @view_state = LanguageState.new(UserLanguageSelection.new(params))
   end
 
+  def ukhpi
+    @view_state = LanguageState.new(UserLanguageSelection.new(params))
+  end
+
   def ukhpi_dsd
     send_file 'app/views/doc/ukhpi-dsd.ttl', type: 'text/turtle'
   end
