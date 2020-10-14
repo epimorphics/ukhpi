@@ -38,6 +38,10 @@ class Location
     @gss == gss
   end
 
+  def welsh_name?
+    @labels.key?(:cy)
+  end
+
   def to_h
     {
       uri: uri,

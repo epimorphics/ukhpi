@@ -1,5 +1,12 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.12 - 2020-10-13 (Ian)
+
+- fix link to broken page at linkeddata.org
+- link to Welsh-language versions of some pages
+- fix broken rendering of 'about UKHPI' page
+- fix mutation of location names in non-JS view
+
 ## 1.5.11 - 2020-10-07 (Ian)
 
 - Adjust the map UI to make the role of the layer selector (countries,
