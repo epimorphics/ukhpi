@@ -295,7 +295,7 @@ namespace :ukhpi do
     uri = args[:uri]
     query = "describe <#{uri}>"
 
-    squery = "#{(ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki')}/bin/s-query"
+    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki'}/bin/s-query"
     server = ENV['SERVER'] || 'http://lr-data-dev-c.epimorphics.net/landregistry/query'
 
     puts 'Running SPARQL query ...'
