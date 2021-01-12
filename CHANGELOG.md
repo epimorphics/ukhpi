@@ -1,5 +1,10 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.13 - 2021-01-12 (Ian)
+
+- Updated regions for new Buckinghamshire UA creation
+- update dependencies
+
 ## 1.5.12 - 2020-10-13 (Ian)
 
 - fix link to broken page at linkeddata.org
