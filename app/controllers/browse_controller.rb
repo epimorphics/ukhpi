@@ -85,7 +85,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   # User clicked the search button
   def search_for_location(view_state)
-    if !view_state.location_search_term&.empty?
+    if view_state.location_search_term.present?
       match_location(view_state)
     else
       flash[:search] = 'Missing search term'

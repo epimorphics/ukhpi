@@ -4,24 +4,24 @@ require 'test_helper'
 
 # :nodoc:
 class CubeComponentTest < ActiveSupport::TestCase
-  let(:b_node_0) { RDF::Node.new }
+  let(:bNode0) { RDF::Node.new }
   let(:dimension) do
     g = RDF::Graph.new
     q = RDF::Resource.new('http://test.test/q')
 
-    g << RDF::Statement(b_node_0, CubeDataModel::Vocabularies::QB.dimension, q)
+    g << RDF::Statement(bNode0, CubeDataModel::Vocabularies::QB.dimension, q)
 
-    CubeDataModel::CubeComponent.new(g, b_node_0)
+    CubeDataModel::CubeComponent.new(g, bNode0)
   end
 
-  let(:b_node_1) { RDF::Node.new }
+  let(:bNode1) { RDF::Node.new }
   let(:measure) do
     g = RDF::Graph.new
     q = RDF::Resource.new('http://test.test/q')
 
-    g << RDF::Statement(b_node_1, CubeDataModel::Vocabularies::QB.measure, q)
+    g << RDF::Statement(bNode1, CubeDataModel::Vocabularies::QB.measure, q)
 
-    CubeDataModel::CubeComponent.new(g, b_node_1)
+    CubeDataModel::CubeComponent.new(g, bNode1)
   end
 
   describe 'CubeComponent' do

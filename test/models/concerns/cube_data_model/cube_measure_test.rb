@@ -4,7 +4,7 @@ require 'test_helper'
 
 # :nodoc:
 class CubeMeasureTest < ActiveSupport::TestCase
-  let :measure_0 do
+  let :measure0 do
     g = RDF::Graph.new
     measure = RDF::Resource.new('http://landregistry.data.gov.uk/def/ukhpi/salesVolume')
 
@@ -28,7 +28,7 @@ class CubeMeasureTest < ActiveSupport::TestCase
     CubeDataModel::CubeMeasure.new(g, measure)
   end
 
-  let :measure_1 do
+  let :measure1 do
     g = RDF::Graph.new
     measure = RDF::Resource.new('http://landregistry.data.gov.uk/def/ukhpi/percentageChangeDetached')
 
@@ -54,21 +54,21 @@ class CubeMeasureTest < ActiveSupport::TestCase
 
   describe 'CubeMeasure' do
     it 'should return the units' do
-      _(measure_0.units.map(&:to_s)).must_equal ['http://dbpedia.org/resource/Number']
+      _(measure0.units.map(&:to_s)).must_equal ['http://dbpedia.org/resource/Number']
     end
 
     it 'should return the range' do
-      _(measure_0.range.map(&:to_s)).must_equal [RDF::XSD.integer.to_s]
+      _(measure0.range.map(&:to_s)).must_equal [RDF::XSD.integer.to_s]
     end
 
     it 'should return true for a percentage measure' do
-      _(measure_0.percentage?).must_equal false
-      _(measure_1.percentage?).must_equal true
+      _(measure0.percentage?).must_equal false
+      _(measure1.percentage?).must_equal true
     end
 
     it 'should return the unit type' do
-      _(measure_0.unit_type).must_equal :integer
-      _(measure_1.unit_type).must_equal :percentage
+      _(measure0.unit_type).must_equal :integer
+      _(measure1.unit_type).must_equal :percentage
     end
   end
 end
