@@ -95,7 +95,7 @@
       </el-col>
       <el-col :span='24' v-else>
         <p>
-          <em>Please select one or more locations</em>
+          <em>{{ $t('js.compare.select_locations') }}</em>
         </p>
       </el-col>
     </el-row>

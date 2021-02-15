@@ -141,7 +141,7 @@ cy:
     user_guide: "canllaw defnyddwyr"
     about: "am Fynegai Prisiau Tai y DU"
     search: "chwilio"
-    changelog: "newid hanes"
+    changelog: "hanes newid"
     show_result: "dangos canlyniad"
     compare: "cymharu"
     update_comparison: "diweddaru cymhariaeth"
@@ -225,6 +225,7 @@ cy:
       n_locations: "%{num} lleoliad"
       csv_format: "CSV (taenlen)"
       json_format: "JSON"
+      select_locations: "Dewiswch un neu ragor o leoliadau"
 
     dates_picker:
       select_dates: "newid dyddiad dechrau neu ddiwedd"

@@ -225,6 +225,7 @@ en:
       n_locations: "%{num} locations"
       csv_format: "CSV (spreadsheet)"
       json_format: "JSON"
+      select_locations: 'Please select one or more locations'
 
     dates_picker:
       select_dates: "change start or end date"
