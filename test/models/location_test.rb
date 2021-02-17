@@ -94,5 +94,39 @@ class RegionTest < ActiveSupport::TestCase
         _(regions[2].label).must_equal 'C'
       end
     end
+
+    describe 'Welsh language support' do
+      it 'should return true if a location is in Wales' do
+        fixture = Location.new('http://example.com/a', { en: 'A' }, nil, nil, nil)
+        fixture_w = Location.new('http://example.com/a', { en: 'A' }, nil, Location::WALES, nil)
+
+        assert_not fixture.in_wales?
+        assert fixture_w.in_wales?
+      end
+
+      it 'should return true if a location has a Welsh label' do
+        fixture = Location.new('http://example.com/a', { en: 'A' }, nil, nil, nil)
+        fixture_w = Location.new('http://example.com/y', { en: 'A', cy: 'Y' }, nil, nil, nil)
+
+        assert_not fixture.welsh_name?
+        assert fixture_w.welsh_name?
+      end
+
+      it 'should return false if the Welsh and English names are identical' do
+        fixture_w = Location.new('http://example.com/y', { en: 'Abcd', cy: 'Abcd' }, nil, nil, nil)
+
+        assert_not fixture_w.welsh_name?
+      end
+
+      it 'should return Boolean based on whether a location is in Wales' do
+        fixture0 = Location.new('http://example.com/1', {}, nil, 'http://atlantis.com', nil)
+        fixture1 = Location.new('http://example.com/1', {}, nil, Location::WALES, nil)
+        fixture2 = Location.new(Location::WALES, {}, nil, nil, nil)
+
+        assert_not fixture0.in_wales?
+        assert fixture1.in_wales?
+        assert fixture2.in_wales?
+      end
+    end
   end
 end

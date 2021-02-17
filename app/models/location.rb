@@ -4,6 +4,8 @@
 # may be countries or European regions, local authorities, or counties or
 # regions of England
 class Location
+  WALES = 'http://landregistry.data.gov.uk/id/region/wales'
+
   attr_reader :uri, :type, :parent, :gss
 
   def initialize(uri, labels, type, parent, gss)
@@ -38,8 +40,16 @@ class Location
     @gss == gss
   end
 
+  # Return `true` if the location has a name in Welsh.
+  # Rule out the Welsh name from display if it's letter-for-letter the
+  # same as English. Strictly, the data should not contain such pairings,
+  # but empirically we know that it does
   def welsh_name?
-    @labels.key?(:cy)
+    @labels.key?(:cy) && (@labels.fetch(:cy) != @labels.fetch(:en))
+  end
+
+  def in_wales?
+    [uri, parent].include?(WALES)
   end
 
   def to_h
