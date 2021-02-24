@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.15 - 2021-02-18
+
+- (Ian) Some Welsh-language fixes suggested by Eleri
+
 ## 1.5.14 - 2021-01-20
 
 - (Ian) Enable use of Welsh langauge affordances in all deployment environments
