@@ -12,7 +12,7 @@ class ValueFormatter
   end
 
   def self.empty?(value)
-    value.nil? || (value.respond_to?(:'empty?') && value.empty?)
+    value.nil? || (value.respond_to?(:empty?) && value.empty?)
   end
 
   def self.formatter(options)

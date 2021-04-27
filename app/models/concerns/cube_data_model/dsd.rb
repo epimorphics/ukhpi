@@ -20,13 +20,13 @@ module CubeDataModel
 
     def measures
       components
-        .select(&:"measure?")
+        .select(&:measure?)
         .map(&:measure)
     end
 
     def dimensions
       components
-        .select(&:"dimension?")
+        .select(&:dimension?)
         .map(&:dimension)
     end
   end
