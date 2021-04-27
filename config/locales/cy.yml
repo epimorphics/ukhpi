@@ -4,7 +4,7 @@ cy:
       home_link: "Ewch i hafan Mynegai Prisiau Tai y DU"
       app_title: "Mynegai Prisiau Tai y DU"
       beta_tag: "[cy] BETA"
-      feedback_request: "Problem neu awgrym? Bydd eich <a rel='external' href='mailto:data.services@landregistry.gov.uk'>adborth</a> yn ein helpu i wella’r gwasanaeth hwn."
+      feedback_request: "Problem neu awgrym? Bydd eich <a rel='external' href='mailto:data.services@mail.landregistry.gov.uk'>adborth</a> yn ein helpu i wella’r gwasanaeth hwn."
 
     footer:
       crown_copyright: "Hawlfraint y Goron "
