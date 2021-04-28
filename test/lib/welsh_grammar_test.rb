@@ -98,6 +98,13 @@ class WelshGrammarTest < ActiveSupport::TestCase
         _(result.prefix).must_equal('yng')
         _(result.result).must_equal('yng Ngorllewin Berkshire')
       end
+
+      it 'should not mutate the single letterform "ch"' do
+        I18n.locale = :cy
+
+        result = WelshGrammar.mutate(source: 'i Chwefror', prefix: 'i')
+        _(result.result).must_equal('i Chwefror')
+      end
     end
   end
 end
