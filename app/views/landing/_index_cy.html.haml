@@ -75,7 +75,7 @@
       = link_to('ddarllen rhagor am ddata cysylltiedig â Mynegai Prisiau Tai y DU', ukhpi_doc_path(lang: 'cy'))
     I gael rhagor o gymorth,
     = succeed('.') do
-      = mail_to('data.services@landregistry.gov.uk', 'anfonwch ebost atom')
+      = mail_to(Rails.application.config.contact_email_address, 'anfonwch ebost atom')
 
   %h2.heading-medium
     Lawrlwytho Data’r Mynegai Prisiau Tai
@@ -139,8 +139,7 @@
     Manylion cysylltu
   %p
     Ebost
-    %a{ href: 'mailto:data.services@landregistry.gov.uk' }
-      data.services@landregistry.gov.uk
+    = mail_to(Rails.application.config.contact_email_address)
     %br
     Ffôn
     %a{ href: 'tel:+44-300-006-0478'}

@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.16 - 2021-04-27
+
+- (Ian) Updated correction to email address (GH-3)
+
 ## 1.5.15 - 2021-02-18
 
 - (Ian) Some Welsh-language fixes suggested by Eleri

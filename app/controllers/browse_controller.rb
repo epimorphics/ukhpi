@@ -57,7 +57,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
   end
 
   def render_view_state(view_state)
-    if view_state.respond_to?(:'[]') && view_state[:error]
+    if view_state.respond_to?(:[]) && view_state[:error]
       render plain: "Bad request: #{view_state[:error]}", status: :bad_request
     else
       @view_state = view_state
