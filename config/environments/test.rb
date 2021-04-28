@@ -50,4 +50,6 @@ Rails.application.configure do
   config.welsh_language_enabled = true
 
   config.accessibility_document_path = '/doc/accessibility'
+
+  config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
