@@ -10,7 +10,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
-      render_bad_request
+      render_bad_request(user_selections)
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
@@ -128,8 +128,10 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     }.merge(new_params))
   end
 
-  def render_bad_request # rubocop:disable Metrics/MethodLength
+  def render_bad_request(user_selections) # rubocop:disable Metrics/MethodLength
     respond_to do |format|
+      @view_state = OpenStruct.new(user_selections: user_selections)
+
       format.html do
         render 'exceptions/error_page',
                locals: { status: 400, sentry_code: nil },
