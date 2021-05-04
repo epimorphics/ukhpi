@@ -7,6 +7,15 @@
       message as a result of using the HPI or PPD applications, please let us
       know so that we can correct the problem.
 
+    - if @view_state.user_selections&.errors
+      %p
+        The following issues were identified in your request:
+
+      %ul.list.list-bullet
+        - @view_state.user_selections.errors.each do |err_msg|
+          %li
+            = err_msg
+
   - elsif status == 404
     %h1.o-heading--1 Page not found
 
