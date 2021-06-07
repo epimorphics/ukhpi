@@ -21,7 +21,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :from_date, to: :user_compare_selections
   delegate :to_date, to: :user_compare_selections
   delegate :search_term, to: :user_compare_selections
-  delegate :'search?', to: :user_compare_selections
+  delegate :search?, to: :user_compare_selections
   delegate :as_json, to: :user_compare_selections
   delegate :selected_locations, to: :user_compare_selections
 

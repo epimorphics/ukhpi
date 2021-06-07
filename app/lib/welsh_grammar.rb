@@ -7,7 +7,7 @@ MUTATIONS = {
       Mutation.new(/p(.*)/i, 'mh\1', 'ym'),
       Mutation.new(/g(.*)/i, 'ng\1', 'yng'),
       Mutation.new(/t(.*)/i, 'nh\1'),
-      Mutation.new(/c(.*)/i, 'ngh\1', 'yng'),
+      Mutation.new(/c([^h].*)/i, 'ngh\1', 'yng'),
       Mutation.new(/d(.*)/i, 'n\1'),
       Mutation.new(/m(.*)/i, 'm\1', 'ym')
     ],
@@ -18,7 +18,7 @@ MUTATIONS = {
       Mutation.new(/t(.*)/i, 'd\1'),
       Mutation.new(/rh(.*)/i, 'r\1'),
       Mutation.new(/b(.*)/i, 'f\1'),
-      Mutation.new(/c(.*)/i, 'g\1'),
+      Mutation.new(/c([^h].*)/i, 'g\1'),
       Mutation.new(/d(.*)/i, 'dd\1'),
       Mutation.new(/ll(.*)/i, '\1'),
       Mutation.new(/p(.*)/i, 'b\1')
@@ -30,7 +30,7 @@ MUTATIONS = {
       Mutation.new(/t(.*)/i, 'd\1'),
       Mutation.new(/rh(.*)/i, 'r\1'),
       Mutation.new(/b(.*)/i, 'f\1'),
-      Mutation.new(/c(.*)/i, 'g\1'),
+      Mutation.new(/c([^h].*)/i, 'g\1'),
       Mutation.new(/d(.*)/i, 'dd\1'),
       Mutation.new(/ll(.*)/i, '\1'),
       Mutation.new(/p(.*)/i, 'b\1')

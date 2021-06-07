@@ -80,7 +80,7 @@
     = succeed('.') do
       = link_to('read more about UKHPI linked-data', ukhpi_doc_path)
     For further assistance, please
-    = mail_to('data.services@landregistry.gov.uk', 'send us an email')
+    = mail_to(Rails.application.config.contact_email_address, 'send us an email')
 
   %h2.heading-medium Downloading House Price Index Data
 
@@ -142,8 +142,7 @@
   %h2.heading-medium Contact details
   %p
     Email
-    %a{ href: 'mailto:data.services@landregistry.gov.uk' }
-      data.services@landregistry.gov.uk
+    = mail_to(Rails.application.config.contact_email_address)
     <br />
     Telephone
     %a{ href: 'tel:+44-300-006-0478'}

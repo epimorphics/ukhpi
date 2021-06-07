@@ -3,7 +3,7 @@
 # Shared functionality for user models that provide access to the users'
 # choices articulated via the params in the incoming request
 module UserChoices
-  Struct.new('UserParam', :default_value, :'array?', :alias)
+  Struct.new('UserParam', :default_value, :array?, :alias)
 
   attr_reader :params
 
