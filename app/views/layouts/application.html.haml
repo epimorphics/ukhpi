@@ -7,6 +7,7 @@
     %title
       = I18n.t('common.header.app_title')
     = render partial: 'common/google-analytics'
+    = javascript_include_tag 'cookie'
     = stylesheet_link_tag 'application', media: 'all'
     = csrf_meta_tags
     = render partial: 'common/favicons'
@@ -21,6 +22,7 @@
         window.isIE8 = true;
 
   %body.government.website.hmlr
+    = render partial: 'common/cookie_banner'
     = render partial: 'common/skip_to_main_content'
     = render partial: 'common/header'
     = render partial: 'common/flash_message'
