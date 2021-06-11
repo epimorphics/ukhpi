@@ -1,0 +1,28 @@
+.cookie-banner {
+  font-size: 1.2em;
+  margin: 0 auto;
+  padding: 1rem;
+
+  & > * + * {
+    margin-top: 0.5em;
+  }
+  
+  &__heading {
+    font-size: 1.1em;
+    font-weight: bold;
+    margin: 0;
+  }
+
+  button {
+    border: none;
+    padding: 0.25em 0.5em;
+  }
+
+  &__accept {
+    background-color: $lr-green-nav;
+  }
+
+  &__reject {
+    background-color: $lr-logo-grey;
+  }
+}
