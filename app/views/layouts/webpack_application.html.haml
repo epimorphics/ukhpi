@@ -7,6 +7,7 @@
     %title
       = I18n.t('common.header.app_title')
     = render partial: 'common/google-analytics'
+    = javascript_include_tag 'cookie'
     :javascript
       document.querySelector('html').classList.add('js');
       window.ukhpi = window.ukhpi || {};
@@ -34,6 +35,7 @@
     = javascript_pack_tag 'ukhpi_vue'
 
   %body.government.website.lr
+    = render partial: 'common/cookie_banner'
     = render partial: 'common/skip_to_main_content'
     = render partial: 'common/header'
     = render partial: 'common/flash_message'
