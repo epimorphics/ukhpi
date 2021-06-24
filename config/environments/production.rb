@@ -80,11 +80,12 @@ Rails.application.configure do
   # Disable logging of the rendering of partials
   config.action_view.logger = nil
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
+  # if ENV['RAILS_LOG_TO_STDOUT'].present?
+  #   logger           = ActiveSupport::Logger.new($stdout)
+  #   logger.formatter = config.log_formatter
+  #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  # end
+  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/app/ukhpi'
 
