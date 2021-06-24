@@ -42,7 +42,7 @@ Rails.application.configure do
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'https://lr-ppd-dev-pres.epimorphics.net'
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
