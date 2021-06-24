@@ -21,6 +21,8 @@ gem 'webpacker'
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
 # gem 'data_services_api', git: '/Users/bogdanadrianmarc/Work/Epimorphics/Projects/ds-api-ruby', branch: 'master'
 
+gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
+
 gem 'font-awesome-rails'
 gem 'sass-rails'
 
