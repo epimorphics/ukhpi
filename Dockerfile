@@ -1,5 +1,7 @@
+ARG RUBY_VERSION=2.6.6
+
 # Defining ruby version
-FROM ruby:2.6.6-alpine
+FROM ruby:$RUBY_VERSION-alpine
 
 # Copy app and set working dir
 COPY . /application
