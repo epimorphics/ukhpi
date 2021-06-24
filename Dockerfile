@@ -13,8 +13,10 @@ RUN apk add build-base \
             tzdata \
             git
 
+ARG BUNDLER_VERSION=2.1.4
+
 # Install bundler and yarn
-RUN gem install bundler:2.1.4
+RUN gem install bundler:$BUNDLER_VERSION
 RUN npm install -g yarn
 
 # Install gems and yarn dependencies
