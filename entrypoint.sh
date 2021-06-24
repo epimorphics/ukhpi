@@ -6,5 +6,11 @@ then
   export RAILS_ENV=production
 fi
 
-# Start the server
-bundle exec rails server
+# Handle secrets based on env
+if [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ]
+then
+  export SECRET_KEY_BASE=`./bin/rails secret`
+fi
+
+# Run the rails app
+exec ./bin/rails server
