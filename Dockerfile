@@ -23,8 +23,10 @@ RUN npm install -g yarn
 RUN bundle install
 RUN yarn install
 
+# Params
+ARG RAILS_ENV="production"
 # Set environment variables and expose the running port
-ENV RELATIVE_URL_ROOT="/"
+ENV RAILS_ENV=$RAILS_ENV
 ENV RAILS_ENV="production"
 EXPOSE 3000
 
