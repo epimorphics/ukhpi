@@ -31,8 +31,6 @@ ENV RAILS_ENV=$RAILS_ENV
 ENV RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
 EXPOSE 3000
 
-# Add secrets as environment variables (used development env key temporarily)
-ENV SECRET_KEY_BASE="a98f0b0b2c66a4d685719afad3a931d9d19e3b10f5fd61978ee56e456b0430a18b8890d69c830a39f942f826e7c47749235d7727f734cde7887af8f2f76c7ec4" 
-
-# Add app entrypoint script
+# Precompile assets and add entrypoint script
+RUN rake assets:precompile
 ENTRYPOINT [ "sh", "./entrypoint.sh" ]
