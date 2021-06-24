@@ -25,9 +25,10 @@ RUN yarn install
 
 # Params
 ARG RAILS_ENV="production"
+ARG RAILS_SERVE_STATIC_FILES="true"
 # Set environment variables and expose the running port
 ENV RAILS_ENV=$RAILS_ENV
-ENV RAILS_ENV="production"
+ENV RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
 EXPOSE 3000
 
 # Add secrets as environment variables (used development env key temporarily)
