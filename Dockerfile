@@ -20,7 +20,7 @@ RUN gem install bundler:$BUNDLER_VERSION
 RUN npm install -g yarn
 
 # Install gems and yarn dependencies
-RUN bundle install --without="development"
+RUN bundle install
 RUN yarn install
 
 # Set environment variables and expose the running port
