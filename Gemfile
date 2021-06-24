@@ -18,8 +18,8 @@ gem 'webpacker'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git'
-# gem 'data_services_api', path: '/home/ian/workspace/epimorphics/ds-api-ruby'
+gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
+# gem 'data_services_api', git: '/Users/bogdanadrianmarc/Work/Epimorphics/Projects/ds-api-ruby', branch: 'master'
 
 gem 'font-awesome-rails'
 gem 'sass-rails'
