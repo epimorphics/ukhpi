@@ -1,0 +1,9 @@
+#cookie-banner.cookie-banner{ style: 'display: none' }
+  %h2.cookie-banner__heading
+    = I18n.t('common.cookie_banner.heading')
+  %p
+    = I18n.t('common.cookie_banner.details')
+  %button.cookie-banner__accept{ onclick: 'acceptCookie()' }
+    = I18n.t('common.cookie_banner.accept')
+  %button.cookie-banner__reject{ onclick: 'rejectCookie()' }
+    = I18n.t('common.cookie_banner.reject')
