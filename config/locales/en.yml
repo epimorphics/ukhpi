@@ -8,7 +8,8 @@ en:
 
     cookie_banner:
       heading: "This site uses cookies"
-      details: "Cookies are files stored on your computer, phone, or tablet. They help us understand how you use this site, such as which pages you visit."
+      details: "Cookies are files stored on your computer, phone, or tablet. They help us understand how you use this site, such as which pages you visit. For more information please read our"
+      privacy_notice: "privacy notice."
       accept: "Accept additional cookies"
       reject: "Reject additional cookies"
 

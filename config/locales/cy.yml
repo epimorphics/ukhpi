@@ -8,7 +8,8 @@ cy:
 
     cookie_banner:
       heading: "Mae’r wefan hon yn defnyddio cwcis"
-      details: "Ffeiliau sy’n cael eu storio ar eich cyfrifiadur, ffôn neu lechen yw cwcis. Maen nhw’n ein helpu i ddeall sut rydych yn defnyddio’r wefan hon, er enghraifft pa dudalennau rydych yn ymweld â nhw. Am ragor o wybodaeth, edrychwch ar ein hysbysiad preifatrwydd."
+      details: "Ffeiliau sy’n cael eu storio ar eich cyfrifiadur, ffôn neu lechen yw cwcis. Maen nhw’n ein helpu i ddeall sut rydych yn defnyddio’r wefan hon, er enghraifft pa dudalennau rydych yn ymweld â nhw. Am ragor o wybodaeth, edrychwch ar ein"
+      privacy_notice: "hysbysiad preifatrwydd."
       accept: "Derbyn cwcis ychwanegol"
       reject: "Gwrthod cwcis ychwanegol"
 
