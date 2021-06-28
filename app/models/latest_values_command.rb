@@ -27,10 +27,10 @@ class LatestValuesCommand
     Rails.logger.info("Status: #{e.status}, body: '#{e.service_message}'")
     nil
   rescue RuntimeError => e
-    Rails.logger.debug("Unexpected error #{e.inspect}")
+    Rails.logger.debug { "Unexpected error #{e.inspect}" }
     Rails.logger.debug(e.class)
     Rails.logger.debug(e.backtrace.join("\n"))
-    Rails.logger.debug("Caused by: #{e.cause}") if e.cause
+    Rails.logger.debug { "Caused by: #{e.cause}" } if e.cause
     nil
   end
 
@@ -41,7 +41,7 @@ class LatestValuesCommand
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
-    Rails.logger.debug "About to ask DsAPI query: #{query.to_json}"
+    Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
     Rails.logger.debug query.to_json
     start = Time.zone.now
     begin
