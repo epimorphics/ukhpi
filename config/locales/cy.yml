@@ -6,6 +6,13 @@ cy:
       beta_tag: "[cy] BETA"
       feedback_request: "Problem neu awgrym? Bydd eich <a rel='external' href='mailto:data.services@mail.landregistry.gov.uk'>adborth</a> yn ein helpu i wella’r gwasanaeth hwn."
 
+    cookie_banner:
+      heading: "Mae’r wefan hon yn defnyddio cwcis"
+      details: "Ffeiliau sy’n cael eu storio ar eich cyfrifiadur, ffôn neu lechen yw cwcis. Maen nhw’n ein helpu i ddeall sut rydych yn defnyddio’r wefan hon, er enghraifft pa dudalennau rydych yn ymweld â nhw. Am ragor o wybodaeth, edrychwch ar ein"
+      privacy_notice: "hysbysiad preifatrwydd."
+      accept: "Derbyn cwcis ychwanegol"
+      reject: "Gwrthod cwcis ychwanegol"
+
     footer:
       crown_copyright: "Hawlfraint y Goron "
       personal_info: "Siarter Gwybodaeth Bersonol"
@@ -16,6 +23,7 @@ cy:
       ogl_statement: "Mae’r holl gynnwys ar gael o dan <a href='//www.nationalarchives.gov.uk/doc/open-government-licence-cymraeg/version/3/'>Drwydded Llywodraeth Agored fersiwn 3.0</a> oni nodir fel arall"
       application_release: "Cyhoeddiad ap"
       accessibility: "Hygyrchedd"
+      privacy: "Preifatrwydd"
 
   browse:
     show:

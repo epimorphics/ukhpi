@@ -6,6 +6,13 @@ en:
       beta_tag: "BETA"
       feedback_request: "Found a problem or have a suggestion? Your <a rel='external' href='mailto:data.services@mail.landregistry.gov.uk'>feedback</a> will help us to improve this service."
 
+    cookie_banner:
+      heading: "This site uses cookies"
+      details: "Cookies are files stored on your computer, phone, or tablet. They help us understand how you use this site, such as which pages you visit. For more information please read our"
+      privacy_notice: "privacy notice."
+      accept: "Accept additional cookies"
+      reject: "Reject additional cookies"
+
     footer:
       crown_copyright: "Crown copyright "
       personal_info: "Personal Information Charter"
@@ -16,6 +23,7 @@ en:
       ogl_statement: "All content is available under the <a href='http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3'>Open Government Licence v3.0</a> except where otherwise stated"
       application_release: "Application release"
       accessibility: "Accessibility"
+      privacy: "Privacy"
 
   browse:
     show:
