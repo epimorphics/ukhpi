@@ -75,22 +75,23 @@ Rails.application.configure do
   config.active_support.deprecation = :notify
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # config.log_formatter = ::Logger::Formatter.new
 
   # Disable logging of the rendering of partials
   config.action_view.logger = nil
 
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
+  # if ENV['RAILS_LOG_TO_STDOUT'].present?
+  #   logger           = ActiveSupport::Logger.new($stdout)
+  #   logger.formatter = config.log_formatter
+  #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
+  # end
+  config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/app/ukhpi'
+  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
+  config.api_service_url = ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true

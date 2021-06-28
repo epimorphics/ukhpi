@@ -20,7 +20,7 @@ class LandingState
   end
 
   def period
-    month = result[:"ukhpi:refMonth"]
+    month = result[:'ukhpi:refMonth']
     if month
       ref_month = to_value(month)
       date = Date.strptime(ref_month.value, '%Y-%m')

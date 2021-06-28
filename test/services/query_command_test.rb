@@ -12,16 +12,16 @@ end
 
 def validate_json(json) # rubocop:disable Metrics/MethodLength
   _(json).must_match_json_expression(
-    "@and":
+    '@and':
     [
-      { "ukhpi:refMonth": {
-        "@ge": { "@value": '2015-01', "@type": 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
+      { 'ukhpi:refMonth': {
+        '@ge': { '@value': '2015-01', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
       } },
-      { "ukhpi:refMonth": {
-        "@le": { "@value": '2016-06', "@type": 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
+      { 'ukhpi:refMonth': {
+        '@le': { '@value': '2016-06', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
       } },
-      { "ukhpi:refRegion": {
-        "@eq": { "@id": 'http://fubar.com/foo' }
+      { 'ukhpi:refRegion': {
+        '@eq': { '@id': 'http://fubar.com/foo' }
       } }
     ],
     '@sort' => [

@@ -1,52 +1,42 @@
-ARG ALPINE_VERSION=3.10
-ARG RUBY_VERSION
+ARG RUBY_VERSION=2.6.6
 
-# Defines base image which builder and final stage use
-FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION as base
+# Defining ruby version
+FROM ruby:$RUBY_VERSION-alpine
 
-# Change this is Gemfile.lock bundler version changes
-ARG BUNDLER_VERSION
-
-RUN apk add --update \
-  build-base \
-  npm \
-  tzdata \
-  git \
-  && rm -rf /var/cache/apk/* \
-  && gem install bundler:$BUNDLER_VERSION \
-  && bundle config --global frozen 1 \
-  && npm install -g yarn
-
-FROM base as builder
-
-ARG APP_VERSION
-LABEL Name=ukhpi version=${APP_VERSION}
-
+# Set working dir and copy app
 WORKDIR /usr/src/app
 COPY . .
 
-RUN bundle install --without="development" \
-  && yarn install \
-  && RAILS_ENV=production rake assets:precompile \
-  && mkdir -p 777 /usr/src/app/coverage \
-  && rm -rf node_modules
+# Prerequisites for gems install
+RUN apk add build-base \
+            npm \
+            tzdata \
+            git
 
-# Start a new build stage to minimise the final image size
-FROM base
+ARG BUNDLER_VERSION=2.1.4
 
-RUN addgroup -S app && adduser -S -G app app
-ENV RAILS_SERVE_STATIC_FILES=true
-ENV RAILS_LOG_TO_STDOUT=true
-ENV RAILS_RELATIVE_URL_ROOT='/'
+# Install bundler and yarn
+RUN gem install bundler:$BUNDLER_VERSION
+RUN npm install -g yarn
+
+# Install gems and yarn dependencies
+RUN bundle install
+RUN yarn install
+
+# Params
+ARG RAILS_ENV="production"
+ARG RAILS_SERVE_STATIC_FILES="true"
+ARG RELATIVE_URL_ROOT="/app/ukhpi"
+ARG API_SERVICE_URL
+
+# Set environment variables and expose the running port
+ENV RAILS_ENV=$RAILS_ENV
+ENV RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
+ENV RELATIVE_URL_ROOT=$RELATIVE_URL_ROOT
+ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
+ENV API_SERVICE_URL=$API_SERVICE_URL
 EXPOSE 3000
 
-WORKDIR /usr/src/app
-
-COPY --from=builder --chown=app /usr/src/app /usr/src/app
-COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-
-USER app
-
-# Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/src/app/
-ENTRYPOINT ["sh", "/usr/src/app/entrypoint.sh"]
+# Precompile assets and add entrypoint script
+RUN rake assets:precompile
+ENTRYPOINT [ "sh", "./entrypoint.sh" ]
