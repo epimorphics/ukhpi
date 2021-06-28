@@ -27,7 +27,7 @@ gem 'sass-rails'
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
 gem 'govuk_template'
-gem 'js-routes'
+gem 'js-routes', '< 2'
 gem 'sentry-raven'
 
 gem 'faraday'
