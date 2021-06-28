@@ -3,6 +3,7 @@
 ## 1.5.19 - 2021-06-28
 
 - (Joseph) Add link to privacy notice to footer
+- (Joseph) Update gem dependencies
 
 ## 1.5.18 - 2021-06-24
 
