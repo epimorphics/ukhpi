@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.5.19 - 2021-06-28
+
+- (Joseph) Add link to privacy notice to footer
+
 ## 1.5.18 - 2021-06-24
 
 - (Joseph) Add localised text for Wales to the cookie banner
