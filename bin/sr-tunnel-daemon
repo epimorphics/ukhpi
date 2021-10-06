@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # $HOST can be passed in as an argument, or default to staging server
-HOST=${HOST:-lr-ppd-dev-pres-1}
+HOST=${HOST:-lr-ppd-preprod-pres-1}
 
 # handle control-c and kill the tunnel process
 trap cleanup_ssh_tunnel INT
