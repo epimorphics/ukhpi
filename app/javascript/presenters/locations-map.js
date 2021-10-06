@@ -5,7 +5,7 @@ import cloneLayer from 'leaflet-clonelayer'
 import '../lib/leaflet-rrose'
 
 import { findLocationNamed, findLocationById } from '../lib/locations'
-import ukFeaturesData from '../data/ONS-Geographies-2020.json'
+import ukFeaturesData from '../data/ONS-Geographies-2021.json'
 
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england'
 
