@@ -42,7 +42,8 @@
     "vue-loader": "^15.7.1",
     "vue-router": "^3.0.1",
     "vue-template-compiler": "^2.6.10",
-    "vuex": "^3.0.1"
+    "vuex": "^3.0.1",
+    "yarn": "^1.22.15"
   },
   "devDependencies": {
     "babel-eslint": "^10.0.2",
