@@ -19,7 +19,7 @@ gem 'webpacker'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 # gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'spike/json-complete-mode'
+gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'issue/7-json-complete-mode'
 # gem 'data_services_api', path: '/Users/bogdanadrianmarc/Work/Epimorphics/Projects/ds-api-ruby'
 
 gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'

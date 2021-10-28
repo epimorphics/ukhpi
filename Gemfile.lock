@@ -1,7 +1,7 @@
 GIT
   remote: https://github.com/epimorphics/ds-api-ruby.git
   revision: 9f34a885fc7321f364d86e81a29defc329af160b
-  branch: spike/json-complete-mode
+  branch: issue/7-json-complete-mode
   specs:
     data_services_api (1.0.0)
       faraday_middleware
