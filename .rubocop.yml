@@ -117,3 +117,8 @@ Rails/ShortI18n:
   Enabled: true
 Rails/WhereExists:
   Enabled: true
+
+Rails/I18nLocaleAssignment:
+  Enabled: true
+  Exclude:
+    - test/**/*
