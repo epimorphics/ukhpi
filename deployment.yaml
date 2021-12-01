@@ -1,5 +1,6 @@
 version: 2
 name:  epimorphics/ukhpi
+key: ukhpi
 deployments:
   - tag: "v{ver}"
     deploy: "prod"
