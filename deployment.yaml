@@ -1,0 +1,13 @@
+version: 2
+name:  epimorphics/ukhpi
+deployments:
+  - tag: "v{ver}"
+    deploy: "prod"
+    publish: "prod"
+  - tag: "v{ver}-rc"
+    deploy: "preprod"
+    publish: "preprod"
+  - branch: "dev-infrastructure"
+    deploy: "dev"
+    publish: "dev"
+  - branch: "[a-zA-Z0-9]+"
