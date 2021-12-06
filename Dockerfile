@@ -1,9 +1,31 @@
+ARG ALPINE_VERSION=3.10
 ARG RUBY_VERSION=2.6.6
 
 # Defining ruby version
 FROM ruby:$RUBY_VERSION-alpine
 
-# Set working dir and copy app
+# Change this is Gemfile.lock bundler version changes
+ARG BUNDLER_VERSION=2.2.17
+
+RUN apk add --update \
+  npm \
+  tzdata \
+  git \
+  && rm -rf /var/cache/apk/* \
+  && gem install bundler:$BUNDLER_VERSION \
+  && bundle config --global frozen 1 \
+  && npm install -g yarn
+
+FROM base as builder
+
+RUN apk add --update build-base
+
+ARG APP_VERSION=0.1
+ARG GRP_TOKEN
+ARG GRP_OWNER=epimorphics
+
+LABEL Name=ukhpi version=${APP_VERSION}
+
 WORKDIR /usr/src/app
 COPY . .
 
@@ -15,9 +37,14 @@ RUN apk add build-base \
 
 ARG BUNDLER_VERSION=2.1.4
 
-# Install bundler and yarn
-RUN gem install bundler:$BUNDLER_VERSION
-RUN npm install -g yarn
+RUN addgroup -S app && adduser -S -G app app
+ENV RAILS_SERVE_STATIC_FILES=true
+ENV RAILS_LOG_TO_STDOUT=true
+ENV RAILS_RELATIVE_URL_ROOT='/'
+ENV API_SERVICE_URL = 'http://localhost:8080'
+
+RUN addgroup -S app && adduser -S -G app app
+EXPOSE 3000
 
 # Install gems and yarn dependencies
 RUN bundle install

@@ -1,67 +1,81 @@
-.PHONY:	clean image release prod tag test help version
+.PHONY:	assets clean image modules publish realclean run tag test vars
 
-APP ?= ukhpi
-REGISTRY ?=  173681544495.dkr.ecr.eu-west-1.amazonaws.com/epimorphics
-IMAGE ?= ${APP}
-API_SERVICE_URL ?= http://localhost:8080/dsapi
+ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
+GRP_OWNER?=epimorphics
+AWS_REGION?=eu-west-1
+STAGE?=dev
+NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
+ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
+PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
+TAG?=$(shell if git describe > /dev/null 2>&1 ; then   git describe; else   git rev-parse --short HEAD; fi)
+API_SERVICE_URL?= http://localhost:8080
 
-ifeq ($(origin SECRET_KEY_BASE), undefined)
-SECRET_KEY_BASE != rails secret
-endif
+IMAGE?=${NAME}/${STAGE}
+REPO?=${ECR}/${IMAGE}
 
-APP_VERSION != ruby -I . -e 'require "app/lib/version" ; puts Version::VERSION'
+GITHUB_TOKEN=.github-token
+NPMRC=.npmrc
+BUNDLE_CFG=${HOME}/.bundle/config
+YARN_LOCK=yarn.lock
 
-RUBY_VERSION != cut -d '.' -f 1,2 .ruby-version
+all: publish
 
-BUNDLER_VERSION != bundler -v | cut -d ' ' -f 3
+${BUNDLE_CFG}: ${GITHUB_TOKEN}
+	@./bin/bundle config set rubygems.pkg.github.com ${GRP_OWNER}:`cat ${GITHUB_TOKEN}`
 
-all: test release
+${GITHUB_TOKEN}:
+	@echo ${PAT} > ${GITHUB_TOKEN}
 
-version:
-	@echo App version is ${APP_VERSION}
-	@echo Ruby version is ${RUBY_VERSION}
-	@echo Bundler version is ${BUNDLER_VERSION}
+${NPMRC}: ${GITHUB_TOKEN}
+	@echo "@epimorphics:registry=https://npm.pkg.github.com/" > ${NPMRC}
+	@echo "//npm.pkg.github.com/:_authToken=`cat ${GITHUB_TOKEN}`" >> ${NPMRC}
 
-image:
-	docker build \
-	  --build-arg APP_VERSION=${APP_VERSION} \
-		--build-arg RUBY_VERSION=${RUBY_VERSION} \
-		--build-arg BUNDLER_VERSION=${BUNDLER_VERSION} \
-		--tag ${IMAGE}:${APP_VERSION} \
-		.
+# run rubocop
 
-prod: image
-	docker run --network=host --rm --name ${APP} -e RAILS_ENV=production -e API_SERVICE_URL=${API_SERVICE_URL} -e SECRET_KEY_BASE=${SECRET_KEY_BASE} ${IMAGE}:${APP_VERSION}
+# env vars required to be passed to docker image ??
+ # network host and relative root? ??
 
-test: image
-	@-docker stop ${APP} 2> /dev/null || true
-	@docker run -d --rm --name ${APP} --network=host -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=development ${IMAGE}:${APP_VERSION}
-	@docker exec -it -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=test ${APP} ./bin/rails test
-	@docker stop ${APP}
+assets: ${YARN_LOCK}
+	@bundle config set --local without 'development'
+	@bundle install
+	@yarn install
+	@./bin/rails assets:clean assets:precompile
 
-tag: image
-	@docker tag ${IMAGE}:${APP_VERSION} ${REGISTRY}/${IMAGE}:${APP_VERSION}
-
-release: tag
-	@docker push ${REGISTRY}/${IMAGE}:${APP_VERSION}
+auth: ${GITHUB_TOKEN} ${NPMRC} ${BUNDLE_CFG}
 
 clean:
 	@rake assets:clobber webpacker:clobber tmp:clear
+	@rm -rf node_modules
 
-help:
-	@echo "Make targets:"
-	@echo "  prod - run the Docker image with Rails running in production mode"
-	@echo "  test - run rails test in the container"
-	@echo "  tag - tag the image with the REGISTRY, in preparation for release"
-	@echo "  release - push the image to the Docker registry"
-	@echo "  clean - remove temporary files"
-	@echo "  version - show the current app version"
-	@echo ""
-	@echo "Environment variables (optional: all variables have defaults):"
-	@echo "  PREFIX"
-	@echo "  IMAGE"
-	@echo "  API_SERVICE_URL"
-	@echo "  SECRET_KEY_BASE"
-	@echo "  APP_VERSION"
-	@echo "  RUBY_VERSION"
-	@echo "  BUNDLER_VERSION"
+image: auth lint test
+	@echo Building ${REPO}:${TAG} ...
+	@docker build --tag ${REPO}:${TAG} .
+	@echo Done.
+
+lint: assets
+	@./bin/bundle exec rubocop
+
+modules: ${NPMRC}
+	@yarn install
+
+publish: image
+	@echo Publishing image: ${REPO}:${TAG} ...
+	@docker push ${REPO}:${TAG} 2>&1
+	@echo Done.
+
+realclean: clean
+	@rm -f ${GITHUB_TOKEN} ${NPMRC} ${BUNDLE_CFG}
+
+run:
+	@-docker stop ukhpi
+	@-docker rm ukhpi && sleep 20
+	@docker run -p 3000:3000 --rm --name ukhpi --network=host -e RAILS_RELATIVE_URL_ROOT='' -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=development ${REPO}:${TAG}
+
+tag:
+	@echo ${TAG}
+
+test: assets
+	@./bin/rake test
+
+vars:
+	@echo "Docker: ${REPO}:${TAG}"

@@ -14,3 +14,4 @@ fi
 
 # Run the rails app
 exec ./bin/rails server
+
