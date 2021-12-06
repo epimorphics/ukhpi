@@ -37,7 +37,6 @@ RUN apk add build-base \
 
 ARG BUNDLER_VERSION=2.1.4
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 ENV RAILS_RELATIVE_URL_ROOT='/'
