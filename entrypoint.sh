@@ -29,3 +29,4 @@ then
 fi
 
 exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0
+

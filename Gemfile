@@ -34,6 +34,7 @@ gem 'faraday'
 gem 'faraday_middleware'
 gem 'http_accept_language'
 gem 'puma'
+gem 'rubocop-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 gem 'rdf-turtle'
@@ -63,6 +64,4 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'rubocop-rails'
 end

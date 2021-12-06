@@ -1,14 +1,13 @@
 ARG ALPINE_VERSION=3.10
-ARG RUBY_VERSION
+ARG RUBY_VERSION=2.6.6
 
 # Defines base image which builder and final stage use
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION as base
 
 # Change this is Gemfile.lock bundler version changes
-ARG BUNDLER_VERSION
+ARG BUNDLER_VERSION=2.2.17
 
 RUN apk add --update \
-  build-base \
   npm \
   tzdata \
   git \
@@ -19,7 +18,12 @@ RUN apk add --update \
 
 FROM base as builder
 
-ARG APP_VERSION
+RUN apk add --update build-base
+
+ARG APP_VERSION=0.1
+ARG GRP_TOKEN
+ARG GRP_OWNER=epimorphics
+
 LABEL Name=ukhpi version=${APP_VERSION}
 
 WORKDIR /usr/src/app
@@ -38,6 +42,9 @@ RUN addgroup -S app && adduser -S -G app app
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 ENV RAILS_RELATIVE_URL_ROOT='/'
+ENV API_SERVICE_URL = 'http://localhost:8080'
+
+RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
 WORKDIR /usr/src/app
