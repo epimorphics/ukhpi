@@ -38,7 +38,6 @@ RUN bundle install --without="development" \
 # Start a new build stage to minimise the final image size
 FROM base
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
 ENV RAILS_RELATIVE_URL_ROOT='/'
