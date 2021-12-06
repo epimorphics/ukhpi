@@ -34,3 +34,6 @@ public/assets/
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+.npmrc
+.github-token
