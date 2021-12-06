@@ -41,3 +41,5 @@ yarn-debug.log*
 .tool-versions
 
 .github-token
+
+.npmrc
