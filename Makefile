@@ -30,11 +30,6 @@ ${NPMRC}: ${GITHUB_TOKEN}
 	@echo "@epimorphics:registry=https://npm.pkg.github.com/" > ${NPMRC}
 	@echo "//npm.pkg.github.com/:_authToken=`cat ${GITHUB_TOKEN}`" >> ${NPMRC}
 
-# run rubocop
-
-# env vars required to be passed to docker image ??
- # network host and relative root? ??
-
 assets: ${YARN_LOCK}
 	@bundle config set --local without 'development'
 	@bundle install
@@ -70,6 +65,8 @@ run:
 	@-docker stop ukhpi
 	@-docker rm ukhpi && sleep 20
 	@docker run -p 3000:3000 --rm --name ukhpi --network=host -e RAILS_RELATIVE_URL_ROOT='' -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=development ${REPO}:${TAG}
+# env vars required to be passed to docker image ??
+ # network host and relative root? ??
 
 tag:
 	@echo ${TAG}
