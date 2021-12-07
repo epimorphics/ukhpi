@@ -75,7 +75,7 @@ class LandingStateTest < ActiveSupport::TestCase
   end
 
   it 'notes when prices have stayed the same' do
-    ls = mock_landing_state([{ "ukhpi:percentageAnnualChange": [0] }])
+    ls = mock_landing_state([{ 'ukhpi:percentageAnnualChange': [0] }])
     _(ls.percentage_annual_change).must_equal 'remained the same'
   end
 end

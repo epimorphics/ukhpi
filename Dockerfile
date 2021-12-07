@@ -20,10 +20,6 @@ FROM base as builder
 
 RUN apk add --update build-base
 
-ARG APP_VERSION=0.1
-ARG GRP_TOKEN
-ARG GRP_OWNER=epimorphics
-
 LABEL Name=ukhpi version=${APP_VERSION}
 
 WORKDIR /usr/src/app
@@ -38,10 +34,11 @@ RUN bundle install --without="development" \
 # Start a new build stage to minimise the final image size
 FROM base
 
-RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+ENV RAILS_ENV=production
 ENV RAILS_SERVE_STATIC_FILES=true
 ENV RAILS_LOG_TO_STDOUT=true
-ENV RAILS_RELATIVE_URL_ROOT='/'
+ENV RAILS_RELATIVE_URL_ROOT='/app/ukhpi'
+ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
 ENV API_SERVICE_URL = 'http://localhost:8080'
 
 RUN addgroup -S app && adduser -S -G app app
@@ -49,8 +46,14 @@ EXPOSE 3000
 
 WORKDIR /usr/src/app
 
-COPY --from=builder --chown=app /usr/src/app /usr/src/app
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
+COPY --from=builder /usr/src/app     ./app
+COPY --from=builder /usr/src/bin     ./bin
+COPY --from=builder /usr/src/config  ./config
+COPY --from=builder /usr/src/doc     ./doc
+COPY --from=builder /usr/src/public  ./public
+COPY --from=builder /usr/src/entrypoint.sh /usr/src/config.ru /usr/src/Gemfile /usr/src/Gemfile.lock /usr/src/Rakefile ./
+RUN chown -R app .
 
 USER app
 
