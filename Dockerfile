@@ -25,9 +25,10 @@ LABEL Name=ukhpi version=${APP_VERSION}
 WORKDIR /usr/src/app
 COPY . .
 
-RUN bundle install --without="development" \
+RUN bundle config set --local without 'development' \
+  && bundle install \
   && yarn install \
-  && RAILS_ENV=production rake assets:precompile \
+  && RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -p 777 /usr/src/app/coverage \
   && rm -rf node_modules
 
