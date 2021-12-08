@@ -29,11 +29,12 @@ LABEL Name=ukhpi version=${APP_VERSION}
 WORKDIR /usr/src/app
 COPY . .
 
-# Prerequisites for gems install
-RUN apk add build-base \
-            npm \
-            tzdata \
-            git
+RUN bundle config set --local without 'development' \
+  && bundle install \
+  && yarn install \
+  && RAILS_ENV=production bundle exec rake assets:precompile \
+  && mkdir -p 777 /usr/src/app/coverage \
+  && rm -rf node_modules
 
 ARG BUNDLER_VERSION=2.1.4
 

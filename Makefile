@@ -30,7 +30,7 @@ ${NPMRC}: ${GITHUB_TOKEN}
 	@echo "@epimorphics:registry=https://npm.pkg.github.com/" > ${NPMRC}
 	@echo "//npm.pkg.github.com/:_authToken=`cat ${GITHUB_TOKEN}`" >> ${NPMRC}
 
-assets: ${YARN_LOCK}
+assets:
 	@bundle config set --local without 'development'
 	@bundle install
 	@yarn install
@@ -39,7 +39,7 @@ assets: ${YARN_LOCK}
 auth: ${GITHUB_TOKEN} ${NPMRC} ${BUNDLE_CFG}
 
 clean:
-	@rake assets:clobber webpacker:clobber tmp:clear
+	@rails assets:clobber webpacker:clobber tmp:clear
 	@rm -rf node_modules
 
 image: auth lint test
@@ -72,7 +72,7 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@./bin/rake test
+	@./bin/rails test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
