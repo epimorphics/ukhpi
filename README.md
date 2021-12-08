@@ -28,13 +28,96 @@ To install on dev machine:
     bundle install
     yarn install
 
-### Local data service
+### Connecting to the data service
 
-The application assumes that a Fuseki instance is running on `localhost:8080`. In
-development, either start a local Fuseki instance, or, more usually, ssh tunnel
-to one of the data servers. A predefined script for tunnelling one of the remote
-data servers to localhost 8080 is provided in `bin/sr-tunnel-daemon`. A copy of
-the ssh access credentials will need to be in your `~/.ssh/config`.
+The application needs to connect to a data API, based on
+[SapiNT](https://github.com/epimorphics/sapi-nt), to provide JSON-API access to
+the data in the triple store. The base URL for the data API needs to be passed
+as an environment variable `API_SERVICE_URL`. In production deployments, the
+`API_SERVICE_URL` will be set by Ansible configuration parameters.
+
+When developing UKHPI locally, the data API URL still needs to be passed via
+the environment. For example:
+
+```sh
+API_SERVICE_URL="http://....." rails server
+```
+
+To prevent unauthorised access to the API, the data API on deployment servers
+is protected so that it can only be accessed from `localhost`. Therefore, when
+working on API a developer needs to map access to the API so that it appears
+to be coming via localhost on the remote server. We can do this by creating
+an ssh tunnel.
+
+#### Setting up an ssh tunnel to access the data service
+
+First, check that you have the right ssh config. You will need a copy of the
+`lr.pem` key (available on S3, see the ops team for help getting access),
+and the following configuration in `~/.ssh/config`:
+
+```text
+Host hmlr-*
+    IdentityFile   ~/.ssh/lr.pem
+    User           ec2-user
+    HostName       %h.epimorphics.net
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+
+Host 10.10.10.* hmlr_*
+  ProxyJump hmlr-bastion
+  IdentityFile  ~/.ssh/lr.pem
+  User ec2-user
+  StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+```
+
+Check that you can access a server by directly connecting via ssh:
+
+```sh
+$ ssh hmlr_dev_pres_071
+Warning: Permanently added 'hmlr-bastion.epimorphics.net' (ECDSA) to the list of known hosts.
+**Warning**: this is a private system operated by Epimorphics Ltd
+Warning: Permanently added 'hmlr_dev_pres_071' (ECDSA) to the list of known hosts.
+**Warning**: this is a private system operated by Epimorphics Ltd
+$
+```
+
+Assuming this succeeds, you can set up an ssh tunnel to map the port where the data
+API is running on the remote machine to a convenient port on your computer. The local
+port you choose is up to you, but a good choice is port 8080. The data service runs
+on port 8081 on the remote service, so the tunnel command is:
+
+```sh
+$ ssh -f hmlr_dev_pres_071 -L 8080:localhost:8081 -N
+```
+
+If this succeeds, you should be able to see the open port with `lsof`:
+
+```sh
+$ lsof -i :8080
+COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+ssh     71358  ian    3u  IPv6 766085      0t0  TCP ip6-localhost:http-alt (LISTEN)
+ssh     71358  ian    6u  IPv4 766086      0t0  TCP localhost:http-alt (LISTEN)
+```
+
+You can then use `localhost:8080` as the data service URL to give to the application
+via the environment:
+
+```sh
+$ API_SERVICE_URL=http://localhost:8080 rails server
+=> Booting Puma
+=> Rails 6.1.3.2 application starting in development
+=> Run `bin/rails server --help` for more startup options
+Puma starting in single mode...
+* Puma version: 5.3.2 (ruby 2.6.6-p146) ("Sweetnighter")
+*  Min threads: 5
+*  Max threads: 5
+*  Environment: development
+*          PID: 72553
+* Listening on http://127.0.0.1:3000
+* Listening on http://[::1]:3000
+Use Ctrl-C to stop
+```
 
 ### Outline domain model
 
