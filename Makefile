@@ -31,8 +31,8 @@ ${NPMRC}: ${GITHUB_TOKEN}
 	@echo "//npm.pkg.github.com/:_authToken=`cat ${GITHUB_TOKEN}`" >> ${NPMRC}
 
 assets:
-	@bundle config set --local without 'development'
-	@bundle install
+	@./bin/bundle config set --local without 'development'
+	@./bin/bundle install
 	@yarn install
 	@./bin/rails assets:clean assets:precompile
 
