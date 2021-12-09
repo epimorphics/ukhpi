@@ -10,8 +10,9 @@
 - (Jon) Updated Land Boundaries to respective files
 - (Jon) Update to include IE11 coverage for webpack
 
-## 1.5.19 - 2021-06-28
+## 1.5.19 - 2021-12-09
 
+- (Mairead) Update deployment workflow, dockerfile and assisting scripts
 - (Joseph) Add link to privacy notice to footer
 - (Joseph) Update gem dependencies
 - (Joseph) Update yarn package dependencies
