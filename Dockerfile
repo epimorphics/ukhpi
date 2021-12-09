@@ -50,11 +50,10 @@ EXPOSE 3000
 RUN bundle install
 RUN yarn install
 
-# Params
-ARG RAILS_ENV="production"
-ARG RAILS_SERVE_STATIC_FILES="true"
-ARG RELATIVE_URL_ROOT="/app/ukhpi"
-ARG API_SERVICE_URL
+COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
+COPY --from=builder /usr/src/app     ./app
+
+RUN chown -R app .
 
 # Set environment variables and expose the running port
 ENV RAILS_ENV=$RAILS_ENV
@@ -64,6 +63,6 @@ ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
 ENV API_SERVICE_URL=$API_SERVICE_URL
 EXPOSE 3000
 
-# Precompile assets and add entrypoint script
-RUN rake assets:precompile
-ENTRYPOINT [ "sh", "./entrypoint.sh" ]
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /app
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
