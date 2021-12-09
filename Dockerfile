@@ -49,15 +49,11 @@ WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
 COPY --from=builder /usr/src/app     ./app
-COPY --from=builder /usr/src/bin     ./bin
-COPY --from=builder /usr/src/config  ./config
-COPY --from=builder /usr/src/doc     ./doc
-COPY --from=builder /usr/src/public  ./public
-COPY --from=builder /usr/src/entrypoint.sh /usr/src/config.ru /usr/src/Gemfile /usr/src/Gemfile.lock /usr/src/Rakefile ./
+
 RUN chown -R app .
 
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh /usr/src/app/
-ENTRYPOINT ["sh", "/usr/src/app/entrypoint.sh"]
+COPY entrypoint.sh /app
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]
