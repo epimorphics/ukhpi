@@ -7,7 +7,6 @@ STAGE?=dev
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
-# TAG?=$(shell if git describe > /dev/null 2>&1 ; then   git describe; else   git rev-parse --short HEAD; fi)
 API_SERVICE_URL?= http://localhost:8080
 
 COMMIT?=$(shell if git describe > /dev/null 2>&1 ; then git describe; else git rev-parse --short HEAD; fi)
@@ -72,8 +71,6 @@ run:
 	@-docker stop ukhpi
 	@-docker rm ukhpi && sleep 20
 	@docker run -p 3000:3000 --rm --name ukhpi --network=host -e RAILS_RELATIVE_URL_ROOT='' -e API_SERVICE_URL=${API_SERVICE_URL} -e RAILS_ENV=development ${REPO}:${TAG}
-# env vars required to be passed to docker image ??
- # network host and relative root? ??
 
 tag:
 	@echo ${TAG}
