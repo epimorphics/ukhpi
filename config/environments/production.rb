@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'] ||
+  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'] || true
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -86,7 +86,7 @@ Rails.application.configure do
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url =  ENV['API_SERVICE_URL'] || 'http://localhost:8080'
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
