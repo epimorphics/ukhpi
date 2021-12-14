@@ -29,18 +29,10 @@ RUN bundle config set --local without 'development' \
   && bundle install \
   && yarn install \
   && RAILS_ENV=production bundle exec rake assets:precompile \
-  && mkdir -p 777 /usr/src/app/coverage \
-  && rm -rf node_modules
+  && mkdir -p 777 /usr/src/app/coverage
 
 # Start a new build stage to minimise the final image size
 FROM base
-
-ENV RAILS_ENV=production
-ENV RAILS_SERVE_STATIC_FILES=true
-ENV RAILS_LOG_TO_STDOUT=true
-ENV RAILS_RELATIVE_URL_ROOT='/app/ukhpi'
-ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
-ENV API_SERVICE_URL = 'http://localhost:8080'
 
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
@@ -48,9 +40,7 @@ EXPOSE 3000
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder /usr/src/app     ./app
-
-RUN chown -R app .
+COPY --from=builder --chown=app /usr/src/app     ./app
 
 USER app
 

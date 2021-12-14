@@ -1,4 +1,4 @@
-.PHONY:	assets clean image modules publish realclean run tag test vars
+.PHONY:	assets clean image lint modules publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 GRP_OWNER?=epimorphics
@@ -7,8 +7,10 @@ STAGE?=dev
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
-TAG?=$(shell if git describe > /dev/null 2>&1 ; then   git describe; else   git rev-parse --short HEAD; fi)
+# TAG?=$(shell if git describe > /dev/null 2>&1 ; then   git describe; else   git rev-parse --short HEAD; fi)
 API_SERVICE_URL?= http://localhost:8080
+
+COMMIT=$(?=$(shell if git describe > /dev/null 2>&1 ; then git describe; else git rev-parse --short HEAD; fi)VERSION?=$(shell ruby -e 'require "./app/lib/version" ; puts Version::VERSION') TAG?=${VERSION}-${COMMIT}
 
 IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
@@ -18,7 +20,7 @@ NPMRC=.npmrc
 BUNDLE_CFG=${HOME}/.bundle/config
 YARN_LOCK=yarn.lock
 
-all: publish
+all: image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 	@./bin/bundle config set rubygems.pkg.github.com ${GRP_OWNER}:`cat ${GITHUB_TOKEN}`
