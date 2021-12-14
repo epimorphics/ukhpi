@@ -33,15 +33,9 @@ RUN bundle config set --local without 'development' \
   && bundle install \
   && yarn install \
   && RAILS_ENV=production bundle exec rake assets:precompile \
-  && mkdir -p 777 /usr/src/app/coverage \
-  && rm -rf node_modules
+  && mkdir -p 777 /usr/src/app/coverage
 
 ARG BUNDLER_VERSION=2.1.4
-
-ENV RAILS_SERVE_STATIC_FILES=true
-ENV RAILS_LOG_TO_STDOUT=true
-ENV RAILS_RELATIVE_URL_ROOT='/'
-ENV API_SERVICE_URL = 'http://localhost:8080'
 
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
@@ -51,17 +45,9 @@ RUN bundle install
 RUN yarn install
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder /usr/src/app     ./app
+COPY --from=builder --chown=app /usr/src/app     ./app
 
-RUN chown -R app .
-
-# Set environment variables and expose the running port
-ENV RAILS_ENV=$RAILS_ENV
-ENV RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
-ENV RELATIVE_URL_ROOT=$RELATIVE_URL_ROOT
-ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
-ENV API_SERVICE_URL=$API_SERVICE_URL
-EXPOSE 3000
+USER app
 
 # Add a script to be executed every time the container starts.
 COPY entrypoint.sh /app
