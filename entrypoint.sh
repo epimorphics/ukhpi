@@ -13,7 +13,7 @@ fi
 
 if [ -z "API_SERVICE_URL" ]
 then
-  export API_SERVICE_URL = 'http://localhost:8080'
+  echo "{'error': 'You have not specified an API_SERVICE_URL'}" >&2
 fi
 
 echo API_SERVICE_URL:  ${API_SERVICE_URL}
