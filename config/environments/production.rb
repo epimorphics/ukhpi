@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.serve_static_files = true || ENV['RAILS_SERVE_STATIC_FILES']
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -80,18 +80,13 @@ Rails.application.configure do
   # Disable logging of the rendering of partials
   config.action_view.logger = nil
 
-  # if ENV['RAILS_LOG_TO_STDOUT'].present?
-  #   logger           = ActiveSupport::Logger.new($stdout)
-  #   logger.formatter = config.log_formatter
-  #   config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  # end
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/'
+  config.relative_url_root = '/app/ukhpi' || ENV['RELATIVE_URL_ROOT']
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL']
+  config.api_service_url = 'http://localhost:8080' || ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
