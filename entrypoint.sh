@@ -9,10 +9,14 @@ mkdir -pm 1777 ./tmp
 if [ -z "$RAILS_ENV" ]
 then
   export RAILS_ENV=production
+fi
+
+if [ -z "API_SERVICE_URL" ]
+then
   export API_SERVICE_URL = 'http://localhost:8080'
 fi
 
-echo PI_SERVICE_URL:  ${API_SERVICE_URL}
+echo API_SERVICE_URL:  ${API_SERVICE_URL}
 
 # Handle secrets based on env
 if [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ]
