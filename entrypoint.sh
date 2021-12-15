@@ -13,7 +13,8 @@ fi
 
 if [ -z "API_SERVICE_URL" ]
 then
-  echo "{'error': 'You have not specified an API_SERVICE_URL'}" >&2
+  echo "{'error' : 'You have not specified an API_SERVICE_URL', 'level' : 'ERROR'}" >&2
+  exit 1
 fi
 
 echo API_SERVICE_URL:  ${API_SERVICE_URL}
