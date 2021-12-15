@@ -20,12 +20,6 @@ FROM base as builder
 
 RUN apk add --update build-base
 
-ARG APP_VERSION=0.1
-ARG GRP_TOKEN
-ARG GRP_OWNER=epimorphics
-
-LABEL Name=ukhpi version=${APP_VERSION}
-
 WORKDIR /usr/src/app
 COPY . .
 
