@@ -10,8 +10,8 @@ PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 API_SERVICE_URL?= http://localhost:8080
 
 COMMIT?=$(shell if git describe > /dev/null 2>&1 ; then git describe; else git rev-parse --short HEAD; fi)
-# VERSION?=$(shell ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
-TAG?=${COMMIT}
+VERSION?=$(shell ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
+TAG?=${COMMIT}-${VERSION}
 
 ${TAG}:
 	@echo ${TAG}
