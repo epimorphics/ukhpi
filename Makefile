@@ -9,9 +9,9 @@ ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 API_SERVICE_URL?= http://localhost:8080
 
-COMMIT?=$(shell if git describe > /dev/null 2>&1 ; then git describe; else git rev-parse --short HEAD; fi)
+COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
-TAG?=${COMMIT}-${VERSION}
+TAG?=${VERSION}-${COMMIT}
 
 ${TAG}:
 	@echo ${TAG}
@@ -45,7 +45,7 @@ assets:
 auth: ${GITHUB_TOKEN} ${NPMRC} ${BUNDLE_CFG}
 
 clean:
-	@rails assets:clobber webpacker:clobber tmp:clear
+	@./bin/rails assets:clobber webpacker:clobber tmp:clear
 	@rm -rf node_modules
 
 image: auth lint test

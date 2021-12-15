@@ -4,7 +4,7 @@ ARG RUBY_VERSION=2.6.6
 # Defining ruby version
 FROM ruby:$RUBY_VERSION-alpine
 
-# Change this is Gemfile.lock bundler version changes
+# Change this if Gemfile.lock bundler version changes
 ARG BUNDLER_VERSION=2.2.17
 
 RUN apk add --update \
