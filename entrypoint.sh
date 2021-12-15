@@ -13,7 +13,7 @@ fi
 
 if [ -z "API_SERVICE_URL" ]
 then
-  echo "{'log_message' : 'You have not specified an API_SERVICE_URL', 'log_level' : 'ERROR', 'log_ts': ${date}}" >&2
+  echo "{'ts': ${date}, 'message': {'text: 'You have not specified an API_SERVICE_URL', 'level': 'ERROR'}}" >&2
   exit 1
 fi
 
