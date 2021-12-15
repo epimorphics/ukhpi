@@ -20,8 +20,6 @@ FROM base as builder
 
 RUN apk add --update build-base
 
-LABEL Name=ukhpi version=${APP_VERSION}
-
 WORKDIR /usr/src/app
 COPY . .
 
