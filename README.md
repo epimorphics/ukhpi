@@ -146,6 +146,13 @@ To bypass the need for running locally AWS you can pass a global variable to the
 
 You can run `make help` to view a list of other make commands available
 
+## Entrypoint.sh
+
+* The Rails Framework requires certain values to be set as a Global environment variable when starting. To ensure the `RAILS_RELATIVE_URL_ROOT` is only set in one place per application we have added this to the Entrypoint file along with the `SCRIPT_NAME`.
+* The Rails secret is also created here.
+* There is a workaround to removing the PID lock of the Rails process in the event of the application crashing and not releasing the process.
+* We have to pass the `API_SERVICE_URL` so that it is available in the Entrypoint.sh or the application will throw an error and exit before starting
+
 ## Updating geographies
 
 Many years, the boundaries of UK local authorities change. Sometimes mutliple adjacent
