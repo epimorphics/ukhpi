@@ -1,42 +1,48 @@
+ARG ALPINE_VERSION=3.10
 ARG RUBY_VERSION=2.6.6
 
-# Defining ruby version
-FROM ruby:$RUBY_VERSION-alpine
+# Defines base image which builder and final stage use
+FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION as base
 
-# Set working dir and copy app
+# Change this if Gemfile.lock bundler version changes
+ARG BUNDLER_VERSION=2.2.17
+
+RUN apk add --update \
+  npm \
+  tzdata \
+  git \
+  && rm -rf /var/cache/apk/* \
+  && gem install bundler:$BUNDLER_VERSION \
+  && bundle config --global frozen 1 \
+  && npm install -g yarn
+
+FROM base as builder
+
+RUN apk add --update build-base
+
 WORKDIR /usr/src/app
 COPY . .
+RUN mkdir log
 
-# Prerequisites for gems install
-RUN apk add build-base \
-            npm \
-            tzdata \
-            git
+RUN bundle config set --local without 'development' \
+  && bundle install \
+  && yarn install \
+  && RAILS_ENV=production bundle exec rake assets:precompile \
+  && mkdir -p 777 /usr/src/app/coverage
 
-ARG BUNDLER_VERSION=2.1.4
+# Start a new build stage to minimise the final image size
+FROM base
 
-# Install bundler and yarn
-RUN gem install bundler:$BUNDLER_VERSION
-RUN npm install -g yarn
-
-# Install gems and yarn dependencies
-RUN bundle install
-RUN yarn install
-
-# Params
-ARG RAILS_ENV="production"
-ARG RAILS_SERVE_STATIC_FILES="true"
-ARG RELATIVE_URL_ROOT="/app/ukhpi"
-ARG API_SERVICE_URL
-
-# Set environment variables and expose the running port
-ENV RAILS_ENV=$RAILS_ENV
-ENV RAILS_SERVE_STATIC_FILES=$RAILS_SERVE_STATIC_FILES
-ENV RELATIVE_URL_ROOT=$RELATIVE_URL_ROOT
-ENV SCRIPT_NAME=$RELATIVE_URL_ROOT
-ENV API_SERVICE_URL=$API_SERVICE_URL
+RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
-# Precompile assets and add entrypoint script
-RUN rake assets:precompile
-ENTRYPOINT [ "sh", "./entrypoint.sh" ]
+WORKDIR /usr/src/app
+
+COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
+COPY --from=builder --chown=app /usr/src/app     .
+
+USER app
+
+# Add a script to be executed every time the container starts.
+COPY entrypoint.sh /app/entrypoint.sh
+ENTRYPOINT ["sh", "/app/entrypoint.sh"]

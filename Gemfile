@@ -19,7 +19,6 @@ gem 'webpacker'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
-# gem 'data_services_api', path: '/Users/bogdanadrianmarc/Work/Epimorphics/Projects/ds-api-ruby'
 
 gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
 
@@ -29,13 +28,14 @@ gem 'sass-rails'
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
 gem 'govuk_template'
-gem 'js-routes'
+gem 'js-routes', '< 2.0'
 gem 'sentry-raven'
 
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'http_accept_language'
 gem 'puma'
+gem 'rubocop-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 gem 'rdf-turtle'
@@ -65,6 +65,4 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
-
-  gem 'rubocop-rails'
 end

@@ -44,7 +44,7 @@ Rails.application.configure do
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL']
+  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
