@@ -82,7 +82,7 @@ Rails.application.configure do
 
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/app/ukhpi'
+  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
 
   # API location can be specified in the environment
   # But defaults to the dev service
