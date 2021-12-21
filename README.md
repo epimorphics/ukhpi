@@ -139,11 +139,12 @@ variable:
 
 ## Deployment
 
-We are moving to a new deployment pattern, based around Docker files. The `Makefile`
-provides a list of make targets to create and run a Docker image for UKHPI. Run
-`make help` to get a list of available targets.
+To mimic running the application in a deployed state you can run
+`make image` and this will run through the assets precompilation, linting and testing before creating a Docker image. To view the Docker container you can run `make run`
 
-More details on the new deployment process will be added in future.
+To bypass the need for running locally AWS you can pass a global variable to the command with `ECR=local make image`
+
+You can run `make help` to view a list of other make commands available
 
 ## Updating geographies
 
