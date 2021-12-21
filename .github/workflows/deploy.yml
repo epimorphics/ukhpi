@@ -74,7 +74,9 @@ jobs:
       run: |
         PAT=${{ secrets.EPI_GPR_ACCESS_TOKEN }} make publish
 
-
+  # N.B. This job will not be triggered if there is no "deploy" target specified in deployment.yaml.
+  # This allows the workflow file to be used for just the publishing step e.g. in
+  # cases such as EKS where the deployment is automated via flux and Ansible is not used
   deploy:
     needs: publish
     name: "Deploy: Ansible"
@@ -88,7 +90,7 @@ jobs:
         known_hosts: unnesessary
 
     - name: "Install Ansible"
-      uses: epimorphics/github-actions/ansible@v6
+      uses: epimorphics/github-actions/ansible@v7
       with:
         aws-access-key-id: "${{ env.AWS_ACCESS_KEY_ID }}"
         aws-secret-access-key: "${{ env.AWS_SECRET_ACCESS_KEY }}"
@@ -105,7 +107,7 @@ jobs:
 
     - name: "Ansible Deploy"
       if: ( needs.publish.outputs.tag != '' && needs.publish.outputs.deploy != '' )
-      uses: epimorphics/github-actions/ansible-deploy-image@v6
+      uses: epimorphics/github-actions/ansible-deploy-image@v7
       with:
         secret: "${{ env.ANSIBLE_VAULT_PASSWORD }}"
         stage: "${{ needs.publish.outputs.deploy }}"
