@@ -22,6 +22,7 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 COPY . .
+RUN mkdir log
 
 RUN bundle config set --local without 'development' \
   && bundle install \
@@ -39,10 +40,10 @@ RUN bundle install
 RUN yarn install
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app     ./app
+COPY --from=builder --chown=app /usr/src/app     .
 
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh /app
+COPY entrypoint.sh /app/entrypoint.sh
 ENTRYPOINT ["sh", "/app/entrypoint.sh"]
