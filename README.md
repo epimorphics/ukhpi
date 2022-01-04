@@ -71,6 +71,20 @@ Host 10.10.10.* hmlr_*
   UserKnownHostsFile /dev/null
 ```
 
+Next we need to know the hostname of the service that's currently hosting the running
+service in the `dev` environment. This will typically be a name like `hmlr-dev-pres_071`,
+but the numerical suffix will change as the cluster is periodically updated by the ops
+team. There are two ways (at least) that we can get this information:
+
+- using [Sensu](https://sensu-hmlr.epimorphics.net/), using the **entities** tab, or
+- using the AWS console, under EC2 instances.
+
+In both cases, you will need credentials to log in to Sensu or AWS. See someone in the
+infrastructure team if you need credentials but don't have them.
+
+The remainder of this guide will assume `hmlr_dev_pres_071`, which is correct as of the
+time of writing (but may not be by the time you are reading this!)
+
 Check that you can access a server by directly connecting via ssh:
 
 ```sh
