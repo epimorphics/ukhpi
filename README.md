@@ -114,8 +114,18 @@ ssh     71358  ian    3u  IPv6 766085      0t0  TCP ip6-localhost:http-alt (LIST
 ssh     71358  ian    6u  IPv4 766086      0t0  TCP localhost:http-alt (LISTEN)
 ```
 
-You can then use `localhost:8080` as the data service URL to give to the application
-via the environment:
+**Note:** the SSH tunnel will now be running as a background process. You should remember
+to stop it when you no longer require access to the API. A command such as `kill` on
+the process ID (PID) listed in the output from `lsof` will suffice:
+
+```sh
+$ kill -HUP 71358
+```
+
+Assuming there are no errors, you will see no output from this command.
+
+Having set up the SSH tunnel, you can then use `localhost:8080` as the data
+service URL to give to the application via the environment:
 
 ```sh
 $ API_SERVICE_URL=http://localhost:8080 rails server
