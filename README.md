@@ -103,6 +103,10 @@ on port 8081 on the remote service, so the tunnel command is:
 
 ```sh
 $ ssh -f hmlr_dev_pres_071 -L 8080:localhost:8081 -N
+Warning: Permanently added 'hmlr-bastion.epimorphics.net,3.251.30.65' (ECDSA) to the list of known hosts.
+**Warning**: this is a private system operated by Epimorphics Ltd
+Warning: Permanently added 'hmlr_dev_pres_071' (ECDSA) to the list of known hosts.
+**Warning**: this is a private system operated by Epimorphics Ltd
 ```
 
 If this succeeds, you should be able to see the open port with `lsof`:
