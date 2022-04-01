@@ -55,6 +55,12 @@ module.exports = function (api) {
         }
       ],
       [
+        require('@babel/plugin-proposal-private-methods').default,
+        {
+          'loose': true
+        }
+      ],
+      [
         require('@babel/plugin-transform-runtime').default,
         {
           helpers: false,
