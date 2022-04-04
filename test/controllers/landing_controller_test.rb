@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class LandingControllerTest < ActionController::TestCase
+class LandingControllerTest < ActionDispatch::IntegrationTest
   # def test_sanity
   #   flunk "Need real tests"
   # end

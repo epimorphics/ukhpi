@@ -94,14 +94,12 @@ class Location
 
   def preferred_type
     admin_geo_type(@types)
-      .reject { |t| t =~ %r{/Borough} }
+      .grep_v(%r{/Borough})
       .first
   end
 
   def admin_geo_type(types)
-    types.select do |t|
-      t =~ /admingeo/
-    end.uniq
+    types.grep(/admingeo/).uniq
   end
 
   def in_wales?
@@ -257,7 +255,7 @@ namespace :ukhpi do
   # Generate the locations modules in JavaScript and Ruby
   task locations_generate: :environment do
     puts 'Loading query results ...'
-    sresults = JSON.parse(IO.read('query-results.json'))
+    sresults = JSON.parse(File.read('query-results.json'))
     locations = {}
     all_types = Set.new
 
