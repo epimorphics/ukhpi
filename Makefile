@@ -36,6 +36,7 @@ ${GITHUB_TOKEN}:
 assets:
 	@./bin/bundle config set --local without 'development'
 	@./bin/bundle install
+	@yarn install
 	@./bin/rails assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
