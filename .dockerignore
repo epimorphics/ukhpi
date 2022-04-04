@@ -5,8 +5,6 @@
 .vs
 .vscode
 CHANGELOG.md
-Dockerfile
-Makefile
 README.md
 deployment.yaml
 log/

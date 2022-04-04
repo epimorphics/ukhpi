@@ -9,9 +9,11 @@ RUN apk add --update \
     tzdata \
     git \
     nodejs \
+    npm \
     && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
-    && bundle config --global frozen 1
+    && bundle config --global frozen 1 \
+    && npm install -g yarn
 
 FROM base as builder
 
@@ -19,13 +21,12 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile ./
+COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
 COPY app app
 COPY bin bin
 COPY config config
 COPY lib lib
 COPY public public
-COPY vendor vendor
 RUN mkdir log
 
 # Copy the bundle config
@@ -37,7 +38,8 @@ COPY .bundle/config /root/.bundle/config
 RUN ./bin/bundle config set --local without 'development test'
 
 RUN ./bin/bundle install \
-  && RAILS_ENV=production bundle exec rake assets:precompile \
+  && yarn install \
+  && RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -p 777 /usr/src/app/coverage
 
 ARG BUNDLER_VERSION=2.1.4
