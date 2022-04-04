@@ -88,7 +88,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     if view_state.location_search_term.present?
       match_location(view_state)
     else
-      flash[:search] = 'Missing search term'
+      flash[:search] = 'Missing search term' # rubocop:disable Rails/I18nLocaleTexts
     end
   end
 
@@ -107,7 +107,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
   end
 
   def match_no_locations
-    flash[:search] = 'Sorry, no locations match that search term'
+    flash[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   def match_single_location(view_state, locations)

@@ -124,3 +124,6 @@ Rails/I18nLocaleAssignment:
   Enabled: true
   Exclude:
     - test/**/*
+
+Style/OpenStructUse:
+  Enabled: false
