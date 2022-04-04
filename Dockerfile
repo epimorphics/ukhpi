@@ -40,7 +40,7 @@ RUN ./bin/bundle config set --local without 'development test'
 RUN ./bin/bundle install \
   && yarn install \
   && RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
-  && mkdir -p 777 /usr/src/app/coverage
+  && mkdir -m 777 /usr/src/app/coverage
 
 ARG BUNDLER_VERSION=2.1.4
 
