@@ -82,11 +82,11 @@ Rails.application.configure do
 
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT'] || '/'
+  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT']
 
   # API location can be specified in the environment
   # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080'
+  config.api_service_url = ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true

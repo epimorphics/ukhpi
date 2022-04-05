@@ -18,10 +18,6 @@ gem 'webpacker'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'data_services_api', git: 'https://github.com/epimorphics/ds-api-ruby.git', branch: 'task/infrastructure-update'
-
-gem 'json_rails_logger', git: 'https://github.com/epimorphics/json-rails-logger.git', branch: 'main'
-
 gem 'font-awesome-rails'
 gem 'sass-rails'
 
@@ -65,4 +61,9 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+source 'https://rubygems.pkg.github.com/epimorphics' do
+  gem 'data_services_api'
+  gem 'json_rails_logger'
 end
