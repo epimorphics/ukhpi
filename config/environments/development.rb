@@ -37,6 +37,10 @@ Rails.application.configure do
 
   config.assets.quiet = true
 
+  config.log_tags = %i[subdomain request_id request_method]
+  $stdout.sync = true
+  config.logger = JsonRailsLogger::Logger.new($stdout)
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
