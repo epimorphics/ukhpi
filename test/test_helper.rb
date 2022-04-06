@@ -15,8 +15,6 @@ require 'minitest/reporters'
 require 'vcr'
 require 'json_expressions/minitest'
 
-Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
-
 VCR.configure do |config|
   config.cassette_library_dir = 'test/fixtures/vcr_cassettes'
   config.hook_into :faraday
