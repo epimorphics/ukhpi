@@ -29,12 +29,13 @@ gem 'sentry-raven'
 
 gem 'faraday'
 gem 'faraday_middleware'
+gem "get_process_mem", "~> 0.2.7"
 gem 'http_accept_language'
+gem "prometheus-client", "~> 4.0"
 gem 'puma'
+gem 'rdf-turtle'
 gem 'rubocop-rails'
 gem 'yajl-ruby', require: 'yajl'
-
-gem 'rdf-turtle'
 
 group :development, :test do
   gem 'byebug'
