@@ -47,3 +47,12 @@ environment ENV.fetch('RAILS_ENV', 'development')
 
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
+
+# Use a custom log formatter to emit Puma log messages in a JSON format
+log_formatter do |str|
+  {
+    level: 'INFO',
+    ts: DateTime.now.rfc3339(3),
+    message: str
+  }.to_json
+end
