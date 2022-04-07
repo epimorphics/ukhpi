@@ -1,10 +1,8 @@
-# UKHPI open data application
-
-![Rails CI test](https://github.com/epimorphics/ukhpi/workflows/Rails%20CI%20test/badge.svg)
+# UK House Price Index (UKHPI) open data application
 
 This is the repo for the application that presents UKHPI open data on behalf
 of Land Registry (England and Wales), Registers of Scotland, Land and Property
-Services (Northern Ireland) and the UK Office for National Statistics.
+Services (Northern Ireland) and the UK Office for National Statistics (ONS).
 
 Development work was carried out by [Epimorphics Ltd](http://www.epimorphics.com),
 funded by [HM Land Registry](https://www.gov.uk/government/organisations/land-registry).
@@ -17,24 +15,89 @@ itself is freely available under the terms of the
 
 ### Installation dependencies
 
-Currently depends on Ruby version 2.6.x, since that matches the production
-environment. Local Ruby version is specified by `.ruby-version`, assuming
-that [rbenv](https://github.com/rbenv/rbenv) is used.
+The app currently depends on Ruby version 2.6.x. The actual version is
+specified in the `.ruby-version` file, which can be used with
+[rbenv](https://github.com/rbenv/rbenv) to install the appropriate version
+locally. The `.ruby-version` file will also determine the version of Ruby that
+will be installed in the Docker image as part of the automated build and deploy
+process.
 
 To install on dev machine:
 
-    git clone git@github.com:epimorphics/ukhpi.git
-    cd ukhpi
-    bundle install
-    yarn install
+```sh
+git clone git@github.com:epimorphics/ukhpi.git
+cd ukhpi
+bundle install
+yarn install
+```
 
 ### Local data service
 
-The application assumes that a Fuseki instance is running on `localhost:8080`. In
-development, either start a local Fuseki instance, or, more usually, ssh tunnel
-to one of the data servers. A predefined script for tunnelling one of the remote
-data servers to localhost 8080 is provided in `bin/sr-tunnel-daemon`. A copy of
-the ssh access credentials will need to be in your `~/.ssh/config`.
+The application communicates with the back-end data API (which uses SapiNT) to
+provide the data to be displayed. The actual API is specified by the
+environment variable `API_SERVICE_URL`.
+
+When developing UKHPI, it is necessary to have a dev instance of the API
+available. Since, for operations reasons, the actual service URL is not exposed
+to the open Internet, you will need to run a local instance of the service.
+This follows the same pattern as [the PPD
+app](https://github.com/epimorphics/ppd-explorer), as follows:
+
+Developers can run the Docker container that defines the SapiNT API
+directly from the AWS Docker registry. To do this, you will need:
+
+- AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
+- the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
+- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
+
+With this set up, you should be able to run the container, mapped to
+`localhost:8080` using:
+
+```sh
+$ AWS_PROFILE=hmlr \
+docker run \
+-e SERVER_DATASOURCE_ENDPOINT=http://hmlr-dev-pres.epimorphics.net/landregistry/query \
+-p 8080:8080 \
+018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+```
+
+Which should produce something like:
+
+```text
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.0.RELEASE)
+
+{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
+"thread_name":"main","level":"INFO","level_value":20000,
+"message":"No active profile set, falling back to default profiles: default"}
+```
+
+Note that the identity of the Docker image will change periodically. The
+currently deployed dev api image version is given by the `api` tag in the ansible
+[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
+
+If you need to run a different API version then the easiest route to
+discovering the most recent is to use the [AWS
+ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+console or look at the hash to the relevant commit in
+[lr-data-api](https://github.com/epimorphics/lr-data-api).
+
+### Coding standards
+
+`rubocop` should always return a clean status with no warnings.
+
+### Tests
+
+To run the tests:
+
+```sh
+rails test
+```
 
 ### Outline domain model
 
@@ -108,23 +171,23 @@ Some development tasks are handled by automated Rails task scripts. All tasks co
 in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`. The mostly
 commonly useful ones are:
 
-* *`test`*\
+- *`test`*\
   Run the test suite
 
-* *`ukhpi:aspects`*\
+- *`ukhpi:aspects`*\
   Generate a JavaScript description of the DSD aspects, as described by the
   `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
 
-* *boundaries tasks*\
+- *boundaries tasks*\
   A number of tasks releated to generating simplified GeoJSON files from the Shapefiles downloaded
   from ONS. These tasks will need to be re-run when the boundaries change,
   e.g. when local authorities are merged or split to form new unitary authorities.
   See below for more details.
 
-* *`ukhpi:describe[uri]`*\
+- *`ukhpi:describe[uri]`*\
   A convenient way to perform a SPARQL describe for the given URI
 
-* *`ukhpi:locations`*\
+- *`ukhpi:locations`*\
   This task uses a SPARQL query to list all of the geographical regions in the UKHPI
   data, and their containment hierarchy, and generate cached versions of that data as
   code. In particular, it regenerates `app/javascript/data/locations-data.js` and
@@ -135,17 +198,107 @@ Note that, by default, SPARQL queries will be run against the dev triple store.
 To direct the query against a different SPARQL endpoint, change the `SERVER` environment
 variable:
 
-    SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
+```sh
+SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
+```
 
 ## Deployment
 
-We are moving to a new deployment pattern, based around Docker files. The `Makefile`
-provides a list of make targets to create and run a Docker image for UKHPI. Run
-`make help` to get a list of available targets.
+The deployment process has been rewritten around a new set of standard
+components, following local best practice. Specifically:
 
-More details on the new deployment process will be added in future.
+- a set of standardised GitHub actions, using shared workflow definitions, are
+  used to orchestrate building and pushing Docker images under certain
+  conditions (see below)
+- Ansible is used to manage the orchestration of servers and services
+- a `Makefile` is the key interface between the deployment automation and the
+  application code, especially `make image` and `make tag`.
 
-## Updating geographies
+The determination of which Docker images go to which environments is managed by
+the `deployment.yml` file. At the time of writing:
+
+- tags matching `vNNN`, e.g. `v1.2.3`<br />
+  Images built from this tag will be deployed to production environments
+- branch `dev-infrastructure`<br />
+  Images built from this branc will be deployed to the `dev` environment
+
+### entrypoint.sh
+
+This script is used as the main entry point for starting the app from the `Dockerfile`.
+
+The Rails Framework requires certain values to be set as a Global environment variable
+when starting. To ensure the `RAILS_RELATIVE_URL_ROOT` is only set in one place per
+application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
+The Rails secret is also created here.
+
+There is a workaround to removing the PID lock of the Rails process in the event of
+the application crashing and not releasing the process.
+
+We have to pass the `API_SERVICE_URL` so that it is available in the `entrypoint.sh`
+or the application will throw an error and exit before starting
+
+### Prometheus monitoring
+
+[Prometheus](https://prometheus.io) is set up to provide metrics on the
+`/metrics` endpoint. The following metrics are recorded:
+
+- `api_status` (counter)
+  Response from data API, labelled by response status code
+- `api_requests` (counter)
+  Count of requests to the data API, labelled by result success/failure
+- `api_connection_failure` (counter)
+  Could not connect to back-end data API, labelled by message
+- `api_service_exception` (counter)
+  The response from the back-end data API was not processed, labelled by message
+- `internal_application_error` (counter)
+  Unexpected events and internal error count, labelled by message
+- `memory_used_mb` (gauge)
+  Process memory usage in megabytes
+- `api_response_times` (histogram)
+  Histogram of response times of successful API calls.
+
+Internally, we use ActiveSupport Notifications to emit events which are
+monitored and collected by the Prometheus store. Relevant pieces of the
+app include:
+
+- `config/initializers/prometheus.rb`
+  Defines the Prometheus counters that the app knows about, and registers them
+  in the metrics store (see above)
+- `config/initializers/load_notification_subscribers.rb`
+  Some boiler-plate code to ensure that all of the notification subscribers
+  are loaded when the app starts
+- `app/subscribers`
+  Folder where the subscribers to the known ActiveSupport notifications are
+  defined. This is where the transform from `ActiveSupport::Notification` to
+  Prometheus counter or gauge is performed.
+
+In addition to the metrics we define, there is a collection of standard
+metrics provided automatically by the
+[Ruby Prometheus client](https://github.com/prometheus/client_ruby)
+
+To test Prometheus when developing locally, there needs to be a Prometheus
+server running. Tip for Linux users: do not install the Prometheus apt
+package. This starts a locally running daemon with a pre-defined
+configuration, which is useful when monitoring the machine on which the
+server is running. A better approach for testing Prometheus is to
+[download](https://prometheus.io/download/) the server package and
+run it locally, with a suitable configuration. A basic config for
+monitoring a Rails application is provided in `test/prometheus/dev.yml`.
+
+Using this approach, and assuming you install your local copy of
+Prometheus into `~/apps`, a starting command line would be something like:
+
+```sh
+~/apps/prometheus/prometheus-2.32.1.linux-amd64/prometheus \
+  --config.file=test/prometheus/dev.yml \
+  --storage.tsdb.path=./tmp/metrics2
+```
+
+Something roughly equivalent should be possible on Windows and Mac as well.
+
+## Other tasks
+
+### Updating geographies
 
 Many years, the boundaries of UK local authorities change. Sometimes mutliple adjacent
 authorities merge to for a new unitary authority, or sometimes a unitary authority
@@ -157,15 +310,15 @@ In 2020, we updated the app due to various changes in LA boundaries, including t
 creation of the Bournemouth, Christchurch and Poole UA. The timeline of these changes
 was fairly typical, so I'm documenting it here for future reference:
 
-* April 2019: new boundaries go into effect
-* Feb 2020: ONS perform their (single) yearly update of location tables
-* March 2020: HMLR provided Epimorphics with a collection of test data, including
+- April 2019: new boundaries go into effect
+- Feb 2020: ONS perform their (single) yearly update of location tables
+- March 2020: HMLR provided Epimorphics with a collection of test data, including
   the new regions table, as Turtle (`.ttl`) files
-* March 2020: we loaded the test data into a dev server, in order to re-run
+- March 2020: we loaded the test data into a dev server, in order to re-run
   the `rails ukhpi:locations` task. This updates the cached Ruby and Javascript
   locations tables, to save the application having to query the API every time
   a location is referred to
-* In order to update the map UI in UKHPI, we need to regenerate the `ONS-Geographies`
+- In order to update the map UI in UKHPI, we need to regenerate the `ONS-Geographies`
   GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has an FME script on
   his system that automates this. The basic process is: find and download the
   relevant shapefile from the ONS geographies portal, then run the script to
@@ -183,4 +336,14 @@ was fairly typical, so I'm documenting it here for future reference:
   Linux command utilities that do the job very easily. The code will need to
   be changed to reference the new GeoJSON file, i.e.
   `app/javascript/data/ONS-Geographies-$YEAR.json`.
-* Finally, the application is published on `dev` for the Plymouth team to test.
+- Finally, the application is published on `dev` for the Plymouth team to test.
+
+## Configuration environment variables
+
+We use a number of environment variables to determine the runtime behaviour
+of the application:
+
+| name                       | description                                                          | typical value           |
+| -------------------------- | -------------------------------------------------------------------- | ----------------------- |
+| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ukhpi`            |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080` |
