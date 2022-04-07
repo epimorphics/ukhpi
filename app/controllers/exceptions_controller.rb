@@ -22,7 +22,7 @@ class ExceptionsController < ApplicationController
   def maybe_report_to_sentry(exception, status_code)
     return nil unless status_code >= 500
 
-    Raven.capture_exception(exception)
-    Raven.last_event_id
+    sevent = Sentry.capture_exception(exception)
+    sevent.event_id
   end
 end

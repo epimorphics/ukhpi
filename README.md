@@ -347,3 +347,4 @@ of the application:
 | -------------------------- | -------------------------------------------------------------------- | ----------------------- |
 | `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ukhpi`            |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080` |
+| `SENTRY_API_KEY`           | The DSN for reporting errors and other events to Sentry              |                         |
