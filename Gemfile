@@ -25,16 +25,16 @@ gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
 gem 'govuk_template'
 gem 'js-routes', '< 2.0'
-gem 'sentry-raven'
 
 gem 'faraday'
 gem 'faraday_middleware'
-gem "get_process_mem", "~> 0.2.7"
+gem 'get_process_mem', '~> 0.2.7'
 gem 'http_accept_language'
-gem "prometheus-client", "~> 4.0"
+gem 'prometheus-client', '~> 4.0'
 gem 'puma'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
+gem 'sentry-rails', '~> 5.2'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
