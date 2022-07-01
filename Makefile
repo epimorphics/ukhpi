@@ -47,8 +47,7 @@ clean:
 	@@ rm -rf bundle coverage log node_modules
 
 
-#image: auth lint test
-image: auth
+image: auth lint test
 	@echo Building ${REPO}:${TAG} ...
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
