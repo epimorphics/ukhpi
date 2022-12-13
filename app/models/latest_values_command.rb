@@ -6,8 +6,6 @@ class LatestValuesCommand
 
   attr_reader :results
 
-  def initialize; end
-
   def perform_query(service = nil)
     hpi = service_api(service)
 

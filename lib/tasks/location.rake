@@ -244,8 +244,8 @@ namespace :ukhpi do
       }
       }"
 
-    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/apache-jena-fuseki'}/bin/s-query"
-    server = ENV['SERVER'] || 'https://landregistry.data.gov.uk/landregistry/query'
+    squery = "#{ENV.fetch('FUSEKI', '/home/ian/dev/java/apache-jena-fuseki')}/bin/s-query"
+    server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
     puts "Running SPARQL query against server #{server}..."
     puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
@@ -293,8 +293,8 @@ namespace :ukhpi do
     uri = args[:uri]
     query = "describe <#{uri}>"
 
-    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki'}/bin/s-query"
-    server = ENV['SERVER'] || 'http://lr-data-dev-c.epimorphics.net/landregistry/query'
+    squery = "#{ENV.fetch('FUSEKI', '/home/ian/dev/java/jena-fuseki')}/bin/s-query"
+    server = ENV.fetch('SERVER', 'http://lr-data-dev-c.epimorphics.net/landregistry/query')
 
     puts 'Running SPARQL query ...'
     system "#{squery} --server='#{server}' '#{query}'"
