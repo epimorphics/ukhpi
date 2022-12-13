@@ -48,7 +48,29 @@ directly from the AWS Docker registry. To do this, you will need:
 
 - AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
 - the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
-- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
+- Set the contents of your `~/.docker/config.json` file to be:
+
+```sh
+{
+ "credsStore": "ecr-login"
+}
+```
+
+This configures the Docker daemon to use the credential helper for all Amazon
+ECR registries.
+
+To use a credential helper for a specific ECR registry[^1], create a `credHelpers`
+section with the URI of your ECR registry:
+
+  ```sh
+  {
+    [...]
+    "credHelpers": {
+      "public.ecr.aws": "ecr-login",
+      "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
+    }
+  }
+  ```
 
 With this set up, you should be able to run the container, mapped to
 `localhost:8080` using:
@@ -56,12 +78,16 @@ With this set up, you should be able to run the container, mapped to
 ```sh
 $ AWS_PROFILE=hmlr \
 docker run \
--e SERVER_DATASOURCE_ENDPOINT=http://hmlr-dev-pres.epimorphics.net/landregistry/query \
+-e SERVER_DATASOURCE_ENDPOINT=https://hmlr-dev-pres.epimorphics.net/landregistry/sparql \
 -p 8080:8080 \
-018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:<LATEST_API_IMAGE_VERSION>
 ```
 
-Which should produce something like:
+Note: the identity of the Docker image will change periodically. The currently
+deployed dev api image version is given by the `api` tag in the ansible
+[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml#L2).
+
+Which then should produce something like:
 
 ```text
   .   ____          _            __ _ _
@@ -76,10 +102,6 @@ Which should produce something like:
 "thread_name":"main","level":"INFO","level_value":20000,
 "message":"No active profile set, falling back to default profiles: default"}
 ```
-
-Note that the identity of the Docker image will change periodically. The
-currently deployed dev api image version is given by the `api` tag in the ansible
-[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
 
 If you need to run a different API version then the easiest route to
 discovering the most recent is to use the [AWS
@@ -167,32 +189,33 @@ We represent these as follows:
 
 ### Rails script tasks
 
-Some development tasks are handled by automated Rails task scripts. All tasks code is
-in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`. The mostly
-commonly useful ones are:
+Some development tasks are handled by automated Rails task scripts. All tasks
+code is in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`.
+The mostly commonly useful ones are:
 
-- *`test`*\
+- _`test`_\
   Run the test suite
 
-- *`ukhpi:aspects`*\
+- _`ukhpi:aspects`_\
   Generate a JavaScript description of the DSD aspects, as described by the
   `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
 
-- *boundaries tasks*\
-  A number of tasks releated to generating simplified GeoJSON files from the Shapefiles downloaded
-  from ONS. These tasks will need to be re-run when the boundaries change,
-  e.g. when local authorities are merged or split to form new unitary authorities.
+- _boundaries tasks_\
+  A number of tasks releated to generating simplified GeoJSON files from the
+  Shapefiles downloaded from ONS. These tasks will need to be re-run when the
+  boundaries change, e.g. when local authorities are merged or split to form new
+  unitary authorities.
   See below for more details.
 
-- *`ukhpi:describe[uri]`*\
+- _`ukhpi:describe[uri]`_\
   A convenient way to perform a SPARQL describe for the given URI
 
-- *`ukhpi:locations`*\
+- _`ukhpi:locations`_\
   This task uses a SPARQL query to list all of the geographical regions in the UKHPI
-  data, and their containment hierarchy, and generate cached versions of that data as
-  code. In particular, it regenerates `app/javascript/data/locations-data.js` and
-  `app/models/locations_table.rb`. This task should be re-run if and when the regions
-  data from LR is changed in the triple store.
+  data, and their containment hierarchy, and generate cached versions of that data
+  as code. In particular, it regenerates `app/javascript/data/locations-data.js`
+  and   `app/models/locations_table.rb`. This task should be re-run if and when
+  the regions data from LR is changed in the triple store.
 
 Note that, by default, SPARQL queries will be run against the dev triple store.
 To direct the query against a different SPARQL endpoint, change the `SERVER` environment
@@ -217,9 +240,9 @@ components, following local best practice. Specifically:
 The determination of which Docker images go to which environments is managed by
 the `deployment.yml` file. At the time of writing:
 
-- tags matching `vNNN`, e.g. `v1.2.3`<br />
+- tags matching `vNNN`, e.g. `v1.2.3`
   Images built from this tag will be deployed to production environments
-- branch `dev-infrastructure`<br />
+- branch `dev-infrastructure`
   Images built from this branc will be deployed to the `dev` environment
 
 ### entrypoint.sh
@@ -231,8 +254,8 @@ when starting. To ensure the `RAILS_RELATIVE_URL_ROOT` is only set in one place 
 application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
 The Rails secret is also created here.
 
-There is a workaround to removing the PID lock of the Rails process in the event of
-the application crashing and not releasing the process.
+There is a workaround to removing the PID lock of the Rails process in the event
+of the application crashing and not releasing the process.
 
 We have to pass the `API_SERVICE_URL` so that it is available in the `entrypoint.sh`
 or the application will throw an error and exit before starting
@@ -348,3 +371,6 @@ of the application:
 | `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ukhpi`            |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080` |
 | `SENTRY_API_KEY`           | The DSN for reporting errors and other events to Sentry              |                         |
+
+[^1]: With Docker 1.13.0 or greater, you can configure Docker to use different
+credential helpers for different registries.
