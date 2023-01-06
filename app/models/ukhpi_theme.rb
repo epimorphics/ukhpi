@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Encapsulates a theme of UKHPI statistics, which are natural groupings of the
 # various statistics in the overall dataset. Example themes include

@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Encapsulates an indicator for the various UKHPI statistics in the overall
 # dataset. An indicator denotes a common characteristic across the statistics,

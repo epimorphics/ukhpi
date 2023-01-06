@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Shared functionality for user models that provide access to the users'
 # choices articulated via the params in the incoming request

@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Decorator-pattern class for creating presentations and renderings of
 # UserSelections objects

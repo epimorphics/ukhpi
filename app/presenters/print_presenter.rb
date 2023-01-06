@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # A presenter for the printable view, based on the download view presenter
 class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength

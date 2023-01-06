@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Controller to handle dynamically displaying error messages
 class ExceptionsController < ApplicationController

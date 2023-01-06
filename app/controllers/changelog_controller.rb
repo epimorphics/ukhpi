@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Simple controller for showing the changelog
 class ChangelogController < ApplicationController

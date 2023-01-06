@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 Rails.application.reloader.to_prepare do
   if ENV['SENTRY_API_KEY']
