@@ -41,15 +41,15 @@ class LatestValuesCommand
 
     Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
     Rails.logger.debug query.to_json
-    start = Time.zone.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     begin
       @results = hpi.query(query)
     rescue RuntimeError => e
       Rails.logger.warn("DsAPI run_query failed with: #{e.inspect}")
       success = false
     end
-
-    Rails.logger.debug(format("query took %.1f ms\n", ((Time.zone.now - start) * 1000.0)))
+    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
+    Rails.logger.debug(format("query took %.0f μs\n", time_taken))
     success
   end
 
