@@ -41,6 +41,8 @@ Rails.application.configure do
   $stdout.sync = true
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
