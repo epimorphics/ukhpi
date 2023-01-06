@@ -64,7 +64,12 @@ group :development do
   gem 'spring'
 end
 
+# For running the app locally for testing you want to set this to your local path
+gem 'data_services_api', path: '~/projects/epimorphics/shared/data_services_api/'
+
+# For running the app in production you want to set this to the gem from our private repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api'
+  # gem 'data_services_api'
+
   gem 'json_rails_logger'
 end
