@@ -6,8 +6,6 @@
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     %title
       = I18n.t('common.header.app_title')
-    = render partial: 'common/google-analytics'
-    = javascript_include_tag 'cookie'
     :javascript
       document.querySelector('html').classList.add('js');
       window.ukhpi = window.ukhpi || {};
@@ -15,8 +13,12 @@
       window.ukhpi.version = '#{Version::VERSION}';
       window.ukhpi.locale = '#{I18n.locale}';
 
+    - if Rails.env.production?
+      = render partial: 'common/google-analytics'
+      = javascript_include_tag 'cookie'
+      = csrf_meta_tags
+
     = stylesheet_link_tag 'application', media: 'all'
-    = csrf_meta_tags
     = render partial: 'common/favicons'
 
     - if @preferences
@@ -35,7 +37,7 @@
     = javascript_pack_tag 'ukhpi_vue'
 
   %body.government.website.lr
-    = render partial: 'common/cookie_banner'
+    = render partial: 'common/cookie_banner' if Rails.env.production?
     = render partial: 'common/skip_to_main_content'
     = render partial: 'common/header'
     = render partial: 'common/flash_message'
