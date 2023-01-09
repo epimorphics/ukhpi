@@ -76,11 +76,11 @@ Rails.application.configure do
 
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ukhpi')
-
-  # API location can be specified in the environment
-  # But defaults to the dev service
-  config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
+  # In Production no default values are passed on the basis that missing
+  # configuration options represent a category of bug, and in that case the
+  # deployment should fail fast and noisily.
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT')
+  config.api_service_url = ENV.fetch('API_SERVICE_URL')
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
