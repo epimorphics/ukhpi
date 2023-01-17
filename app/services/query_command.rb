@@ -4,8 +4,6 @@
 class QueryCommand
   include DataService
 
-  # MILLISECONDS = 1000.0
-
   attr_reader :user_selections, :results, :query
 
   def initialize(user_selections)
