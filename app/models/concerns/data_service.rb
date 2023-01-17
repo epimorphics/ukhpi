@@ -4,7 +4,7 @@
 module DataService
   attr_reader :default_service_name
 
-  def initialize(default_service_name)
+  def initialize(default_service_name = nil)
     @default_service_name = default_service_name
   end
 
