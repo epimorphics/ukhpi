@@ -57,6 +57,15 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
+  # This will affect assets served from /app/assets
+  config.static_cache_control = "public, max-age=#{2.minutes.to_i}"
+
+  # This will affect assets in /public, e.g. webpacker assets.
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{2.minutes.to_i}",
+    'Expires' => 2.minutes.from_now.to_formatted_s(:rfc822)
+  }
+
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
