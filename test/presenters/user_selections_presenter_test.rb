@@ -16,7 +16,6 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
   end
 
   let(:presenter) { UserSelectionsPresenter.new(selections) }
-  # rubocop:disable Layout/LineLength
   describe '#UserSelectionsPresenter' do
     describe '#as_url_search_string' do
       it 'should translate the selections to a well-formed search string' do
@@ -33,5 +32,4 @@ class UserSelectionsPresenterTest < ActiveSupport::TestCase
       end
     end
   end
-  # rubocop:enable Layout/LineLength
 end
