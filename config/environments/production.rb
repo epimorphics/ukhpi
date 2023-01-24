@@ -97,6 +97,7 @@ Rails.application.configure do
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
 
+  # Use default paths for documentation.
   config.accessibility_document_path = '/accessibility'
   config.privacy_document_path = '/privacy'
 
