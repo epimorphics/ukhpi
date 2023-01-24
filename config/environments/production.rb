@@ -57,6 +57,9 @@ Rails.application.configure do
   # Enable serving of images, stylesheets, and JavaScripts from an asset server.
   # config.action_controller.asset_host = 'http://assets.example.com'
 
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * UHPI needs to be shorter to avoid delay (in users cache) on the
+  # * publication deadline so it is set for 2 minutes (120 seconds)
   # This will affect assets served from /app/assets
   config.static_cache_control = "public, max-age=#{2.minutes.to_i}"
 
