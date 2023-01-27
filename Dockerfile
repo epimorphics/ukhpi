@@ -21,9 +21,13 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru Dockerfile entrypoint.sh Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
-COPY app app
+COPY config.ru entrypoint.sh Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
 COPY bin bin
+COPY .bundle/config /root/.bundle/config
+
+RUN ./bin/bundle install && yarn install
+
+COPY app app
 COPY config config
 COPY lib lib
 COPY public public
@@ -33,20 +37,14 @@ RUN mkdir log
 # **Important** the destination for this copy **must not** be in WORKDIR,
 # or there is a risk that the GitHub PAT could be part of the final image
 # in a potentially leaky way
-COPY .bundle/config /root/.bundle/config
 
-RUN ./bin/bundle config set --local without 'development test'
-
-RUN ./bin/bundle install \
-  && yarn install \
-  && RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
+#RUN yarn install \
+RUN RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
 ARG BUNDLER_VERSION=2.1.4
 
 ARG image_name
-ARG build
-ARG build_date
 ARG git_branch
 ARG git_commit_hash
 ARG github_run_number
@@ -55,7 +53,6 @@ ARG VERSION
 LABEL com.epimorphics.name=$image_name \
       com.epimorphics.branch=$git_branch \
       com.epimorphics.build=$github_run_number \
-      com.epimorphics.created=$build_date \
       com.epimorphics.commit=$git_commit_hash \
       com.epimorphics.version=$VERSION
 
