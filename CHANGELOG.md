@@ -19,6 +19,10 @@
   `APPLICATION_PATH` to be more clear on it's use in the codebase.
 - (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env
   vars are set accordingly or deployment will fail noisily.
+- (Jon) Refactored the version cadence creation to include the PATCH property as
+  per other Epimorphics apps.
+- (Jon) Refactored the version cadence creation to include a SUFFIX value if
+  provided; otherwise no SUFFIX is included in the version number.
 
 ## 1.5.19 - 2021-12-09
 
