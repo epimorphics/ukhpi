@@ -41,7 +41,6 @@ Rails.application.configure do
   $stdout.sync = true
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
