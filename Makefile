@@ -26,7 +26,7 @@ REPO?=${ECR}/${IMAGE}
 GITHUB_TOKEN=.github-token
 BUNDLE_CFG=.bundle/config
 
-all: image
+all: lint test image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 	@./bin/bundle config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
@@ -47,7 +47,7 @@ clean:
 	@@ rm -rf bundle coverage log node_modules
 
 
-image: auth lint test
+image: auth
 	@echo Building ${REPO}:${TAG} ...
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \

@@ -21,17 +21,19 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru entrypoint.sh Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
+COPY config.ru Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
 COPY bin bin
 COPY .bundle/config /root/.bundle/config
 
-RUN ./bin/bundle install && yarn install
+RUN ./bin/bundle config set --local without 'development test' && \
+    ./bin/bundle install && \
+    yarn install && \
+    mkdir log
 
 COPY app app
 COPY config config
 COPY lib lib
 COPY public public
-RUN mkdir log
 
 # Copy the bundle config
 # **Important** the destination for this copy **must not** be in WORKDIR,
