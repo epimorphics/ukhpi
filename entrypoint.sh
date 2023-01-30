@@ -17,8 +17,6 @@ then
   exit 1
 fi
 
-echo "{'ts': '`date -u +%FT%T.%3NZ`', 'message': {'text: 'UKHPI starting with API_SERVICE_URL ${API_SERVICE_URL}', 'level': 'INFO'}}"
-
 # Handle secrets based on env
 if [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ]
 then
@@ -27,5 +25,7 @@ fi
 
 export RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT:-'/app/ukhpi'}
 export SCRIPT_NAME=${RAILS_RELATIVE_URL_ROOT}
+
+echo "{'ts': '`date -u +%FT%T.%3NZ`', 'message': {'text: 'Starting UK HPI. API_SERVICE_URL=${API_SERVICE_URL} RAILS_ENV=${RAILS_ENV} RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}', 'level': 'INFO'}}"
 
 exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0

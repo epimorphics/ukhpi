@@ -35,16 +35,13 @@ COPY config config
 COPY lib lib
 COPY public public
 
-# Copy the bundle config
-# **Important** the destination for this copy **must not** be in WORKDIR,
-# or there is a risk that the GitHub PAT could be part of the final image
-# in a potentially leaky way
+# Compile
 
 #RUN yarn install \
 RUN RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
-# Start a new build stage to minimise the final image size
+# Start a new stage to minimise the final image size
 FROM base
 
 ARG image_name
