@@ -351,11 +351,11 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.3.2)
+    data_services_api (1.3.3)
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (0.3.4)
+    json_rails_logger (0.3.5.3)
       json
       lograge
       railties
@@ -366,7 +366,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara_minitest_spec
-  data_services_api (~> 1.3.2)!
+  data_services_api (~> 1.3.3)!
   faraday
   faraday_middleware
   font-awesome-rails
@@ -379,7 +379,7 @@ DEPENDENCIES
   http_accept_language
   js-routes (< 2.0)
   json_expressions
-  json_rails_logger (~> 0.3.4)!
+  json_rails_logger (~> 0.3.5)!
   m
   minitest-rails (~> 6.0)
   minitest-reporters
