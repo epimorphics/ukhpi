@@ -45,6 +45,21 @@ RUN ./bin/bundle install \
 # Start a new build stage to minimise the final image size
 FROM base
 
+ARG image_name
+ARG build
+ARG build_date
+ARG git_branch
+ARG git_commit_hash
+ARG github_run_number
+ARG VERSION
+
+LABEL com.epimorphics.name=$image_name \
+      com.epimorphics.branch=$git_branch \
+      com.epimorphics.build=$github_run_number \
+      com.epimorphics.created=$build_date \
+      com.epimorphics.commit=$git_commit_hash \
+      com.epimorphics.version=$VERSION
+
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 

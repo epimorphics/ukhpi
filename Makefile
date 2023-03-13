@@ -12,9 +12,10 @@ RUBY_VERSION?=$(shell cat .ruby-version)
 STAGE?=dev
 API_SERVICE_URL?= http://localhost:8080
 
+BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
-TAG?=${VERSION}-${COMMIT}
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
+TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
 ${TAG}:
 	@echo ${TAG}
@@ -39,10 +40,12 @@ assets:
 	@yarn install
 	@./bin/rails assets:clean assets:precompile
 
-auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
+auth: ${BUNDLE_CFG}
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
+	@@ rm -rf bundle coverage log node_modules
+
 
 image: auth lint test
 	@echo Building ${REPO}:${TAG} ...
@@ -50,6 +53,12 @@ image: auth lint test
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
 		--build-arg BUNDLER_VERSION=${BUNDLER_VERSION} \
+    --build-arg VERSION=${VERSION} \
+    --build-arg build_date=`date -Iseconds` \
+    --build-arg git_branch=${BRANCH} \
+    --build-arg git_commit_hash=${COMMIT} \
+    --build-arg github_run_number=${GITHUB_RUN_NUMBER} \
+    --build-arg image_name=${NAME} \
 	  --tag ${REPO}:${TAG} \
 		.
 	@echo Done.

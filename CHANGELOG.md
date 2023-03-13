@@ -24,6 +24,13 @@
 - (Jon) Refactored the version cadence creation to include a SUFFIX value if
   provided; otherwise no SUFFIX is included in the version number.
 
+## 1.6.0 - 2022-04-07
+
+- (Ian) Adopt all of the current Epimorphics best-practice deployment patterns,
+  including shared GitHub actions, updated Makefile and Dockerfile, Prometheus
+  monitoring, and updated version of Sentry.
+- (Ian) Updated the README as part of handover.
+
 ## 1.5.19 - 2021-12-09
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
