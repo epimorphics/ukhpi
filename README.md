@@ -64,15 +64,15 @@ ECR registries.
 To use a credential helper for a specific ECR registry[^1], create a
 `credHelpers` section with the URI of your ECR registry:
 
-  ```sh
-  {
-    [...]
-    "credHelpers": {
-      "public.ecr.aws": "ecr-login",
-      "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
-    }
+```sh
+{
+  [...]
+  "credHelpers": {
+    "public.ecr.aws": "ecr-login",
+    "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
   }
-  ```
+}
+```
 
 With this set up, you should be able to run the container, mapped to
 `localhost:8080` using:
@@ -110,6 +110,40 @@ the most recent is to use the [AWS
 ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
 console or look at the hash to the relevant commit in
 [lr-data-api](https://github.com/epimorphics/lr-data-api).
+
+### Running the app locally in dev mode
+
+Assuming the API is running on port 8080 (the default), to start the app locally:
+
+```sh
+API_SERVICE_URL=http://localhost:8080 rails server
+```
+
+And then visit [`localhost:3000`](http://localhost:3000/).
+
+### Running the app locally as a Docker image
+
+It can be useful to run the compiled Docker image, that will be run by the
+production installation, locally yourself. Assuming you have the dev API
+running on `localhost:8080` (the default), then you can run the Docker image
+for the app itself as follows:
+
+```sh
+API_SERVICE_URL=http://host.docker.internal:8080 make run
+```
+
+Note that `host.docker.internal` is a special alias for `localhost`, which is
+[supported by
+Docker](https://medium.com/@TimvanBaarsen/how-to-connect-to-the-docker-host-from-inside-a-docker-container-112b4c71bc66).
+
+Assuming the Docker container starts up OK, you will need a proxy to simulate
+the effect of accessing the application via its ingress path
+(`/app/ukhpi`). There is a [simple web
+proxy](https://github.com/epimorphics/simple-web-proxy) that you can use.
+
+With the simple web proxy, and the two Docker containers running, access the
+application as
+[`localhost:3001/app/ukhpi/`](http://localhost:3001/app/ukhpi/).
 
 ### Coding standards
 
@@ -252,7 +286,7 @@ This script is used as the main entry point for starting the app from the
 `Dockerfile`.
 
 The Rails Framework requires certain values to be set as a Global environment
-variable when starting. To ensure the `APPLICATION_PATH` is only set in
+variable when starting. To ensure the `APPLICATION_ROOT` is only set in
 one place per application we have added this to the `entrypoint.sh` file along
 with the `SCRIPT_NAME`. The Rails secret is also created here.
 
@@ -368,7 +402,7 @@ the application:
 
 | name                       | description                                                          | typical value           |
 | -------------------------- | -------------------------------------------------------------------- | ----------------------- |
-| `APPLICATION_PATH`         | The path from the server root to the application                     | `/app/ukhpi`            |
+| `APPLICATION_ROOT`         | The path from the server root to the application                     | `/app/ukhpi`            |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080` |
 | `SENTRY_API_KEY`           | The DSN for reporting errors and other events to Sentry              |                         |
 
