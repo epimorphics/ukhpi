@@ -1,6 +1,6 @@
 # Changes to the UKHPI app by version and date
 
-## 1.5.20 - 2023-01
+## 1.5.20 - 2023-03-13
 
 - (Jon) Refactors the elapsed time calculated for API requests to be resolved
   as microseconds rather than milliseconds. This is to improve the reporting of
