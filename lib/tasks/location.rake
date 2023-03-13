@@ -244,7 +244,8 @@ namespace :ukhpi do
       }
       }"
 
-    squery = "#{ENV.fetch('FUSEKI', '/home/ian/dev/java/apache-jena-fuseki')}/bin/s-query"
+    root = Rails.root.to_s
+    squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
     puts "Running SPARQL query against server #{server}..."
@@ -292,8 +293,8 @@ namespace :ukhpi do
   task :describe, [:uri] => [:environment] do |_t, args|
     uri = args[:uri]
     query = "describe <#{uri}>"
-
-    squery = "#{ENV.fetch('FUSEKI', '/home/ian/dev/java/jena-fuseki')}/bin/s-query"
+    root = Rails.root.to_s
+    squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'http://lr-data-dev-c.epimorphics.net/landregistry/query')
 
     puts 'Running SPARQL query ...'
