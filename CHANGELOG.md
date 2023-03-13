@@ -8,15 +8,15 @@
 - (Jon) Minor text changes to the `Gemfile` to include instructions for running
   Epimorphics specific gems locally during the development of those gems.
 - (Jon) Updated the production `json_rails_logger` gem version to be at least
-  the current version `~>0.3.4` to cover out-of-sync release versions.
+  the current version `~>0.3.5` to cover out-of-sync release versions.
 - (Jon) Updated the production `data_services_api` gem version to be at least
-  the current version`~>1.3.2` to cover out-of-sync release versions.
+  the current version`~>1.3.3` to cover out-of-sync release versions.
 - (Jon) Removed 'test' environment from sentry configuration to reduce unecessary
   monitoring charges
 - (Jon) Updated the `sentry-rails` gem version to the current version`~>5.7`
   following warnings in the sentry dashboard about the out of date gem version
 - (Jon) Renamed the global env variable `RAILS_RELATIVE_URL_ROOT` to
-  `APPLICATION_PATH` to be more clear on it's use in the codebase.
+  `APPLICATION_ROOT` to be more clear on it's use in the `entrypoint.sh` code.
 - (Jon) Refactored better guards in `entrypoint.sh` to ensure the required env
   vars are set accordingly or deployment will fail noisily.
 - (Jon) Refactored the version cadence creation to include the PATCH property as
