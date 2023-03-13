@@ -44,9 +44,9 @@ Rails.application.configure do
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 
-  # Application Path can be specified in the entrypoint.sh script
+  # The application path can be specified in the entrypoint.sh script
   # but falls back to a standard root value in development
-  config.relative_url_root = ENV.fetch('APPLICATION_PATH', '/')
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
 
   # API location can be specified in the entrypoint.sh script
   # but falls back to the local dev service
