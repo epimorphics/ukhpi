@@ -18,6 +18,7 @@ class LatestValuesCommand
     service || dataset(:ukhpi)
   rescue Faraday::ConnectionFailed => e
     Rails.logger.info('Failed to connect to UK HPI ')
+    Rails.logger.info("Status: #{e.status}, body: '#{e.message}'")
     Rails.logger.info(e)
     nil
   rescue DataServicesApi::ServiceException => e
@@ -40,7 +41,6 @@ class LatestValuesCommand
     query = add_limit_constraint(query)
 
     Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
-    Rails.logger.debug query.to_json
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     begin
       @results = hpi.query(query)
