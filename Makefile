@@ -25,9 +25,9 @@ IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
-BUNDLE_CFG=${HOME}/.bundle/config
+BUNDLE_CFG=.bundle/config
 
-all: image
+all: lint test image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 	@./bin/bundle config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
