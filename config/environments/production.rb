@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV.fetch('RAILS_SERVE_STATIC_FILES', true)
+  config.public_file_server.enabled = ENV.fetch('RAILS_SERVE_STATIC_FILES', true)
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -47,15 +47,16 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
+  # Tag rails logs with useful information
   config.log_tags = %i[subdomain request_id request_method]
+  # When sync mode is true, all output is immediately flushed to the underlying
+  # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
+  # Log the stdout output to the Epimorphics JSON logging gem
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
-
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
 
   # * Set cache control headers for HMLR apps to be public and cacheable
   # * UHPI needs to be shorter to avoid delay (in users cache) on the
@@ -74,26 +75,21 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
+  # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  # config.log_formatter = ::Logger::Formatter.new
+  # The RAILS_RELATIVE_URL_ROOT env var should NOT be used in Production
+  # The default value is passed in as the compiled assets have no knowledge of
+  # the base path and utilise the config.relative_url_root value to prefix the
+  # compiled asset paths
+  config.relative_url_root = '/app/ukhpi'
 
-  # Disable logging of the rendering of partials
-  config.action_view.logger = nil
-
-  config.logger = JsonRailsLogger::Logger.new($stdout)
-
-  # The application root should be specified in the entrypoint.sh file and therefore
-  # in Production no fall back values are passed on the basis that missing
-  # configuration options represent a category of bug, and in that case the
-  # deployment should fail fast and noisily.
-  config.relative_url_root = ENV['RAILS_RELATIVE_URL_ROOT']
-  # API location should also be specified in the entrypoint.sh file
+  # API_SERVICE_URL should also be specified in the entrypoint.sh file and
+  # set in the Makefile as an env variable for the docker container when run as an image.
+  # API_SERVICE_URL is required by both Docker image and Rails
   config.api_service_url = ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance
@@ -103,5 +99,6 @@ Rails.application.configure do
   config.accessibility_document_path = '/accessibility'
   config.privacy_document_path = '/privacy'
 
+  # Set the contact email address to Land Registry supplied address
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end

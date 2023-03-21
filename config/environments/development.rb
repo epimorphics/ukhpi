@@ -35,28 +35,37 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # Don't print a log message every time an asset file is loaded
   config.assets.quiet = true
 
+  # Tag rails logs with useful information
   config.log_tags = %i[subdomain request_id request_method]
+  # When sync mode is true, all output is immediately flushed to the underlying
+  # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
+  # Log the stdout output to the Epimorphics JSON logging gem
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
-
-  # The application path can be specified in the entrypoint.sh script
-  # but falls back to a standard root value in development
+  # The RAILS_RELATIVE_URL_ROOT should be specified in the entrypoint.sh script
+  # but this passes in a standard root value in development if the app is run
+  # directly via `rails server`
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
 
-  # API location can be specified in the entrypoint.sh script
-  # but falls back to the local dev service
+  # API_SERVICE_URL should also be specified in the entrypoint.sh file and
+  # set in the Makefile as an env variable for the docker container when run as an image.
+  # API_SERVICE_URL is required by both Docker image and Rails
+  
+  # API location can be specified in the environment
+  # But defaults to the dev service
   config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
 
+  # Use default paths for documentation.
   config.accessibility_document_path = '/doc/accessibility'
   config.privacy_document_path = '/doc/privacy'
 
+  # Set the contact email address to Land Registry supplied address
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end

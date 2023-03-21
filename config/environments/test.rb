@@ -33,24 +33,28 @@ Rails.application.configure do
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
 
-  # Randomize the order test cases are executed.
-  config.active_support.test_order = :random
-
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
-  # Raises error for missing translations
-  # config.action_view.raise_on_missing_translations = true
+  # Tag rails logs with useful information
+  config.log_tags = %i[subdomain request_id request_method]
+  # When sync mode is true, all output is immediately flushed to the underlying
+  # operating system and is not buffered by Ruby internally.
+  $stdout.sync = true
+  # Log the stdout output to the Epimorphics JSON logging gem
+  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # API location can be specified in the environment
   # But defaults to the dev service
   config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')
 
-  # feature flag for showing the Welsh language switch affordance
-  config.welsh_language_enabled = true
-
+  # Use default paths for documentation.
   config.accessibility_document_path = '/doc/accessibility'
   config.privacy_document_path = '/doc/privacy'
 
+  # feature flag for showing the Welsh language switch affordance
+  config.welsh_language_enabled = true
+
+  # Set the contact email address to Land Registry supplied address
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
