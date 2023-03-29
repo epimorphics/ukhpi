@@ -1,31 +1,26 @@
 #!/bin/bash
 set -e
 
-# Remove a potentially pre-existing server.pid for Rails.
+# Remove any pre-existing server.pid for Rails.
 rm -f ./tmp/pids/server.pid
 mkdir -pm 1777 ./tmp
 
 # Set the environment
-if [ -z "$RAILS_ENV" ]
-then
-  export RAILS_ENV=production
-fi
+[ -z "$RAILS_ENV" ] && RAILS_ENV=production
 
 if [ -z "API_SERVICE_URL" ]
 then
-  echo "{'ts': '`date -u +%FT%T.%3NZ`', 'message': {'text: 'You have not specified an API_SERVICE_URL', 'level': 'ERROR'}}" >&2
+  echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"ERROR\",\"message\":\"API_SERVICE_URL not set\"}" >&2
   exit 1
+else
+  echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"API_SERVICE_URL=${API_SERVICE_URL}\"}"
 fi
 
 # Handle secrets based on env
-if [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ]
-then
-  export SECRET_KEY_BASE=`./bin/rails secret`
-fi
+[ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ] && export SECRET_KEY_BASE=$(./bin/rails secret)
 
-export RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT:-'/app/ukhpi'}
-export SCRIPT_NAME=${RAILS_RELATIVE_URL_ROOT}
+[ -n "${RAILS_RELATIVE_URL_ROOT}" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}\"}"
 
-echo "{'ts': '`date -u +%FT%T.%3NZ`', 'message': {'text: 'Starting UK HPI. API_SERVICE_URL=${API_SERVICE_URL} RAILS_ENV=${RAILS_ENV} RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}', 'level': 'INFO'}}"
+echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0\"}"
 
 exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0

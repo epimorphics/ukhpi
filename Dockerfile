@@ -37,8 +37,7 @@ COPY public public
 
 # Compile
 
-#RUN yarn install \
-RUN RAILS_RELATIVE_URL_ROOT=/app/ukhpi RAILS_ENV=production bundle exec rake assets:precompile \
+RUN RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
 # Start a new stage to minimise the final image size
@@ -62,7 +61,7 @@ EXPOSE 3000
 WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app     .
+COPY --from=builder --chown=app /usr/src/app .
 
 USER app
 

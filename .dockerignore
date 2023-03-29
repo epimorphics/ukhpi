@@ -6,7 +6,7 @@
 .vscode
 CHANGELOG.md
 README.md
-deployment.yaml
 log/
 node_modules
 npm-debug.log
+public/assets/
