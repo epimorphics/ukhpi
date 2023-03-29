@@ -48,8 +48,8 @@ module Rails
     class ServerCommand
       def print_boot_information(server, url)
         msg = {
+          ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
           level: 'INFO',
-          ts: DateTime.now.rfc3339(3),
           message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
         }
         say msg.to_json

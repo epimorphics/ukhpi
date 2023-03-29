@@ -11,6 +11,119 @@ Code in this repository is open-source under the MIT license. The UKHPI data
 itself is freely available under the terms of the
 [Open Government License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 
+## Running this service
+
+### Production mode
+
+When deployed applications will run behind a reverse proxy.
+
+This enables request to be routed to the appropriate application base on the request path.
+In order to simplifiy the proxy configuration we retain the original path where possible.
+
+Thus applications running in `production` mode will do so from a sub-directory i.e `/app/ukhpi`.
+
+It is expected that any rails application running in `production` mode will set
+the `config.relative_url_root` property to this sub-directory within the file
+`config/environments/production.rb`.
+
+If need be, `config.relative_url_root` may by overridden by means of the
+`RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
+require rebuilding the assets or docker image.
+
+If running more than one application locally ensure that each is listerning on a
+separate port. In the case of running local docker images, the required
+configuration is captured in the `Makefile` and an image can be run by using
+
+```sh
+make image run
+```
+
+or, if the image is already built, simply
+
+```sh
+make run
+```
+
+For rails applications you can start the server locally using the following command:
+
+```sh
+rails server -e production -p <port> -b 0.0.0.0
+```
+
+To test the running application visit `localhost:<port>/{application path}`.
+
+For information on how to running a proxy to mimic production and run multple services
+together see [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
+
+## Runtime Configuration environment variables
+
+We use a number of environment variables to determine the runtime behaviour
+of the application:
+
+| name                       | description                                                             | default value              |
+| -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
+| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
+|                            | http://localhost:8888 if running a `data-api service` locally           |                            |
+|                            | http://data-api:8080  if running a `data-api docker` image locally      |                            |
+| `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
+
+
+### Running the Data API during locally
+
+The application connects to the triple store via a `data-api` service.
+
+The easiest way to do this is as a local docker container. The image can be built from [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
+or pulled from Amazon Elastic Container Registry [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+#### Building and running from [lr-data-api repository](https://github.com/epimorphics/lr-data-api)
+
+To build and a run a new docker image check out the [lr-data-api repository](https://github.com/epimorphics/lr-data-api) and run
+```sh
+make image run
+```
+
+#### Running an existing [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1) image
+
+Obtaining an ECR image requires:
+
+- AWS IAM credentials to connect to the HMLR AWS account
+- the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
+- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
+
+Once you have a local copy of you required image, it is advisable to run a local docker bridge network to mirror 
+production and development environments.
+
+Running a client application as a docker image from their respective `Makefile`s will set this up 
+automatically, but to confirn run
+
+```sh
+docker network inspect dnet
+```
+
+To create the docker network run
+```sh
+docker network create dnet
+```
+
+To run the Data API as a docker container:
+
+```sh
+docker run --network dnet -p 8888:8080 --rm --name data-api \
+    -e SERVER_DATASOURCE_ENDPOINT=https://landregistry.data.gov.uk/landregistry/query \
+    018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+```
+the latest image can be found here [dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml) 
+and [production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
+
+The full list of versions can be found at [AWS
+ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+Note: port 8080 should be avoided to allow for a reverse proxy to run on this port.
+
+With this set up, the api service is available on `http://localhost:8888` from the host or `http://data-api:8080`
+from inside other docker containers.
+
+
 ## Developer notes
 
 ### Installation dependencies
@@ -30,62 +143,6 @@ cd ukhpi
 bundle install
 yarn install
 ```
-
-### Local data service
-
-The application communicates with the back-end data API (which uses SapiNT) to
-provide the data to be displayed. The actual API is specified by the
-environment variable `API_SERVICE_URL`.
-
-When developing UKHPI, it is necessary to have a dev instance of the API
-available. Since, for operations reasons, the actual service URL is not exposed
-to the open Internet, you will need to run a local instance of the service.
-This follows the same pattern as [the PPD
-app](https://github.com/epimorphics/ppd-explorer), as follows:
-
-Developers can run the Docker container that defines the SapiNT API
-directly from the AWS Docker registry. To do this, you will need:
-
-- AWS IAM credentials to connect to the HMLR AWS account (see Dave or Andy)
-- the ECR credentials helper installed locally (see [here](https://github.com/awslabs/amazon-ecr-credential-helper))
-- this line: `"credsStore": "ecr-login"` in `~/.docker/config.json`
-
-With this set up, you should be able to run the container, mapped to
-`localhost:8080` using:
-
-```sh
-$ AWS_PROFILE=hmlr \
-docker run \
--e SERVER_DATASOURCE_ENDPOINT=http://hmlr-dev-pres.epimorphics.net/landregistry/query \
--p 8080:8080 \
-018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
-```
-
-Which should produce something like:
-
-```text
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.2.0.RELEASE)
-
-{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
-"thread_name":"main","level":"INFO","level_value":20000,
-"message":"No active profile set, falling back to default profiles: default"}
-```
-
-Note that the identity of the Docker image will change periodically. The
-currently deployed dev api image version is given by the `api` tag in the ansible
-[dev configuration](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml).
-
-If you need to run a different API version then the easiest route to
-discovering the most recent is to use the [AWS
-ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
-console or look at the hash to the relevant commit in
-[lr-data-api](https://github.com/epimorphics/lr-data-api).
 
 ### Coding standards
 
@@ -202,41 +259,6 @@ variable:
 SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
 ```
 
-## Deployment
-
-The deployment process has been rewritten around a new set of standard
-components, following local best practice. Specifically:
-
-- a set of standardised GitHub actions, using shared workflow definitions, are
-  used to orchestrate building and pushing Docker images under certain
-  conditions (see below)
-- Ansible is used to manage the orchestration of servers and services
-- a `Makefile` is the key interface between the deployment automation and the
-  application code, especially `make image` and `make tag`.
-
-The determination of which Docker images go to which environments is managed by
-the `deployment.yml` file. At the time of writing:
-
-- tags matching `vNNN`, e.g. `v1.2.3`<br />
-  Images built from this tag will be deployed to production environments
-- branch `dev-infrastructure`<br />
-  Images built from this branc will be deployed to the `dev` environment
-
-### entrypoint.sh
-
-This script is used as the main entry point for starting the app from the `Dockerfile`.
-
-The Rails Framework requires certain values to be set as a Global environment variable
-when starting. To ensure the `RAILS_RELATIVE_URL_ROOT` is only set in one place per
-application we have added this to the `entrypoint.sh` file along with the `SCRIPT_NAME`.
-The Rails secret is also created here.
-
-There is a workaround to removing the PID lock of the Rails process in the event of
-the application crashing and not releasing the process.
-
-We have to pass the `API_SERVICE_URL` so that it is available in the `entrypoint.sh`
-or the application will throw an error and exit before starting
-
 ### Prometheus monitoring
 
 [Prometheus](https://prometheus.io) is set up to provide metrics on the
@@ -337,14 +359,3 @@ was fairly typical, so I'm documenting it here for future reference:
   be changed to reference the new GeoJSON file, i.e.
   `app/javascript/data/ONS-Geographies-$YEAR.json`.
 - Finally, the application is published on `dev` for the Plymouth team to test.
-
-## Configuration environment variables
-
-We use a number of environment variables to determine the runtime behaviour
-of the application:
-
-| name                       | description                                                          | typical value           |
-| -------------------------- | -------------------------------------------------------------------- | ----------------------- |
-| `RAILS_RELATIVE_URL_ROOT`  | The path from the server root to the application                     | `/app/ukhpi`            |
-| `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme  | `http://localhost:8080` |
-| `SENTRY_API_KEY`           | The DSN for reporting errors and other events to Sentry              |                         |
