@@ -63,8 +63,8 @@ of the application:
 | name                       | description                                                             | default value              |
 | -------------------------- | ----------------------------------------------------------------------- | -------------------------- |
 | `API_SERVICE_URL`          | The base URL from which data is accessed, including the HTTP scheme eg. | None                       |
-|                            | http://localhost:8888 if running a `data-api service` locally           |                            |
-|                            | http://data-api:8080  if running a `data-api docker` image locally      |                            |
+|                            | http://localhost:8888 if running a `data-api` service locally           |                            |
+|                            | http://data-api:8080  if running a `data-api` docker image locally      |                            |
 | `SENTRY_API_KEY`           | The DSN for sending reports to the PPD Sentry account                   | None                       |
 
 
