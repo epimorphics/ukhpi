@@ -12,10 +12,6 @@ use Prometheus::Middleware::Exporter
 
 require ::File.expand_path('config/environment', __dir__)
 
-if ENV['RAILS_ENV'] != 'production'
-    run Rails.application
-else
-  map Rails.application.config.relative_url_root || '/' do
-    run Rails.application
-  end
+map Rails.application.config.relative_url_root || '/' do
+  run Rails.application
 end

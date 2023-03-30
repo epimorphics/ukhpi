@@ -26,7 +26,7 @@ IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
-BUNDLE_CFG=${HOME}/.bundle/config
+BUNDLE_CFG=.bundle/config
 
 all: image
 
@@ -75,11 +75,17 @@ publish: image
 realclean: clean
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
-run:
+run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
+	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
+
+server: assets start
+	@export SECRET_KEY_BASE=$(./bin/rails secret)
+	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
+
+start:
 	@docker stop ${SHORTNAME} > /dev/null 2>&1 || :
 	@echo "Starting ${SHORTNAME} ..."
-	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
 
 tag:
 	@echo ${TAG}
