@@ -54,5 +54,7 @@ Rails.application.configure do
   config.accessibility_document_path = '/doc/accessibility'
   config.privacy_document_path = '/doc/privacy'
 
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
+
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
