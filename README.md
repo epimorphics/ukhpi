@@ -58,10 +58,10 @@ rails server -e <environment> -p <port>
 
 N.B. The default for `environment` is `development` if omitted.
 
-#### Running Rails as a server with a sub-directory
+#### Running Rails as a server within a sub-directory
 
 ```sh
-API_SERVICE_URL=<data-api url> RAILS_ENV=<mode> RAILS_RELATIVE_URL_ROOT=<path> make server
+API_SERVICE_URL=<data-api url> RAILS_ENV=<mode> RAILS_RELATIVE_URL_ROOT=<path> rails server -e <environment> -p <port>
 ```
 
 The default for `RAILS_ENV` here is `development` if omitted.
@@ -106,31 +106,38 @@ application:
 |                            | This is handled automatically when starting a docker container, or the `server` `make` target | |
 | `SENTRY_API_KEY`           | The Data Source Name (DSN) for sending reports to the Sentry account                   | None                       |
 
-### Running the Data API during locally
+## Developer notes
 
-The application connects to the triple store via a `data-api` service.
+### Installing dependencies
 
-The easiest way to do this is as a local docker container. The image can be
-built from [lr-data-api repository](https://github.com/epimorphics/lr-data-api).
-or pulled from Amazon Elastic Container Registry
-[ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+The app currently depends on Ruby version 2.6.x. The actual version is specified
+in the `.ruby-version` file, which can be used with
+[rbenv](https://github.com/rbenv/rbenv) to install the appropriate version
+locally. The `.ruby-version` file will also determine the version of Ruby that
+will be installed in the Docker image as part of the automated build and deploy
+process.
 
-#### Building and running from [lr-data-api repository](https://github.com/epimorphics/lr-data-api)
-
-To build and a run a new docker image check out the [lr-data-api
-repository](https://github.com/epimorphics/lr-data-api) and run
+To install on dev machine:
 
 ```sh
-make image run
+git clone git@github.com:epimorphics/ukhpi.git
+cd ukhpi
+bundle install
+yarn install
 ```
 
-#### Running an existing image from
+### Coding standards
 
-See [here](https://github.com/epimorphics/lr-data-api#Running-an-existing-image)
-on how to run an existing image from
-[ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+`rubocop` should always return a clean status with no warnings.
 
-## Developer notes
+### Tests
+
+Once the API is started you can invoke the tests with the simple command
+below[^2]:
+
+```sh
+rake test
+```
 
 ### Running the Data API locally
 
@@ -197,38 +204,7 @@ port.
 With this set up, the api service is available on `http://localhost:8888` from
 the host or `http://data-api:8080` from inside other docker containers.
 
-## Developer notes
-
-### Installing dependencies
-
-The app currently depends on Ruby version 2.6.x. The actual version is specified
-in the `.ruby-version` file, which can be used with
-[rbenv](https://github.com/rbenv/rbenv) to install the appropriate version
-locally. The `.ruby-version` file will also determine the version of Ruby that
-will be installed in the Docker image as part of the automated build and deploy
-process.
-
-To install on dev machine:
-
-```sh
-git clone git@github.com:epimorphics/ukhpi.git
-cd ukhpi
-bundle install
-yarn install
-```
-
-### Coding standards
-
-`rubocop` should always return a clean status with no warnings.
-
-### Tests
-
-Once the API is started you can invoke the tests with the simple command
-below[^2]:
-
-```sh
-rake test
-```
+## Additional Information
 
 ### Outline domain model
 
@@ -295,44 +271,6 @@ We represent these as follows:
 |  | % annual change | Existing properties |
 |  | sales volume | Existing properties
 
-### Rails script tasks
-
-Some development tasks are handled by automated Rails task scripts. All tasks
-code is in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`.
-The mostly commonly useful ones are:
-
-- _`test`_\
-  Run the test suite
-
-- _`ukhpi:aspects`_\
-  Generate a JavaScript description of the DSD aspects, as described by the
-  `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
-
-- _boundaries tasks_\
-  A number of tasks releated to generating simplified GeoJSON files from the
-  Shapefiles downloaded from ONS. These tasks will need to be re-run when the
-  boundaries change, e.g. when local authorities are merged or split to form new
-  unitary authorities. See below for more details.
-
-- _`ukhpi:describe[uri]`_\
-  A convenient way to perform a SPARQL describe for the given URI
-
-- _`ukhpi:locations`_\
-  This task uses a SPARQL query to list all of the geographical regions in the
-  UKHPI data, and their containment hierarchy, and generate cached versions of
-  that data as code. In particular, it regenerates
-  `app/javascript/data/locations-data.js` and   `app/models/locations_table.rb`.
-  This task should be re-run if and when the regions data from LR is changed in
-  the triple store.
-
-Note that, by default, SPARQL queries will be run against the dev triple store.
-To direct the query against a different SPARQL endpoint, change the `SERVER`
-environment variable:
-
-```sh
-SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
-```
-
 ### Prometheus monitoring
 
 [Prometheus](https://prometheus.io) is set up to provide metrics on the
@@ -389,9 +327,47 @@ Using this approach, and assuming you install your local copy of Prometheus into
 
 Something roughly equivalent should be possible on Windows and Mac as well.
 
-## Other tasks
+### Rails script tasks
 
-### Updating geographies
+Some development tasks are handled by automated Rails task scripts. All tasks
+code is in `./lib/tasks/*.rake`. You can list all of the tasks with `rails -T`.
+The mostly commonly useful ones are:
+
+- _`test`_\
+  Run the test suite
+
+- _`ukhpi:aspects`_\
+  Generate a JavaScript description of the DSD aspects, as described by the
+  `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
+
+- _boundaries tasks_\
+  A number of tasks releated to generating simplified GeoJSON files from the
+  Shapefiles downloaded from ONS. These tasks will need to be re-run when the
+  boundaries change, e.g. when local authorities are merged or split to form new
+  unitary authorities. See below for more details.
+
+- _`ukhpi:describe[uri]`_\
+  A convenient way to perform a SPARQL describe for the given URI
+
+- _`ukhpi:locations`_\
+  This task uses a SPARQL query to list all of the geographical regions in the
+  UKHPI data, and their containment hierarchy, and generate cached versions of
+  that data as code. In particular, it regenerates
+  `app/javascript/data/locations-data.js` and   `app/models/locations_table.rb`.
+  This task should be re-run if and when the regions data from LR is changed in
+  the triple store.
+
+Note that, by default, SPARQL queries will be run against the dev triple store.
+To direct the query against a different SPARQL endpoint, change the `SERVER`
+environment variable:
+
+```sh
+SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
+```
+
+### Other tasks
+
+#### Updating geographies
 
 Many years, the boundaries of UK local authorities change. Sometimes mutliple
 adjacent authorities merge to for a new unitary authority, or sometimes a
