@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-# Remove a potentially pre-existing server.pid for Rails.
+# Remove any pre-existing server.pid for Rails.
 rm -f ./tmp/pids/server.pid
 mkdir -pm 1777 ./tmp
 
@@ -9,30 +9,24 @@ mkdir -pm 1777 ./tmp
 PUBLIC_NAME="UK Housing Price Index"
 
 # Set the environment
-if [ -z "$RAILS_ENV" ]
-then
-  export RAILS_ENV=production
-fi
+[ -z "$RAILS_ENV" ] && RAILS_ENV=production
 
 
 echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"INFO\", \"message\": \"Initiating ${PUBLIC_NAME} application using APPLICATION_ROOT=${APPLICATION_ROOT}, API_SERVICE_URL=${API_SERVICE_URL}}"
 
 if [ -z "$API_SERVICE_URL" ]
 then
-  echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"ERROR\", \"message\": \"You have not specified the env var API_SERVICE_URL\"}" >&2
+  echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"ERROR\",\"message\":\"API_SERVICE_URL not set\"}" >&2
   exit 1
+else
+  echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"API_SERVICE_URL=${API_SERVICE_URL}\"}"
 fi
 
 # Handle secrets based on env
-if [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ]
-then
-  SECRET_KEY_BASE=$(./bin/rails secret)
-  export SECRET_KEY_BASE
-fi
+[ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ] && export SECRET_KEY_BASE=$(./bin/rails secret)
 
-export RAILS_RELATIVE_URL_ROOT=${APPLICATION_ROOT:-'/app/ukhpi'}
-export SCRIPT_NAME=${RAILS_RELATIVE_URL_ROOT}
+[ -n "${RAILS_RELATIVE_URL_ROOT}" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}\"}"
 
-echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"INFO\", \"message\": \"Starting ${PUBLIC_NAME} application with RAILS_ENV=\"${RAILS_ENV}\", \"RAILS_RELATIVE_URL_ROOT\"=\"${RAILS_RELATIVE_URL_ROOT}\", \"SCRIPT_NAME\"=\"${SCRIPT_NAME}\"}"
+echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0\"}"
 
 exec ./bin/rails server -e "${RAILS_ENV}" -b 0.0.0.0
