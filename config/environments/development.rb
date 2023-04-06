@@ -46,18 +46,13 @@ Rails.application.configure do
   # Log the stdout output to the Epimorphics JSON logging gem
   config.logger = JsonRailsLogger::Logger.new($stdout)
 
-  # The RAILS_RELATIVE_URL_ROOT should be specified in the entrypoint.sh script
-  # but this passes in a standard root value in development if the app is run
-  # directly via `rails server`
+  # By default Rails expects that your application is running at the root directory (e.g. /).
+  # Rails needs to know this directory to generate the appropriate routes.
+  # Alternatively you can set the RAILS_RELATIVE_URL_ROOT environment variable.
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/')
 
-  # API_SERVICE_URL should also be specified in the entrypoint.sh file and
-  # set in the Makefile as an env variable for the docker container when run as an image.
-  # API_SERVICE_URL is required by both Docker image and Rails
-  
-  # API location can be specified in the environment
-  # But defaults to the dev service
-  config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')
+  # API location can be specified in the environment but defaults to the dev service
+  config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8888')
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true

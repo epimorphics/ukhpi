@@ -33,6 +33,9 @@ Rails.application.configure do
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
 
+  # Disable logging of the rendering of partials
+  config.action_view.logger = nil
+
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
   config.assets.digest = true
@@ -81,15 +84,13 @@ Rails.application.configure do
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # The RAILS_RELATIVE_URL_ROOT env var should NOT be used in Production
-  # The default value is passed in as the compiled assets have no knowledge of
-  # the base path and utilise the config.relative_url_root value to prefix the
+  # The RAILS_RELATIVE_URL_ROOT env var should ONLY be used in a local environment.
+  # Here, the default value is passed in as the compiled assets have no knowledge
+  # of the base path and utilise the config.relative_url_root value to prefix the
   # compiled asset paths
-  config.relative_url_root = '/app/ukhpi'
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ukhpi')
 
-  # API_SERVICE_URL should also be specified in the entrypoint.sh file and
-  # set in the Makefile as an env variable for the docker container when run as an image.
-  # API_SERVICE_URL is required by both Docker image and Rails
+  # API location is specified in the environment but defaults to the dev service
   config.api_service_url = ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance

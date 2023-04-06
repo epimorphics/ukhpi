@@ -4,14 +4,18 @@
 
 require_relative 'config/environment'
 
+require ::File.expand_path('config/environment', __dir__)
+
 require 'prometheus/middleware/collector'
 require 'prometheus/middleware/exporter'
 
 use Prometheus::Middleware::Collector
 use Prometheus::Middleware::Exporter
 
-require ::File.expand_path('config/environment', __dir__)
-
-map Rails.application.config.relative_url_root || '/' do
+if ENV['RAILS_ENV'] == 'production'
+  map Rails.application.config.relative_url_root || '/' do
+    run Rails.application
+  end
+else
   run Rails.application
 end
