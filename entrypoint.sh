@@ -5,15 +5,7 @@ set -e
 rm -f ./tmp/pids/server.pid
 mkdir -pm 1777 ./tmp
 
-# This is set to the name of the application for logging purposes
-PUBLIC_NAME="UK Housing Price Index"
-
-# Set the environment
-[ -z "$RAILS_ENV" ] && RAILS_ENV=production
-
-
-echo "{\"ts\": $(date -u +%FT%T.%3NZ), \"level\": \"INFO\", \"message\": \"Initiating ${PUBLIC_NAME} application using APPLICATION_ROOT=${APPLICATION_ROOT}, API_SERVICE_URL=${API_SERVICE_URL}}"
-
+# Check for API Service URL env var
 if [ -z "$API_SERVICE_URL" ]
 then
   echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"ERROR\",\"message\":\"API_SERVICE_URL not set\"}" >&2
@@ -23,7 +15,7 @@ else
 fi
 
 # Handle secrets based on env
-[ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ] && export SECRET_KEY_BASE=$(./bin/rails secret)
+[ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ] && SECRET_KEY_BASE=$(./bin/rails secret) && export SECRET_KEY_BASE
 
 [ -n "${RAILS_RELATIVE_URL_ROOT}" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}\"}"
 
