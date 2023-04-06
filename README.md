@@ -170,7 +170,7 @@ Once you have a local copy of you required image, it is advisable to run a local
 docker bridge network to mirror production and development environments.
 
 Running a client application as a docker image from their respective `Makefile`s
-will set this up automatically, but to confirn run
+will set this up automatically, but to confirm this run
 
 ```sh
 docker network inspect dnet
@@ -190,7 +190,7 @@ docker run --network dnet -p 8888:8080 --rm --name data-api \
     018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
 ```
 
-the latest image can be found here
+the latest images can be found here for
 [dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml)
 and
 [production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
@@ -198,11 +198,16 @@ and
 The full list of versions can be found at [AWS
 ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
 
-Note: port 8080 should be avoided to allow for a reverse proxy to run on this
+N.B.: Port 8080 should be avoided to allow for a reverse proxy to run on this
 port.
 
 With this set up, the api service is available on `http://localhost:8888` from
 the host or `http://data-api:8080` from inside other docker containers.
+
+## Issues
+
+Please add issues to the [shared issues
+list](https://github.com/epimorphics/hmlr-linked-data/issues)
 
 ## Additional Information
 
@@ -340,16 +345,16 @@ The mostly commonly useful ones are:
   Generate a JavaScript description of the DSD aspects, as described by the
   `DataModel` class, which directly translates from the `UKHPI-dsd.ttl` file
 
-- _boundaries tasks_\
+- **boundaries tasks**\
   A number of tasks releated to generating simplified GeoJSON files from the
   Shapefiles downloaded from ONS. These tasks will need to be re-run when the
   boundaries change, e.g. when local authorities are merged or split to form new
   unitary authorities. See below for more details.
 
-- _`ukhpi:describe[uri]`_\
+  - _`ukhpi:describe[uri]`_\
   A convenient way to perform a SPARQL describe for the given URI
 
-- _`ukhpi:locations`_\
+  - _`ukhpi:locations`_\
   This task uses a SPARQL query to list all of the geographical regions in the
   UKHPI data, and their containment hierarchy, and generate cached versions of
   that data as code. In particular, it regenerates
@@ -369,41 +374,52 @@ SERVER="https://lr-dev.epimorphics.net/landregistry/query" rails ukhpi:locations
 
 #### Updating geographies
 
-Many years, the boundaries of UK local authorities change. Sometimes mutliple
-adjacent authorities merge to for a new unitary authority, or sometimes a
-unitary authority is split off from an existing LA (e.g. City of Plymouth). In
-this case, we need to update two data sources with the application, and
-coordinate this change with HMLR (and, by extension, ONS)
+Over many years, the boundaries of UK local authorities (LA) change. Sometimes
+multiple adjacent authorities merge to for a new unitary authority, or sometimes
+a unitary authority is split off from an existing LA (e.g. City of Plymouth).
+
+In this case, we need to update two data sources with the application, and
+coordinate this change with HMLR (and, by extension, ONS).
 
 In 2020, we updated the app due to various changes in LA boundaries, including
 the creation of the Bournemouth, Christchurch and Poole UA. The timeline of
-these changes was fairly typical, so I'm documenting it here for future
+these changes was fairly typical, so we've documented it here for future
 reference:
 
-- April 2019: new boundaries go into effect
-- Feb 2020: ONS perform their (single) yearly update of location tables
+- April 2019: new boundaries go into effect.
+- Feb 2020: ONS perform their (single) yearly update of location tables.
 - March 2020: HMLR provided Epimorphics with a collection of test data,
-  including the new regions table, as Turtle (`.ttl`) files
+  including the new regions table, as Turtle (`.ttl`) files.
 - March 2020: we loaded the test data into a dev server, in order to re-run the
-  `rails ukhpi:locations` task. This updates the cached Ruby and Javascript
-  locations tables, to save the application having to query the API every time a
-  location is referred to
+  [`rails ukhpi:locations` task](#rails-script-tasks). This updates the cached
+  Ruby and Javascript locations tables, to save the application having to query
+  the API every time a location is referred to.
 - In order to update the map UI in UKHPI, we need to regenerate the
   `ONS-Geographies` GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has
-  an FME script on his system that automates this. The basic process is: find
-  and download the relevant shapefile from the ONS geographies portal, then run
-  the script to convert the shapefile GeoJSON, simplifying the outlines along
-  the way. We need to simplify the outlines, because otherwise the generated
-  GeoJSON file is enormous. Doing the simplification in FME means that there are
-  no gaps between adjacent authorities as the outlines are compressed. Once the
-  initial GeoJSON file is produced, there is a simple shellscript to regularise
-  the property names in the GeoJSON. See `bin/ons-geojson-cleanup`. The core
-  issue is that the application code expects the GSS code for a location to be
-  `code` and the location name to be `name`. In the ONS shapefile, the GSS code
-  can be, for example, `rgn18cd` and the name `rgn18nm`. Rather than have the
-  code adapt to these (I'm assuming they may change each year), it was easier to
-  have a data-cleansing task. It could have been a rake task, but there are some
-  Linux command utilities that do the job very easily. The code will need to be
-  changed to reference the new GeoJSON file, i.e.
+  a Feature Migration Engine (FME) script on his system that automates this.
+
+  We need to simplify the outlines, because otherwise the generated GeoJSON file
+  is enormous. Doing the simplification in FME means that there are no gaps
+  between adjacent authorities as the outlines are compressed. The basic process
+  is:
+
+    1. Find and download the relevant shapefile from the ONS geographies portal.
+    2. Run the FME script to convert the shapefile GeoJSON, simplifying the
+    outlines along the way.
+    3. Once the initial GeoJSON file is produced, there is a simple shellscript
+  to regularise the property names in the GeoJSON, see
+  `bin/ons-geojson-cleanup`.
+
+  The core issue is that the application code expects the GSS code for a
+  location to be `code` and the location name to be `name`. In the ONS
+  shapefile, the GSS code can be, for example, `rgn18cd` and the name `rgn18nm`.
+
+  Rather than have the code adapt to these, assuming they may change each year,
+  it was easier to have a data-cleansing task. It could have been a rake task,
+  but there are some Linux command utilities that do the job very easily. The
+  code will need to be changed to reference the new GeoJSON file, i.e.
   `app/javascript/data/ONS-Geographies-$YEAR.json`.
-- Finally, the application is published on `dev` for the Plymouth team to test.
+
+- Finally, the application is published on
+  <https://hmlr-dev-pres.epimorphics.net/app/ukhpi/> for the Plymouth team to
+  test.
