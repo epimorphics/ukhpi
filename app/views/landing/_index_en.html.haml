@@ -123,7 +123,8 @@
 
   %p
     For details on changes to the service or changes to the data see
-    = link_to('the changelog,', changelog_index_path)
+    = succeed "," do
+      = link_to('the changelog', changelog_index_path)
     changes may include Government administration and local government geography changes.
 
   %p
