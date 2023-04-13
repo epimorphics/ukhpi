@@ -6,14 +6,15 @@ FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
 ARG BUNDLER_VERSION
 
 RUN apk add --update \
-    tzdata \
+    bash \
+    coreutils \
     git \
     nodejs \
-    npm \
+    tzdata \
+    yarn \
     && rm -rf /var/cache/apk/* \
     && gem install bundler:$BUNDLER_VERSION \
-    && bundle config --global frozen 1 \
-    && npm install -g yarn
+    && bundle config --global frozen 1
 
 FROM base as builder
 
@@ -21,14 +22,12 @@ RUN apk add --update build-base
 
 WORKDIR /usr/src/app
 
-COPY config.ru Gemfile Gemfile.lock Rakefile package.json babel.config.js postcss.config.js yarn.lock ./
-COPY bin bin
+COPY config.ru Gemfile Gemfile.lock Rakefile ./
+COPY package.json babel.config.js postcss.config.js yarn.lock ./
 COPY .bundle/config /root/.bundle/config
+COPY bin bin
 
-RUN ./bin/bundle config set --local without 'development test' && \
-    ./bin/bundle install && \
-    yarn install && \
-    mkdir log
+RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install && mkdir log
 
 COPY app app
 COPY config config
@@ -36,8 +35,7 @@ COPY lib lib
 COPY public public
 
 # Compile
-
-RUN RAILS_ENV=production bundle exec rake assets:precompile \
+RUN yarn install --production && RAILS_ENV=production bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
 # Start a new stage to minimise the final image size
@@ -58,9 +56,7 @@ LABEL com.epimorphics.name=$image_name \
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
-# Install gems and yarn dependencies
-RUN bundle install
-RUN yarn install
+WORKDIR /usr/src/app
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
 COPY --from=builder --chown=app /usr/src/app .
