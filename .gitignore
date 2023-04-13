@@ -8,6 +8,7 @@
 .vscode
 
 # Ignore bundler config.
+!/log/.keep
 .byebug_history
 .yarn-integrity
 .tags
@@ -34,7 +35,5 @@ yarn-debug.log*
 yarn-error.log
 
 .tool-versions
-
 .github-token
-
 .npmrc
