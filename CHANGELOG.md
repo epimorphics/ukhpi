@@ -7,9 +7,25 @@
   monitoring, and updated version of Sentry.
 - (Ian) Updated the README as part of handover.
 
-## 1.5.19 - 2021-12-09
+## 1.5.20 - 2023-04-12
+
+- (Jon) Updated English Changelog for April 2023 Release
+- (Jon) Updated English Changelog for Oct 2021 Release
+- (Jon) Update Element-UI to latest 2.15.13 version
+- (Jon) Updated .gitignore to handle dev files
+- (Jon) updated to lock node to v14.21.3
+- (Jon) Updated Land Boundaries to respective files
+- (Jon) Update to include IE11 coverage for webpack
+
+## 1.5.19.1 - 2021-12-09
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
+
+## 1.5.19 - 2021-06-28
+
+- (Joseph) Add link to privacy notice to footer
+- (Joseph) Update gem dependencies
+- (Joseph) Update yarn package dependencies
 
 ## 1.5.18 - 2021-06-24
 

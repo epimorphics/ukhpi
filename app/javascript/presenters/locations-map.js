@@ -5,7 +5,7 @@ import cloneLayer from 'leaflet-clonelayer'
 import '../lib/leaflet-rrose'
 
 import { findLocationNamed, findLocationById } from '../lib/locations'
-import ukFeaturesData from '../data/ONS-Geographies-2020.json'
+import ukFeaturesData from '../data/ONS-Geographies-2023.json'
 
 const ENGLAND = 'http://landregistry.data.gov.uk/id/region/england'
 
@@ -28,20 +28,20 @@ const REGION_TYPES = [
 /** Cases where selecting one thing highlights several things */
 const LOCATION_EXPANSIONS = {
   'http://landregistry.data.gov.uk/id/region/great-britain':
-      ['http://landregistry.data.gov.uk/id/region/england',
-        'http://landregistry.data.gov.uk/id/region/scotland',
-        'http://landregistry.data.gov.uk/id/region/wales'
-      ],
+    ['http://landregistry.data.gov.uk/id/region/england',
+      'http://landregistry.data.gov.uk/id/region/scotland',
+      'http://landregistry.data.gov.uk/id/region/wales'
+    ],
   'http://landregistry.data.gov.uk/id/region/united-kingdom':
-      ['http://landregistry.data.gov.uk/id/region/england',
-        'http://landregistry.data.gov.uk/id/region/scotland',
-        'http://landregistry.data.gov.uk/id/region/wales',
-        'http://landregistry.data.gov.uk/id/region/northern-ireland'
-      ],
+    ['http://landregistry.data.gov.uk/id/region/england',
+      'http://landregistry.data.gov.uk/id/region/scotland',
+      'http://landregistry.data.gov.uk/id/region/wales',
+      'http://landregistry.data.gov.uk/id/region/northern-ireland'
+    ],
   'http://landregistry.data.gov.uk/id/region/england-and-wales':
-      ['http://landregistry.data.gov.uk/id/region/england',
-        'http://landregistry.data.gov.uk/id/region/wales'
-      ]
+    ['http://landregistry.data.gov.uk/id/region/england',
+      'http://landregistry.data.gov.uk/id/region/wales'
+    ]
 }
 
 /** A list of reqions that are typed as metropolitan districts but which should not appear
@@ -261,7 +261,7 @@ export default class LocationsMap {
       }
 
       if (_.includes(LOCAL_AUTHORITY_TYPES, location.type) &&
-      !_.includes(LA_MAP_ERRATA, location.uri)) {
+        !_.includes(LA_MAP_ERRATA, location.uri)) {
         partitionKeys.push('la')
       }
     }

@@ -119,20 +119,13 @@
     If you want to see, and run, the SPARQL query that is used to generate the report
     created in the search tool, use the <code>show SPARQL query</code> button.
 
-  %h2.heading-medium Changes to local authority geography November 2020
-  %p
-    Due to Government changes to the local authority, a local authority geography
-    change was made in the November 2020 release (release date 20 January 2021).
-    The change is in line with the updates given by ONS Geography. This includes:
-
-  %ul.list.list-bullet
-    %li
-      Aylesbury Vale (E07000004), Chiltern (E07000005), South Bucks (E07000006) and
-      Wycombe (E07000007) will merge to create a new local authority “Buckinghamshire” (E06000060).
+  %h2.heading-medium Service and data changes
 
   %p
-    Full details of the affected geographies can be found in
-    = link_to('the changelog', changelog_index_path)
+    For details on changes to the service or changes to the data see
+    = succeed "," do
+      = link_to('the changelog', changelog_index_path)
+    changes may include Government administration and local government geography changes.
 
   %p
     Links to other sources of open data are provided under the Open Government Licence

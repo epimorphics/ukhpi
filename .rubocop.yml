@@ -97,6 +97,8 @@ Rails/ActiveRecordCallbacksOrder:
   Enabled: true
 Rails/FindById:
   Enabled: true
+Rails/I18nLocaleAssignment:
+  Enabled: false
 Rails/Inquiry:
   Enabled: true
 Rails/MailerName:
