@@ -2,9 +2,10 @@
 
 ## 1.5.20 - 2023-04-17
 
-- (Jon) Updated English & Welsh translations of the Changelog for latest releases
+- (Jon) Updated English & Welsh translations of the Changelog for current releases
 - (Jon) Updated English & Welsh translations of the Landing page
-- (Jon) Updated version.rb to include `SUFFIX` parameter for release cadence
+- (Jon) Updated `version.rb` to include `SUFFIX` parameter for improved release cadence
+- (Jon) Updated `package.json` to include current release cadence
 - (Jon) Updated Changelog for April 2023 Release
 - (Jon) Updated Changelog for Oct 2021 Release
 - (Jon) Update Element-UI to latest 2.15.13 version
