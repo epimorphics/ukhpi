@@ -123,8 +123,11 @@
 
   %p
     For details on changes to the service or changes to the data see
-    = link_to('the changelog,', changelog_index_path)
-    changes may include Government administration and local government geography changes.
+    = succeed "." do
+      = link_to('the changelog', changelog_index_path)
+
+    %p
+      Changes may include Government administration and local government geography changes.
 
   %p
     Links to other sources of open data are provided under the Open Government Licence
