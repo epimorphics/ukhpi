@@ -1,9 +1,12 @@
 # Changes to the UKHPI app by version and date
 
-## 1.5.20 - 2023-04-12
+## 1.5.20 - 2023-04-17
 
-- (Jon) Updated English Changelog for April 2023 Release
-- (Jon) Updated English Changelog for Oct 2021 Release
+- (Jon) Updated English & Welsh translations of the Changelog for latest releases
+- (Jon) Updated English & Welsh translations of the Landing page
+- (Jon) Updated version.rb to include `SUFFIX` parameter for release cadence
+- (Jon) Updated Changelog for April 2023 Release
+- (Jon) Updated Changelog for Oct 2021 Release
 - (Jon) Update Element-UI to latest 2.15.13 version
 - (Jon) Updated .gitignore to handle dev files
 - (Jon) updated to lock node to v14.21.3
