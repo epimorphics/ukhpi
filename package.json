@@ -1,6 +1,6 @@
 {
   "name": "ukhpi",
-  "version": "0.0.1",
+  "version": "1.5.20",
   "description": "UKHPI build support",
   "main": "index.js",
   "directories": {
