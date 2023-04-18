@@ -10,10 +10,9 @@
 # Ignore bundler config.
 !/log/.keep
 .byebug_history
-.github-token
-.npmrc
-.tags
 .yarn-integrity
+.tags
+!/log/.keep
 /.bundle
 /log/*
 /node_modules
@@ -36,3 +35,5 @@ yarn-debug.log*
 yarn-error.log
 
 .tool-versions
+.github-token
+.npmrc

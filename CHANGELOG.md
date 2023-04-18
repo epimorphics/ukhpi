@@ -33,8 +33,12 @@
   monitoring, and updated version of Sentry.
 - (Ian) Updated the README as part of handover.
 
-## 1.5.20 - 2023-04-12
+## 1.5.20 - 2023-04-17
 
+- (Jon) Updated English & Welsh translations of the Changelog for current releases
+- (Jon) Updated English & Welsh translations of the Landing page
+- (Jon) Updated `version.rb` to include `SUFFIX` parameter for improved release cadence
+- (Jon) Updated `package.json` to include current release cadence
 - (Jon) Updated English Changelog for April 2023 Release
 - (Jon) Updated English Changelog for Oct 2021 Release
 - (Jon) Update Element-UI to latest 2.15.13 version
@@ -46,6 +50,9 @@
 ## 1.5.19.1 - 2021-12-09
 
 - (Mairead) Update deployment workflow, dockerfile and assisting scripts
+- (Joseph) Add link to privacy notice to footer
+- (Joseph) Update gem dependencies
+- (Joseph) Update yarn package dependencies
 
 ## 1.5.19 - 2021-06-28
 
