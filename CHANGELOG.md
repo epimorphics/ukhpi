@@ -18,6 +18,7 @@
 
 - (Joseph) Add link to privacy notice to footer
 - (Joseph) Update gem dependencies
+- (Joseph) Update yarn package dependencies
 
 ## 1.5.18 - 2021-06-24
 
