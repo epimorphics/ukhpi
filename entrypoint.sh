@@ -5,6 +5,9 @@ set -e
 rm -f ./tmp/pids/server.pid
 mkdir -pm 1777 ./tmp
 
+# Set the environment
+[ -z "$RAILS_ENV" ] && RAILS_ENV=production
+
 # Check for API Service URL env var
 if [ -z "$API_SERVICE_URL" ]
 then
@@ -17,7 +20,7 @@ fi
 # Handle secrets based on env
 [ "$RAILS_ENV" == "production" ] && [ -z "$SECRET_KEY_BASE" ] && SECRET_KEY_BASE=$(./bin/rails secret) && export SECRET_KEY_BASE
 
-[ -n "${RAILS_RELATIVE_URL_ROOT}" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}\"}"
+[ -n "$RAILS_RELATIVE_URL_ROOT" ] && echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT}\"}"
 
 echo "{\"ts\":\"$(date -u +%FT%T.%3NZ)\",\"level\":\"INFO\",\"message\":\"exec ./bin/rails server -e ${RAILS_ENV} -b 0.0.0.0\"}"
 
