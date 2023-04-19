@@ -1,7 +1,13 @@
 # Changes to the UKHPI app by version and date
 
-## 1.6.1 - 2023-04
+## 1.6.1 - 2023-04-19
 
+- (Jon) Complete re-write of the README information to ensure inclusion of
+  latest changes and emphasis where required is met. Also now links to the
+  appropriate additional tools needed to develop and test both the individual
+  app and the HMLR suite locally.
+- (Jon) Updated the `makefile` and `dockerfile` files to ensure the correct
+  commands are used for development and release.
 - (Jon) Refactors the elapsed time calculated for API requests to be resolved as
   microseconds rather than milliseconds. This is to improve the reporting of the
   elapsed time in the system tooling logs.
@@ -35,9 +41,11 @@
 
 ## 1.5.20 - 2023-04-17
 
-- (Jon) Updated English & Welsh translations of the Changelog for current releases
+- (Jon) Updated English & Welsh translations of the Changelog for current
+  releases
 - (Jon) Updated English & Welsh translations of the Landing page
-- (Jon) Updated `version.rb` to include `SUFFIX` parameter for improved release cadence
+- (Jon) Updated `version.rb` to include `SUFFIX` parameter for improved release
+  cadence
 - (Jon) Updated `package.json` to include current release cadence
 - (Jon) Updated English Changelog for April 2023 Release
 - (Jon) Updated English Changelog for Oct 2021 Release

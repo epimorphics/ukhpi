@@ -238,7 +238,7 @@ The identity of the Docker image will change periodically so the full list of
 versions can be found at [AWS
 ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
 
-N.B.: Port 8080 should be avoided to allow for a reverse proxy to run on this
+N.B. Port 8080 should be avoided to allow for a reverse proxy to run on this
 port.
 
 With this set up, the api service is available on `http://localhost:8888` from
@@ -280,7 +280,7 @@ API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> RAILS_RELATIVE_URL
 
 And then visit <http://localhost:3002/app/ukhpi>.
 
-N.B.: The default for `RAILS_ENV` is `production` if omitted.
+N.B. The default for `RAILS_ENV` is `production` if omitted.
 
 ### Running the app locally as a Docker image
 
@@ -312,7 +312,7 @@ Using docker network dnet
 Assuming the Docker container starts up OK, you can again access the application
 at <http://localhost:3002/app/ukhpi/>
 
-In `production` mode, `SECRET_KEY_BASE` is also required. It is insufficient to
+N.B. In `production` mode, `SECRET_KEY_BASE` is also required. It is insufficient to
 just set this as the value must be exported _**before**_ running the commands
 above. i.e.
 
@@ -338,7 +338,7 @@ require rebuilding the assets or docker image when running inside docker.
 
 ## Running the complete HMLR suite locally
 
-Then entire HLMR suite of applications can be run locally as individualrails
+Then entire HLMR suite of applications can be run locally as individual rails
 servers in `development` mode as noted
 [above](#running-the-app-locally-in-dev-mode); however, when deployed, the HMLR
 applications will be docker images and run behind a reverse proxy to route to
