@@ -22,19 +22,19 @@ Plymouth).
 In this case, we need to update two data sources within the application, and
 coordinate this change with HMLR (and, by extension, ONS).
 
-In 2020, we updated the app due to various changes in LA boundaries, including
-the creation of the Bournemouth, Christchurch and Poole UA. The timeline of
-these changes was fairly typical, so we've documented it here for future
-reference:
+For example, in 2020 we updated the app due to various changes in LA boundaries,
+including the creation of the Bournemouth, Christchurch and Poole UA. The
+timeline of these changes was fairly typical, so we've documented it here for
+future reference:
 
 - April 2019: new boundaries go into effect.
 - Feb 2020: ONS perform their (single) yearly update of location tables.
 - March 2020: HMLR provided Epimorphics with a collection of test data,
   including the new regions table, as Turtle (`.ttl`) files.
-- March 2020: we loaded the test data into a dev server, in order to re-run the
-  [`rails ukhpi:locations` task](#rails-script-tasks). This updates the cached
-  Ruby and Javascript locations tables, to save the application having to query
-  the API every time a location is referred to.
+- March 2020: we loaded the test data into a dev server in order to re-run the
+  [`rails ukhpi:locations` task](#rails-script-tasks). This task updates the
+  cached Ruby and Javascript locations tables, to save the application having to
+  query the API every time a location is referred to.
 - In order to update the map UI in UKHPI, we need to regenerate the
   `ONS-Geographies` GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has
   a Feature Migration Engine (FME) script on his system that automates this.
@@ -151,7 +151,7 @@ bundle install
 yarn install
 ```
 
-### Accessing the data service API locally
+### Accessing the Data API locally
 
 The application communicates with the HMLR data API (which uses Sapi-NT) to
 provide the data to be displayed. The actual API location is specified by the
@@ -159,7 +159,7 @@ environment variable `API_SERVICE_URL`.
 
 When developing UKHPI locally, it is necessary to have a dev instance of the API
 available. Since, for operations reasons, the actual service URL is not exposed
-to the open Internet, you will need to run a local instance of the service.
+to the open internet, you will need to run a local instance of the service.
 
 This follows the same pattern as [the PPD
 app](https://github.com/epimorphics/ppd-explorer), and developers can run a
@@ -193,10 +193,10 @@ To use a credential helper for a specific ECR registry[^1], create a
 }
 ```
 
-The local application can then connect to the triple store via a `data-api`
+The local application can then connect to the triple store via the `data-api`
 service.
 
-### Running the data service API locally
+### Running the Data API locally
 
 The easiest way to do this is via a local docker container. The `data-api` image
 can be built from [lr-data-api
@@ -204,38 +204,8 @@ repository](https://github.com/epimorphics/lr-data-api). or pulled from Amazon
 Elastic Container Registry
 [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
 
-#### Building and running from [lr-data-api repository](https://github.com/epimorphics/lr-data-api)
-
-To build and a run a new docker image check out the [lr-data-api
-repository](https://github.com/epimorphics/lr-data-api) and run
-
-```sh
-make image run
-```
-
-#### Running an existing [ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1) image
-
-Obtaining an ECR image requires the AWS Credentials Helper to be installed and
-configured as per [the instructions
-above](#accessing-the-data-service-api-locally).
-
-Once you have a local copy of you required image, it is advisable to run a local
-docker bridge network to mirror production and development environments.
-
-Running a client application as a docker image from their respective `Makefile`s
-will set this up automatically, but to confirm this run:
-
-```sh
-docker network inspect dnet
-```
-
-To create the docker network run:
-
-```sh
-docker network create dnet
-```
-
-To run the Data API as a docker container:
+Once you have a local copy of the required `data-api` image, to run the Data API
+as a docker container:
 
 ```sh
 docker run --network dnet -p 8888:8080 --rm --name data-api \
@@ -274,67 +244,81 @@ port.
 With this set up, the api service is available on `http://localhost:8888` from
 the host or `http://data-api:8080` from inside other docker containers.
 
-### Running the app locally in dev mode
+Note: It is advisable to run a local docker bridge network to mirror production
+and development environments.
 
-Assuming the `data API` is running on port 8888 (the default), to start the app
-locally:
+Running an HMLR application as a docker image from the respective `Makefile`
+will set up the local docker bridge network automatically, but to confirm this
+run:
 
 ```sh
-API_SERVICE_URL=http://localhost:8888 rails server
+docker network inspect dnet
 ```
 
-And then visit [`localhost:3000`](http://localhost:3000/).
+If needed, to create the docker network run:
+
+```sh
+docker network create dnet
+```
+
+### Running the app locally
+
+Assuming the `Data API` is running on `http://localhost:8888` (the default), to
+start the app locally:
+
+```sh
+API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> make server
+```
+
+And then visit <http://localhost:3002>
+
+or, to start within a sub-directory, use the following command:
+
+```sh
+API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> RAILS_RELATIVE_URL_ROOT=/app/ukhpi make server
+```
+
+And then visit <http://localhost:3002/app/ukhpi>.
+
+N.B.: The default for `RAILS_ENV` is `production` if omitted.
 
 ### Running the app locally as a Docker image
 
-It can be useful to run the compiled Docker image, that will be run by the
-production installation, locally yourself. Assuming you have the dev API running
-on `localhost:8888` (the default), then you can run the Docker image for the app
+It can be useful to check the compiled Docker image, that will be run by the
+production installation, locally yourself. Assuming you have the `Data API`
+running in docker, then you can build and run the Docker image for the app
 itself as follows:
 
 ```sh
-API_SERVICE_URL=http://host.docker.internal:8888 make image run
+make image run
 ```
 
-Note that `host.docker.internal` is a special alias for `localhost`, which is
-[supported by
-Docker](https://medium.com/@TimvanBaarsen/how-to-connect-to-the-docker-host-from-inside-a-docker-container-112b4c71bc66).
-
-Assuming the Docker container starts up OK, you will need a proxy to simulate
-the effect of accessing the application via its ingress path (`/app/ukhpi`).
-
-There is a [simple web proxy](https://github.com/epimorphics/simple-web-proxy)
-that you can use.
-
-With the simple web proxy, and the two Docker containers running, access the
-application as <http://localhost:3002/app/ukhpi/>.
-
-### Coding standards
-
-`rubocop` should always return a clean status with no warnings.
-
-### Tests
-
-Once the API is started you can invoke the tests with the simple command
-below[^2]:
+or, if the image is already built, simply:
 
 ```sh
-rake test
+make run
 ```
 
-## Running this service locally
+You will be able to follow the progress of the invocation in the terminal:
 
-This application can be run locally as a rails server in `development` mode as
-noted [above](#running-the-app-locally-in-dev-mode); however, when deployed, the
-HMLR applications will be docker images and run behind a reverse proxy to enable
-requests to be routed to the appropriate application based on the request path.
-In order to simplifiy the proxy configuration we retain the original path where
-possible.
+```sh
+make run
+Starting ukhpi ...
+Using docker network dnet
+{"ts":"2022-03-21T11:12:27.340Z","level":"INFO","message":"API_SERVICE_URL=http://data-api:8080"}
+{"ts":"2022-03-21T11:12:34.970Z","level":"INFO","message":"exec ./bin/rails server -e production -b 0.0.0.0"}
+```
 
-For running a proxy to mimic production and join multple services together see
-the information found in the
-[simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
-repository.
+Assuming the Docker container starts up OK, you can again access the application
+at <http://localhost:3002/app/ukhpi/>
+
+In `production` mode, `SECRET_KEY_BASE` is also required. It is insufficient to
+just set this as the value must be exported _**before**_ running the commands
+above. i.e.
+
+```sh
+export SECRET_KEY_BASE=$(./bin/rails secret)
+```
 
 ### Development and Production mode differences
 
@@ -352,32 +336,33 @@ If need be, `config.relative_url_root` may by overridden by means of the
 `RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
 require rebuilding the assets or docker image when running inside docker.
 
-### Running Rails as a server
+## Running the complete HMLR suite locally
 
-You can start the server locally using the following command:
+Then entire HLMR suite of applications can be run locally as individualrails
+servers in `development` mode as noted
+[above](#running-the-app-locally-in-dev-mode); however, when deployed, the HMLR
+applications will be docker images and run behind a reverse proxy to route to
+the appropriate application based on the request path.
+
+In order to simplifiy the proxy configuration we retain the original path where
+possible.
+
+For running a proxy to mimic production and join multple services together see
+the information found in the
+[simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
+repository.
+
+### Coding standards
+
+`rubocop` should always return a clean status with no warnings.
+
+### Tests
+
+Once the API is started you can invoke the tests with the simple command
+below[^2]:
 
 ```sh
-API_SERVICE_URL=<data-api url> RAILS_ENV=<environment> make server
-```
-
-And then visit <http://localhost:3002/>.
-
-or start within a sub-directory with the following command:
-
-```sh
-API_SERVICE_URL=<data-api url> RAILS_ENV=<environment> RAILS_RELATIVE_URL_ROOT=/app/ukhpi make server
-```
-
-And then visit <http://localhost:3002/app/ukhpi>.
-
-The default for environment here is `production` if omitted.
-
-N.B.: In `production` mode, `SECRET_KEY_BASE` is also rquired. It is
-insufficient to just set this as the value must be exported before running the
-commands above. i.e.
-
-```sh
-export SECRET_KEY_BASE=$(./bin/rails secret)
+rake test
 ```
 
 ## Runtime Configuration environment variables
