@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Custom error handling via a Rack middleware action
 Rails.application.config.exceptions_app =

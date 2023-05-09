@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 require_dependency 'active_support/core_ext/module/delegation'
 

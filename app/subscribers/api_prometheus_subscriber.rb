@@ -16,7 +16,7 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { result: 'success' })
     Prometheus::Client.registry
                       .get(:api_response_times)
-                      .observe(duration)
+                      .observe(duration.to_i)
   end
 
   def connection_failure(event)

@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Controller for the main user experience of browsing the UKHPI statistics.
 # Usually the primary interaction will be via JavaScript and XHR, but we also

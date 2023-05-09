@@ -72,15 +72,23 @@ class LandingState
     DataServicesApi::Value.new(val.symbolize_keys)
   end
 
-  def format_percentage(change)
+  def format_percentage(change) # rubocop:disable Metrics/MethodLength
     if change == 'unknown'
       change
     elsif change.zero?
       I18n.t('landing.change.same')
     elsif change.positive?
-      format('%s %.1f%%', I18n.t('landing.change.risen'), change.abs)
+      format(
+        '%<risen>s %<change>.1f%%',
+        risen: I18n.t('landing.change.risen'),
+        change: change.abs
+      )
     else
-      format('%s %.1f%%', I18n.t('landing.change.fallen'), change.abs)
+      format(
+        '%<fallen>s %<change>.1f%%',
+        fallen: I18n.t('landing.change.fallen'),
+        change: change.abs
+      )
     end
   end
 end

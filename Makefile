@@ -7,6 +7,7 @@ BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 GPR_OWNER?=epimorphics
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
+SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 PORT?=3002
 RUBY_VERSION?=$(shell cat .ruby-version)
@@ -42,12 +43,11 @@ assets:
 	@yarn install
 	@./bin/rails assets:clean assets:precompile
 
-auth: ${BUNDLE_CFG}
+auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
 	@@ rm -rf bundle coverage log node_modules
-
 
 image: auth
 	@echo Building ${REPO}:${TAG} ...
@@ -102,6 +102,7 @@ vars:
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
+	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "STAGE = ${STAGE}"
