@@ -340,7 +340,7 @@ require rebuilding the assets or docker image when running inside docker.
 
 Then entire HLMR suite of applications can be run locally as individual rails
 servers in `development` mode as noted
-[above](#running-the-app-locally-in-dev-mode); however, when deployed, the HMLR
+[above](#running-the-app-locally); however, when deployed, the HMLR
 applications will be docker images and run behind a reverse proxy to route to
 the appropriate application based on the request path.
 
@@ -389,7 +389,7 @@ list](https://github.com/epimorphics/hmlr-linked-data/issues)
 
 ### Deployment
 
-The detailed deployment mapping is decscribed in `deployment.yml`. At the time
+The detailed deployment mapping is described in `deployment.yml`. At the time
 of writing, using the new infrastructure, the deployment process is as follows:
 
 - commits to the `dev-infrastructure` branch will deploy the dev server
