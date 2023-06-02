@@ -355,7 +355,7 @@ GEM
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (0.3.5.4)
+    json_rails_logger (1.0.0)
       json
       lograge
       railties
@@ -379,7 +379,7 @@ DEPENDENCIES
   http_accept_language
   js-routes (< 2.0)
   json_expressions
-  json_rails_logger (~> 0.3.5)!
+  json_rails_logger (~> 1.0.0)!
   m
   minitest-rails (~> 6.0)
   minitest-reporters

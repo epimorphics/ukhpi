@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.6.2 - 2023-06-03
+
+- (Jon) Updated the `json_rails_logger` gem to the latest 1.0.0 release.
+
 ## 1.6.1 - 2023-04-19
 
 - (Jon) Complete re-write of the README information to ensure inclusion of
