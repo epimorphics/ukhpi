@@ -183,7 +183,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
-    mini_portile2 (2.8.1)
+    mini_portile2 (2.8.2)
     minitest (5.18.0)
     minitest-rails (6.1.0)
       minitest (~> 5.10)
@@ -208,7 +208,7 @@ GEM
     puma (5.6.4)
       nio4r (~> 2.0)
     racc (1.6.2)
-    rack (2.2.6.4)
+    rack (2.2.7)
     rack-proxy (0.7.2)
       rack
     rack-test (2.1.0)
@@ -319,7 +319,7 @@ GEM
       rdf (~> 3.2)
     sysexits (1.2.0)
     temple (0.8.2)
-    thor (1.2.1)
+    thor (1.2.2)
     tilt (2.0.10)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
@@ -346,7 +346,7 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yajl-ruby (1.4.2)
-    zeitwerk (2.6.7)
+    zeitwerk (2.6.8)
 
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
@@ -355,7 +355,7 @@ GEM
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (1.0.0)
+    json_rails_logger (1.0.1)
       json
       lograge
       railties
