@@ -80,6 +80,7 @@ export default class LocationsMap {
     /** Callback to notify Vue that user has selected a location via the map */
     this.onSelectionCallback = null
 
+    /** The root popup object */
     this.popup = null
   }
 
