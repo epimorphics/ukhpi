@@ -10,8 +10,7 @@
       .content
         %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
         %nav#proposition-menu{ 'aria-label' => 'application menu' }
-          %a#proposition-name{ href: "#{Rails.application.config.relative_url_root}" }
-            = t('common.header.app_title')
+          = link_to(t('common.header.app_title'), root_path(lang: I18n.locale), id: "proposition-name")
 
           %ul#proposition-links
             %li
