@@ -8,7 +8,7 @@ gem 'rails', '~> 6.0'
 gem 'uglifier', '>= 1.3.0'
 
 gem 'haml-rails'
-gem 'webpacker'
+gem 'webpacker', '~> 5.4', '>= 5.4.4'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
