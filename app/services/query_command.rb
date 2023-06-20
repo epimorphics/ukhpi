@@ -46,7 +46,7 @@ class QueryCommand
     dataset(:ukhpi)
   end
 
-  # Run the given query, stash the results, and Return time taken in microseconds.
+  # Run the given query, stash the results, and return time taken in microseconds.
   def execute_query(service, query)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     @results = api_service(service).query(query)
