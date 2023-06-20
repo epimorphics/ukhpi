@@ -20,9 +20,10 @@ class ExceptionsController < ApplicationController
   private
 
   def maybe_report_to_sentry(exception, status_code)
+    return nil if Rails.env.development? # Why are we reporting to Senty in dev?
     return nil unless status_code >= 500
 
     sevent = Sentry.capture_exception(exception)
-    sevent.event_id
+    sevent&.event_id
   end
 end
