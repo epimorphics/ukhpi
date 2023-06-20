@@ -17,18 +17,18 @@ class LatestValuesCommand
   def service_api(service) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     service || dataset(:ukhpi)
   rescue Faraday::ConnectionFailed => e
-    Rails.logger.error('Failed to connect to UK HPI ')
-    Rails.logger.error("Status: #{e.status}, body: '#{e.message}'")
-    Rails.logger.error(e)
+    Rails.logger.error { 'Failed to connect to UK HPI ' }
+    Rails.logger.error { "Status: #{e.status}, body: '#{e.message}'" }
+    Rails.logger.error { e }
     nil
   rescue DataServicesApi::ServiceException => e
-    Rails.logger.error('Failed to get response from UK HPI service')
-    Rails.logger.error("Status: #{e.status}, body: '#{e.service_message}'")
+    Rails.logger.error { 'Failed to get response from UK HPI service' }
+    Rails.logger.error { "Status: #{e.status}, body: '#{e.service_message}'" }
     nil
   rescue RuntimeError => e
     Rails.logger.error { "Runtime error #{e.inspect}" }
-    Rails.logger.error(e.class)
-    Rails.logger.error(e.backtrace.join("\n"))
+    Rails.logger.error { e.class }
+    Rails.logger.error { e.backtrace.join("\n") }
     Rails.logger.error { "Caused by: #{e.cause}" } if e.cause
     nil
   end
@@ -43,12 +43,15 @@ class LatestValuesCommand
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     begin
       @results = hpi.query(query)
+    rescue NoMethodError => e
+      Rails.logger.debug { "Application failed with: NoMethodError #{e.inspect}" }
+      success = false
     rescue RuntimeError => e
-      Rails.logger.error("API query failed with: #{e.inspect}")
+      Rails.logger.error { "API query failed with: #{e.inspect}" }
       success = false
     end
     time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
-    Rails.logger.info(format("API query '#{query.to_json}' completed in %.0f μs\n", time_taken))
+    Rails.logger.info { format("API query '#{query.to_json}' completed in %.0f μs\n", time_taken) }
     success
   end
 
