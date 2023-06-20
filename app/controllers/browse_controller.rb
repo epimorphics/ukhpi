@@ -134,7 +134,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
       format.html do
         render 'exceptions/error_page',
-               locals: { status: 400, sentry_code: nil },
+               locals: { status: 500, sentry_code: nil },
                layout: true,
                status: :bad_request
       end
