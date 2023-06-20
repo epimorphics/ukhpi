@@ -130,7 +130,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   def render_bad_request(user_selections) # rubocop:disable Metrics/MethodLength
     respond_to do |format|
-      @view_state = OpenStruct.new(user_selections: user_selections)
+      @view_state = { user_selections: user_selections }
 
       format.html do
         render 'exceptions/error_page',
