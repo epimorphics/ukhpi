@@ -17,7 +17,7 @@ class QueryCommand
   def perform_query(service = nil)
     Rails.logger.debug { "About to perform API query: #{query.to_json}" }
     time_taken = execute_query(service, query)
-    Rails.logger.debug(format("query took %.0f μs\n", time_taken))
+    Rails.logger.info(format("API roundtrip took %.0f μs\n", time_taken))
   end
 
   # @return True if this a query execution command

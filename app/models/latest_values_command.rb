@@ -26,7 +26,7 @@ class LatestValuesCommand
     Rails.logger.error("Status: #{e.status}, body: '#{e.service_message}'")
     nil
   rescue RuntimeError => e
-    Rails.logger.error { "Unexpected error #{e.inspect}" }
+    Rails.logger.error { "Runtime error #{e.inspect}" }
     Rails.logger.error(e.class)
     Rails.logger.error(e.backtrace.join("\n"))
     Rails.logger.error { "Caused by: #{e.cause}" } if e.cause

@@ -121,7 +121,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   def view_result(view_state)
     new_params = view_state.user_selections.without('form-action', nil).params
-    Rails.logger.debug { "Redirecting to #{new_params}" }
+    Rails.logger.info { "Redirecting to #{new_params}" }
     redirect_to({
       controller: :browse,
       action: :show
