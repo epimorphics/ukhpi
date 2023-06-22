@@ -1,5 +1,41 @@
 # Changes to the UKHPI app by version and date
 
+## 1.7.0 - 2023-06-22
+
+- (Jon) Added `NoMethodError` rescue clause set to `debug` level to reduce
+  loggin noise in production as this should be caught in development and test
+  environments.
+- (Jon) Improved logging by using blocks instead of strings as Ruby has to
+  evaluate these strings, which includes instantiating the somewhat heavy String
+  object and interpolating the variables, and which takes time. Therefore, it's
+  recommended to pass blocks to the logger methods, as these are only evaluated
+  if the output level is the same or included in the allowed level (i.e. lazy
+  loading). [Documentation](http://guides.rubyonrails.org/debugging_rails_applications.html#impact-of-logs-on-performance)
+- (Jon) Removed sentry logging from dev instance
+- (Jon) Improved logging status with allowance for the differences between 400
+  and 500 errors handled by the same method.
+- (Jon) Improved Javascript asset delivery by adding `defer` to the script tags.
+  If the defer attribute is set, it specifies that the script is downloaded in
+  parallel to parsing the page, and executed after the page has finished
+  parsing.
+- (Jon) Resolves error level reported to match logs where the logging was
+  reporting 400 instead of 500
+- (Jon) Improved webpacker setup to match newer applications
+- (Jon) Improved logging in perform_query method by combining generated logs
+  into single log for better message
+- (Jon) Resolves rubocop OpenStruct warning
+- (Jon) Now uses the proper logging level as well as provides more details to
+  the logs for the `json_rails_logger` gem
+- (Jon) Refactored cache control - resolves
+  [GH-114](https://github.com/epimorphics/hmlr-linked-data/issues/114)
+- (Jon) Updated header links to apply the appropriate language to the root link
+- (Jon) Updated errors reported as `info` level to `error` level - also resolves
+  the `DEBUG level logs seen in production` issues on this file.
+- (Jon) Updated the `data_service_api` gem to the latest 1.4.0 minor release
+  version.
+  - Also includes minor patch updates for other gems, please see the
+  `Gemfile.lock` for details.
+
 ## 1.6.3 - 2023-06-07
 
 - (Jon) Updated the `json_rails_logger` gem to the latest 1.0.1 patch release.
