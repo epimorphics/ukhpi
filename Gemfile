@@ -34,6 +34,7 @@ gem 'prometheus-client', '~> 4.0'
 gem 'puma'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
+# gem 'sentry-ruby',
 gem 'sentry-rails', '~> 5.7'
 gem 'yajl-ruby', require: 'yajl'
 
@@ -65,11 +66,11 @@ group :development do
 end
 
 # TODO: For running the app locally for testing you can set this to your local path
-# gem 'data_services_api', '~> 1.3.3', path: '~/Epimorphics/shared/data_services_api/'
+# gem 'data_services_api', '~> 1.4.0', path: '~/Epimorphics/shared/data_services_api/'
 # gem 'json_rails_logger', '~> 1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api', '~> 1.3.3'
+  gem 'data_services_api', '~> 1.4.0'
   gem 'json_rails_logger', '~> 1.0.0'
 end
