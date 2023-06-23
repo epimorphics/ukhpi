@@ -15,7 +15,7 @@
 
     - if Rails.env.production?
       = render partial: 'common/google-analytics'
-      = javascript_include_tag 'cookie'
+      = javascript_include_tag 'cookie', defer: true
       = csrf_meta_tags
 
     = stylesheet_link_tag 'application', media: 'all'
@@ -34,7 +34,7 @@
       :javascript
         window.isIE8 = true;
 
-    = javascript_pack_tag 'ukhpi_vue'
+    = javascript_pack_tag 'ukhpi_vue', defer: true
 
   %body.government.website.lr
     = render partial: 'common/cookie_banner' if Rails.env.production?

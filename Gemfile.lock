@@ -94,7 +94,7 @@ GEM
     erubi (1.12.0)
     erubis (2.7.0)
     execjs (2.8.1)
-    faraday (1.10.0)
+    faraday (1.10.3)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
       faraday-excon (~> 1.1)
@@ -110,8 +110,8 @@ GEM
     faraday-em_synchrony (1.0.0)
     faraday-excon (1.1.0)
     faraday-httpclient (1.0.1)
-    faraday-multipart (1.0.3)
-      multipart-post (>= 1.2, < 3)
+    faraday-multipart (1.0.4)
+      multipart-post (~> 2)
     faraday-net_http (1.0.1)
     faraday-net_http_persistent (1.2.0)
     faraday-patron (1.0.0)
@@ -194,7 +194,7 @@ GEM
       minitest (>= 5.0)
       ruby-progressbar
     mocha (1.13.0)
-    multipart-post (2.1.1)
+    multipart-post (2.3.0)
     nio4r (2.5.8)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
@@ -209,7 +209,7 @@ GEM
       nio4r (~> 2.0)
     racc (1.6.2)
     rack (2.2.7)
-    rack-proxy (0.7.2)
+    rack-proxy (0.7.6)
       rack
     rack-test (2.1.0)
       rack (>= 1.3)
@@ -335,7 +335,7 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
-    webpacker (5.4.3)
+    webpacker (5.4.4)
       activesupport (>= 5.2)
       rack-proxy (>= 0.6.1)
       railties (>= 5.2)
@@ -345,13 +345,13 @@ GEM
     websocket-extensions (0.1.5)
     xpath (3.2.0)
       nokogiri (~> 1.8)
-    yajl-ruby (1.4.2)
+    yajl-ruby (1.4.3)
     zeitwerk (2.6.8)
 
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.3.3)
+    data_services_api (1.4.0)
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
@@ -366,7 +366,7 @@ PLATFORMS
 DEPENDENCIES
   byebug
   capybara_minitest_spec
-  data_services_api (~> 1.3.3)!
+  data_services_api (~> 1.4.0)!
   faraday
   faraday_middleware
   font-awesome-rails
@@ -401,7 +401,7 @@ DEPENDENCIES
   uglifier (>= 1.3.0)
   vcr
   web-console
-  webpacker
+  webpacker (~> 5.4, >= 5.4.4)
   yajl-ruby
 
 BUNDLED WITH

@@ -10,7 +10,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
-      render_bad_request(user_selections)
+      render_request_error(user_selections, 400)
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
@@ -53,15 +53,15 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
-    { error: e.message }
+    { user_selections: user_selections, error: e.message }
   end
 
   def render_view_state(view_state)
+    @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      render plain: "Bad request: #{view_state[:error]}", status: :bad_request
+      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" }
+      render_request_error(@view_state.user_selections, :internal_server_error)
     else
-      @view_state = view_state
-
       respond_to do |format|
         format.html
         format.json { render json: @view_state }
@@ -121,26 +121,26 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   def view_result(view_state)
     new_params = view_state.user_selections.without('form-action', nil).params
-    Rails.logger.debug { "Redirecting to #{new_params}" }
+    Rails.logger.info { "Redirecting to #{new_params}" }
     redirect_to({
       controller: :browse,
       action: :show
     }.merge(new_params))
   end
 
-  def render_bad_request(user_selections) # rubocop:disable Metrics/MethodLength
+  def render_request_error(user_selections, status) # rubocop:disable Metrics/MethodLength
     respond_to do |format|
-      @view_state = OpenStruct.new(user_selections: user_selections)
-
+      @view_state = { user_selections: user_selections }
+      request_status = status == 400 ? :bad_request : :internal_server_error
       format.html do
         render 'exceptions/error_page',
-               locals: { status: 400, sentry_code: nil },
+               locals: { status: status, sentry_code: nil },
                layout: true,
-               status: :bad_request
+               status: request_status
       end
 
       format.json do
-        render(json: { status: 'bad request' }, status: :bad_request)
+        render(json: { status: 'request error' }, status: request_status)
       end
     end
   end

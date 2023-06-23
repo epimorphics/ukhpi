@@ -15,9 +15,8 @@ class QueryCommand
   # @param service Optional API service end-point to use. Defaults to the UKHPI
   # API service endpoint
   def perform_query(service = nil)
-    Rails.logger.debug { "About to perform API query: #{query.to_json}" }
     time_taken = execute_query(service, query)
-    Rails.logger.debug(format("query took %.0f μs\n", time_taken))
+    Rails.logger.info(format("API roundtrip took %.0f μs\n", time_taken))
   end
 
   # @return True if this a query execution command
@@ -40,19 +39,17 @@ class QueryCommand
   end
 
   def api_service(service)
-    api_service ||= service || default_service
-    @api_service = api_service
+    @api_service ||= service || default_service
   end
 
   def default_service
     dataset(:ukhpi)
   end
 
-  # Run the given query, stash the results, and Return time taken in microseconds.
+  # Run the given query, stash the results, and return time taken in microseconds.
   def execute_query(service, query)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-    query_results = api_service(service).query(query)
-    @results = query_results
+    @results = api_service(service).query(query)
     (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 

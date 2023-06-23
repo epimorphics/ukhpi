@@ -8,7 +8,7 @@
       = I18n.t('common.header.app_title')
     - if Rails.env.production?
       = render partial: 'common/google-analytics'
-      = javascript_include_tag 'cookie'
+      = javascript_include_tag 'cookie', defer: true
       = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
     = render partial: 'common/favicons'
