@@ -1,5 +1,13 @@
 # Changes to the UKHPI app by version and date
 
+## 1.7.1 - 2023-06-23
+
+- (Jon) Updated the `data_service_api` gem to the latest 1.4.1 patch release
+  version.
+- (Jon) Updated the `json_rails_logger` gem to the latest 1.0.3 patch release
+  - Also includes minor patch updates for other gems, please see the
+  `Gemfile.lock` for details.
+
 ## 1.7.0 - 2023-06-22
 
 - (Jon) Added `NoMethodError` rescue clause set to `debug` level to reduce
