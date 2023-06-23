@@ -34,7 +34,6 @@ gem 'prometheus-client', '~> 4.0'
 gem 'puma'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
-# gem 'sentry-ruby',
 gem 'sentry-rails', '~> 5.7'
 gem 'yajl-ruby', require: 'yajl'
 
