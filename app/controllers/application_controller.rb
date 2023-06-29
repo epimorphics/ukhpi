@@ -21,6 +21,9 @@ class ApplicationController < ActionController::Base
     I18n.locale = user_locale if Rails.application.config.welsh_language_enabled
   end
 
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * UHPI needs to be shorter to avoid delay (in users cache) on the
+  # * publication deadline so it is set for 2 minutes (120 seconds)
   # Set the default `Cache-Control` header for all requests,
   # unless overridden in the action
   def change_default_caching_policy
