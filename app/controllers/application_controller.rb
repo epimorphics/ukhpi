@@ -8,10 +8,18 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale, :change_default_caching_policy
 
+  around_action :log_request_result
+  def log_request_result
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+    yield
+    duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
+    detailed_request_log(duration)
+  end
+
   private
 
   # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-  def create_detailed_request_log(duration)
+  def detailed_request_log(duration)
     env = request.env
 
     log_fields = {
