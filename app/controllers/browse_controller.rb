@@ -59,7 +59,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
   def render_view_state(view_state)
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" }
+      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
       render_request_error(@view_state.user_selections, :internal_server_error)
     else
       respond_to do |format|
@@ -71,7 +71,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   # Look at the `action` parameter, which may be set by various action buttons
   # on the form, to determine whether we need to do any processing before
-  # dislaying the form
+  # displaying the form
   def process_form_action(view_state)
     action = view_state.user_selections.action
 
@@ -121,7 +121,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
 
   def view_result(view_state)
     new_params = view_state.user_selections.without('form-action', nil).params
-    Rails.logger.info { "Redirecting to #{new_params}" }
+    Rails.logger.info { "Redirecting to #{new_params}" } if Rails.env.development?
     redirect_to({
       controller: :browse,
       action: :show
