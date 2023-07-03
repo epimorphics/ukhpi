@@ -11,7 +11,7 @@
 ## 1.7.0 - 2023-06-22
 
 - (Jon) Added `NoMethodError` rescue clause set to `debug` level to reduce
-  loggin noise in production as this should be caught in development and test
+  logging noise in production as this should be caught in development and test
   environments.
 - (Jon) Improved logging by using blocks instead of strings as Ruby has to
   evaluate these strings, which includes instantiating the somewhat heavy String
