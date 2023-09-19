@@ -20,6 +20,8 @@ Bundler.require(*Rails.groups)
 module Ukhpi
   # :nodoc:
   class Application < Rails::Application
+    config.load_defaults 6.0
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
@@ -34,5 +36,24 @@ module Ukhpi
 
     # Add deflater to compress JSON payloads
     config.middleware.use Rack::Deflater
+  end
+end
+
+# Monkey-patch the bit of Rails that emits the start-up log message, so that it
+# is written out in JSON format that our combined logging service can handle
+module Rails
+  # :nodoc:
+  module Command
+    # :nodoc:
+    class ServerCommand
+      def print_boot_information(server, url)
+        msg = {
+          ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
+          level: 'INFO',
+          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
+        }
+        say msg.to_json
+      end
+    end
   end
 end

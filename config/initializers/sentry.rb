@@ -1,10 +1,14 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
-Raven.configure do |config|
-  config.dsn = 'https://1150348b449a444bb3ac47ddd82b37c4:5fd368489fe44c0f83f1f2e5df10a7ef@sentry.io/251669'
-  config.current_environment = ENV['DEPLOYMENT_ENVIRONMENT'] || Rails.env
-  config.environments = %w[production test]
-  config.release = Version::VERSION
-  config.tags = { app: 'ukhpi' }
-  config.excluded_exceptions += ['ActionController::BadRequest']
+Rails.application.reloader.to_prepare do
+  if ENV['SENTRY_API_KEY']
+    Sentry.init do |config|
+      config.dsn = ENV['SENTRY_API_KEY']
+      config.environment = ENV.fetch('DEPLOYMENT_ENVIRONMENT') { Rails.env }
+      config.enabled_environments = %w[production]
+      config.release = Version::VERSION
+      config.breadcrumbs_logger = %i[active_support_logger http_logger]
+      config.excluded_exceptions += ['ActionController::BadRequest']
+    end
+  end
 end

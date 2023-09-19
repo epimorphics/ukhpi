@@ -4,8 +4,6 @@
 class QueryCommand
   include DataService
 
-  MILLISECONDS = 1000.0
-
   attr_reader :user_selections, :results, :query
 
   def initialize(user_selections)
@@ -17,9 +15,8 @@ class QueryCommand
   # @param service Optional API service end-point to use. Defaults to the UKHPI
   # API service endpoint
   def perform_query(service = nil)
-    Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
     time_taken = execute_query(service, query)
-    Rails.logger.debug(format("query took %.1f ms\n", time_taken))
+    Rails.logger.info(format("API roundtrip took %.0f μs\n", time_taken))
   end
 
   # @return True if this a query execution command
@@ -49,11 +46,11 @@ class QueryCommand
     dataset(:ukhpi)
   end
 
-  # Run the given query, and stash the results. Return time taken in ms.
+  # Run the given query, stash the results, and return time taken in microseconds.
   def execute_query(service, query)
-    start = Time.zone.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     @results = api_service(service).query(query)
-    (Time.zone.now - start) * MILLISECONDS
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 
   def add_date_range_constraint(query)

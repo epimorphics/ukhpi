@@ -8,36 +8,32 @@
 .vscode
 
 # Ignore bundler config.
-/.bundle
-
-# Ignore all logfiles and tempfiles.
-/log/*
 !/log/.keep
-/tmp
-query-results.json
 .byebug_history
-coverage
-bower_components/
-node_modules/
-index-names.txt
-index.json
-fc.json
-fc_simple.json
-uk.json
-uk.geojson
-tags
+.yarn-integrity
 .tags
-/public/packs
+!/log/.keep
+/.bundle
+/log/*
 /node_modules
-public/assets/
-
 /public/packs
 /public/packs-test
-/node_modules
-/yarn-error.log
+/tmp
+bower_components/
+coverage
+fc.json
+fc_simple.json
+index-names.txt
+index.json
+node_modules/
+public/assets/
+query-results.json
+tags
+uk.geojson
+uk.json
 yarn-debug.log*
-.yarn-integrity
+yarn-error.log
 
 .tool-versions
-
 .github-token
+.npmrc

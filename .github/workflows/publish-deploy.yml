@@ -1,0 +1,34 @@
+name: "Build & Publish Docker Image"
+on:
+  workflow_dispatch: {}
+  push: {}
+
+jobs:
+  publish:
+    uses:  "epimorphics/github-workflows/.github/workflows/publish.yml@reusable"
+    secrets:
+      # Repostory specific
+      aws_access_key_id:     "${{ secrets.BUILD_HMLR_AWS_ACCESS_KEY_ID }}"
+      aws_secret_access_key: "${{ secrets.BUILD_HMLR_AWS_SECRET_ACCESS_KEY }}"
+      # Fixed
+      epi_gpr_access_token:  "${{ secrets.HMLR_GPR_ACCESS_TOKEN }}"
+  deploy:
+    needs: "publish"
+    uses:  "epimorphics/github-workflows/.github/workflows/deploy.yml@reusable"
+    with:
+      # Repostory specific
+      ansible_repo:     epimorphics/hmlr-ansible-deployment
+      ansible_repo_ref: master
+      host_prefix:      hmlr
+      # Fixed
+      deploy: "${{ needs.publish.outputs.deploy }}"
+      key:    "${{ needs.publish.outputs.key }}"
+      tag:    "${{ needs.publish.outputs.tag }}"
+    secrets:
+      # Repostory specific
+      ansible_vault_password: "${{ secrets.HMLR_ANSIBLE_VAULT_PASSWORD }}"
+      aws_access_key_id:      "${{ secrets.BUILD_HMLR_AWS_ACCESS_KEY_ID }}"
+      aws_secret_access_key:  "${{ secrets.BUILD_HMLR_AWS_SECRET_ACCESS_KEY }}"
+      ssh_key:                "${{ secrets.HMLR_SSH_KEY }}"
+      # Fixed
+      github_pat: "${{ secrets.GIT_REPOSITORY_FULL_ACCESS_PAT }}"

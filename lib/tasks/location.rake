@@ -94,14 +94,12 @@ class Location
 
   def preferred_type
     admin_geo_type(@types)
-      .reject { |t| t =~ %r{/Borough} }
+      .grep_v(%r{/Borough})
       .first
   end
 
   def admin_geo_type(types)
-    types.select do |t|
-      t =~ /admingeo/
-    end.uniq
+    types.grep(/admingeo/).uniq
   end
 
   def in_wales?
@@ -246,8 +244,9 @@ namespace :ukhpi do
       }
       }"
 
-    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/apache-jena-fuseki'}/bin/s-query"
-    server = ENV['SERVER'] || 'https://landregistry.data.gov.uk/landregistry/query'
+    root = Rails.root.to_s
+    squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
+    server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
     puts "Running SPARQL query against server #{server}..."
     puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
@@ -257,7 +256,7 @@ namespace :ukhpi do
   # Generate the locations modules in JavaScript and Ruby
   task locations_generate: :environment do
     puts 'Loading query results ...'
-    sresults = JSON.parse(IO.read('query-results.json'))
+    sresults = JSON.parse(File.read('query-results.json'))
     locations = {}
     all_types = Set.new
 
@@ -294,9 +293,9 @@ namespace :ukhpi do
   task :describe, [:uri] => [:environment] do |_t, args|
     uri = args[:uri]
     query = "describe <#{uri}>"
-
-    squery = "#{ENV['FUSEKI'] || '/home/ian/dev/java/jena-fuseki'}/bin/s-query"
-    server = ENV['SERVER'] || 'http://lr-data-dev-c.epimorphics.net/landregistry/query'
+    root = Rails.root.to_s
+    squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
+    server = ENV.fetch('SERVER', 'http://lr-data-dev-c.epimorphics.net/landregistry/query')
 
     puts 'Running SPARQL query ...'
     system "#{squery} --server='#{server}' '#{query}'"

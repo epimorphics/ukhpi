@@ -5,6 +5,7 @@ AllCops:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
     - 'node_modules/**/*'
+    - 'Gemfile'
   NewCops: enable
 
 # Customize rules
@@ -20,6 +21,7 @@ Metrics/ClassLength:
     - test/**/*
 
 Metrics/BlockLength:
+  Max: 30
   Exclude:
     - test/**/*
     - lib/tasks/**/*
@@ -118,3 +120,11 @@ Rails/ShortI18n:
   Enabled: true
 Rails/WhereExists:
   Enabled: true
+
+Rails/I18nLocaleAssignment:
+  Enabled: true
+  Exclude:
+    - test/**/*
+
+Style/OpenStructUse:
+  Enabled: false

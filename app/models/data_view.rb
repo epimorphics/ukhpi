@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 require_dependency 'active_support/core_ext/module/delegation'
 
@@ -170,7 +170,7 @@ class DataView # rubocop:disable Metrics/ClassLength
     query_result.map do |row_data|
       columns.map do |column|
         datum = row_data[column[:pred]]
-        datum = datum.is_a?(Hash) ? datum['@value'] : datum
+        datum = datum['@value'] if datum.is_a?(Hash)
         datum.is_a?(Array) && datum.length == 1 ? datum.first : datum
       end
     end

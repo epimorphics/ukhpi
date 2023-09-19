@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Module that encapsulates the concern of formatting values in a suitable way
 # for rendering as part of a download

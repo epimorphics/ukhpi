@@ -1,6 +1,6 @@
 /* Component for rendering the map outlines as means of selecting regions */
 import _ from 'lodash'
-import Leaflet from 'leaflet'
+import L from 'leaflet'
 import cloneLayer from 'leaflet-clonelayer'
 import '../lib/leaflet-rrose'
 
@@ -63,7 +63,7 @@ export default class LocationsMap {
     this.locale = locale
 
     this.featuresIndex = {}
-    this.backgroundLayer = Leaflet.layerGroup([])
+    this.backgroundLayer = L.layerGroup([])
 
     /** Guard flag so that we only initialise the features index once */
     this.featuresIndexInitialised = false
@@ -79,6 +79,9 @@ export default class LocationsMap {
 
     /** Callback to notify Vue that user has selected a location via the map */
     this.onSelectionCallback = null
+
+    /** The root popup object */
+    this.popup = null
   }
 
   /** @return The location object denoted by the layer, looked up by name */
@@ -166,17 +169,15 @@ export default class LocationsMap {
   /** Show a popup with the location label */
   showPopup (label, point) {
     if (label) {
-      const popup = new Leaflet.Rrose({
-        offset: new Leaflet.Point(0, -10),
+      this.popup = new L.Rrose({
+        offset: new L.Point(0, -10),
+        closeButton: false,
         autoPan: false
-      })
-        .setLatLng(point)
-        .setContent(label)
+      }).setLatLng(point).setContent(label).openOn(this.leafletMap)
 
-      popup.openOn(this.leafletMap)
       const hidePopup = (function onHidePopup (m, p) {
         return function onClosePopup () { m.closePopup(p) }
-      }(this.leafletMap, popup))
+      }(this.leafletMap, this.popup))
 
       _.delay(hidePopup, 1500)
     } else {
@@ -272,7 +273,7 @@ export default class LocationsMap {
   /** Update the given partition table by assigning the `layer` to the category for `key` */
   addToPartition (partitionTable, key, layer) {
     if (!_.has(partitionTable, key)) {
-      const layerGroup = Leaflet.layerGroup([], { pane: 'overlayPane' })
+      const layerGroup = L.layerGroup([], { pane: 'overlayPane' })
       Object.assign(partitionTable, { [key]: layerGroup })
     }
 
@@ -282,7 +283,7 @@ export default class LocationsMap {
   /** @return the feature set from loading the given GeoJSON structure */
   loadGeoJson (json) {
     const onEachFeature = _.bind(this.onEachFeature, this)
-    return Leaflet.geoJson(json, {
+    return L.geoJson(json, {
       style: this.standardLocationStyle,
       onEachFeature
     })
@@ -329,7 +330,7 @@ export default class LocationsMap {
     if (!this.leafletMap) {
       this.indexedFeatures()
 
-      this.leafletMap = Leaflet.map(this.elementId, {
+      this.leafletMap = L.map(this.elementId, {
         zoomDelta: 0.5,
         zoomSnap: 0
       })

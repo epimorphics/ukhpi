@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Decorator for query results that provides additional capabilities for
 # presenting data in downloadable form

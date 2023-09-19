@@ -1,0 +1,14 @@
+version: 2
+name:  epimorphics/ukhpi
+key: ukhpi
+deployments:
+  - branch: "prod"
+    deploy: "prod"
+    publish: "prod"
+  - branch: "preprod"
+    deploy: "preprod"
+    publish: "preprod"
+  - branch: "dev-infrastructure"
+    deploy: "dev"
+    publish: "dev"
+  - branch: "[a-zA-Z0-9]+"

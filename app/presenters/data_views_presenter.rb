@@ -1,4 +1,4 @@
-# frozen-string-literal: true
+# frozen_string_literal: true
 
 # Presenter object that calculates the set of `DataView`s that should be
 # created from a given `UserSelection`.

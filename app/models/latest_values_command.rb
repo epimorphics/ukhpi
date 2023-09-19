@@ -6,8 +6,6 @@ class LatestValuesCommand
 
   attr_reader :results
 
-  def initialize; end
-
   def perform_query(service = nil)
     hpi = service_api(service)
 
@@ -19,18 +17,19 @@ class LatestValuesCommand
   def service_api(service) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     service || dataset(:ukhpi)
   rescue Faraday::ConnectionFailed => e
-    Rails.logger.info('Failed to connect to UK HPI ')
-    Rails.logger.info(e)
+    Rails.logger.error { 'Failed to connect to UK HPI ' }
+    Rails.logger.error { "Status: #{e.status}, body: '#{e.message}'" }
+    Rails.logger.error { e }
     nil
   rescue DataServicesApi::ServiceException => e
-    Rails.logger.info('Failed to get response from UK HPI service')
-    Rails.logger.info("Status: #{e.status}, body: '#{e.service_message}'")
+    Rails.logger.error { 'Failed to get response from UK HPI service' }
+    Rails.logger.error { "Status: #{e.status}, body: '#{e.service_message}'" }
     nil
   rescue RuntimeError => e
-    Rails.logger.debug { "Unexpected error #{e.inspect}" }
-    Rails.logger.debug(e.class)
-    Rails.logger.debug(e.backtrace.join("\n"))
-    Rails.logger.debug { "Caused by: #{e.cause}" } if e.cause
+    Rails.logger.error { "Runtime error #{e.inspect}" }
+    Rails.logger.error { e.class }
+    Rails.logger.error { e.backtrace.join("\n") }
+    Rails.logger.error { "Caused by: #{e.cause}" } if e.cause
     nil
   end
 
@@ -41,17 +40,18 @@ class LatestValuesCommand
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
-    Rails.logger.debug { "About to ask DsAPI query: #{query.to_json}" }
-    Rails.logger.debug query.to_json
-    start = Time.zone.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     begin
       @results = hpi.query(query)
+    rescue NoMethodError => e
+      Rails.logger.debug { "Application failed with: NoMethodError #{e.inspect}" }
+      success = false
     rescue RuntimeError => e
-      Rails.logger.warn("DsAPI run_query failed with: #{e.inspect}")
+      Rails.logger.error { "API query failed with: #{e.inspect}" }
       success = false
     end
-
-    Rails.logger.debug(format("query took %.1f ms\n", ((Time.zone.now - start) * 1000.0)))
+    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
+    Rails.logger.info { format("API query '#{query.to_json}' completed in %.0f μs\n", time_taken) }
     success
   end
 

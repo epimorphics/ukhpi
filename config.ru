@@ -2,5 +2,20 @@
 
 # This file is used by Rack-based servers to start the application.
 
+require_relative 'config/environment'
+
 require ::File.expand_path('config/environment', __dir__)
-run Rails.application
+
+require 'prometheus/middleware/collector'
+require 'prometheus/middleware/exporter'
+
+use Prometheus::Middleware::Collector
+use Prometheus::Middleware::Exporter
+
+if ENV['RAILS_ENV'] == 'production'
+  map Rails.application.config.relative_url_root || '/' do
+    run Rails.application
+  end
+else
+  run Rails.application
+end

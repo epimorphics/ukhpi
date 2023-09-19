@@ -24,7 +24,7 @@ Rails.application.configure do
 
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
-  config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
+  config.public_file_server.enabled = ENV.fetch('RAILS_SERVE_STATIC_FILES', true)
 
   # Compress JavaScripts and CSS.
   config.assets.js_compressor = :uglifier
@@ -32,6 +32,9 @@ Rails.application.configure do
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
+
+  # Disable logging of the rendering of partials
+  config.action_view.logger = nil
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
@@ -47,56 +50,56 @@ Rails.application.configure do
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
   # config.force_ssl = true
 
-  # Use the lowest log level to ensure availability of diagnostic information
-  # when problems arise.
-  config.log_level = :info
-
-  # Prepend all log lines with the following tags.
-  # config.log_tags = [ :subdomain, :uuid ]
-
-  # Use a different logger for distributed setups.
-  # config.logger = ActiveSupport::TaggedLogging.new(SyslogLogger.new)
+  # Tag rails logs with useful information
+  config.log_tags = %i[subdomain request_id request_method]
+  # When sync mode is true, all output is immediately flushed to the underlying
+  # operating system and is not buffered by Ruby internally.
+  $stdout.sync = true
+  # Log the stdout output to the Epimorphics JSON logging gem
+  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store
 
-  # Enable serving of images, stylesheets, and JavaScripts from an asset server.
-  # config.action_controller.asset_host = 'http://assets.example.com'
+  # * Set cache control headers for HMLR apps to be public and cacheable
+  # * UHPI needs to be shorter to avoid delay (in users cache) on the
+  # * publication deadline so it is set for 2 minutes (120 seconds)
+  # This will affect assets served from /app/assets
+  config.static_cache_control = "public, max-age=#{2.minutes.to_i}"
+
+  # This will affect assets in /public, e.g. webpacker assets.
+  config.public_file_server.headers = {
+    'Cache-Control' => "public, max-age=#{2.minutes.to_i}",
+    'Expires' => 2.minutes.from_now.to_formatted_s(:rfc822)
+  }
 
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
-  # the I18n.default_locale when a translation cannot be found).
+  # the I18n.default_locale when a translation can not be found).
   config.i18n.fallbacks = true
 
   # Send deprecation notices to registered listeners.
   config.active_support.deprecation = :notify
 
-  # Use default logging formatter so that PID and timestamp are not suppressed.
-  config.log_formatter = ::Logger::Formatter.new
+  # The RAILS_RELATIVE_URL_ROOT env var should ONLY be used in a local environment.
+  # Here, the default value is passed in as the compiled assets have no knowledge
+  # of the base path and utilise the config.relative_url_root value to prefix the
+  # compiled asset paths
+  config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ukhpi')
 
-  # Disable logging of the rendering of partials
-  config.action_view.logger = nil
-
-  if ENV['RAILS_LOG_TO_STDOUT'].present?
-    logger           = ActiveSupport::Logger.new($stdout)
-    logger.formatter = config.log_formatter
-    config.logger    = ActiveSupport::TaggedLogging.new(logger)
-  end
-
-  config.relative_url_root = ENV['RELATIVE_URL_ROOT'] || '/app/ukhpi'
-
-  # API location can be specified in the environment
-  # But defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL'] || 'http://localhost:8080/dsapi'
+  # API location is specified in the environment but defaults to the dev service
+  config.api_service_url = ENV['API_SERVICE_URL']
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
 
+  # Use default paths for documentation.
   config.accessibility_document_path = '/accessibility'
   config.privacy_document_path = '/privacy'
 
+  # Set the contact email address to Land Registry supplied address
   config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end

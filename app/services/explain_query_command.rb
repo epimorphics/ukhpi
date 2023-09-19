@@ -4,11 +4,11 @@
 # only that it asks the DsAPI to explain its query strategy, rather than performing
 # the query.
 class ExplainQueryCommand < QueryCommand
-  # Explain the given query, and stash the results. Return time taken in ms.
+  # Explain the given query, and stash the results. Return time taken in microseconds.
   def execute_query(service, query)
-    start = Time.zone.now
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     @results = api_service(service).explain(query)
-    (Time.zone.now - start) * MILLISECONDS
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 
   def query_command?
