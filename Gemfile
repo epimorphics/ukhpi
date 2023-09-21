@@ -47,7 +47,7 @@ group :development, :test do
   gem 'minitest-reporters'
   # gem 'minitest-spec-rails'
   gem 'mocha'
-  gem 'nokogiri'
+  gem 'nokogiri', '1.13.10' # This is the highest version that supports Ruby 2.6
   gem 'oj'
   gem 'rubocop', require: false
   gem 'selenium-webdriver'
