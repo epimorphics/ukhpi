@@ -134,10 +134,7 @@ We represent these as follows:
 |  | % monthly change | Existing properties |
 |  | % annual change | Existing properties |
 |  | sales volume | Existing properties
-
-## Developer notes
-
-### Installing dependencies
+## Installing dependencies
 
 The app currently depends on Ruby version 2.6.x. The actual version is specified
 in the `.ruby-version` file, which can be used with
@@ -155,7 +152,9 @@ bundle install
 yarn install
 ```
 
-### Accessing the Data API locally
+## Running the data API locally
+
+### Prerequisites
 
 The application communicates with the HMLR data API (which uses Sapi-NT) to
 provide the data to be displayed. The actual API location is specified by the
@@ -200,7 +199,7 @@ To use a credential helper for a specific ECR registry[^1], create a
 The local application can then connect to the triple store via the `data-api`
 service.
 
-### Running the Data API locally
+### Running the API
 
 The easiest way to do this is via a local docker container. The `data-api` image
 can be built from [lr-data-api
@@ -265,7 +264,9 @@ If needed, to create the docker network run:
 docker network create dnet
 ```
 
-### Running the app locally
+## Running the app
+
+### Locally
 
 Assuming the `Data API` is running on `http://localhost:8888` (the default), to
 start the app locally:
@@ -286,7 +287,7 @@ And then visit <http://localhost:3002/app/ukhpi>.
 
 N.B. The default for `RAILS_ENV` is `production` if omitted.
 
-### Running the app locally as a Docker image
+### As a Docker image
 
 It can be useful to check the compiled Docker image, that will be run by the
 production installation, locally yourself. Assuming you have the `Data API`
@@ -340,7 +341,7 @@ If need be, `config.relative_url_root` may by overridden by means of the
 `RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
 require rebuilding the assets or docker image when running inside docker.
 
-## Running the complete HMLR suite locally
+### Running the complete HMLR suite locally
 
 Then entire HLMR suite of applications can be run locally as individual rails
 servers in `development` mode as noted
@@ -369,7 +370,7 @@ below[^2]:
 rake test
 ```
 
-## Runtime Configuration environment variables
+### Runtime Configuration environment variables
 
 A number of environment variables to determine the runtime behaviour of the
 application:
@@ -384,12 +385,10 @@ application:
 |                            | This is handled automatically when starting a docker container, or the `server` `make` target | |
 | `SENTRY_API_KEY`           | The Data Source Name (DSN) for sending reports to the Sentry account                   | None                       |
 
-## Issues
+### Issues
 
 Please add issues to the [shared issues
 list](https://github.com/epimorphics/hmlr-linked-data/issues)
-
-## Additional Information
 
 ### Deployment
 
