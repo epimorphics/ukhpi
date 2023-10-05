@@ -358,6 +358,8 @@ We represent these as follows:
 |  | % annual change | Existing properties |
 |  | sales volume | Existing properties
 
+## Additional Information
+
 ### Coding standards
 
 `rubocop` should always return a clean status with no warnings.
