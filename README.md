@@ -16,70 +16,6 @@ Code in this repository is open-source under the MIT license. The UKHPI data
 itself is freely available under the terms of the [Open Government
 License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 
-## Outline domain model
-
-In the 2017 update, we extended the display to present all of the underlying
-statistics calculated by ONS. In addition to the figures by property type (all,
-detached houses, semi-detached, terraced and flat/maisonette), there are also
-figures for property status (new build vs. existing), buyer status (first-time
-buyer or not), and funding status (paid cash or bought with a mortgage).  For
-each of these figures, multiple indicators are calculated: the statistical
-index, the percentage change (monthly and annual) and the average price. For
-some of the statistics, a sales volume indicator is also available.
-
-We represent these as follows:
-
-| theme | indicator | statistic |
-| --- | --- | --- |
-| Type of property | index | All property types |
-|  | average price | All property types |
-|  | % monthly change | All property types |
-|  | % annual change | All property types |
-|  | sales volume | All property types |
-|  | index | Detached houses |
-|  | average price | Detached houses |
-|  | % monthly change | Detached houses |
-|  | % annual change | Detached houses |
-|  | index | Semi-detached houses |
-|  | average price | Semi-detached houses |
-|  | % monthly change | Semi-detached houses |
-|  | % annual change | Semi-detached houses |
-|  | index | Terraced houses |
-|  | average price | Terraced houses |
-|  | % monthly change | Terraced houses |
-|  | % annual change | Terraced houses |
-|  | index | Flats and maisonettes |
-|  | average price | Flats and maisonettes |
-|  | % monthly change | Flats and maisonettes |
-|  | % annual change | Flats and maisonettes |
-| Buyer status | index | First-time buyers |
-|  | average price | First-time buyers |
-|  | % monthly change | First-time buyers |
-|  | % annual change | First-time buyers |
-|  | index | Former owner-occupiers |
-|  | average price | Former owner-occupiers |
-|  | % monthly change | Former owner-occupiers |
-|  | % annual change | Former owner-occupiers |
-| Funding status | index | Cash purchases |
-|  | average price | Cash purchases |
-|  | % monthly change | Cash purchases |
-|  | % annual change | Cash purchases |
-|  | sales volume | Cash purchases |
-|  | index | Mortgage purchases |
-|  | average price | Mortgage purchases |
-|  | % monthly change | Mortgage purchases |
-|  | % annual change | Mortgage purchases |
-|  | sales volume | Mortgage purchases |
-| Property status | index | New build |
-|  | average price | New build |
-|  | % monthly change | New build |
-|  | % annual change | New build |
-|  | sales volume | New build
-|  | index | Existing properties |
-|  | average price | Existing properties |
-|  | % monthly change | Existing properties |
-|  | % annual change | Existing properties |
-|  | sales volume | Existing properties
 ## Installing dependencies
 
 The app currently depends on Ruby version 2.6.x. The actual version is specified
@@ -356,6 +292,71 @@ future reference:
 - Finally, the application is published on
   <https://hmlr-dev-pres.epimorphics.net/app/ukhpi/> for the Plymouth team to
   test.
+
+## Outline domain model
+
+In the 2017 update, we extended the display to present all of the underlying
+statistics calculated by ONS. In addition to the figures by property type (all,
+detached houses, semi-detached, terraced and flat/maisonette), there are also
+figures for property status (new build vs. existing), buyer status (first-time
+buyer or not), and funding status (paid cash or bought with a mortgage).  For
+each of these figures, multiple indicators are calculated: the statistical
+index, the percentage change (monthly and annual) and the average price. For
+some of the statistics, a sales volume indicator is also available.
+
+We represent these as follows:
+
+| theme | indicator | statistic |
+| --- | --- | --- |
+| Type of property | index | All property types |
+|  | average price | All property types |
+|  | % monthly change | All property types |
+|  | % annual change | All property types |
+|  | sales volume | All property types |
+|  | index | Detached houses |
+|  | average price | Detached houses |
+|  | % monthly change | Detached houses |
+|  | % annual change | Detached houses |
+|  | index | Semi-detached houses |
+|  | average price | Semi-detached houses |
+|  | % monthly change | Semi-detached houses |
+|  | % annual change | Semi-detached houses |
+|  | index | Terraced houses |
+|  | average price | Terraced houses |
+|  | % monthly change | Terraced houses |
+|  | % annual change | Terraced houses |
+|  | index | Flats and maisonettes |
+|  | average price | Flats and maisonettes |
+|  | % monthly change | Flats and maisonettes |
+|  | % annual change | Flats and maisonettes |
+| Buyer status | index | First-time buyers |
+|  | average price | First-time buyers |
+|  | % monthly change | First-time buyers |
+|  | % annual change | First-time buyers |
+|  | index | Former owner-occupiers |
+|  | average price | Former owner-occupiers |
+|  | % monthly change | Former owner-occupiers |
+|  | % annual change | Former owner-occupiers |
+| Funding status | index | Cash purchases |
+|  | average price | Cash purchases |
+|  | % monthly change | Cash purchases |
+|  | % annual change | Cash purchases |
+|  | sales volume | Cash purchases |
+|  | index | Mortgage purchases |
+|  | average price | Mortgage purchases |
+|  | % monthly change | Mortgage purchases |
+|  | % annual change | Mortgage purchases |
+|  | sales volume | Mortgage purchases |
+| Property status | index | New build |
+|  | average price | New build |
+|  | % monthly change | New build |
+|  | % annual change | New build |
+|  | sales volume | New build
+|  | index | Existing properties |
+|  | average price | Existing properties |
+|  | % monthly change | Existing properties |
+|  | % annual change | Existing properties |
+|  | sales volume | Existing properties
 
 ### Coding standards
 
