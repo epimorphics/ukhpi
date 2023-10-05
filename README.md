@@ -16,60 +16,6 @@ Code in this repository is open-source under the MIT license. The UKHPI data
 itself is freely available under the terms of the [Open Government
 License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
 
-## Updating geographies
-
-Over many years, the boundaries of UK Local Authorities (LA) change. Sometimes
-multiple adjacent authorities merge to for a new unitary authority (UA), or
-sometimes a unitary authority is split off from an existing LA (e.g. City of
-Plymouth).
-
-In this case, we need to update two data sources within the application, and
-coordinate this change with HMLR (and, by extension, ONS).
-
-For example, in 2020 we updated the app due to various changes in LA boundaries,
-including the creation of the Bournemouth, Christchurch and Poole UA. The
-timeline of these changes was fairly typical, so we've documented it here for
-future reference:
-
-- April 2019: new boundaries go into effect.
-- Feb 2020: ONS perform their (single) yearly update of location tables.
-- March 2020: HMLR provided Epimorphics with a collection of test data,
-  including the new regions table, as Turtle (`.ttl`) files.
-- March 2020: we loaded the test data into a dev server in order to re-run the
-  [`rails ukhpi:locations` task](#rails-script-tasks). This task updates the
-  cached Ruby and Javascript locations tables, to save the application having to
-  query the API every time a location is referred to.
-- In order to update the map UI in UKHPI, we need to regenerate the
-  `ONS-Geographies` GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has
-  a Feature Migration Engine (FME) script on his system that automates this.
-
-  We need to simplify the outlines, because otherwise the generated GeoJSON file
-  is enormous. Doing the simplification in FME means that there are no gaps
-  between adjacent authorities as the outlines are compressed.
-
-  The basic process is:
-
-    1. Find and download the relevant shapefile from the ONS geographies portal.
-    2. Run the FME script to convert the shapefile GeoJSON, simplifying the
-    outlines along the way.
-    3. Once the initial GeoJSON file is produced, there is a simple shellscript
-  to regularise the property names in the GeoJSON, see
-  `bin/ons-geojson-cleanup`.
-
-  The core issue is that the application code expects the GSS code for a
-  location to be `code` and the location name to be `name`. In the ONS
-  shapefile, the GSS code can be, for example, `rgn18cd` and the name `rgn18nm`.
-
-  Rather than have the code adapt to these, assuming they may change each year,
-  it was easier to have a data-cleansing task. It could have been a rake task,
-  but there are some Linux command utilities that do the job very easily. The
-  code will need to be changed to reference the new GeoJSON file, i.e.
-  `app/javascript/data/ONS-Geographies-$YEAR.json`.
-
-- Finally, the application is published on
-  <https://hmlr-dev-pres.epimorphics.net/app/ukhpi/> for the Plymouth team to
-  test.
-
 ## Outline domain model
 
 In the 2017 update, we extended the display to present all of the underlying
@@ -356,6 +302,60 @@ For running a proxy to mimic production and join multple services together see
 the information found in the
 [simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
 repository.
+
+## Updating geographies
+
+Over many years, the boundaries of UK Local Authorities (LA) change. Sometimes
+multiple adjacent authorities merge to for a new unitary authority (UA), or
+sometimes a unitary authority is split off from an existing LA (e.g. City of
+Plymouth).
+
+In this case, we need to update two data sources within the application, and
+coordinate this change with HMLR (and, by extension, ONS).
+
+For example, in 2020 we updated the app due to various changes in LA boundaries,
+including the creation of the Bournemouth, Christchurch and Poole UA. The
+timeline of these changes was fairly typical, so we've documented it here for
+future reference:
+
+- April 2019: new boundaries go into effect.
+- Feb 2020: ONS perform their (single) yearly update of location tables.
+- March 2020: HMLR provided Epimorphics with a collection of test data,
+  including the new regions table, as Turtle (`.ttl`) files.
+- March 2020: we loaded the test data into a dev server in order to re-run the
+  [`rails ukhpi:locations` task](#rails-script-tasks). This task updates the
+  cached Ruby and Javascript locations tables, to save the application having to
+  query the API every time a location is referred to.
+- In order to update the map UI in UKHPI, we need to regenerate the
+  `ONS-Geographies` GeoJSON file. [Alex](mailto:alex.coley@epimorphics.com) has
+  a Feature Migration Engine (FME) script on his system that automates this.
+
+  We need to simplify the outlines, because otherwise the generated GeoJSON file
+  is enormous. Doing the simplification in FME means that there are no gaps
+  between adjacent authorities as the outlines are compressed.
+
+  The basic process is:
+
+    1. Find and download the relevant shapefile from the ONS geographies portal.
+    2. Run the FME script to convert the shapefile GeoJSON, simplifying the
+    outlines along the way.
+    3. Once the initial GeoJSON file is produced, there is a simple shellscript
+  to regularise the property names in the GeoJSON, see
+  `bin/ons-geojson-cleanup`.
+
+  The core issue is that the application code expects the GSS code for a
+  location to be `code` and the location name to be `name`. In the ONS
+  shapefile, the GSS code can be, for example, `rgn18cd` and the name `rgn18nm`.
+
+  Rather than have the code adapt to these, assuming they may change each year,
+  it was easier to have a data-cleansing task. It could have been a rake task,
+  but there are some Linux command utilities that do the job very easily. The
+  code will need to be changed to reference the new GeoJSON file, i.e.
+  `app/javascript/data/ONS-Geographies-$YEAR.json`.
+
+- Finally, the application is published on
+  <https://hmlr-dev-pres.epimorphics.net/app/ukhpi/> for the Plymouth team to
+  test.
 
 ### Coding standards
 
