@@ -1,7 +1,7 @@
 .PHONY:	assets clean image lint publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
-ALPINE_VERSION?=3.12
+ALPINE_VERSION?=3.13
 AWS_REGION?=eu-west-1
 BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
