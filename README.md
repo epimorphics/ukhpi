@@ -4,6 +4,10 @@ This is the repo for the application that presents UKHPI open data on behalf of
 Land Registry (England and Wales), Registers of Scotland, Land and Property
 Services (Northern Ireland) and the UK Office for National Statistics (ONS).
 
+Please see the other repositories in the [HM Land Registry Open
+Data](https://github.com/epimorphics/hmlr-linked-data/) project for more
+details.
+
 Development work was carried out by [Epimorphics
 Ltd](http://www.epimorphics.com), funded by [HM Land
 Registry](https://www.gov.uk/government/organisations/land-registry).
@@ -11,6 +15,229 @@ Registry](https://www.gov.uk/government/organisations/land-registry).
 Code in this repository is open-source under the MIT license. The UKHPI data
 itself is freely available under the terms of the [Open Government
 License](https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/)
+
+## Installing dependencies
+
+The app currently depends on Ruby version 2.6.x. The actual version is specified
+in the `.ruby-version` file, which can be used with
+[rbenv](https://github.com/rbenv/rbenv) to install the appropriate version
+locally. The `.ruby-version` file will also determine the version of Ruby that
+will be installed in the Docker image as part of the automated build and deploy
+process.
+
+To install on the dev machine:
+
+```sh
+git clone git@github.com:epimorphics/ukhpi.git
+cd ukhpi
+bundle install
+yarn install
+```
+
+## Running the data API locally
+
+### Prerequisites
+
+The application communicates with the HMLR data API (which uses Sapi-NT) to
+provide the data to be displayed. The actual API location is specified by the
+environment variable `API_SERVICE_URL`.
+
+When developing UKHPI locally, it is necessary to have a dev instance of the API
+available. Since, for operations reasons, the actual service URL is not exposed
+to the open internet, you will need to run a local instance of the service.
+
+This follows the same pattern as [the PPD
+app](https://github.com/epimorphics/ppd-explorer), and developers can run a
+Docker container that defines the SapiNT API directly from the AWS Docker
+registry. To do this, you will need:
+
+- AWS IAM credentials to connect to the HMLR AWS account
+- the ECR credentials helper installed locally (see
+  [here](https://github.com/awslabs/amazon-ecr-credential-helper))
+- Setting the contents of your `{HOME}/.docker/config.json` file to be:
+
+```sh
+{
+ "credsStore": "ecr-login"
+}
+```
+
+This configures the Docker daemon to use the credential helper for _all_ Amazon
+ECR registries.
+
+To use a credential helper for a specific ECR registry[^1], create a
+`credHelpers` section with the URI of your ECR registry:
+
+```sh
+{
+  [...]
+  "credHelpers": {
+    "public.ecr.aws": "ecr-login",
+    "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
+  }
+}
+```
+
+The local application can then connect to the triple store via the `data-api`
+service.
+
+### Running the API
+
+The easiest way to do this is via a local docker container. The `data-api` image
+can be built from [lr-data-api
+repository](https://github.com/epimorphics/lr-data-api). or pulled from Amazon
+Elastic Container Registry
+[ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+Once you have a local copy of the required `data-api` image, to run the Data API
+as a docker container:
+
+```sh
+docker run --network dnet -p 8888:8080 --rm --name data-api \
+    -e SERVER_DATASOURCE_ENDPOINT=https://landregistry.data.gov.uk/landregistry/query \
+    018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
+```
+
+Which then should produce something like:
+
+```text
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::        (v2.2.0.RELEASE)
+
+{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
+"thread_name":"main","level":"INFO","level_value":20000,
+"message":"No active profile set, falling back to default profiles: default"}
+```
+
+The latest images can be found here for
+[dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml)
+and
+[production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
+
+The identity of the Docker image will change periodically so the full list of
+versions can be found at [AWS
+ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
+
+N.B. Port 8080 should be avoided to allow for a reverse proxy to run on this
+port.
+
+With this set up, the api service is available on `http://localhost:8888` from
+the host or `http://data-api:8080` from inside other docker containers.
+
+Note: It is advisable to run a local docker bridge network to mirror production
+and development environments.
+
+Running an HMLR application as a docker image from the respective `Makefile`
+will set up the local docker bridge network automatically, but to confirm this
+run:
+
+```sh
+docker network inspect dnet
+```
+
+If needed, to create the docker network run:
+
+```sh
+docker network create dnet
+```
+
+## Running the app
+
+### Locally
+
+Assuming the `Data API` is running on `http://localhost:8888` (the default), to
+start the app locally:
+
+```sh
+API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> make server
+```
+
+And then visit <http://localhost:3002>
+
+or, to start within a sub-directory, use the following command:
+
+```sh
+API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> RAILS_RELATIVE_URL_ROOT=/app/ukhpi make server
+```
+
+And then visit <http://localhost:3002/app/ukhpi>.
+
+N.B. The default for `RAILS_ENV` is `production` if omitted.
+
+### As a Docker image
+
+It can be useful to check the compiled Docker image, that will be run by the
+production installation, locally yourself. Assuming you have the `Data API`
+running in docker, then you can build and run the Docker image for the app
+itself as follows:
+
+```sh
+make image run
+```
+
+or, if the image is already built, simply:
+
+```sh
+make run
+```
+
+You will be able to follow the progress of the invocation in the terminal:
+
+```sh
+make run
+Starting ukhpi ...
+Using docker network dnet
+{"ts":"2022-03-21T11:12:27.340Z","level":"INFO","message":"API_SERVICE_URL=http://data-api:8080"}
+{"ts":"2022-03-21T11:12:34.970Z","level":"INFO","message":"exec ./bin/rails server -e production -b 0.0.0.0"}
+```
+
+Assuming the Docker container starts up OK, you can again access the application
+at <http://localhost:3002/app/ukhpi/>
+
+N.B. In `production` mode, `SECRET_KEY_BASE` is also required. It is insufficient to
+just set this as the value must be exported _**before**_ running the commands
+above. i.e.
+
+```sh
+export SECRET_KEY_BASE=$(./bin/rails secret)
+```
+
+### Development and Production mode differences
+
+Applications running in `development` mode default to not use a sub-directory to
+aid stand-alone development.
+
+Applications running in `production` mode default to use a sub-directory, i.e
+`/app/ukhpi`.
+
+In each case, this is achieved by assigning the `config.relative_url_root`
+property to the appropriate "root" set within the respective environment file:
+`config/environments/(development|production).rb`.
+
+If need be, `config.relative_url_root` may by overridden by means of the
+`RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
+require rebuilding the assets or docker image when running inside docker.
+
+### Running the complete HMLR suite locally
+
+Then entire HLMR suite of applications can be run locally as individual rails
+servers in `development` mode as noted
+[above](#running-the-app-locally); however, when deployed, the HMLR
+applications will be docker images and run behind a reverse proxy to route to
+the appropriate application based on the request path.
+
+In order to simplifiy the proxy configuration we retain the original path where
+possible.
+
+For running a proxy to mimic production and join multple services together see
+the information found in the
+[simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
+repository.
 
 ## Updating geographies
 
@@ -131,226 +358,7 @@ We represent these as follows:
 |  | % annual change | Existing properties |
 |  | sales volume | Existing properties
 
-## Developer notes
-
-### Installing dependencies
-
-The app currently depends on Ruby version 2.6.x. The actual version is specified
-in the `.ruby-version` file, which can be used with
-[rbenv](https://github.com/rbenv/rbenv) to install the appropriate version
-locally. The `.ruby-version` file will also determine the version of Ruby that
-will be installed in the Docker image as part of the automated build and deploy
-process.
-
-To install on the dev machine:
-
-```sh
-git clone git@github.com:epimorphics/ukhpi.git
-cd ukhpi
-bundle install
-yarn install
-```
-
-### Accessing the Data API locally
-
-The application communicates with the HMLR data API (which uses Sapi-NT) to
-provide the data to be displayed. The actual API location is specified by the
-environment variable `API_SERVICE_URL`.
-
-When developing UKHPI locally, it is necessary to have a dev instance of the API
-available. Since, for operations reasons, the actual service URL is not exposed
-to the open internet, you will need to run a local instance of the service.
-
-This follows the same pattern as [the PPD
-app](https://github.com/epimorphics/ppd-explorer), and developers can run a
-Docker container that defines the SapiNT API directly from the AWS Docker
-registry. To do this, you will need:
-
-- AWS IAM credentials to connect to the HMLR AWS account
-- the ECR credentials helper installed locally (see
-  [here](https://github.com/awslabs/amazon-ecr-credential-helper))
-- Setting the contents of your `{HOME}/.docker/config.json` file to be:
-
-```sh
-{
- "credsStore": "ecr-login"
-}
-```
-
-This configures the Docker daemon to use the credential helper for _all_ Amazon
-ECR registries.
-
-To use a credential helper for a specific ECR registry[^1], create a
-`credHelpers` section with the URI of your ECR registry:
-
-```sh
-{
-  [...]
-  "credHelpers": {
-    "public.ecr.aws": "ecr-login",
-    "018852084843.dkr.ecr.eu-west-1.amazonaws.com": "ecr-login"
-  }
-}
-```
-
-The local application can then connect to the triple store via the `data-api`
-service.
-
-### Running the Data API locally
-
-The easiest way to do this is via a local docker container. The `data-api` image
-can be built from [lr-data-api
-repository](https://github.com/epimorphics/lr-data-api). or pulled from Amazon
-Elastic Container Registry
-[ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
-
-Once you have a local copy of the required `data-api` image, to run the Data API
-as a docker container:
-
-```sh
-docker run --network dnet -p 8888:8080 --rm --name data-api \
-    -e SERVER_DATASOURCE_ENDPOINT=https://landregistry.data.gov.uk/landregistry/query \
-    018852084843.dkr.ecr.eu-west-1.amazonaws.com/epimorphics/lr-data-api/dev:1.0-SNAPSHOT_a5590d2
-```
-
-Which then should produce something like:
-
-```text
-  .   ____          _            __ _ _
- /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
- \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-  '  |____| .__|_| |_|_| |_\__, | / / / /
- =========|_|==============|___/=/_/_/_/
- :: Spring Boot ::        (v2.2.0.RELEASE)
-
-{"ts":"2022-03-21T16:12:26.585Z","version":"1","logger_name":"com.epimorphics.SapiNtApplicationKt",
-"thread_name":"main","level":"INFO","level_value":20000,
-"message":"No active profile set, falling back to default profiles: default"}
-```
-
-The latest images can be found here for
-[dev](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/dev/tags.yml)
-and
-[production](https://github.com/epimorphics/hmlr-ansible-deployment/blob/master/ansible/group_vars/prod/tags.yml).
-
-The identity of the Docker image will change periodically so the full list of
-versions can be found at [AWS
-ECR](https://eu-west-1.console.aws.amazon.com/ecr/repositories/private/018852084843/epimorphics/lr-data-api/dev?region=eu-west-1)
-
-N.B. Port 8080 should be avoided to allow for a reverse proxy to run on this
-port.
-
-With this set up, the api service is available on `http://localhost:8888` from
-the host or `http://data-api:8080` from inside other docker containers.
-
-Note: It is advisable to run a local docker bridge network to mirror production
-and development environments.
-
-Running an HMLR application as a docker image from the respective `Makefile`
-will set up the local docker bridge network automatically, but to confirm this
-run:
-
-```sh
-docker network inspect dnet
-```
-
-If needed, to create the docker network run:
-
-```sh
-docker network create dnet
-```
-
-### Running the app locally
-
-Assuming the `Data API` is running on `http://localhost:8888` (the default), to
-start the app locally:
-
-```sh
-API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> make server
-```
-
-And then visit <http://localhost:3002>
-
-or, to start within a sub-directory, use the following command:
-
-```sh
-API_SERVICE_URL=http://localhost:8888 RAILS_ENV=<environment> RAILS_RELATIVE_URL_ROOT=/app/ukhpi make server
-```
-
-And then visit <http://localhost:3002/app/ukhpi>.
-
-N.B. The default for `RAILS_ENV` is `production` if omitted.
-
-### Running the app locally as a Docker image
-
-It can be useful to check the compiled Docker image, that will be run by the
-production installation, locally yourself. Assuming you have the `Data API`
-running in docker, then you can build and run the Docker image for the app
-itself as follows:
-
-```sh
-make image run
-```
-
-or, if the image is already built, simply:
-
-```sh
-make run
-```
-
-You will be able to follow the progress of the invocation in the terminal:
-
-```sh
-make run
-Starting ukhpi ...
-Using docker network dnet
-{"ts":"2022-03-21T11:12:27.340Z","level":"INFO","message":"API_SERVICE_URL=http://data-api:8080"}
-{"ts":"2022-03-21T11:12:34.970Z","level":"INFO","message":"exec ./bin/rails server -e production -b 0.0.0.0"}
-```
-
-Assuming the Docker container starts up OK, you can again access the application
-at <http://localhost:3002/app/ukhpi/>
-
-N.B. In `production` mode, `SECRET_KEY_BASE` is also required. It is insufficient to
-just set this as the value must be exported _**before**_ running the commands
-above. i.e.
-
-```sh
-export SECRET_KEY_BASE=$(./bin/rails secret)
-```
-
-### Development and Production mode differences
-
-Applications running in `development` mode default to not use a sub-directory to
-aid stand-alone development.
-
-Applications running in `production` mode default to use a sub-directory, i.e
-`/app/ukhpi`.
-
-In each case, this is achieved by assigning the `config.relative_url_root`
-property to the appropriate "root" set within the respective environment file:
-`config/environments/(development|production).rb`.
-
-If need be, `config.relative_url_root` may by overridden by means of the
-`RAILS_RELATIVE_URL_ROOT` environment variable, althought this could also
-require rebuilding the assets or docker image when running inside docker.
-
-## Running the complete HMLR suite locally
-
-Then entire HLMR suite of applications can be run locally as individual rails
-servers in `development` mode as noted
-[above](#running-the-app-locally); however, when deployed, the HMLR
-applications will be docker images and run behind a reverse proxy to route to
-the appropriate application based on the request path.
-
-In order to simplifiy the proxy configuration we retain the original path where
-possible.
-
-For running a proxy to mimic production and join multple services together see
-the information found in the
-[simple-web-proxy](https://github.com/epimorphics/simple-web-proxy/edit/main/README.md)
-repository.
+## Additional Information
 
 ### Coding standards
 
@@ -365,7 +373,7 @@ below[^2]:
 rake test
 ```
 
-## Runtime Configuration environment variables
+### Runtime Configuration environment variables
 
 A number of environment variables to determine the runtime behaviour of the
 application:
@@ -380,12 +388,10 @@ application:
 |                            | This is handled automatically when starting a docker container, or the `server` `make` target | |
 | `SENTRY_API_KEY`           | The Data Source Name (DSN) for sending reports to the Sentry account                   | None                       |
 
-## Issues
+### Issues
 
 Please add issues to the [shared issues
 list](https://github.com/epimorphics/hmlr-linked-data/issues)
-
-## Additional Information
 
 ### Deployment
 
