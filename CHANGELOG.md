@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## 1.7.2 - 2023-11-28
+
+- (Jon) Update to add `www` to the ONS url links on the landing page [GH-133(https://github.com/epimorphics/hmlr-linked-data/issues/133)
+
 ## 1.7.1 - 2023-06-23
 
 - (Jon) Updated the `data_service_api` gem to the latest 1.4.1 patch release
