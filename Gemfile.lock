@@ -187,7 +187,7 @@ GEM
       ruby-progressbar
     mocha (1.13.0)
     multipart-post (2.1.1)
-    nio4r (2.5.9)
+    nio4r (2.7.0)
     nokogiri (1.13.10)
       mini_portile2 (~> 2.8.0)
       racc (~> 1.4)
@@ -196,7 +196,7 @@ GEM
     parser (3.0.1.1)
       ast (~> 2.4.1)
     public_suffix (5.0.3)
-    puma (6.3.1)
+    puma (6.4.2)
       nio4r (~> 2.0)
     racc (1.7.1)
     rack (2.2.6.4)
