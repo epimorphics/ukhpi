@@ -2,6 +2,12 @@
 
 ## unreleased
 
+## 1.7.3 - 2024-03-15
+
+- (Jon) Updated puma.rb configuration to accept both `RAILS_MIN_THREADS` and
+  `RAILS_MAX_THREADS` environment variables to allow a more flexible configuration
+  for the application to run in different environments.
+  [GH-143](https://github.com/epimorphics/hmlr-linked-data/issues/143)
 - (Jon) Updated the UKHPI contact form links to point to the new contact form
   page; both the English and Welsh versions
   [GH-135](https://github.com/epimorphics/hmlr-linked-data/issues/135)
