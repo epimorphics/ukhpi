@@ -2,6 +2,8 @@
 
 ## unreleased
 
+## 1.7.3 - 2024-03-15
+
 - (Jon) Updated puma.rb configuration to accept both `RAILS_MIN_THREADS` and
   `RAILS_MAX_THREADS` environment variables to allow a more flexible configuration
   for the application to run in different environments.
