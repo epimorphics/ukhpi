@@ -7,33 +7,57 @@
 # Ignore vscode config
 .vscode
 
-# Ignore bundler config.
-!/log/.keep
-.byebug_history
-.yarn-integrity
-.tags
-!/log/.keep
+## Ignore bundler configuration:
 /.bundle
+/vendor/bundle
+/lib/bundler/man/
+
+# Ignore all logfiles and tempfiles.
 /log/*
-/node_modules
+/tmp/*
+!/log/.keep
+!/tmp/.keep
+
+# Ignore Byebug command history file.
+.byebug_history
+
+# Ignore node_modules
+node_modules/
+
+# Ignore precompiled javascript packs
 /public/packs
 /public/packs-test
-/tmp
-bower_components/
-coverage
+/public/assets
+
+# Ignore yarn files
+/yarn-error.log
+yarn-debug.log*
+.yarn-integrity
+
+# Ignore uploaded files in development
+/storage/*
+!/storage/.keep
+/public/uploads
+
+### Rails specific ###
+/public/system
+/coverage/
+/spec/tmp
+
+# Ignore files specific to the development environment
 fc.json
 fc_simple.json
 index-names.txt
 index.json
-node_modules/
-public/assets/
-query-results.json
 tags
 uk.geojson
 uk.json
-yarn-debug.log*
-yarn-error.log
 
+# Used by the location.rake task, don't delete or commit
+query-results.json
+
+# Ignore dot files used by environment or IDE tools
+.tags
 .tool-versions
 .github-token
 .npmrc
