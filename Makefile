@@ -102,7 +102,7 @@ tag:
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/rails test:unit
+	@./bin/rails test
 	@echo "Running system tests ..."
 	@./bin/rails test:system
 
