@@ -91,7 +91,7 @@ Rails.application.configure do
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ukhpi')
 
   # API location is specified in the environment but defaults to the dev service
-  config.api_service_url = ENV['API_SERVICE_URL']
+  config.api_service_url = ENV.fetch('API_SERVICE_URL')
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
