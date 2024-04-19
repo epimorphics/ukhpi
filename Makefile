@@ -37,9 +37,11 @@ ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
 assets: auth
-	@./bin/bundle config set --local without 'development test'
+	@echo "Installing all gems ..."
 	@./bin/bundle install
-	@yarn install
+	@echo "Installing yarn packages ..."
+	yarn install
+	@echo "Removing old compiled assets and compiling all the assets named in config.assets.precompile ..."
 	@./bin/rails assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
@@ -69,11 +71,7 @@ image: auth
 lint: assets
 	@./bin/bundle exec rubocop
 
-local:
-	@echo "Installing all gems ..."
-	@./bin/bundle install
-	@echo "Installing yarn packages ..."
-	yarn install
+local: assets
 	@echo "Starting local server ..."
 	@./bin/rails server -p ${PORT}
 
@@ -102,9 +100,7 @@ tag:
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/rails test
-	@echo "Running system tests ..."
-	@./bin/rails test:system
+	@./bin/bundle exec rake test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
