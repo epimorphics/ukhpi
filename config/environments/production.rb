@@ -4,7 +4,7 @@ Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
-  config.cache_classes = true
+  config.cache_classes = false
 
   # Eager load code on boot. This eager loads most of Rails and
   # your application in memory, allowing both threaded web servers
@@ -91,7 +91,7 @@ Rails.application.configure do
   config.relative_url_root = ENV.fetch('RAILS_RELATIVE_URL_ROOT', '/app/ukhpi')
 
   # API location is specified in the environment variable API_SERVICE_URL
-  config.api_service_url = ENV['API_SERVICE_URL']
+  config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
 
   # feature flag for showing the Welsh language switch affordance
   config.welsh_language_enabled = true
