@@ -1,4 +1,4 @@
-.PHONY:	assets auth check clean image lint publish realclean run tag test vars
+.PHONY:	assets check clean image lint publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 ALPINE_VERSION?=3.13
@@ -17,7 +17,7 @@ API_SERVICE_URL?=http://data-api:8080
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
-TAG?=$(shell printf '%s-%s-%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
+TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
 ${TAG}:
 	@echo ${TAG}
@@ -38,9 +38,7 @@ ${GITHUB_TOKEN}:
 
 assets:
 	@./bin/bundle install
-	@echo "Installing yarn packages ..."
-	yarn install
-	@echo "Removing old compiled assets and compiling all the assets named in config.assets.precompile ..."
+	@yarn install
 	@./bin/rails assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
