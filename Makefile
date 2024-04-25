@@ -1,4 +1,4 @@
-.PHONY:	assets auth check clean image lint local publish realclean run tag test vars
+.PHONY:	assets auth check clean image lint publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 ALPINE_VERSION?=3.13
@@ -70,10 +70,6 @@ image: auth
 
 lint: assets
 	@./bin/bundle exec rubocop
-
-local: assets
-	@echo "Starting local server ..."
-	@./bin/rails server -p ${PORT}
 
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
