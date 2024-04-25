@@ -38,7 +38,6 @@ ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
 assets:
-	@./bin/bundle config set --local without 'development'
 	@./bin/bundle install
 	@yarn install
 	@./bin/rails assets:clean assets:precompile
@@ -50,7 +49,7 @@ clean:
 	@@ rm -rf bundle coverage log node_modules
 
 image: auth
-	@echo Building ${REPO}:${TAG} ...
+	@echo Building ${NAME}:${TAG} ...
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
@@ -60,7 +59,7 @@ image: auth
 		--build-arg git_commit_hash=${COMMIT} \
 		--build-arg github_run_number=${GITHUB_RUN_NUMBER} \
 		--build-arg image_name=${NAME} \
-		--tag ${REPO}:${TAG} \
+		--tag ${NAME}:${TAG} \
 		.
 	@echo Done.
 
@@ -69,6 +68,7 @@ lint: assets
 
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
+	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
 	@docker push ${REPO}:${TAG} 2>&1
 	@echo Done.
 
@@ -77,7 +77,7 @@ realclean: clean
 
 run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
-	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${REPO}:${TAG}
+	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 server: assets start
 	@export SECRET_KEY_BASE=$(./bin/rails secret)
@@ -107,5 +107,6 @@ vars:
 	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "STAGE = ${STAGE}"
 	@echo "COMMIT = ${COMMIT}"
+	@echo "REPO = ${REPO}"
 	@echo "TAG = ${TAG}"
 	@echo "VERSION = ${VERSION}"
