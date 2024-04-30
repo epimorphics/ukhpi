@@ -1,4 +1,4 @@
-.PHONY:	assets clean image lint publish realclean run tag test vars
+.PHONY:	assets check clean image lint publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 ALPINE_VERSION?=3.13
@@ -7,7 +7,6 @@ BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.eu-west-1.amazonaws.com
 GPR_OWNER?=epimorphics
 NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
-SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 PORT?=3002
 RUBY_VERSION?=$(shell cat .ruby-version)
@@ -43,6 +42,9 @@ assets:
 	@./bin/rails assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
+
+check: lint test
+	@echo "All checks passed."
 
 clean:
 	@[ -d public/assets ] && ./bin/rails assets:clobber || :
@@ -91,7 +93,8 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@./bin/rails test
+	@echo "Running unit tests ..."
+	@./bin/bundle exec rake test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
@@ -102,7 +105,6 @@ vars:
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
-	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "STAGE = ${STAGE}"

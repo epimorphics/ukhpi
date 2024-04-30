@@ -39,21 +39,12 @@ gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
-  gem 'capybara_minitest_spec'
   gem 'haml-lint'
   gem 'json_expressions'
-  gem 'm'
-  gem 'minitest-rails', '~> 6.0'
-  gem 'minitest-reporters'
-  # gem 'minitest-spec-rails'
-  gem 'mocha'
   gem 'nokogiri', '1.13.10' # This is the highest version that supports Ruby 2.6
-  gem 'oj'
+  gem 'oj', '3.14.2' # This is the highest version that supports Ruby 2.6
   gem 'rubocop', require: false
-  gem 'selenium-webdriver'
-  gem 'simplecov', require: false
   gem 'tzinfo-data'
-  gem 'vcr'
 end
 
 group :development do
@@ -62,6 +53,18 @@ group :development do
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+end
+
+group :test do
+  gem 'capybara_minitest_spec'
+  gem 'm'
+  gem 'minitest-rails', '~> 6.0'
+  gem 'minitest-reporters'
+  # gem 'minitest-spec-rails'
+  gem 'mocha'
+  gem 'selenium-webdriver'
+  gem 'simplecov', '0.22.0'
+  gem 'vcr'
 end
 
 # TODO: For running the app locally for testing you can set this to your local path
