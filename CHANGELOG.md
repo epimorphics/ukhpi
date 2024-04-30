@@ -2,7 +2,7 @@
 
 ## unreleased
 
-## 1.7.4 - 2024-04-19
+## 1.7.4 - 2024-05-01
 
 - (Jon) Updated print presenter to use
   [`.try(:first)`](https://apidock.com/rails/Object/try) which resolves by
