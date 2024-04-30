@@ -17,6 +17,7 @@ jobs:
     uses:  "epimorphics/github-workflows/.github/workflows/deploy.yml@reusable"
     with:
       # Repostory specific
+      ansible_playbook: pres.yml
       ansible_repo:     epimorphics/hmlr-ansible-deployment
       ansible_repo_ref: master
       host_prefix:      hmlr
