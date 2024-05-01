@@ -6,8 +6,10 @@
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     %title
       = I18n.t('common.header.app_title')
+    - if Rails.env.production?
+      = render partial: 'common/google-analytics'
+      = csrf_meta_tags
     = stylesheet_link_tag 'application', media: 'all'
-    = csrf_meta_tags
     = render partial: 'common/favicons'
 
     - if @preferences
@@ -25,8 +27,8 @@
       .header-wrapper
         .header-global
           .header-logo
-            %a.content{ href: '/app/ukhpi', title: 'UK HPI' }
-              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'))
+            %a.content{ href: "#{Rails.application.config.relative_url_root}", title: t('common.header.home_link') }
+              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: '')
         .header-proposition
           .content
             %nav#proposition-menu

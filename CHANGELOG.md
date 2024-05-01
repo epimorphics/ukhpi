@@ -2,11 +2,25 @@
 
 ## unreleased
 
+## 1.7.4 - 2024-05-01
+
+- (Jon) Updated print presenter to use
+  [`.try(:first)`](https://apidock.com/rails/Object/try) which resolves by
+  returning `nil` without failing if the requested element does not have the
+  method `.first`, i.e. is empty or nil
+  [GH-396](https://github.com/epimorphics/ukhpi/issues/396)
+- (Jon) Updated the print template to include the Google Analytics tracking
+  script for the print page as well as importing shared header content for
+  unification of presentation
+- (Jon) Minor tweaks to the Makefile to remove duplicate variables (`SHORTNAME`)
+  as well as introducing new targets for `check` and `local` for streamlined
+  development tasks
+
 ## 1.7.3 - 2024-03-15
 
 - (Jon) Updated puma.rb configuration to accept both `RAILS_MIN_THREADS` and
-  `RAILS_MAX_THREADS` environment variables to allow a more flexible configuration
-  for the application to run in different environments.
+  `RAILS_MAX_THREADS` environment variables to allow a more flexible
+  configuration for the application to run in different environments.
   [GH-143](https://github.com/epimorphics/hmlr-linked-data/issues/143)
 - (Jon) Updated the UKHPI contact form links to point to the new contact form
   page; both the English and Welsh versions
@@ -32,7 +46,8 @@
   object and interpolating the variables, and which takes time. Therefore, it's
   recommended to pass blocks to the logger methods, as these are only evaluated
   if the output level is the same or included in the allowed level (i.e. lazy
-  loading). [Documentation](http://guides.rubyonrails.org/debugging_rails_applications.html#impact-of-logs-on-performance)
+  loading).
+  [Documentation](http://guides.rubyonrails.org/debugging_rails_applications.html#impact-of-logs-on-performance)
 - (Jon) Removed sentry logging from dev instance
 - (Jon) Improved logging status with allowance for the differences between 400
   and 500 errors handled by the same method.
