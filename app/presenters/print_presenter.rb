@@ -16,7 +16,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
     DownloadColumn.new(
       label: I18n.t('browse.print.reporting_period').html_safe,
       format: lambda do |row|
-        key = row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly'
+        key = row['ukhpi:refPeriodDuration'].try(:first) == 3 ? 'quarterly' : 'monthly'
         val = I18n.t("browse.print.#{key}")
         "<div class='u-text-centre'>#{val}</div>".html_safe
       end
@@ -24,7 +24,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
     DownloadColumn.new(
       label: I18n.t('statistic.volume'),
       format: lambda do |row|
-        val = row['ukhpi:salesVolume'].first
+        val = row['ukhpi:salesVolume'].try(:first)
         "<div class='u-text-right'>#{val}</div>".html_safe
       end
     )
@@ -127,7 +127,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
         stat: stat,
         sep: '<br />',
         format: lambda do |row|
-          val = row["ukhpi:#{ind&.root_name}#{stat.root_name}"].first
+          val = row["ukhpi:#{ind&.root_name}#{stat.root_name}"].try(:first)
           ValueFormatter.format(val,
                                 slug: ind&.root_name,
                                 template: "<div class='u-text-right'>%<formatted>s</div>")

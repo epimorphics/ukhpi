@@ -48,7 +48,6 @@ class ApplicationController < ActionController::Base
   end
   # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-
   # Set the user's preferred locale. An explicit locale set via
   # the URL param `lang` is preeminent, otherwise we look to the
   # user's preferred language specified via browser headers
