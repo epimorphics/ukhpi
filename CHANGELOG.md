@@ -1,6 +1,8 @@
 # Changes to the UKHPI app by version and date
 
-## unreleased
+## 1.7.5 - 2024-08
+
+- (Bogdan) Added alt text to application logo [GH-404](https://github.com/epimorphics/ukhpi/issues/404)
 
 ## 1.7.4 - 2024-04-19
 
