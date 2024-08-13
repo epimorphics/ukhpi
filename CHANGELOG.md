@@ -2,6 +2,8 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Increased contrast for search location input and map elements, as well
+  as all modal buttons [GH-408](https://github.com/epimorphics/ukhpi/issues/408)
 - (Bogdan) Increased contrast of modal warning message [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
 - (Bogdan) Increased contrast for modal close button and body [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
 - (Bogdan) Landing page links should now be more visible [GH-406](https://github.com/epimorphics/ukhpi/issues/406)
