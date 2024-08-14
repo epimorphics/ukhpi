@@ -2,6 +2,7 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Increased contrast for compare location dropdowns [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) Increased contrast for search location results, as well as when they
   are being focused [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) CSS Refactoring
