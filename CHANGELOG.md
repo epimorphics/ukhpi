@@ -2,6 +2,10 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Fixed a bug where CSS was applied to the wrong element, causing search
+  location results to be displayed incorrectly
+- (Bogdan) Increased focusable area for close button on modal and hide graph button
+  [GH-411](https://github.com/epimorphics/ukhpi/issues/411)
 - (Bogdan) Increased contrast for search location input and map elements, as well
   as all modal buttons [GH-408](https://github.com/epimorphics/ukhpi/issues/408)
 - (Bogdan) Increased contrast of modal warning message [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
