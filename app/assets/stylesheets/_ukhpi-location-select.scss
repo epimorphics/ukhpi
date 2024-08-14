@@ -8,6 +8,7 @@
 
   .el-dialog__close {
     color: #000000;
+    padding: 4px;
   }
 
   .el-input__inner {
@@ -18,7 +19,9 @@
     color: #a4742b;
   }
 
-  .el-button {
-    color: #000000;
+  .el-dialog__footer {
+    .el-button {
+      color: #000000;
+    }
   }
 }
