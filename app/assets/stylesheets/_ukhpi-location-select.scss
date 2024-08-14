@@ -1,14 +1,22 @@
 .o-select-location {
   text-align: left;
 
-  .el-dialog__body {
-    padding: 5px 20px;
-    color: #000000;
-  }
+  .el-dialog {
+    &__body {
+      padding: 5px 20px;
+      color: #000000;
+    }
 
-  .el-dialog__close {
-    color: #000000;
-    padding: 4px;
+    &__close {
+      color: #000000;
+      padding: 4px;
+    }
+
+    &__footer {
+      .el-button--default {
+        color: #000000;
+      }
+    }
   }
 
   .el-input__inner {
@@ -19,9 +27,6 @@
     color: #a4742b;
   }
 
-  .el-dialog__footer {
-    .el-button {
-      color: #000000;
     }
   }
 }
