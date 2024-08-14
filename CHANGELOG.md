@@ -2,6 +2,9 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Increased contrast for search location results, as well as when they
+  are being focused [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) CSS Refactoring
 - (Bogdan) Fixed a bug where CSS was applied to the wrong element, causing search
   location results to be displayed incorrectly
 - (Bogdan) Increased focusable area for close button on modal and hide graph button
