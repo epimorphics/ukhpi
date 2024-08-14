@@ -19,7 +19,9 @@
     color: #a4742b;
   }
 
-  .el-dialog__footer .el-button {
-    color: #000000;
+  .el-dialog__footer {
+    .el-button {
+      color: #000000;
+    }
   }
 }
