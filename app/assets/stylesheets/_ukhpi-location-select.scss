@@ -30,6 +30,10 @@
   .o-search-location__results {
     .el-button--text {
       color: #0050a2;
+
+      &:focus, &:hover {
+        color: #007dff;
+      }
     }
   }
 }
