@@ -27,7 +27,11 @@
     color: #a4742b;
   }
 
-  .o-search-location__results {
+  .o-search-location__result {
+    &:focus, &:hover {
+      background-color: #e6e6e6;
+    }
+
     .el-button--text {
       color: #0050a2;
 
