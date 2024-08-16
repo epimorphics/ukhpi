@@ -1,7 +1,8 @@
 = content_for(:title, "Hanes Newid")
 
 %section#main.c-changelog
-  %h1.heading-large Mynegai Prisiau Tai y DU: hanes newid
+  %h1.heading-large
+    = yield(:title) + " - " + I18n.t('common.header.app_title')
 
   %h2.heading-medium Ebrill 2023 &ndash; Newidiadau i ddaearyddiaeth awdurdodau lleol yn Lloegr
 
