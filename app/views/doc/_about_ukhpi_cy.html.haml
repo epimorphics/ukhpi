@@ -1,7 +1,7 @@
 = content_for(:title, "Am")
 
 %h1.heading-large
-  = yield(:title) + " - " + I18n.t('common.header.app_title')
+  = I18n.t('common.header.app_title') + " : " + yield(:title)
 
 %h2.heading-medium
   Beth sydd wedi ei gynnwys yn Set Ddata’r Mynegai Prisiau Tai?
