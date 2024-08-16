@@ -1,4 +1,7 @@
-%h1.heading-large UK House Price Index Linked Data
+= content_for(:title, "About")
+
+%h1.heading-large
+  = I18n.t('common.header.app_title') + " : " + yield(:title)
 
 %h2.heading-medium
   What does the House Price Index Dataset consist of?

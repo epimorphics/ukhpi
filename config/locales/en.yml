@@ -238,8 +238,8 @@ en:
     dates_picker:
       select_dates: "change start or end date"
       date_range_prompt: "Change the date range"
-      start: "Start:"
-      end: "End:"
+      start: "Start"
+      end: "End"
 
 # old-------------
 

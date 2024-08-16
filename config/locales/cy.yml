@@ -238,8 +238,8 @@ cy:
     dates_picker:
       select_dates: "newid dyddiad dechrau neu ddiwedd"
       date_range_prompt: "Newid amrediad y dyddiadau"
-      start: "Dechrau:"
-      end: "Diwedd:"
+      start: "Dechrau"
+      end: "Diwedd"
 
   date:
     abbr_day_names:
