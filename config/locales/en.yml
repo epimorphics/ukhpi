@@ -172,7 +172,7 @@ en:
       data_graph: "See data graph"
       data_table: "See data table"
       compare: "Compare with location ..."
-      select_location: "select a diffent location"
+      select_location: "select a different location"
       cancel: "cancel"
       confirm: "confirm"
       print_table: "print this table"
