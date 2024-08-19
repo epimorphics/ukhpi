@@ -2,6 +2,7 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
 - (Bogdan) Added page titles for each individual view [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
 - (Bogdan) Set correct values for `aria-label` link attributes on the about page
