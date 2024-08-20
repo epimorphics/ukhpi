@@ -4,33 +4,19 @@
       <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
     </div>
     <div class='o-data-view__data-display'>
-      <el-tabs
-        v-model='activeTab'
-        @tab-click='onChangeTab'
-      >
-        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
-          <data-view-graph
-            :theme='theme'
-            :indicator='indicator'
-            :elementId='elementId'
-            :key='`data-view-graph-${theme}-${indicator}-${elementId}`'
-          >
-          </data-view-graph>
-        </el-tab-pane>
+      <el-tabs v-model='activeTab' @tab-click='onChangeTab'>
         <el-tab-pane :label='$t("js.action.data_table")' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
-          <data-view-table
-            :statistics='availableStatistics'
-            :indicator='indicator'
-            :theme='theme'
-            :key='`data-view-table-${theme}-${indicator}-${elementId}`'
-          >
+          <data-view-table :statistics='availableStatistics' :indicator='indicator' :theme='theme'
+            :key='`data-view-table-${theme}-${indicator}-${elementId}`'>
           </data-view-table>
         </el-tab-pane>
+        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
+          <data-view-graph :theme='theme' :indicator='indicator' :elementId='elementId'
+            :key='`data-view-graph-${theme}-${indicator}-${elementId}`'>
+          </data-view-graph>
+        </el-tab-pane>
         <el-tab-pane :label='$t("js.action.download")' :name='`download-tab${indicator.slug}-${theme.slug}`'>
-          <data-view-download
-            :theme='theme'
-            :indicator='indicator'
-          >
+          <data-view-download :theme='theme' :indicator='indicator'>
           </data-view-download>
         </el-tab-pane>
         <el-tab-pane :label='$t("js.action.compare")' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
@@ -88,7 +74,7 @@ export default {
     DataViewDownload,
   },
 
-  beforeMount() {
+  beforeMount () {
     const attrs = this.$el.attributes;
 
     for (let i = 0; i < attrs.length; i += 1) {
@@ -102,7 +88,7 @@ export default {
     }
   },
 
-  mounted() {
+  mounted () {
     this.checkStoreInitialised();
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
 
@@ -112,12 +98,12 @@ export default {
   computed: {
     /** @return The node ID that would have been assigned to this data view, given
      * the indicator and theme */
-    elementId() {
+    elementId () {
       const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
       return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
     },
 
-    selectedLocation() {
+    selectedLocation () {
       return this.$store.state.location;
     },
 
@@ -131,7 +117,7 @@ export default {
   },
 
   methods: {
-    checkStoreInitialised() {
+    checkStoreInitialised () {
       // we only need this to happen once, so the page renderer sets a flag on
       // the first data-view component on the page
       if (this.first) {
@@ -139,7 +125,7 @@ export default {
       }
     },
 
-    initialiseStore() {
+    initialiseStore () {
       this.$store.commit(INITIALISE, {
         location: this.location,
         fromDate: this.fromDate.date,
@@ -147,10 +133,10 @@ export default {
       });
     },
 
-    onChangeTab() {
+    onChangeTab () {
     },
 
-    onOpenCloseDataView({ id, closing }) {
+    onOpenCloseDataView ({ id, closing }) {
       if (this.elementId !== id) {
         return;
       }
@@ -162,7 +148,7 @@ export default {
     },
 
     /** Set the CSS class of the section element according to whether we are opening or closing */
-    updateOpenCloseState(id, closing) {
+    updateOpenCloseState (id, closing) {
       const node = document.getElementById(id);
       const cls = node.className.replace(
         /o-data-view--(open|closed)/,
@@ -172,7 +158,7 @@ export default {
     },
 
     /** Ensure that at least one statistic is selected, or we will have an empty graph */
-    ensureSomeSelectedStatisitics() {
+    ensureSomeSelectedStatisitics () {
       const stor = this.$store;
       const selectedStats = stor.state.selectedStatistics;
 
@@ -191,7 +177,7 @@ export default {
       }
     },
 
-    onCompareSelect() {
+    onCompareSelect () {
       const vm = this;
       const statistic =
         _.find(this.availableStatistics, stat => vm.$store.state.selectedStatistics[stat.slug]);
@@ -206,7 +192,7 @@ export default {
   },
 
   watch: {
-    selectedLocation() {
+    selectedLocation () {
       let name = this.selectedLocationLabel;
       let preposition = this.$t('preposition.in')
 
@@ -231,5 +217,4 @@ export default {
 };
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>
