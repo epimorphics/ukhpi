@@ -2,6 +2,7 @@
 
 ## 1.7.5 - 2024-08
 
+- (Bogdan) Data table is now the first tab to be focused when displaying data [GH-405](https://github.com/epimorphics/ukhpi/issues/405)
 - (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
 - (Bogdan) Added page titles for each individual view [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
