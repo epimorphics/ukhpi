@@ -56,7 +56,7 @@ table.el-month-table {
     background-color: $dark-blue;
     color: white;
   }
-  &.hover {
+  &.hover:not(.selected) {
     background-color: #e6e6e6;
   }
 }
