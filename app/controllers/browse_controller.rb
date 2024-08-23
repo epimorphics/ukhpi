@@ -3,7 +3,7 @@
 # Controller for the main user experience of browsing the UKHPI statistics.
 # Usually the primary interaction will be via JavaScript and XHR, but we also
 # support non-JS access by setting browse preferences in the `edit` action.
-class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLength
+class BrowseController < ApplicationController
   layout 'webpack_application'
 
   def show
@@ -128,7 +128,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     }.merge(new_params))
   end
 
-  def render_request_error(user_selections, status) # rubocop:disable Metrics/MethodLength
+  def render_request_error(user_selections, status)
     respond_to do |format|
       @view_state = { user_selections: user_selections }
       request_status = status == 400 ? :bad_request : :internal_server_error

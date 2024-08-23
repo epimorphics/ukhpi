@@ -116,7 +116,7 @@ class DownloadPresenter
     ukhpi.themes.values.map(&:slug)
   end
 
-  def sort_results_by_date_and_location # rubocop:disable Metrics/MethodLength
+  def sort_results_by_date_and_location
     @results.sort! do |result0, result1|
       date0 = result0['ukhpi:refMonth']['@value']
       date1 = result1['ukhpi:refMonth']['@value']
