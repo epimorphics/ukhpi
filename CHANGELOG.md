@@ -2,6 +2,9 @@
 
 ## 1.7.5 - 2024-08
 
+- (Jon) Exposed `instrument_internal_error(exception)` metric to the
+  `ExceptionsController` to provide a count of internal errors
+  [GH-142](https://github.com/epimorphics/hmlr-linked-data/issues/142)
 - (Jon) Added puma.stats to footer template in development environment only,
   again as per the approach in the [`LR_Common_Styles`
   gem](https://github.com/epimorphics/lr_common_styles/releases/tag/1.9.6)
