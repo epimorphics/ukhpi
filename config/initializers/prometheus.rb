@@ -35,6 +35,13 @@ prometheus.gauge(
   docstring: 'Process memory usage in mb'
 )
 
+prometheus.gauge(
+  :process_threads,
+  docstring: 'The number of process threads',
+  labels: [:status],
+  preset_labels: { status: 'total' }
+)
+
 # Prometheus histograms
 prometheus.histogram(
   :api_response_times,
