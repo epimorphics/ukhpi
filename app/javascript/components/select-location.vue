@@ -70,12 +70,12 @@
                 {{ $t("js.location.show_on_map") }}
               </div>
               <nav aria-label="show location type">
-                <el-radio-group v-model='locationType'>
-                  <el-radio-button label='country'>{{ $t("js.location.type_countries") }}</el-radio-button>
-                  <el-radio-button label='la'>{{ $t("js.location.type_las") }}</el-radio-button>
-                  <el-radio-button label='region'>{{ $t("js.location.type_regions_england") }}</el-radio-button>
-                  <el-radio-button label='county'>{{ $t("js.location.type_counties_england") }}</el-radio-button>
-                </el-radio-group>
+                <div role="radiogroup" class="el-radio-group">
+                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_countries")' label='country'>{{ $t("js.location.type_countries") }}</el-radio>
+                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_las")' label='la'>{{ $t("js.location.type_las") }}</el-radio>
+                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_regions_england")' label='region'>{{ $t("js.location.type_regions_england") }}</el-radio>
+                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_counties_england")' label='county'>{{ $t("js.location.type_counties_england") }}</el-radio>
+                </div>
               </nav>
             </div>
           </div>
@@ -87,6 +87,8 @@
             type='primary'
             @click='onSaveChanges'
             :disabled='!allowConfirm'
+            :aria-disabled='!allowConfirm'
+            :aria-label='$t("js.action.confirm")'
           >{{ $t('js.action.confirm') }}</el-button>
         </span>
       </el-dialog>
