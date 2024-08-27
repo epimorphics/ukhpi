@@ -29,3 +29,8 @@
         %p.u-muted--footer
           = t('common.footer.application_release')
           = Version::VERSION
+    - if Rails.env.development?
+      %pre
+        [puma stats:
+        = JSON.pretty_generate(JSON.parse(Puma.stats, symbolize_names: true))
+        , time: #{Time.now}]
