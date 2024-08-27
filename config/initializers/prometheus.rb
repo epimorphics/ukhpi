@@ -37,7 +37,7 @@ prometheus.gauge(
 
 prometheus.gauge(
   :process_threads,
-  docstring: 'The number of process threads',
+  docstring: 'The number of process threads, labelled by status',
   labels: [:status],
   preset_labels: { status: 'total' }
 )
