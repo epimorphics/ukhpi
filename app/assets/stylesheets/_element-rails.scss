@@ -62,6 +62,7 @@ table.el-month-table {
     color: white;
   }
   &.hover:not(.selected) {
-    background-color: #e6e6e6;
+    background-color: $dark-blue-hover;
+    color: white;
   }
 }
