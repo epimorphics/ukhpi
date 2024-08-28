@@ -35,6 +35,11 @@
   [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) Fixed type in aria-label text
   [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
+- (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
+  [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
+- (Bogdan) Fixed a bug where CSS was being applied to the wrong element 
+  [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
 - (Bogdan) Added page titles for each individual view
   [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
