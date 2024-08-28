@@ -49,8 +49,8 @@
             %li.c-compare__add-location
               %label{ for: 'location-term'}
                 = t('compare.show.add_location')
-              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-label": "Location search", value: @view_state.search_term }
-              %button{ type: 'submit', value: 'search', name: 'form-action', "aria-label": "Search for location" }
+              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-label": "#{t('compare.show.add_location')}", value: @view_state.search_term }
+              %button{ type: 'submit', value: 'search', name: 'form-action', "aria-label": "#{t('action.search')}" }
                 = t('action.search')
 
           - if @view_state.search_results
