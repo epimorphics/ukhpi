@@ -47,10 +47,10 @@
                 %input{ type: 'hidden', name: 'location[]', value: location.gss }
 
             %li.c-compare__add-location
-              %label{ for: 'location-term'}
+              %label{ for: 'location-term', id: 'location-term-label'}
                 = t('compare.show.add_location')
-              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-label": "#{t('compare.show.add_location')}", value: @view_state.search_term }
-              %button{ type: 'submit', value: 'search', name: 'form-action', "aria-label": "#{t('action.search')}" }
+              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-labelledby": "location-term-label", value: @view_state.search_term }
+              %button{ type: 'submit', value: 'search', name: 'form-action' }
                 = t('action.search')
 
           - if @view_state.search_results
