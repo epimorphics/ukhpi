@@ -178,6 +178,8 @@ cy:
       print_table: "argraffu’r tabl hwn"
       download_data_as: "Lawrlwytho’r data hwn fel:"
       choose_another_location: "Dewiswch leoliad arall"
+      accessibility_tablist: "Tabiwch drwy'r tabiau canlynol: Gweler graff data, Gweler tabl data, Lawrlwythwch y data hwn a Cymharwch leoliad."
+      accessibility_tab: "Defnyddiwch y tabl data yn y tab nesaf, Gweler y tabl data, sy'n cynnwys data hygyrch."
 
     graph:
       no_data: "Mae’n flin gennym, nid yw data %{label} ar gael ar gyfer %{location}. Dewiswch leoliad gwahanol."

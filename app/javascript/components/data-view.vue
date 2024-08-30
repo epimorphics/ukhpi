@@ -1,14 +1,17 @@
 <template lang="html">
+  <div>
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
       <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
     </div>
-    <div class='o-data-view__data-display'>
+    <div role='tabpanel' aria-describedby='tabpanel-accessibility-message' class='o-data-view__data-display'>
       <el-tabs
+        role='tablist'
+        aria-describedby='tablist-accessibility-message'
         v-model='activeTab'
         @tab-click='onChangeTab'
       >
-        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane :aria-describedby="'tab-message'" :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
           <data-view-graph
             :theme='theme'
             :indicator='indicator'
@@ -44,7 +47,16 @@
       </el-tabs>
     </div>
   </div>
-
+    <p id="tabpanel-accessibility-message" class="u-sr-only" aria-hidden="true">
+      {{ $t('browse.show.intro.property_type') }}
+    </p>
+    <p id="tablist-accessibility-message" class="u-sr-only" aria-hidden="true">
+      {{ $t('js.action.accessibility_tablist') }}
+    </p>
+    <p id="tab-message" class="u-sr-only"  aria-hidden="true">
+      {{ $t('js.action.accessibility_tab') }}
+    </p>
+  </div>
 </template>
 
 <script>

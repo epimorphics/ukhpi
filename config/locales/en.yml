@@ -178,6 +178,8 @@ en:
       print_table: "print this table"
       download_data_as: "Download this data as:"
       choose_another_location: "Choose another location"
+      accessibility_tablist: "Tab through the following tabs: See data graph, See data table, Download this data and Compare location."
+      accessibility_tab: "Please use the data table in the next tab, See data table, which contains accessible data."
 
     graph:
       no_data: "Sorry, there is no %{label} data available for %{location}. Please select a different location."
