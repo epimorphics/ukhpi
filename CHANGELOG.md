@@ -2,6 +2,7 @@
 
 ## 1.7.5 - 2024-08
 
+- (Dan) Adds message for screenreaders for guidance on how to use tables [Gh-405](https://github.com/epimorphics/ukhpi/issues/405)
 - (Dan) Fixed aria-label in compare locations form [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
