@@ -1,6 +1,12 @@
 <template lang='html'>
   <div class='o-data-view__js-options-statistics'>
-    <span
+    <div v-for='(statistic, index) in statistics'
+      :key='statistic.slug' class="checkbox-container">
+      <input type="checkbox" :name='`${statistic.label}`' @click='onSelectStatistic' :data-slug='statistic.slug'>
+      <label :for='`${statistic.label}`'>{{ statistic.label }}</label>
+    </div>
+
+    <!-- <span
       v-for='(statistic, index) in statistics'
       :key='statistic.slug'
       class='o-data-view__js-options-statistics'>
@@ -15,7 +21,7 @@
         />
         {{ statistic.label }}
       </button>
-    </span>
+    </span> -->
   </div>
 </template>
 
