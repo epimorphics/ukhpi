@@ -53,9 +53,6 @@ export default {
     },
   },
 
-  getters: {
-  },
-
   mounted() {
     this.initStatistics();
   },

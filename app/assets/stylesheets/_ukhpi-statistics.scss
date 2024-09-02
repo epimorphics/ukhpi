@@ -25,24 +25,24 @@ $graph-colours: (
 }
 
 .o-data-view__js-options-statistics {
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  flex-wrap: wrap;
-  .checkbox-container {
-    margin-right: 5px;
+  // display: flex;
+  // justify-content: space-between;
+  // width: 100%;
+  // flex-wrap: wrap;
+  // .checkbox-container {
+  //   margin-right: 5px;
+  // }
+  button {
+    font-size: 85%;
+    margin-right: 10px;
+    border: 0;
+    background-color: inherit;
+    cursor: pointer;
   }
-  // button {
-  //   font-size: 85%;
-  //   margin-right: 10px;
-  //   border: 0;
-  //   background-color: inherit;
-  //   cursor: pointer;
-  // }
 
-  // img {
-  //   max-height: 15px;
-  //   margin-bottom: -3px;
-  //   border: 1px solid $grey-1;
-  // }
+  img {
+    max-height: 15px;
+    margin-bottom: -3px;
+    border: 1px solid $grey-1;
+  }
 }
