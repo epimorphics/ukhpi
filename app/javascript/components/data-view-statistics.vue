@@ -1,6 +1,6 @@
 <template lang='html'>
   <div class='o-data-view__js-options-statistics'>
-    <div
+    <span
       v-for='(statistic, index) in statistics'
       :key='statistic.slug'
       class="checkbox-container"
@@ -20,11 +20,9 @@
         />
         {{ statistic.label }}
       </label>
-    </div>
+    </span>
   </div>
 </template>
-
-
 
 <script>
 import { SELECT_STATISTIC } from '../store/mutation-types';
