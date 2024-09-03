@@ -1,7 +1,8 @@
 # Changes to the UKHPI app by version and date
 
-## 1.7.5 - 2024-08
+## 1.7.5 - 2024-09
 
+- (Dan) Replaces the buttons for checkboxes on the property tables [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
 - (Jon) Exposed `instrument_internal_error(exception)` metric to the
   `ExceptionsController` to provide a count of internal errors
   [GH-142](https://github.com/epimorphics/hmlr-linked-data/issues/142)
