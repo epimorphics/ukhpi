@@ -7,7 +7,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 # a view of the  `averagePrice` indicator, together with the relevant dates,
 # location and other options, and access to the underlying data, to enable
 # the renderer to draw the display
-class DataView # rubocop:disable Metrics/ClassLength
+class DataView
   include Rails.application.routes.url_helpers
 
   attr_reader :user_selections, :query_result, :indicator, :theme

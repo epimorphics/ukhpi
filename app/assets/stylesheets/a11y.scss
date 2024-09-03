@@ -1,0 +1,101 @@
+/* Created in 2024-08 accessibility review ~ JRH */
+$govuk-brand-colour:	#1d70b8;
+$govuk-brand-hover-colour:	#003078;
+$govuk-brand-disabled-colour: lighten( $govuk-brand-colour, 40% );
+
+
+@mixin disabled-button {
+  color: #606266;
+  background-color: $govuk-brand-disabled-colour;
+  border-color: $govuk-brand-disabled-colour;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@mixin hidden-radio {
+  opacity: 0;
+  outline: 0;
+  position: absolute;
+  z-index: -1;
+}
+
+button,
+.button{
+  &.el-button {
+    &--primary{
+      background-color: $govuk-brand-colour;
+      border-color: $govuk-brand-colour;
+      &:hover,
+      &:focus {
+        background-color: $govuk-brand-hover-colour;
+        border-color: $govuk-brand-hover-colour;
+      }
+      &.is-disabled {
+        @include disabled-button;
+        &:active,
+        &:focus,
+        &:hover {
+          @include disabled-button;
+        }
+      }
+    }
+  }
+}
+
+div {
+  &.el-radio-group {
+    &[role="radiogroup"] {
+      [role="radio"]{
+        &.el-radio-button {
+          position: relative;
+          display: inline-block;
+          width: 100%;
+          outline: 0;
+          width: 100%;
+          margin: 0;
+          padding: 0;
+          &.is-checked {
+            .el-radio__label {
+              color: #FFF;
+              background-color: $govuk-brand-colour;
+            }
+          }
+
+          .el-radio__input {
+            @include hidden-radio;
+            .el-radio__inner{
+              display: none;
+            }
+          }
+          .el-radio__label {
+            width: 100%;
+            border: 0;
+            border-radius: 0;
+            color: #000000;
+            display: inline-block;
+            line-height: 2.0;
+            text-align: center;
+            padding: 0.75rem 1.4rem;
+            font-size: calc(1.0rem + 0.2vw); // maintain text size relative to viewport width
+            background-color: #FFF;
+            font-weight: 500;
+            text-align: center;
+            box-sizing: border-box;
+              &:hover, &:focus, &:visited {
+                background-color: $govuk-brand-hover-colour;
+                color: #FFF;
+              }
+              &:active {
+                background-color: $govuk-brand-hover-colour;
+                color: $govuk-brand-colour;
+              }
+          }
+          [aria-hidden="true"] {
+            @include hidden-radio;
+          }
+        }
+      }
+    }
+  }
+}
+

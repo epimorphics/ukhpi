@@ -40,9 +40,10 @@ yarn-debug.log*
 /public/uploads
 
 ### Rails specific ###
+.byebug_history
 /public/system
 /coverage/
-/spec/tmp
+tmp
 
 # Ignore files specific to the development environment
 fc.json

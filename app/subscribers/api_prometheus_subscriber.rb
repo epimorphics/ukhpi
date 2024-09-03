@@ -4,7 +4,7 @@
 class ApiPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :api
 
-  def response(event) # rubocop:disable Metrics/MethodLength
+  def response(event)
     response = event.payload[:response]
     duration = event.payload[:duration]
 

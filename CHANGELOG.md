@@ -2,29 +2,71 @@
 
 ## 1.7.5 - 2024-08
 
+- (Jon) Exposed `instrument_internal_error(exception)` metric to the
+  `ExceptionsController` to provide a count of internal errors
+  [GH-142](https://github.com/epimorphics/hmlr-linked-data/issues/142)
+- (Jon) Added puma.stats to footer template in development environment only,
+  again as per the approach in the [`LR_Common_Styles`
+  gem](https://github.com/epimorphics/lr_common_styles/releases/tag/1.9.6)
+- (Jon) Adjusted footer `link_to` helpers to only appending the lang parameter
+  to the url only if it exists for "internal" links as per the approach in the
+  [`LR_Common_Styles`
+  gem](https://github.com/epimorphics/lr_common_styles/releases/tag/1.9.6)
+- (Jon) Adjusted fix for visual contrast in the location selection menu via
+  additional styling and updated 3rd-party element use specific to ticket
+  [GH-408](https://github.com/epimorphics/ukhpi/issues/408) alongside adding
+  missing aria-attributes required for assisted use
+- (Jon) Implements revised approach to page titles mirrored on other suite apps,
+  as well as fixes white space typo in some concatenated page titles
+- (Jon) Added `process_threads` guage to prometheus metrics alongside isolating
+  thread counts to specific status' as per the Rails thread documentation as
+  well as updating the approach to resolve
+  [GH-142](https://github.com/epimorphics/hmlr-linked-data/issues/142)
+- (Jon) Excluded prometheus metrics from the testing environment to reduce noise
+  in the logs
+- (Jon) Added `puma-metrics` gem to provide base metrics for the Puma web server
+- (Jon) Updated .rubocop.yml primarily reorganising the rules alphabetically as
+  well as adding `CountAsOne` to both `Metrics/ClassLength` and
+  `Metrics/MethodLength`; includes files with removed earlier disabling of said
+  rules!
+- (Jon) Updated `.gitignore` to include ignoring byebug history as well as sets
+  the tmp directory ignore to be anywhere, not just at the project root
+- (Bogdan) Fixed a bug where CSS was being applied to the wrong element
+  [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) Fixed type in aria-label text
+  [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds message for screenreaders for guidance on how to use tables [Gh-405](https://github.com/epimorphics/ukhpi/issues/405)
 - (Dan) Fixed aria-label in compare locations form [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
-- (Bogdan) Fixed a bug where CSS was being applied to the wrong element [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) Fixed a bug where CSS was being applied to the wrong element 
+  [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
-- (Bogdan) Added page titles for each individual view [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
+- (Bogdan) Added page titles for each individual view
+  [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
 - (Bogdan) Set correct values for `aria-label` link attributes on the about page
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
-- (Bogdan) Increased contrast for compare location dropdowns [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
+- (Bogdan) Increased contrast for compare location dropdowns
+  [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) Increased contrast for search location results, as well as when they
   are being focused [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) CSS Refactoring
-- (Bogdan) Fixed a bug where CSS was applied to the wrong element, causing search
-  location results to be displayed incorrectly
-- (Bogdan) Increased focusable area for close button on modal and hide graph button
-  [GH-411](https://github.com/epimorphics/ukhpi/issues/411)
-- (Bogdan) Increased contrast for search location input and map elements, as well
-  as all modal buttons [GH-408](https://github.com/epimorphics/ukhpi/issues/408)
-- (Bogdan) Increased contrast of modal warning message [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
-- (Bogdan) Increased contrast for modal close button and body [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
-- (Bogdan) Landing page links should now be more visible [GH-406](https://github.com/epimorphics/ukhpi/issues/406)
-- (Bogdan) Added alt text to application logo [GH-404](https://github.com/epimorphics/ukhpi/issues/404)
+- (Bogdan) Fixed a bug where CSS was applied to the wrong element, causing
+  search location results to be displayed incorrectly
+- (Bogdan) Increased focusable area for close button on modal and hide graph
+  button [GH-411](https://github.com/epimorphics/ukhpi/issues/411)
+- (Bogdan) Increased contrast for search location input and map elements, as
+  well as all modal buttons
+  [GH-408](https://github.com/epimorphics/ukhpi/issues/408)
+- (Bogdan) Increased contrast of modal warning message
+  [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
+- (Bogdan) Increased contrast for modal close button and body
+  [GH-407](https://github.com/epimorphics/ukhpi/issues/407)
+- (Bogdan) Landing page links should now be more visible
+  [GH-406](https://github.com/epimorphics/ukhpi/issues/406)
+- (Bogdan) Added alt text to application logo
+  [GH-404](https://github.com/epimorphics/ukhpi/issues/404)
 
 ## 1.7.4 - 2024-04-19
 

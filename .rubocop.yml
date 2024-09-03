@@ -16,9 +16,30 @@ Layout/LineLength:
     - config/**/*
     - test/**/*
 
-Metrics/ClassLength:
+Layout/EmptyLinesAroundAttributeAccessor:
+  Enabled: true
+
+Layout/SpaceAroundMethodCallOperator:
+  Enabled: true
+
+Lint/DeprecatedOpenSSLConstant:
+  Enabled: true
+
+Lint/DuplicateElsifCondition:
+  Enabled: true
+
+Lint/MixedRegexpCaptureTypes:
+  Enabled: true
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Metrics/AbcSize:
   Exclude:
-    - test/**/*
+    - lib/tasks/location.rake
 
 Metrics/BlockLength:
   Max: 30
@@ -26,18 +47,89 @@ Metrics/BlockLength:
     - test/**/*
     - lib/tasks/**/*
 
-Metrics/MethodLength:
+Metrics/ClassLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  Exclude:
+    - test/**/*
+
+Metrics/CyclomaticComplexity:
   Exclude:
     - lib/tasks/location.rake
 
-Style/FormatStringToken:
-  Enabled: false
+Metrics/MethodLength:
+  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  Exclude:
+    - lib/tasks/location.rake
+
+Rails/ActiveRecordCallbacksOrder:
+  Enabled: true
+
+Rails/FindById:
+  Enabled: true
+
+Rails/I18nLocaleAssignment:
+  Enabled: true
+  Exclude:
+    - test/**/*
+Rails/Inquiry:
+  Enabled: true
+
+Rails/MailerName:
+  Enabled: true
+
+Rails/MatchRoute:
+  Enabled: true
+
+Rails/NegateInclude:
+  Enabled: true
+
+Rails/Pluck:
+  Enabled: true
+
+Rails/PluckInWhere:
+  Enabled: true
+
+Rails/RenderInline:
+  Enabled: true
+
+Rails/RenderPlainText:
+  Enabled: true
+
+Rails/ShortI18n:
+  Enabled: true
+
+Rails/WhereExists:
+  Enabled: true
 
 Rails/OutputSafety:
   Exclude:
     - app/presenters/*.rb
 
+Style/AccessorGrouping:
+  Enabled: true
+
+Style/ArrayCoercion:
+  Enabled: true
+
+Style/BisectedAttrAccessor:
+  Enabled: true
+
+Style/CaseLikeIf:
+  Enabled: true
+
+Style/ExponentialNotation:
+  Enabled: true
+
+Style/FormatStringToken:
+  Enabled: false
+
+Style/HashAsLastArrayItem:
+  Enabled: true
+
 Style/HashEachMethods:
+  Enabled: true
+
+Style/HashLikeCase:
   Enabled: true
 
 Style/HashTransformKeys:
@@ -46,83 +138,23 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
-Metrics/AbcSize:
-  Exclude:
-    - lib/tasks/location.rake
-
-Metrics/CyclomaticComplexity:
-  Exclude:
-    - lib/tasks/location.rake
-
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-Lint/RaiseException:
-  Enabled: true
-Lint/StructNewOverride:
-  Enabled: true
-Style/ExponentialNotation:
-  Enabled: true
-Style/RedundantFetchBlock:
-  Enabled: true
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-Style/RedundantRegexpEscape:
-  Enabled: true
-Style/SlicingWithRange:
-  Enabled: true
-Lint/DuplicateElsifCondition:
-  Enabled: true
-Style/AccessorGrouping:
-  Enabled: true
-Style/ArrayCoercion:
-  Enabled: true
-Style/BisectedAttrAccessor:
-  Enabled: true
-Style/CaseLikeIf:
-  Enabled: true
-Style/HashAsLastArrayItem:
-  Enabled: true
-Style/HashLikeCase:
-  Enabled: true
 Style/RedundantAssignment:
   Enabled: true
-Style/RedundantFileExtensionInRequire:
-  Enabled: true
-Rails/ActiveRecordCallbacksOrder:
-  Enabled: true
-Rails/FindById:
-  Enabled: true
-Rails/Inquiry:
-  Enabled: true
-Rails/MailerName:
-  Enabled: true
-Rails/MatchRoute:
-  Enabled: true
-Rails/NegateInclude:
-  Enabled: true
-Rails/Pluck:
-  Enabled: true
-Rails/PluckInWhere:
-  Enabled: true
-Rails/RenderInline:
-  Enabled: true
-Rails/RenderPlainText:
-  Enabled: true
-Rails/ShortI18n:
-  Enabled: true
-Rails/WhereExists:
+
+Style/RedundantFetchBlock:
   Enabled: true
 
-Rails/I18nLocaleAssignment:
+Style/RedundantFileExtensionInRequire:
   Enabled: true
-  Exclude:
-    - test/**/*
+
+Style/RedundantRegexpCharacterClass:
+  Enabled: true
+
+Style/RedundantRegexpEscape:
+  Enabled: true
+
+Style/SlicingWithRange:
+  Enabled: true
 
 Style/OpenStructUse:
   Enabled: false
