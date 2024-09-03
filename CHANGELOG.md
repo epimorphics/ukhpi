@@ -1,8 +1,9 @@
 # Changes to the UKHPI app by version and date
 
-## 1.7.5 - 2024-08
+## 1.7.5 - 2024-09
 
 - (Dan) Replaces the buttons for checkboxes on the property tables [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
+- (Dan) Adds message for screenreaders for guidance on how to use tables [Gh-405](https://github.com/epimorphics/ukhpi/issues/405)
 - (Dan) Fixed aria-label in compare locations form [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
