@@ -7,12 +7,13 @@
     >
       <input
         type="checkbox"
+        :id="'checkbox-' + statistic.slug"
         :name='statistic.label'
         :data-slug='statistic.slug'
         @change='onSelectStatistic'
         :checked='isSelectedStatistic(statistic.slug)'
       />
-      <label :for='statistic.label'>
+      <label :for="'checkbox-' + statistic.slug">
         <img
           :src='imageSrcPath(index, false)'
           :srcset='imageSrcPath(index, true)'
