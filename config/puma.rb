@@ -49,6 +49,10 @@ environment ENV.fetch('RAILS_ENV', 'development')
 # Allow puma to be restarted by `rails restart` command.
 plugin :tmp_restart
 
+# Uncomment the following line once ruby is updated to 2.7 or greater to allow
+# the use of the puma-metrics plugin as we're using puma 6.0.0 or greater
+# plugin :metrics
+
 # Use a custom log formatter to emit Puma log messages in a JSON format
 log_formatter do |str|
   {
