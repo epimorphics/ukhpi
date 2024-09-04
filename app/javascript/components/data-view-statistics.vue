@@ -1,19 +1,16 @@
 <template lang='html'>
   <div class='o-data-view__js-options-statistics'>
-    <span
-      v-for='(statistic, index) in statistics'
+    <label v-for='(statistic, index) in statistics'
       :key='statistic.slug'
-      class="checkbox-container"
-    >
+      class="checkbox-container">
       <input
         type="checkbox"
-        :id="'checkbox-' + statistic.slug"
         :name='statistic.label'
         :data-slug='statistic.slug'
         @change='onSelectStatistic'
         :checked='isSelectedStatistic(statistic.slug)'
+        @keydown.enter="onSelectStatistic"
       />
-      <label :for="'checkbox-' + statistic.slug">
         <img
           :src='imageSrcPath(index, false)'
           :srcset='imageSrcPath(index, true)'
@@ -21,7 +18,6 @@
         />
         {{ statistic.label }}
       </label>
-    </span>
   </div>
 </template>
 
