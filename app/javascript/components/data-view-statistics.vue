@@ -17,7 +17,7 @@
           :alt='`marker image for ${statistic.label}`'
         />
         {{ statistic.label }}
-      </label>
+    </label>
   </div>
 </template>
 
