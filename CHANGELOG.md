@@ -2,6 +2,7 @@
 
 ## 1.7.5 - 2024-09
 
+- (Dan) Updates the property table ui so the label is clickable
 - (Dan) Replaces the buttons for checkboxes on the property tables [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
 - (Jon) Exposed `instrument_internal_error(exception)` metric to the
   `ExceptionsController` to provide a count of internal errors
@@ -40,7 +41,7 @@
 - (Dan) Fixed aria-label in compare locations form [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
-- (Bogdan) Fixed a bug where CSS was being applied to the wrong element 
+- (Bogdan) Fixed a bug where CSS was being applied to the wrong element
   [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
