@@ -92,14 +92,4 @@ Rails.application.configure do
 
   # API location is specified in the environment variable API_SERVICE_URL
   config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
-
-  # feature flag for showing the Welsh language switch affordance
-  config.welsh_language_enabled = true
-
-  # Use default paths for documentation.
-  config.accessibility_document_path = '/accessibility'
-  config.privacy_document_path = '/privacy'
-
-  # Set the contact email address to Land Registry supplied address
-  config.contact_email_address = 'data.services@mail.landregistry.gov.uk'
 end
