@@ -2,6 +2,9 @@
 
 ## 1.7.5 - 2024-09
 
+- (Jon) Moved all mirrored configuration settings from individual environments
+  into the application configuration to reduce the need to manage multiple
+  sources of truth
 - (Jon) Actioned all of the outstanding updates contained within the dependabot
   #443 PR as well as all updates implemented via yarn upgrade-interactive thus
   bringing the application to the highest level of update available at this time
