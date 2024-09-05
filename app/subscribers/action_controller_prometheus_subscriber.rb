@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-# Subscribe to :action_dispatch events
-class ActionDispatchPrometheusSubscriber < ActiveSupport::Subscriber
-  attach_to :action_dispatch
+# Subscribe to :action_controller events to monitor memory usage and thread status
+class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
+  attach_to :action_controller
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def process_action(_event)
     mem = GetProcessMem.new
     Prometheus::Client.registry
@@ -56,5 +56,5 @@ class ActionDispatchPrometheusSubscriber < ActiveSupport::Subscriber
                         }
                       )
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

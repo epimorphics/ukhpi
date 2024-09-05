@@ -2,7 +2,9 @@
 
 ## 1.7.5 - 2024-09
 
-- (Dan) Updates the property table ui so the label is clickable
+- (Jon) Swapped the `action_dispatch` subscriber for `action_controller` to
+  allow the `memory_used_mb` and `process_threads` metrics to report correctly
+  (Dan) Updates the property table ui so the label is clickable
 - (Dan) Replaces the buttons for checkboxes on the property tables [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
 - (Jon) Exposed `instrument_internal_error(exception)` metric to the
   `ExceptionsController` to provide a count of internal errors

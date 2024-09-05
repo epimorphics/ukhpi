@@ -31,6 +31,10 @@ $graph-colours: (
   flex-wrap: wrap;
   .checkbox-container {
     margin-right: 5px;
+    cursor: pointer;
+    input[type="checkbox"] {
+      cursor: inherit;
+    }
     img {
       max-height: 15px;
       margin-bottom: -1px;
