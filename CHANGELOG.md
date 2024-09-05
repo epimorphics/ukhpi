@@ -2,10 +2,15 @@
 
 ## 1.7.5 - 2024-09
 
+- (Jon) Actioned all of the outstanding updates contained within the dependabot
+  #443 PR as well as all updates implemented via yarn upgrade-interactive thus
+  bringing the application to the highest level of update available at this time
+  [GHD-443](https://github.com/epimorphics/ukhpi/pull/443)
 - (Jon) Swapped the `action_dispatch` subscriber for `action_controller` to
   allow the `memory_used_mb` and `process_threads` metrics to report correctly
   (Dan) Updates the property table ui so the label is clickable
-- (Dan) Replaces the buttons for checkboxes on the property tables [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
+- (Dan) Replaces the buttons for checkboxes on the property tables
+  [GH-431](https://github.com/epimorphics/ukhpi/issues/431)
 - (Jon) Exposed `instrument_internal_error(exception)` metric to the
   `ExceptionsController` to provide a count of internal errors
   [GH-142](https://github.com/epimorphics/hmlr-linked-data/issues/142)
@@ -39,13 +44,16 @@
   [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
 - (Bogdan) Fixed type in aria-label text
   [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
-- (Dan) Adds message for screenreaders for guidance on how to use tables [Gh-405](https://github.com/epimorphics/ukhpi/issues/405)
-- (Dan) Fixed aria-label in compare locations form [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
+- (Dan) Adds message for screenreaders for guidance on how to use tables
+  [Gh-405](https://github.com/epimorphics/ukhpi/issues/405)
+- (Dan) Fixed aria-label in compare locations form
+  [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Dan) Adds `aria-label` link attributes on the about page to SPARQL link
   [GH-413](https://github.com/epimorphics/ukhpi/issues/413)
 - (Bogdan) Fixed a bug where CSS was being applied to the wrong element
   [GH-412](https://github.com/epimorphics/ukhpi/issues/412)
-- (Bogdan) Fixed type in aria-label text [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
+- (Bogdan) Fixed type in aria-label text
+  [GH-416](https://github.com/epimorphics/ukhpi/issues/416)
 - (Bogdan) Fixed a duplicate character bug when selecting dates
 - (Bogdan) Added page titles for each individual view
   [GH-409](https://github.com/epimorphics/ukhpi/issues/409)
