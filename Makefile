@@ -94,7 +94,7 @@ tag:
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/bundle exec rake test
+	@./bin/rails test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
