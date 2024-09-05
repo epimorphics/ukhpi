@@ -1,7 +1,6 @@
 {
   "name": "ukhpi",
-  "version": "1.6.1",
-  "description": "UKHPI build support",
+  "description": "UK House Price Index - A search tool to find house price trends in the UK ~ Please view the latest version cadence found in the app/lib/version.rb file",
   "main": "index.js",
   "directories": {
     "test": "test"
