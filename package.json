@@ -46,6 +46,7 @@
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^14.1.0",
