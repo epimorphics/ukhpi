@@ -11,7 +11,7 @@
     "@rails/webpacker": "^5.4.4",
     "@sentry/browser": "^6.19.3",
     "@sentry/integrations": "^6.19.3",
-    "axios": "^0.26.1",
+    "axios": "^0.28.0",
     "core-js": "^3.2.1",
     "d3-array": "^2.4.0",
     "d3-axis": "^1.0.8",
@@ -41,7 +41,7 @@
     "vue-i18n": "^8.20.0",
     "vue-loader": "^15.7.1",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.7.16",
     "vuex": "^3.0.1",
     "yaml-loader": "^0.6.0"
   },
