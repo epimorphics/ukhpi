@@ -1,7 +1,6 @@
 {
   "name": "ukhpi",
-  "version": "1.6.1",
-  "description": "UKHPI build support",
+  "description": "UK House Price Index - A search tool to find house price trends in the UK ~ Please view the latest version cadence found in the app/lib/version.rb file",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -11,7 +10,7 @@
     "@rails/webpacker": "^5.4.4",
     "@sentry/browser": "^6.19.3",
     "@sentry/integrations": "^6.19.3",
-    "axios": "^0.26.1",
+    "axios": "^0.28.0",
     "core-js": "^3.2.1",
     "d3-array": "^2.4.0",
     "d3-axis": "^1.0.8",
@@ -41,11 +40,12 @@
     "vue-i18n": "^8.20.0",
     "vue-loader": "^15.7.1",
     "vue-router": "^3.0.1",
-    "vue-template-compiler": "^2.6.10",
+    "vue-template-compiler": "^2.7.16",
     "vuex": "^3.0.1",
     "yaml-loader": "^0.6.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "babel-eslint": "^10.0.2",
     "eslint": "^6.1.0",
     "eslint-config-standard": "^14.1.0",

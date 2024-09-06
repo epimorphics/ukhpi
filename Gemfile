@@ -32,6 +32,7 @@ gem 'get_process_mem', '~> 0.2.7'
 gem 'http_accept_language'
 gem 'prometheus-client', '~> 4.0'
 gem 'puma'
+gem 'puma-metrics'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
 gem 'sentry-rails', '~> 5.7'
@@ -63,7 +64,7 @@ group :test do
   # gem 'minitest-spec-rails'
   gem 'mocha'
   gem 'selenium-webdriver'
-  gem 'simplecov', '0.22.0'
+  gem 'simplecov', '0.22.0', require: false
   gem 'vcr'
 end
 

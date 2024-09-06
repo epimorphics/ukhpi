@@ -4,7 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
+class CompareLocationsPresenter
   include I18n
   include LocationsTable
 
@@ -25,7 +25,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :as_json, to: :user_compare_selections
   delegate :selected_locations, to: :user_compare_selections
 
-  def headline_summary # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def headline_summary # rubocop:disable Metrics/AbcSize
     ind = I18n.t("indicator.#{indicator.slug}")
     stat = I18n.t("statistic.#{statistic.label_key}").downcase
     from = I18n.l(user_compare_selections.from_date, format: '%B %Y')

@@ -10,7 +10,8 @@
               :key='item.slug'
               :label='item.label'
               :value='item.slug'
-              :disabled='isDisabledIndicator(item.slug)'>
+              :disabled='isDisabledIndicator(item.slug)'
+              :aria-disabled='isDisabledIndicator(item.slug)'>
             </el-option>
           </el-select>
         </label>
@@ -26,7 +27,8 @@
                 :key='item.slug'
                 :label='item.label'
                 :value='item.slug'
-                :disabled='isDisabledStatistic(item.slug)'>
+                :disabled='isDisabledStatistic(item.slug)'
+                :aria-disabled='isDisabledStatistic(item.slug)'>
               </el-option>
             </el-option-group>
           </el-select>

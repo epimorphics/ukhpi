@@ -78,7 +78,7 @@ class UserCompareSelections
 
   delegate :to_h, to: :params
 
-  def as_json # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def as_json # rubocop:disable Metrics/AbcSize
     {
       from: { date: from_date }.to_json,
       to: { date: to_date }.to_json,

@@ -31,7 +31,7 @@ class CompareController < ApplicationController
     render 'compare/print', layout: 'print'
   end
 
-  def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength
+  def perform_query(user_compare_selections)
     query_results = {}
     base_selection = UserSelections.new(
       __safe_params: {

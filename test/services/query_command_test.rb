@@ -10,7 +10,7 @@ class MockService
   end
 end
 
-def validate_json(json) # rubocop:disable Metrics/MethodLength
+def validate_json(json)
   _(json).must_match_json_expression(
     '@and':
     [
