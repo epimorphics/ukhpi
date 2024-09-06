@@ -5,7 +5,7 @@
     %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
     %title
-      = I18n.t('common.header.app_title')
+      = (yield(:title) + " - " unless yield(:title).blank?).to_s + I18n.t('common.header.app_title')
     - if Rails.env.production?
       = render partial: 'common/google-analytics'
       = csrf_meta_tags
@@ -28,7 +28,7 @@
         .header-global
           .header-logo
             %a.content{ href: "#{Rails.application.config.relative_url_root}", title: t('common.header.home_link') }
-              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: '')
+              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: 'UKHPI Logo')
         .header-proposition
           .content
             %nav#proposition-menu

@@ -18,10 +18,17 @@
     display: flex;
     flex-direction: column;
 
-    .el-radio-button__inner {
-      width: 100%;
-      border: 0;
-      border-radius: 0;
+    .el-radio-button {
+      &__inner {
+        width: 100%;
+        border: 0;
+        border-radius: 0;
+        color: #000000;
+      }
+
+      &.is-active {
+        background-color: #409eff;
+      }
     }
   }
 

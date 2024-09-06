@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # A presenter for the printable view, based on the download view presenter
-class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
+class PrintPresenter < DownloadPresenter
   include ActionView::Helpers::NumberHelper
 
   PRINT_COLUMNS = [
@@ -120,7 +120,7 @@ class PrintPresenter < DownloadPresenter # rubocop:disable Metrics/ClassLength
 
   # @return An array of the given statistic paired with the currently selected
   # indicators
-  def statistic_indicator_columns(stat) # rubocop:disable Metrics/MethodLength
+  def statistic_indicator_columns(stat)
     selected_indicators.map do |ind|
       DownloadColumn.new(
         ind: ind,

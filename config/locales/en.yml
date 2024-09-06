@@ -172,12 +172,13 @@ en:
       data_graph: "See data graph"
       data_table: "See data table"
       compare: "Compare with location ..."
-      select_location: "select a diffent location"
+      select_location: "select a different location"
       cancel: "cancel"
       confirm: "confirm"
       print_table: "print this table"
       download_data_as: "Download this data as:"
       choose_another_location: "Choose another location"
+      accessibility_tabpanel: "The table has an unusual structure. Please use the second tab in the tablist named 'See data table' for data that is in an accessible format."
 
     graph:
       no_data: "Sorry, there is no %{label} data available for %{location}. Please select a different location."
@@ -238,8 +239,8 @@ en:
     dates_picker:
       select_dates: "change start or end date"
       date_range_prompt: "Change the date range"
-      start: "Start:"
-      end: "End:"
+      start: "Start"
+      end: "End"
 
 # old-------------
 

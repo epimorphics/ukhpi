@@ -25,17 +25,19 @@ $graph-colours: (
 }
 
 .o-data-view__js-options-statistics {
-  button {
-    font-size: 85%;
-    margin-right: 10px;
-    border: 0;
-    background-color: inherit;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  flex-wrap: wrap;
+  .checkbox-container {
+    margin-right: 5px;
     cursor: pointer;
-  }
-
-  img {
-    max-height: 15px;
-    margin-bottom: -3px;
-    border: 1px solid $grey-1;
+    input[type="checkbox"] {
+      cursor: inherit;
+    }
+    img {
+      max-height: 15px;
+      margin-bottom: -1px;
+    }
   }
 }

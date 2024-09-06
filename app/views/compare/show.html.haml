@@ -1,8 +1,10 @@
+= content_for(:title, t('compare.show.heading'))
+
 .grid-row
   .column-full
     %article.c-compare
       %h1.o-heading--2
-        = t('compare.show.heading')
+        = yield(:title)
       %p.u-muted
         = t('compare.show.prompt')
 
@@ -45,8 +47,9 @@
                 %input{ type: 'hidden', name: 'location[]', value: location.gss }
 
             %li.c-compare__add-location
-              = t('compare.show.add_location')
-              %input{ type: 'text', name: 'location-term', value: @view_state.search_term }
+              %label{ for: 'location-term', id: 'location-term-label'}
+                = t('compare.show.add_location')
+              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-labelledby": "location-term-label", value: @view_state.search_term }
               %button{ type: 'submit', value: 'search', name: 'form-action' }
                 = t('action.search')
 
