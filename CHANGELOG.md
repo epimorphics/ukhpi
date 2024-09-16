@@ -2,7 +2,7 @@
 
 ## 1.7.5 - 2024-09
 
-- (Dan) Updates translation to official translation [GH-435](https://github.com/epimorphics/ukhpi/issues/435)
+- (Dan) Updates Welsh translation to the official Welsh translation [GH-435](https://github.com/epimorphics/ukhpi/issues/435)
 - (Jon) Moved all mirrored configuration settings from individual environments
   into the application configuration to reduce the need to manage multiple
   sources of truth
