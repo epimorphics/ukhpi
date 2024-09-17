@@ -68,6 +68,14 @@ image: auth
 lint: assets
 	@./bin/bundle exec rubocop
 
+local:
+	@echo "Installing bundler packages ..."
+	@./bin/bundle install
+	@echo "Installing yarn packages ..."
+	@yarn install
+	@echo "Starting local server ..."
+	@./bin/rails server -p ${PORT}
+
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
