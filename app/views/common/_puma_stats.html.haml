@@ -1,0 +1,5 @@
+
+%div
+  %pre
+    %code
+      = "[#{JSON.pretty_generate(puma_stats: JSON.parse(Puma.stats), time: Time.now)}]"
