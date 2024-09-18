@@ -2,7 +2,24 @@
 
 ## 1.7.5 - 2024-09
 
-- (Dan) Updates Welsh translation to the official Welsh translation [GH-435](https://github.com/epimorphics/ukhpi/issues/435)
+- (Jon) Created a `local` makefile target to allow for local development without
+  asset compilation
+- (Jon) Updated the puma-stats to display in the footer while in development
+  [GH-449](https://github.com/epimorphics/ukhpi/issues/449)
+- (Jon) Updated the application exceptions controller to instrument the
+  `ActiveSupport::Notifications` for internal errors albeit this is not
+  currently in use in the application
+  [GH-449](https://github.com/epimorphics/ukhpi/issues/449)
+- (Jon) Updated `config/initializers/prometheus.rb` to include the `Middleware
+  instrumentation` fix for the 0 memory bug by notifying Action Dispatch
+  subscribers on Prometheus initialise
+  [GH-449](https://github.com/epimorphics/ukhpi/issues/449)
+- (Jon) Updated `config/puma.rb` to include metrics plugin and port information
+  for the metrics endpoint as environment variable, with default, to enable
+  running multiple sibling HMLR apps locally if needed without port conflicts
+  [GH-449](https://github.com/epimorphics/ukhpi/issues/449)
+- (Dan) Updates Welsh translation to the official Welsh translation
+  [GH-435](https://github.com/epimorphics/ukhpi/issues/435)
 - (Jon) Moved all mirrored configuration settings from individual environments
   into the application configuration to reduce the need to manage multiple
   sources of truth
