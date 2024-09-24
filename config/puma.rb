@@ -10,9 +10,13 @@ max_threads_count = ENV.fetch('RAILS_MAX_THREADS', 5)
 min_threads_count = ENV.fetch('RAILS_MIN_THREADS', max_threads_count)
 threads min_threads_count, max_threads_count
 
-# Specifies the `port` that Puma will listen on to receive requests, default is 3000.
-#
-port        ENV.fetch('PORT', 3000)
+# Specifies the `port` that Puma will listen on to receive requests;
+# default is 3000.
+port ENV.fetch('PORT', 3000)
+
+# Specifies the `metrics_port` that Puma will listen on to export metrics;
+# default is 9393.
+# metrics_port = ENV.fetch('METRICS_PORT', 9393)
 
 # Specifies the `environment` that Puma will run in.
 #
@@ -51,7 +55,10 @@ plugin :tmp_restart
 
 # Uncomment the following line once ruby is updated to 2.7 or greater to allow
 # the use of the puma-metrics plugin as we're using puma 6.0.0 or greater
+# Additional metrics from the Puma server to be exposed in the /metrics endpoint
 # plugin :metrics
+# Bind the metric server to "url". "tcp://" is the only accepted protocol.
+# metrics_url "tcp://0.0.0.0:#{metrics_port}" if Rails.env.development?
 
 # Use a custom log formatter to emit Puma log messages in a JSON format
 log_formatter do |str|
