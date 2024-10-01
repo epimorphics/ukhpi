@@ -20,8 +20,8 @@
 }
 
 .el-table .cell {
-  word-break: normal;
   -ms-word-break: normal;
+  word-break: normal;
 }
 
 .el-button--default {
@@ -30,6 +30,11 @@
 
 .el-button--primary {
   background-color: $dark-blue;
+  border-color: $dark-blue;
+  &:any-link, &:focus, &:hover {
+    background-color: $dark-blue-hover;
+    border-color: $dark-blue-hover;
+  }
 }
 
 .el-date-editor {
@@ -51,7 +56,13 @@ table.el-month-table {
   }
 }
 
-.el-select-dropdown__item.selected {
-  background-color: $dark-blue;
-  color: white;
+.el-select-dropdown__item {
+  &.selected {
+    background-color: $dark-blue;
+    color: white;
+  }
+  &.hover:not(.selected) {
+    background-color: $dark-blue-hover;
+    color: white;
+  }
 }

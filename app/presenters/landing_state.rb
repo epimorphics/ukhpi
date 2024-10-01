@@ -72,7 +72,7 @@ class LandingState
     DataServicesApi::Value.new(val.symbolize_keys)
   end
 
-  def format_percentage(change) # rubocop:disable Metrics/MethodLength
+  def format_percentage(change)
     if change == 'unknown'
       change
     elsif change.zero?

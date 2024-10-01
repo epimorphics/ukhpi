@@ -3,7 +3,7 @@
     <div class='o-data-view__js-options'>
       <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
     </div>
-    <div class='o-data-view__data-display'>
+    <div role='tabpanel' aria-describedby='tabpanel-accessibility-message' class='o-data-view__data-display'>
       <el-tabs
         v-model='activeTab'
         @tab-click='onChangeTab'
@@ -43,6 +43,9 @@
         </el-tab-pane>
       </el-tabs>
     </div>
+    <p id="tabpanel-accessibility-message" class="u-sr-only" aria-hidden="true">
+      {{ $t('js.action.accessibility_tabpanel') }}
+    </p>
   </div>
 
 </template>

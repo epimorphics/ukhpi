@@ -38,8 +38,8 @@ ol.numbered {
 
 input[type=checkbox],
 input[type=radio] {
-  transform: scale(1.5);
   -webkit-transform: scale(1.5);
+  transform: scale(1.5);
 }
 
 /* objects */
@@ -261,3 +261,4 @@ input[type=radio] {
 :focus, a:focus {
   outline: 2px solid $focus-colour !important;
 }
+

@@ -14,7 +14,7 @@ class LatestValuesCommand
 
   private
 
-  def service_api(service) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def service_api(service) # rubocop:disable Metrics/AbcSize
     service || dataset(:ukhpi)
   rescue Faraday::ConnectionFailed => e
     Rails.logger.error { 'Failed to connect to UK HPI ' }
@@ -33,7 +33,7 @@ class LatestValuesCommand
     nil
   end
 
-  def run_query(hpi) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+  def run_query(hpi) # rubocop:disable Metrics/AbcSize
     success = true
     query = add_date_range_constraint(base_query)
     query = add_location_constraint(query)

@@ -1,7 +1,43 @@
 .o-select-location {
   text-align: left;
 
-  .el-dialog__body {
-    padding: 5px 20px;
+  .el-dialog {
+    &__body {
+      padding: 5px 20px;
+      color: #000000;
+    }
+
+    &__close {
+      color: #000000;
+      padding: 4px;
+    }
+
+    &__footer {
+      .el-button--default {
+        color: #000000;
+      }
+    }
+  }
+
+  .el-input__inner {
+    border: 1px solid #9ea0a5;
+  }
+
+  .el-alert--warning.is-light {
+    color: #a4742b;
+  }
+
+  .o-search-location__result {
+    &:focus, &:hover {
+      background-color: #e6e6e6;
+    }
+
+    .el-button--text {
+      color: #0050a2;
+
+      &:focus, &:hover {
+        color: #007dff;
+      }
+    }
   }
 }
