@@ -1,5 +1,6 @@
 GEM
   remote: https://rubygems.org/
+  remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
     actioncable (6.1.5)
       actionpack (= 6.1.5)
@@ -83,6 +84,10 @@ GEM
     childprocess (4.1.0)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
+    data_services_api (1.4.1.1)
+      faraday_middleware (~> 1.2.0)
+      json (~> 2.6.1)
+      yajl-ruby (~> 1.4.1)
     docile (1.4.0)
     ebnf (2.3.1)
       amazing_print (~> 1.4)
@@ -165,6 +170,10 @@ GEM
       railties (>= 4)
     json (2.6.3)
     json_expressions (0.9.0)
+    json_rails_logger (1.0.3)
+      json
+      lograge
+      railties
     link_header (0.0.8)
     lograge (0.12.0)
       actionpack (>= 4)
@@ -183,6 +192,7 @@ GEM
     matrix (0.4.2)
     method_source (1.0.0)
     mini_mime (1.1.2)
+    mini_portile2 (2.8.7)
     minitest (5.18.1)
     minitest-rails (6.1.0)
       minitest (~> 5.10)
@@ -195,6 +205,9 @@ GEM
     mocha (1.13.0)
     multipart-post (2.3.0)
     nio4r (2.5.9)
+    nokogiri (1.13.10)
+      mini_portile2 (~> 2.8.0)
+      racc (~> 1.4)
     nokogiri (1.13.10-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.13.10-x86_64-linux)
@@ -351,19 +364,8 @@ GEM
     yajl-ruby (1.4.3)
     zeitwerk (2.6.8)
 
-GEM
-  remote: https://rubygems.pkg.github.com/epimorphics/
-  specs:
-    data_services_api (1.4.1.1)
-      faraday_middleware (~> 1.2.0)
-      json (~> 2.6.1)
-      yajl-ruby (~> 1.4.1)
-    json_rails_logger (1.0.3)
-      json
-      lograge
-      railties
-
 PLATFORMS
+  ruby
   x86_64-darwin-21
   x86_64-linux
 
