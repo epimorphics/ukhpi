@@ -1,6 +1,6 @@
 # Changes to the UKHPI app by version and date
 
-## 1.7.6 - 2024-10
+## 1.8.0 - 2024-10
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
 
