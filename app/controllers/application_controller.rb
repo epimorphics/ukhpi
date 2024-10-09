@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def detailed_request_log(duration)
     env = request.env
 
@@ -54,20 +54,28 @@ class ApplicationController < ActionController::Base
       body: request.body.gets&.gsub("\n", '\n'),
       method: request.method,
       status: response.status,
-      message: Rack::Utils::HTTP_STATUS_CODES[response.status]
+      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status]
     }
 
-    case response.status
-    when 500..599
+    if (500..599).include?(Rack::Utils::SYMBOL_TO_STATUS_CODE[response.status])
       log_fields[:message] = env['action_dispatch.exception'].to_s
-      Rails.logger.error(JSON.generate(log_fields))
+    end
+
+    log_response(response.status, log_fields)
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+
+  # Log the error with the appropriate log level based on the status code
+  def log_response(status, error_log)
+    case status
+    when 500..599
+      Rails.logger.error(JSON.generate(error_log))
     when 400..499
-      Rails.logger.warn(JSON.generate(log_fields))
+      Rails.logger.warn(JSON.generate(error_log))
     else
-      Rails.logger.info(JSON.generate(log_fields))
+      Rails.logger.info(JSON.generate(error_log))
     end
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
