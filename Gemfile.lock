@@ -1,6 +1,13 @@
+PATH
+  remote: ../json-rails-logger
+  specs:
+    json_rails_logger (1.1.0)
+      json (~> 2.0)
+      lograge (~> 0.11)
+      railties (~> 6.0)
+
 GEM
   remote: https://rubygems.org/
-  remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
     actioncable (6.1.5)
       actionpack (= 6.1.5)
@@ -84,10 +91,6 @@ GEM
     childprocess (4.1.0)
     concurrent-ruby (1.2.2)
     crass (1.0.6)
-    data_services_api (1.4.1.1)
-      faraday_middleware (~> 1.2.0)
-      json (~> 2.6.1)
-      yajl-ruby (~> 1.4.1)
     docile (1.4.0)
     ebnf (2.3.1)
       amazing_print (~> 1.4)
@@ -170,12 +173,8 @@ GEM
       railties (>= 4)
     json (2.6.3)
     json_expressions (0.9.0)
-    json_rails_logger (1.0.3)
-      json
-      lograge
-      railties
     link_header (0.0.8)
-    lograge (0.12.0)
+    lograge (0.14.0)
       actionpack (>= 4)
       activesupport (>= 4)
       railties (>= 4)
@@ -266,7 +265,7 @@ GEM
       ebnf (~> 2.3)
       rdf (~> 3.2)
     regexp_parser (2.2.1)
-    request_store (1.5.1)
+    request_store (1.7.0)
       rack (>= 1.4)
     rexml (3.2.5)
     rubocop (1.26.1)
@@ -364,6 +363,14 @@ GEM
     yajl-ruby (1.4.3)
     zeitwerk (2.6.8)
 
+GEM
+  remote: https://rubygems.pkg.github.com/epimorphics/
+  specs:
+    data_services_api (1.4.1.1)
+      faraday_middleware (~> 1.2.0)
+      json (~> 2.6.1)
+      yajl-ruby (~> 1.4.1)
+
 PLATFORMS
   ruby
   x86_64-darwin-21
@@ -385,7 +392,7 @@ DEPENDENCIES
   http_accept_language
   js-routes (< 2.0)
   json_expressions
-  json_rails_logger (~> 1.0.0)!
+  json_rails_logger (~> 1.1.0)!
   m
   minitest-rails (~> 6.0)
   minitest-reporters
@@ -412,4 +419,4 @@ DEPENDENCIES
   yajl-ruby
 
 BUNDLED WITH
-   2.4.8
+   2.4.22

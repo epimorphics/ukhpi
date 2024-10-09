@@ -70,10 +70,10 @@ end
 
 # TODO: For running the app locally for testing you can set this to your local path
 # gem 'data_services_api', '~> 1.4.0', path: '~/Epimorphics/shared/data_services_api/'
-# gem 'json_rails_logger', '~> 1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
+# gem 'json_rails_logger', '~> 1.1.0', path: '~/json-rails-logger/'
 
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api', '~> 1.4.0'
-  gem 'json_rails_logger', '~> 1.0.0'
+  gem 'json_rails_logger', '~> 1.1.0'
 end
