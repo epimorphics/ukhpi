@@ -4,7 +4,7 @@
 class ExceptionsController < ApplicationController
   layout 'application'
 
-  def render_error
+  def handle_error
     env = request.env
     exception = env['action_dispatch.exception']
     status_code = ActionDispatch::ExceptionWrapper.new(env, exception).status_code
