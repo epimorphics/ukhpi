@@ -5,30 +5,17 @@
         <label>
           {{ $t('js.compare.compare_action') }}
           <el-select v-model='indicatorSlug'>
-            <el-option
-              v-for='item in indicators'
-              :key='item.slug'
-              :label='item.label'
-              :value='item.slug'
-              :disabled='isDisabledIndicator(item.slug)'
-              :aria-disabled='isDisabledIndicator(item.slug)'>
+            <el-option v-for='item in indicators' :key='item.slug' :label='item.label' :value='item.slug'
+              :disabled='isDisabledIndicator(item.slug)' :aria-disabled='isDisabledIndicator(item.slug)'>
             </el-option>
           </el-select>
         </label>
         <label>
           {{ $t('preposition.for') }}
           <el-select v-model='statisticSlug'>
-            <el-option-group
-              v-for='theme in themes'
-              :key='theme.slug'
-              :label='theme.label'>
-              <el-option
-                v-for='item in theme.statistics'
-                :key='item.slug'
-                :label='item.label'
-                :value='item.slug'
-                :disabled='isDisabledStatistic(item.slug)'
-                :aria-disabled='isDisabledStatistic(item.slug)'>
+            <el-option-group v-for='theme in themes' :key='theme.slug' :label='theme.label'>
+              <el-option v-for='item in theme.statistics' :key='item.slug' :label='item.label' :value='item.slug'
+                :disabled='isDisabledStatistic(item.slug)' :aria-disabled='isDisabledStatistic(item.slug)'>
               </el-option>
             </el-option-group>
           </el-select>
@@ -37,11 +24,7 @@
         <data-view-dates prefix='preposition.from' />
       </el-col>
       <el-col :span='24'>
-        <el-alert
-          type='warning'
-          :title='illegalIndicatorStatisticCombo'
-          v-if='illegalIndicatorStatisticCombo'
-        >
+        <el-alert type='warning' :title='illegalIndicatorStatisticCombo' v-if='illegalIndicatorStatisticCombo'>
         </el-alert>
       </el-col>
     </el-row>
@@ -51,12 +34,14 @@
         <ul class='c-compare__locations'>
           <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
             {{ location.labels[$locale] || location.labels.en }}
-            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify' :title="$t('action.remove')" :aria-label="$t('action.remove')">
+            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'
+              :title="$t('action.remove')" :aria-label="$t('action.remove')">
               <i class='fa fa-times-circle fa-2x'></i>
             </button>
           </li>
           <li v-if='showAddLocationButton' class='c-compare__location'>
-            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation' :title="$t('action.add_location')" :aria-label="$t('action.add_location')">
+            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'
+              :title="$t('action.add_location')" :aria-label="$t('action.add_location')">
               <i class='fa fa-plus-circle fa-2x'></i>
             </button>
             <compare-additional-location></compare-additional-location>
@@ -66,12 +51,8 @@
     </el-row>
     <el-row>
       <el-col :span='24' v-if='oneOrMoreLocations'>
-        <compare-locations-table
-          v-if='statisticSlug && indicatorSlug'
-          :statistic='statistic'
-          :indicator='indicator'
-          :locations='locations'
-        >
+        <compare-locations-table v-if='statisticSlug && indicatorSlug' :statistic='statistic' :indicator='indicator'
+          :locations='locations'>
         </compare-locations-table>
         <div class='c-compare__actions'>
           <div class='c-compare__print'>
@@ -108,14 +89,16 @@
 import kebabCase from 'kebab-case';
 import _ from 'lodash';
 import Moment from 'moment';
-import { SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
-  SET_COMPARE_INDICATOR, INITIALISE } from '../store/mutation-types';
+import {
+  SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
+  SET_COMPARE_INDICATOR, INITIALISE
+} from '../store/mutation-types';
 
 import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
 import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
-import Routes from '../lib/routes.js.erb';
+import { newDownloadPath, comparePath } from '../lib/routes.js.erb';
 import unavailable from '../models/ukhpi-cube-metadata';
 
 const MAX_LOCATIONS = 5;
@@ -134,7 +117,7 @@ export default {
     CompareLocationsTable,
   },
 
-  mounted() {
+  mounted () {
     const node = document.querySelector('.c-location-compare__data');
     const attrs = node.attributes;
     const initialData = {};
@@ -166,47 +149,47 @@ export default {
   },
 
   computed: {
-    statistic() {
+    statistic () {
       const slug = this.statisticSlug;
       return this.statistics.find(stat => stat.slug === slug);
     },
 
-    indicator() {
+    indicator () {
       const slug = this.indicatorSlug;
       return this.indicators.find(ind => ind.slug === slug);
     },
 
-    statistics() {
-      function statWithGroup(theme, stat) {
+    statistics () {
+      function statWithGroup (theme, stat) {
         return Object.assign({ theme: theme.label }, stat);
       }
 
-      function themeStats(theme) {
+      function themeStats (theme) {
         return theme.statistics.map(stat => statWithGroup(theme, stat));
       }
 
       return _.flatten(this.themes.map(themeStats));
     },
 
-    oneOrMoreLocations() {
+    oneOrMoreLocations () {
       return this.locations.length > 0;
     },
 
-    locations() {
+    locations () {
       return this.$store.state.compareLocations;
     },
 
-    locationSlugs() {
+    locationSlugs () {
       return this.$store.state.compareLocations.map(loc => loc.gss);
     },
 
     /** We can still add a location if the current list is strictly less than
      * the ultimate limit, giving room for one last addition */
-    showAddLocationButton() {
+    showAddLocationButton () {
       return this.locations.length < MAX_LOCATIONS;
     },
 
-    illegalIndicatorStatisticCombo() {
+    illegalIndicatorStatisticCombo () {
       if (this.indicatorSlug === 'vol' && !this.statistic.hasVolume) {
         return 'Sorry, that combination of indicator and statistic is not available.';
       }
@@ -214,22 +197,22 @@ export default {
       return null;
     },
 
-    toDateISO() {
+    toDateISO () {
       return Moment(this.$store.state.toDate).format('YYYY-MM-DD');
     },
 
-    fromDateISO() {
+    fromDateISO () {
       return Moment(this.$store.state.fromDate).format('YYYY-MM-DD');
     },
 
-    selectedStatIndicator() {
+    selectedStatIndicator () {
       return {
         stat: this.$store.state.compareStatistic,
         ind: this.$store.state.compareIndicator,
       };
     },
 
-    pathOptions() {
+    pathOptions () {
       const options = {
         from: this.fromDateISO,
         to: this.toDateISO,
@@ -242,15 +225,15 @@ export default {
       return options;
     },
 
-    downloadUrlJson() {
-      return Routes.newDownloadPath(Object.assign({ format: 'json' }, this.pathOptions));
+    downloadUrlJson () {
+      return newDownloadPath(Object.assign({ format: 'json' }, this.pathOptions));
     },
 
-    downloadUrlCsv() {
-      return Routes.newDownloadPath(Object.assign({ format: 'csv' }, this.pathOptions));
+    downloadUrlCsv () {
+      return newDownloadPath(Object.assign({ format: 'csv' }, this.pathOptions));
     },
 
-    printUrl() {
+    printUrl () {
       const options = { print: true };
       Object.assign(options, this.pathOptions);
 
@@ -265,35 +248,35 @@ export default {
 
       options.lang = window.ukhpi.locale
 
-      return Routes.comparePath(options);
+      return comparePath(options);
     },
   },
 
   watch: {
-    indicators() {
+    indicators () {
       const selIndicator = this.indicators.find(indicator => indicator.isSelected).slug;
       this.indicatorSlug = selIndicator;
       this.$store.commit(SET_COMPARE_INDICATOR, selIndicator);
     },
 
-    statistics() {
+    statistics () {
       const selStatistic = this.statistics.find(statistic => statistic.isSelected).slug;
       this.statisticSlug = selStatistic;
       this.$store.commit(SET_COMPARE_STATISTIC, selStatistic);
     },
 
-    indicatorSlug() {
+    indicatorSlug () {
       this.$store.commit(SET_COMPARE_INDICATOR, this.indicatorSlug);
     },
 
-    statisticSlug() {
+    statisticSlug () {
       this.$store.commit(SET_COMPARE_STATISTIC, this.statisticSlug);
     },
 
     /** When the statistic and indicator change in the store, update the data
      * (but only if there is a difference). This typically occurs when the store
      * is updated via the 'back' operation */
-    selectedStatIndicator() {
+    selectedStatIndicator () {
       const { stat, ind } = this.selectedStatIndicator;
       if (this.statisticSlug !== stat) {
         this.statisticSlug = stat;
@@ -305,12 +288,12 @@ export default {
   },
 
   methods: {
-    onRemoveLocation(toRemoveLocation) {
+    onRemoveLocation (toRemoveLocation) {
       const newLocations = this.locations.filter(location => location.gss !== toRemoveLocation.gss);
       this.$store.commit(SET_COMPARE_LOCATIONS, newLocations);
     },
 
-    onAddLocation() {
+    onAddLocation () {
       bus.$emit('select-comparison');
     },
 
@@ -320,7 +303,7 @@ export default {
      * @param  {String}  ind indicator slug
      * @return {Boolean}     True if the indicator should be shown as disabled
      */
-    isDisabledIndicator(ind) {
+    isDisabledIndicator (ind) {
       return unavailable(this.statisticSlug, ind);
     },
 
@@ -330,12 +313,11 @@ export default {
      * @param  {String}  ind statistic slug
      * @return {Boolean}     True if the statistic should be shown as disabled
      */
-    isDisabledStatistic(stat) {
+    isDisabledStatistic (stat) {
       return unavailable(stat, this.indicatorSlug);
     },
   },
 };
 </script>
 
-<style lang='scss'>
-</style>
+<style lang='scss'></style>
