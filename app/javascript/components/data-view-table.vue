@@ -4,11 +4,7 @@
       <thead>
         <tr>
           <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
-          <th v-for='column in columns'
-              :key='`th-${column.slug}`'
-              class='u-right'
-              scope='col'
-          >
+          <th v-for='column in columns' :key='`th-${column.slug}`' class='u-right' scope='col'>
             {{ column.label }}
           </th>
         </tr>
@@ -23,8 +19,7 @@
       </tbody>
     </table>
     <div class='o-data-view__table-print'>
-      <a :href='printUrl' target='_' class='o-print-action'
-      >
+      <a :href='printUrl' target='_' class='o-print-action'>
         <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
       </a>
     </div>
@@ -32,7 +27,7 @@
 </template>
 
 <script>
-import Routes from '../lib/routes.js.erb';
+import { printPath } from '../lib/routes.js.erb';
 
 export default {
   data: () => ({
@@ -57,7 +52,7 @@ export default {
   },
 
   computed: {
-    printUrl() {
+    printUrl () {
       const vm = this;
       const location = this.$store.state.location || {};
       const params = {
@@ -72,20 +67,20 @@ export default {
         lang: this.$locale
       };
 
-      return `${Routes.printPath(params)}`;
+      return `${printPath(params)}`;
     },
 
-    columns() {
+    columns () {
       return this.statistics.filter(stat => this.isSelectedStatistic(stat.slug));
     },
 
-    queryResults() {
+    queryResults () {
       return this.$store.state.queryResults;
     },
   },
 
   watch: {
-    queryResults() {
+    queryResults () {
       const results = this.queryResults && this.queryResults.results();
       if (results) {
         this.tableData = results.map(result => result.asTableData());
@@ -94,16 +89,15 @@ export default {
   },
 
   methods: {
-    isSelectedStatistic(slug) {
+    isSelectedStatistic (slug) {
       return this.$store.state.selectedStatistics[slug];
     },
 
-    columnProp(stat) {
+    columnProp (stat) {
       return `ukhpi:${this.indicator ? this.indicator.rootName : ''}${stat.rootName}`;
     },
   }
 };
 </script>
 
-<style lang='scss'>
-</style>
+<style lang='scss'></style>

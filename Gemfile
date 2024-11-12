@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
@@ -24,7 +24,7 @@ gem 'sass-rails'
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit', '~> 7.0'
 gem 'govuk_template'
-gem 'js-routes', '< 2.0'
+gem 'js-routes'
 
 gem 'faraday'
 gem 'faraday_middleware'
@@ -35,15 +35,15 @@ gem 'puma'
 gem 'puma-metrics'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
-gem 'sentry-rails', '~> 5.7'
+gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
   gem 'haml-lint'
   gem 'json_expressions'
-  gem 'nokogiri', '1.13.10' # This is the highest version that supports Ruby 2.6
-  gem 'oj', '3.14.2' # This is the highest version that supports Ruby 2.6
+  gem 'nokogiri'
+  gem 'oj'
   gem 'rubocop', require: false
   gem 'tzinfo-data'
 end
@@ -59,7 +59,7 @@ end
 group :test do
   gem 'capybara_minitest_spec'
   gem 'm'
-  gem 'minitest-rails', '~> 6.0'
+  gem 'minitest-rails'
   gem 'minitest-reporters'
   # gem 'minitest-spec-rails'
   gem 'mocha'
