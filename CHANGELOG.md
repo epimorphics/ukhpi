@@ -1,5 +1,13 @@
 # Changes to the UKHPI app by version and date
 
+## 2.0.0 - 2024-11
+
+- (Bogdan) Updated all gems by regenerating `Gemfile.lock`
+- (Bogdan) Upgraded alpine to `3.20`
+- (Bogdan) Upgraded node to `20.12.2`
+- (Bogdan) Upgraded rails to `7.2.2`
+- (Bogdan) Upgraded ruby to `3.3.5`
+
 ## 1.8.0 - 2024-10
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
