@@ -59,7 +59,7 @@ end
 group :test do
   gem 'capybara_minitest_spec'
   gem 'm'
-  gem 'minitest-rails', '~> 6.0'
+  gem 'minitest-rails'
   gem 'minitest-reporters'
   # gem 'minitest-spec-rails'
   gem 'mocha'
