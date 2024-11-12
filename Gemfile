@@ -49,6 +49,10 @@ group :development, :test do
 end
 
 group :development do
+  # Devtools panel for Rails development
+  # https://chromewebstore.google.com/detail/rails-panel/gjpfobpafnhjhbajcjgccbbdofdckggg?pli=1
+  gem 'meta_request'
+
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
 
