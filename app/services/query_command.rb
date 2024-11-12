@@ -15,8 +15,8 @@ class QueryCommand
   # @param service Optional API service end-point to use. Defaults to the UKHPI
   # API service endpoint
   def perform_query(service = nil)
-    time_taken = execute_query(service, query)
-    Rails.logger.info(format("API roundtrip took %.0f μs\n", time_taken))
+    time_taken = execute_query(service, query) / 1000.0
+    Rails.logger.info(format("API roundtrip took %.0f ms\n", time_taken))
   end
 
   # @return True if this a query execution command

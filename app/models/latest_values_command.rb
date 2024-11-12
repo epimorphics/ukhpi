@@ -50,8 +50,8 @@ class LatestValuesCommand
       Rails.logger.error { "API query failed with: #{e.inspect}" }
       success = false
     end
-    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
-    Rails.logger.info { format("API query '#{query.to_json}' completed in %.0f μs\n", time_taken) }
+    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000.0
+    Rails.logger.info { format("API query '#{query.to_json}' completed in %.0f ms\n", time_taken) }
     success
   end
 
