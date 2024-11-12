@@ -35,7 +35,7 @@ gem 'puma'
 gem 'puma-metrics'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
-gem 'sentry-rails', '~> 5.7'
+gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
