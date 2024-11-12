@@ -3,7 +3,7 @@
 import Axios from 'axios'
 import store from './index'
 import bus from '../lib/event-bus'
-import Routes from '../lib/routes.js.erb'
+import { browsePath } from '../lib/routes.js.erb'
 import QueryResults from '../models/query-results'
 import setSessionStore from '../lib/session-store'
 
@@ -24,7 +24,7 @@ function onError (error) {
 /** Get the query results from the server. @return The promise object */
 function fetchQueryResults (userSelections, options) {
   return Axios.get(
-    Routes.browsePath(),
+    browsePath(),
     {
       params: userSelections,
       headers: {
@@ -46,7 +46,7 @@ function fetchQueryResults (userSelections, options) {
  * @return The promise object */
 function fetchQueryExplanation (userSelections) {
   return Axios.get(
-    Routes.browsePath(),
+    browsePath(),
     {
       params: Object.assign({ explain: true }, userSelections),
       headers: {
