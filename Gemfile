@@ -42,8 +42,8 @@ group :development, :test do
   gem 'byebug'
   gem 'haml-lint'
   gem 'json_expressions'
-  gem 'nokogiri', '1.13.10' # This is the highest version that supports Ruby 2.6
-  gem 'oj', '3.14.2' # This is the highest version that supports Ruby 2.6
+  gem 'nokogiri'
+  gem 'oj'
   gem 'rubocop', require: false
   gem 'tzinfo-data'
 end
