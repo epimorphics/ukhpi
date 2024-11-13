@@ -39,31 +39,36 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
   def detailed_request_log(duration)
     env = request.env
 
     log_fields = {
-      duration: duration,
-      request_id: env['X_REQUEST_ID'],
-      forwarded_for: env['X_FORWARDED_FOR'],
-      path: env['REQUEST_PATH'],
-      query_string: env['QUERY_STRING'],
-      user_agent: env['HTTP_USER_AGENT'],
       accept: env['HTTP_ACCEPT'],
       body: request.body.gets&.gsub("\n", '\n'),
+      duration: duration,
+      forwarded_for: env['X_FORWARDED_FOR'],
+      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status],
+      path: env['REQUEST_PATH'],
+      query_string: env['QUERY_STRING'],
+      request_id: env['X_REQUEST_ID'],
+      request_uri: env['REQUEST_URI'],
       method: request.method,
-      status: response.status,
-      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status]
+      status: response.status
     }
+
+    if env['HTTP_USER_AGENT'] && Rails.env.production?
+      log_fields[:user_agent] = env['HTTP_USER_AGENT']
+    end
 
     if (500..599).include?(Rack::Utils::SYMBOL_TO_STATUS_CODE[response.status])
       log_fields[:message] = env['action_dispatch.exception'].to_s
+      log_fields[:backtrace] = env['action_dispatch.backtrace'].join("\n") unless Rails.env.production?
     end
 
     log_response(response.status, log_fields)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
 
   # Log the error with the appropriate log level based on the status code
   def log_response(status, error_log)
