@@ -12,6 +12,16 @@
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
 
+## 1.7.6 - 2024-10
+
+- (Jon) Split the error logging into it's own method as well as adjusted the
+  logged message to be either the response message or the response status
+- (Jon) Renamed `render_error` method to `handle_error`
+- (Jon) Set the Internal Error Instrumentation to an `unless` statement to
+  ensure the application does not report internal errors to the Prometheus
+  metrics when the error is a 404 thereby reducing the noise in the Slack alerts
+  channel
+
 ## 1.7.5 - 2024-09
 
 - (Jon) Created a `local` makefile target to allow for local development without
