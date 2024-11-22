@@ -13,8 +13,7 @@ RUN apk add --update \
     tzdata \
     yarn \
     && rm -rf /var/cache/apk/* \
-    && gem install rubygems-update \
-    && update_rubygems \
+    && gem update --system \
     && gem install bundler:$BUNDLER_VERSION \
     && bundle config --global frozen 1
 
