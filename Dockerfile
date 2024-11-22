@@ -37,7 +37,7 @@ COPY lib lib
 COPY public public
 
 # Compile
-RUN yarn install --production && RAILS_ENV=production bundle exec rake assets:precompile \
+RUN yarn install --production && RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider bundle exec rake assets:precompile \
   && mkdir -m 777 /usr/src/app/coverage
 
 # Start a new stage to minimise the final image size

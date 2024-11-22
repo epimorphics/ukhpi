@@ -3,12 +3,12 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 6.0'
+gem 'rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier', '>= 1.3.0'
+gem 'uglifier'
 
 gem 'haml-rails'
-gem 'webpacker', '~> 5.4', '>= 5.4.4'
+gem 'webpacker', '~> 5.4'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -22,28 +22,28 @@ gem 'font-awesome-rails'
 gem 'sass-rails'
 
 gem 'govuk_elements_rails'
-gem 'govuk_frontend_toolkit', '~> 7.0'
+gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
-gem 'js-routes', '< 2.0'
+gem 'js-routes'
 
 gem 'faraday'
 gem 'faraday_middleware'
-gem 'get_process_mem', '~> 0.2.7'
+gem 'get_process_mem'
 gem 'http_accept_language'
-gem 'prometheus-client', '~> 4.0'
+gem 'prometheus-client'
 gem 'puma'
 gem 'puma-metrics'
 gem 'rdf-turtle'
 gem 'rubocop-rails'
-gem 'sentry-rails', '~> 5.7'
+gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
   gem 'haml-lint'
   gem 'json_expressions'
-  gem 'nokogiri', '1.13.10' # This is the highest version that supports Ruby 2.6
-  gem 'oj', '3.14.2' # This is the highest version that supports Ruby 2.6
+  gem 'nokogiri'
+  gem 'oj'
   gem 'rubocop', require: false
   gem 'tzinfo-data'
 end
@@ -59,21 +59,21 @@ end
 group :test do
   gem 'capybara_minitest_spec'
   gem 'm'
-  gem 'minitest-rails', '~> 6.0'
+  gem 'minitest-rails'
   gem 'minitest-reporters'
   # gem 'minitest-spec-rails'
   gem 'mocha'
   gem 'selenium-webdriver'
-  gem 'simplecov', '0.22.0', require: false
+  gem 'simplecov', require: false
   gem 'vcr'
 end
 
-# TODO: For running the app locally for testing you can set this to your local path
-# gem 'data_services_api', '~> 1.4.0', path: '~/Epimorphics/shared/data_services_api/'
-# gem 'json_rails_logger', '~> 1.0.0', path: '~/Epimorphics/shared/json-rails-logger/'
-
 # TODO: In production you want to set this to the gem from the epimorphics package repo
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api', '~> 1.4.0'
-  gem 'json_rails_logger', '~> 1.0.0'
+  gem 'data_services_api'
+  gem 'json_rails_logger'
 end
+
+# TODO: For running the app locally for testing you can set this to your local path
+# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
+# gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
