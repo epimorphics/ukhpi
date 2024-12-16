@@ -23,6 +23,9 @@ class ExceptionsController < ApplicationController
     return nil if Rails.env.development? # Why are we reporting to Senty in dev?
     return nil unless status_code >= 500
 
+    # add the exception to the prometheus metrics
+    instrument_internal_error(exception)
+
     sevent = Sentry.capture_exception(exception)
     sevent&.event_id
   end
