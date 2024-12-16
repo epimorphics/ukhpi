@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def detailed_request_log(duration)
     env = request.env
 
@@ -67,14 +67,27 @@ class ApplicationController < ActionController::Base
       Rails.logger.info(JSON.generate(log_fields))
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
-  # @param [Exception] exp the exception that caused the error
+  # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  def instrument_internal_error(exception)
-    ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
+  def instrument_internal_error(exc) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    err = {
+      message: exc&.message || exc,
+      status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]
+    }
+    err[:type] = exc.class&.name if exc&.class
+    err[:cause] = exc&.cause if exc&.cause
+    err[:backtrace] = exc&.backtrace if exc&.backtrace && Rails.env.development?
+    # Log the exception to the Rails logger with the appropriate severity
+    Rails.logger.send(err[:status] < 500 ? :warn : :error, JSON.generate(err))
+    # Return unless the status code is 500 or greater to ensure subscribers are NOT notified
+    return unless err[:status] >= 500
+
+    # Instrument the internal error event to notify subscribers of the error
+    ActiveSupport::Notifications.instrument('internal_error.application', exception: err)
   end
 end
