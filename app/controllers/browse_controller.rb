@@ -60,7 +60,8 @@ class BrowseController < ApplicationController
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
       Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
-      render_request_error(@view_state.user_selections, :internal_server_error)
+      user_selections = view_state.respond_to?(:user_selections) ? view_state.user_selections : UserSelections.new
+      render_request_error(user_selections, :internal_server_error)
     else
       respond_to do |format|
         format.html
