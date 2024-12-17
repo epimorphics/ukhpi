@@ -3,7 +3,7 @@
 # Controller for the main user experience of browsing the UKHPI statistics.
 # Usually the primary interaction will be via JavaScript and XHR, but we also
 # support non-JS access by setting browse preferences in the `edit` action.
-class BrowseController < ApplicationController
+class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLength
   layout 'webpack_application'
 
   def show
@@ -56,10 +56,11 @@ class BrowseController < ApplicationController
     { user_selections: user_selections, error: e.message }
   end
 
+  # rubocop:disable Metrics/MethodLength, Metrics/LineLength
   def render_view_state(view_state)
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
+      Rails.logger.debug { "UKHPI experienced an issue with this request: #{view_state}" } if Rails.env.development?
       user_selections = view_state.respond_to?(:user_selections) ? view_state.user_selections : UserSelections.new
       render_request_error(user_selections, :internal_server_error)
     else
@@ -69,6 +70,7 @@ class BrowseController < ApplicationController
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength, Metrics/LineLength
 
   # Look at the `action` parameter, which may be set by various action buttons
   # on the form, to determine whether we need to do any processing before
@@ -108,7 +110,7 @@ class BrowseController < ApplicationController
   end
 
   def match_no_locations
-    flash[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
+    flash.now[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   def match_single_location(view_state, locations)
@@ -129,7 +131,7 @@ class BrowseController < ApplicationController
     }.merge(new_params))
   end
 
-  def render_request_error(user_selections, status)
+  def render_request_error(user_selections, status) # rubocop:disable Metrics/MethodLength
     respond_to do |format|
       @view_state = { user_selections: user_selections }
       request_status = status == 400 ? :bad_request : :internal_server_error
