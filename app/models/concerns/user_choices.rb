@@ -54,15 +54,23 @@ module UserChoices
   end
 
   # Recognise a date. Accepts ISO-8601 strings or Date objects.
-  # Dates that match YYYY-MM will be transformed to YYYY-MM-01.
   # @param date Either an ISO0-8601 date string, or a date object
   def parse_date(date)
     if date.is_a?(Date)
       date
     else
-      date_str = date.to_s.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{date}-01" : date.to_s
+      # We need to truncate the date to at most the final 10 characters expected
+      # to avoid potential errors from maliciously long strings.
+      potential_date = date.to_s.first(10)
+      # strings that match YYYY-MM will be transformed to YYYY-MM-01 (i.e. 10 chars)
+      date_str = potential_date.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{potential_date}-01" : potential_date
+      # We can now parse the date string and fail if it is not a valid date.
       Date.parse(date_str)
     end
+  rescue ArgumentError => e
+    # We use truncate here to show the original date value in the logs with an
+    # ellipsis but with a maximum length of 128 characters to clarify the error.
+    Rails.logger.error("Failed to parse date '#{date.to_s.truncate(128)}': #{e.message || e}")
   end
 
   def array_valued?(param)
