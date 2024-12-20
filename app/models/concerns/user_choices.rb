@@ -63,7 +63,7 @@ module UserChoices
       # to avoid potential errors from maliciously long strings.
       potential_date = date.to_s.first(10)
       # strings that match YYYY-MM will be transformed to YYYY-MM-01 (i.e. 10 chars)
-      date_str = potential_date.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{potential_date}-01" : potential_date
+      date_str = potential_date.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{potential_date}-01" : potential_date # rubocop:disable Layout/LineLength
       # We can now parse the date string and fail if it is not a valid date.
       Date.parse(date_str)
     end
