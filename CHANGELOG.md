@@ -9,7 +9,7 @@
   [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
 - (Jon) Updated the `maybe_report_to_sentry` method to call the
   `instrument_internal_error` method for reporting internal errors to the
-  Prometheus metrics when neccessary
+  Prometheus metrics when necessary
 - (Jon) Renamed the `handle_error` method to `handle_exceptions` to better
   reflect the method's purpose
 
