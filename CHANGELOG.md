@@ -1,5 +1,9 @@
 # Changes to the UKHPI app by version and date
 
+## Unreleased
+
+- (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime`
+
 ## 2.0.1 - 2024-12
 
 - (Jon) Improves error metrics reporting to ensure that logging always happens
@@ -23,7 +27,8 @@
 
 ## 1.8.0 - 2024-10
 
-- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
+- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16
+  [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
 
 ## 1.7.5 - 2024-09
 
