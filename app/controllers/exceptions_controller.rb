@@ -4,7 +4,7 @@
 class ExceptionsController < ApplicationController
   layout 'application'
 
-  def handle_error
+  def handle_exceptions
     env = request.env
     exception = env['action_dispatch.exception']
     status_code = ActionDispatch::ExceptionWrapper.new(env, exception).status_code
@@ -25,6 +25,9 @@ class ExceptionsController < ApplicationController
   def maybe_report_to_sentry(exception, status_code)
     return nil if Rails.env.development? # Why are we reporting to Sentry in dev?
     return nil unless status_code >= 500
+
+    # add the exception to the prometheus metrics
+    instrument_internal_error(exception)
 
     sevent = Sentry.capture_exception(exception)
     sevent&.event_id
