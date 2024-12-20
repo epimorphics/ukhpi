@@ -4,7 +4,7 @@ require 'test_helper'
 
 # Unit tests on the UkhpiIndicator class
 class UkhpiIndicatorTest < ActiveSupport::TestCase
-  describe 'UkhpiIndicator' do
+  describe 'UkhpiIndicator' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should provide access to the initialised values' do
         ind = UkhpiIndicator.new('foo', 'foo_root', 'average_price')
