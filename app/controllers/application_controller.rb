@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def detailed_request_log(duration)
     env = request.env
 
@@ -63,7 +63,7 @@ class ApplicationController < ActionController::Base
 
     log_response(response.status, log_fields)
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 
   # Log the error with the appropriate log level based on the status code
   def log_response(status, error_log)

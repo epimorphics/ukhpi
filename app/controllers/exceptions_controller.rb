@@ -4,12 +4,14 @@
 class ExceptionsController < ApplicationController
   layout 'application'
 
-  def handle_error
+  def render_error
     env = request.env
     exception = env['action_dispatch.exception']
     status_code = ActionDispatch::ExceptionWrapper.new(env, exception).status_code
 
     sentry_code = maybe_report_to_sentry(exception, status_code)
+    # add the exception to the prometheus metrics
+    instrument_internal_error(exception)
 
     # add the exception to the prometheus metrics but only on errors that are 404
     instrument_internal_error(exception) unless status_code == 404
