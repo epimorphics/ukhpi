@@ -74,7 +74,26 @@ class ApplicationController < ActionController::Base
   # @param [Exception] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  def instrument_internal_error(exception)
-    ActiveSupport::Notifications.instrument('internal_error.application', exception: exception)
+  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  def instrument_internal_error(exc, status = nil)
+    err = {
+      message: exc&.message || exc,
+      status: Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]
+    }
+    err[:status] = status if status
+    err[:type] = exc.class&.name if exc&.class
+    err[:cause] = exc&.cause if exc&.cause
+    err[:backtrace] = exc&.backtrace if exc&.backtrace && Rails.env.development?
+    # Log the exception to the Rails logger with the appropriate severity
+    Rails.logger.send(err[:status] < 500 ? :warn : :error, JSON.generate(err))
+    # Return unless the status code is 500 or greater to ensure subscribers are NOT notified
+    return nil unless err[:status] >= 500
+
+    sevent = Sentry.capture_exception(exc) unless Rails.env.development?
+    # Instrument the internal error event to notify subscribers of the error
+    ActiveSupport::Notifications.instrument('internal_error.application', exception: err)
+    # Return the event id for the internal error event
+    sevent&.event_id
   end
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
 end
