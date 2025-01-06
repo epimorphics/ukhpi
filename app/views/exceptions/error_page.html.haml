@@ -1,3 +1,6 @@
+- puts "Rendering error page with status: #{status.inspect}" if Rails.env.development?
+- puts "View state: #{@view_state.inspect}" if Rails.env.development?
+
 %article.u-clear
   - if status == 400
     %h1.o-heading--1 Request not understood
@@ -7,16 +10,16 @@
       message as a result of using the HPI or PPD applications, please let us
       know so that we can correct the problem.
 
-    - if @view_state.user_selections&.errors
+    - if @view_state && @view_state[:user_selections].errors.any?
       %p
         The following issues were identified in your request:
 
       %ul.list.list-bullet
-        - @view_state.user_selections.errors.each do |err_msg|
+        - @view_state[:user_selections].errors.each do |err_msg|
           %li
             = err_msg
 
-  - elsif status == 404
+  - if status == 404
     %h1.o-heading--1 Page not found
 
     %p
@@ -24,7 +27,7 @@
       Please check the spelling of the page address (URL). If you require further
       assistance, please see the contact details below.
 
-  - else
+  - if status == 500
     %h1.o-heading--1 Application error
 
     %p
@@ -42,16 +45,14 @@
         = sentry_code
 
   %h2.o-heading--2 Who to contact
-  %p
-    If you are unable to access the data, please
-    %a{ href: 'http://site.landregistry.gov.uk/contact-us/form' }
-      fill in our contact form.
-
-  %p
-    For general transaction data enquiries, email
-    %a{ href: 'mailto:DRO@landregistry.gov.uk' }
-      DRO@landregistry.gov.uk
-
-  %p
-    For general price paid data enquiries, contact
-    = mail_to(Rails.application.config.contact_email_address)
+  %ul.list.list-bullet
+    %li
+      If you are unable to access the data, please
+      %a{ href: '//site.landregistry.gov.uk/contact-us/form' }
+        fill in our contact form.
+    %li
+      For general transaction data enquiries, email
+      = mail_to('DRO@landregistry.gov.uk')
+    %li
+      For general price paid data enquiries, contact
+      = mail_to(Rails.application.config.contact_email_address)
