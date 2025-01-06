@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+- (Jon) Updated the `ApplicationController` to handle each error status
+  appropriately as well as ensure that the `instrument_internal_error` method is
+  called when an internal error is raised
+- (Jon) Updated the `instrument_internal_error` method to replace the
+  `maybe_report_to_sentry` method while reporting internal errors to the
+  Prometheus metrics only when necessary
+- (Jon) Removed the custom error handling by deleting the `ExceptionsController`
+  and the `exceptions` initialiser
 - (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime` in Ruby
   3.1.0
 - (Jon) Improves error metrics reporting to ensure that logging always happens
@@ -9,11 +17,6 @@
   the types of errors that can trigger a an error metric and therefore a
   notification in slack
   [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
-- (Jon) Updated the `maybe_report_to_sentry` method to call the
-  `instrument_internal_error` method for reporting internal errors to the
-  Prometheus metrics when necessary
-- (Jon) Renamed the `handle_error` method to `handle_exceptions` to better
-  reflect the method's purpose
 
 ## 2.0.0 - 2024-11
 
