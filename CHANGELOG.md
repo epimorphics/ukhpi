@@ -2,10 +2,8 @@
 
 ## Unreleased
 
-- (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime`
-
-## 2.0.1 - 2024-12
-
+- (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime` in Ruby
+  3.1.0
 - (Jon) Improves error metrics reporting to ensure that logging always happens
   with the appropriate severity depending on the exception status while reducing
   the types of errors that can trigger a an error metric and therefore a
