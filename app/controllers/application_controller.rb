@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # :nodoc:
-class ApplicationController < ActionController::Base
+class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::TranslationHelper
   # Prevent CSRF attacks by raising an exception.
@@ -111,7 +111,7 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:disable Metrics/AbcSize
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def detailed_request_log(duration)
     env = request.env
 
@@ -139,11 +139,11 @@ class ApplicationController < ActionController::Base
       Rails.logger.info(JSON.generate(log_fields))
     end
   end
-  # rubocop:enable Metrics/AbcSize
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
-  # @param [Exception] exp the exception that caused the error
+  # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
   # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
