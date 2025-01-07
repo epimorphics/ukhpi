@@ -10,7 +10,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
-      render_request_error(user_selections, 400)
+      render_request_error(user_selections, :bad_request)
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
@@ -128,19 +128,20 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     }.merge(new_params))
   end
 
-  def render_request_error(user_selections, status)
+  def render_request_error(user_selections, status_code) # rubocop:disable Metrics/MethodLength
+    # Convert status code to integer if it is a symbol
+    status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code] if status_code.is_a?(Symbol)
     respond_to do |format|
-      @view_state = { user_selections: user_selections }
-      request_status = status == 400 ? :bad_request : :internal_server_error
+      @view_state ||= { user_selections: user_selections }
       format.html do
         render 'exceptions/error_page',
-               locals: { status: status, sentry_code: nil },
+               locals: { status: status_code, sentry_code: nil },
                layout: true,
-               status: request_status
+               status: status_code
       end
 
       format.json do
-        render(json: { status: 'request error' }, status: request_status)
+        render(json: { status: 'request error' }, status: status_code)
       end
     end
   end
