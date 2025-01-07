@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+## 2.0.1 - 2025-01
+
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
   ensure a message is displayed at all times no matter what status is passed in
   as per best practices
