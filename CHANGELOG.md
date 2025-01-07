@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.1 - 2025-01
+
+- (Jon) Refactored UI code to use if/elsif/else in error page responses to
+  ensure a message is displayed at all times no matter what status is passed in
+  as per best practices
 - (Jon) Updated the `ApplicationController` to handle each error status
   appropriately as well as ensure that the `instrument_internal_error` method is
   called when an internal error is raised
