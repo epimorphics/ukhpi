@@ -19,7 +19,7 @@
           %li
             = err_msg
 
-  - if status == 404
+  - elsif status == 404
     %h1.o-heading--1 Page not found
 
     %p
@@ -27,7 +27,7 @@
       Please check the spelling of the page address (URL). If you require further
       assistance, please see the contact details below.
 
-  - if status == 500
+  - else
     %h1.o-heading--1 Application error
 
     %p
