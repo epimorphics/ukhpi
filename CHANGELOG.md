@@ -1,5 +1,28 @@
 # Changes to the UKHPI app by version and date
 
+## Unreleased
+
+## 2.0.1 - 2025-01
+
+- (Jon) Refactored UI code to use if/elsif/else in error page responses to
+  ensure a message is displayed at all times no matter what status is passed in
+  as per best practices
+- (Jon) Updated the `ApplicationController` to handle each error status
+  appropriately as well as ensure that the `instrument_internal_error` method is
+  called when an internal error is raised
+- (Jon) Updated the `instrument_internal_error` method to replace the
+  `maybe_report_to_sentry` method while reporting internal errors to the
+  Prometheus metrics only when necessary
+- (Jon) Removed the custom error handling by deleting the `ExceptionsController`
+  and the `exceptions` initialiser
+- (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime` in Ruby
+  3.1.0
+- (Jon) Improves error metrics reporting to ensure that logging always happens
+  with the appropriate severity depending on the exception status while reducing
+  the types of errors that can trigger a an error metric and therefore a
+  notification in slack
+  [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
+
 ## 2.0.0 - 2024-11
 
 - (Bogdan) Updated all gems by regenerating `Gemfile.lock`
@@ -10,7 +33,8 @@
 
 ## 1.8.0 - 2024-10
 
-- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16 [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
+- (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16
+  [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
 
 ## 1.7.6 - 2024-10
 
