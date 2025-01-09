@@ -15,4 +15,6 @@ Rails.application.routes.draw do
   get 'doc/ukhpi', to: 'doc#ukhpi', as: 'ukhpi_doc'
   get 'doc/ukhpi-dsd', to: 'doc#ukhpi_dsd'
   get 'doc/ukhpi-user-guide', to: 'doc#ukhpi_user_guide'
+
+  get '*unmatched_route', to: 'application#render_404'
 end

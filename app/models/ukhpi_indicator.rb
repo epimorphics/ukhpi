@@ -17,7 +17,7 @@ class UkhpiIndicator
 
   # @return True if this indicator denotes sales volume
   def volume?
-    slug == 'vol'
+    slug && slug == 'vol'
   end
 
   # @return The label for this indicator

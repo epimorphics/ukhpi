@@ -4,7 +4,7 @@ require 'test_helper'
 
 # Unit tests on the UkhpiTheme class
 class UkhpiThemeTest < ActiveSupport::TestCase
-  describe 'UkhpiTheme' do
+  describe 'UkhpiTheme' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = stub

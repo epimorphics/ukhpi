@@ -32,12 +32,13 @@
   .o-secondary-banner
     - if Rails.application.config.welsh_language_enabled
       %nav.o-secondary-banner__lang-select{ 'aria-label' => 'language selector' }
-        - if @view_state.user_selections.english?
+        - user_selections = @view_state.respond_to?(:[]) ? @view_state[:user_selections] : @view_state.user_selections
+        - if user_selections.english?
           English
         - else
-          = link_to('English', @view_state.user_selections.alternative_language_params.params)
+          = link_to('English', user_selections.alternative_language_params.params)
         |
-        - if @view_state.user_selections.welsh?
+        - if user_selections.welsh?
           Cymraeg
         - else
-          = link_to('Cymraeg', @view_state.user_selections.alternative_language_params.params)
+          = link_to('Cymraeg', user_selections.alternative_language_params.params)
