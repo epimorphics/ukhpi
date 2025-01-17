@@ -23,7 +23,8 @@ class LatestValuesCommand
     log_fields = {}
     service = nil if service.blank?
     begin
-      service || dataset(:ukhpi)
+      # Set service to ukhpi dataset if not already set
+      service ||= dataset(:ukhpi)
       log_fields[:message] = 'Connected to UK HPI service'
       log_type = 'info'
     rescue Faraday::ConnectionFailed => e
