@@ -69,10 +69,10 @@ class LatestValuesCommand
     begin
       @results = hpi.query(query)
       time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-      message = format("Processing Data Services API query: '#{query.to_json}' in %.0fms", time_taken)
+      message = format("Completed Data Services API query: '#{query.to_json}' in %.0fms", time_taken)
       log_fields[:duration] = time_taken
       log_fields[:message] = message
-      log_fields[:request_status] = 'processing'
+      log_fields[:request_status] = 'completed'
       log_type = 'info'
     rescue NoMethodError => e
       log_fields[:message] = "Application failed with: NoMethodError: #{e.inspect}"
