@@ -58,6 +58,7 @@ class LatestValuesCommand
 
   def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     log_fields = {}
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
     success = true
     query = add_date_range_constraint(base_query)
@@ -65,7 +66,6 @@ class LatestValuesCommand
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
-    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     begin
       @results = hpi.query(query)
       time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
