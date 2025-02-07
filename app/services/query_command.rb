@@ -12,15 +12,17 @@ class QueryCommand
   end
 
   # Perform the UKHPI query encapsulated by this command object
-  # @param service Optional API service end-point to use. Defaults to the UKHPI
-  # API service endpoint
+  # @param service Optional API service endpoint to use.
+  # Defaults to the UKHPI API service endpoint
   def perform_query(service = nil)
     log_fields = {}
-    time_taken = execute_query(service, query)
-    log_fields[:message] = format("Completed Data Services API roundtrip took %.0fms\n", time_taken)
+    time_taken = execute_query(service, query) / 1000
+    msg = format('Completed Data Services API request from UKHPI service in %.0f ms', time_taken)
+    log_fields[:message] = msg
     log_fields[:request_status] = 'completed'
-    log_fields[:duration] = time_taken
-    Rails.logger.info(log_fields)
+    log_fields[:request_time] = time_taken
+    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
+    Rails.logger.info(JSON.generate(log_fields))
   end
 
   # @return True if this a query execution command
@@ -36,14 +38,10 @@ class QueryCommand
   private
 
   # Construct the DsAPI query that matches the given user constraints
-  def build_query
-    log_fields = {}
-    log_fields[:message] = 'Received Data Services API query'
-    log_fields[:request_status] = 'received'
+  def build_query # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     query = add_date_range_constraint(base_query)
     query1 = add_location_constraint(query)
     add_sort(query1)
-    Rails.logger.info(log_fields)
   end
 
   def api_service(service)
@@ -55,14 +53,10 @@ class QueryCommand
   end
 
   # Run the given query, stash the results, and return time taken in microseconds.
-  def execute_query(service, query)
-    log_fields = {}
-    log_fields[:message] = 'Processing Data Services API query'
-    log_fields[:request_status] = 'processing'
+  def execute_query(service, query) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     @results = api_service(service).query(query)
-    Rails.logger.info(log_fields)
-    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 
   def add_date_range_constraint(query)
