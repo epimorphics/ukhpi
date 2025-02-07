@@ -92,4 +92,7 @@ Rails.application.configure do
 
   # API location is specified in the environment variable API_SERVICE_URL
   config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
+
+  # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
+  config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
 end
