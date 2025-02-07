@@ -6,7 +6,9 @@ require_dependency 'locations_table'
 class Locations
   extend LocationsTable
 
-  Struct.new('LocationSearchType', :label, :rdf_types)
+  # Prevent a warning about LocationSearchType being redefined
+  LocationSearchType ||= Struct.new('LocationSearchType', :label, :rdf_types)
+
   LOCATION_SEARCH_TYPES = {
     'country' => Struct::LocationSearchType.new('Country', [
                                                   'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion'
