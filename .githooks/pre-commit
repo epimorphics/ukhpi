@@ -25,10 +25,11 @@ if [ -z "$RUBY_FILES" ]; then
   printf '\n\033[0;31mThere are currently no updated files in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
 fi
 
-
 if [ -n "$RUBY_FILES" ]; then
   printf '\n\033[0;33mRunning Rubocop...\033[0m\n'
-  bundle exec rubocop -A "$RUBY_FILES"
+  for file in $RUBY_FILES; do
+    git show :"$file" | bundle exec rubocop -A --stdin "$file"
+  done
   RUBOCOP_EXIT_CODE=$?
   WORK_DONE=1
 else
