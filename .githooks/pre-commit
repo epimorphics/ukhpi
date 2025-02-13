@@ -28,7 +28,7 @@ fi
 
 if [ -n "$RUBY_FILES" ]; then
   printf '\n\033[0;33mRunning Rubocop...\033[0m\n'
-  bundle exec rubocop --autocorrect "$RUBY_FILES"
+  bundle exec rubocop -A "$RUBY_FILES"
   RUBOCOP_EXIT_CODE=$?
   WORK_DONE=1
 else
