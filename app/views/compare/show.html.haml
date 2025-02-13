@@ -8,7 +8,7 @@
       %p.u-muted
         = t('compare.show.prompt')
 
-      .c-location-compare--non-js.u-js-hidden
+      .c-location-compare--non-js{:class => ("u-js-hidden" unless Rails.env.development?)}
         %form.c-compare__form{ action: compare_path, method: 'get' }
           %p
             %label{ for: 'select-in' }
@@ -49,7 +49,7 @@
             %li.c-compare__add-location
               %label{ for: 'location-term', id: 'location-term-label'}
                 = t('compare.show.add_location')
-              %input{ id: 'location-term', type: 'text', name: 'location-term', "aria-labelledby": "location-term-label", value: @view_state.search_term }
+              %input{ id: 'location-term', type: 'search', name: 'location-term', "aria-labelledby": "location-term-label", value: @view_state.search_term }
               %button{ type: 'submit', value: 'search', name: 'form-action' }
                 = t('action.search')
 
@@ -70,7 +70,7 @@
           %p
             = msg
         - else
-          %table.c-compare__results.u-js-hidden
+          %table.c-compare__results{:class => ("u-js-hidden" unless Rails.env.development?)}
             %thead
               %tr
                 %th{ scope: 'col' }

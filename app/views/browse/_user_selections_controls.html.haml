@@ -4,7 +4,7 @@
 
 %p
   = label_tag(:'location-term', t('browse.edit.form.search_prompt'))
-  = text_field_tag(:'location-term')
+  = search_field_tag(:'location-term')
 
   %button{ type: 'submit', value: 'search', name: 'form-action' }
     = t('action.search')
