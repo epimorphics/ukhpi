@@ -1,0 +1,55 @@
+#!/bin/sh
+# caveat: this script assumes all modifications to a file were staged in the commit
+# beware if you are in the habit of committing only partial modifications to a file:
+# THIS HOOK WILL ADD ALL MODIFICATIONS TO A FILE TO THE COMMIT IF ANY FILE WAS CHANGED BY LINTING
+
+list="issue spike task"
+
+listRE="^($(printf '%s\n' "$list" | tr ' ' '|'))/"
+
+BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
+
+printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
+
+if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
+ 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
+	exit 0
+fi
+
+RUBY_FILES="$(git diff --diff-filter=d --name-only --cached | grep -E '(Gemfile|Rakefile|\.(rb|rake|ru))$')"
+PRE_STATUS="$(git status | wc -l)"
+
+WORK_DONE=0
+
+if [ -z "$RUBY_FILES" ]; then
+  printf '\n\033[0;31mThere are currently no updated files in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
+fi
+
+
+if [ -n "$RUBY_FILES" ]; then
+  printf '\n\033[0;33mRunning Rubocop...\033[0m\n'
+  bundle exec rubocop --autocorrect "$RUBY_FILES"
+  RUBOCOP_EXIT_CODE=$?
+  WORK_DONE=1
+else
+  printf '\n\033[0;32mContinuing as there are no changes to check... 🎉\033[0m\n'
+  RUBOCOP_EXIT_CODE=0
+fi
+
+POST_STATUS="$(git status | wc -l)"
+
+if [ ! $RUBOCOP_EXIT_CODE -eq 0 ]; then
+  git reset HEAD
+  printf '\n\033[0;31mLinting has uncorrectable errors; please fix and restage your commit. 😖\033[0m\n'
+  exit 1
+fi
+
+if [ "$PRE_STATUS" != "$POST_STATUS" ]; then
+  git add "$RUBY_FILES"
+fi
+
+if [ $WORK_DONE -eq 1 ]; then
+  printf '\n\033[0;32mLinting completed successfully! 🎉\033[0m\n'
+fi
+
+exit 0
