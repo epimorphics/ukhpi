@@ -3,8 +3,8 @@
 # Shared functionality for user models that provide access to the users'
 # choices articulated via the params in the incoming request
 module UserChoices
-  # prevent warning about UserParam being redefined
-  UserParam ||= Struct.new('UserParam', :default_value, :array?, :alias)
+  # Define the user parameters that can be set by the user
+  Struct.new('UserParam', :default_value, :array?, :alias)
 
   attr_reader :params
 
