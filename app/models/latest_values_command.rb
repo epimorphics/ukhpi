@@ -1,19 +1,13 @@
 # frozen_string_literal: true
 
 # Command object to query the API for the latest available values
-class LatestValuesCommand
+class LatestValuesCommand # rubocop:disable Metrics/ClassLength
   include DataService
 
   attr_reader :results
 
   def perform_query(service = nil)
-    log_fields = {}
-    log_fields[:message] = 'Received Data Services API query'
-    log_fields[:request_status] = 'received'
-
-    Rails.logger.info(JSON.generate(log_fields))
     hpi = service_api(service)
-
     (hpi && run_query(hpi)) || no_service
   end
 
@@ -21,43 +15,47 @@ class LatestValuesCommand
 
   def service_api(service) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     log_fields = {}
+    log_type = 'error'
+
     service = nil if service.blank?
     begin
       # Set service to ukhpi dataset if not already set
       service ||= dataset(:ukhpi)
-      log_fields[:message] = 'Connected to UK HPI service'
-      log_type = 'info'
+
     rescue Faraday::ConnectionFailed => e
-      log_fields[:message] = 'Failed to connect to UK HPI service'
-      log_fields[:status] = e.status
+      log_fields[:message] = 'Failed to connect to UKHPI service'
       log_fields[:body] = e.message
       log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.env.development?
-      log_fields[:request_status] = 'error'
+      log_fields[:request_status] = log_type
+      log_fields[:status] = e.status
 
       service = nil
     rescue DataServicesApi::ServiceException => e
-      log_fields[:message] = 'Failed to get response from UK HPI service'
-      log_fields[:status] = e.status
+      log_fields[:message] = 'Failed to get response from UKHPI service'
       log_fields[:body] = e.service_message
-      log_fields[:request_status] = 'error'
+      log_fields[:request_status] = log_type
+      log_fields[:status] = e.status
 
       service = nil
     rescue RuntimeError => e
       log_fields[:message] = "Runtime error #{e.inspect}"
-      log_fields[:status] = e.status
       log_fields[:body] = "Caused by: #{e.cause} in " if e.cause
-      log_fields[:body] += e.class
+      log_fields[:body] += "\r\n(#{e.class})" if Rails.application.config.log_level == :debug
       log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.env.development?
-      log_fields[:request_status] = 'error'
+      log_fields[:request_status] = log_type
+      log_fields[:status] = e.status
 
       service = nil
     end
-    Rails.logger.send(log_type) { log_fields }
+
+    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
+
     service
   end
 
-  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     log_fields = {}
+    log_type = 'error'
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
     success = true
@@ -66,31 +64,38 @@ class LatestValuesCommand
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
+    # Log the initial request received, passing in the service and query params
+    LoggingHelper.log_request({ service: hpi, params: query })
+
     begin
       @results = hpi.query(query)
-      time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-      message = format("Completed Data Services API query: '#{query.to_json}' in %.0fms", time_taken)
-      log_fields[:duration] = time_taken
-      log_fields[:message] = message
-      log_fields[:request_status] = 'completed'
+
+      msg = 'completed Data Services API request from the UKHPI service'
       log_type = 'info'
     rescue NoMethodError => e
-      log_fields[:message] = "Application failed with: NoMethodError: #{e.inspect}"
-      log_fields[:request_status] = 'error'
-      log_type = 'error'
+      msg = "application failed with: NoMethodError: #{e.inspect}"
+      log_fields[:status] = 405
       success = false
     rescue ArgumentError => e
-      log_fields[:message] = "Data Services API query failed with: ArgumentError: #{e.inspect}"
-      log_fields[:request_status] = 'error'
-      log_type = 'error'
+      msg = "Data Services API request failed with: ArgumentError: #{e.inspect}"
+      log_fields[:status] = 422
       success = false
     rescue RuntimeError => e
-      log_fields[:message] = "Data Services API query failed with: #{e.inspect}"
-      log_fields[:request_status] = 'error'
-      log_type = 'error'
+      msg = "Data Services API request failed with: #{e.inspect}"
+      log_fields[:status] = 400
       success = false
     end
-    Rails.logger.send(log_type) { JSON.generate(log_fields) }
+    # Calculate the time taken to execute the query and pass in the details to be logged
+    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
+    msg += format(' in %.0f ms', time_taken) if time_taken.positive?
+    log_fields[:message] = msg.upcase_first
+    log_fields[:request_status] = success ? 'completed' : 'error'
+    log_fields[:request_time] = time_taken
+    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok] if success
+
+    # Log the final request status and response
+    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
+    puts "\n" if Rails.env.development? && Rails.logger.debug?
     success
   end
 
