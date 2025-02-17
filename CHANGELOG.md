@@ -2,8 +2,24 @@
 
 ## Unreleased
 
-## 2.0.1 - 2025-01
+## 2.0.1 - 2025-02
 
+- (Jon) Updated the logging to utilise a call-flow diagram to display the
+  sequence of messages that are sent between the app and the api.
+  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+- (Jon) Updated visibility and search input types
+  - Added conditional class for hiding elements in non-dev environments.
+  - Changed text fields to search fields for better UX.
+  - Cleaned up HTML structure for improved readability.
+- (Jon) Added pre-commit and pre-push hooks
+  - Introduced a pre-commit hook to run Rubocop on staged Ruby files.
+  - Implemented a pre-push hook to run Rails tests before pushing.
+- (Jon) Changed time measurement from microseconds to milliseconds in the main
+  query method
+- (Jon) Removed duplicated gem entry
+- (Jon) Added dynamic `LOG_LEVEL` env variable
+  - Defaults to `debug` in development and `info` in production/test.
+- (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
   ensure a message is displayed at all times no matter what status is passed in
   as per best practices
