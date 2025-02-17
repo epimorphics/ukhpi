@@ -2,8 +2,24 @@
 
 ## Unreleased
 
-## 2.0.1 - 2025-01
+## 2.0.1 - 2025-02
 
+- (Jon) Updated the logging to utilise a call-flow diagram to display the
+  sequence of messages that are sent between the app and the api.
+  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+- (Jon) Updated visibility and search input types
+  - Added conditional class for hiding elements in non-dev environments.
+  - Changed text fields to search fields for better UX.
+  - Cleaned up HTML structure for improved readability.
+- (Jon) Added pre-commit and pre-push hooks
+  - Introduced a pre-commit hook to run Rubocop on staged Ruby files.
+  - Implemented a pre-push hook to run Rails tests before pushing.
+- (Jon) Changed time measurement from microseconds to milliseconds in the main
+  query method
+- (Jon) Removed duplicated gem entry
+- (Jon) Added dynamic `LOG_LEVEL` env variable
+  - Defaults to `debug` in development and `info` in production/test.
+- (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
   ensure a message is displayed at all times no matter what status is passed in
   as per best practices
@@ -35,6 +51,16 @@
 
 - (Dan) Updates ruby version to 2.7.8 and alpine version to 3.16
   [GH-455](https://github.com/epimorphics/ukhpi/issues/455)
+
+## 1.7.6 - 2024-10
+
+- (Jon) Split the error logging into it's own method as well as adjusted the
+  logged message to be either the response message or the response status
+- (Jon) Renamed `render_error` method to `handle_error`
+- (Jon) Set the Internal Error Instrumentation to an `unless` statement to
+  ensure the application does not report internal errors to the Prometheus
+  metrics when the error is a 404 thereby reducing the noise in the Slack alerts
+  channel
 
 ## 1.7.5 - 2024-09
 
@@ -137,7 +163,7 @@
 - (Bogdan) Added alt text to application logo
   [GH-404](https://github.com/epimorphics/ukhpi/issues/404)
 
-## 1.7.4 - 2024-04-19
+## 1.7.4 - 2024-05-01
 
 - (Jon) Updated print presenter to use
   [`.try(:first)`](https://apidock.com/rails/Object/try) which resolves by

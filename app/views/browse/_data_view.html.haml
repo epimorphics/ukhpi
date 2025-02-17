@@ -12,7 +12,7 @@
         = visibility_action
 
   - if visible
-    .o-data-view__options.u-js-hidden
+    .o-data-view__options{:class => ("u-js-hidden" unless Rails.env.development?)}
       = t('preposition.for').titlecase
       = succeed ',' do
         = data_view.selected_location_label
@@ -33,7 +33,7 @@
             %a{ href: data_view.add_remove_statistic(!checked, stat) }
               = stat.label
 
-    .o-data-view__data-table.u-js-hidden
+    .o-data-view__data-table{:class => ("u-js-hidden" unless Rails.env.development?)}
       - table_data = data_view.as_table_data
       %table
         %thead

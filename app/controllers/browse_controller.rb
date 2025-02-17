@@ -14,6 +14,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
+      LoggingHelper.log_request({ params: params })
       render_view_state(setup_view_state(user_selections))
     end
   end

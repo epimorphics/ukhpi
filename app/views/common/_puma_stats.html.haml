@@ -1,5 +1,8 @@
 
-%div
-  %pre
-    %code
-      = "[#{JSON.pretty_generate(puma_stats: JSON.parse(Puma.stats), time: Time.now)}]"
+%div{style: 'padding: 1rem;'}
+  %details
+    %summary
+      Puma Stats
+    %pre
+      %code
+        = "[#{JSON.pretty_generate(puma_stats: JSON.parse(Puma.stats), time: Time.now)}]"

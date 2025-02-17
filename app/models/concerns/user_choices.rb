@@ -3,6 +3,7 @@
 # Shared functionality for user models that provide access to the users'
 # choices articulated via the params in the incoming request
 module UserChoices
+  # Define the user parameters that can be set by the user
   Struct.new('UserParam', :default_value, :array?, :alias)
 
   attr_reader :params
@@ -54,7 +55,8 @@ module UserChoices
   end
 
   # Recognise a date. Accepts ISO-8601 strings or Date objects.
-  # @param date Either an ISO0-8601 date string, or a date object
+  # Dates that match YYYY-MM will be transformed to YYYY-MM-01.
+  # @param date Either an ISO-8601 date string, or a date object
   def parse_date(date)
     if date.is_a?(Date)
       date

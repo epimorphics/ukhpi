@@ -36,7 +36,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
     yield
     duration = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start
-    detailed_request_log(duration)
+    detailed_log_result(duration)
   end
 
   # Handle specific types of exceptions and render the appropriate error page
@@ -85,7 +85,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     render_error(500)
   end
 
-  def render_error(status, sentry_code = nil) # rubocop:disable Metrics/AbcSize
+  def render_error(status, sentry_code = nil)
     reset_response
 
     status = Rack::Utils::SYMBOL_TO_STATUS_CODE[status] if status.is_a?(Symbol)
@@ -98,7 +98,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
-  def render_html_error_page(status, sentry_code) # rubocop:disable Metrics/MethodLength
+  def render_html_error_page(status, sentry_code)
     render 'exceptions/error_page',
            locals: { status: status, sentry_code: sentry_code },
            layout: true,
@@ -111,42 +111,55 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   private
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-  def detailed_request_log(duration)
-    env = request.env
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
+  def detailed_log_result(duration)
+    # prevent OK responses from being logged as they're logged elsewhere
+    return unless response&.status != 200
 
+    env = request.env
+    query = env['QUERY_STRING'] || URI.parse(env['REQUEST_URI']).query
     log_fields = {
-      duration: duration,
+      message: response.message || Rack::Utils::HTTP_STATUS_CODES[response.status],
+      path: env['REQUEST_PATH'] || URI.parse(env['REQUEST_URI']).path,
       request_id: env['X_REQUEST_ID'],
-      forwarded_for: env['X_FORWARDED_FOR'],
-      path: env['REQUEST_PATH'],
-      query_string: env['QUERY_STRING'],
-      user_agent: env['HTTP_USER_AGENT'],
-      accept: env['HTTP_ACCEPT'],
-      body: request.body.gets&.gsub("\n", '\n'),
+      request_time: (duration / 1000) || env['REQUEST_TIME'], # in milliseconds
       method: request.method,
-      status: response.status,
-      message: Rack::Utils::HTTP_STATUS_CODES[response.status]
+      status: response.status
     }
 
-    case response.status
-    when 500..599
+    log_fields[:query_string] = query if query.present?
+
+    if env['HTTP_USER_AGENT'] && Rails.env.production?
+      log_fields[:user_agent] = env['HTTP_USER_AGENT']
+    end
+
+    if (500..599).include?(Rack::Utils::SYMBOL_TO_STATUS_CODE[response.status])
       log_fields[:message] = env['action_dispatch.exception'].to_s
-      Rails.logger.error(JSON.generate(log_fields))
+      log_fields[:backtrace] = env['action_dispatch.backtrace'].join("\n") unless Rails.env.production?
+    end
+
+    log_response(response.status, log_fields.sort.to_h)
+  end
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength
+
+  # Log the error with the appropriate log level based on the status code
+  def log_response(status, error_log)
+    case status
+    when 500..599
+      Rails.logger.error(JSON.generate(error_log))
     when 400..499
-      Rails.logger.warn(JSON.generate(log_fields))
+      Rails.logger.warn(JSON.generate(error_log))
     else
-      Rails.logger.info(JSON.generate(log_fields))
+      Rails.logger.info(JSON.generate(error_log))
     end
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 
   # Notify subscriber(s) of an internal error event with the payload of the
   # exception once done
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def instrument_internal_error(exc, status = nil)
     err = {
       message: exc&.message || exc,
@@ -167,5 +180,5 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     # Return the event id for the internal error event
     sevent&.event_id
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

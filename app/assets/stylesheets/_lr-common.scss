@@ -25,6 +25,12 @@ $lr-green-nav-darkened: darken( $lr-green-nav, 20% );
 
 /* settings */
 
+ol, ul, nav ol, nav ul {
+  list-style: unset;
+  list-style-type: none;
+  list-style-position: inside;
+}
+
 /* elements */
 
 a {

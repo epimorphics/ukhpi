@@ -41,6 +41,11 @@ class CompareController < ApplicationController
     )
 
     user_compare_selections.selected_locations.each do |location|
+      msg = 'Received Data Services API request from UKHPI service'
+      msg += " for #{location.label}" if location
+      log_fields = { params: base_selection.with('location', location.uri) }
+      log_fields[:message] = msg
+      LoggingHelper.log_request(log_fields)
       query_results[location.label] = query_with(base_selection, location)
     end
 

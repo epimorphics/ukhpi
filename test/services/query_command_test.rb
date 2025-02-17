@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class MockService
+class MockService # :nodoc:
   attr_reader :captured
 
   def query(query)
@@ -10,7 +10,7 @@ class MockService
   end
 end
 
-def validate_json(json)
+def validate_json(json) # rubocop:disable Metrics/MethodLength
   _(json).must_match_json_expression(
     '@and':
     [
