@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class DownloadControllerTest < ActionController::TestCase
+class DownloadControllerTest < ActionDispatch::IntegrationTest
   def test_sanity
     # flunk "Need real tests"
   end

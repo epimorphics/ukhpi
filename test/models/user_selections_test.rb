@@ -171,7 +171,6 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-
     describe '#formatted_date_is_valid?' do
       it 'should allow a YYYY-MM date as valid' do
         selections = user_selections(
@@ -200,7 +199,6 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections.errors).must_include('incorrect or missing "from" date')
       end
     end
-
 
     describe '#to_date_is_invalid?' do
       it 'should report that an incorrectly formatted to date is invalid' do

@@ -78,7 +78,7 @@ class Locations
     locations.values.find { |loc| loc.gss?(gss) }
   end
 
-  def self.each_location(&block)
-    locations.values.each(&block)
+  def self.each_location(&)
+    locations.values.each(&)
   end
 end

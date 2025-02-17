@@ -39,7 +39,7 @@ class Aspects
 
   def visible_aspects
     prefs.aspect_indicators.product(prefs.aspect_categories).map do |pair|
-      "#{pair.first}#{pair.second}".to_sym
+      :"#{pair.first}#{pair.second}"
     end
   end
 
@@ -47,8 +47,8 @@ class Aspects
     @aspects[name]
   end
 
-  def each(&block)
-    @aspects.values.each(&block)
+  def each(&)
+    @aspects.values.each(&)
   end
 
   def visible?(aspect)

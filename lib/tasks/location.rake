@@ -156,7 +156,7 @@ def write_locations_files(locations, all_types)
 
   location_names.sort! { |l0, l1| l0[:label] <=> l1[:label] }
 
-  puts 'Generating location files ... '
+  Rails.logger.debug 'Generating location files ... '
   # JavaScript module output
   open('locations-data.js', 'w') do |file|
     # file << "export const locationNames = #{location_names.to_json};\n"
@@ -248,14 +248,14 @@ namespace :ukhpi do
     squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
-    puts "Running SPARQL query against server #{server}..."
-    puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
+    Rails.logger.debug { "Running SPARQL query against server #{server}..." }
+    Rails.logger.debug '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
 
   # Generate the locations modules in JavaScript and Ruby
   task locations_generate: :environment do
-    puts 'Loading query results ...'
+    Rails.logger.debug 'Loading query results ...'
     sresults = JSON.parse(File.read('query-results.json'))
     locations = {}
     all_types = Set.new
@@ -278,13 +278,13 @@ namespace :ukhpi do
   # Use eslint in --fix mode to re-parse the JSON output and convert it to
   # compliant ES2015
   task locations_files_lint: :environment do
-    puts 'Linting generated files ...'
+    Rails.logger.debug 'Linting generated files ...'
     raise NO_ESLINT unless system('eslint --fix locations-data.js')
   end
 
   # Move the files to their correct locations
   task move_locations_files: :environment do
-    puts 'Moving locations files ...'
+    Rails.logger.debug 'Moving locations files ...'
     File.rename('locations-data.js', 'app/javascript/data/locations-data.js')
     File.rename('locations-data.rb', 'app/models/locations_table.rb')
   end
@@ -297,7 +297,7 @@ namespace :ukhpi do
     squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'http://lr-data-dev-c.epimorphics.net/landregistry/query')
 
-    puts 'Running SPARQL query ...'
+    Rails.logger.debug 'Running SPARQL query ...'
     system "#{squery} --server='#{server}' '#{query}'"
   end
 end

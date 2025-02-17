@@ -25,7 +25,7 @@ class QueryCommand
     log_fields[:request_time] = time_taken
     log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
     LoggingHelper.log_request(log_fields) unless log_fields.empty?
-    puts "\n" if Rails.env.development? && Rails.logger.debug?
+    Rails.logger.debug "\n" if Rails.env.development? && Rails.logger.debug?
   end
 
   # @return True if this a query execution command

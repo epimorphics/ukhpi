@@ -48,6 +48,6 @@ Rails.application.configure do
   # But defaults to the dev service
   config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')
 
-    # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
-    config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
+  # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
+  config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
 end
