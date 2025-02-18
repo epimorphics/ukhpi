@@ -8,7 +8,7 @@
 # standard set of statistics is presented if there is no information in the
 # user parameters yet. This functionality combines the previous
 # `models/UserPreferences` and `presenters/Aspects`
-class UserSelections
+class UserSelections # rubocop:disable Metrics/ClassLength
   include UserChoices
   include UserSelectionValidations
   include UserLanguage
@@ -51,7 +51,7 @@ class UserSelections
               .freeze
 
   def initialize(params)
-    @params = params[:__safe_params] || params.permit(*PERMITTED)
+    @params ||= params[:__safe_params] || params.permit(*PERMITTED)
   end
 
   def user_params_model
