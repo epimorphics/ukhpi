@@ -4,6 +4,11 @@
 
 ## 2.0.1 - 2025-02
 
+- (Jon) Add error raising for date parsing failures by returning the error
+   to the application as well as logging the error message to the logs
+- (Jon) Updates the test suite with rubocop linting recommendations
+- (Jon) Updated pre-push githook to call a single `make test` command instead of
+  triggering both unit tests and system tests separately
 - (Jon) Added deprecation warning for `to_time` behaviour change and set
   `to_time_preserves_timezone` to `:zone` to preserve system timezone
 - (Jon) applied recommended linting corrections from Rubocop
