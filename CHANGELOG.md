@@ -2,7 +2,7 @@
 
 ## Unreleased
 
-## 2.0.1 - 2025-02
+## 2.0.2 - 2025-02
 
 - (Jon) Add error raising for date parsing failures by returning the error
    to the application as well as logging the error message to the logs
@@ -28,6 +28,9 @@
 - (Jon) Added dynamic `LOG_LEVEL` env variable
   - Defaults to `debug` in development and `info` in production/test.
 - (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
+
+## 2.0.1 - 2025-01
+
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
   ensure a message is displayed at all times no matter what status is passed in
   as per best practices
