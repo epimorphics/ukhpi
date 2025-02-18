@@ -4,6 +4,9 @@
 
 ## 2.0.1 - 2025-02
 
+- (Jon) Added deprecation warning for `to_time` behaviour change and set
+  `to_time_preserves_timezone` to `:zone` to preserve system timezone
+- (Jon) applied recommended linting corrections from Rubocop
 - (Jon) Updated the logging to utilise a call-flow diagram to display the
   sequence of messages that are sent between the app and the api.
   [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
