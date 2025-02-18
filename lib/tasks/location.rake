@@ -12,7 +12,7 @@ NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm 
 # Value class encapsulating a JSON location record
 class LocationRecord
   def initialize(json)
-    @json = json
+    @json ||= json
   end
 
   def value_of(json)
@@ -140,7 +140,7 @@ class Location
   end
 end
 
-def write_locations_files(locations, all_types)
+def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
   location_names = []
   gss_index = {}
 
@@ -206,12 +206,12 @@ def process_location_data(location_data, locations, all_types)
   end
 end
 
-namespace :ukhpi do
+namespace :ukhpi do # rubocop:disable Metrics/BlockLength
   desc 'Generate the locations files by SPARQL query'
   task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
 
   # run the SPARQL query to generate the locations results
-  task locations_query: :environment do
+  task locations_query: :environment do # rubocop:disable Metrics/BlockLength
     query = "
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix qb: <http://purl.org/linked-data/cube#>
