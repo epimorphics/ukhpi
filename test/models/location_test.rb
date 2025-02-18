@@ -4,7 +4,7 @@ require 'test_helper'
 require 'location'
 
 # Unit tests on the Location class
-class RegionTest < ActiveSupport::TestCase
+class RegionTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   BOROUGH_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'
   COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
 
@@ -15,7 +15,7 @@ class RegionTest < ActiveSupport::TestCase
                  'D12345678')
   end
 
-  describe 'Location' do
+  describe 'Location' do # rubocop:disable Metrics/BlockLength
     describe '#uri' do
       it 'should return the URI' do
         _(region.uri).must_equal 'http://foo.bar/bam'

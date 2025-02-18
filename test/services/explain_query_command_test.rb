@@ -2,11 +2,12 @@
 
 require 'test_helper'
 
+# :nodoc:
 class MockService
   attr_reader :captured
 
   def explain(_query)
-    @captured = { explain_called: true }
+    @captured = { explain_called: true } # rubocop:disable Rails/HelperInstanceVariable
   end
 end
 
