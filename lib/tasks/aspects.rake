@@ -8,7 +8,7 @@ namespace :ukhpi do
 
   # Translate the aspects model to JavaScript
   task aspects_js: :environment do
-    Rails.logger.debug 'Generating aspects.js ...'
+    puts 'Generating aspects.js ...'
     data_model = DataModel.new
 
     File.open('aspects.js', 'w') do |file|
@@ -42,7 +42,7 @@ namespace :ukhpi do
 
   # Move the aspects.js file to the right location
   task move_aspects_js_file: :environment do
-    Rails.logger.debug 'Moving aspects.js ...'
+    puts 'Moving aspects.js ...'
     File.rename('aspects.js', 'app/assets/javascripts/aspects.js')
   end
 end

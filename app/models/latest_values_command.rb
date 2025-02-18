@@ -94,7 +94,7 @@ class LatestValuesCommand
 
     # Log the final request status and response
     LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
-    Rails.logger.debug "\n" if Rails.env.development? && Rails.logger.debug?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
     success
   end
 

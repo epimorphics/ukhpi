@@ -155,7 +155,7 @@ def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSiz
 
   location_names.sort! { |l0, l1| l0[:label] <=> l1[:label] }
 
-  Rails.logger.debug 'Generating location files ... '
+  puts 'Generating location files ... '
   # JavaScript module output
   open('locations-data.js', 'w') do |file|
     # file << "export const locationNames = #{location_names.to_json};\n"
@@ -247,14 +247,14 @@ namespace :ukhpi do # rubocop:disable Metrics/BlockLength
     squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
-    Rails.logger.debug { "Running SPARQL query against server #{server}..." }
-    Rails.logger.debug '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
+    puts { "Running SPARQL query against server #{server}..." }
+    puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
 
   # Generate the locations modules in JavaScript and Ruby
   task locations_generate: :environment do
-    Rails.logger.debug 'Loading query results ...'
+    puts 'Loading query results ...'
     sresults = JSON.parse(File.read('query-results.json'))
     locations = {}
     all_types = Set.new
@@ -277,13 +277,13 @@ namespace :ukhpi do # rubocop:disable Metrics/BlockLength
   # Use eslint in --fix mode to re-parse the JSON output and convert it to
   # compliant ES2015
   task locations_files_lint: :environment do
-    Rails.logger.debug 'Linting generated files ...'
+    puts 'Linting generated files ...'
     raise NO_ESLINT unless system('eslint --fix locations-data.js')
   end
 
   # Move the files to their correct locations
   task move_locations_files: :environment do
-    Rails.logger.debug 'Moving locations files ...'
+    puts 'Moving locations files ...'
     File.rename('locations-data.js', 'app/javascript/data/locations-data.js')
     File.rename('locations-data.rb', 'app/models/locations_table.rb')
   end
@@ -296,7 +296,7 @@ namespace :ukhpi do # rubocop:disable Metrics/BlockLength
     squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'http://lr-data-dev-c.epimorphics.net/landregistry/query')
 
-    Rails.logger.debug 'Running SPARQL query ...'
+    puts 'Running SPARQL query ...'
     system "#{squery} --server='#{server}' '#{query}'"
   end
 end
