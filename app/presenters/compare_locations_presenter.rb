@@ -4,7 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter
+class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include I18n
   include LocationsTable
 

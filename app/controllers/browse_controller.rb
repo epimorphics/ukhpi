@@ -108,7 +108,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
   end
 
   def match_no_locations
-    flash[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
+    flash.now[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
   end
 
   def match_single_location(view_state, locations)
@@ -129,7 +129,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     }.merge(new_params))
   end
 
-  def render_request_error(user_selections, status_code) # rubocop:disable Metrics/MethodLength
+  def render_request_error(user_selections, status_code)
     # Convert status code to integer if it is a symbol
     status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code] if status_code.is_a?(Symbol)
     respond_to do |format|

@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# Unit tests on the DataModel class and helpers
-
 require 'test_helper'
 
+# Unit tests on the DataModel class and helpers
 class DataModelTest < ActiveSupport::TestCase
   let(:cube) { UkhpiDataCube.new }
 

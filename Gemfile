@@ -59,9 +59,10 @@ group :development do
 end
 
 group :test do
-  gem 'capybara_minitest_spec'
+  gem 'capybara'
   gem 'm'
   gem 'minitest-rails'
+  gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
   # gem 'minitest-spec-rails'
   gem 'mocha'

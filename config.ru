@@ -4,7 +4,7 @@
 
 require_relative 'config/environment'
 
-require ::File.expand_path('config/environment', __dir__)
+require File.expand_path('config/environment', __dir__)
 
 unless Rails.env.test?
   require 'prometheus/middleware/collector'

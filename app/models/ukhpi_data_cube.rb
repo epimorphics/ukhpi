@@ -61,8 +61,8 @@ class UkhpiDataCube
   end
 
   # Invoke a block with the key and members for each theme of statistics
-  def each_theme(&block)
-    THEMES.each(&block)
+  def each_theme(&)
+    THEMES.each(&)
   end
 
   # @return An array of the indicators
@@ -86,8 +86,8 @@ class UkhpiDataCube
   end
 
   # Invoke a block with each indicator as an argument
-  def each_indicator(&block)
-    indicators.each(&block)
+  def each_indicator(&)
+    indicators.each(&)
   end
 
   # @return The elements of the data-cube properties (and thus also DSAPI aspects)

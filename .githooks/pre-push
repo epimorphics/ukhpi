@@ -15,7 +15,9 @@ fi
 
 # Check for existence of "new or modified" test files
 TEST_FILES="$(git diff --diff-filter=ACDM --name-only --cached | grep -E '(./test/*)$')"
-RUBY_FILES="$(git diff --diff-filter=ACDM --name-only --cached | grep -E '(_test\.rb)$')"
+# Get all test files to run tests
+RUBY_FILES="$(git ls-files | grep -i -E '(_test\.rb)$')"
+# Get a rough idea of how many files have changes or are untracked
 PRE_STATUS="$(git status | wc -l)"
 
 WORK_DONE=0
@@ -26,26 +28,16 @@ if [ -z "$TEST_FILES" ]; then
 fi
 
 
-if [ -n "$RUBY_FILES" ]; then
+if [ -n "$TEST_FILES" ]; then
   printf '\nRunning Rails Tests...'
-  bundle exec rails test
+  make test
   RUBY_TEST_EXIT_CODE=$?
   WORK_DONE=1
 else
   RUBY_TEST_EXIT_CODE=0
 fi
 
-if [ -n "$RUBY_FILES" ]; then
-  printf '\nRunning System Tests...'
-  bundle exec rails test:system
-  RUBY_SYSTEM_EXIT_CODE=$?
-  WORK_DONE=1
-else
-  RUBY_SYSTEM_EXIT_CODE=0
-fi
-
-
-if [ ! $RUBY_TEST_EXIT_CODE -eq 0 ] || [ ! $RUBY_SYSTEM_EXIT_CODE -eq 0 ]; then
+if [ ! $RUBY_TEST_EXIT_CODE -eq 0 ]; then
   printf '\n\033[0;31mCannot push, tests are failing. Use --no-verify to force push. 😖\033[0m\n'
   exit 1
 fi

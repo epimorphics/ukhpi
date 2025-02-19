@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Command object to query the API for the latest available values
-class LatestValuesCommand # rubocop:disable Metrics/ClassLength
+class LatestValuesCommand
   include DataService
 
   attr_reader :results
@@ -21,7 +21,6 @@ class LatestValuesCommand # rubocop:disable Metrics/ClassLength
     begin
       # Set service to ukhpi dataset if not already set
       service ||= dataset(:ukhpi)
-
     rescue Faraday::ConnectionFailed => e
       log_fields[:message] = 'Failed to connect to UKHPI service'
       log_fields[:body] = e.message
@@ -53,7 +52,7 @@ class LatestValuesCommand # rubocop:disable Metrics/ClassLength
     service
   end
 
-  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
     log_fields = {}
     log_type = 'error'
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
@@ -95,7 +94,7 @@ class LatestValuesCommand # rubocop:disable Metrics/ClassLength
 
     # Log the final request status and response
     LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
-    puts "\n" if Rails.env.development? && Rails.logger.debug?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
     success
   end
 

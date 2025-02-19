@@ -2,8 +2,16 @@
 
 ## Unreleased
 
-## 2.0.1 - 2025-02
+## 2.0.2 - 2025-02
 
+- (Jon) Add error raising for date parsing failures by returning the error to
+   the application as well as logging the error message to the logs
+- (Jon) Updates the test suite with rubocop linting recommendations
+- (Jon) Updated pre-push githook to call a single `make test` command instead of
+  triggering both unit tests and system tests separately
+- (Jon) Added deprecation warning for `to_time` behaviour change and set
+  `to_time_preserves_timezone` to `:zone` to preserve system timezone
+- (Jon) applied recommended linting corrections from Rubocop
 - (Jon) Updated the logging to utilise a call-flow diagram to display the
   sequence of messages that are sent between the app and the api.
   [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
@@ -17,9 +25,14 @@
 - (Jon) Changed time measurement from microseconds to milliseconds in the main
   query method
 - (Jon) Removed duplicated gem entry
+- (Jon) Updated the rails gem and dependencies to v8.0.1 alongside other minor
+  gem updates including test gems for better compatibility
 - (Jon) Added dynamic `LOG_LEVEL` env variable
   - Defaults to `debug` in development and `info` in production/test.
 - (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
+
+## 2.0.1 - 2025-01
+
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
   ensure a message is displayed at all times no matter what status is passed in
   as per best practices

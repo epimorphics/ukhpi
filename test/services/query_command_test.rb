@@ -6,7 +6,7 @@ class MockService # :nodoc:
   attr_reader :captured
 
   def query(query)
-    @captured = query.to_json
+    @captured = query.to_json # rubocop:disable Rails/HelperInstanceVariable
   end
 end
 

@@ -1,14 +1,15 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'i18n'
 
 def user_selections(params)
   UserSelections.new(ActionController::Parameters.new(params))
 end
 
 # Unit tests on the UserSelections class
-class UserSelectionsTest < ActiveSupport::TestCase
-  describe 'UserSelections' do
+class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+  describe 'UserSelections' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
         selections = user_selections('location' => 'test-region')
@@ -171,7 +172,6 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-
     describe '#formatted_date_is_valid?' do
       it 'should allow a YYYY-MM date as valid' do
         selections = user_selections(
@@ -194,18 +194,17 @@ class UserSelectionsTest < ActiveSupport::TestCase
     describe '#from_date_is_invalid?' do
       it 'should report that an incorrectly formatted from date is invalid' do
         selections = user_selections(
-          'from' => '2017-0'
+          'from' => '2017-13'
         )
         _(selections.valid?).must_equal(false)
         _(selections.errors).must_include('incorrect or missing "from" date')
       end
     end
 
-
     describe '#to_date_is_invalid?' do
       it 'should report that an incorrectly formatted to date is invalid' do
         selections = user_selections(
-          'to' => '2017-0'
+          'to' => '2017-13'
         )
         _(selections.valid?).must_equal(false)
         _(selections.errors).must_include('incorrect or missing "to" date')

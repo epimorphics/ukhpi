@@ -51,7 +51,7 @@ class UserSelections # rubocop:disable Metrics/ClassLength
               .freeze
 
   def initialize(params)
-    @params = params[:__safe_params] || params.permit(*PERMITTED)
+    @params ||= params[:__safe_params] || params.permit(*PERMITTED)
   end
 
   def user_params_model

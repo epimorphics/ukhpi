@@ -73,6 +73,7 @@ module UserChoices
     # We use truncate here to show the original date value in the logs with an
     # ellipsis but with a maximum length of 128 characters to clarify the error.
     Rails.logger.error("Failed to parse date '#{date.to_s.truncate(128)}': #{e.message || e}")
+    raise
   end
 
   def array_valued?(param)
