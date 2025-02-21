@@ -61,7 +61,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
       Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
-      render_request_error(@view_state.user_selections, :internal_server_error)
+      render_request_error(@view_state[:user_selections], :internal_server_error)
     else
       respond_to do |format|
         format.html
@@ -129,7 +129,7 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     }.merge(new_params))
   end
 
-  def render_request_error(user_selections, status_code)
+  def render_request_error(user_selections, status_code) # rubocop:disable Metrics/MethodLength
     # Convert status code to integer if it is a symbol
     status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code] if status_code.is_a?(Symbol)
     respond_to do |format|
