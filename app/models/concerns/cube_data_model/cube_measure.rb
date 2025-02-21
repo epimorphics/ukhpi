@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module CubeDataModel # rubocop:disable Metrics/MethodLength
+module CubeDataModel
   # Specialises a CubeResource to add behaviour specific to DataCube measures
   class CubeMeasure < CubeResource
     include CubeDataModel::Vocabularies

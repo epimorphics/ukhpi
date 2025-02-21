@@ -3,14 +3,14 @@
 require 'test_helper'
 
 # Unit tests on the DownloadPresenter class
-class DownloadPresenterTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class DownloadPresenterTest < ActiveSupport::TestCase
   let(:user_selections) do
     UserSelections.new(ActionController::Parameters.new(
                          location: 'http://landregistry.data.gov.uk/id/region/england',
                          thm: ['property_type']
                        ))
   end
-  let(:query_results) do # rubocop:disable Metrics/BlockLength
+  let(:query_results) do
     [
       {
         'ukhpi:averagePriceSA' => [229_454],
@@ -95,7 +95,7 @@ class DownloadPresenterTest < ActiveSupport::TestCase # rubocop:disable Metrics/
   end
   let(:presenter_all) { DownloadPresenter.new(query_command_all) }
 
-  describe 'DownloadPresenter' do # rubocop:disable Metrics/BlockLength
+  describe 'DownloadPresenter' do
     describe '#column_names' do
       it 'should correctly create an array of column names' do
         _(presenter.column_names.length).must_be :>=, 26

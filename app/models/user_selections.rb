@@ -8,7 +8,7 @@
 # standard set of statistics is presented if there is no information in the
 # user parameters yet. This functionality combines the previous
 # `models/UserPreferences` and `presenters/Aspects`
-class UserSelections # rubocop:disable Metrics/ClassLength
+class UserSelections
   include UserChoices
   include UserSelectionValidations
   include UserLanguage
