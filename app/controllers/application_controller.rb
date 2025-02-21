@@ -113,9 +113,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
   def detailed_log_result(duration)
-    # prevent OK responses from being logged as they're logged elsewhere
-    return unless response&.status != 200
-
     env = request.env
     query = env['QUERY_STRING'] || URI.parse(env['REQUEST_URI']).query
     log_fields = {
@@ -127,6 +124,13 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
       status: response.status
     }
 
+    log_fields[:path] = "#{log_fields[:path]}?#{query}" if query.present?
+
+    if log_fields[:message] == 'OK' && log_fields[:status] == 200
+      log_fields[:message] = "Completed request to #{log_fields[:path]}"
+      log_fields[:request_status] = 'completed'
+    end
+
     log_fields[:query_string] = query if query.present?
 
     if env['HTTP_USER_AGENT'] && Rails.env.production?
@@ -137,6 +141,11 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
       log_fields[:message] = env['action_dispatch.exception'].to_s
       log_fields[:backtrace] = env['action_dispatch.backtrace'].join("\n") unless Rails.env.production?
     end
+
+    if log_fields[:request_time]
+      log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
+    end
+
 
     log_response(response.status, log_fields.sort.to_h)
   end
