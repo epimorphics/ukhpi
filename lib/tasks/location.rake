@@ -12,7 +12,7 @@ NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm 
 # Value class encapsulating a JSON location record
 class LocationRecord
   def initialize(json)
-    @json ||= json
+    @json = json unless defined? @json
   end
 
   def value_of(json)
