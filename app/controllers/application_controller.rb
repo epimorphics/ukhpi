@@ -105,6 +105,19 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
            status: status
   end
 
+  def render_request_error(user_selections, status_code)
+    # Convert status code to integer if it is a symbol
+    status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code] if status_code.is_a?(Symbol)
+    respond_to do |format|
+      @view_state ||= { user_selections: user_selections }
+      format.html { render_html_error_page(status_code, nil) }
+
+      format.json do
+        render(json: { status: 'request error' }, status: status_code)
+      end
+    end
+  end
+
   def reset_response
     self.response_body = nil
   end
@@ -145,7 +158,6 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     if log_fields[:request_time]
       log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
     end
-
 
     log_response(response.status, log_fields.sort.to_h)
   end
