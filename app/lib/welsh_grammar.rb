@@ -1,44 +1,44 @@
 # frozen_string_literal: true
 
-MUTATIONS ||= {
-  'yn' =>
-    [
-      Mutation.new(/b(.*)/i, 'm\1', 'ym'),
-      Mutation.new(/p(.*)/i, 'mh\1', 'ym'),
-      Mutation.new(/g(.*)/i, 'ng\1', 'yng'),
-      Mutation.new(/t(.*)/i, 'nh\1'),
-      Mutation.new(/c([^h].*)/i, 'ngh\1', 'yng'),
-      Mutation.new(/d(.*)/i, 'n\1'),
-      Mutation.new(/m(.*)/i, 'm\1', 'ym')
-    ],
-  'o' =>
-    [
-      Mutation.new(/m(.*)/i, 'f\1'),
-      Mutation.new(/g(.*)/i, '\1'),
-      Mutation.new(/t(.*)/i, 'd\1'),
-      Mutation.new(/rh(.*)/i, 'r\1'),
-      Mutation.new(/b(.*)/i, 'f\1'),
-      Mutation.new(/c([^h].*)/i, 'g\1'),
-      Mutation.new(/d(.*)/i, 'dd\1'),
-      Mutation.new(/ll(.*)/i, '\1'),
-      Mutation.new(/p(.*)/i, 'b\1')
-    ],
-  'i' =>
-    [
-      Mutation.new(/m(.*)/i, 'f\1'),
-      Mutation.new(/g(.*)/i, '\1'),
-      Mutation.new(/t(.*)/i, 'd\1'),
-      Mutation.new(/rh(.*)/i, 'r\1'),
-      Mutation.new(/b(.*)/i, 'f\1'),
-      Mutation.new(/c([^h].*)/i, 'g\1'),
-      Mutation.new(/d(.*)/i, 'dd\1'),
-      Mutation.new(/ll(.*)/i, '\1'),
-      Mutation.new(/p(.*)/i, 'b\1')
-    ]
-}.freeze
-
 # Assistance with formulating correct Welsh grammar
 class WelshGrammar
+  MUTATIONS = {
+    'yn' =>
+      [
+        Mutation.new(/b(.*)/i, 'm\1', 'ym'),
+        Mutation.new(/p(.*)/i, 'mh\1', 'ym'),
+        Mutation.new(/g(.*)/i, 'ng\1', 'yng'),
+        Mutation.new(/t(.*)/i, 'nh\1'),
+        Mutation.new(/c([^h].*)/i, 'ngh\1', 'yng'),
+        Mutation.new(/d(.*)/i, 'n\1'),
+        Mutation.new(/m(.*)/i, 'm\1', 'ym')
+      ],
+    'o' =>
+      [
+        Mutation.new(/m(.*)/i, 'f\1'),
+        Mutation.new(/g(.*)/i, '\1'),
+        Mutation.new(/t(.*)/i, 'd\1'),
+        Mutation.new(/rh(.*)/i, 'r\1'),
+        Mutation.new(/b(.*)/i, 'f\1'),
+        Mutation.new(/c([^h].*)/i, 'g\1'),
+        Mutation.new(/d(.*)/i, 'dd\1'),
+        Mutation.new(/ll(.*)/i, '\1'),
+        Mutation.new(/p(.*)/i, 'b\1')
+      ],
+    'i' =>
+      [
+        Mutation.new(/m(.*)/i, 'f\1'),
+        Mutation.new(/g(.*)/i, '\1'),
+        Mutation.new(/t(.*)/i, 'd\1'),
+        Mutation.new(/rh(.*)/i, 'r\1'),
+        Mutation.new(/b(.*)/i, 'f\1'),
+        Mutation.new(/c([^h].*)/i, 'g\1'),
+        Mutation.new(/d(.*)/i, 'dd\1'),
+        Mutation.new(/ll(.*)/i, '\1'),
+        Mutation.new(/p(.*)/i, 'b\1')
+      ]
+  }.freeze
+
   def self.apply(options)
     mutate(options)
   end
