@@ -52,16 +52,22 @@ class BrowseController < ApplicationController
     command = query_command.new(user_selections)
     command.perform_query
 
+    raise ArgumentError, 'No data found' if command.results.blank?
+
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
     { user_selections: user_selections, error: e.message }
   end
 
-  def render_view_state(view_state)
+  def render_view_state(view_state) # rubocop:disable Metrics/MethodLength
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
-      render_request_error(@view_state[:user_selections], :internal_server_error)
+      user_selections = if view_state.respond_to?(:user_selections)
+                          view_state.user_selections
+                        else
+                          view_state[:user_selections]
+                        end
+      render_request_error(user_selections, :internal_server_error)
     else
       respond_to do |format|
         format.html
