@@ -9,7 +9,7 @@ class CompareController < ApplicationController
     if params.delete(:print)
       render_print
     else
-      render_interactive
+      render_interactive(setup_view_state)
     end
   end
 
@@ -19,11 +19,20 @@ class CompareController < ApplicationController
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
-    @view_state = CompareLocationsPresenter.new(user_compare_selections, query_results)
+    raise ArgumentError, 'No data found' unless query_results&.values&.any?(&:present?)
+
+    CompareLocationsPresenter.new(user_compare_selections, query_results)
+  rescue ArgumentError => e
+    { user_selections: user_compare_selections, error: e.message }
   end
 
-  def render_interactive
-    setup_view_state
+  def render_interactive(view_state)
+    @view_state = view_state
+    if view_state.respond_to?(:[]) && view_state[:error]
+      render_request_error(@view_state[:user_selections], :internal_server_error)
+    else
+      @view_state
+    end
   end
 
   def render_print
