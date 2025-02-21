@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-MUTATIONS = {
+MUTATIONS ||= {
   'yn' =>
     [
       Mutation.new(/b(.*)/i, 'm\1', 'ym'),
