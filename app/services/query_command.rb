@@ -17,11 +17,10 @@ class QueryCommand
   # Perform the UKHPI query encapsulated by this command object
   # @param [DataServicesApi::Service] service the API service to use
   # Defaults to the UKHPI API service endpoint
-  def perform_query(service = nil) # rubocop:disable Metrics/AbcSize
-    log_fields = { message: 'Completed Data Services API request from the UKHPI service' }
+  def perform_query(service = nil)
     time_taken = execute_query(service, query) / 1000
-    log_fields[:message] += format(' in %.0f ms', time_taken) if time_taken.positive?
-    log_fields[:request_status] = 'completed'
+    log_fields = { message: 'Processing Data Services API response' }
+    log_fields[:request_status] = 'processing'
     log_fields[:request_time] = time_taken
     log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
     LoggingHelper.log_request(log_fields) unless log_fields.empty?
@@ -61,9 +60,33 @@ class QueryCommand
   # @param [DataServicesApi::Service] service the API service to use
   # @param [DataServicesApi::Query] query the query to execute
   # @return [Integer] the time taken to execute the query in microseconds
-  def execute_query(service, query)
-    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-    @results = api_service(service).query(query)
+  def execute_query(service, query) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    begin
+      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+      log_fields = {}
+      log_type = 'error'
+
+      @results = api_service(service).query(query)
+    rescue Faraday::ConnectionFailed => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = e.message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue DataServicesApi::ServiceException => e
+      log_fields[:message] = e.service_message
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 503 # Service Unavailable
+    rescue RuntimeError => e
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = "Runtime error #{e.inspect}"
+      log_fields[:message] += "Caused by: #{e.cause}" if e.cause
+      log_fields[:message] += " in (#{e.class})" if Rails.logger.debug?
+      log_fields[:request_status] = log_type
+      log_fields[:status] = 500 # Internal Server Error
+    end
+    # Log the request status and response
+    LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
+    # Always return the time taken to execute the query
     (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 

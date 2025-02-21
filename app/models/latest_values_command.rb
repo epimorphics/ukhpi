@@ -14,45 +14,43 @@ class LatestValuesCommand
   private
 
   def service_api(service) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    log_fields = {}
-    log_type = 'error'
-
-    service = nil if service.blank?
     begin
+      log_fields = {}
+      log_type = 'error'
       # Set service to ukhpi dataset if not already set
       service ||= dataset(:ukhpi)
     rescue Faraday::ConnectionFailed => e
+      log_fields[:body] = e.message if Rails.logger.debug?
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
       log_fields[:message] = 'Failed to connect to UKHPI service'
-      log_fields[:body] = e.message
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.env.development?
       log_fields[:request_status] = log_type
       log_fields[:status] = e.status
 
       service = nil
     rescue DataServicesApi::ServiceException => e
+      log_fields[:body] = e.service_message if Rails.logger.debug?
       log_fields[:message] = 'Failed to get response from UKHPI service'
-      log_fields[:body] = e.service_message
       log_fields[:request_status] = log_type
       log_fields[:status] = e.status
 
       service = nil
     rescue RuntimeError => e
-      log_fields[:message] = "Runtime error #{e.inspect}"
       log_fields[:body] = "Caused by: #{e.cause} in " if e.cause
-      log_fields[:body] += "\r\n(#{e.class})" if Rails.application.config.log_level == :debug
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.env.development?
+      log_fields[:body] += "\r\n(#{e.class})" if Rails.logger.debug?
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      log_fields[:message] = "Runtime error #{e.inspect}"
       log_fields[:request_status] = log_type
       log_fields[:status] = e.status
 
       service = nil
     end
-
+    # Log the request status and response
     LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
-
+    # Always return the service object, even if it's nil
     service
   end
 
-  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     log_fields = {}
     log_type = 'error'
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
@@ -69,28 +67,29 @@ class LatestValuesCommand
     begin
       @results = hpi.query(query)
 
-      msg = 'completed Data Services API request from the UKHPI service'
+      msg = 'processing Data Services API response'
       log_type = 'info'
     rescue NoMethodError => e
-      msg = "application failed with: NoMethodError: #{e.inspect}"
-      log_fields[:status] = 405
+      msg = "Data Services API request failed with: NoMethodError: #{e}"
+      log_fields[:status] = 405 # Method Not Allowed
       success = false
     rescue ArgumentError => e
-      msg = "Data Services API request failed with: ArgumentError: #{e.inspect}"
-      log_fields[:status] = 422
+      msg = "Data Services API request failed with: ArgumentError: #{e}"
+      log_fields[:status] = 422 # Unprocessable Entity
       success = false
     rescue RuntimeError => e
-      msg = "Data Services API request failed with: #{e.inspect}"
-      log_fields[:status] = 400
+      msg = "Data Services API request failed with: #{e}"
+      log_fields[:status] = 400 # Bad Request
       success = false
     end
     # Calculate the time taken to execute the query and pass in the details to be logged
     time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-    msg += format(' in %.0f ms', time_taken) if time_taken.positive?
     log_fields[:message] = msg.upcase_first
-    log_fields[:request_status] = success ? 'completed' : 'error'
+    log_fields[:request_status] = success ? 'processing' : 'error'
     log_fields[:request_time] = time_taken
-    log_fields[:status] = Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok] if success
+    log_fields[:status] ||= Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok] if success
+
+    log_type = 'warn' if (400..499).cover?(log_fields[:status])
 
     # Log the final request status and response
     LoggingHelper.log_request(log_fields, log_type) unless log_fields.empty?
