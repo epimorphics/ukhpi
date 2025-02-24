@@ -3,7 +3,7 @@
 # Controller for the main user experience of browsing the UKHPI statistics.
 # Usually the primary interaction will be via JavaScript and XHR, but we also
 # support non-JS access by setting browse preferences in the `edit` action.
-class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLength
+class BrowseController < ApplicationController
   layout 'webpack_application'
 
   def show
@@ -52,16 +52,22 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
     command = query_command.new(user_selections)
     command.perform_query
 
+    raise ArgumentError, 'No data found' if command.results.blank?
+
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
     { user_selections: user_selections, error: e.message }
   end
 
-  def render_view_state(view_state)
+  def render_view_state(view_state) # rubocop:disable Metrics/MethodLength
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      Rails.logger.debug { "Application experienced an issue with this request: #{view_state}" } if Rails.env.development? # rubocop:disable Metrics/LineLength
-      render_request_error(@view_state.user_selections, :internal_server_error)
+      user_selections = if view_state.respond_to?(:user_selections)
+                          view_state.user_selections
+                        else
+                          view_state[:user_selections]
+                        end
+      render_request_error(user_selections, :internal_server_error)
     else
       respond_to do |format|
         format.html
@@ -127,23 +133,5 @@ class BrowseController < ApplicationController # rubocop:disable Metrics/ClassLe
       controller: :browse,
       action: :show
     }.merge(new_params))
-  end
-
-  def render_request_error(user_selections, status_code)
-    # Convert status code to integer if it is a symbol
-    status_code = Rack::Utils::SYMBOL_TO_STATUS_CODE[status_code] if status_code.is_a?(Symbol)
-    respond_to do |format|
-      @view_state ||= { user_selections: user_selections }
-      format.html do
-        render 'exceptions/error_page',
-               locals: { status: status_code, sentry_code: nil },
-               layout: true,
-               status: status_code
-      end
-
-      format.json do
-        render(json: { status: 'request error' }, status: status_code)
-      end
-    end
   end
 end

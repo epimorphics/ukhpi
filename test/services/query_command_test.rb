@@ -6,11 +6,11 @@ class MockService # :nodoc:
   attr_reader :captured
 
   def query(query)
-    @captured = query.to_json # rubocop:disable Rails/HelperInstanceVariable
+    @captured = query.to_json
   end
 end
 
-def validate_json(json) # rubocop:disable Metrics/MethodLength
+def validate_json(json)
   _(json).must_match_json_expression(
     '@and':
     [

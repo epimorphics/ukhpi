@@ -7,7 +7,7 @@ class MockService
   attr_reader :captured
 
   def explain(_query)
-    @captured = { explain_called: true } # rubocop:disable Rails/HelperInstanceVariable
+    @captured = { explain_called: true }
   end
 end
 

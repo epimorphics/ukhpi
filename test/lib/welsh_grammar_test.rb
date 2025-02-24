@@ -4,12 +4,12 @@ require 'test_helper'
 
 # Unit tests on Welsh grammar support
 class WelshGrammarTest < ActiveSupport::TestCase
-  describe 'WelshGrammar' do # rubocop:disable Metrics/BlockLength
+  describe 'WelshGrammar' do
     teardown do
       I18n.with_locale = :en
     end
 
-    describe 'mutations' do # rubocop:disable Metrics/BlockLength
+    describe 'mutations' do
       before do
         I18n.with_locale = :en
       end

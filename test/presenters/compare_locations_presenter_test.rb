@@ -3,7 +3,7 @@
 require 'test_helper'
 
 # Unit tests on the CompareLocationsPresenter class
-class CompareLocationsPresenterTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class CompareLocationsPresenterTest < ActiveSupport::TestCase
   let(:user_selections) do
     UserCompareSelections.new(ActionController::Parameters.new(
                                 location: %w[K02000001 E10000024],
@@ -11,7 +11,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase # rubocop:disable 
                                 in: 'hpi'
                               ))
   end
-  let(:query_results) do # rubocop:disable Metrics/BlockLength
+  let(:query_results) do
     { 'United Kingdom' =>
       [{ 'ukhpi:averagePriceSA' => [227_147],
          'ukhpi:percentageChangeNewBuild' => [],
@@ -142,7 +142,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase # rubocop:disable 
 
   let(:presenter) { CompareLocationsPresenter.new(user_selections, query_results) }
 
-  describe 'CompareLocationsPresenter' do # rubocop:disable Metrics/BlockLength
+  describe 'CompareLocationsPresenter' do
     describe '#headline_summary' do
       it 'should correctly generate a summary headline' do
         _(presenter.headline_summary)

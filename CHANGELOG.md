@@ -4,7 +4,12 @@
 
 ## 2.0.2 - 2025-02
 
-- (Jon) Add error raising for date parsing failures by returning the error to
+- (Jon) Continued logging improvements alongside refactoring of Rubocop rules set
+- (Jon) Refactored code to prevent MUTATION reinitialisation if already set
+- (Jon) Fixed error handling in the landing, browse, and compare pages to ensure
+  that the correct error message is displayed to the user when an error occurs
+  [GH-465](https://github.com/epimorphics/ukhpi/issues/465)
+  - (Jon) Add error raising for date parsing failures by returning the error to
    the application as well as logging the error message to the logs
 - (Jon) Updates the test suite with rubocop linting recommendations
 - (Jon) Updated pre-push githook to call a single `make test` command instead of
