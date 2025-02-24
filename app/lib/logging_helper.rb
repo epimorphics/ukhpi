@@ -11,7 +11,7 @@ class LoggingHelper
     fields[:service] = nil
     fields[:params] = nil
     # Set default values for log fields
-    fields[:message] ||= 'Received request'
+    fields[:message] ||= 'Initiating API request'
     fields[:method] ||= 'GET'
 
     fields[:path] ||= nil
