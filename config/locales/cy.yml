@@ -131,6 +131,9 @@ cy:
   label:
     date: "Dyddiad"
 
+  results:
+     no_data: "Mae’n flin gennym, nid yw data ar gael. Dewiswch leoliad gwahanol."
+
   preposition:
     by: "yn ôl"
     in: "yn"
