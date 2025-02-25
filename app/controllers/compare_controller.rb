@@ -19,8 +19,6 @@ class CompareController < ApplicationController
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
-    raise ArgumentError, 'No data found' unless query_results&.values&.any?(&:present?)
-
     CompareLocationsPresenter.new(user_compare_selections, query_results)
   rescue ArgumentError => e
     { user_selections: user_compare_selections, error: e.message }
