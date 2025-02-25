@@ -52,8 +52,6 @@ class BrowseController < ApplicationController
     command = query_command.new(user_selections)
     command.perform_query
 
-    raise ArgumentError, 'No data found' if command.results.blank?
-
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
     { user_selections: user_selections, error: e.message }

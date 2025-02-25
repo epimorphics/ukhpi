@@ -79,13 +79,18 @@
                   %th{ scope: 'col' }
                     = loc.label
             %tbody
-              - @view_state.query_results_rows.each do |row|
-                %tr{ class: cycle('u-row-odd', 'u-row-even') }
-                  %th{ scope: 'row' }
-                    = row.shift
-                  - row.each do |value|
-                    %td
-                      = ValueFormatter.format(value, slug: @view_state.indicator.label)
+              - if @view_state.query_results_rows.empty?
+                %tr.no-data
+                  %td{ colspan: @view_state.selected_locations.size + 1, class: 'u-text-center' }
+                    = t('results.no_data')
+              - else
+                - @view_state.query_results_rows.each do |row|
+                  %tr{ class: cycle('u-row-odd', 'u-row-even') }
+                    %th{ scope: 'row' }
+                      = row.shift
+                    - row.each do |value|
+                      %td
+                        = ValueFormatter.format(value, slug: @view_state.indicator.label)
 
       #application
         %router-view

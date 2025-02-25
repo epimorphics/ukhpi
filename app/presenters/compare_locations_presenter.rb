@@ -149,8 +149,10 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     ensure_even_row_lengths(by_columns)
   end
 
-  def ensure_even_row_lengths(by_columns)
-    max_results = by_columns.map(&:length).max
+  def ensure_even_row_lengths(by_columns) # rubocop:disable Metrics/CyclomaticComplexity
+    return [] unless by_columns&.any?(&:present?)
+
+    max_results = by_columns&.map(&:length).max
 
     by_columns.each do |results|
       results.unshift(nil) while results.length < max_results

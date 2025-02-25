@@ -42,14 +42,19 @@
               %th{ scope: 'col' }
                 = col[:label]
         %tbody
-          - table_data[:data].each do |row|
-            %tr{ class: cycle('u-row-odd', 'u-row-even') }
-              - row.each_with_index do |datum, i|
-                - if i.zero?
-                  %td
-                    = ValueFormatter.month_year(datum)
-                - else
-                  %td
-                    = ValueFormatter.format(datum, slug: data_view.indicator.label)
+          - if table_data[:data].empty?
+            %tr.no-data
+              %td{ colspan: table_data[:columns].size }
+                = t('results.no_data')
+          - else
+            - table_data[:data].each do |row|
+              %tr{ class: cycle('u-row-odd', 'u-row-even') }
+                - row.each_with_index do |datum, i|
+                  - if i.zero?
+                    %td
+                      = ValueFormatter.month_year(datum)
+                  - else
+                    %td
+                      = ValueFormatter.format(datum, slug: data_view.indicator.label)
 
   .o-data-view__vue-root.u-js-only{ data: data_view.as_js_attributes }

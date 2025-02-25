@@ -131,6 +131,9 @@ en:
   label:
     date: "Date"
 
+  results:
+    no_data: "Sorry, there is no data available. Please select a different location."
+
   preposition:
     by: "by"
     in: "in"
