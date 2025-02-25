@@ -5,28 +5,38 @@
   width: 100%;
   background-color: white;
 
-  td {
-    text-align: right;
-  }
+  tr {
+    &.no-data {
+      td:first-child {
+        text-align: center;
+        padding: 0.5em;
+        color: $grey-2;
+      }
+    }
 
-  td:first-child {
-    text-align: left;
-  }
+    td {
+      text-align: right;
+    }
 
-  th {
-    text-align: center;
-  }
+    td:first-child {
+      text-align: left;
+    }
 
-  th.u-left {
-    text-align: left;
-  }
+    th {
+      text-align: center;
+    }
 
-  th.u-right {
-    text-align: right;
-  }
+    th.u-left {
+      text-align: left;
+    }
 
-  .u-row-odd {
-    background-color: $grey-3;
+    th.u-right {
+      text-align: right;
+    }
+
+    .u-row-odd {
+      background-color: $grey-3;
+    }
   }
 }
 
