@@ -5,6 +5,9 @@
 - fix: Updated menu jump link to be more accessible
   - Added the menu jump link translations for both english and welsh.
   - Added `sr-only` class to the menu jump link for screen reader support.
+- fix: Refactor logging parameter handling
+  - Changed how `params` are extracted from fields
+  - Simplified presence check for `params`
 
 ## 2.0.2 - 2025-02
 
