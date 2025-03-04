@@ -6,7 +6,7 @@ class LoggingHelper
     puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
     # Extract service and params from fields hash
     service = fields[:service] if fields[:service].respond_to?(:data_api)
-    fields[:params].presence
+    params = fields[:params] if fields[:params].presence
     # Set the service and params keys to nil for later removal
     fields[:service] = nil
     fields[:params] = nil

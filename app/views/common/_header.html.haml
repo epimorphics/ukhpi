@@ -7,7 +7,7 @@
 
     .header-proposition
       .content
-        %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
+        = link_to(t('common.header.menu_text'), '#proposition-links', class: 'menu sr-only')
         %nav#proposition-menu{ 'aria-label' => 'application menu' }
           = link_to(t('common.header.app_title'), root_path(lang: I18n.locale), id: "proposition-name")
 

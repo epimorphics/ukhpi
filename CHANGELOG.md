@@ -2,8 +2,17 @@
 
 ## Unreleased
 
-## 2.0.2 - 2025-02
+## 2.0.2 - 2025-03
 
+- ci: update workflow versions to v2
+  - Changed publish job to use version 2 of the publish workflow.
+  - Updated deploy job to reference version 2 of the deploy workflow.
+- fix: Refactor logging parameter handling
+  - Changed how `params` are extracted from fields
+  - Simplified presence check for `params`
+- fix: Updated menu jump link to be more accessible
+  - Added the menu jump link translations for both english and welsh.
+  - Added `sr-only` class to the menu jump link for screen reader support.
 - (Jon) Continued logging improvements alongside refactoring of Rubocop rules set
 - (Jon) Refactored code to prevent MUTATION reinitialisation if already set
 - (Jon) Fixed error handling in the landing, browse, and compare pages to ensure
