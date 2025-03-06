@@ -40,6 +40,7 @@ gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
+  gem 'dotenv'
   gem 'haml-lint'
   gem 'json_expressions'
   gem 'nokogiri'
