@@ -157,6 +157,8 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
 
     if log_fields[:request_time]
       log_fields[:message] += format(', time taken: %.0f ms', log_fields[:request_time])
+      seconds, milliseconds = log_fields[:request_time].divmod(1000)
+      log_fields[:request_time] = format('%.0f.%04d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
     end
 
     log_response(response.status, log_fields.sort.to_h)
