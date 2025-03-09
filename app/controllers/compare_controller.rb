@@ -16,6 +16,7 @@ class CompareController < ApplicationController
   private
 
   def setup_view_state
+    LoggingHelper.log_request({ params: params, path: request.path })
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 

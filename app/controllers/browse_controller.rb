@@ -7,6 +7,7 @@ class BrowseController < ApplicationController
   layout 'webpack_application'
 
   def show
+    LoggingHelper.log_request({ params: params, path: request.path })
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
@@ -14,7 +15,6 @@ class BrowseController < ApplicationController
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
-      LoggingHelper.log_request({ params: params })
       render_view_state(setup_view_state(user_selections))
     end
   end
