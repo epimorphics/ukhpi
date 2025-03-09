@@ -39,7 +39,7 @@ class CompareController < ApplicationController
     render 'compare/print', layout: 'print'
   end
 
-  def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength
+  def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     query_results = {}
     base_selection = UserSelections.new(
       __safe_params: {
@@ -49,9 +49,9 @@ class CompareController < ApplicationController
     )
 
     user_compare_selections.selected_locations.each do |location|
-      msg = 'Received Data Services API request from UKHPI service'
-      msg += " for #{location.label}" if location
-      log_fields = { params: base_selection.with('location', location.uri) }
+      log_fields = { params: base_selection.params, path: request.path }
+      msg = 'Received request'
+      msg += " for #{location.label}"
       log_fields[:message] = msg
       LoggingHelper.log_request(log_fields)
       query_results[location.label] = query_with(base_selection, location)
