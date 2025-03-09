@@ -27,7 +27,7 @@ class CompareController < ApplicationController
   def render_interactive(view_state)
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
-      render_request_error(@view_state[:user_selections], :internal_server_error)
+      render_request_error(@view_state[:user_selections], :internal_server_error) unless Rails.env.development? # rubocop:disable Layout.LineLength
     else
       @view_state
     end

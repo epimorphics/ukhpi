@@ -65,7 +65,7 @@ class BrowseController < ApplicationController
                         else
                           view_state[:user_selections]
                         end
-      render_request_error(user_selections, :internal_server_error)
+      render_request_error(user_selections, :internal_server_error) unless Rails.env.development?
     else
       respond_to do |format|
         format.html
