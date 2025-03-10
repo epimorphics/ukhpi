@@ -29,7 +29,7 @@ class LoggingHelper
     if fields[:request_time]
       fields[:message] += format(', time taken: %.0f ms', fields[:request_time])
       seconds, milliseconds = fields[:request_time].divmod(1000)
-      fields[:request_time] = format('%.0f.%04d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
+      fields[:request_time] = format('%.0f.%03d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
     end
 
     # fields[:status] ||= Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
