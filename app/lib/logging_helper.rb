@@ -15,14 +15,16 @@ class LoggingHelper
 
     fields[:path] ||= nil
     if service.respond_to?(:data_api) && fields[:path].blank?
-      fields[:message] += ": #{service.data_api}"
+      # TODO: Resolve this line once all services are updated to use the new fields
+      # fields[:message] += ": #{service.data_api}"
       fields[:path] = URI.parse(service.data_api).path
     elsif params.present? && fields[:path].present?
-      query = params.is_a?(Hash) ? params : params.except('permitted', 'controller', 'action').to_unsafe_h
+      query = params.is_a?(Hash) ? params : params.except('permitted', 'controller', 'action').to_unsafe_h # rubocop:disable Layout/LineLength
       fields[:path] += "?#{query.map { |k, v| "#{k}=#{v}" }.join('&')}"
     end
 
-    fields[:message] += ": #{fields[:path]}" if fields[:path].present?
+    # TODO: Resolve this line once all services are updated to use the new fields
+    # fields[:message] += ": #{fields[:path]}" if fields[:path].present?
     fields[:request_status] ||= 'received'
     fields[:request_time] ||= fields[:duration]
 
@@ -32,7 +34,6 @@ class LoggingHelper
       fields[:request_time] = format('%.0f.%03d', seconds, milliseconds) # rubocop:disable Style/FormatStringToken
     end
 
-    # fields[:status] ||= Rack::Utils::SYMBOL_TO_STATUS_CODE[:ok]
     fields[:status]
 
     fields.compact! # Finally, remove any nil values before sending to the logger

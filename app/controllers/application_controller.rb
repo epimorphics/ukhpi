@@ -140,7 +140,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     log_fields[:path] = "#{log_fields[:path]}?#{query}" if query.present?
 
     if log_fields[:message] == 'OK' && log_fields[:status] == 200
-      log_fields[:message] = "Completed request: #{log_fields[:path]}"
+      log_fields[:message] = 'Completed request'
       log_fields[:request_status] = 'completed'
     end
 
