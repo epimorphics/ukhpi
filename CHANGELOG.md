@@ -4,6 +4,12 @@
 
 ## 2.0.2 - 2025-03
 
+- (Jon) Introduced local config files and updated .gitignore appropriately
+- (Jon) Updated request logging to include path and parameters more clearly
+- (Jon) Added logging for request parameters and path
+- (Jon) Improved error logging in query execution
+- (Jon) Improved `request_time` logging format to show seconds and milliseconds.
+- (Jon) Prevent error rendering in development mode
 - (Jon) Updated Sentry configuration and tagging to include tags for better
   tracking and filtering in Sentry
 - (Jon) Added `development` environment configuration for `dotenv` gem
