@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# Unit tests on the Locations class
-
 require 'test_helper'
 
+# Unit tests on the Locations class
 class LocationsTest < ActiveSupport::TestCase
   it 'recognise a valid region type' do
     region = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'

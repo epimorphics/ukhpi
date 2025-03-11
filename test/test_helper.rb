@@ -9,11 +9,13 @@ end
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../config/environment', __dir__)
 require 'rails/test_help'
-require 'minitest/rails/capybara'
-require 'mocha/minitest'
-require 'minitest/reporters'
-require 'vcr'
+
+require 'capybara/rails'
 require 'json_expressions/minitest'
+require 'minitest/rails'
+require 'minitest/reporters'
+require 'mocha/minitest'
+require 'vcr'
 
 VCR.configure do |config|
   config.cassette_library_dir = 'test/fixtures/vcr_cassettes'

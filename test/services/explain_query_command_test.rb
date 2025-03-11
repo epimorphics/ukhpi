@@ -2,6 +2,7 @@
 
 require 'test_helper'
 
+# :nodoc:
 class MockService
   attr_reader :captured
 

@@ -1,0 +1,49 @@
+#!/bin/bash
+
+list="issue spike task"
+
+listRE="^($(printf '%s\n' "$list" | tr ' ' '|'))/"
+
+BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
+
+printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
+
+if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
+ 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
+	exit 0
+fi
+
+# Check for existence of "new or modified" test files
+TEST_FILES="$(git diff --diff-filter=ACDM --name-only --cached | grep -E '(./test/*)$')"
+# Get all test files to run tests
+RUBY_FILES="$(git ls-files | grep -i -E '(_test\.rb)$')"
+# Get a rough idea of how many files have changes or are untracked
+PRE_STATUS="$(git status | wc -l)"
+
+WORK_DONE=0
+
+if [ -z "$TEST_FILES" ]; then
+  printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
+  printf '\n\033[0;31mContinuing without new tests... 😖\033[0m\n'
+fi
+
+
+if [ -n "$TEST_FILES" ]; then
+  printf '\nRunning Rails Tests...'
+  make test
+  RUBY_TEST_EXIT_CODE=$?
+  WORK_DONE=1
+else
+  RUBY_TEST_EXIT_CODE=0
+fi
+
+if [ ! $RUBY_TEST_EXIT_CODE -eq 0 ]; then
+  printf '\n\033[0;31mCannot push, tests are failing. Use --no-verify to force push. 😖\033[0m\n'
+  exit 1
+fi
+
+if [ $WORK_DONE = 1 ]; then
+  printf '\n\033[0;32mAll tests are green, pushing... 🎉\033[0m\n'
+fi
+
+exit 0

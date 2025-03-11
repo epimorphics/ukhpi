@@ -2,13 +2,12 @@
   .header-wrapper
     .header-global
       .header-logo
-        %a.content{ href: "#{Rails.application.config.relative_url_root}", title: t('common.header.home_link') }
+        = link_to(root_path(lang: I18n.locale), class: 'content', title: t('common.header.home_link')) do
           = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: 'UKHPI Logo')
-
 
     .header-proposition
       .content
-        %a.js-header-toggle.menu{ href: '#proposition-links' } Menu
+        = link_to(t('common.header.menu_text'), '#proposition-links', class: 'menu sr-only')
         %nav#proposition-menu{ 'aria-label' => 'application menu' }
           = link_to(t('common.header.app_title'), root_path(lang: I18n.locale), id: "proposition-name")
 

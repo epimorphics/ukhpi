@@ -1,6 +1,7 @@
 cy:
   common:
     header:
+      menu_text: "Dewislen"
       home_link: "Ewch i hafan Mynegai Prisiau Tai y DU"
       app_title: "Mynegai Prisiau Tai y DU"
       beta_tag: "[cy] BETA"
@@ -130,6 +131,9 @@ cy:
 
   label:
     date: "Dyddiad"
+
+  results:
+     no_data: "Mae’n flin gennym, nid yw data ar gael. Dewiswch leoliad gwahanol."
 
   preposition:
     by: "yn ôl"

@@ -12,7 +12,7 @@
         = visibility_action
 
   - if visible
-    .o-data-view__options.u-js-hidden
+    .o-data-view__options{:class => ("u-js-hidden" unless Rails.env.development?)}
       = t('preposition.for').titlecase
       = succeed ',' do
         = data_view.selected_location_label
@@ -33,7 +33,7 @@
             %a{ href: data_view.add_remove_statistic(!checked, stat) }
               = stat.label
 
-    .o-data-view__data-table.u-js-hidden
+    .o-data-view__data-table{:class => ("u-js-hidden" unless Rails.env.development?)}
       - table_data = data_view.as_table_data
       %table
         %thead
@@ -42,14 +42,19 @@
               %th{ scope: 'col' }
                 = col[:label]
         %tbody
-          - table_data[:data].each do |row|
-            %tr{ class: cycle('u-row-odd', 'u-row-even') }
-              - row.each_with_index do |datum, i|
-                - if i.zero?
-                  %td
-                    = ValueFormatter.month_year(datum)
-                - else
-                  %td
-                    = ValueFormatter.format(datum, slug: data_view.indicator.label)
+          - if table_data[:data].empty?
+            %tr.no-data
+              %td{ colspan: table_data[:columns].size }
+                = t('results.no_data')
+          - else
+            - table_data[:data].each do |row|
+              %tr{ class: cycle('u-row-odd', 'u-row-even') }
+                - row.each_with_index do |datum, i|
+                  - if i.zero?
+                    %td
+                      = ValueFormatter.month_year(datum)
+                  - else
+                    %td
+                      = ValueFormatter.format(datum, slug: data_view.indicator.label)
 
   .o-data-view__vue-root.u-js-only{ data: data_view.as_js_attributes }

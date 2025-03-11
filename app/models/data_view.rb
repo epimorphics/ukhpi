@@ -51,8 +51,8 @@ class DataView # rubocop:disable Metrics/ClassLength
   end
 
   # Invoke a block for each of this theme's statisics
-  def each_statistic(&block)
-    theme.statistics.each(&block)
+  def each_statistic(&)
+    theme.statistics.each(&)
   end
 
   # @return True if a given statistic is selected for this theme
@@ -103,7 +103,7 @@ class DataView # rubocop:disable Metrics/ClassLength
       <span class='o-data-view__location-preposition'>#{title_location_translated[:preposition]}</span>
       <a href='#{change_path}' class='o-data-view__location'>#{title_location_translated[:html]}</a>
     TITLE
-      .html_safe # rubocop:disable Rails/OutputSafety
+      .html_safe
   end
 
   def title_without_indicator
@@ -167,6 +167,8 @@ class DataView # rubocop:disable Metrics/ClassLength
   end
 
   def project_data(query_result, columns)
+    return [] unless query_result.present?
+
     query_result.map do |row_data|
       columns.map do |column|
         datum = row_data[column[:pred]]

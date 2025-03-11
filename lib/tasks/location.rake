@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require 'set'
 require 'json'
 require 'csv'
 
@@ -13,7 +12,7 @@ NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm 
 # Value class encapsulating a JSON location record
 class LocationRecord
   def initialize(json)
-    @json = json
+    @json = json unless defined? @json
   end
 
   def value_of(json)
@@ -248,7 +247,7 @@ namespace :ukhpi do
     squery = "#{ENV.fetch('FUSEKI_HOME', root)}/bin/s-query"
     server = ENV.fetch('SERVER', 'https://landregistry.data.gov.uk/landregistry/query')
 
-    puts "Running SPARQL query against server #{server}..."
+    puts { "Running SPARQL query against server #{server}..." }
     puts '(to change the destination SPARQL endpoint, set the $SERVER env variable)'
     system "#{squery} --server='#{server}' '#{query}' > query-results.json"
   end
