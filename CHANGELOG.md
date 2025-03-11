@@ -2,6 +2,14 @@
 
 ## Unreleased
 
+## 2.0.3 - 2025-04
+
+- (Jon) Updated UK features data to use 2025 version
+- (Jon) Added new GeoJSON data for 2025 geographies
+- (Jon) Changed GSS code for Sheffield from E08000019 to E08000039
+- (Jon) Changed GSS code for Barnsley from E08000016 to E08000038
+- (Jon) Changed GSS code for Northern Ireland from N92000001 to N92000002
+
 ## 2.0.2 - 2025-03
 
 - (Jon) Introduced local config files and updated .gitignore appropriately
