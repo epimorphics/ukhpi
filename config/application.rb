@@ -44,6 +44,12 @@ module Ukhpi
     # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
     # config.i18n.default_locale = :de
 
+    # !DEPRECATION WARNING: `to_time` will always preserve the full system
+    # ! timezone offset rather than offset of the receiver in Rails 8.1.
+    # * To opt in to the new behavior and maintain system timezone,
+    # * set the value to :zone; otherwise, set to false
+    config.active_support.to_time_preserves_timezone = :zone
+
     # Add deflater to compress JSON payloads
     config.middleware.use Rack::Deflater
   end

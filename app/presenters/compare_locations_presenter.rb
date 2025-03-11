@@ -4,7 +4,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter
+class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   include I18n
   include LocationsTable
 
@@ -149,8 +149,10 @@ class CompareLocationsPresenter
     ensure_even_row_lengths(by_columns)
   end
 
-  def ensure_even_row_lengths(by_columns)
-    max_results = by_columns.map(&:length).max
+  def ensure_even_row_lengths(by_columns) # rubocop:disable Metrics/CyclomaticComplexity
+    return [] unless by_columns&.any?(&:present?)
+
+    max_results = by_columns&.map(&:length).max
 
     by_columns.each do |results|
       results.unshift(nil) while results.length < max_results

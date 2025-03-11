@@ -70,7 +70,7 @@ Rails.application.configure do
   # This will affect assets in /public, e.g. webpacker assets.
   config.public_file_server.headers = {
     'Cache-Control' => "public, max-age=#{2.minutes.to_i}",
-    'Expires' => 2.minutes.from_now.to_formatted_s(:rfc822)
+    'Expires' => 2.minutes.from_now.to_fs(:rfc822)
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.
@@ -92,4 +92,7 @@ Rails.application.configure do
 
   # API location is specified in the environment variable API_SERVICE_URL
   config.api_service_url = ENV.fetch('API_SERVICE_URL', nil)
+
+  # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
+  config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
 end

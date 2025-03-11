@@ -2,8 +2,9 @@
 
 require 'test_helper'
 
-describe CompareController do
-  # it "must be a real test" do
+# :nodoc:
+class CompareControllerTest < ActionDispatch::IntegrationTest
+  # def test_sanity
   #   flunk "Need real tests"
   # end
 end

@@ -37,8 +37,11 @@ ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
 assets:
+	@echo "Installing bundler packages ..."
 	@./bin/bundle install
+	@echo "Installing yarn packages ..."
 	@yarn install
+	@echo "Cleaning and precompiling static assets ..."
 	@./bin/rails assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
@@ -68,14 +71,6 @@ image: auth
 lint: assets
 	@./bin/bundle exec rubocop
 
-local:
-	@echo "Installing bundler packages ..."
-	@./bin/bundle install
-	@echo "Installing yarn packages ..."
-	@yarn install
-	@echo "Starting local server ..."
-	@./bin/rails server -p ${PORT}
-
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
@@ -89,8 +84,12 @@ run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
 	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
-server:
+secret:
+	@echo "Creating secret ..."
 	@export SECRET_KEY_BASE=$(./bin/rails secret)
+
+server:
+	@echo "Starting local server ..."
 	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
 start:

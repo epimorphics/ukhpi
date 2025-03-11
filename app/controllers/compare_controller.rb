@@ -9,21 +9,29 @@ class CompareController < ApplicationController
     if params.delete(:print)
       render_print
     else
-      render_interactive
+      render_interactive(setup_view_state)
     end
   end
 
   private
 
   def setup_view_state
+    LoggingHelper.log_request({ params: params, path: request.path })
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
-    @view_state = CompareLocationsPresenter.new(user_compare_selections, query_results)
+    CompareLocationsPresenter.new(user_compare_selections, query_results)
+  rescue ArgumentError => e
+    { user_selections: user_compare_selections, error: e.message }
   end
 
-  def render_interactive
-    setup_view_state
+  def render_interactive(view_state)
+    @view_state = view_state
+    if view_state.respond_to?(:[]) && view_state[:error]
+      render_request_error(@view_state[:user_selections], :internal_server_error) unless Rails.env.development? # rubocop:disable Layout.LineLength
+    else
+      @view_state
+    end
   end
 
   def render_print
@@ -31,7 +39,7 @@ class CompareController < ApplicationController
     render 'compare/print', layout: 'print'
   end
 
-  def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength
+  def perform_query(user_compare_selections) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     query_results = {}
     base_selection = UserSelections.new(
       __safe_params: {
@@ -41,6 +49,11 @@ class CompareController < ApplicationController
     )
 
     user_compare_selections.selected_locations.each do |location|
+      log_fields = { params: base_selection.params, path: request.path }
+      msg = 'Received request'
+      msg += " for #{location.label}"
+      log_fields[:message] = msg
+      LoggingHelper.log_request(log_fields)
       query_results[location.label] = query_with(base_selection, location)
     end
 

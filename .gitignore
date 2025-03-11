@@ -62,3 +62,8 @@ query-results.json
 .tool-versions
 .github-token
 .npmrc
+
+# Ignore local configuration files
+.env
+.env*.local
+!.env.development
