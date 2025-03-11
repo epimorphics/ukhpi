@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# :nodoc:
 module CubeDataModel
   # Specialises a CubeResource to add behaviour specific to DataCube measures
   class CubeMeasure < CubeResource
@@ -33,7 +34,7 @@ module CubeDataModel
       range.include?(RDF::XSD.decimal)
     end
 
-    def unit_type
+    def unit_type # rubocop:disable Metrics/MethodLength
       if scalar?
         :scalar
       elsif percentage?

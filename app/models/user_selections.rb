@@ -51,7 +51,7 @@ class UserSelections
               .freeze
 
   def initialize(params)
-    @params = params[:__safe_params] || params.permit(*PERMITTED)
+    @params = params[:__safe_params] || params.permit(*PERMITTED) unless defined? @params
   end
 
   def user_params_model

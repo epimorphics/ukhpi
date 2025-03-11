@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'test_helper'
+require 'i18n'
 
 def user_selections(params)
   UserSelections.new(ActionController::Parameters.new(params))
@@ -77,7 +78,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-    describe '#with' do
+    describe '#with_the_new_singular_value' do
       it 'should create a new user preferences with the new singular value' do
         selections0 = user_selections('location' => 'test-region-0')
         _(selections0.selected_location).must_equal 'test-region-0'
@@ -93,7 +94,9 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections2.selected_location).must_equal 'test-region-2'
         _(selections2.from_date).must_equal Date.new(2017, 3, 25)
       end
+    end
 
+    describe '#with_the_additional_array_value' do
       it 'should create a new user preferences with an additional array value' do
         selections0 = user_selections('in' => ['averagePrice'])
         _(selections0.selected_indicators).must_equal ['averagePrice']
@@ -112,7 +115,9 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections2.selected_indicators).must_include 'percentageMonthlyChange'
         _(selections2.selected_indicators).must_include 'percentageAnnualChange'
       end
+    end
 
+    describe '#with_array_valued_params' do
       it 'should not create duplicate values in array-valued params' do
         selections0 = user_selections('in' => ['averagePrice'])
         selections1 = selections0.with('in', 'averagePrice')
@@ -121,7 +126,7 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-    describe '#without' do
+    describe '#without_the_given_key_for_singlular_values' do
       it 'should create a new user preferences value without the given key for singlular values' do
         selections0 = user_selections('location' => 'test-region-0')
         _(selections0.selected_location).must_equal 'test-region-0'
@@ -131,7 +136,9 @@ class UserSelectionsTest < ActiveSupport::TestCase
         assert selections0.params.key?('location')
         assert_not selections1.params.key?('location')
       end
+    end
 
+    describe '#without_the_given_value_for_array_values' do
       it 'should create a new user preferences value without the given value for array values' do
         selections0 = user_selections('in' => %w[averagePrice percentageMonthlyChange])
         _(selections0.selected_indicators.length).must_equal 2
@@ -158,27 +165,14 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
-    describe '#valid?' do
+    describe '#empty_model_is_valid?' do
       it 'should report the empty model is valid' do
         selections = user_selections({})
         _(selections.valid?).must_equal(true)
       end
+    end
 
-      it 'should report that a correctly formatted from date is valid' do
-        selections = user_selections(
-          'from' => '2017-01-01'
-        )
-        _(selections.valid?).must_equal(true)
-      end
-
-      it 'should report that an incorrectly formatted from date is invalid' do
-        selections = user_selections(
-          'from' => '2017-0'
-        )
-        _(selections.valid?).must_equal(false)
-        _(selections.errors).must_include('incorrect or missing "from" date')
-      end
-
+    describe '#formatted_date_is_valid?' do
       it 'should allow a YYYY-MM date as valid' do
         selections = user_selections(
           'from' => '2017-01'
@@ -186,22 +180,47 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections.valid?).must_equal(true)
         _(selections.errors).must_be_empty
       end
+    end
 
+    describe '#from_date_is_valid?' do
+      it 'should report that a correctly formatted from date is valid' do
+        selections = user_selections(
+          'from' => '2017-01-01'
+        )
+        _(selections.valid?).must_equal(true)
+      end
+    end
+
+    describe '#from_date_is_invalid?' do
+      it 'should report that an incorrectly formatted from date is invalid' do
+        selections = user_selections(
+          'from' => '2017-13'
+        )
+        _(selections.valid?).must_equal(false)
+        _(selections.errors).must_include('incorrect or missing "from" date')
+      end
+    end
+
+    describe '#to_date_is_invalid?' do
       it 'should report that an incorrectly formatted to date is invalid' do
         selections = user_selections(
-          'to' => '2017-0'
+          'to' => '2017-13'
         )
         _(selections.valid?).must_equal(false)
         _(selections.errors).must_include('incorrect or missing "to" date')
       end
+    end
 
+    describe '#location_is_valid?' do
       it 'should report that a correct location URI is valid' do
         selections = user_selections(
           location: 'http://landregistry.data.gov.uk/id/region/united-kingdom'
         )
         _(selections.valid?).must_equal(true)
       end
+    end
 
+    describe '#location_is_invalid?' do
       it 'should report that an incorrect location URI is invalid' do
         selections = user_selections(
           location: 'http://landregistry.data.gov.uk/id/region/'
@@ -209,35 +228,53 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(selections.valid?).must_equal(false)
         _(selections.errors).must_include('unrecognised location')
       end
+    end
 
+    describe '#indicator_is_valid?' do
       it 'should report that a correctly stated indicator is valid' do
         selections = user_selections('in' => %w[pac pmc])
         _(selections.valid?).must_equal(true)
       end
+    end
 
+    describe '#indicator_is_invalid?' do
       it 'should report that an incorrectly stated indicator is not valid' do
         selections = user_selections('in' => %w[pmc percentageMonthlyWombles])
         _(selections.valid?).must_equal(false)
       end
+    end
 
+    describe '#statistic_is_valid?' do
       it 'should report that a correctly stated statistic is valid' do
         selections = user_selections('st' => %w[det sem])
         _(selections.valid?).must_equal(true)
       end
+    end
 
+    describe '#statistic_is_invalid?' do
       it 'should report that an incorrectly stated statistic is not valid' do
         selections = user_selections('st' => %w[det percentageMonthlyWombles])
         _(selections.valid?).must_equal(false)
       end
     end
 
-    describe 'language handling' do
+    describe '#default_language_selected' do
       it 'should return English as the default' do
         selections = user_selections({})
         assert selections.english?
         assert_not selections.welsh?
       end
+    end
 
+    describe '#default_language_params' do
+      it 'should return English when that language is selected' do
+        selections = user_selections('lang' => 'en')
+        assert selections.english?
+        assert_not selections.welsh?
+      end
+    end
+
+    describe '#alternative_language_params' do
       it 'should return Welsh when that language is selected' do
         selections = user_selections('lang' => 'cy')
         current_locale = I18n.locale
@@ -248,19 +285,17 @@ class UserSelectionsTest < ActiveSupport::TestCase
       ensure
         I18n.locale = current_locale
       end
+    end
 
-      it 'should return English when that language is selected' do
-        selections = user_selections('lang' => 'en')
-        assert selections.english?
-        assert_not selections.welsh?
-      end
-
+    describe '#ignore_other_languages' do
       it 'should ignore other languages' do
         selections = user_selections('lang' => 'fr')
         assert selections.english?
         assert_not selections.welsh?
       end
+    end
 
+    describe '#alternative_language_params_switch' do
       it 'should generate the correct options to switch to Welsh language' do
         selections = user_selections(
           'from' => '2017-01'
@@ -270,7 +305,9 @@ class UserSelectionsTest < ActiveSupport::TestCase
         _(alt_params.params['from']).must_equal('2017-01')
         _(alt_params.params['lang']).must_equal('cy')
       end
+    end
 
+    describe '#default_language_params_switch' do
       it 'should generate the correct options to switch to English language' do
         selections = user_selections(
           'from' => '2017-01',

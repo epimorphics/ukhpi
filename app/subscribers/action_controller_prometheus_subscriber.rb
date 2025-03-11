@@ -4,7 +4,7 @@
 class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :action_controller
 
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:disable Metrics/AbcSize
   def process_action(_event)
     mem = GetProcessMem.new
     Prometheus::Client.registry
@@ -56,5 +56,5 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                         }
                       )
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+  # rubocop:enable Metrics/AbcSize
 end

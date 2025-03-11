@@ -55,7 +55,5 @@ class Presenter
     @aspects ||= Aspects.new(@cmd.prefs)
   end
 
-  def lookup_location(loc)
-    Locations.lookup_location(loc)
-  end
+  delegate :lookup_location, to: :Locations
 end

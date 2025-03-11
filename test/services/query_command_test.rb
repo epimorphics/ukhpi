@@ -2,7 +2,7 @@
 
 require 'test_helper'
 
-class MockService
+class MockService # :nodoc:
   attr_reader :captured
 
   def query(query)

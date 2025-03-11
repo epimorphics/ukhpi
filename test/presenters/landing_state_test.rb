@@ -1,9 +1,8 @@
 # frozen_string_literal: true
 
-# Unit tests on the LandingState class
-
 require 'test_helper'
 
+# Unit tests on the LandingState class
 class LandingStateTest < ActiveSupport::TestCase
   def mock_latest_value_data
     {

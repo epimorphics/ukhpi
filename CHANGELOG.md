@@ -2,6 +2,60 @@
 
 ## Unreleased
 
+## 2.0.2 - 2025-03
+
+- (Jon) Introduced local config files and updated .gitignore appropriately
+- (Jon) Updated request logging to include path and parameters more clearly
+- (Jon) Added logging for request parameters and path
+- (Jon) Improved error logging in query execution
+- (Jon) Improved `request_time` logging format to show seconds and milliseconds.
+- (Jon) Prevent error rendering in development mode
+- (Jon) Updated Sentry configuration and tagging to include tags for better
+  tracking and filtering in Sentry
+- (Jon) Added `development` environment configuration for `dotenv` gem
+- (Jon) Added `dotenv` gem for environment variable management
+- (Jon) Updated workflow versions to v2
+  - Changed publish job to use version 2 of the publish workflow.
+  - Updated deploy job to reference version 2 of the deploy workflow.
+- (Jon) Refactor logging parameter handling
+  - Changed how `params` are extracted from fields
+  - Simplified presence check for `params`
+- (Jon) Updated menu jump link to be more accessible
+  - Added the menu jump link translations for both english and welsh.
+  - Added `sr-only` class to the menu jump link for screen reader support.
+- (Jon) Continued logging improvements alongside refactoring of Rubocop rules
+  set
+- (Jon) Refactored code to prevent MUTATION reinitialisation if already set
+- (Jon) Fixed error handling in the landing, browse, and compare pages to ensure
+  that the correct error message is displayed to the user when an error occurs
+  [GH-465](https://github.com/epimorphics/ukhpi/issues/465)
+  - (Jon) Add error raising for date parsing failures by returning the error to
+   the application as well as logging the error message to the logs
+- (Jon) Updates the test suite with rubocop linting recommendations
+- (Jon) Updated pre-push githook to call a single `make test` command instead of
+  triggering both unit tests and system tests separately
+- (Jon) Added deprecation warning for `to_time` behaviour change and set
+  `to_time_preserves_timezone` to `:zone` to preserve system timezone
+- (Jon) applied recommended linting corrections from Rubocop
+- (Jon) Updated the logging to utilise a call-flow diagram to display the
+  sequence of messages that are sent between the app and the api.
+  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+- (Jon) Updated visibility and search input types
+  - Added conditional class for hiding elements in non-dev environments.
+  - Changed text fields to search fields for better UX.
+  - Cleaned up HTML structure for improved readability.
+- (Jon) Added pre-commit and pre-push hooks
+  - Introduced a pre-commit hook to run Rubocop on staged Ruby files.
+  - Implemented a pre-push hook to run Rails tests before pushing.
+- (Jon) Changed time measurement from microseconds to milliseconds in the main
+  query method
+- (Jon) Removed duplicated gem entry
+- (Jon) Updated the rails gem and dependencies to v8.0.1 alongside other minor
+  gem updates including test gems for better compatibility
+- (Jon) Added dynamic `LOG_LEVEL` env variable
+  - Defaults to `debug` in development and `info` in production/test.
+- (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
+
 ## 2.0.1 - 2025-01
 
 - (Jon) Refactored UI code to use if/elsif/else in error page responses to
