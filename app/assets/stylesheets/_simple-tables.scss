@@ -43,6 +43,21 @@
 .u-documentation-table {
   @extend .u-simple-table;
 
+  tr.u-row-center {
+    td {
+      padding: 0.5em;
+      text-align: center;
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+
   th {
     text-align: left;
     font-weight: bold;
