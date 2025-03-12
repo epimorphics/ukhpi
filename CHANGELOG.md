@@ -4,6 +4,7 @@
 
 ## 2.0.3 - 2025-04
 
+- (Jon) Updated changelog for local authority GSS Codes - English translation
 - (Jon) Updated UK features data to use 2025 version
 - (Jon) Added new GeoJSON data for 2025 geographies
 - (Jon) Changed GSS code for Sheffield from E08000019 to E08000039
