@@ -50,5 +50,5 @@ prometheus.histogram(
 )
 
 # Middleware instrumentation
-  # This fixes the 0 memory bug by notifying Action Dispatch subscribers on Prometheus initialise
-  ActiveSupport::Notifications.instrument('process_middleware.action_dispatch')
+# This fixes the 0 memory bug by notifying Action Dispatch subscribers on Prometheus initialise
+ActiveSupport::Notifications.instrument('process_middleware.action_dispatch')
