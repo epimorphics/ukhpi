@@ -42,7 +42,7 @@ assets:
 	@echo "Installing yarn packages ..."
 	@yarn install
 	@echo "Cleaning and precompiling static assets ..."
-	@./bin/rails assets:clean assets:precompile
+	@NODE_OPTIONS=--openssl-legacy-provider ./bin/bundle exec rake assets:clean assets:precompile
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
