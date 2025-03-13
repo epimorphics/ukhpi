@@ -71,6 +71,11 @@ image: auth
 lint: assets
 	@./bin/bundle exec rubocop
 
+locations:
+	@echo "Generating new UKHPI location files ... "
+	@./bin/rails ukhpi:locations
+	@echo "Done."
+
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
