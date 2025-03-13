@@ -23,7 +23,18 @@
     }
 
     th {
-      text-align: center;
+      &:first-child {
+        text-align: left;
+      }
+      &:not(:first-child):not(:last-child){
+        text-align: center;
+      }
+      &:last-child {
+        text-align: right;
+        [lang="cy"] & {
+          width: 25vw; // Welsh text is longer
+        }
+      }
     }
 
     th.u-left {
