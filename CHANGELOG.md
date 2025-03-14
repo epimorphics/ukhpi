@@ -2,8 +2,13 @@
 
 ## Unreleased
 
-## 2.0.3 - 2025-04
+## 2.1.0 - 2025-04
 
+- (Jon) Updated layout template HTML lang attributes for I18n support
+- (Jon) Updated changelog for local authority geography - Welsh translation
+- (Jon) Updated the README to include the new `make locations` target information
+- (Jon) Updated the `makefile` to include the new `locations` target for running
+  the rake task to update the locations data in the application
 - (Jon) Updated changelog for local authority GSS Codes - English translation
 - (Jon) Updated UK features data to use 2025 version
 - (Jon) Added new GeoJSON data for 2025 geographies
