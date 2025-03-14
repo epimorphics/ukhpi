@@ -48,3 +48,10 @@
 .u-pull-right {
   float: right;
 }
+
+.list {
+  &.list-bullet
+  {
+    list-style-position: outside;
+  }
+}
