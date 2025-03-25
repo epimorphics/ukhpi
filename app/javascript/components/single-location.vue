@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div>
     <options-selection />
     <compare-selection />

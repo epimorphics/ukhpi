@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <focus-trap v-model='dialogVisible' :initial-focus='initialFocusElement'>
     <div class='c-options-selection__dates'>
       <span class='' v-if='fromDate'>

@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='c-compare__selections'>
     <el-row>
       <el-col :span='24'>

@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
       <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>

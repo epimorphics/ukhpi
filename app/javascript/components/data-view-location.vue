@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div  class='c-options-selection__location'>
     <span v-if='location'>
       <el-button

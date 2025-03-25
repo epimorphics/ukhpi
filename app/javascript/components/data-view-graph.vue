@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div :class='rootCssClass'>
     <svg :id='graphElementId'></svg>
   </div>

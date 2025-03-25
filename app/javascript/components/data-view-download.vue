@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='o-data-view-download'>
     <el-row>
       <el-col :span='18'>

@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='o-data-view__js-options-statistics'>
     <label v-for='(statistic, index) in statistics'
       :key='statistic.slug'
@@ -69,7 +69,7 @@ export default {
         store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
       });
     },
-    
+
     onSelectStatistic(event) {
       const slug = event.target.getAttribute('data-slug');
       const selected = this.isSelectedStatistic(slug);
