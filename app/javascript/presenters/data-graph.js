@@ -16,7 +16,7 @@ import { timeFormat } from 'd3-time-format'
 import { interpolateNumber } from 'd3-interpolate'
 import { asCurrency, formatValue } from '../lib/values'
 import bus from '../lib/event-bus'
-import VueI18n from 'lang'
+import VueI18n from '../lang'
 
 const SERIES_MARKER = [
   symbolCircle,

@@ -64,13 +64,13 @@ import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 import safeForEach from '../lib/safe-foreach';
 import AvailableStatistics from '../mixins/available-statistics';
-import i18n from 'lang'
+import VueI18n from '../lang'
 import { mutateName } from 'lang/welsh-name-mutations'
 
 export default {
   mixins: [AvailableStatistics],
 
-  i18n,
+  VueI18n,
 
   data: () => ({
     activeTab: '',
@@ -233,6 +233,3 @@ export default {
   store,
 };
 </script>
-
-<style lang="scss">
-</style>
