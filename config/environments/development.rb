@@ -24,7 +24,7 @@ Rails.application.configure do
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  # config.assets.debug = true
 
   # Asset digests allow you to set far-future HTTP expiration dates on all assets,
   # yet still be able to expire them through the digest params.
@@ -36,7 +36,7 @@ Rails.application.configure do
   config.assets.raise_runtime_errors = true
 
   # Don't print a log message every time an asset file is loaded
-  config.assets.quiet = true
+  # config.assets.quiet = true
 
   # Tag rails logs with useful information
   config.log_tags = %i[subdomain request_id request_method]
