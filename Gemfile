@@ -3,12 +3,14 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem 'rails', '~> 8.0'
+
+gem 'vite_rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier'
 
 gem 'haml-rails'
-gem 'webpacker', '~> 5.4'
+# gem 'webpacker', '~> 5.4'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -26,10 +28,12 @@ gem 'govuk_frontend_toolkit'
 gem 'govuk_template'
 gem 'js-routes'
 
+gem 'csv'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'get_process_mem'
 gem 'http_accept_language'
+gem 'ostruct'
 gem 'prometheus-client'
 gem 'puma'
 gem 'puma-metrics'
