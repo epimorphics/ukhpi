@@ -167,7 +167,7 @@ class DataView # rubocop:disable Metrics/ClassLength
   end
 
   def project_data(query_result, columns)
-    return [] unless query_result.present?
+    return [] if query_result.blank?
 
     query_result.map do |row_data|
       columns.map do |column|
