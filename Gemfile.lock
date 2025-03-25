@@ -98,9 +98,10 @@ GEM
     csv (3.3.3)
     date (3.4.1)
     docile (1.4.1)
-    dotenvx (0.0.2)
-    dotenvx-rails (0.0.2)
-      dotenvx (= 0.0.2)
+    dotenv (3.1.7)
+    dotenv-rails (3.1.7)
+      dotenv (= 3.1.7)
+      railties (>= 6.1)
     drb (2.2.1)
     dry-cli (1.2.0)
     ebnf (2.6.0)
@@ -177,6 +178,7 @@ GEM
       rainbow
       rubocop (>= 1.0)
       sysexits (~> 1.1)
+    htmlbeautifier (1.4.3)
     htmlentities (4.3.4)
     http_accept_language (2.1.1)
     i18n (1.14.7)
@@ -490,7 +492,7 @@ DEPENDENCIES
   capybara
   csv
   data_services_api!
-  dotenvx-rails
+  dotenv-rails
   faraday
   faraday_middleware
   font-awesome-rails
@@ -500,6 +502,7 @@ DEPENDENCIES
   govuk_template
   haml-lint
   haml-rails
+  htmlbeautifier
   http_accept_language
   js-routes
   json_expressions

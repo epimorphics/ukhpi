@@ -29,6 +29,7 @@ gem 'govuk_template'
 gem 'js-routes'
 
 gem 'csv'
+gem 'dotenv-rails', groups: %i[development test]
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'get_process_mem'
@@ -44,8 +45,8 @@ gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
-  gem 'dotenv'
   gem 'haml-lint'
+  gem 'htmlbeautifier'
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'
