@@ -36,8 +36,8 @@
 
   .c-search-tool {
     @extend .button;
-    @extend .button-start;
+    @extend .button-start !optional;
 
-    background-image: url('images/icon-pointer.png');
+    background-image: url('../images/icon-pointer.png');
   }
 }

@@ -1,47 +1,47 @@
 // from gov.uk front-end-toolkit
-@import 'colours';
+@import 'govuk_frontend_toolkit/stylesheets/colours';
 // @import 'font_stack';
-@import 'measurements';
-@import 'conditionals';
-@import 'device-pixels';
-@import 'grid_layout';
-@import 'typography';
-@import 'shims';
+@import 'govuk_frontend_toolkit/stylesheets/measurements';
+@import 'govuk_frontend_toolkit/stylesheets/conditionals';
+@import 'govuk_frontend_toolkit/stylesheets/device-pixels';
+@import 'govuk_frontend_toolkit/stylesheets/grid_layout';
+@import 'govuk_frontend_toolkit/stylesheets/typography';
+@import 'govuk_frontend_toolkit/stylesheets/shims';
 
-@import 'design-patterns/alpha-beta';
-@import 'design-patterns/buttons';
-@import 'design-patterns/breadcrumbs';
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/alpha-beta';
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/buttons';
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/breadcrumbs';
 
 // GOV.UK elements
 
-@import 'elements/reset';
+// @import 'elements/reset';
 
-// Helper functions and classes
-@import "elements/helpers";
+// // Helper functions and classes
+// @import "elements/helpers";
 
-$govuk-brand-colour:	#1d70b8;
-$govuk-brand-hover-colour:	#003078;
+// $govuk-brand-colour:	#1d70b8;
+// $govuk-brand-hover-colour:	#003078;
 
-$grey-8: #f0f0f0;
-$dark-blue: $govuk-brand-colour;
-$dark-blue-hover: $govuk-brand-hover-colour;
+// $grey-8: #f0f0f0;
+// $dark-blue: $govuk-brand-colour;
+// $dark-blue-hover: $govuk-brand-hover-colour;
 
-// HTML elements, set by the GOV.UK template
-@import "elements/govuk-template-base";
+// // HTML elements, set by the GOV.UK template
+// @import "elements/govuk-template-base";
 
 
-@import 'elements/layout';
-@import 'elements/elements-typography';
-@import 'elements/buttons';
-// @import 'elements/icons';
-@import 'elements/lists';
-// @import 'elements/tables';
-@import 'elements/details';
-@import 'elements/panels';
-@import 'elements/forms';
-// @import 'elements/forms/form-block-labels';
-@import 'elements/forms/form-date';
-@import 'elements/forms/form-validation';
-@import 'elements/breadcrumbs';
-@import 'elements/phase-banner';
-@import 'elements/components';
+// @import 'elements/layout';
+// @import 'elements/elements-typography';
+// @import 'elements/buttons';
+// // @import 'elements/icons';
+// @import 'elements/lists';
+// // @import 'elements/tables';
+// @import 'elements/details';
+// @import 'elements/panels';
+// @import 'elements/forms';
+// // @import 'elements/forms/form-block-labels';
+// @import 'elements/forms/form-date';
+// @import 'elements/forms/form-validation';
+// @import 'elements/breadcrumbs';
+// @import 'elements/phase-banner';
+// @import 'elements/components';

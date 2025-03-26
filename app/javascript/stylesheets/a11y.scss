@@ -1,7 +1,10 @@
 /* Created in 2024-08 accessibility review ~ JRH */
+@use "sass:color";
+
 $govuk-brand-colour:	#1d70b8;
 $govuk-brand-hover-colour:	#003078;
-$govuk-brand-disabled-colour: lighten( $govuk-brand-colour, 40% );
+$govuk-brand-disabled-colour: color.adjust($govuk-brand-colour, $lightness: 40%);
+
 
 
 @mixin disabled-button {

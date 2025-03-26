@@ -1,8 +1,13 @@
 /* Adjustments to Element defaults */
+$grey-8: #f0f0f0;
+$dark-blue: #1d70b8;
+$dark-blue-hover: #003078;
+$black: #000000;
+
 
 @font-face {
     font-family: element-icons;
-    src: asset-url('fonts/element-icons.woff') format('woff'), asset-url('fonts/element-icons.ttf') format('truetype');
+    src: url('../fonts/element-icons.woff') format('woff'), url('../fonts/element-icons.ttf') format('truetype');
     font-weight: 400;
     font-style: normal
 }

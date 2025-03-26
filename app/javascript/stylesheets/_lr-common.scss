@@ -1,3 +1,4 @@
+@use "sass:color";
 // Common style settings to share between LR applications
 // Trying to follow @csswizardry's CSS Namespaces advice
 // http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/
@@ -19,10 +20,18 @@ $lr-link-quiet: $lr-logo-green-light;
 $lr-focus: $lr-logo-green-dark;
 $lr-top-line: $lr-green-nav;
 $lr-footer-grey: #f0f5f0;
-$lr-footer-link: lighten( $lr-separator, 10 );
+$lr-footer-link: color.adjust($lr-separator, $lightness: 10%);
 $lr-footer-background: #818181;
-$lr-green-nav-darkened: darken( $lr-green-nav, 20% );
+$lr-green-nav-darkened: color.adjust( $lr-green-nav, $lightness: -20%);
 
+$graph-colours: (
+  graph-0: $fuschia,
+  graph-1: $light-blue,
+  graph-2: $mellow-red,
+  graph-3: $green,
+  graph-4: $orange,
+  graph-5: $purple
+);
 /* settings */
 
 ol, ul, nav ol, nav ul {
@@ -193,29 +202,35 @@ input[type=radio] {
 }
 
 // override UK gov stylesheet, which uses the highly specific #global-header selector
-#global-header.lr-header {
-  background-color: white;
-
-  .header-wrapper {
+#global-header{
+  &.lr-header {
     background-color: white;
-  }
-}
 
-#global-header .header-proposition #proposition-name.lr-header--proposition-name {
-  color: $lr-link;
-}
-
-#global-header .header-proposition #proposition-links {
-  .lr-header--header-proposition--a {
-    color: $lr-link-quiet;
+    .header-wrapper {
+      background-color: white;
+    }
   }
 
-  .lr-header--header-proposition--a__active {
-    color: $lr-link;
-  }
+  .header-proposition {
+    #proposition-name{
+      &.lr-header--proposition-name {
+        color: $lr-link;
+      }
+    }
 
-  .lr-header--header-proposition {
-    color: $lr-headline;
+    #proposition-links {
+      .lr-header--header-proposition--a {
+        color: $lr-link-quiet;
+      }
+
+      .lr-header--header-proposition--a__active {
+        color: $lr-link;
+      }
+
+      .lr-header--header-proposition {
+        color: $lr-headline;
+      }
+    }
   }
 }
 
@@ -239,7 +254,7 @@ input[type=radio] {
   }
 
   .footer-meta .footer-meta-inner .open-government-licence .logo a {
-    background-image: image-url('ogl-symbol-41px-black.png');
+    background-image: url('../images/ogl-symbol-41px-black.png');
     display: block;
     width: 41px;
     height: 17px;

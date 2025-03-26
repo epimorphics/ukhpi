@@ -1,14 +1,14 @@
 .o-heading {
   &--1 {
-    @extend .heading-large;
+    @extend .heading-large !optional;
   }
 
   &--2 {
-    @extend .heading-medium;
+    @extend .heading-medium !optional;
   }
 
   &--3, &--4 {
-    @extend .heading-small;
+    @extend .heading-small !optional;
   }
 }
 
