@@ -27,6 +27,8 @@ REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
 BUNDLE_CFG=.bundle/config
+BUNDLE=./bin/bundle
+RAILS=./bin/rails
 
 all: image
 
@@ -38,11 +40,13 @@ ${GITHUB_TOKEN}:
 
 assets:
 	@echo "Installing bundler packages ..."
-	@./bin/bundle install
+	@${BUNDLE} install
 	@echo "Installing yarn packages ..."
 	@yarn install
-	@echo "Cleaning and precompiling static assets ..."
-	@NODE_OPTIONS=--openssl-legacy-provider ./bin/bundle exec rake assets:clean assets:precompile
+	@echo "Removing old compiled assets and compiling via vite ..."
+	@NODE_OPTIONS=--openssl-legacy-provider ${RAILS} vite:clobber vite:build
+	@echo vite info
+	@${RAILS} vite:info
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
