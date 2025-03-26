@@ -23,9 +23,6 @@ gem 'haml-rails'
 gem 'font-awesome-rails'
 gem 'sass-rails'
 
-gem 'govuk_elements_rails'
-gem 'govuk_frontend_toolkit'
-gem 'govuk_template'
 gem 'js-routes'
 
 gem 'csv'
