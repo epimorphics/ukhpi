@@ -202,7 +202,7 @@ input[type=radio] {
 }
 
 // override UK gov stylesheet, which uses the highly specific #global-header selector
-#global-header{
+#global-header {
   &.lr-header {
     background-color: white;
 
