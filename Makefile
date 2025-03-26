@@ -33,7 +33,7 @@ RAILS=./bin/rails
 all: image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
-	@./bin/bundle config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
+	@${BUNDLE} install config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
 
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
@@ -73,11 +73,11 @@ image: auth
 	@echo Done.
 
 lint: assets
-	@./bin/bundle exec rubocop
+	@${BUNDLE} install exec rubocop
 
 locations:
 	@echo "Generating new UKHPI location files ... "
-	@./bin/rails ukhpi:locations
+	@${RAILS} ukhpi:locations
 	@echo "Done."
 
 publish: image
@@ -87,6 +87,7 @@ publish: image
 	@echo Done.
 
 realclean: clean
+# Clear github token from bundle config
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 run: start
@@ -110,7 +111,7 @@ tag:
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/rails test
+	@${RAILS} test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
