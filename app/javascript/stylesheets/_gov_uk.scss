@@ -15,7 +15,9 @@
 // GOV.UK elements
 
 @import 'elements/reset';
-@import "elements/helpers";                       // Helper functions and classes
+
+// Helper functions and classes
+@import "elements/helpers";
 
 $govuk-brand-colour:	#1d70b8;
 $govuk-brand-hover-colour:	#003078;
@@ -23,7 +25,9 @@ $govuk-brand-hover-colour:	#003078;
 $grey-8: #f0f0f0;
 $dark-blue: $govuk-brand-colour;
 $dark-blue-hover: $govuk-brand-hover-colour;
-@import "elements/govuk-template-base";                       // HTML elements, set by the GOV.UK template
+
+// HTML elements, set by the GOV.UK template
+@import "elements/govuk-template-base";
 
 
 @import 'elements/layout';
