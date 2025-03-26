@@ -1,0 +1,38 @@
+// 3rd Party CSS
+
+// govuk-frontend
+@import 'govuk-template';
+@import '../stylesheets/gov_uk';
+
+// Font Awesome
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+// element UI
+@import 'element-ui/lib/theme-chalk/index';
+@import '../stylesheets/element-rails';
+
+// Leaflet
+@import 'leaflet/dist/leaflet';
+@import '../stylesheets/leaflet-rrose';
+
+// everything else can load independently of order, so sort A-Z
+@import '../stylesheets/a11y';
+@import '../stylesheets/actions';
+@import '../stylesheets/compare';
+@import '../stylesheets/cookie-banner';
+@import '../stylesheets/data-view';
+@import '../stylesheets/data-view-download';
+@import '../stylesheets/data-table';
+@import '../stylesheets/landing';
+@import '../stylesheets/lr-common';
+@import '../stylesheets/print';
+@import '../stylesheets/skip_to_main';
+@import '../stylesheets/simple-tables';
+@import '../stylesheets/ukhpi-graphs';
+@import '../stylesheets/ukhpi-header';
+@import '../stylesheets/ukhpi-location-select';
+@import '../stylesheets/ukhpi-maps';
+@import '../stylesheets/ukhpi-options';
+@import '../stylesheets/ukhpi-statistics';
+@import '../stylesheets/ukhpi-typography';
+@import '../stylesheets/utilities';
