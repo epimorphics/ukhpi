@@ -38,6 +38,6 @@
     @extend .button;
     @extend .button-start;
 
-    background-image: url(<%= asset_path 'icon-pointer.png' %>);
+    background-image: url('images/icon-pointer.png');
   }
 }
