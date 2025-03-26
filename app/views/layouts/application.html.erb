@@ -19,7 +19,7 @@
     <%= vite_client_tag %>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-    <%= vite_stylesheet_tag 'application', media: 'all' %>
+    <%= vite_stylesheet_tag 'application.scss', media: 'all' %>
     <%= vite_javascript_tag 'application' %>
     <% if @preferences %>
       <link href="//<%= request.host_with_port %><%= @preferences.as_path(:view) %>" rel="canonical" />
