@@ -45,8 +45,6 @@ gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
-  gem 'haml-lint'
-  gem 'htmlbeautifier'
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'
@@ -55,13 +53,15 @@ group :development, :test do
 end
 
 group :development do
+  gem 'haml-lint'
+  gem 'htmlbeautifier'
   # Devtools panel for Rails development
   # https://chromewebstore.google.com/detail/rails-panel/gjpfobpafnhjhbajcjgccbbdofdckggg?pli=1
   gem 'meta_request'
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
+  # Access an IRB console on exception pages or by using <%= console %> in views
+  gem 'web-console'
 end
 
 group :test do
