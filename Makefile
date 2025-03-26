@@ -54,8 +54,18 @@ check: lint test
 	@echo "All checks passed."
 
 clean:
-	@[ -d public/assets ] && ./bin/rails assets:clobber || :
-	@@ rm -rf bundle coverage log node_modules
+# Add a marker to the Gemfile
+	@sed -i -e 's/^/##~## /' Gemfile
+# Remove all assets
+	[ -d public/vite/assets ] && ${RAILS} vite:clobber || :
+# Clear cache files from tmp/
+	@${RAILS} tmp:cache:clear
+# Remove all bundled files
+	@${BUNDLE} clean --force
+# Remove all generated files
+	@rm -rf vendor bundle coverage log node_modules Gemfile.lock
+# Remove the marker from the Gemfile
+	@sed -i -e 's/^##~## //' Gemfile
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
