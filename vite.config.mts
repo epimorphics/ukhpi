@@ -24,7 +24,13 @@ export default defineConfig(({ command, mode }) => {
           delay: 300
         }
       }),
-      vue(),
+      vue({
+        template: {
+          transformAssetUrlsOptions: {
+            includeAbsolute: false
+          }
+        }
+      }),
       // Put the Sentry vite plugin after all other plugins
       sentryVitePlugin({
         org: env.SENTRY_ORG,
