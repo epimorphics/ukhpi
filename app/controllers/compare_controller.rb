@@ -3,7 +3,7 @@
 # Controller for the user action of copmaring statistics between two or more
 # locations
 class CompareController < ApplicationController
-  layout 'webpack_application'
+  layout 'application'
 
   def show
     if params.delete(:print)
@@ -27,8 +27,8 @@ class CompareController < ApplicationController
 
   def render_interactive(view_state)
     @view_state = view_state
-    if view_state.respond_to?(:[]) && view_state[:error]
-      render_request_error(@view_state[:user_selections], :internal_server_error) unless Rails.env.development? # rubocop:disable Layout.LineLength
+    if view_state.respond_to?(:[]) && view_state[:error] && Rails.env.production?
+      render_request_error(@view_state[:user_selections], :internal_server_error)
     else
       @view_state
     end
