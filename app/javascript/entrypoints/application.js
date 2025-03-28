@@ -1,5 +1,5 @@
-import * as Sentry from '@sentry/vue'
 import Vue from 'vue/dist/vue.esm'
+import * as Sentry from '@sentry/vue'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
 import localeElementCy from '../lang/element-ui-cy'
@@ -96,12 +96,14 @@ if (i18n.locale === 'cy') {
 }
 
 const mountVueApp = () => {
-  // This is the main entry point for the Vue app
-  new Vue({
-    i18n,
-    store,
-    router
-  }).$mount('#application')
+  if (['/browse', '/compare'].includes(window.location.pathname)) {
+    // This is the main entry point for the Vue app
+    new Vue({
+      i18n,
+      store,
+      router
+    }).$mount('#application')
+  }
 }
 
 if (document.readyState === 'loading') {
