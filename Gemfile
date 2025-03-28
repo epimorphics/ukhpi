@@ -26,6 +26,7 @@ gem 'sass-rails'
 gem 'js-routes'
 
 gem 'csv'
+gem 'dotenv'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'get_process_mem'

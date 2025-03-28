@@ -32,6 +32,7 @@
     "d3-shape": "^1.2.0",
     "d3-time": "^1.0.7",
     "d3-time-format": "^2.0.5",
+    "dotenv": "^16.4.7",
     "element-ui": "2.15.13",
     "focus-trap": "^6.0.1",
     "focus-trap-vue": "^0.0.6",
@@ -58,6 +59,7 @@
     "@babel/core": "^7.23.2",
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.23.2",
+    "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/node": "^22.13.13",
     "@vitejs/plugin-vue2": "^2.3.3",
     "babel-eslint": "^10.0.2",
@@ -78,5 +80,6 @@
     "vite-plugin-erb": "^1.1.2",
     "vite-plugin-rails": "^0.5.0",
     "vite-plugin-ruby": "^5.1.0"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

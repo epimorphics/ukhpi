@@ -98,6 +98,7 @@ GEM
     csv (3.3.3)
     date (3.4.1)
     docile (1.4.1)
+    dotenv (3.1.7)
     drb (2.2.1)
     dry-cli (1.2.0)
     ebnf (2.6.0)
@@ -472,6 +473,7 @@ DEPENDENCIES
   capybara
   csv
   data_services_api!
+  dotenv
   faraday
   faraday_middleware
   font-awesome-rails
