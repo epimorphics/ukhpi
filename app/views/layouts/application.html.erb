@@ -5,20 +5,20 @@
     <meta content="width=device-width, initial-scale=1" name="viewport" />
     <title><%= (yield(:title) + " - " unless yield(:title).blank?).to_s + I18n.t('common.header.app_title') %></title>
     <%= render partial: 'common/favicons' %>
+    <%= vite_client_tag %>
     <script>
       document.querySelector('html').classList.add('js');
       window.ukhpi ||= {};
-      window.ukhpi.environment
-      window.ukhpi.version
-      window.ukhpi.locale
+      window.ukhpi.environment = '<%= ENV.fetch('SENTRY_ENVIRONMENT', Rails.env) %>';
+      window.ukhpi.version = '<%= Version::VERSION %>';
+      window.ukhpi.locale = '<%= I18n.locale %>';
+      window.ukhpi.root_path = '<%= Rails.application.config.relative_url_root %>';
     </script>
     <% if Rails.env.production? %>
       <%= render partial: 'common/google-analytics' %>
       <%= javascript_include_tag 'cookie', defer: true %>
+      <%= csrf_meta_tags %>
     <% end %>
-    <%= vite_client_tag %>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
     <%= vite_stylesheet_tag 'application.scss', media: 'all' %>
     <%= vite_javascript_tag 'application' %>
     <% if @preferences %>
