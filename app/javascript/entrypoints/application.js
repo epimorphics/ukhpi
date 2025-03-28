@@ -13,6 +13,8 @@ import { timeFormatDefaultLocale } from 'd3-time-format'
 import router from '../router/index.js.erb'
 import store from '../store/index'
 
+import getAppVersion from '../lib/app_version'
+
 // Issue https://github.com/epimorphics/ukhpi/issues/169
 // Add fix for IE Edge
 import '../lib/ie-d3-fix'
@@ -21,7 +23,7 @@ import '../lib/ie-d3-fix'
 import VueI18n from 'vue-i18n'
 import i18n from '../lang'
 
-const currentAppRelease = window.ukhpi.version // || await getAppVersion()
+const currentAppRelease = window.ukhpi.version || await getAppVersion()
 
 console.debug('Vite ⚡️ Rails')
 
@@ -29,8 +31,8 @@ console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
 console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
 console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
 console.debug(`Node environment: ${import.meta.env.MODE}`)
-console.debug(`FSA Alerts Environment: ${import.meta.env.FSA_ALERTS_ENVIRONMENT}`)
-console.debug(`FSA Alerts Version: ${currentAppRelease}`)
+console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
+console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
 console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
 
 console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
@@ -66,10 +68,6 @@ if (currentEnvironment === 'production') {
 }
 
 // Set up the Vue app
-if (currentEnvironment === 'development') {
-  dotenv.config({ path: '.env.local' })
-}
-
 Vue.use(VueI18n)
 Vue.config.devtools = true
 
@@ -97,11 +95,19 @@ if (i18n.locale === 'cy') {
   timeFormatDefaultLocale(localeD3Cy)
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  /* eslint-disable no-new */
+const mountVueApp = () => {
+  // This is the main entry point for the Vue app
   new Vue({
-    router,
+    i18n,
     store,
-    i18n
+    router
   }).$mount('#application')
-})
+}
+
+if (document.readyState === 'loading') {
+  // Loading hasn't finished yet
+  document.addEventListener('DOMContentLoaded', mountVueApp)
+} else {
+  // DOMContentLoaded has already fired
+  mountVueApp()
+}
