@@ -1,3 +1,4 @@
+@import '@/stylesheets/utilities';
 // govuk-frontend
 @import '@/stylesheets/gov_uk';
 
@@ -12,24 +13,23 @@
 @import 'leaflet/dist/leaflet.css';
 @import '@/stylesheets/leaflet-rrose';
 
+// Other required styles - original order maintained to avoid conflicts
+@import '@/stylesheets/simple-tables';
 @import '@/stylesheets/lr-common';
-// everything else can load independently of order, so sort A-Z
-@import '@/stylesheets/a11y';
-@import '@/stylesheets/actions';
-@import '@/stylesheets/compare';
-@import '@/stylesheets/cookie-banner';
+@import '@/stylesheets/print';
+@import '@/stylesheets/ukhpi-header';
+@import '@/stylesheets/ukhpi-typography';
+@import '@/stylesheets/ukhpi-statistics';
+@import '@/stylesheets/ukhpi-graphs';
+@import '@/stylesheets/ukhpi-options';
 @import '@/stylesheets/data-view';
 @import '@/stylesheets/data-view-download';
 @import '@/stylesheets/data-table';
-@import '@/stylesheets/landing';
-@import '@/stylesheets/print';
-@import '@/stylesheets/skip_to_main';
-@import '@/stylesheets/simple-tables';
-@import '@/stylesheets/ukhpi-graphs';
-@import '@/stylesheets/ukhpi-header';
-@import '@/stylesheets/ukhpi-location-select';
 @import '@/stylesheets/ukhpi-maps';
-@import '@/stylesheets/ukhpi-options';
-@import '@/stylesheets/ukhpi-statistics';
-@import '@/stylesheets/ukhpi-typography';
-@import '@/stylesheets/utilities';
+@import '@/stylesheets/compare';
+@import '@/stylesheets/landing';
+@import '@/stylesheets/ukhpi-location-select';
+@import '@/stylesheets/actions';
+@import '@/stylesheets/cookie-banner';
+@import '@/stylesheets/skip_to_main';
+@import '@/stylesheets/a11y';
