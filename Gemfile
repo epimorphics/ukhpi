@@ -36,7 +36,8 @@ gem 'prometheus-client'
 gem 'puma'
 gem 'puma-metrics'
 gem 'rdf-turtle'
-gem 'rubocop-rails'
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
@@ -45,7 +46,6 @@ group :development, :test do
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'
-  gem 'rubocop', require: false
   gem 'tzinfo-data'
 end
 
