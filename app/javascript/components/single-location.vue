@@ -41,14 +41,14 @@ export default {
       new Vue(DataView).$mount(node);
     }
 
-
-    // add options selection component
+    // // add options selection component
     // const optionsNode = document.querySelector('.c-options-select');
     // new Vue(OptionsSelection).$mount(optionsNode);
-    //
+
     // // add comparison selection component
     // const compareNode = document.querySelector('.c-compare-select');
     // new Vue(CompareSelection).$mount(compareNode);
+
     Vue.nextTick(bindExternalEvents);
   },
 };
