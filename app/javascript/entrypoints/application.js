@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/vue'
-import 'dotenv/config'
+import dotenv from 'dotenv'
 import Vue from 'vue/dist/vue.esm'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
@@ -64,6 +64,11 @@ if (currentEnvironment === 'production') {
   Sentry.configureScope(scope => {
     scope.setTag('app', 'ukhpi-js')
   })
+}
+
+/* Load environment variables from .env.local and .env */
+if (currentEnvironment === 'development') {
+  dotenv.config({ path: '.env.local' })
 }
 
 Vue.use(VueI18n)
