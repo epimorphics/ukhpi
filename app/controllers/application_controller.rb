@@ -122,6 +122,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     self.response_body = nil
   end
 
+  def version
+    render json: { version: Version::VERSION }
+  end
+
   private
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Layout/LineLength, Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity
