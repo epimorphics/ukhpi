@@ -1,5 +1,4 @@
 import * as Sentry from '@sentry/vue'
-import dotenv from 'dotenv'
 import Vue from 'vue/dist/vue.esm'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
@@ -66,7 +65,7 @@ if (currentEnvironment === 'production') {
   })
 }
 
-/* Load environment variables from .env.local and .env */
+// Set up the Vue app
 if (currentEnvironment === 'development') {
   dotenv.config({ path: '.env.local' })
 }
