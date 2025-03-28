@@ -32,7 +32,7 @@
         .header-proposition
           .content
             %nav#proposition-menu
-              %a#proposition-name{ href: '/app/ukhpi' }
+              %a#proposition-name{ href: "#{Rails.application.config.relative_url_root}" }
                 %strong
                   = I18n.t('common.header.app_title')
 
