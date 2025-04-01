@@ -54,7 +54,8 @@ function fetchQueryExplanation (userSelections) {
       }
     }
   ).then((response) => {
-    setSessionStore(QONSOLE_QUERY, response.data.results.sparql)
+    const { sparql } = response.data.results
+    setSessionStore(QONSOLE_QUERY, sparql)
   }).catch((error) => {
     onError(error)
   })
@@ -72,6 +73,7 @@ export default function getUkhpiData (userSelections, options) {
 
   if (options.explain) {
     promise.then(() => {
+      // Only fetch the explanation if the main query was successful
       fetchQueryExplanation(userSelections, options)
     })
   }
