@@ -17,19 +17,25 @@
 }
 
 .o-data-view__js-options-statistics {
-  display: flex;
-  justify-content: space-between;
   width: 100%;
-  flex-wrap: wrap;
+  display: block;
+  @media(min-width: 480px){
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
   .checkbox-container {
-    margin-right: 5px;
+    display: block;
+    margin-inline-start: 5px;
     cursor: pointer;
     input[type="checkbox"] {
       cursor: inherit;
+      width: 1rem;
     }
     img {
       max-height: 15px;
-      margin-bottom: -1px;
+      margin-block-end: -1px;
+      margin-inline-start: 0.5rem;
     }
   }
 }
