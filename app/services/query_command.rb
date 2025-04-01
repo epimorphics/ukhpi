@@ -28,7 +28,7 @@ class QueryCommand
 
   # @return True if this is a query explanation command
   def explain_query_command?
-    false
+    true
   end
 
   private

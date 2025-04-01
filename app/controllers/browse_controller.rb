@@ -28,7 +28,12 @@ class BrowseController < ApplicationController
 
   # @return The appropriate query command class
   def query_command
-    params[:explain] ? ExplainQueryCommand : QueryCommand
+    # If the user has requested an explain, use the ExplainQueryCommand
+    if params[:explain] && params[:explain].to_s.downcase == 'true'
+      ExplainQueryCommand
+    else
+      QueryCommand
+    end
   end
 
   # Return true if the user has requested the explain-results action, but not with Mime
