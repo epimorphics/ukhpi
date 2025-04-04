@@ -23,7 +23,7 @@
 
 <script>
 import { SELECT_STATISTIC } from '../store/mutation-types';
-import serverRoutes from '../store/server-routes.js.erb';
+import serverRoutes from '../images/markers';
 
 const MARKERS = [
   'Circle',
