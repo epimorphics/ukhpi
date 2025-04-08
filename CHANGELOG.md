@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.0.3 - 2025-04
+
+- (Jon) Updated Data Services Api gem version to include update for ticket
+  [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+
 ## 2.0.2 - 2025-03
 
 - (Jon) Introduced local config files and updated .gitignore appropriately
