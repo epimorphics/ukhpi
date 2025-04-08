@@ -7,7 +7,8 @@ gem 'rails', '~> 8.0'
 
 gem 'vite_rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
+# gem 'uglifier'
+gem 'terser' # Updating to terser for ES6+ support
 
 gem 'haml-rails'
 # gem 'webpacker', '~> 5.4'
