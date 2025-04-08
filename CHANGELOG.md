@@ -2,6 +2,11 @@
 
 ## Unreleased
 
+## 2.1.1 - 2025-04
+
+- (Jon) Updated Data Services Api gem version to include update for ticket
+  [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+
 ## 2.1.0 - 2025-04
 
 - (Jon) Updated layout template HTML lang attributes for I18n support
