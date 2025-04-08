@@ -26,7 +26,7 @@
       &:first-child {
         text-align: left;
       }
-      &:not(:first-child):not(:last-child){
+      &:not(:first-child):not(:last-child):not(.u-right){
         text-align: center;
       }
       &:last-child {
