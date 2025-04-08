@@ -16,7 +16,7 @@
     </script>
     <% if Rails.env.production? %>
       <%= render partial: 'common/google-analytics' %>
-      <%= javascript_include_tag 'cookie', defer: true %>
+      <%= vite_javascript_tag 'cookie', defer: true %>
       <%= csrf_meta_tags %>
     <% end %>
     <%= vite_stylesheet_tag 'application.scss', media: 'all' %>
