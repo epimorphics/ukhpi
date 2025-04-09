@@ -23,7 +23,7 @@ import '../lib/ie-d3-fix'
 import VueI18n from 'vue-i18n'
 import i18n from '../lang'
 
-const currentAppRelease = window.ukhpi.version || await getAppVersion()
+const currentAppRelease = window.ukhpi.version || getAppVersion()
 
 console.debug('Vite ⚡️ Rails')
 
