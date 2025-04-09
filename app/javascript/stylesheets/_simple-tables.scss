@@ -1,5 +1,5 @@
-/* Very simple table layout for non-JS views. Table must function correctly if these
- * styles are switched off. */
+
+@use 'lr-common';
 
 .u-simple-table {
   width: 100%;
@@ -10,7 +10,7 @@
       td:first-child {
         text-align: center;
         padding: 0.5em;
-        color: $grey-2;
+        color: lr-common.$lr-grey-2;
       }
     }
 
@@ -46,13 +46,13 @@
     }
 
     .u-row-odd {
-      background-color: $grey-3;
+      background-color: lr-common.$lr-grey-3;
     }
   }
 }
 
 .u-documentation-table {
-  @extend .u-simple-table;
+  @extend .u-simple-table !optional;
 
   tr.u-row-center {
     td {
@@ -80,6 +80,6 @@
 
   td, th {
     padding: 0.25em 0.25em 0.25em 0;
-    border-bottom: 1px solid $grey-3;
+    border-bottom: 1px solid lr-common.$lr-grey-3;
   }
 }

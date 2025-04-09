@@ -1,5 +1,6 @@
 
 // This file is used to import the GOV.UK Frontend Toolkit and Elements SASS files.
+// @import '@/stylesheets/govuk_template/index';
 
 // from gov.uk front-end-toolkit
 $govuk-suppressed-warning: "legacy-organisation-colours";
@@ -19,15 +20,14 @@ $govuk-suppressed-warning: "legacy-organisation-colours";
 @import 'govuk_frontend_toolkit/stylesheets/design-patterns/breadcrumbs';
 
 // GOV.UK elements
-
 @import 'govuk-elements-sass/public/sass/elements/reset';
-
 // Helper functions and classes
 @import "govuk-elements-sass/public/sass/elements/helpers";
 
 $govuk-brand-colour:	#1d70b8;
 $govuk-brand-hover-colour:	#003078;
-
+$focus-color: #ffdd00;
+// Legacy internal colours
 $grey-8: #f0f0f0;
 $dark-blue: $govuk-brand-colour;
 $dark-blue-hover: $govuk-brand-hover-colour;

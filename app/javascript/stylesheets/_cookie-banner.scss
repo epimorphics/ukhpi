@@ -1,4 +1,6 @@
 
+@use 'lr-common';
+
 .cookie-banner {
   font-size: 1.2em;
   margin: 0 auto;
@@ -20,10 +22,10 @@
   }
 
   &__accept {
-    background-color: $lr-green-nav;
+    background-color: lr-common.$lr-green-nav;
   }
 
   &__reject {
-    background-color: $lr-logo-grey;
+    background-color: lr-common.$lr-logo-grey;
   }
 }

@@ -1,3 +1,6 @@
+
+@use 'lr-common';
+
 .c-options-selection {
   &__dates, &__location {
     display: inline-block;
@@ -7,7 +10,7 @@
   }
 
   a, a:visited {
-    color: $black;
+    color: lr-common.$lr-black;
     text-decoration: none;
 
     &:hover {
@@ -25,8 +28,8 @@
 
 .c-options-selection__button {
   padding: 5px;
-  color: $black;
-  background-color: $grey-4;
+  color: lr-common.$lr-black;
+  background-color: lr-common.$lr-grey-4;
   font-size: 18px;
   font-weight: bold;
 }

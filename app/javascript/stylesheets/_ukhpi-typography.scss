@@ -1,3 +1,6 @@
+
+@use 'lr-common';
+
 .o-heading {
   &--1 {
     @extend .heading-large !optional;
@@ -15,7 +18,7 @@
 .u-muted {
   font-size: 90%;
   font-weight: normal;
-  color: $grey-1;
+  color: lr-common.$lr-grey-1;
 }
 
 .u-warning {

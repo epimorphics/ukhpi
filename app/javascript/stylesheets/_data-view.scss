@@ -1,9 +1,10 @@
-/* Styles for a data-view component */
+
+@use 'lr-common';
 
 $options-panel-grey: #eef1f6;
 
 .o-data-view {
-  background-color: $grey-3;
+  background-color: lr-common.$lr-grey-3;
   padding: 5px;
   margin-bottom: 15px;
 
@@ -39,7 +40,7 @@ $options-panel-grey: #eef1f6;
   a.o-data-view__location,
   a.o-data-view__location:visited,
   a.o-data-view__location:link {
-    color: $black;
+    color: lr-common.$lr-black;
     text-decoration: none;
   }
 
@@ -48,7 +49,7 @@ $options-panel-grey: #eef1f6;
   }
 
   table {
-    @extend .u-simple-table;
+    @extend .u-simple-table !optional;
   }
 }
 
@@ -71,7 +72,7 @@ $options-panel-grey: #eef1f6;
   line-height: 25px;
 
   a, a:visited {
-    color: $black;
+    color: lr-common.$lr-black;
     text-decoration: none;
 
     &:hover {

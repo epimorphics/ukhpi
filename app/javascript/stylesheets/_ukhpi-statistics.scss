@@ -1,10 +1,11 @@
-/* Styles for presenting statistics */
+
 @use "sass:map";
+@use 'lr-common';
 
 .o-statistic-option {
   height: 15px;
   width: 15px;
-  border: 1px solid $black;
+  border: 1px solid lr-common.$lr-black;
   margin-bottom: -2px;
 
   display: inline-block;
@@ -12,7 +13,7 @@
 
 @for $i from 0 through 5 {
   .v-graph-#{$i} {
-    background-color: map.get($graph-colours, graph-#{$i})
+    background-color: map.get(lr-common.$graph-colours, graph-#{$i})
   }
 }
 

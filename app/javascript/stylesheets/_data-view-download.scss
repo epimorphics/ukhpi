@@ -1,3 +1,7 @@
+
+@use 'element-rails' as element;
+
+
 .o-data-view-download {
   background-color: white;
   padding: 5px;
@@ -8,7 +12,7 @@
   }
 
   &__button {
-    @extend .button;
+    @extend .button !optional;
     font-size: 1.5rem;
     text-decoration: none;
   }
@@ -16,29 +20,29 @@
   &__button{
     &:visited, &:link {
       color: white;
-      background-color: $dark-blue;
+      background-color: element.$dark-blue;
       &:hover, &:focus, &:visited {
         color: white;
-        background-color: $dark-blue-hover;
+        background-color: element.$dark-blue-hover;
       }
     }
   }
 }
 
 .c-compare__download-link {
-  @extend .button;
+  @extend .button !optional;
   color: white;
-  background-color: $dark-blue;
+  background-color: element.$dark-blue;
   font-size: 1.5rem;
   &:hover, &:focus, &:visited {
     color: white;
-    background-color: $dark-blue-hover;
+    background-color: element.$dark-blue-hover;
   }
 }
 
 .c-compare__print-link {
-  color: $dark-blue;
+  color: element.$dark-blue;
   &:hover, &:focus, &:visited {
-    color: $dark-blue-hover;
+    color: element.$dark-blue-hover;
   }
 }

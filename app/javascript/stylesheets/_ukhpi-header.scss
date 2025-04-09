@@ -1,7 +1,8 @@
-/* Styles for UKHPI header component */
+
+@use 'lr-common';
 
 .c-hmlr-header-colours {
-  color: $black;
+  color: lr-common.$lr-black;
   background-color: white;
 }
 
@@ -38,7 +39,7 @@
 }
 
 .u-active {
-  border-bottom: 2px solid $black;
+  border-bottom: 2px solid lr-common.$lr-black;
 }
 
 .o-secondary-banner {

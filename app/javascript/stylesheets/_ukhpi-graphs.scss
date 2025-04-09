@@ -1,7 +1,7 @@
 
-// D3/SVG colours ...
+@use 'lr-common';
 
-@each $cssClass, $colour in $graph-colours {
+@each $cssClass, $colour in lr-common.$graph-colours {
   .line.v-#{$cssClass} {
     stroke: $colour;
   }
@@ -37,7 +37,7 @@
 
   .o-graph-title {
     font-weight: normal;
-    fill: $semi-black;
+    fill: lr-common.$semi-black;
     stroke: none;
   }
 
@@ -79,7 +79,7 @@
 
 .o-graph-note {
   font-size: 13px;
-  color: $semi-black;
+  color: lr-common.$semi-black;
 }
 
 .o-graph-key {

@@ -1,14 +1,15 @@
-/* Action button styles */
+
+@use 'lr-common';
 
 .c-action {
   padding: 5px 10px;
-  background-color: $grey-2;
-  border: 1px solid $grey-1;
+  background-color: lr-common.$lr-grey-2;
+  border: 1px solid lr-common.$lr-grey-1;
   font-size: 13px;
 }
 
 .c-action-prominent {
-  background-color: $button-colour;
+  background-color: lr-common.$lr-button-colour;
   color: white;
 }
 

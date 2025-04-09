@@ -1,35 +1,31 @@
 // govuk-frontend
-@import 'gov_uk';
+@use 'gov_uk' as *;
 
 // Font Awesome
-@import '@fortawesome/fontawesome-free/css/all.css';
-
-// element UI
-@import 'element-ui/lib/theme-chalk/index';
-@import 'element-rails';
+@use '@fortawesome/fontawesome-free/css/all.css' as *;
 
 // Leaflet
-@import 'leaflet/dist/leaflet';
 @import 'leaflet-rrose';
 
-// everything else can load independently of order, so sort A-Z
-@import 'a11y';
-@import 'actions';
-@import 'compare';
-@import 'cookie-banner';
+// Load the HMLR Frontend styles
+@import 'lr-common';
+// load everything else in original order
+@import 'utilities';
+@import 'simple-tables';
+@import 'print';
+@import 'ukhpi-header';
+@import 'ukhpi-typography';
+@import 'ukhpi-statistics';
+@import 'ukhpi-graphs';
+@import 'ukhpi-options';
 @import 'data-view';
 @import 'data-view-download';
 @import 'data-table';
-@import 'landing';
-@import 'lr-common';
-@import 'print';
-@import 'skip_to_main';
-@import 'simple-tables';
-@import 'ukhpi-graphs';
-@import 'ukhpi-header';
-@import 'ukhpi-location-select';
 @import 'ukhpi-maps';
-@import 'ukhpi-options';
-@import 'ukhpi-statistics';
-@import 'ukhpi-typography';
-@import 'utilities';
+@import 'compare';
+@import 'landing';
+@import 'ukhpi-location-select';
+@import 'actions';
+@import 'skip_to_main';
+@import 'cookie-banner';
+@import 'a11y';
