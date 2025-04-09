@@ -3,7 +3,6 @@ import Erb from 'vite-plugin-erb'
 import ViteRails from 'vite-plugin-rails'
 import ViteYaml from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue2'
-import legacy from '@vitejs/plugin-legacy'
 import { fileURLToPath, URL } from 'node:url'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 
@@ -18,9 +17,6 @@ export default defineConfig(({ command, mode }) => {
     envPrefix: ['VITE_', 'RAILS_', 'HMLR_', 'LOG_', 'SENTRY_'], // default: 'VITE_'
     plugins: [
       Erb(),
-      legacy({
-        targets: ['defaults', 'not IE 11'],
-      }),
       ViteRails(),
       ViteYaml(),
       vue(),

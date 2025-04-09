@@ -33,7 +33,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:^7.18.5, @babel/core@npm:^7.23.2, @babel/core@npm:^7.26.9":
+"@babel/core@npm:^7.18.5, @babel/core@npm:^7.23.2":
   version: 7.26.10
   resolution: "@babel/core@npm:7.26.10"
   dependencies:
@@ -988,7 +988,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/preset-env@npm:^7.23.2, @babel/preset-env@npm:^7.26.9":
+"@babel/preset-env@npm:^7.23.2":
   version: 7.26.9
   resolution: "@babel/preset-env@npm:7.26.9"
   dependencies:
@@ -1848,7 +1848,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15, @jridgewell/sourcemap-codec@npm:^1.5.0":
+"@jridgewell/sourcemap-codec@npm:^1.4.10, @jridgewell/sourcemap-codec@npm:^1.4.14, @jridgewell/sourcemap-codec@npm:^1.4.15":
   version: 1.5.0
   resolution: "@jridgewell/sourcemap-codec@npm:1.5.0"
   checksum: 10c0/2eb864f276eb1096c3c11da3e9bb518f6d9fc0023c78344cdc037abadc725172c70314bdb360f2d4b7bffec7f5d657ce006816bc5d4ecb35e61b66132db00c18
@@ -2349,25 +2349,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-legacy@npm:^6.0.2":
-  version: 6.0.2
-  resolution: "@vitejs/plugin-legacy@npm:6.0.2"
-  dependencies:
-    "@babel/core": "npm:^7.26.9"
-    "@babel/preset-env": "npm:^7.26.9"
-    browserslist: "npm:^4.24.4"
-    browserslist-to-esbuild: "npm:^2.1.1"
-    core-js: "npm:^3.40.0"
-    magic-string: "npm:^0.30.17"
-    regenerator-runtime: "npm:^0.14.1"
-    systemjs: "npm:^6.15.1"
-  peerDependencies:
-    terser: ^5.16.0
-    vite: ^6.0.0
-  checksum: 10c0/9b14f4e12f1c433a7104404b8db81d38fa2fb1c6e27c406f6d7e4fd89ae579de1d890df535c63138c54d0d15b25cfc8b21d1cfe1a06fb23a6bd5207ac47ff430
-  languageName: node
-  linkType: hard
-
 "@vitejs/plugin-vue2@npm:^2.3.3":
   version: 2.3.3
   resolution: "@vitejs/plugin-vue2@npm:2.3.3"
@@ -2800,19 +2781,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"browserslist-to-esbuild@npm:^2.1.1":
-  version: 2.1.1
-  resolution: "browserslist-to-esbuild@npm:2.1.1"
-  dependencies:
-    meow: "npm:^13.0.0"
-  peerDependencies:
-    browserslist: "*"
-  bin:
-    browserslist-to-esbuild: cli/index.js
-  checksum: 10c0/4d1968efd72850949d5dfa355f4663c695a8fd7b259b19cc81ecd0ed33dd37bbd327475c644de3f2beb53e737c6e511c6e84ed3e97a2ff49f117505a7707c72d
-  languageName: node
-  linkType: hard
-
 "browserslist@npm:^4.24.0, browserslist@npm:^4.24.4":
   version: 4.24.4
   resolution: "browserslist@npm:4.24.4"
@@ -3062,7 +3030,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.2.1, core-js@npm:^3.40.0":
+"core-js@npm:^3.2.1":
   version: 3.41.0
   resolution: "core-js@npm:3.41.0"
   checksum: 10c0/a29ed0b7fe81acf49d04ce5c17a1947166b1c15197327a5d12f95bbe84b46d60c3c13de701d808f41da06fa316285f3f55ce5903abc8d5642afc1eac4457afc8
@@ -5299,15 +5267,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"magic-string@npm:^0.30.17":
-  version: 0.30.17
-  resolution: "magic-string@npm:0.30.17"
-  dependencies:
-    "@jridgewell/sourcemap-codec": "npm:^1.5.0"
-  checksum: 10c0/16826e415d04b88378f200fe022b53e638e3838b9e496edda6c0e086d7753a44a6ed187adc72d19f3623810589bf139af1a315541cd6a26ae0771a0193eaf7b8
-  languageName: node
-  linkType: hard
-
 "make-fetch-happen@npm:^14.0.3":
   version: 14.0.3
   resolution: "make-fetch-happen@npm:14.0.3"
@@ -5331,13 +5290,6 @@ __metadata:
   version: 1.1.0
   resolution: "math-intrinsics@npm:1.1.0"
   checksum: 10c0/7579ff94e899e2f76ab64491d76cf606274c874d8f2af4a442c016bd85688927fcfca157ba6bf74b08e9439dc010b248ce05b96cc7c126a354c3bae7fcb48b7f
-  languageName: node
-  linkType: hard
-
-"meow@npm:^13.0.0":
-  version: 13.2.0
-  resolution: "meow@npm:13.2.0"
-  checksum: 10c0/d5b339ae314715bcd0b619dd2f8a266891928e21526b4800d49b4fba1cc3fff7e2c1ff5edd3344149fac841bc2306157f858e8c4d5eaee4d52ce52ad925664ce
   languageName: node
   linkType: hard
 
@@ -6571,7 +6523,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.14.0, regenerator-runtime@npm:^0.14.1":
+"regenerator-runtime@npm:^0.14.0":
   version: 0.14.1
   resolution: "regenerator-runtime@npm:0.14.1"
   checksum: 10c0/1b16eb2c4bceb1665c89de70dcb64126a22bc8eb958feef3cd68fe11ac6d2a4899b5cd1b80b0774c7c03591dc57d16631a7f69d2daa2ec98100e2f29f7ec4cc4
@@ -7559,13 +7511,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"systemjs@npm:^6.15.1":
-  version: 6.15.1
-  resolution: "systemjs@npm:6.15.1"
-  checksum: 10c0/106e5751a49dbe4acb17fa1474a43b27fd26efbee1b322c00c04c08f3e95de756adfba828d743af89bef7fa10888da8a5c5ceb55dae5c42e4909b151168ad192
-  languageName: node
-  linkType: hard
-
 "tabbable@npm:^5.3.3":
   version: 5.3.3
   resolution: "tabbable@npm:5.3.3"
@@ -7791,7 +7736,6 @@ __metadata:
     "@sentry/vite-plugin": "npm:^3.2.2"
     "@sentry/vue": "npm:^9.9.0"
     "@types/node": "npm:^22.13.13"
-    "@vitejs/plugin-legacy": "npm:^6.0.2"
     "@vitejs/plugin-vue2": "npm:^2.3.3"
     axios: "npm:^0.28.0"
     babel-eslint: "npm:^10.0.2"
