@@ -53,6 +53,9 @@ Sentry.init({
   environment: currentEnvironment,
   release: `${currentAppRelease}`,
   ignoreErrors: ['Non-Error promise rejection captured'],
+  initialScope: {
+    tags: { app: 'ukhpi-js' }
+  },
   integrations: [
     Sentry.replayIntegration()
   ],
@@ -60,12 +63,6 @@ Sentry.init({
   replaysSessionSampleRate: sessionSampleRate,
   replaysOnErrorSampleRate: errorSampleRate
 })
-
-if (currentEnvironment === 'production') {
-  Sentry.configureScope(scope => {
-    scope.setTag('app', 'ukhpi-js')
-  })
-}
 
 // Set up the Vue app
 Vue.use(VueI18n)
