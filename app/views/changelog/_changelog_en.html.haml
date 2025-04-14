@@ -4,6 +4,64 @@
   %h1.heading-large
     = "#{I18n.t('common.header.app_title')}: #{yield(:title)}"
 
+  %h2.heading-medium April 2025 &ndash; Changes to local authority geography in England
+
+  %p
+    The Office for National Statistics (ONS) will make the following
+    changes to local authority geography in England.
+
+  %table.u-documentation-table
+    %thead
+      %tr.u-row-center
+        %th
+          Local authority
+        %th
+          Former geography code
+        %th
+          New geography code
+        %th
+          Data and publication date
+    %tbody
+      %tr.u-row-center
+        %td
+          Barnsley
+        %td
+          E08000016
+        %td
+          E08000038
+        %td
+          April 2025 release
+          %br
+          (release date 16 April 2025)
+      %tr.u-row-center
+        %td
+          Sheffield
+        %td
+          E08000019
+        %td
+          E08000039
+        %td
+          April 2025 release
+          %br
+          (release date 16 April 2025)
+
+  %p
+    The Northern Ireland Country's ONS GSS code has also been updated. While users
+    of the app will see the new code reflected in the location search and the map
+    selector, users who utilise the SPARQL query function should be aware that
+    the data URI for re-assigned area has not changed.
+
+  %ul.list.list-bullet
+    %li
+      Northern Ireland Country
+      %br
+      ONS GSS code: N92000002 (formerly N92000001)
+      %br
+      The URI remains
+      %code http://landregistry.data.gov.uk/id/region/northern-ireland
+
+  %p Date of change: 16th April 2025
+
   %h2.heading-medium April 2023 &ndash; Changes to local authority geography in England
 
   %p
