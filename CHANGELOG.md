@@ -4,7 +4,8 @@
 
 ## 2.1.1 - 2025-04
 
-- (Jon) Updated Data Services Api gem version to include update for ticket
+- (Jon) Updated Data Services Api gem version to include update for ticket in
+  Dev and PreProd
   [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## 2.1.0 - 2025-04
@@ -24,6 +25,7 @@
 ## 2.0.3 - 2025-04
 
 - (Jon) Updated Data Services Api gem version to include update for ticket
+  in Prod instance
   [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## 2.0.2 - 2025-03
