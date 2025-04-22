@@ -59,6 +59,7 @@ image: auth
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
+		--build-arg NODE_VERSION=${NODE_VERSION} \
 		--build-arg BUNDLER_VERSION=${BUNDLER_VERSION} \
 		--build-arg VERSION=${VERSION} \
 		--build-arg git_branch=${BRANCH} \
@@ -119,6 +120,7 @@ vars:
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
+	@echo "NODE_VERSION = ${NODE_VERSION}"
 	@echo "SHORTNAME = ${SHORTNAME}"
 	@echo "STAGE = ${STAGE}"
 	@echo "COMMIT = ${COMMIT}"
