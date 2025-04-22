@@ -2,8 +2,18 @@ ARG ALPINE_VERSION=3.20
 ARG RUBY_VERSION=3.3.5
 ARG NODE_VERSION=20
 
+# Load node from official build
+FROM node:$NODE_VERSION-alpine AS node
+
 # Defines base image which builder and final stage use
-FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
+FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
+
+# Copy node binaries from the official image
+COPY --from=node /usr/lib /usr/lib
+COPY --from=node /usr/local/lib /usr/local/lib
+COPY --from=node /usr/local/include /usr/local/include
+COPY --from=node /usr/local/bin /usr/local/bin
+
 ARG BUNDLER_VERSION
 
 RUN apk add --update \
