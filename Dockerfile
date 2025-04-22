@@ -1,5 +1,6 @@
-ARG ALPINE_VERSION
-ARG RUBY_VERSION
+ARG ALPINE_VERSION=3.20
+ARG RUBY_VERSION=3.3.5
+ARG NODE_VERSION=20
 
 # Defines base image which builder and final stage use
 FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} as base
