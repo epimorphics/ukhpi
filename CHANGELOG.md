@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- (Bogdan) Fixed an issue where the `.nvmrc` node version was not respected in Docker
+
 ## 2.1.1 - 2025-04
 
 - (Jon) Updated Data Services Api gem version to include update for ticket
