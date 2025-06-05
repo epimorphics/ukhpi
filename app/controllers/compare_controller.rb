@@ -16,7 +16,7 @@ class CompareController < ApplicationController
   private
 
   def setup_view_state
-    LoggingHelper.log_request({ params: params, path: request.path })
+    Log.info('Requesting Compare Controller', { params: params, path: request.path })
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
@@ -52,8 +52,7 @@ class CompareController < ApplicationController
       log_fields = { params: base_selection.params, path: request.path }
       msg = 'Received request'
       msg += " for #{location.label}"
-      log_fields[:message] = msg
-      LoggingHelper.log_request(log_fields)
+      Log.info(msg, log_fields)
       query_results[location.label] = query_with(base_selection, location)
     end
 
