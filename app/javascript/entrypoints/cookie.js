@@ -15,6 +15,8 @@ window.onload = function () {
       loadAnalytics()
     }
   } else {
+    document.querySelector('.cookie-banner__accept').addEventListener('click', acceptCookie)
+    document.querySelector('.cookie-banner__reject').addEventListener('click', rejectCookie)
     showBanner(true)
   }
 }
@@ -102,7 +104,7 @@ function acceptAnalytics (bool) {
  */
 function loadAnalytics () {
   // do something
-  window.dataLayer = window.dataLayer || []
+  const dataLayer = window.dataLayer || []
   function gtag () {
     dataLayer.push(arguments)
   }
