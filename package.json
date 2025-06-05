@@ -83,5 +83,5 @@
     "vite-plugin-rails": "^0.5.0",
     "vite-plugin-ruby": "^5.1.0"
   },
-  "packageManager": "yarn@4.8.1"
+  "packageManager": "yarn@4.9.2"
 }
