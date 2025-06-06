@@ -251,6 +251,23 @@ input[type=radio] {
   }
 }
 
+.o-container,#content {
+    max-width: 960px;
+    margin: 0 15px
+}
+
+@media (min-width: 641px) {
+    .o-container,#content {
+        margin:0 30px
+    }
+}
+
+@media (min-width: 1020px) {
+    .o-container,#content {
+        margin:0 auto
+    }
+}
+
 #footer {
   margin-top: 3rem;
 
