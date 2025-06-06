@@ -29,6 +29,12 @@
   }
 }
 
+.c-compare__download-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
 .c-compare__download-link {
   @extend .button !optional;
   color: white;

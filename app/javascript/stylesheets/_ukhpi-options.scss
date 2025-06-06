@@ -27,9 +27,11 @@
 }
 
 .c-options-selection__button {
-  padding: 5px;
-  color: lr-common.$lr-black;
-  background-color: lr-common.$lr-grey-4;
-  font-size: 18px;
-  font-weight: bold;
+  &.el-button{
+    padding: 5px;
+    color: lr-common.$lr-black;
+    background-color: lr-common.$lr-grey-4;
+    font-size: 18px;
+    font-weight: bold;
+  }
 }
