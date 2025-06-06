@@ -65,11 +65,11 @@
               {{ $t('js.action.download_data_as') }}
               &nbsp;
             </div>
-            <div>
-              <a :href='downloadUrlCsv' class='c-compare__download-link c-compare__download-csv'>
+            <div class='c-compare__download-links'>
+              <a :href='downloadUrlCsv' class='button c-compare__download-link c-compare__download-csv'>
                 {{ $t('js.compare.csv_format') }} <i class='fa fa-external-link'></i>
               </a>
-              <a :href='downloadUrlJson' class='c-compare__download-link c-compare__download-json'>
+              <a :href='downloadUrlJson' class='button c-compare__download-link c-compare__download-json'>
                 {{ $t('js.compare.json_format') }} <i class='fa fa-external-link'></i>
               </a>
             </div>
