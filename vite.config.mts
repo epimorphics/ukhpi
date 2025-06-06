@@ -54,7 +54,7 @@ export default defineConfig(({ command, mode }) => {
         target: 'esnext'
       },
       optimizeDeps: {
-        include: ['govuk_frontend_toolkit', 'govuk-elements-sass']
+        include: ['govuk_frontend_toolkit', 'govuk-elements-sass', 'element-ui', 'leaflet']
       }
     },
     resolve: {
