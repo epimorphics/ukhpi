@@ -1,6 +1,8 @@
 /* govuk-frontend */
 @use '@/stylesheets/gov_uk' as *;
 
+@use '@assets/govuk_template-0.26.0/assets/stylesheets/govuk-template.css' as *;
+
 /* Font Awesomec*/
 @use '@fortawesome/fontawesome-free/css/all.css' as *;
 
