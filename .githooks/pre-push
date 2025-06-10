@@ -19,8 +19,8 @@ if ! git update-index -q --ignore-submodules --refresh; then
 	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
   DOCKER_BUILD_EXIT_CODE=1
 else
-  printf '\n\033[0;33mBuilding %s Docker image with local profile... \033[0m\n' "$CLIENT_PROFILE"
-  ECR=local make image
+  printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$CLIENT_PROFILE"
+  AWS_PROFILE=$CLIENT_PROFILE make image
   DOCKER_BUILD_EXIT_CODE=$?
 fi
 
@@ -29,7 +29,7 @@ if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
   exit 1
 else
   printf '\n\033[0;32mDocker image build succeeded. 🎉\033[0m\n'
-  CONTAINER_ID=$(ECR=local API_SERVICE_URL=$API_SERVICE_URL make run | tail -1)
+  CONTAINER_ID=$(AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL make run | tail -1)
   printf '\n\033[0;33mRunning Docker image %s ... \033[0m\n' "$CONTAINER_ID"
   sleep 10
   docker inspect --format="{{.State.Running}}" "$CONTAINER_ID" | grep 'true' -q
