@@ -1,4 +1,6 @@
 #!/bin/bash
+: "${CLIENT_PROFILE:=hmlr}"
+: "${API_SERVICE_URL:=http://data-api:8080}"
 
 list="issue spike task"
 
@@ -8,42 +10,38 @@ BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
 
 printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
 
-if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
- 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
+if echo "$BRANCH_NAME" | grep -q '^(hotfix)|(rebase)|(production)*$'; then
+ 	printf '\n\033[0;32mNo checks necessary on "%s", skipping hooks... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
-
-# Check for existence of "new or modified" test files
-TEST_FILES="$(git diff --diff-filter=ACDM --name-only --cached | grep -E '(./test/*)$')"
-# Get all test files to run tests
-RUBY_FILES="$(git ls-files | grep -i -E '(_test\.rb)$')"
-# Get a rough idea of how many files have changes or are untracked
-PRE_STATUS="$(git status | wc -l)"
-
-WORK_DONE=0
-
-if [ -z "$TEST_FILES" ]; then
-  printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
-  printf '\n\033[0;31mContinuing without new tests... 😖\033[0m\n'
-fi
-
-
-if [ -n "$TEST_FILES" ]; then
-  printf '\nRunning Rails Tests...'
-  make test
-  RUBY_TEST_EXIT_CODE=$?
-  WORK_DONE=1
+# Check for existence of "new or modified" files
+if ! git update-index -q --ignore-submodules --refresh; then
+	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
+  DOCKER_BUILD_EXIT_CODE=1
 else
-  RUBY_TEST_EXIT_CODE=0
+  printf '\n\033[0;33mBuilding %s Docker image with local profile... \033[0m\n' "$CLIENT_PROFILE"
+  ECR=local make image
+  DOCKER_BUILD_EXIT_CODE=$?
 fi
 
-if [ ! $RUBY_TEST_EXIT_CODE -eq 0 ]; then
-  printf '\n\033[0;31mCannot push, tests are failing. Use --no-verify to force push. 😖\033[0m\n'
+if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
+  printf '\n\033[0;31mDocker image build failed. Please check your changes. 😖\033[0m\n'
   exit 1
+else
+  printf '\n\033[0;32mDocker image build succeeded. 🎉\033[0m\n'
+  CONTAINER_ID=$(ECR=local API_SERVICE_URL=$API_SERVICE_URL make run | tail -1)
+  printf '\n\033[0;33mRunning Docker image %s ... \033[0m\n' "$CONTAINER_ID"
+  sleep 10
+  docker inspect --format="{{.State.Running}}" "$CONTAINER_ID" | grep 'true' -q
+  DOCKER_RUN_EXIT_CODE=$?
+  printf '\n\033[0;33mStopping Docker image with exit code %s ... \033[0m\n' "$DOCKER_RUN_EXIT_CODE"
+  docker stop "$CONTAINER_ID" > /dev/null 2>&1
 fi
 
-if [ $WORK_DONE = 1 ]; then
-  printf '\n\033[0;32mAll tests are green, pushing... 🎉\033[0m\n'
+if [ $DOCKER_RUN_EXIT_CODE -ne 0 ]; then
+  printf '\n\033[0;31mDocker image run failed. Please check your changes. 😖\033[0m\n'
+  exit 1
+else
+  printf '\n\033[0;32mDocker image run succeeded. 🎉\033[0m\n'
+  exit 0
 fi
-
-exit 0
