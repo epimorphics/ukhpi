@@ -23,7 +23,7 @@
 
 <script>
 import { SELECT_STATISTIC } from '../store/mutation-types';
-import serverRoutes from '../images/markers';
+import markerRoutes from '../images/markers/';
 
 const MARKERS = [
   'Circle',
@@ -83,7 +83,7 @@ export default {
     imageSrcPath(index, svg) {
       const imageRoot = MARKERS[index];
       const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`;
-      return new URL(`../${serverRoutes[imagePathKey]}`, import.meta.url).pathname;
+      return new URL(`../${markerRoutes[imagePathKey]}`, import.meta.url).pathname;
     },
   },
 };
