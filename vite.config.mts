@@ -33,6 +33,7 @@ export default defineConfig(({ command, mode }) => {
     ],
     build: {
       assetsInlineLimit: 0, // Prevents inlining of all assets
+      base: env.RAILS_ENV === 'production' ? '/app/ukhpi/' : '/',
       sourcemap: true, // Source map generation must be turned on for Sentry to work
       target: 'esnext'
     },
