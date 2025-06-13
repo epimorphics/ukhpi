@@ -1,0 +1,112 @@
+import Vue from 'vue/dist/vue.esm'
+import * as Sentry from '@sentry/vue'
+import ElementUI from 'element-ui'
+import localeEn from 'element-ui/lib/locale/lang/en'
+import localeElementCy from '../lang/element-ui-cy'
+import localeD3Cy from '@/lang/d3-timeformat-cy.json'
+import Numeral from 'numeral'
+import 'core-js/stable'
+import 'regenerator-runtime/runtime'
+import moment from 'moment'
+import { timeFormatDefaultLocale } from 'd3-time-format'
+
+import router from '../router/index.js.erb'
+import store from '../store/index'
+
+import getAppVersion from '../lib/app_version'
+
+// Issue https://github.com/epimorphics/ukhpi/issues/169
+// Add fix for IE Edge
+import '../lib/ie-d3-fix'
+
+// set up internationalization support
+import VueI18n from 'vue-i18n'
+import i18n from '../lang'
+
+const currentAppRelease = window.ukhpi.version || getAppVersion()
+
+console.debug('Vite ⚡️ Rails')
+
+console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
+console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
+console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
+console.debug(`Node environment: ${import.meta.env.MODE}`)
+console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
+console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
+console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
+
+console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
+
+const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
+// This sets the sample rate to be 100% while in development
+// and samples at a lower rate of 10% when in production
+const sessionSampleRate = currentEnvironment.includes('dev') ? 1.0 : 0.1
+// If we're not already sampling the entire session, change the error
+// sample rate to 100% when sampling sessions where errors occur.
+const errorSampleRate = currentEnvironment.includes('prod') ? 1.0 : 0.1
+
+// Register Sentry error tracking with Vue
+Sentry.init({
+  Vue,
+  debug: currentEnvironment.includes('dev'),
+  dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+  environment: currentEnvironment,
+  release: `${currentAppRelease}`,
+  ignoreErrors: ['Non-Error promise rejection captured'],
+  initialScope: {
+    tags: { app: 'ukhpi-js' }
+  },
+  integrations: [
+    Sentry.replayIntegration()
+  ],
+  // Session Replay set by current MODE env variable:
+  replaysSessionSampleRate: sessionSampleRate,
+  replaysOnErrorSampleRate: errorSampleRate
+})
+
+// Set up the Vue app
+Vue.use(VueI18n)
+Vue.config.devtools = true
+
+// Use Element.IO
+Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeElementCy })
+
+// locale settings
+Numeral.register('locale', 'gb', {
+  delimiters: {
+    thousands: ',',
+    decimal: '.'
+  },
+  currency: {
+    symbol: '£'
+  },
+  ordinal: () => ''
+})
+Numeral.locale('gb')
+
+// other i18n settings: moment.js
+moment.locale(i18n.locale)
+
+// other i18n settings: D3.js
+if (i18n.locale === 'cy') {
+  timeFormatDefaultLocale(localeD3Cy)
+}
+
+const mountVueApp = () => {
+  if (['/browse', '/compare'].includes(window.location.pathname)) {
+    // This is the main entry point for the Vue app
+    new Vue({
+      i18n,
+      store,
+      router
+    }).$mount('#application')
+  }
+}
+
+if (document.readyState === 'loading') {
+  // Loading hasn't finished yet
+  document.addEventListener('DOMContentLoaded', mountVueApp)
+} else {
+  // DOMContentLoaded has already fired
+  mountVueApp()
+}

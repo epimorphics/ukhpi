@@ -8,7 +8,7 @@
       %p.u-muted
         = t('compare.show.prompt')
 
-      .c-location-compare--non-js{:class => ("u-js-hidden" unless Rails.env.development?)}
+      .c-location-compare--non-js{:class => ("u-js-hidden" if @view_state.as_json)}
         %form.c-compare__form{ action: compare_path, method: 'get' }
           %p
             %label{ for: 'select-in' }
@@ -70,7 +70,7 @@
           %p
             = msg
         - else
-          %table.c-compare__results{:class => ("u-js-hidden" unless Rails.env.development?)}
+          %table.c-compare__results{:class => ("u-js-hidden" if @view_state.as_json)}
             %thead
               %tr
                 %th{ scope: 'col' }

@@ -1,0 +1,76 @@
+@use 'element-ui/lib/theme-chalk/index' as *;
+
+/* Adjustments to Element defaults */
+$grey-8: #f0f0f0;
+$dark-blue: #1d70b8;
+$dark-blue-hover: #003078;
+$black: #000000;
+$yellow-50: #f6eb61;
+
+@font-face {
+    font-family: element-icons;
+    src: url('../fonts/element-icons.woff') format('woff'),
+         url('../fonts/element-icons.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal
+}
+
+.el-tabs__item {
+  color: $black;
+
+  &.is-active {
+    color: $black;
+  }
+
+  &:hover {
+    color: #20a0ff;
+  }
+}
+
+.el-table .cell {
+  -ms-word-break: normal;
+  word-break: normal;
+}
+
+.el-button--default {
+  background-color: $grey-8;
+}
+
+.el-button--primary {
+  background-color: $dark-blue;
+  border-color: $dark-blue;
+  &:any-link, &:focus, &:hover {
+    background-color: $dark-blue-hover;
+    border-color: $dark-blue-hover;
+  }
+}
+
+.el-date-editor {
+  color: $black;
+}
+
+table.el-month-table {
+  td .cell {
+    color: $black;
+  }
+
+  td.current .cell {
+    color: $black;
+    background-color: $yellow-50;
+  }
+
+  td.current .cell:not(.disabled) {
+    color: $black;
+  }
+}
+
+.el-select-dropdown__item {
+  &.selected {
+    background-color: $dark-blue;
+    color: white;
+  }
+  &.hover:not(.selected) {
+    background-color: $dark-blue-hover;
+    color: white;
+  }
+}

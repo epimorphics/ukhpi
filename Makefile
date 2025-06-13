@@ -14,6 +14,8 @@ NODE_VERSION?=$(shell cat .nvmrc)
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
 API_SERVICE_URL?=http://data-api:8080
+RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
+RUN_VARS?=--publish
 
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
@@ -28,22 +30,26 @@ REPO?=${ECR}/${IMAGE}
 
 GITHUB_TOKEN=.github-token
 BUNDLE_CFG=.bundle/config
+BUNDLE=./bin/bundle
+RAILS=./bin/rails
 
 all: image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
-	@./bin/bundle config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
+	@${BUNDLE} config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
 
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
 assets:
 	@echo "Installing bundler packages ..."
-	@./bin/bundle install
+	@${BUNDLE} install
 	@echo "Installing yarn packages ..."
 	@yarn install
-	@echo "Cleaning and precompiling static assets ..."
-	@NODE_OPTIONS=--openssl-legacy-provider ./bin/bundle exec rake assets:clean assets:precompile
+	@echo "Removing old compiled assets and compiling via vite ..."
+	@NODE_OPTIONS=--openssl-legacy-provider ${RAILS} vite:clobber vite:build
+	@echo vite info
+	@${RAILS} vite:info
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
@@ -51,8 +57,14 @@ check: lint test
 	@echo "All checks passed."
 
 clean:
-	@[ -d public/assets ] && ./bin/rails assets:clobber || :
-	@@ rm -rf bundle coverage log node_modules
+# Remove all assets
+	[ -d public/vite/assets ] && ${RAILS} vite:clobber || :
+# Clear cache files from tmp/
+	@${RAILS} tmp:cache:clear
+# Remove all bundled files
+	@${BUNDLE} clean --force
+# Remove all generated files
+	@rm -rf bundle coverage log node_modules vendor
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
@@ -61,6 +73,7 @@ image: auth
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
 		--build-arg NODE_VERSION=${NODE_VERSION} \
 		--build-arg BUNDLER_VERSION=${BUNDLER_VERSION} \
+		--build-arg RAILS_RELATIVE_URL_ROOT=${RAILS_RELATIVE_URL_ROOT} \
 		--build-arg VERSION=${VERSION} \
 		--build-arg git_branch=${BRANCH} \
 		--build-arg git_commit_hash=${COMMIT} \
@@ -71,11 +84,11 @@ image: auth
 	@echo Done.
 
 lint: assets
-	@./bin/bundle exec rubocop
+	@${BUNDLE} install exec rubocop
 
 locations:
 	@echo "Generating new UKHPI location files ... "
-	@./bin/rails ukhpi:locations
+	@${RAILS} ukhpi:locations
 	@echo "Done."
 
 publish: image
@@ -85,30 +98,29 @@ publish: image
 	@echo Done.
 
 realclean: clean
+# Clear github token from bundle config
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 run: start
-	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
-	@docker run -p ${PORT}:3000 -e API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
+	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; Docker network create dnet; sleep 2; fi
+	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
-secret:
-	@echo "Creating secret ..."
-	@export SECRET_KEY_BASE=$(./bin/rails secret)
-
-server:
-	@echo "Starting local server ..."
+server: start
 	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
-start:
+start: stop
+	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
+
+stop:
+	@echo "Stopping ${SHORTNAME} ..."
 	@docker stop ${SHORTNAME} > /dev/null 2>&1 || :
-	@echo "Starting ${SHORTNAME} ..."
 
 tag:
 	@echo ${TAG}
 
 test: assets
 	@echo "Running unit tests ..."
-	@./bin/rails test
+	@${RAILS} test
 
 vars:
 	@echo "Docker: ${REPO}:${TAG}"
@@ -127,3 +139,6 @@ vars:
 	@echo "REPO = ${REPO}"
 	@echo "TAG = ${TAG}"
 	@echo "VERSION = ${VERSION}"
+
+version:
+	@echo ${VERSION}

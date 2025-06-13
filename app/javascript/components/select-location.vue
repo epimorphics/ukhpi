@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <focus-trap v-model='showDialog' :initial-focus='initialFocusElement'>
     <div class='o-select-location'>
       <el-dialog

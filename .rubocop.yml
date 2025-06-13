@@ -1,6 +1,7 @@
 plugins: rubocop-rails
 
 AllCops:
+  TargetRubyVersion: 3.3
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
@@ -11,6 +12,7 @@ AllCops:
 # Customize rules
 Layout/LineLength:
   Max: 100
+  AllowedPatterns: ['^(\s*#)']
   Exclude:
     - bin/**/*
     - config/**/*
@@ -38,7 +40,9 @@ Lint/StructNewOverride:
   Enabled: true
 
 Metrics/AbcSize:
+  Max: 30
   Exclude:
+    - test/**/*
     - lib/tasks/location.rake
 
 Metrics/BlockLength:
@@ -59,6 +63,7 @@ Metrics/CyclomaticComplexity:
 Metrics/MethodLength:
   CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
   Exclude:
+    - test/**/*
     - lib/tasks/location.rake
 
 Rails/ActiveRecordCallbacksOrder:

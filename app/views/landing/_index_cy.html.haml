@@ -6,7 +6,7 @@
     Defnyddiwch y teclyn chwilio i weld tueddiadau prisiau tai yn y DU:
 
   %p.c-cta
-    = link_to('chwilio mynegai prisiau tai y DU', browse_path(lang: 'cy'), class: 'c-search-tool')
+    = link_to('chwilio mynegai prisiau tai y DU', browse_path(lang: 'cy'), class: 'c-search-tool button button-start')
 
   %h2.heading-medium
     Mynegai cyfredol
@@ -146,10 +146,10 @@
   .c-logos
     %p.u-text-center
       = link_to("//www.gov.uk/government/organisations/land-registry.cy", 'aria-label' => '[cy] go to HM Land Registry home page') do
-        = image_tag("hm_lr_logo.png", alt: '[cy] HM Land Registry')
+        = vite_image_tag("images/hm_lr_logo.png", alt: '[cy] HM Land Registry')
       = link_to("//www.ros.gov.uk/", 'aria-label' => '[cy] Go to Registers of Scotland home page') do
-        = image_tag("ros_logo.png", alt: '[cy] Registers of Scotland')
+        = vite_image_tag("images/ros_logo.png", alt: '[cy] Registers of Scotland')
       = link_to("//www.finance-ni.gov.uk/land-property-services-lps", 'aria-label' => '[cy] Go to Land and Property Services home page') do
-        = image_tag("lps-identity.png", alt: '[cy] Land and Propert Services')
+        = vite_image_tag("images/lps-identity.png", alt: '[cy] Land and Propert Services')
       = link_to("//cy.ons.gov.uk", 'aria-label' => '[cy] Go to ONS home page') do
-        = image_tag("ons_logo.png", alt: '[cy] Office for National Statistics')
+        = vite_image_tag("images/ons_logo.png", alt: '[cy] Office for National Statistics')

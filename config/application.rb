@@ -10,7 +10,7 @@ require 'active_job/railtie'
 require 'action_controller/railtie'
 require 'action_mailer/railtie'
 require 'action_view/railtie'
-require 'sprockets/railtie'
+# require 'sprockets/railtie'
 require 'rails/test_unit/railtie'
 
 # Require the gems listed in Gemfile, including any gems
@@ -20,7 +20,9 @@ Bundler.require(*Rails.groups)
 module Ukhpi
   # :nodoc:
   class Application < Rails::Application
-    config.load_defaults 6.0
+    # Set the Google Analytics ID, if available
+    # This can be set in the environment variables or left as nil
+    config.google_analytics_id = ENV.fetch('GOOGLE_ANALYTICS_ID', nil)
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

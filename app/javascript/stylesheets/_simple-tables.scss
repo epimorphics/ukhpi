@@ -1,0 +1,85 @@
+
+@use 'lr-common';
+
+.u-simple-table {
+  width: 100%;
+  background-color: white;
+
+  tr {
+    &.no-data {
+      td:first-child {
+        text-align: center;
+        padding: 0.5em;
+        color: lr-common.$lr-grey-2;
+      }
+    }
+
+    td {
+      text-align: right;
+    }
+
+    td:first-child {
+      text-align: left;
+    }
+
+    th {
+      &:first-child {
+        text-align: left;
+      }
+      &:not(:first-child):not(:last-child):not(.u-right){
+        text-align: center;
+      }
+      &:last-child {
+        text-align: right;
+        [lang="cy"] & {
+          width: 25vw; // Welsh text is longer
+        }
+      }
+    }
+
+    th.u-left {
+      text-align: left;
+    }
+
+    th.u-right {
+      text-align: right;
+    }
+
+    .u-row-odd {
+      background-color: lr-common.$lr-grey-3;
+    }
+  }
+}
+
+.u-documentation-table {
+  @extend .u-simple-table !optional;
+
+  tr.u-row-center {
+    td {
+      padding: 0.5em;
+      text-align: center;
+
+      &:first-child {
+        text-align: left;
+      }
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+
+  th {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  td {
+    text-align: left;
+  }
+
+  td, th {
+    padding: 0.25em 0.25em 0.25em 0;
+    border-bottom: 1px solid lr-common.$lr-grey-3;
+  }
+}

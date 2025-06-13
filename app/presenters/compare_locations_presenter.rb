@@ -25,7 +25,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   delegate :as_json, to: :user_compare_selections
   delegate :selected_locations, to: :user_compare_selections
 
-  def headline_summary # rubocop:disable Metrics/AbcSize
+  def headline_summary
     ind = I18n.t("indicator.#{indicator.slug}")
     stat = I18n.t("statistic.#{statistic.label_key}").downcase
     from = I18n.l(user_compare_selections.from_date, format: '%B %Y')

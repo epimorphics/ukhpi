@@ -1,0 +1,22 @@
+
+@use 'lr-common';
+
+.c-action {
+  padding: 5px 10px;
+  background-color: lr-common.$lr-grey-2;
+  border: 1px solid lr-common.$lr-grey-1;
+  font-size: 13px;
+}
+
+.c-action-prominent {
+  background-color: lr-common.$lr-button-colour;
+  color: white;
+}
+
+.c-download-controls {
+  margin-left: 2em;
+
+  a {
+    margin-left: 5px;
+  }
+}

@@ -28,11 +28,11 @@
         .header-global
           .header-logo
             %a.content{ href: "#{Rails.application.config.relative_url_root}", title: t('common.header.home_link') }
-              = image_tag('ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: 'UKHPI Logo')
+              = vite_image_tag('images/ukhpi-icon.png', srcset: image_path('ukhpi-icon.svg'), alt: 'UKHPI Logo')
         .header-proposition
           .content
             %nav#proposition-menu
-              %a#proposition-name{ href: '/app/ukhpi' }
+              %a#proposition-name{ href: "#{Rails.application.config.relative_url_root}" }
                 %strong
                   = I18n.t('common.header.app_title')
 

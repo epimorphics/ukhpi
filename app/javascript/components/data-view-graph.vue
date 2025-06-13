@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div :class='rootCssClass'>
     <svg :id='graphElementId'></svg>
   </div>
@@ -6,8 +6,8 @@
 
 <script>
 import Moment from 'moment';
-import drawGraph from '../presenters/data-graph';
-import bus from '../lib/event-bus';
+import drawGraph from '@/presenters/data-graph';
+import bus from '@/lib/event-bus';
 
 export default {
   data: () => ({

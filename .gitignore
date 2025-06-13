@@ -4,13 +4,36 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore vscode config
+# Ignore dot files and directories
+.DS_Store
+.github-token
+.npmrc
+.tags
+.tool-versions
 .vscode
 
-## Ignore bundler configuration:
+# Ignore bundler config.
 /.bundle
 /vendor/bundle
+
+# Ignore Ruby & Rails
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
 /lib/bundler/man/
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Ignore RubyLSP config.
+/.ruby-lsp
+
+
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -30,9 +53,13 @@ node_modules/
 /public/assets
 
 # Ignore yarn files
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Ignore uploaded files in development
 /storage/*
@@ -58,12 +85,13 @@ uk.json
 query-results.json
 
 # Ignore dot files used by environment or IDE tools
-.tags
-.tool-versions
-.github-token
-.npmrc
 
-# Ignore local configuration files
-.env
-.env*.local
-!.env.development
+
+
+# Vite Ruby
+/public/vite*
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+*.local
+
+vite.config.js.timestamp-*-*.mjs

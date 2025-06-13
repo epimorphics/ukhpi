@@ -28,7 +28,7 @@ class QueryCommand
 
   # @return True if this is a query explanation command
   def explain_query_command?
-    false
+    true
   end
 
   private
@@ -57,32 +57,32 @@ class QueryCommand
   def execute_query(service, query) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
     begin
       start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-      log_type = 'error'
 
       @results = api_service(service).query(query)
     rescue Faraday::ConnectionFailed => e
-      log_fields = { message: e.message }
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:status] = 503 # Service Unavailable
+      message = e.message
+      status = 503 # Service Unavailable
     rescue DataServicesApi::ServiceException => e
-      log_fields = { message: e.service_message }
-      log_fields[:status] = 503 # Service Unavailable
+      message = e.service_message
+      status = 503 # Service Unavailable
     rescue RuntimeError => e
-      log_fields = { message: "Runtime error #{e.inspect}" }
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:message] += "Caused by: #{e.cause}" if e.cause
-      log_fields[:message] += " in (#{e.class})" if Rails.logger.debug?
-      log_fields[:status] = 500 # Internal Server Error
+      message = "Runtime error #{e.inspect}"
+      message += "Caused by: #{e.cause}" if e.cause
+      message += " in (#{e.class})" if Rails.logger.debug?
+      status = 500 # Internal Server Error
     end
 
     # Calculate the time taken to execute the query and pass in the details to be logged
     time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
 
     # Log the final request status and response if there's an error
-    if log_fields.present?
+    if status.present?
+      log_fields = { service: 'ukhpi', params: user_selections.params, path: request.path }
+      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
       log_fields[:request_status] = 'error'
       log_fields[:request_time] = time_taken
-      LoggingHelper.log_request(log_fields, log_type)
+      log_fields[:status] = status
+      Log.error(message, log_fields)
       puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
     end
     # Always return the time taken to execute the query

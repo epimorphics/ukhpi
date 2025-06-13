@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='c-data-view-graph-zoomed'>
     <el-dialog
       :visible.sync='showZoomedGraph'

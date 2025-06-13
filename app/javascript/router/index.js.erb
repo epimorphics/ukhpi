@@ -5,18 +5,22 @@ import CompareLocations from '../components/compare-locations.vue';
 
 Vue.use(Router);
 
+// # This is a workaround to avoid the issue of Vue Router not being able to handle
+// # relative URLs correctly when using Rails' asset pipeline.
+const relativeUrlRoot = '<%= Rails.application.config.relative_url_root unless Rails.application.config.relative_url_root == '/' %>';
+
 export default new Router({
   routes: [
     {
-      path: '<%= Rails.application.config.relative_url_root %>/browse',
+      path: `${relativeUrlRoot}/browse`,
       name: 'single-location',
-      component: SingleLocation,
+      component: SingleLocation
     },
     {
-      path: '<%= Rails.application.config.relative_url_root %>/compare',
+      path: `${relativeUrlRoot}/compare`,
       name: 'compare-locations',
-      component: CompareLocations,
+      component: CompareLocations
     }
   ],
-  mode: 'history',
+  mode: 'history'
 });

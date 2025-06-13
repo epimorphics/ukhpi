@@ -1,0 +1,42 @@
+
+@use 'lr-common';
+
+.c-landing-page {
+  a {
+    text-decoration: underline;
+  }
+
+  .c-logos {
+    margin-top: 48px;
+    img {
+      max-height: 50px;
+      max-width: 200px;
+      margin-right: 20px;
+    }
+  }
+
+  .c-headline-figure {
+    font-weight: bold;
+  }
+
+  .c-current-figures {
+    p {
+      border-left: 8px solid lr-common.$lr-green-dark;
+      padding-left: 12px;
+      margin-left: -12px;
+    }
+  }
+
+  .c-cta {
+    margin-top: 20px;
+    margin-bottom: 40px;
+    text-align: center;
+  }
+
+  .c-search-tool {
+    @extend .button !optional;
+    @extend .button-start !optional;
+
+    background-image: url('../images/icon-pointer.png');
+  }
+}

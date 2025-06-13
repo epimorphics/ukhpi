@@ -1,4 +1,4 @@
-<template lang="html">
+<template>
   <div class='o-data-view__vue-root u-js-only'>
     <div class='o-data-view__js-options'>
       <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
@@ -59,13 +59,13 @@ import DataViewStatistics from './data-view-statistics.vue';
 import DataViewTable from './data-view-table.vue';
 import DataViewGraph from './data-view-graph.vue';
 import DataViewDownload from './data-view-download.vue';
-import store from '../store/index';
-import { INITIALISE, SELECT_STATISTIC } from '../store/mutation-types';
-import bus from '../lib/event-bus';
-import safeForEach from '../lib/safe-foreach';
-import AvailableStatistics from '../mixins/available-statistics';
-import i18n from 'lang'
-import { mutateName } from 'lang/welsh-name-mutations'
+import store from '@/store/index';
+import { INITIALISE, SELECT_STATISTIC } from '@/store/mutation-types';
+import bus from '@/lib/event-bus';
+import safeForEach from '@/lib/safe-foreach';
+import AvailableStatistics from '@/mixins/available-statistics';
+import i18n from '../lang'
+import { mutateName } from '@/lang/welsh-name-mutations'
 
 export default {
   mixins: [AvailableStatistics],
@@ -233,6 +233,3 @@ export default {
   store,
 };
 </script>
-
-<style lang="scss">
-</style>

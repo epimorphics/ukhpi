@@ -3,12 +3,15 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails'
+gem 'rails', '~> 8.0'
+
+gem 'vite_rails'
 # Use Uglifier as compressor for JavaScript assets
-gem 'uglifier'
+# gem 'uglifier'
+gem 'terser' # Updating to terser for ES6+ support
 
 gem 'haml-rails'
-gem 'webpacker', '~> 5.4'
+# gem 'webpacker', '~> 5.4'
 
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -21,42 +24,44 @@ gem 'webpacker', '~> 5.4'
 gem 'font-awesome-rails'
 gem 'sass-rails'
 
-gem 'govuk_elements_rails'
-gem 'govuk_frontend_toolkit'
-gem 'govuk_template'
 gem 'js-routes'
 
+gem 'csv'
+gem 'dotenv'
 gem 'faraday'
 gem 'faraday_middleware'
 gem 'get_process_mem'
+gem 'govuk_template'
 gem 'http_accept_language'
+gem 'ostruct'
 gem 'prometheus-client'
 gem 'puma'
 gem 'puma-metrics'
 gem 'rdf-turtle'
-gem 'rubocop-rails'
+gem 'rubocop', require: false
+gem 'rubocop-rails', require: false
 gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
-  gem 'dotenv'
-  gem 'haml-lint'
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'
-  gem 'rubocop', require: false
   gem 'tzinfo-data'
 end
 
 group :development do
-  # Devtools panel for Rails development
-  # https://chromewebstore.google.com/detail/rails-panel/gjpfobpafnhjhbajcjgccbbdofdckggg?pli=1
-  gem 'meta_request'
+  gem 'haml-lint'
+  gem 'htmlbeautifier'
+  gem 'ruby-lsp'
+  gem 'solargraph'
+   # Devtools panel for Rails development - loading from the GitHub repo
+   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
+  gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
+  gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
 end
 
 group :test do
