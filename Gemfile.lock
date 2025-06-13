@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/dejan/rails_panel.git
+  revision: fed66f8a4ac2d11aa05ebf7d50e1d4d1e745423f
+  ref: meta_request-v0.8.5
+  specs:
+    meta_request (0.8.5)
+      rack-contrib (>= 1.1, < 3)
+      railties (>= 3.0.0, < 9)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -76,6 +85,7 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     ansi (1.5.0)
     ast (2.4.3)
+    backport (1.2.0)
     base64 (0.3.0)
     bcp47_spec (0.2.1)
     benchmark (0.4.1)
@@ -97,6 +107,7 @@ GEM
     crass (1.0.6)
     csv (3.3.5)
     date (3.4.1)
+    diff-lcs (1.6.2)
     docile (1.4.1)
     dotenv (3.1.8)
     drb (2.2.3)
@@ -180,11 +191,16 @@ GEM
       pp (>= 0.6.0)
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
+    jaro_winkler (1.6.1)
     js-routes (2.3.5)
       railties (>= 5)
       sorbet-runtime
     json (2.6.3)
     json_expressions (0.9.0)
+    kramdown (2.5.1)
+      rexml (>= 3.3.9)
+    kramdown-parser-gfm (1.1.0)
+      kramdown (~> 2.0)
     language_server-protocol (3.17.0.5)
     link_header (0.0.8)
     lint_roller (1.1.0)
@@ -207,9 +223,6 @@ GEM
       net-smtp
     marcel (1.0.4)
     matrix (0.4.2)
-    meta_request (0.8.5)
-      rack-contrib (>= 1.1, < 3)
-      railties (>= 3.0.0, < 9)
     method_source (1.1.0)
     mini_mime (1.1.5)
     minitest (5.25.5)
@@ -254,6 +267,7 @@ GEM
       racc (~> 1.4)
     nokogiri (1.18.8-x86_64-linux-musl)
       racc (~> 1.4)
+    observer (0.1.2)
     oj (3.16.11)
       bigdecimal (>= 3.0)
       ostruct (>= 0.2)
@@ -321,6 +335,8 @@ GEM
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
     rake (13.3.0)
+    rbs (3.9.4)
+      logger
     rdf (3.3.2)
       bcp47_spec (~> 0.2)
       bigdecimal (~> 3.1, >= 3.1.5)
@@ -338,6 +354,8 @@ GEM
       io-console (~> 0.5)
     request_store (1.7.0)
       rack (>= 1.4)
+    reverse_markdown (3.0.0)
+      nokogiri
     rexml (3.4.1)
     rubocop (1.76.0)
       json (~> 2.3)
@@ -359,6 +377,11 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.75.0, < 2.0)
       rubocop-ast (>= 1.44.0, < 2.0)
+    ruby-lsp (0.24.1)
+      language_server-protocol (~> 3.17.0)
+      prism (>= 1.2, < 2.0)
+      rbs (>= 3, < 5)
+      sorbet-runtime (>= 0.5.10782)
     ruby-progressbar (1.13.0)
     ruby2_keywords (0.0.5)
     rubyzip (2.4.1)
@@ -392,6 +415,25 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.13.1)
     simplecov_json_formatter (0.1.4)
+    solargraph (0.55.1)
+      backport (~> 1.2)
+      benchmark (~> 0.4)
+      bundler (~> 2.0)
+      diff-lcs (~> 1.4)
+      jaro_winkler (~> 1.6, >= 1.6.1)
+      kramdown (~> 2.3)
+      kramdown-parser-gfm (~> 1.1)
+      logger (~> 1.6)
+      observer (~> 0.1)
+      ostruct (~> 0.6)
+      parser (~> 3.0)
+      rbs (~> 3.3)
+      reverse_markdown (~> 3.0)
+      rubocop (~> 1.38)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9, >= 0.9.24)
+      yard-solargraph (~> 0.1)
     sorbet-runtime (0.5.12155)
     spring (4.3.0)
     sprockets (4.2.2)
@@ -447,6 +489,9 @@ GEM
     xpath (3.2.0)
       nokogiri (~> 1.8)
     yajl-ruby (1.4.3)
+    yard (0.9.37)
+    yard-solargraph (0.1.0)
+      yard (~> 0.9)
     zeitwerk (2.7.3)
 
 GEM
@@ -490,7 +535,7 @@ DEPENDENCIES
   json_expressions
   json_rails_logger!
   m
-  meta_request
+  meta_request!
   minitest-rails
   minitest-rails-capybara
   minitest-reporters
@@ -505,10 +550,12 @@ DEPENDENCIES
   rdf-turtle
   rubocop
   rubocop-rails
+  ruby-lsp
   sass-rails
   selenium-webdriver
   sentry-rails
   simplecov
+  solargraph
   spring
   terser
   tzinfo-data
