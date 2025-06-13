@@ -1,6 +1,7 @@
-ARG ALPINE_VERSION=3.20
 ARG RUBY_VERSION=3.3.5
 ARG NODE_VERSION=20
+ARG ALPINE_VERSION=3.20
+ARG BUNDLER_VERSION=2.6.6
 
 # Load node from official build
 FROM node:$NODE_VERSION-alpine AS node
@@ -14,41 +15,76 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-ARG BUNDLER_VERSION
+ENV DIR=/usr/src/app
 
-RUN apk add --update \
+RUN apk add --update --no-cache \
     bash \
     coreutils \
     git \
+    npm \
     nodejs \
     tzdata \
-    yarn \
-    && rm -rf /var/cache/apk/* \
-    && gem update --system \
-    && gem install bundler:$BUNDLER_VERSION \
-    && bundle config --global frozen 1
+    && gem update --system
 
-FROM base as builder
+# for Bundler
+ARG BUNDLER_VERSION
+RUN echo "Bundler version ${BUNDLER_VERSION}"
+RUN gem install bundler:$BUNDLER_VERSION
 
-RUN apk add --update build-base
+# for Yarn
+RUN npm install -g corepack
+RUN corepack enable
 
-WORKDIR /usr/src/app
+# installs the required gems
+FROM base AS gems
+RUN apk add --update build-base && gem update --system
 
-COPY config.ru Gemfile Gemfile.lock Rakefile ./
-COPY package.json babel.config.js postcss.config.js yarn.lock ./
-COPY .bundle/config /root/.bundle/config
 COPY bin bin
+COPY Gemfile Gemfile.lock ./
+# .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
+COPY .bundle/config /root/.bundle/config
+RUN bundle config set --local without 'development test' \
+    && bundle config set --local frozen 1 \
+    && bundle install
 
-RUN ./bin/bundle config set --local without 'development test' && ./bin/bundle install && mkdir log
+# install the required node modules
+FROM base AS npm
+RUN apk add --update build-base && gem update --system
 
+WORKDIR ${DIR}
+COPY package.json yarn.lock .yarnrc.yml ./
+COPY .yarn .yarn
+RUN yarn install --immutable
+
+# runs build to compile assets
+FROM base AS builder
+RUN apk add --update build-base && gem update --system
+
+WORKDIR ${DIR}
+# Copy the builds from the previous stages
+COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
+COPY --from=npm --chown=app ${DIR}/node_modules ./node_modules
+
+# Copy the rest of the application code
+COPY config.ru Gemfile Gemfile.lock Rakefile ./
+COPY package.json yarn.lock vite.config.mts .yarnrc.yml ./
+COPY .yarn .yarn
 COPY app app
+COPY bin bin
 COPY config config
 COPY lib lib
 COPY public public
 
-# Compile
-RUN yarn install --production && RAILS_ENV=production NODE_OPTIONS=--openssl-legacy-provider bundle exec rake assets:precompile \
-  && mkdir -m 777 /usr/src/app/coverage
+ARG RAILS_RELATIVE_URL_ROOT
+RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT}"
+
+# Precompile assets and build vite
+RUN RAILS_ENV=production \
+    VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
+    NODE_OPTIONS=--max-old-space-size=4096 \
+    bundle exec rake vite:build \
+    && mkdir -m 777 ${DIR}/coverage \
+    && mkdir -m 777 ${DIR}/log
 
 # Start a new stage to minimise the final image size
 FROM base
@@ -68,10 +104,10 @@ LABEL com.epimorphics.name=$image_name \
 RUN addgroup -S app && adduser -S -G app app
 EXPOSE 3000
 
-WORKDIR /usr/src/app
+WORKDIR ${DIR}
 
 COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app /usr/src/app .
+COPY --from=builder --chown=app ${DIR} .
 
 USER app
 
