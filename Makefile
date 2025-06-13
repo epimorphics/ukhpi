@@ -36,7 +36,7 @@ RAILS=./bin/rails
 all: image
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
-	@${BUNDLE} install config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
+	@${BUNDLE} config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
 
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
