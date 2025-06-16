@@ -6310,7 +6310,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.4":
+"lodash@npm:^4.17.14, lodash@npm:^4.17.19, lodash@npm:^4.17.21, lodash@npm:^4.17.4":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -8867,7 +8867,7 @@ __metadata:
     kebab-case: "npm:^1.0.2"
     leaflet: "npm:^1.9.4"
     leaflet-clonelayer: "npm:^1.0.7"
-    lodash: "npm:^4.17.15"
+    lodash: "npm:^4.17.21"
     moment: "npm:^2.18.1"
     numeral: "npm:^2.0.6"
     path-complete-extname: "npm:^1.0.0"
