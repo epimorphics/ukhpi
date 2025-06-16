@@ -1,6 +1,7 @@
 %html{ lang: 'en', data: { 'rails-env': Rails.env, GA_ID: Rails.application.config.google_analytics_id} }
   %head
-    %meta{ charset: 'utf-8', httpEquiv:'Content-Type' }
+    %meta{ charset: 'utf-8' }
+    %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
     %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
     %title
       = (yield(:title) + " - " unless yield(:title).blank?).to_s + I18n.t('common.header.app_title')
