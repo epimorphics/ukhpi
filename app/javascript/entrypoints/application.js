@@ -32,6 +32,7 @@ console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
 console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
 console.debug(`Node environment: ${import.meta.env.MODE}`)
 console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
+console.debug('HMLR UKHPI Basepath:', import.meta.env.RAILS_RELATIVE_URL_ROOT)
 console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
 console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
 
