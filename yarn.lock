@@ -4836,7 +4836,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-config-standard@npm:^14.1.0":
+"eslint-config-standard@npm:^14.1.1":
   version: 14.1.1
   resolution: "eslint-config-standard@npm:14.1.1"
   peerDependencies:
@@ -8851,7 +8851,7 @@ __metadata:
     dotenv: "npm:^16.4.7"
     element-ui: "npm:2.15.14"
     eslint: "npm:^6.1.0"
-    eslint-config-standard: "npm:^14.1.0"
+    eslint-config-standard: "npm:^14.1.1"
     eslint-plugin-html: "npm:6.0.0"
     eslint-plugin-import: "npm:^2.18.1"
     eslint-plugin-node: "npm:^11.0.0"
