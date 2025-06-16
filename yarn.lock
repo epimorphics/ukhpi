@@ -3714,7 +3714,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^0.28.0":
+"axios@npm:^0.28.1":
   version: 0.28.1
   resolution: "axios@npm:0.28.1"
   dependencies:
@@ -8836,7 +8836,7 @@ __metadata:
     "@types/node": "npm:^22.13.13"
     "@vitejs/plugin-legacy": "npm:^6.1.1"
     "@vitejs/plugin-vue2": "npm:^2.3.3"
-    axios: "npm:^0.28.0"
+    axios: "npm:^0.28.1"
     babel-eslint: "npm:^10.0.2"
     core-js: "npm:^3.2.1"
     d3-array: "npm:^2.4.0"
