@@ -3291,7 +3291,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/integrations@npm:^6.19.3":
+"@sentry/integrations@npm:^6.19.7":
   version: 6.19.7
   resolution: "@sentry/integrations@npm:6.19.7"
   dependencies:
@@ -8830,7 +8830,7 @@ __metadata:
     "@babel/preset-env": "npm:^7.23.2"
     "@fortawesome/fontawesome-free": "npm:^6.7.2"
     "@modyfi/vite-plugin-yaml": "npm:^1.1.1"
-    "@sentry/integrations": "npm:^6.19.3"
+    "@sentry/integrations": "npm:^6.19.7"
     "@sentry/vite-plugin": "npm:^3.2.2"
     "@sentry/vue": "npm:^9.9.0"
     "@types/node": "npm:^22.13.13"
