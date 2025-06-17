@@ -4153,7 +4153,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-promise@npm:^4.2.1":
+"eslint-plugin-promise@npm:^4.3.1":
   version: 4.3.1
   resolution: "eslint-plugin-promise@npm:4.3.1"
   checksum: 10c0/a6ebe19b80e1943b860eb865d7efa70641eea80eb39281ebc820e7da88921854b19989350c4aa971798a045e5e1bea2f202d261b4d3c82770a2138f41a844478
@@ -8032,7 +8032,7 @@ __metadata:
     eslint-plugin-html: "npm:6.2.0"
     eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-node: "npm:^11.1.0"
-    eslint-plugin-promise: "npm:^4.2.1"
+    eslint-plugin-promise: "npm:^4.3.1"
     eslint-plugin-standard: "npm:^4.0.1"
     focus-trap: "npm:^6.0.1"
     focus-trap-vue: "npm:^0.0.6"
