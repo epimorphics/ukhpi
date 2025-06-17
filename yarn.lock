@@ -4204,7 +4204,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^6.1.0":
+"eslint@npm:^6.8.0":
   version: 6.8.0
   resolution: "eslint@npm:6.8.0"
   dependencies:
@@ -8027,7 +8027,7 @@ __metadata:
     d3-time-format: "npm:^2.0.5"
     dotenv: "npm:^16.4.7"
     element-ui: "npm:2.15.14"
-    eslint: "npm:^6.1.0"
+    eslint: "npm:^6.8.0"
     eslint-config-standard: "npm:^14.1.1"
     eslint-plugin-html: "npm:6.2.0"
     eslint-plugin-import: "npm:^2.31.0"
