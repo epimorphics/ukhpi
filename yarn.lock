@@ -4160,7 +4160,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-standard@npm:^4.0.1":
+"eslint-plugin-standard@npm:^4.1.0":
   version: 4.1.0
   resolution: "eslint-plugin-standard@npm:4.1.0"
   peerDependencies:
@@ -8033,7 +8033,7 @@ __metadata:
     eslint-plugin-import: "npm:^2.31.0"
     eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-promise: "npm:^4.3.1"
-    eslint-plugin-standard: "npm:^4.0.1"
+    eslint-plugin-standard: "npm:^4.1.0"
     focus-trap: "npm:^6.0.1"
     focus-trap-vue: "npm:^0.0.6"
     glob: "npm:^7.1.2"
