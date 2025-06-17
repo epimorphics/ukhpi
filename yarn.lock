@@ -8064,7 +8064,7 @@ __metadata:
     vue-i18n: "npm:^8.20.0"
     vue-router: "npm:^3.0.1"
     vue-template-compiler: "npm:^2.7.16"
-    vuex: "npm:^3.0.1"
+    vuex: "npm:^3.6.2"
   languageName: unknown
   linkType: soft
 
@@ -8345,7 +8345,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vuex@npm:^3.0.1":
+"vuex@npm:^3.6.2":
   version: 3.6.2
   resolution: "vuex@npm:3.6.2"
   peerDependencies:
