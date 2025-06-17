@@ -61,7 +61,7 @@
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@babel/preset-env": "^7.23.2",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
-    "@types/node": "^22.13.13",
+    "@types/node": "^22.15.32",
     "@vitejs/plugin-legacy": "^6.1.1",
     "@vitejs/plugin-vue2": "^2.3.3",
     "babel-eslint": "^10.0.2",
