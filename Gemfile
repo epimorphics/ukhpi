@@ -52,12 +52,12 @@ group :development, :test do
 end
 
 group :development do
-  gem 'haml-lint'
+  gem 'haml-lint', require: false
   gem 'htmlbeautifier'
   gem 'ruby-lsp'
   gem 'solargraph'
-   # Devtools panel for Rails development - loading from the GitHub repo
-   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
+  # Devtools panel for Rails development - loading from the GitHub repo
+  # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
