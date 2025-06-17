@@ -4137,7 +4137,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-node@npm:^11.0.0":
+"eslint-plugin-node@npm:^11.1.0":
   version: 11.1.0
   resolution: "eslint-plugin-node@npm:11.1.0"
   dependencies:
@@ -8031,7 +8031,7 @@ __metadata:
     eslint-config-standard: "npm:^14.1.1"
     eslint-plugin-html: "npm:6.2.0"
     eslint-plugin-import: "npm:^2.31.0"
-    eslint-plugin-node: "npm:^11.0.0"
+    eslint-plugin-node: "npm:^11.1.0"
     eslint-plugin-promise: "npm:^4.2.1"
     eslint-plugin-standard: "npm:^4.0.1"
     focus-trap: "npm:^6.0.1"
