@@ -77,7 +77,7 @@ module Log
 
     if fields[:request_time] && fields[:message].present?
       fields[:message] += format(', time taken: %.0f ms', fields[:request_time])
-      seconds, milliseconds = fields[:request_time].divmod(1000)
+      seconds, milliseconds = Integer(fields[:request_time]).divmod(1000)
       fields[:request_time] = format('%.0f.%03d', seconds, milliseconds)
     end
 
