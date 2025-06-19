@@ -24,7 +24,7 @@ import VueI18n from 'vue-i18n'
 import i18n from '../lang'
 
 const currentAppRelease = window.ukhpi.version || getAppVersion()
-const basePath = import.meta.env.BASE_PATH || '/'
+const basePath = import.meta.env.VITE_RUBY_BASE || '/'
 
 console.debug('Vite ⚡️ Rails')
 
@@ -32,7 +32,7 @@ console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
 console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
 console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
 console.debug(`Node environment: ${import.meta.env.MODE}`)
-console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
+console.debug(`Sentry Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
 console.debug('HMLR UKHPI Basepath:', basePath)
 console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
 console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
@@ -95,6 +95,7 @@ if (i18n.locale === 'cy') {
 }
 
 const mountVueApp = () => {
+  console.debug(`Mounting Vue app on ${window.location.pathname}...`)
   if (['/browse', '/compare'].includes(window.location.pathname)) {
     // This is the main entry point for the Vue app
     new Vue({
