@@ -7,7 +7,10 @@ class BrowseController < ApplicationController
   layout 'application'
 
   def show
-    Log.info('Requesting Browse Controller', { params: params, path: request.path })
+    Log.info(
+      'Requesting Browse Controller',
+      { params: params, path: request.path, request_status: 'processing' }
+    )
 
     user_selections = UserSelections.new(params)
 
