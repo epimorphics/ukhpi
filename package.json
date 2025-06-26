@@ -20,7 +20,7 @@
     "@fortawesome/fontawesome-free": "^6.7.2",
     "@sentry/integrations": "^6.19.7",
     "@sentry/vite-plugin": "^3.5.0",
-    "@sentry/vue": "^9.30.0",
+    "@sentry/vue": "^9.32.0",
     "axios": "^0.28.1",
     "core-js": "^3.2.1",
     "d3-array": "^2.4.0",
