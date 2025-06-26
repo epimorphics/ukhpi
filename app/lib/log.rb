@@ -65,7 +65,7 @@ module Log
     fields[:message] = message if message.present?
 
     # * Set the request status based on the presence of request_time or duration
-    action = fields[:request_time] || fields[:duration] ? 'processing' : 'received'
+    action = fields[:request_time] || fields[:duration] ? 'processing' : 'complete'
     fields[:request_status] ||= action
 
     # * Apply duration to request_time if request_time is not present
@@ -77,9 +77,9 @@ module Log
 
     if fields[:request_time] && fields[:message].present?
       fields[:message] += format(', time taken: %.0f ms', fields[:request_time])
-      seconds, milliseconds = Integer(fields[:request_time]).divmod(1000)
-      fields[:request_time] = format('%.0f.%03d', seconds, milliseconds)
     end
+
+    fields[:request_time] = format_request_time(log_fields[:request_time])
 
     # * Extract service and params from fields hash
     service = fields[:service] if fields[:service].respond_to?(:api)
@@ -138,5 +138,11 @@ module Log
       JSON.generate(logs)
     end
     Rails.logger.flush if Rails.logger.respond_to?(:flush)
+  end
+
+  # Helper method to format request time in seconds and milliseconds
+  def format_request_time(request_time)
+    seconds, milliseconds = Integer(request_time).divmod(1000)
+    format('%.0f.%03d', seconds, milliseconds)
   end
 end
