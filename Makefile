@@ -59,10 +59,6 @@ check: lint test
 clean:
 # Remove all assets
 	[ -d public/vite/assets ] && ${RAILS} vite:clobber || :
-# Clear cache files from tmp/
-	@${RAILS} tmp:cache:clear
-# Remove all bundled files
-	@${BUNDLE} clean --force
 # Remove all generated files
 	@rm -rf bundle coverage log node_modules vendor
 
@@ -100,6 +96,10 @@ publish: image
 realclean: clean
 # Clear github token from bundle config
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
+# Clear cache files from tmp/
+	@${RAILS} tmp:cache:clear
+# Remove all bundled files
+	@${BUNDLE} clean --force
 
 run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; Docker network create dnet; sleep 2; fi
