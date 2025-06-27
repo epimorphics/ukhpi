@@ -79,7 +79,7 @@ module Log
       fields[:message] += format(', time taken: %.0f ms', fields[:request_time])
     end
 
-    fields[:request_time] = format_request_time(log_fields[:request_time])
+    fields[:request_time] = format_request_time(fields[:request_time])
 
     # * Extract service and params from fields hash
     service = fields[:service] if fields[:service].respond_to?(:api)
@@ -142,6 +142,8 @@ module Log
 
   # Helper method to format request time in seconds and milliseconds
   def format_request_time(request_time)
+    return if request_time.nil? || request_time.zero?
+
     seconds, milliseconds = Integer(request_time).divmod(1000)
     format('%.0f.%03d', seconds, milliseconds)
   end
