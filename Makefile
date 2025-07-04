@@ -10,12 +10,12 @@ NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:b
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 PORT?=3002
 RUBY_VERSION?=$(shell cat .ruby-version)
-RUN_VARS?=--publish
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
 API_SERVICE_URL?=http://data-api:8080
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
 RUN_VARS?=--publish
+
 
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
@@ -55,8 +55,8 @@ check: lint test
 	@echo "All checks passed."
 
 clean:
-# Clean up the project
 	@echo "Cleaning up project ..."
+# Clean up the project
 	@[ -d public/assets ] && ${RAILS} assets:clobber || :
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules vendor tmp
@@ -92,27 +92,30 @@ publish: image
 	@echo Done.
 
 realclean: clean
+# Remove the auth configuration files
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
-	# Clear cache files from tmp/
+# Clear cache files from tmp/
 	@${RAILS} tmp:cache:clear
 # Remove all bundled files
 	@${BUNDLE} clean --force
 
 run: start
-	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; Docker network create dnet; sleep 2; fi
+	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 secret:
 	@echo "Creating secret ..."
 	@export SECRET_KEY_BASE=$(${RAILS} secret)
 
-server:
-	@echo "Starting local server ..."
-	@API_SERVICE_URL=${API_SERVICE_URL} ${RAILS} server -p ${PORT}
+server: start
+	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
 
-start:
+start: stop
+	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
+
+stop:
+	@echo "Stopping ${SHORTNAME} ..."
 	@docker stop ${SHORTNAME} > /dev/null 2>&1 || :
-	@echo "Starting ${SHORTNAME} ..."
 
 tag:
 	@echo ${TAG}
