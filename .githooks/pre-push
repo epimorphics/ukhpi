@@ -1,4 +1,7 @@
 #!/bin/bash
+: "${CLIENT_PROFILE:=hmlr}"
+: "${API_SERVICE_URL:=http://data-api:8080}"
+: "${RUN_VARS:=--detatch --publish}"
 
 list="issue spike task"
 
@@ -12,19 +15,14 @@ if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
  	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
-
-# Check for existence of "new or modified" test files
-TEST_FILES="$(git diff --diff-filter=ACDM --name-only --cached | grep -E '(./test/*)$')"
-# Get all test files to run tests
-RUBY_FILES="$(git ls-files | grep -i -E '(_test\.rb)$')"
-# Get a rough idea of how many files have changes or are untracked
-PRE_STATUS="$(git status | wc -l)"
-
-WORK_DONE=0
-
-if [ -z "$TEST_FILES" ]; then
-  printf '\n\033[0;31mThere are currently no new tests found in "%s". 🤨\033[0m\n' "$BRANCH_NAME"
-  printf '\n\033[0;31mContinuing without new tests... 😖\033[0m\n'
+# Check for existence of "new or modified" files
+if ! git update-index -q --ignore-submodules --refresh; then
+	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
+  DOCKER_BUILD_EXIT_CODE=1
+else
+  printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$CLIENT_PROFILE"
+  AWS_PROFILE=$CLIENT_PROFILE RUN_VARS=$RUN_VARS make image
+  DOCKER_BUILD_EXIT_CODE=$?
 fi
 
 
