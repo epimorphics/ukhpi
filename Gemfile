@@ -4,7 +4,10 @@ source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails'
-# Use Uglifier as compressor for JavaScript assets
+
+# Gems for front-end asset management
+gem 'font-awesome-rails'
+gem 'sass-rails'
 gem 'uglifier'
 
 gem 'haml-rails'
@@ -17,9 +20,6 @@ gem 'webpacker', '~> 5.4'
 # gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'font-awesome-rails'
-gem 'sass-rails'
 
 gem 'govuk_elements_rails'
 gem 'govuk_frontend_toolkit'
