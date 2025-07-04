@@ -21,8 +21,9 @@ module Ukhpi
   # :nodoc:
   class Application < Rails::Application
     # Set the Google Analytics ID, if available
-    # This can be set in the environment variables or left as nil
-    config.google_analytics_id = ENV.fetch('GOOGLE_ANALYTICS_ID', nil)
+    # This can be set in the environment variables or left as old value
+    # for backwards compatibility.
+    config.google_analytics_id = ENV.fetch('GOOGLE_ANALYTICS_ID', 'UA-21165003-6')
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
