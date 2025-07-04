@@ -8,7 +8,7 @@ gem 'rails'
 # Gems for front-end asset management
 gem 'font-awesome-rails'
 gem 'sass-rails'
-gem 'uglifier'
+# gem 'uglifier'
 
 gem 'haml-rails'
 gem 'webpacker', '~> 5.4'
