@@ -107,7 +107,6 @@ GEM
       sxp (~> 2.0)
       unicode-types (~> 1.8)
     erubi (1.13.1)
-    execjs (2.10.0)
     faraday (1.10.4)
       faraday-em_http (~> 1.0)
       faraday-em_synchrony (~> 1.0)
@@ -421,8 +420,6 @@ GEM
       concurrent-ruby (~> 1.0)
     tzinfo-data (1.2025.1)
       tzinfo (>= 1.0.0)
-    uglifier (4.2.1)
-      execjs (>= 0.3.0, < 3)
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
@@ -454,11 +451,11 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.5.3)
+    data_services_api (1.5.4)
       faraday_middleware (~> 1.2.0)
       json (~> 2.6.1)
       yajl-ruby (~> 1.4.1)
-    json_rails_logger (2.0.3)
+    json_rails_logger (2.0.6)
       json
       lograge
       railties
@@ -512,11 +509,10 @@ DEPENDENCIES
   simplecov
   spring
   tzinfo-data
-  uglifier
   vcr
   web-console
   webpacker (~> 5.4)
   yajl-ruby
 
 BUNDLED WITH
-   2.5.23
+   2.6.9
