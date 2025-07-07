@@ -5,15 +5,17 @@ import CompareLocations from '../components/compare-locations.vue';
 
 Vue.use(Router);
 
+const relativeUrlRoot = '<%= Rails.application.config.relative_url_root != '/' ? Rails.application.config.relative_url_root : '' %>';
+
 export default new Router({
   routes: [
     {
-      path: '<%= Rails.application.config.relative_url_root %>/browse',
+      path: relativeUrlRoot + '/browse',
       name: 'single-location',
       component: SingleLocation,
     },
     {
-      path: '<%= Rails.application.config.relative_url_root %>/compare',
+      path: relativeUrlRoot + '/compare',
       name: 'compare-locations',
       component: CompareLocations,
     }

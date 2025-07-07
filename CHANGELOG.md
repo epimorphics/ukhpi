@@ -2,16 +2,25 @@
 
 ## Unreleased
 
+## 2.1.2 - 2025-06
+
+- Improve Google Analytics implementation
+  - Load scripts asynchronously for better performance
+  - Remove legacy script inclusion from views
+- Add post-commit and modify pre-push git hooks
+- Introduce Docker build checks in git hooks
+
 ## 2.1.1 - 2025-04
 
-- (Jon) Updated Data Services Api gem version to include update for ticket
-  [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+- (Jon) Updated Data Services Api gem version to include update for ticket in
+  Dev and PreProd [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## 2.1.0 - 2025-04
 
 - (Jon) Updated layout template HTML lang attributes for I18n support
 - (Jon) Updated changelog for local authority geography - Welsh translation
-- (Jon) Updated the README to include the new `make locations` target information
+- (Jon) Updated the README to include the new `make locations` target
+  information
 - (Jon) Updated the `makefile` to include the new `locations` target for running
   the rake task to update the locations data in the application
 - (Jon) Updated changelog for local authority GSS Codes - English translation
@@ -20,6 +29,11 @@
 - (Jon) Changed GSS code for Sheffield from E08000019 to E08000039
 - (Jon) Changed GSS code for Barnsley from E08000016 to E08000038
 - (Jon) Changed GSS code for Northern Ireland from N92000001 to N92000002
+
+## 2.0.3 - 2025-04
+
+- (Jon) Updated Data Services Api gem version to include update for ticket in
+  Prod instance [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## 2.0.2 - 2025-03
 
