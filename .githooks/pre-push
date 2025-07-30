@@ -21,7 +21,7 @@ if ! git update-index -q --ignore-submodules --refresh; then
   DOCKER_BUILD_EXIT_CODE=1
 else
   printf '\n\033[0;33mBuilding Docker image with "%s" profile... \033[0m\n' "$CLIENT_PROFILE"
-  AWS_PROFILE=$CLIENT_PROFILE RUN_VARS=$RUN_VARS make image
+  AWS_PROFILE=$CLIENT_PROFILE make image
   DOCKER_BUILD_EXIT_CODE=$?
 fi
 
@@ -30,13 +30,19 @@ if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
   exit 1
 else
   printf '\n\033[0;32mDocker image build succeeded. 🎉\033[0m\n'
-  CONTAINER_ID=$(AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL make run | tail -1)
+  CONTAINER_ID=$(make name)
   printf '\n\033[0;33mRunning Docker image %s ... \033[0m\n' "$CONTAINER_ID"
-  sleep 10
+  AWS_PROFILE=$CLIENT_PROFILE API_SERVICE_URL=$API_SERVICE_URL RUN_VARS=$RUN_VARS make run
+  secs=5
+  while [ $secs -gt -1 ]; do
+    echo -ne "$secs\033[0K\r"
+    sleep 1
+    : $((secs--))
+  done
   docker inspect --format="{{.State.Running}}" "$CONTAINER_ID" | grep 'true' -q
   DOCKER_RUN_EXIT_CODE=$?
   printf '\n\033[0;33mStopping Docker image with exit code %s ... \033[0m\n' "$DOCKER_RUN_EXIT_CODE"
-  docker stop "$CONTAINER_ID" > /dev/null 2>&1
+  make stop
 fi
 
 if [ $DOCKER_RUN_EXIT_CODE -ne 0 ]; then
