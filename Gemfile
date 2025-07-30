@@ -28,8 +28,12 @@ gem 'js-routes'
 
 gem 'csv'
 gem 'dotenv'
+
 gem 'faraday'
-gem 'faraday_middleware'
+gem 'faraday-encoding', '~> 0.0.6'
+gem 'faraday-follow_redirects', '~> 0.3.0'
+gem 'faraday-retry', '~> 2.0'
+
 gem 'get_process_mem'
 gem 'govuk_template'
 gem 'http_accept_language'
@@ -56,8 +60,8 @@ group :development do
   gem 'htmlbeautifier'
   gem 'ruby-lsp'
   gem 'solargraph'
-   # Devtools panel for Rails development - loading from the GitHub repo
-   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
+  # Devtools panel for Rails development - loading from the GitHub repo
+  # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
