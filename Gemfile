@@ -22,7 +22,7 @@ gem 'haml-rails'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 gem 'font-awesome-rails'
-gem 'sass-rails'
+gem 'sass-rails', '~> 6.0'
 
 gem 'js-routes'
 

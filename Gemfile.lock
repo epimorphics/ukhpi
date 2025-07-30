@@ -551,7 +551,7 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   ruby-lsp
-  sass-rails
+  sass-rails (~> 6.0)
   selenium-webdriver
   sentry-rails
   simplecov
