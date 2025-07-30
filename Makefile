@@ -1,7 +1,7 @@
-.PHONY:	assets check clean image lint publish realclean run tag test vars
+.PHONY:	assets auth check clean image lint publish realclean run tag test vars
 
 ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
-ALPINE_VERSION?=3.20
+ALPINE_VERSION?=3.22
 AWS_REGION?=eu-west-1
 BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
 ECR?=${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com
@@ -13,17 +13,14 @@ RUBY_VERSION?=$(shell cat .ruby-version)
 NODE_VERSION?=$(shell cat .nvmrc)
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
-API_SERVICE_URL?=http://data-api:8080
+API_SERVICE_URL?=http://localhost:8888
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
-RUN_VARS?=--publish
+RUN_VARS?=-p
 
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
 TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
-
-${TAG}:
-	@echo ${TAG}
 
 IMAGE?=${NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
@@ -33,16 +30,16 @@ BUNDLE_CFG=.bundle/config
 BUNDLE=./bin/bundle
 RAILS=./bin/rails
 
-all: image
-
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 	@${BUNDLE} config set --local rubygems.pkg.github.com ${GPR_OWNER}:`cat ${GITHUB_TOKEN}`
 
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
+all: image
+
 assets:
-	@echo "Installing bundler packages ..."
+	@echo "Installing bundled gems ..."
 	@${BUNDLE} install
 	@echo "Installing yarn packages ..."
 	@yarn install
@@ -57,14 +54,13 @@ check: lint test
 	@echo "All checks passed."
 
 clean:
-# Remove all assets
-	[ -d public/vite/assets ] && ${RAILS} vite:clobber || :
+	@echo "Cleaning up ${SHORTNAME} files..."
+# Clean up the project
+	@[ -d public/assets ] && ${RAILS} assets:clobber || :
 # Clear cache files from tmp/
 	@${RAILS} tmp:cache:clear
-# Remove all bundled files
-	@${BUNDLE} clean --force
-# Remove all generated files
-	@rm -rf bundle coverage log node_modules vendor
+# Remove temporary files and directories
+	@@ rm -rf bundle coverage log node_modules tmp
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
@@ -83,13 +79,20 @@ image: auth
 		.
 	@echo Done.
 
+forceclean: realclean
+# Remove all bundled files
+	@${BUNDLE} clean --force || :
+
 lint: assets
-	@${BUNDLE} install exec rubocop
+	@${BUNDLE} exec rubocop
 
 locations:
 	@echo "Generating new UKHPI location files ... "
 	@${RAILS} ukhpi:locations
 	@echo "Done."
+
+name:
+	@echo ${SHORTNAME}
 
 publish: image
 	@echo Publishing image: ${REPO}:${TAG} ...
@@ -98,7 +101,7 @@ publish: image
 	@echo Done.
 
 realclean: clean
-# Clear github token from bundle config
+	@echo "Removing authentication from ${SHORTNAME}..."
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 run: start
@@ -106,7 +109,7 @@ run: start
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 server: start
-	@API_SERVICE_URL=${API_SERVICE_URL} ./bin/rails server -p ${PORT}
+	@API_SERVICE_URL=${API_SERVICE_URL} ${RAILS} server -p ${PORT}
 
 start: stop
 	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
@@ -119,7 +122,7 @@ tag:
 	@echo ${TAG}
 
 test: assets
-	@echo "Running unit tests ..."
+	@echo "Running tests ..."
 	@${RAILS} test
 
 vars:
@@ -131,6 +134,7 @@ vars:
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
 	@echo "NAME = ${NAME}"
+	@echo "RAILS_RELATIVE_URL_ROOT = ${RAILS_RELATIVE_URL_ROOT}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "NODE_VERSION = ${NODE_VERSION}"
 	@echo "SHORTNAME = ${SHORTNAME}"
