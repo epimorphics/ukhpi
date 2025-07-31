@@ -26,9 +26,6 @@ gem 'haml-rails'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
-gem 'font-awesome-rails'
-gem 'sass-rails'
-
 gem 'js-routes'
 
 gem 'csv'
@@ -54,8 +51,6 @@ group :development, :test do
   gem 'nokogiri'
   gem 'oj'
   gem 'tzinfo-data'
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
 end
 
 group :development do
@@ -66,6 +61,7 @@ group :development do
    # Devtools panel for Rails development - loading from the GitHub repo
    # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'
