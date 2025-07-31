@@ -17,6 +17,7 @@ API_SERVICE_URL?=http://data-api:8080
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
 RUN_VARS?=--publish
 
+
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
@@ -61,10 +62,12 @@ clean:
 	[ -d public/vite/assets ] && ${RAILS} vite:clobber || :
 # Clear cache files from tmp/
 	@${RAILS} tmp:cache:clear
-# Remove all bundled files
-	@${BUNDLE} clean --force
 # Remove all generated files
 	@rm -rf bundle coverage log node_modules vendor
+
+forceclean:
+# Remove all bundled files
+	@${BUNDLE} clean --force
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
@@ -84,7 +87,7 @@ image: auth
 	@echo Done.
 
 lint: assets
-	@${BUNDLE} install exec rubocop
+	@${BUNDLE} exec rubocop
 
 locations:
 	@echo "Generating new UKHPI location files ... "

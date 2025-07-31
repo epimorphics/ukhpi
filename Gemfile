@@ -10,6 +10,11 @@ gem 'vite_rails'
 # gem 'uglifier'
 gem 'terser' # Updating to terser for ES6+ support
 
+# Gems for front-end asset management
+gem 'font-awesome-rails'
+gem 'sass-rails'
+# gem 'uglifier'
+
 gem 'haml-rails'
 # gem 'webpacker', '~> 5.4'
 
@@ -49,6 +54,8 @@ group :development, :test do
   gem 'nokogiri'
   gem 'oj'
   gem 'tzinfo-data'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
+  gem 'spring'
 end
 
 group :development do
