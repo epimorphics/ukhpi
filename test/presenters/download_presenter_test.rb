@@ -95,7 +95,15 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   end
   let(:presenter_all) { DownloadPresenter.new(query_command_all) }
 
-  describe 'DownloadPresenter' do
+  describe 'DownloadPresenter' do # rubocop:disable Metrics/BlockLength
+    before do
+      I18n.locale = :en # Ensure tests run in English locale
+    end
+
+    teardown do
+      I18n.locale = I18n.default_locale
+    end
+
     describe '#column_names' do
       it 'should correctly create an array of column names' do
         _(presenter.column_names.length).must_be :>=, 26

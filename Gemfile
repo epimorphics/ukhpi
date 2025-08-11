@@ -10,6 +10,11 @@ gem 'vite_rails'
 # gem 'uglifier'
 gem 'terser' # Updating to terser for ES6+ support
 
+# Gems for front-end asset management
+gem 'font-awesome-rails'
+gem 'sass-rails'
+# gem 'uglifier'
+
 gem 'haml-rails'
 # gem 'webpacker', '~> 5.4'
 
@@ -20,9 +25,6 @@ gem 'haml-rails'
 # gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 # gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'font-awesome-rails'
-gem 'sass-rails', '~> 6.0'
 
 gem 'js-routes'
 
@@ -60,9 +62,10 @@ group :development do
   gem 'htmlbeautifier'
   gem 'ruby-lsp'
   gem 'solargraph'
-  # Devtools panel for Rails development - loading from the GitHub repo
+  # Original meta_request gem is broken. Using fork provided by rails_panel
   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
+  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   # Access an IRB console on exception pages or by using <%= console %> in views
   gem 'web-console'

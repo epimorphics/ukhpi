@@ -17,6 +17,7 @@ API_SERVICE_URL?=http://localhost:8888
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
 RUN_VARS?=-p
 
+
 BRANCH:=$(shell git rev-parse --abbrev-ref HEAD)
 COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
@@ -61,6 +62,10 @@ clean:
 	@${RAILS} tmp:cache:clear
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
+
+forceclean:
+# Remove all bundled files
+	@${BUNDLE} clean --force
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
@@ -121,8 +126,8 @@ stop:
 tag:
 	@echo ${TAG}
 
-test: assets
-	@echo "Running tests ..."
+test:
+	@echo "Running unit tests ..."
 	@${RAILS} test
 
 vars:

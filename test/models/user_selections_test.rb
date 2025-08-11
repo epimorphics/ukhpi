@@ -8,8 +8,9 @@ def user_selections(params)
 end
 
 # Unit tests on the UserSelections class
-class UserSelectionsTest < ActiveSupport::TestCase
-  describe 'UserSelections' do
+class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+  # Test cases for UserSelections
+  describe 'UserSelections' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
         selections = user_selections('location' => 'test-region')
@@ -261,16 +262,26 @@ class UserSelectionsTest < ActiveSupport::TestCase
     describe '#default_language_selected' do
       it 'should return English as the default' do
         selections = user_selections({})
-        assert selections.english?
-        assert_not selections.welsh?
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
     describe '#default_language_params' do
       it 'should return English when that language is selected' do
         selections = user_selections('lang' => 'en')
-        assert selections.english?
-        assert_not selections.welsh?
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
@@ -280,8 +291,8 @@ class UserSelectionsTest < ActiveSupport::TestCase
         current_locale = I18n.locale
         I18n.locale = :cy # simulate controller action
 
-        assert_not selections.english?
-        assert selections.welsh?
+        assert_not selections.english? # Ensure English is not selected
+        assert selections.welsh? # Ensure Welsh is selected
       ensure
         I18n.locale = current_locale
       end
@@ -290,8 +301,13 @@ class UserSelectionsTest < ActiveSupport::TestCase
     describe '#ignore_other_languages' do
       it 'should ignore other languages' do
         selections = user_selections('lang' => 'fr')
-        assert selections.english?
-        assert_not selections.welsh?
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
@@ -300,10 +316,14 @@ class UserSelectionsTest < ActiveSupport::TestCase
         selections = user_selections(
           'from' => '2017-01'
         )
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
 
         alt_params = selections.alternative_language_params
         _(alt_params.params['from']).must_equal('2017-01')
         _(alt_params.params['lang']).must_equal('cy')
+      ensure
+        I18n.locale = current_locale
       end
     end
 

@@ -4,14 +4,14 @@ require 'test_helper'
 
 # Unit tests on Welsh grammar support
 class WelshGrammarTest < ActiveSupport::TestCase
-  describe 'WelshGrammar' do
+  describe 'WelshGrammar' do # rubocop:disable Metrics/BlockLength
     teardown do
-      I18n.with_locale = :en
+      I18n.default_locale = :en
     end
 
-    describe 'mutations' do
+    describe 'mutations' do # rubocop:disable Metrics/BlockLength
       before do
-        I18n.with_locale = :en
+        I18n.default_locale = :en
       end
 
       it 'make no changes if language is not Welsh' do
@@ -23,7 +23,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate months that are prefix by "o" if necessary' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'Ionawr', assuming_prefix: 'o')
         _(result.result).must_equal('Ionawr')
@@ -33,7 +33,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate a placenmame with an assumed prefix' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'Gwynedd', assuming_prefix: 'yn')
         _(result.result).must_equal('Ngwynedd')
@@ -41,7 +41,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate if the prefix is "yn"' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'yn Bxxyy', prefix: 'yn')
         _(result.result).must_equal('ym Mxxyy')
@@ -57,7 +57,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate if the prefix is "o"' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'o Mxxyy', prefix: 'o')
         _(result.result).must_equal('o Fxxyy')
@@ -68,7 +68,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate if the prefix is "i"' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'i Rhxxyy', prefix: 'i')
         _(result.result).must_equal('i Rxxyy')
@@ -79,7 +79,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should preserve the case of the mutated value' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'yn Dxxyy', prefix: 'yn')
         _(result.result).must_equal('yn Nxxyy')
@@ -88,7 +88,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should mutate correctly if there are spaces in the name' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'Gorllewin Berkshire', assuming_prefix: 'yn')
         _(result.prefix).must_equal('yng')
@@ -100,7 +100,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
       end
 
       it 'should not mutate the single letterform "ch"' do
-        I18n.with_locale = :cy
+        I18n.locale = :cy
 
         result = WelshGrammar.mutate(source: 'i Chwefror', prefix: 'i')
         _(result.result).must_equal('i Chwefror')
