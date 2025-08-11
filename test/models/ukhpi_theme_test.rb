@@ -4,7 +4,15 @@ require 'test_helper'
 
 # Unit tests on the UkhpiTheme class
 class UkhpiThemeTest < ActiveSupport::TestCase
-  describe 'UkhpiTheme' do
+  before do
+    I18n.locale = :en # Set default locale for tests
+  end
+
+  teardown do
+    I18n.locale = I18n.default_locale # Reset locale after tests
+  end
+
+  describe 'UkhpiTheme' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = stub

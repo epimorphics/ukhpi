@@ -96,6 +96,10 @@ class DownloadPresenterTest < ActiveSupport::TestCase
   let(:presenter_all) { DownloadPresenter.new(query_command_all) }
 
   describe 'DownloadPresenter' do # rubocop:disable Metrics/BlockLength
+    before do
+      I18n.locale = :en # Ensure tests run in English locale
+    end
+
     teardown do
       I18n.locale = I18n.default_locale
     end

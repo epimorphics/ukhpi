@@ -262,8 +262,13 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
     describe '#default_language_selected' do
       it 'should return English as the default' do
         selections = user_selections({})
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
         assert selections.english? # Ensure English is the default
         assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
@@ -311,10 +316,14 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
         selections = user_selections(
           'from' => '2017-01'
         )
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
 
         alt_params = selections.alternative_language_params
         _(alt_params.params['from']).must_equal('2017-01')
         _(alt_params.params['lang']).must_equal('cy')
+      ensure
+        I18n.locale = current_locale
       end
     end
 

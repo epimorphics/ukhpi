@@ -25,6 +25,14 @@ class RegionTest < ActiveSupport::TestCase
   end
 
   describe 'Location' do # rubocop:disable Metrics/BlockLength
+    before do
+      I18n.locale = :en # Ensure tests run in English locale
+    end
+
+    teardown do
+      I18n.locale = I18n.default_locale
+    end
+
     describe '#uri' do
       it 'should return the URI' do
         _(region.uri).must_equal 'http://foo.bar/bam'

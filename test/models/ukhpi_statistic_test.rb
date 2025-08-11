@@ -4,6 +4,14 @@ require 'test_helper'
 
 # Unit tests on the UkhpiStatistic class
 class UkhpiStatisticTest < ActiveSupport::TestCase
+  before do
+    I18n.locale = :en # Set default locale for tests
+  end
+
+  teardown do
+    I18n.locale = I18n.default_locale # Reset locale after tests
+  end
+
   describe 'UkhpiStatistic' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
@@ -31,9 +39,6 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
 
     describe '#to_h' do
       it 'should serialize the statistic to a hash correctly when selected' do
-        I18n.default_locale = :en
-        I18n.locale = :en
-
         user_selections = stub(selected_statistics: ['foo'])
         hash = UkhpiStatistic
                .new('foo', 'foo_r', 'all_property_types', true)
