@@ -8,6 +8,12 @@ class Location
 
   attr_reader :uri, :type, :parent, :gss
 
+  # Initializes a new Location instance.
+  # @param uri [String] the URI of the location
+  # @param labels [Hash] a hash of labels for the location, keyed by language
+  # @param type [String] the RDF type of the location
+  # @param parent [String] the URI of the parent location
+  # @param gss [String] the GSS code for the location
   def initialize(uri, labels, type, parent, gss)
     @uri = uri
     @labels = labels
