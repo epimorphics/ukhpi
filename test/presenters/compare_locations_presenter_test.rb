@@ -142,7 +142,15 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
 
   let(:presenter) { CompareLocationsPresenter.new(user_selections, query_results) }
 
-  describe 'CompareLocationsPresenter' do
+  describe 'CompareLocationsPresenter' do # rubocop:disable Metrics/BlockLength
+    before do
+      I18n.locale = :en
+    end
+
+    teardown do
+      I18n.locale = I18n.default_locale
+    end
+
     describe '#headline_summary' do
       it 'should correctly generate a summary headline' do
         _(presenter.headline_summary)

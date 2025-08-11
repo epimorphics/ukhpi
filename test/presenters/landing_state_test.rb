@@ -25,6 +25,14 @@ class LandingStateTest < ActiveSupport::TestCase
     LandingState.new({}, lv)
   end
 
+  before do
+    I18n.locale = :en
+  end
+
+  teardown do
+    I18n.locale = I18n.default_locale
+  end
+
   it 'returns the result when one is available' do
     ls = mock_landing_state([mock_latest_value_data])
 
