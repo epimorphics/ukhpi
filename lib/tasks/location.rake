@@ -57,7 +57,7 @@ class LocationRecord
 end
 
 # Encapsulates a particular location
-class Location
+class LocationContainer
   attr_reader :uri, :container, :container2, :container3, :gss, :message
 
   def initialize(location_record)
@@ -114,7 +114,7 @@ class Location
   end
 
   def to_ruby
-    'Location.new(' \
+    'LocationContainer.new(' \
       "#{uri.inspect}, " \
       "#{@labels.inspect}, " \
       "#{preferred_type.inspect}, " \
@@ -202,7 +202,7 @@ def process_location_data(location_data, locations, all_types)
   if loc
     loc.update_from(lr)
   else
-    locations[lr.uri] = Location.new(lr)
+    locations[lr.uri] = LocationContainer.new(lr)
   end
 end
 
@@ -211,7 +211,8 @@ namespace :ukhpi do # rubocop:disable Metrics/BlockLength
   task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
 
   # run the SPARQL query to generate the locations results
-  task locations_query: :environment do
+  task locations_query: :environment do # rubocop:disable Metrics/BlockLength
+
     query = "
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix qb: <http://purl.org/linked-data/cube#>
