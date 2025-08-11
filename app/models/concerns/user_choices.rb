@@ -41,6 +41,7 @@ module UserChoices
   # * return the default value
   def param_or_default(key)
     return params[key] unless params[key].nil?
+
     if (alt_key = alternative_key(key)) && params[alt_key]
       return params[alt_key]
     end
