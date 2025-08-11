@@ -6,7 +6,7 @@
 class Location
   WALES = 'http://landregistry.data.gov.uk/id/region/wales'
 
-  attr_reader :uri, :type, :parent, :gss
+  attr_reader :uri, :labels, :type, :parent, :gss
 
   # Initializes a new Location instance.
   # @param uri [String] the URI of the location
