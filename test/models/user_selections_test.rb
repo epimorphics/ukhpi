@@ -262,16 +262,21 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
     describe '#default_language_selected' do
       it 'should return English as the default' do
         selections = user_selections({})
-        assert selections.english?
-        assert_not selections.welsh?
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
       end
     end
 
     describe '#default_language_params' do
       it 'should return English when that language is selected' do
         selections = user_selections('lang' => 'en')
-        assert selections.english?
-        assert_not selections.welsh?
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
@@ -281,8 +286,8 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
         current_locale = I18n.locale
         I18n.locale = :cy # simulate controller action
 
-        assert_not selections.english?
-        assert selections.welsh?
+        assert_not selections.english? # Ensure English is not selected
+        assert selections.welsh? # Ensure Welsh is selected
       ensure
         I18n.locale = current_locale
       end
@@ -291,8 +296,13 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
     describe '#ignore_other_languages' do
       it 'should ignore other languages' do
         selections = user_selections('lang' => 'fr')
-        assert selections.english?
-        assert_not selections.welsh?
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
+        assert selections.english? # Ensure English is the default
+        assert_not selections.welsh? # Ensure Welsh is not selected
+      ensure
+        I18n.locale = current_locale
       end
     end
 
