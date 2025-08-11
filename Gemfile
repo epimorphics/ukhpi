@@ -58,8 +58,8 @@ group :development do
   gem 'htmlbeautifier'
   gem 'ruby-lsp'
   gem 'solargraph'
-   # Devtools panel for Rails development - loading from the GitHub repo
-   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
+  # Original meta_request gem is broken. Using fork provided by rails_panel
+  # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
