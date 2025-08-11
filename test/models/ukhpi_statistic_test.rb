@@ -31,6 +31,9 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
 
     describe '#to_h' do
       it 'should serialize the statistic to a hash correctly when selected' do
+        I18n.default_locale = :en
+        I18n.locale = :en
+
         user_selections = stub(selected_statistics: ['foo'])
         hash = UkhpiStatistic
                .new('foo', 'foo_r', 'all_property_types', true)

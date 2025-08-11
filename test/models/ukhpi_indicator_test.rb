@@ -7,6 +7,9 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
   describe 'UkhpiIndicator' do
     describe '#initialize' do
       it 'should provide access to the initialised values' do
+        I18n.default_locale = :en
+        I18n.locale = :en
+
         ind = UkhpiIndicator.new('foo', 'foo_root', 'average_price')
         _(ind.slug).must_equal 'foo'
         _(ind.root_name).must_equal 'foo_root'
@@ -23,6 +26,9 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
 
     describe '#to_h' do
       it 'should correctly convert the indicator to a hash' do
+        I18n.default_locale = :en
+        I18n.locale = :en
+
         user_selections = stub(selected_indicators: ['foo'])
 
         hash = UkhpiIndicator.new('foo', 'r', 'average_price').to_h(user_selections)
