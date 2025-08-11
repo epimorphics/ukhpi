@@ -121,7 +121,7 @@ stop:
 tag:
 	@echo ${TAG}
 
-test: assets
+test:
 	@echo "Running unit tests ..."
 	@${RAILS} test
 
