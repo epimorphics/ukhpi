@@ -9,7 +9,7 @@ end
 
 # Unit tests on the UserSelections class
 class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
-  describe 'UserSelections' do
+  # Test cases for UserSelections
   describe 'UserSelections' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
