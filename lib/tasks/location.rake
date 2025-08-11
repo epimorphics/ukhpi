@@ -140,7 +140,7 @@ class Location
   end
 end
 
-def write_locations_files(locations, all_types)
+def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
   location_names = []
   gss_index = {}
 
@@ -206,7 +206,7 @@ def process_location_data(location_data, locations, all_types)
   end
 end
 
-namespace :ukhpi do
+namespace :ukhpi do # rubocop:disable Metrics/BlockLength
   desc 'Generate the locations files by SPARQL query'
   task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
 

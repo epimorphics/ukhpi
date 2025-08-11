@@ -15,7 +15,7 @@ class RegionTest < ActiveSupport::TestCase
                  'D12345678')
   end
 
-  describe 'Location' do
+  describe 'Location' do # rubocop:disable Metrics/BlockLength
     describe '#uri' do
       it 'should return the URI' do
         _(region.uri).must_equal 'http://foo.bar/bam'
