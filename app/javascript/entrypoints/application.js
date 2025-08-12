@@ -38,35 +38,43 @@ console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
 console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
 
 const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
-// This sets the sample rate to be 100% while in development
-// and samples at a lower rate of 10% when in production
-const sessionSampleRate = currentEnvironment.includes('dev') ? 1.0 : 0.1
-// If we're not already sampling the entire session, change the error
-// sample rate to 100% when sampling sessions where errors occur.
-const errorSampleRate = currentEnvironment.includes('prod') ? 1.0 : 0.1
 
-// Register Sentry error tracking with Vue
-Sentry.init({
-  Vue,
-  debug: currentEnvironment.includes('dev'),
-  dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
-  environment: currentEnvironment,
-  release: `${currentAppRelease}`,
-  ignoreErrors: ['Non-Error promise rejection captured'],
-  initialScope: {
-    tags: { app: 'ukhpi-js' }
-  },
-  integrations: [
-    Sentry.replayIntegration()
-  ],
-  // Session Replay set by current MODE env variable:
-  replaysSessionSampleRate: sessionSampleRate,
-  replaysOnErrorSampleRate: errorSampleRate
-})
+if (currentEnvironment.includes('dev')) {
+  console.log('Not in production, skipping Sentry initialisation')
+  console.debug('Development mode detected, enabling Vue devtools')
+  Vue.config.devtools = true
+} else {
+  Vue.config.devtools = false
+  // This sets the sample rate to be 100% while in development
+  // and samples at a lower rate of 10% when in production
+  const sessionSampleRate = currentEnvironment.includes('dev') ? 1.0 : 0.1
+  // If we're not already sampling the entire session, change the error
+  // sample rate to 100% when sampling sessions where errors occur.
+  const errorSampleRate = currentEnvironment.includes('prod') ? 1.0 : 0.1
+
+  // Register Sentry error tracking with Vue
+  Sentry.init({
+    Vue,
+    debug: currentEnvironment.includes('dev'),
+    dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+    enabled: !currentEnvironment.includes('dev'),
+    environment: currentEnvironment,
+    release: `${currentAppRelease}`,
+    ignoreErrors: ['Non-Error promise rejection captured'],
+    initialScope: {
+      tags: { app: 'ukhpi-js' }
+    },
+    integrations: [
+      Sentry.replayIntegration()
+    ],
+    // Session Replay set by current MODE env variable:
+    replaysSessionSampleRate: sessionSampleRate,
+    replaysOnErrorSampleRate: errorSampleRate
+  })
+}
 
 // Set up the Vue app
 Vue.use(VueI18n)
-Vue.config.devtools = true
 
 // Use Element.IO
 Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeElementCy })

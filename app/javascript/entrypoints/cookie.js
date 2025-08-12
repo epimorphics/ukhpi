@@ -63,7 +63,7 @@ function getCookie (name) {
   const cookieList = decodedCookie.split(';')
   for (let i = 0; i < cookieList.length; i++) {
     let cookie = cookieList[i]
-    while (cookie.charAt(0) == ' ') {
+    while (cookie.charAt(0) === ' ') {
       cookie = cookie.substring(1)
     }
     if (cookie.indexOf(key) == 0) {
@@ -192,7 +192,7 @@ const loadAnalytics = async (inProduction = false) => {
   try {
     // Check if the environment is production
     if (!inProduction) {
-      console.log('Not in production, skipping Google Analytics initialization')
+      console.log('Not in production, skipping Google Analytics initialisation')
       console.debug('Google Analytics ID:', GA_TRACKING_ID)
       return
     }
