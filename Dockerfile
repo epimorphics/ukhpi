@@ -1,12 +1,13 @@
-ARG ALPINE_VERSION=3.20
-ARG RUBY_VERSION=3.3.5
+ARG RUBY_VERSION=3.4.4
+ARG NODE_VERSION=22
+ARG ALPINE_VERSION=3.22
+ARG BUNDLER_VERSION=2.7.1
 
 # Load node from official build
 FROM node:$NODE_VERSION-alpine AS node
 
 # Defines base image which builder and final stage use
-FROM ruby:${RUBY_VERSION}-alpine${ALPINE_VERSION} AS base
-ARG BUNDLER_VERSION=2.6.9
+FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
 
 # Copy node binaries from the official image
 COPY --from=node /usr/lib /usr/lib
@@ -23,14 +24,12 @@ RUN apk add --update --no-cache \
     npm \
     nodejs \
     tzdata \
-    yarn \
-    && rm -rf /var/cache/apk/* \
-    && gem install rubygems-update -v 3.4.22 \
-    && update_rubygems \
-    && gem install bundler:$BUNDLER_VERSION \
-    && bundle config --global frozen 1
+    && gem update --system
 
-FROM base AS builder
+# for Bundler
+ARG BUNDLER_VERSION
+RUN echo "Bundler version ${BUNDLER_VERSION}"
+RUN gem install bundler:$BUNDLER_VERSION
 
 # for Yarn
 RUN npm install -g corepack
