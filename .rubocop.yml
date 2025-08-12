@@ -2,7 +2,6 @@ plugins:
   - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.3
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
