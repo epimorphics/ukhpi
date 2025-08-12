@@ -63,9 +63,9 @@ clean:
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
 
-forceclean:
+forceclean: realclean
 # Remove all bundled files
-	@${BUNDLE} clean --force
+	@${BUNDLE} clean --force || :
 
 image: auth
 	@echo Building ${NAME}:${TAG} ...
@@ -83,10 +83,6 @@ image: auth
 		--tag ${NAME}:${TAG} \
 		.
 	@echo Done.
-
-forceclean: realclean
-# Remove all bundled files
-	@${BUNDLE} clean --force || :
 
 lint: assets
 	@${BUNDLE} exec rubocop
