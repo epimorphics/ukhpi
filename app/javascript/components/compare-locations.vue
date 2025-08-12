@@ -36,7 +36,7 @@
             {{ location.labels[$locale] || location.labels.en }}
             <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'
               :title="$t('action.remove')" :aria-label="$t('action.remove')">
-              <i class='fa fa-times-circle fa-2x'></i>
+              <i class='fa fa-times-circle'></i>
             </button>
           </li>
           <li v-if='showAddLocationButton' class='c-compare__location'>
@@ -98,7 +98,7 @@ import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
 import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
-import { newDownloadPath, comparePath } from '../lib/routes.js.erb';
+import { newDownloadPath, comparePath, printPath } from '../lib/routes.js.erb';
 import unavailable from '../models/ukhpi-cube-metadata';
 
 const MAX_LOCATIONS = 5;
