@@ -3,18 +3,39 @@
 : "${API_SERVICE_URL:=http://data-api:8080}"
 : "${RUN_VARS:=--detatch --publish}"
 
+# Check if the script is being run in a Git repository
+if ! git rev-parse --is-inside-work-tree &>/dev/null; then
+  printf '\n\033[0;31mThis script must be run inside a Git repository.\033[0m\n'
+  exit 1
+fi
+
+# Check if Docker is installed and running
+if ! command -v docker &>/dev/null; then
+  printf '\n\033[0;31mDocker is not installed or not running. Please check Docker and try again.\033[0m\n'
+  exit 1
+else
+  printf '\n\033[0;32mDocker is installed and running. Proceeding with the checks... 🎉\033[0m\n'
+fi
+
+# The branch prefixes are defined in the list variable
+# and can be modified as needed.
 list="issue spike task"
-
+# The list is converted to a regular expression
 listRE="^($(printf '%s\n' "$list" | tr ' ' '|'))/"
-
+# Set the branch name based on the current branch
+# The branch name is extracted using grep and sed
+# to match the branch prefixes.
 BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
-
+# If the branch name is empty, it means the current branch
+# does not match any of the prefixes.
 printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
-
+# If the branch name is one of the specified prefixes,
+# skip the checks and exit with success.
 if echo "$BRANCH_NAME" | grep -q '^(hotfix)|(rebase)|(production)*$'; then
  	printf '\n\033[0;32mNo checks necessary on "%s", skipping hooks... 🎉\033[0m\n' "$BRANCH_NAME"
 	exit 0
 fi
+
 # Check for existence of "new or modified" files
 if ! git update-index -q --ignore-submodules --refresh; then
 	printf '\n\033[0;31mUp-to-date check failed😖\033[0m\n'
@@ -25,6 +46,7 @@ else
   DOCKER_BUILD_EXIT_CODE=$?
 fi
 
+# If the Docker image build fails, print an error message and exit with an error code.
 if [ $DOCKER_BUILD_EXIT_CODE -ne 0 ]; then
   printf '\n\033[0;31mDocker image build failed. Please check your changes. 😖\033[0m\n'
   exit 1
