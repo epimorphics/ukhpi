@@ -32,7 +32,6 @@
       :javascript
         window.isIE8 = true;
 
-    = javascript_pack_tag 'ukhpi_vue', defer: true
 
   %body.government.website.hmlr
     = render partial: 'common/cookie_banner' if Rails.env.production? || Rails.logger.debug?
