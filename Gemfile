@@ -36,6 +36,7 @@ gem 'faraday-encoding', '~> 0.0.6'
 gem 'faraday-follow_redirects', '~> 0.3.0'
 gem 'faraday-retry', '~> 2.0'
 
+gem 'foreman'
 gem 'get_process_mem'
 gem 'govuk_template'
 gem 'http_accept_language'
