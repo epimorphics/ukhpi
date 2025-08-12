@@ -14,7 +14,12 @@ if ! command -v docker &>/dev/null; then
   printf '\n\033[0;31mDocker is not installed or not running. Please check Docker and try again.\033[0m\n'
   exit 1
 else
-  printf '\n\033[0;32mDocker is installed and running. Proceeding with the checks... 🎉\033[0m\n'
+    DOCKER_SERVER_VERSION=$(docker info -f json | jq -r '.ServerVersion')
+    if [ $? -eq 0 ]; then
+        printf "\n\033[0;32mDocker is installed and running at version ${DOCKER_SERVER_VERSION}. Proceeding with the checks... 🎉\033[0m\n"
+    else
+        printf '\n\033[0;31mDocker is installed but not running. Please start Docker and try again.\033[0m\n'
+    fi
 fi
 
 # The branch prefixes are defined in the list variable
