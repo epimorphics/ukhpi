@@ -20,7 +20,7 @@ import '../lib/ie-d3-fix'
 
 // set up internationalization support
 import VueI18n from 'vue-i18n'
-import i18n from 'lang'
+import i18n from '../lang'
 
 Vue.use(VueI18n)
 
@@ -53,12 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
   Sentry.init({
     dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
     debug: process.env.NODE_ENV === 'development',
+    enabled: process.env.NODE_ENV !== 'development',
     environment: process.env.NODE_ENV,
+    ignoreErrors: ['Non-Error promise rejection captured'],
     integrations: [
       new Integrations.Vue({ Vue, attachProps: true })
     ],
     release: window.ukhpi.version || '1.0.0',
-    ignoreErrors: ['Non-Error promise rejection captured']
+    tracesSampleRate: 1.0 // Adjust this value for performance monitoring
   })
 
   if (process.env.NODE_ENV === 'production') {
