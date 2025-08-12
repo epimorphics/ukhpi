@@ -112,5 +112,5 @@ COPY --from=builder --chown=app ${DIR} .
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh "/app/entrypoint.sh"
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+COPY entrypoint.sh "${DIR}/entrypoint.sh"
+ENTRYPOINT ["sh", "${DIR}/entrypoint.sh"]
