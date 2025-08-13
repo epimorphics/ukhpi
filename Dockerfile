@@ -24,6 +24,7 @@ RUN apk add --update --no-cache \
     npm \
     nodejs \
     tzdata \
+    yaml-dev \
     && gem update --system
 
 # for Bundler
