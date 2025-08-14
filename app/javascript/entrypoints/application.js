@@ -3,7 +3,7 @@ import * as Sentry from '@sentry/vue'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
 import localeElementCy from '../lang/element-ui-cy'
-import localeD3Cy from '@/lang/d3-timeformat-cy.json'
+import localeD3Cy from '../lang/d3-timeformat-cy.json'
 import Numeral from 'numeral'
 import 'core-js/stable'
 import 'regenerator-runtime/runtime'
@@ -25,6 +25,8 @@ import i18n from '../lang'
 
 const currentAppRelease = window.ukhpi.version || getAppVersion()
 
+const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
+
 console.debug('Vite ⚡️ Rails')
 
 console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
@@ -34,43 +36,62 @@ console.debug(`Node environment: ${import.meta.env.MODE}`)
 console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
 console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
 console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
+console.debug(`Sentry Enabled: ${import.meta.env.SENTRY_ENABLED}`)
 
 console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
 
-const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
-
-if (currentEnvironment.includes('dev')) {
-  console.log('Not in production, skipping Sentry initialisation')
+if (currentEnvironment === 'development') {
+  console.warn('Not in production, skipping Sentry initialisation')
   console.debug('Development mode detected, enabling Vue devtools')
   Vue.config.devtools = true
 } else {
-  Vue.config.devtools = false
-  // This sets the sample rate to be 100% while in development
-  // and samples at a lower rate of 10% when in production
-  const sessionSampleRate = currentEnvironment.includes('dev') ? 1.0 : 0.1
-  // If we're not already sampling the entire session, change the error
-  // sample rate to 100% when sampling sessions where errors occur.
-  const errorSampleRate = currentEnvironment.includes('prod') ? 1.0 : 0.1
+  Vue.config.devtools = true
+  if (import.meta.env.SENTRY_ENABLED) {
+    // This sets the sample rate to be 100% while in development
+    // and samples at a lower rate of 10% when in production
+    const sessionSampleRate = currentEnvironment.includes('dev') ? 1.0 : 0.1
+    // If we're not already sampling the entire session, change the error
+    // sample rate to 100% when sampling sessions where errors occur.
+    const errorSampleRate = currentEnvironment.includes('prod') ? 1.0 : 0.1
 
-  // Register Sentry error tracking with Vue
-  Sentry.init({
-    Vue,
-    debug: currentEnvironment.includes('dev'),
-    dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
-    enabled: !currentEnvironment.includes('dev'),
-    environment: currentEnvironment,
-    release: `${currentAppRelease}`,
-    ignoreErrors: ['Non-Error promise rejection captured'],
-    initialScope: {
-      tags: { app: 'ukhpi-js' }
-    },
-    integrations: [
-      Sentry.replayIntegration()
-    ],
-    // Session Replay set by current MODE env variable:
-    replaysSessionSampleRate: sessionSampleRate,
-    replaysOnErrorSampleRate: errorSampleRate
-  })
+    // Register Sentry error tracking with Vue
+    Sentry.init({
+      Vue,
+      debug: currentEnvironment.includes('dev'),
+      dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+      enabled: !currentEnvironment.includes('dev'),
+      environment: currentEnvironment,
+      ignoreErrors: ['Non-Error promise rejection captured'],
+      initialScope: {
+        tags: { app: 'ukhpi-js' }
+      },
+      integrations: [
+        Sentry.replayIntegration()
+      ],
+      release: `${currentAppRelease}`,
+      // Session Replay set by current MODE env variable:
+      replaysSessionSampleRate: sessionSampleRate,
+      replaysOnErrorSampleRate: errorSampleRate,
+      telemetry: {
+        tracesSampleRate: currentEnvironment.includes('dev') ? 1.0 : 0.1,
+        tracePropagationTargets: ['localhost', 'https://landregistry.gov.uk/app/ukhpi']
+      }
+    })
+
+    const sentryTags = {
+      app: 'ukhpi-js',
+      band: import.meta.env.SENTRY_BAND || null,
+      enabled: import.meta.env.SENTRY_ENABLED || null,
+      hostname: import.meta.env.SENTRY_HOSTNAME || null
+    }
+    Sentry.configureScope(scope => {
+      sentryTags.each((value, key) => {
+        if (value !== null) { // Only set tags that are not null
+          scope.setTag(key, value)
+        }
+      })
+    })
+  }
 }
 
 // Set up the Vue app
