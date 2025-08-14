@@ -106,7 +106,7 @@ realclean: clean
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 run: start
-	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; Docker network create dnet; sleep 2; fi
+	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 server: start
