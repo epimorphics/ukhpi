@@ -559,7 +559,6 @@ DEPENDENCIES
   rubocop-rails
   ruby-lsp
   sass-rails
-  selenium-webdriver
   sentry-rails
   simplecov
   solargraph
