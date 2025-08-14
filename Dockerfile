@@ -24,6 +24,7 @@ RUN apk add --update --no-cache \
     npm \
     nodejs \
     tzdata \
+    yaml-dev \
     && gem update --system
 
 # for Bundler
@@ -112,5 +113,5 @@ COPY --from=builder --chown=app ${DIR} .
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh "${DIR}/entrypoint.sh"
-ENTRYPOINT ["sh", "${DIR}/entrypoint.sh"]
+COPY entrypoint.sh "app/entrypoint.sh"
+ENTRYPOINT ["sh", "app/entrypoint.sh"]
