@@ -1,11 +1,22 @@
+@use "sass:color";
+
 .o-data-table {
-  tbody tr:nth-child(odd) td {
-    background-color: #fafafa;
+  border-collapse: collapse;
+
+  tbody tr {
+    &:nth-child(odd) td {
+      background-color: #fafafa;
+    }
+    &:focus td,
+    &:hover td {
+      background-color: color.scale(#fafafa, $lightness: -5%);
+      cursor: default;
+    }
   }
 
   td, th {
     font-size: 0.8em;
-    padding: 0.2em 0.5em;
+    padding: 0.4em;
   }
 
   td {
