@@ -27,20 +27,20 @@ const currentAppRelease = window.ukhpi.version || getAppVersion()
 
 const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
 
-console.debug('Vite ⚡️ Rails')
-
-console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
-console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
-console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
-console.debug(`Node environment: ${import.meta.env.MODE}`)
-console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
-console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
-console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
-console.debug(`Sentry Enabled: ${import.meta.env.SENTRY_ENABLED}`)
-
-console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
-
 if (currentEnvironment === 'development') {
+  console.debug('Vite ⚡️ Rails')
+
+  console.debug(`Organisation: ${import.meta.env.SENTRY_ORG}`)
+  console.debug(`Project: ${import.meta.env.SENTRY_PROJECT}`)
+  console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
+  console.debug(`Node environment: ${import.meta.env.MODE}`)
+  console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
+  console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
+  console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
+  console.debug(`Sentry Enabled: ${import.meta.env.SENTRY_ENABLED}`)
+
+  console.debug('Visit the guide for more information: https://vite-ruby.netlify.app/guide/rails')
+
   console.warn('Not in production, skipping Sentry initialisation')
   console.debug('Development mode detected, enabling Vue devtools')
   Vue.config.devtools = true
