@@ -98,7 +98,7 @@ import DataViewDates from './data-view-dates.vue';
 import CompareAdditionalLocation from './compare-additional-location.vue';
 import CompareLocationsTable from './compare-locations-table.vue';
 import bus from '../lib/event-bus';
-import { newDownloadPath, comparePath, printPath } from '../lib/routes.js.erb';
+import { newDownloadPath, comparePath } from '../lib/routes.js.erb';
 import unavailable from '../models/ukhpi-cube-metadata';
 
 const MAX_LOCATIONS = 5;
