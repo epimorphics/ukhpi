@@ -62,13 +62,12 @@ end
 
 group :test do
   gem 'capybara'
+  gem 'capybara-playwright-driver'
   gem 'm'
   gem 'minitest-rails'
   gem 'minitest-rails-capybara'
   gem 'minitest-reporters'
-  # gem 'minitest-spec-rails'
   gem 'mocha'
-  gem 'selenium-webdriver'
   gem 'simplecov', require: false
   gem 'vcr'
 end
