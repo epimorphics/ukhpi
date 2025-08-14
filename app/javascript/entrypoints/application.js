@@ -122,16 +122,18 @@ if (i18n.locale === 'cy') {
 }
 
 const mountVueApp = () => {
-  if (['/browse', '/compare'].includes(window.location.pathname)) {
-    // This is the main entry point for the Vue app
-    new Vue({
-      i18n,
-      store,
-      router
-    }).$mount('#application')
-  }
+  // This is the main entry point for the Vue app
+  new Vue({
+    i18n,
+    store,
+    router
+  }).$mount('#application')
 }
 
+/**
+ * Mount the Vue app when the DOM is ready.
+ * This ensures that the app is only mounted after the DOM has been fully loaded.
+ */
 if (document.readyState === 'loading') {
   // Loading hasn't finished yet
   document.addEventListener('DOMContentLoaded', mountVueApp)
