@@ -162,7 +162,12 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
                                      'from' => '2017-01',
                                      'to' => '2017-10',
                                      'location' => 'http://landregistry.data.gov.uk/id/region/england')
+        current_locale = I18n.locale
+        I18n.locale = :en # simulate controller action
+
         _(selections.summary).must_equal 'property_type England from 2017-01 to 2017-10'
+      ensure
+        I18n.locale = current_locale
       end
     end
 
