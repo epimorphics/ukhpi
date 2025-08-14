@@ -42,7 +42,7 @@
           <li v-if='showAddLocationButton' class='c-compare__location'>
             <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'
               :title="$t('action.add_location')" :aria-label="$t('action.add_location')">
-              <i class='fa fa-plus-circle fa-2x'></i>
+              <i class='fa fa-plus-circle'></i>
             </button>
             <compare-additional-location></compare-additional-location>
           </li>
