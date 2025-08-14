@@ -1,12 +1,12 @@
-plugins: rubocop-rails
+plugins:
+  - rubocop-rails
 
 AllCops:
-  TargetRubyVersion: 3.3
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
-    - 'node_modules/**/*'
-    - 'Gemfile'
+    - "node_modules/**/*"
+    - "Gemfile"
   NewCops: enable
 
 # Customize rules
@@ -52,7 +52,7 @@ Metrics/BlockLength:
     - lib/tasks/**/*
 
 Metrics/ClassLength:
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
   Exclude:
     - test/**/*
 
@@ -61,7 +61,7 @@ Metrics/CyclomaticComplexity:
     - lib/tasks/location.rake
 
 Metrics/MethodLength:
-  CountAsOne: ['array', 'hash', 'heredoc', 'method_call']
+  CountAsOne: ["array", "hash", "heredoc", "method_call"]
   Exclude:
     - test/**/*
     - lib/tasks/location.rake

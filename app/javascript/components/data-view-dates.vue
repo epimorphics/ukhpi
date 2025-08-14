@@ -62,9 +62,9 @@
 <script>
 import Moment from 'moment';
 import { FocusTrap } from 'focus-trap-vue'
-import { SET_DATES } from '@/store/mutation-types';
-import bus from '@/lib/event-bus';
-import { mutateName } from '@/lang/welsh-name-mutations'
+import { SET_DATES } from '../store/mutation-types';
+import bus from '../lib/event-bus';
+import { mutateName } from '../lang/welsh-name-mutations'
 
 export default {
   name: 'data-view-dates',

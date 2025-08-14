@@ -6,11 +6,14 @@ import vue from '@vitejs/plugin-vue2'
 import { fileURLToPath, URL } from 'node:url'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
 
-export default defineConfig(({ command, mode }) => {
-  // Load env file based on `mode` in the current working directory.
-  // Set the third parameter to '' to load all env regardless of the
-  // `VITE_` prefix.
+export default defineConfig(({ mode }) => {
+  /*
+   * Load env file based on `mode` in the current working directory.
+   * Set the third parameter to '' to load all env regardless of the
+   * `VITE_` prefix.
+   */
   const env = loadEnv(mode, process.cwd(), '')
+  const currentAppRelease = env.HMLR_APP_VERSION || '1.0.0'
 
   return {
 
@@ -25,15 +28,19 @@ export default defineConfig(({ command, mode }) => {
         org: env.SENTRY_ORG,
         project: env.SENTRY_PROJECT,
         authToken: env.SENTRY_AUTH_TOKEN,
-        telemetry: env.RAILS_ENV === 'production',
+        release: {
+          name: `${env.SENTRY_PROJECT}@${currentAppRelease}`
+        },
+
         sourcemaps: {
           ignore: ['node_modules']
-        }
+        },
+        telemetry: env.RAILS_ENV === 'production'
       })
     ],
     build: {
-      assetsInlineLimit: 0, // Prevents inlining of all assets
-      base: env.RAILS_ENV === 'production' ? '/app/ukhpi/' : '/',
+      assetsInlineLimit: 0, // Prevents inlining of all assets, resolves issues with graph icons
+      base: env.VITE_RUBY_BASE,
       sourcemap: true, // Source map generation must be turned on for Sentry to work
       target: 'esnext'
     },

@@ -1,7 +1,7 @@
-ARG RUBY_VERSION=3.3.5
-ARG NODE_VERSION=20
-ARG ALPINE_VERSION=3.20
-ARG BUNDLER_VERSION=2.6.6
+ARG RUBY_VERSION=3.4.4
+ARG NODE_VERSION=22
+ARG ALPINE_VERSION=3.22
+ARG BUNDLER_VERSION=2.7.1
 
 # Load node from official build
 FROM node:$NODE_VERSION-alpine AS node
@@ -24,6 +24,7 @@ RUN apk add --update --no-cache \
     npm \
     nodejs \
     tzdata \
+    yaml-dev \
     && gem update --system
 
 # for Bundler
@@ -112,5 +113,5 @@ COPY --from=builder --chown=app ${DIR} .
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh "/app/entrypoint.sh"
-ENTRYPOINT ["sh", "/app/entrypoint.sh"]
+COPY entrypoint.sh "app/entrypoint.sh"
+ENTRYPOINT ["sh", "app/entrypoint.sh"]

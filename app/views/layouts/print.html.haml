@@ -1,16 +1,23 @@
-!!! html
-%html{ 'lang' => 'en', 'xml:lang' => 'en', 'xmlns' => 'http://www.w3.org/1999/xhtml' }
+%html{ lang: 'en', data: { 'rails-env': Rails.env, GA_ID: Rails.application.config.google_analytics_id} }
   %head
-    %meta{ charset: 'utf-8' }
-    %meta{ 'http-equiv' => 'x-ua-compatible', content: 'ie=edge' }
-    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1, shrink-to-fit=no' }
+    %meta{ charset: 'utf-8', httpEquiv:'Content-Type' }
+    %meta{ name: 'viewport', content: 'width=device-width, initial-scale=1' }
     %title
       = (yield(:title) + " - " unless yield(:title).blank?).to_s + I18n.t('common.header.app_title')
-    - if Rails.env.production?
-      = render partial: 'common/google-analytics'
-      = csrf_meta_tags
-    = stylesheet_link_tag 'application', media: 'all'
     = render partial: 'common/favicons'
+    = vite_client_tag
+    :javascript
+      document.querySelector('html').classList.add('js')
+      window.ukhpi ||= {}
+      window.ukhpi.environment = "#{ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)}"
+      window.ukhpi.version = "#{Version::VERSION}"
+      window.ukhpi.locale = "#{I18n.locale}"
+      window.ukhpi.root_path = "#{Rails.application.config.relative_url_root}"
+    - if Rails.env.production? || Rails.logger.debug?
+      = vite_javascript_tag 'cookie', defer: true
+      = csrf_meta_tags
+    = vite_javascript_tag 'application'
+    = vite_stylesheet_tag 'application', media: 'all'
 
     - if @preferences
       %link{ rel: 'canonical', href: '//#{request.host_with_port}#{@preferences.as_path(:view)}' }
@@ -22,7 +29,6 @@
         window.isIE8 = true;
 
   %body.government.website.hmlr
-
     %header.with-proposition.c-hmlr-header#global-header
       .header-wrapper
         .header-global
@@ -39,8 +45,9 @@
     .o-lr-top-bar
 
     = render partial: 'common/flash_message'
-
-    %main
-      = yield
+    %main#main-content.container.o-container
+      .row
+        .col-md-12
+          = yield
 
     = render partial: 'common/footer'

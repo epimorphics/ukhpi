@@ -32,6 +32,7 @@
       :javascript
         window.isIE8 = true;
 
+
   %body.government.website.hmlr
     = render partial: 'common/cookie_banner' if Rails.env.production? || Rails.logger.debug?
     = render partial: 'common/skip_to_main_content'

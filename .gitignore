@@ -4,12 +4,7 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
-# Ignore dot files and directories
-.DS_Store
-.github-token
-.npmrc
-.tags
-.tool-versions
+# Ignore vscode config
 .vscode
 
 # Ignore bundler config.
@@ -32,8 +27,6 @@
 
 # Ignore RubyLSP config.
 /.ruby-lsp
-
-
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -81,17 +74,24 @@ tags
 uk.geojson
 uk.json
 
+# Ignore dot files used by environment or IDE tools
+.DS_Store
+.github-token
+.npmrc
+.tags
+.tool-versions
+
 # Used by the location.rake task, don't delete or commit
 query-results.json
-
-# Ignore dot files used by environment or IDE tools
-
-
 
 # Vite Ruby
 /public/vite*
 # Vite uses dotenv and suggests to ignore local-only env files. See
 # https://vitejs.dev/guide/env-and-mode.html#env-files
-*.local
 
 vite.config.js.timestamp-*-*.mjs
+
+# Ignore local configuration files
+.env
+.env*.local
+!.env.development

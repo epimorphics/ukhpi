@@ -64,9 +64,9 @@ fi
 
 if [ -n "$CURRENT_TEST_FILES" ] && [ "$WORK_DONE" -eq 0 ]; then
   printf '\nRunning all Rails Tests ...\n'
-  # make test
-  # RAILS_TEST_EXIT_CODE=$?
-  WORK_DONE=2
+  make test
+  RAILS_TEST_EXIT_CODE=$?
+  WORK_DONE=1
 else
   RAILS_TEST_EXIT_CODE=0
 fi

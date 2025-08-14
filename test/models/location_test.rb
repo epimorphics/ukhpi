@@ -9,13 +9,30 @@ class RegionTest < ActiveSupport::TestCase
   COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
 
   let(:region) do
-    Location.new('http://foo.bar/bam', { en: 'foo', cy: 'bar' },
-                 BOROUGH_TYPE,
-                 'http://foo.bar/parent',
-                 'D12345678')
+    # Initializes a new Location instance.
+    # @param uri [String] the URI of the location
+    # @param labels [Hash] a hash of labels for the location, keyed by language
+    # @param type [String] the RDF type of the location
+    # @param parent [String] the URI of the parent location
+    # @param gss [String] the GSS code for the location
+    Location.new(
+      'http://foo.bar/bam',
+      { en: 'foo', cy: 'bar' },
+      BOROUGH_TYPE,
+      'http://foo.bar/parent',
+      'D12345678'
+    )
   end
 
-  describe 'Location' do
+  describe 'Location' do # rubocop:disable Metrics/BlockLength
+    before do
+      I18n.locale = :en # Ensure tests run in English locale
+    end
+
+    teardown do
+      I18n.locale = I18n.default_locale
+    end
+
     describe '#uri' do
       it 'should return the URI' do
         _(region.uri).must_equal 'http://foo.bar/bam'

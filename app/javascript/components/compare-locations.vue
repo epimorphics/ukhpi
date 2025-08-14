@@ -36,13 +36,13 @@
             {{ location.labels[$locale] || location.labels.en }}
             <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'
               :title="$t('action.remove')" :aria-label="$t('action.remove')">
-              <i class='fa fa-times-circle fa-2x'></i>
+              <i class='fa fa-times-circle'></i>
             </button>
           </li>
           <li v-if='showAddLocationButton' class='c-compare__location'>
             <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'
               :title="$t('action.add_location')" :aria-label="$t('action.add_location')">
-              <i class='fa fa-plus-circle fa-2x'></i>
+              <i class='fa fa-plus-circle'></i>
             </button>
             <compare-additional-location></compare-additional-location>
           </li>
