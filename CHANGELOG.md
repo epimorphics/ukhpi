@@ -4,12 +4,12 @@
 
 ## 2.2.0 - 2025-08
 
-- Updated node and Ruby versions, and Gemfile dependencies for compatibility.
-- Simplified environment variable management and pre-push Git hook logic.
-- Refactored Vue app mounting alongside Sentry integration improvements.
-- Removed unnecessary files and outdated configuration settings.
-- Enhanced Docker pre-push checks with Docker version information.
-- Fixed an issue where the `.nvmrc` node version was not respected in Docker
+- Updated node and Ruby versions for compatibility
+- Simplified environment variable management
+- Refactored app mounting and Sentry integration
+- Removed outdated files and settings
+- Enhanced Docker checks with version info
+- Fixes node version issue in Docker
 
 ## 2.1.2 - 2025-06
 
