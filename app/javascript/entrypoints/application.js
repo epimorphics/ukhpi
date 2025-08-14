@@ -84,12 +84,10 @@ if (currentEnvironment === 'development') {
       enabled: import.meta.env.SENTRY_ENABLED || null,
       hostname: import.meta.env.SENTRY_HOSTNAME || null
     }
-    Sentry.configureScope(scope => {
-      sentryTags.each((value, key) => {
-        if (value !== null) { // Only set tags that are not null
-          scope.setTag(key, value)
-        }
-      })
+    sentryTags.each((value, key) => {
+      if (value !== null) { // Only set tags that are not null
+        Sentry.setTag(key, value)
+      }
     })
   }
 }
