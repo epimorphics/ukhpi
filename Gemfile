@@ -5,41 +5,27 @@ source 'https://rubygems.org'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 8.0'
 
-gem 'vite_rails'
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier'
-gem 'terser' # Updating to terser for ES6+ support
-
 # Gems for front-end asset management
 gem 'font-awesome-rails'
 gem 'sass-rails'
+# Use Uglifier as compressor for JavaScript assets
 # gem 'uglifier'
+gem 'terser' # Updating to terser for ES6+ support
+gem 'vite_rails'
 
-gem 'haml-rails'
-# gem 'webpacker', '~> 5.4'
-
-# See https://github.com/rails/execjs#readme for more supported runtimes
-# gem 'therubyracer', platforms: :ruby
-
-# Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
-# gem 'jbuilder', '~> 2.0'
-# bundle exec rake doc:rails generates the API under doc/api.
-# gem 'sdoc', '~> 0.4.0', group: :doc
-
-gem 'js-routes'
-
+# Gems for different use cases
 gem 'csv'
-gem 'dotenv'
-
+# Faraday v2 requires individual middlewares to be specified
 gem 'faraday'
 gem 'faraday-encoding', '~> 0.0.6'
 gem 'faraday-follow_redirects', '~> 0.3.0'
 gem 'faraday-retry', '~> 2.0'
 
-gem 'foreman'
 gem 'get_process_mem'
 gem 'govuk_template'
+gem 'haml-rails'
 gem 'http_accept_language'
+gem 'js-routes'
 gem 'ostruct'
 gem 'prometheus-client'
 gem 'puma'
@@ -52,6 +38,7 @@ gem 'yajl-ruby', require: 'yajl'
 
 group :development, :test do
   gem 'byebug'
+  gem 'dotenv'
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'
@@ -59,6 +46,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'foreman'
   gem 'haml-lint'
   gem 'htmlbeautifier'
   gem 'ruby-lsp'
@@ -85,12 +73,12 @@ group :test do
   gem 'vcr'
 end
 
-# TODO: In production you want to set this to the gem from the epimorphics package repo
+# TODO: In production you want to set this to the gem from the epimorphics group package repository
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api'
   gem 'json_rails_logger'
 end
 
-# TODO: For running the app locally for testing you can set this to your local path
+# TODO: For gem development and testing, you can use the local path to the gem
 # gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
 # gem 'json_rails_logger', path: '~/Epimorphics/shared/json-rails-logger'
