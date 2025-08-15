@@ -25,6 +25,7 @@ end
 # Minitest assertions
 
 module MiniTest
+  # :nodoc:
   module Assertions
     def assert_well_formed_html(fragment)
       doc = Nokogiri::XML(fragment)

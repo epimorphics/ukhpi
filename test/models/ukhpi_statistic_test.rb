@@ -4,7 +4,15 @@ require 'test_helper'
 
 # Unit tests on the UkhpiStatistic class
 class UkhpiStatisticTest < ActiveSupport::TestCase
-  describe 'UkhpiStatistic' do
+  before do
+    I18n.locale = :en # Set default locale for tests
+  end
+
+  teardown do
+    I18n.locale = I18n.default_locale # Reset locale after tests
+  end
+
+  describe 'UkhpiStatistic' do # rubocop:disable Metrics/BlockLength
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', true)

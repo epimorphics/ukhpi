@@ -4,6 +4,10 @@
 # only that it asks the DsAPI to explain its query strategy, rather than performing
 # the query.
 class ExplainQueryCommand < QueryCommand
+  include DataService
+
+  attr_reader :query
+
   # Explain the given query, and stash the results. Return time taken in microseconds.
   def execute_query(service, query)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)

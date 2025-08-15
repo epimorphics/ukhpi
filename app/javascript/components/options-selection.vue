@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='c-options-selection'>
     <data-view-location :element-id='elementId'></data-view-location>
     {{ $t('preposition.for') }}

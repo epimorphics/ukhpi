@@ -1,0 +1,33 @@
+
+@use 'lr-common';
+
+.o-heading {
+  &--1 {
+    @extend .heading-large !optional;
+  }
+
+  &--2 {
+    @extend .heading-medium !optional;
+  }
+
+  &--3, &--4 {
+    @extend .heading-small !optional;
+  }
+}
+
+.u-muted {
+  font-size: 90%;
+  font-weight: normal;
+  color: lr-common.$lr-grey-1;
+}
+
+.u-warning {
+  font-size: 110%;
+  padding: 0.8em 2em;
+  background-color: #EF9A9A;
+  margin-top: 1.5em;
+}
+
+p {
+  word-break: break-word !important;
+}

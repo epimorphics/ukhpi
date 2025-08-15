@@ -1,0 +1,332 @@
+@use "sass:color";
+
+// Common style settings to share between LR applications
+// Trying to follow @csswizardry's CSS Namespaces advice
+// http://csswizardry.com/2015/03/more-transparent-ui-code-with-namespaces/
+
+/* variables */
+// Standard palette, greys
+$lr-black: #0b0c0c;
+$lr-grey-1: #6f777b;
+$lr-grey-2: #bfc1c3;
+$lr-grey-3: #dee0e2;
+$lr-grey-4: #f8f8f8;
+$lr-white: #fff;
+
+$lr-graph-fuschia: #912b88;
+$lr-graph-light-blue: #2b8cc4;
+$lr-graph-mellow-red: #df3034;
+$lr-graph-green: #006435;
+$lr-graph-orange: #f47738;
+$lr-graph-purple: #2e358b;
+
+$lr-button-colour: #00823b;
+$lr-green-dark: #5A8006;
+$lr-yellow: #e5ea08;
+$lr-logo-green-light: #a6d71c;
+$lr-logo-green-dark: #66c430;
+$lr-logo-grey: #a7a5a6;
+$lr-green-nav: #ACCD40;
+$semi-black: #202222;
+
+$lr-headline: $lr-green-dark;
+$lr-separator: $lr-green-nav;
+$lr-link: $lr-headline;
+$lr-link-quiet: $lr-logo-green-light;
+$lr-focus: $lr-logo-green-dark;
+$lr-focus-color: $lr-yellow;
+$lr-top-line: $lr-green-nav;
+$lr-footer-grey: #f0f5f0;
+$lr-footer-link: color.adjust($lr-separator, $lightness: 10%);
+$lr-footer-background: #818181;
+$lr-green-nav-darkened: color.adjust( $lr-green-nav, $lightness: -20%);
+
+$graph-colours: (
+  graph-0: $lr-graph-fuschia,
+  graph-1: $lr-graph-light-blue,
+  graph-2: $lr-graph-mellow-red,
+  graph-3: $lr-graph-green,
+  graph-4: $lr-graph-orange,
+  graph-5: $lr-graph-purple
+);
+/* settings */
+
+ol, ul, nav ol, nav ul {
+  list-style: unset;
+  list-style-type: none;
+  list-style-position: inside;
+}
+
+/* elements */
+
+a {
+  cursor: pointer;
+}
+
+ol.numbered {
+  list-style: decimal outside;
+  margin-left: 2rem;
+}
+
+input[type=checkbox],
+input[type=radio] {
+  -webkit-transform: scale(1.5);
+  transform: scale(1.5);
+}
+
+/* objects */
+// ! Omitting phase banner and tag for now as they are not used in the current design
+// .o-beta-banner {
+//   @include phase-banner;
+//   padding-top: 3px;
+//   padding-bottom: 3px;
+// }
+// .o-beta-tag{
+//   @include phase-tag;
+// }
+
+.o-flash-message {
+  padding-top: 3px;
+  padding-bottom: 3px;
+  p {
+    border-left: 8px solid $lr-yellow;
+    padding-left: 12px;
+  }
+}
+
+.o-lr-top-bar {
+  width: 100%;
+  height: 3px;
+  background-color: $lr-top-line;
+  margin: 5px 0;
+}
+
+.o-container {
+  @extend %site-width-container !optional;
+}
+
+.o-footer {
+  margin-top: 2rem;
+  background-color: $lr-footer-background;
+  border-top: 8px solid $lr-separator;
+  font-size: 1.5rem;
+
+  .o-footer--h2 {
+    line-height: normal;
+    font-size: 1rem;
+
+    img {
+      max-height: 18px;
+      margin-right: 15px;
+    }
+
+    a {
+      padding: 0;
+      margin: 0;
+    }
+  }
+
+  a {
+    color: $lr-footer-link;
+  }
+
+  .o-footer--ogl p {
+    color: #303030;
+    font-size: 11pt;
+  }
+}
+
+.o-form-control {
+  line-height: 3rem;
+
+  .o-form-control--input {
+    margin-right: 0.8rem;
+  }
+
+  .o-form-control--label {
+    display: block;
+  }
+
+  .o-form-control--label-inline {
+    display: inline-block;
+  }
+
+  .o-form-control--label input[type=text] {
+    // margin-left: 0.8rem;
+    width: 100%;
+  }
+}
+
+/* components */
+
+.lr-header {
+  background-color: white;
+}
+
+.c-review-report {
+  .c-review-report--summary-key {
+    color: $lr-grey-1;
+  }
+
+  .c-review-report--summary-value {
+    font-weight: bold;
+  }
+
+  .c-review-report--change-option {
+    font-size: 80%;
+    margin-left: 20px;
+  }
+}
+
+.c-form-submit {
+  margin-top: 30px;
+}
+
+.c-back-action {
+  display: none;
+}
+
+.js .c-back-action {
+  display: inline-block;
+  margin-top: 33px;
+  margin-left: 20px;
+  color: $lr-grey-1;
+}
+
+.c-heading-prefix {
+  display: block;
+  color: $lr-grey-1;
+}
+
+/* utilities */
+
+.u-large-top-margin {
+  margin-top: 3rem;
+}
+
+.u-font-bold {
+  font-weight: bold;
+}
+
+.u-font-smaller {
+  font-size: 90%;
+}
+
+/* surface */
+
+.o-form-control--label details {
+  margin-left: 2.5rem;
+}
+
+// override UK gov stylesheet, which uses the highly specific #global-header selector
+#global-header {
+  &.lr-header,
+  &.with-proposition {
+    background-color: white;
+
+    .header-wrapper {
+      background-color: white;
+
+      .header-proposition {
+        padding-block-end: 1rem;;
+        #proposition-name{
+          &.lr-header--proposition-name {
+            color: $lr-link;
+          }
+        }
+
+        #proposition-links {
+          .lr-header--header-proposition--a {
+            color: $lr-link-quiet;
+          }
+
+          .lr-header--header-proposition--a__active {
+            color: $lr-link;
+          }
+
+          .lr-header--header-proposition {
+            color: $lr-headline;
+          }
+        }
+      }
+
+      @media screen and (min-width: 769px) {
+        .header-global,
+        .header-proposition {
+          width: unset;
+        }
+        .header-proposition {
+          float: right;
+        }
+      }
+    }
+  }
+
+}
+
+.o-container,#content {
+    max-width: 960px;
+    margin: 0 15px
+}
+
+@media (min-width: 641px) {
+    .o-container,#content {
+        margin:0 30px
+    }
+}
+
+@media (min-width: 1020px) {
+    .o-container,#content {
+        margin:0 auto
+    }
+}
+
+#footer {
+  margin-top: 3rem;
+
+  .footer-meta .footer-meta-inner {
+    width: 100% !important;
+  }
+
+  .footer-meta a {
+    text-decoration: underline;
+  }
+
+  .footer-meta .footer-meta-inner .logo {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 41px;
+    height: 100%;
+  }
+
+  .footer-meta .footer-meta-inner .open-government-licence .logo a {
+    background-image: url('../images/ogl-symbol-41px-black.png');
+    display: block;
+    width: 41px;
+    height: 17px;
+    overflow: hidden;
+    text-indent: -999em;
+  }
+
+  .footer-meta .footer-meta-inner .open-government-licence p {
+    margin: 0;
+    padding-top: 0.1em;
+  }
+
+  .u-muted--footer {
+    font-size: 11pt ;
+    color: #444;
+    margin-top: 1em;
+  }
+}
+
+.panel {
+  border: 0;
+}
+
+
+:focus, a:focus {
+  outline: 2px solid $lr-yellow !important;
+}
+

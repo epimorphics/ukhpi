@@ -1,0 +1,102 @@
+@use 'lr-common';
+
+.c-compare {
+  &__locations {
+    display: inline;
+  }
+
+  &__locations-list {
+    list-style: none;
+  }
+
+  &__location {
+    display: block;
+  }
+
+  .c-compare__locations-prompt {
+    float: left
+  }
+
+  .c-compare__locations-list {
+    margin-left: 10em;
+  }
+
+  table {
+    @extend .u-simple-table !optional;
+  }
+}
+
+.c-compare__selections {
+  .c-compare__locations {
+    list-style: none;
+    display: inline-flex;
+    flex-wrap: wrap;
+
+    >.c-compare__location {
+      min-height: 2em;
+      border: 1px solid lr-common.$lr-grey-2;
+      border-radius: 5px;
+      margin-right: 0.5em;
+      margin-top: 5px;
+      padding-left: 5px;
+      padding-right: 5px;
+      line-height: 1;
+      font-size: 1em;
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+      height: 100%;
+
+      &:has(> .u-full-width) {
+        border: none;
+      }
+    }
+
+    &--modify {
+      border: 0;
+      background-color: white;
+      cursor: pointer;
+      font-size: 1em;
+      &.u-full-width {
+        font-size: 1.5em;
+      }
+    }
+
+  }
+
+  .c-options-selection__dates {
+
+    a,
+    a:visited {
+      color: lr-common.$lr-black;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.c-compare__actions {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 2em;
+}
+
+.c-compare__download {
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+  flex-grow: 0;
+  align-items: center;
+}
+
+.o-no-data {
+  font-style: italic;
+  color: lr-common.$lr-grey-2;
+}
