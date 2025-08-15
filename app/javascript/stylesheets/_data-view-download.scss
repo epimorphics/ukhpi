@@ -1,0 +1,54 @@
+
+@use 'element-rails' as element;
+
+
+.o-data-view-download {
+  background-color: white;
+  padding: 5px;
+  font-size: 90%;
+
+  li {
+    margin-bottom: 15px;
+  }
+
+  &__button {
+    @extend .button !optional;
+    font-size: 1.5rem;
+    text-decoration: none;
+  }
+
+  &__button{
+    &:visited, &:link {
+      color: white;
+      background-color: element.$dark-blue;
+      &:hover, &:focus, &:visited {
+        color: white;
+        background-color: element.$dark-blue-hover;
+      }
+    }
+  }
+}
+
+.c-compare__download-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+}
+
+.c-compare__download-link {
+  @extend .button !optional;
+  color: white;
+  background-color: element.$dark-blue;
+  font-size: 1.5rem;
+  &:hover, &:focus, &:visited {
+    color: white;
+    background-color: element.$dark-blue-hover;
+  }
+}
+
+.c-compare__print-link {
+  color: element.$dark-blue;
+  &:hover, &:focus, &:visited {
+    color: element.$dark-blue-hover;
+  }
+}

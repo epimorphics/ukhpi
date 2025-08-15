@@ -1,0 +1,33 @@
+@use "sass:color";
+
+.o-data-table {
+  border-collapse: collapse;
+
+  tbody tr {
+    &:nth-child(odd) td {
+      background-color: #fafafa;
+    }
+    &:focus td,
+    &:hover td {
+      background-color: color.scale(#fafafa, $lightness: -5%);
+      cursor: default;
+    }
+  }
+
+  td, th {
+    font-size: 0.8em;
+    padding: 0.4em;
+  }
+
+  td {
+    border-top: 1px solid #ddd;
+  }
+
+  .u-right {
+    text-align: right;
+  }
+
+  .u-left {
+    text-align: left;
+  }
+}

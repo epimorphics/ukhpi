@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='o-data-view__table'>
     <table class='o-data-table'>
       <thead>

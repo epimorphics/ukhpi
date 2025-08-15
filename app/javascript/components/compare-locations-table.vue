@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='o-compare__table'>
     <h2 class='o-heading--3'>
       {{ tableCaption }}

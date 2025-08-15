@@ -1,0 +1,42 @@
+
+@use "sass:map";
+@use 'lr-common';
+
+.o-statistic-option {
+  height: 15px;
+  width: 15px;
+  border: 1px solid lr-common.$lr-black;
+  margin-bottom: -2px;
+
+  display: inline-block;
+}
+
+@for $i from 0 through 5 {
+  .v-graph-#{$i} {
+    background-color: map.get(lr-common.$graph-colours, graph-#{$i})
+  }
+}
+
+.o-data-view__js-options-statistics {
+  width: 100%;
+  display: block;
+  @media(min-width: 480px){
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+  .checkbox-container {
+    display: block;
+    margin-inline-start: 5px;
+    cursor: pointer;
+    input[type="checkbox"] {
+      cursor: inherit;
+      width: 1rem;
+    }
+    img {
+      max-height: 15px;
+      margin-block-end: -1px;
+      margin-inline-start: 0.5rem;
+    }
+  }
+}

@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div class='o-data-view__js-options-statistics'>
     <label v-for='(statistic, index) in statistics'
       :key='statistic.slug'
@@ -23,7 +23,7 @@
 
 <script>
 import { SELECT_STATISTIC } from '../store/mutation-types';
-import serverRoutes from '../store/server-routes.js.erb';
+import markerRoutes from '../images/markers/';
 
 const MARKERS = [
   'Circle',
@@ -69,7 +69,7 @@ export default {
         store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
       });
     },
-    
+
     onSelectStatistic(event) {
       const slug = event.target.getAttribute('data-slug');
       const selected = this.isSelectedStatistic(slug);
@@ -83,7 +83,7 @@ export default {
     imageSrcPath(index, svg) {
       const imageRoot = MARKERS[index];
       const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`;
-      return serverRoutes[imagePathKey];
+      return new URL(`../${markerRoutes[imagePathKey]}`, import.meta.url).pathname;
     },
   },
 };

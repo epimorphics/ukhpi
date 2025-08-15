@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <div :class='rootCssClass'>
     <svg :id='graphElementId'></svg>
   </div>
@@ -150,11 +150,6 @@ export default {
 </script>
 
 <style lang='scss'>
-.o-data-view__graph svg {
-  width: 100%;
-  height: 100%;
-}
-
 .line {
   fill: none;
   stroke-width: 2px;

@@ -1,10 +1,10 @@
 import Vue from 'vue/dist/vue.esm'
 import VueI18n from 'vue-i18n'
 
-Vue.use(VueI18n)
+import localeEn from '../../../config/locales/en.yml'
+import localeCy from '../../../config/locales/cy.yml'
 
-const localeEn = require('../../../config/locales/en.yml')
-const localeCy = require('../../../config/locales/cy.yml')
+Vue.use(VueI18n)
 
 // The locale is passed via the window.ukhpi structure
 // directly from Rails

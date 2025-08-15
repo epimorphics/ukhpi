@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <focus-trap v-model='dialogVisible' :initial-focus='initialFocusElement'>
     <div class='c-options-selection__dates'>
       <span class='' v-if='fromDate'>
@@ -64,7 +64,7 @@ import Moment from 'moment';
 import { FocusTrap } from 'focus-trap-vue'
 import { SET_DATES } from '../store/mutation-types';
 import bus from '../lib/event-bus';
-import { mutateName } from 'lang/welsh-name-mutations'
+import { mutateName } from '../lang/welsh-name-mutations'
 
 export default {
   name: 'data-view-dates',

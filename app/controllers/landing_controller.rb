@@ -3,7 +3,7 @@
 # :nodoc:
 class LandingController < ApplicationController
   def index
-    LoggingHelper.log_request({ params: params, path: request.path })
+    Log.info('Requesting Landing Controller', { params: params, path: request.path })
     @view_state = LandingState.new(UserLanguageSelection.new(params))
   rescue StandardError => e
     status = if e.respond_to?(:status)

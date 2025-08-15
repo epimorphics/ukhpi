@@ -1,0 +1,53 @@
+
+// This file is used to import the GOV.UK Frontend Toolkit and Elements SASS files.
+// @import '@/stylesheets/govuk_template/index';
+
+// from gov.uk front-end-toolkit
+$govuk-suppressed-warning: 'legacy-organisation-colours';
+// This is a temporary fix to suppress the warning about using legacy organisation colours.
+// It should be removed when the legacy organisation colours are no longer used in the GOV.UK Frontend Toolkit.
+@import 'govuk_frontend_toolkit/stylesheets/_colours.scss';
+// @import 'font_stack';
+@import 'govuk_frontend_toolkit/stylesheets/_measurements.scss';
+@import 'govuk_frontend_toolkit/stylesheets/_conditionals.scss';
+@import 'govuk_frontend_toolkit/stylesheets/_device-pixels.scss';
+@import 'govuk_frontend_toolkit/stylesheets/_grid_layout.scss';
+@import 'govuk_frontend_toolkit/stylesheets/_typography.scss';
+@import 'govuk_frontend_toolkit/stylesheets/_shims.scss';
+
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/_alpha-beta.scss';
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/_buttons.scss';
+@import 'govuk_frontend_toolkit/stylesheets/design-patterns/_breadcrumbs.scss';
+
+// GOV.UK elements
+@import 'govuk-elements-sass/public/sass/elements/_reset.scss';
+// Helper functions and classes
+@import 'govuk-elements-sass/public/sass/elements/_helpers.scss';
+
+$govuk-brand-colour:	#1d70b8;
+$govuk-brand-hover-colour:	#003078;
+$focus-color: #ffdd00;
+// Legacy internal colours
+$grey-8: #f0f0f0;
+$dark-blue: $govuk-brand-colour;
+$dark-blue-hover: $govuk-brand-hover-colour;
+
+// HTML elements, set by the GOV.UK template
+@import 'govuk-elements-sass/public/sass/elements/_govuk-template-base.scss';
+
+
+@import 'govuk-elements-sass/public/sass/elements/_layout.scss';
+@import 'govuk-elements-sass/public/sass/elements/_elements-typography.scss';
+@import 'govuk-elements-sass/public/sass/elements/_buttons.scss';
+// @import 'govuk-elements-sass/public/sass/elements/_icons.scss';
+@import 'govuk-elements-sass/public/sass/elements/_lists.scss';
+// @import 'govuk-elements-sass/public/sass/elements/_tables.scss';
+@import 'govuk-elements-sass/public/sass/elements/_details.scss';
+@import 'govuk-elements-sass/public/sass/elements/_panels.scss';
+@import 'govuk-elements-sass/public/sass/elements/_forms.scss';
+// @import 'govuk-elements-sass/public/sass/elements/forms/_form-block-labels.scss';
+@import 'govuk-elements-sass/public/sass/elements/forms/_form-date.scss';
+@import 'govuk-elements-sass/public/sass/elements/forms/_form-validation.scss';
+@import 'govuk-elements-sass/public/sass/elements/_breadcrumbs.scss';
+@import 'govuk-elements-sass/public/sass/elements/_phase-banner.scss';
+@import 'govuk-elements-sass/public/sass/elements/_components.scss';

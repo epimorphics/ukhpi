@@ -1,4 +1,4 @@
-<template lang='html'>
+<template>
   <select-location
     :dialog-visible='dialogVisible'
     :element-id='elementId'

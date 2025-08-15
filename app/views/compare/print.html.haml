@@ -1,26 +1,30 @@
-%article.o-print-view
-  %h2.o-heading--2
-    = @view_state.headline_summary
-    = I18n.t('preposition.for')
-    = @view_state.locations_summary
+= content_for(:title, t('compare.show.heading'))
 
-  .o-print-view__data-table
-    %table
-      %thead
-        %tr
-          %th{ scope: 'col' }
-            = I18n.t('compare.print.date')
-          - @view_state.selected_locations.each do |loc|
-            %th{ scope: 'col' }
-              = loc.label
-      %tbody
-        - @view_state.query_results_rows.each do |row|
-          %tr
-            - row.each_with_index do |col, i|
-              %td
-                - if i.zero?
-                  = col.gsub(' ', '&nbsp;').html_safe
-                - else
-                  = @view_state.format(col)
+.grid-row
+  .column-full
+    %article.o-print-view
+      %h2.o-heading--2
+        = @view_state.headline_summary
+        = I18n.t('preposition.for')
+        = @view_state.locations_summary
+
+      .o-print-view__data-table
+        %table
+          %thead
+            %tr
+              %th{ scope: 'col' }
+                = I18n.t('compare.print.date')
+              - @view_state.selected_locations.each do |loc|
+                %th{ scope: 'col' }
+                  = loc.label
+          %tbody
+            - @view_state.query_results_rows.each do |row|
+              %tr
+                - row.each_with_index do |col, i|
+                  %td
+                    - if i.zero?
+                      = col.gsub(' ', '&nbsp;').html_safe
+                    - else
+                      = @view_state.format(col)
 
 = render partial: 'common/print-on-dom-ready'

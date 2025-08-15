@@ -37,7 +37,7 @@ class DsdTest < ActiveSupport::TestCase
             <http://dbpedia.org/resource/Pound_sterling> .
     GRAPH
 
-    CubeDataModel::DSD.new(g, CubeDataModel::Vocabularies::UKHPI.datasetDefinition)
+    CubeDataModel::DSD&.new(g, CubeDataModel::Vocabularies::UKHPI.datasetDefinition)
   end
 
   it 'should return a collection of components' do

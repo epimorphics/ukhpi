@@ -11,8 +11,8 @@ BRANCH_NAME=$(git branch --show-current | grep -E "$listRE" | sed 's/* //')
 
 printf '\n\033[0;105mChecking "%s"... \033[0m\n' "$BRANCH_NAME"
 
-if echo "$BRANCH_NAME" | grep -q '^(rebase)|(production)*$'; then
- 	printf '\n\033[0;32mNo checks necessary on "%s", pushing now... 🎉\033[0m\n' "$BRANCH_NAME"
+if echo "$BRANCH_NAME" | grep -q '^(hotfix)|(rebase)|(production)*$'; then
+ 	printf '\n\033[0;33mSkipping pre-commit hook on "%s"... 🤨\033[0m\n'  "$BRANCH_NAME"
 	exit 0
 fi
 

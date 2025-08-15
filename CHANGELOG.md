@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 2.2.0 - 2025-08
+
+- Updated node and Ruby versions for compatibility
+- Simplified environment variable management
+- Refactored app mounting and Sentry integration
+- Removed outdated files and settings
+- Enhanced Docker checks with version info
+- Fixes node version issue in Docker
+
 ## 2.1.2 - 2025-06
 
 - Improve Google Analytics implementation

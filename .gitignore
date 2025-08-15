@@ -7,10 +7,26 @@
 # Ignore vscode config
 .vscode
 
-## Ignore bundler configuration:
+# Ignore bundler config.
 /.bundle
 /vendor/bundle
+
+# Ignore Ruby & Rails
+*.gem
+*.rbc
+/.config
+/coverage/
+/InstalledFiles
 /lib/bundler/man/
+/pkg/
+/spec/reports/
+/spec/examples.txt
+/test/tmp/
+/test/version_tmp/
+/tmp/
+
+# Ignore RubyLSP config.
+/.ruby-lsp
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -30,9 +46,13 @@ node_modules/
 /public/assets
 
 # Ignore yarn files
-/yarn-error.log
-yarn-debug.log*
-.yarn-integrity
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
 
 # Ignore uploaded files in development
 /storage/*
@@ -54,14 +74,22 @@ tags
 uk.geojson
 uk.json
 
+# Ignore dot files used by environment or IDE tools
+.DS_Store
+.github-token
+.npmrc
+.tags
+.tool-versions
+
 # Used by the location.rake task, don't delete or commit
 query-results.json
 
-# Ignore dot files used by environment or IDE tools
-.tags
-.tool-versions
-.github-token
-.npmrc
+# Vite Ruby
+/public/vite*
+# Vite uses dotenv and suggests to ignore local-only env files. See
+# https://vitejs.dev/guide/env-and-mode.html#env-files
+
+vite.config.js.timestamp-*-*.mjs
 
 # Ignore local configuration files
 .env
