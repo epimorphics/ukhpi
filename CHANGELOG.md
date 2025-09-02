@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 2.2.1 - 2025-08
+
+- Bump core `rails` framework from 8.0.2 to 8.0.2.1 along with all associated
+  modules and dependencies
+- Update `rubocop-rails` to 2.33.3 and `rubocop` to 1.80.1, including minor
+  dependency updates (`regexp_parser`, `unicode-display_width`)
+- Upgrade `puma` and `spring` to their latest patch versions
+- Refreshes `linter`, `rack`, and utility library dependencies
+
 ## 2.2.0 - 2025-08
 
 - Updated node and Ruby versions for compatibility
