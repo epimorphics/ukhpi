@@ -1,140 +1,194 @@
-# Changes to the UKHPI app by version and date
+# Changelog
 
-## Unreleased
+All notable changes to this project will be documented in this file.
 
-## 2.2.1 - 2025-08
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-- Bump core `rails` framework from 8.0.2 to 8.0.2.1 along with all associated
+## [Unreleased]
+
+### Changed
+
+- Adjusted test logging to respect log level and reduce logs displayed unless debugging
+
+## [2.2.1] - 2025-08
+
+### Changed
+
+- Bumped core `rails` framework from 8.0.2 to 8.0.2.1 along with all associated
   modules and dependencies
-- Update `rubocop-rails` to 2.33.3 and `rubocop` to 1.80.1, including minor
+- Updated `rubocop-rails` to 2.33.3 and `rubocop` to 1.80.1, including minor
   dependency updates (`regexp_parser`, `unicode-display_width`)
-- Upgrade `puma` and `spring` to their latest patch versions
-- Refreshes `linter`, `rack`, and utility library dependencies
+- Upgraded `puma` and `spring` to their latest patch versions
+- Refreshed `linter`, `rack`, and utility library dependencies
 
-## 2.2.0 - 2025-08
+## [2.2.0] - 2025-08
+
+### Changed
 
 - Updated node and Ruby versions for compatibility
 - Simplified environment variable management
 - Refactored app mounting and Sentry integration
-- Removed outdated files and settings
-- Enhanced Docker checks with version info
-- Fixes node version issue in Docker
 
-## 2.1.2 - 2025-06
+### Removed
 
-- Improve Google Analytics implementation
-  - Load scripts asynchronously for better performance
-  - Remove legacy script inclusion from views
-- Add post-commit and modify pre-push git hooks
-- Introduce Docker build checks in git hooks
+- Outdated files and settings are now deleted
 
-## 2.1.1 - 2025-04
+### Added
 
-- (Jon) Updated Data Services Api gem version to include update for ticket in
-  Dev and PreProd [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+- Enhanced Docker checks with version info are now present in the Dockerfile
 
-## 2.1.0 - 2025-04
+### Fixed
 
-- (Jon) Updated layout template HTML lang attributes for I18n support
-- (Jon) Updated changelog for local authority geography - Welsh translation
-- (Jon) Updated the README to include the new `make locations` target
-  information
-- (Jon) Updated the `makefile` to include the new `locations` target for running
-  the rake task to update the locations data in the application
-- (Jon) Updated changelog for local authority GSS Codes - English translation
-- (Jon) Updated UK features data to use 2025 version
-- (Jon) Added new GeoJSON data for 2025 geographies
-- (Jon) Changed GSS code for Sheffield from E08000019 to E08000039
-- (Jon) Changed GSS code for Barnsley from E08000016 to E08000038
-- (Jon) Changed GSS code for Northern Ireland from N92000001 to N92000002
+- Set static Node version in Docker
 
-## 2.0.3 - 2025-04
+## [2.1.2] - 2025-06
 
-- (Jon) Updated Data Services Api gem version to include update for ticket in
-  Prod instance [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+### Changed
 
-## 2.0.2 - 2025-03
+- Improved Google Analytics implementation
+  - Loads scripts asynchronously for better performance
+  - Removed legacy script inclusion from views
 
-- (Jon) Introduced local config files and updated .gitignore appropriately
-- (Jon) Updated request logging to include path and parameters more clearly
-- (Jon) Added logging for request parameters and path
-- (Jon) Improved error logging in query execution
-- (Jon) Improved `request_time` logging format to show seconds and milliseconds.
-- (Jon) Prevent error rendering in development mode
-- (Jon) Updated Sentry configuration and tagging to include tags for better
-  tracking and filtering in Sentry
-- (Jon) Added `development` environment configuration for `dotenv` gem
-- (Jon) Added `dotenv` gem for environment variable management
-- (Jon) Updated workflow versions to v2
-  - Changed publish job to use version 2 of the publish workflow.
-  - Updated deploy job to reference version 2 of the deploy workflow.
-- (Jon) Refactor logging parameter handling
+### Added
+
+- Post-commit and modify pre-push git hooks
+- Docker build checks in git hooks
+
+## [2.1.1] - 2025-04
+
+### Changed
+
+- Update Data Services Api gem version to include update for ticket in Dev and
+  PreProd [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+
+## [2.1.0] - 2025-04
+
+### Changed
+
+- Updated layout template HTML lang attributes for I18n support
+- Updated changelog for local authority geography - Welsh translation
+- Updated the README to include the new `make locations` target information
+- Updated the `makefile` to include the new `locations` target for running the
+  rake task to update the locations data in the application
+- Updated changelog for local authority GSS Codes - English translation
+- Updated UK features data to use 2025 version
+- Changed GSS code for Sheffield from E08000019 to E08000039
+- Changed GSS code for Barnsley from E08000016 to E08000038
+- Changed GSS code for Northern Ireland from N92000001 to N92000002
+
+### Added
+
+- New GeoJSON data for 2025 geographies
+
+## [2.0.3] - 2025-04
+
+### Changed
+
+- Updated Data Services Api gem version to include update for ticket in Prod
+  instance [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+
+## [2.0.2] - 2025-03
+
+### Added
+
+- Implemented local config files and updated .gitignore appropriately
+- Logging for request parameters and path
+- `development` environment configuration for `dotenv` gem
+- `dotenv` gem for environment variable management
+- Menu jump link translations for both English and Welsh
+- `sr-only` class to the menu jump link for screen reader support
+- Pre-commit and pre-push hooks are now available to use if wanted
+  - Pre-commit hook to run Rubocop on staged Ruby files
+  - Pre-push hook to run Rails tests before pushing
+- Dynamic `LOG_LEVEL` env variable is now set in ruby environment configs
+  - Defaults to `debug` in development and `info` in production/test
+
+### Changed
+
+- Updated request logging to include path and parameters more clearly
+- Improved error logging in query execution
+- Improved `request_time` logging format to show seconds and milliseconds
+- Error rendering in development mode is now switchable
+- Updated Sentry configuration and tagging to include tags for better tracking
+  and filtering in Sentry
+- Updated workflow versions to v2
+  - Changed publish job to use version 2 of the publish workflow
+  - Updated deploy job to reference version 2 of the deploy workflow
+- Refactored logging parameter handling
   - Changed how `params` are extracted from fields
   - Simplified presence check for `params`
-- (Jon) Updated menu jump link to be more accessible
-  - Added the menu jump link translations for both english and welsh.
-  - Added `sr-only` class to the menu jump link for screen reader support.
-- (Jon) Continued logging improvements alongside refactoring of Rubocop rules
-  set
-- (Jon) Refactored code to prevent MUTATION reinitialisation if already set
-- (Jon) Fixed error handling in the landing, browse, and compare pages to ensure
+- Updated menu jump link to be more accessible
+- Refactored code to prevent MUTATION reinitialisation if already set
+- Updated the test suite with rubocop linting recommendations
+- Updated pre-push githook to call a single `make test` command instead of
+  triggering both unit tests and system tests separately
+- Implemented deprecation warning for `to_time` behaviour change and set
+  `to_time_preserves_timezone` to `:zone` to preserve system timezone
+- Applied recommended linting corrections from Rubocop
+- Updated the logging to utilise a call-flow diagram to display the sequence of
+  messages that are sent between the app and the api
+  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+- Updated visibility and search input types
+  - Added conditional class for hiding elements in non-dev environments
+  - Changed text fields to search fields for better UX
+  - Cleaned up HTML structure for improved readability
+- Changed time measurement from microseconds to milliseconds in the main query
+  method
+- Updated the rails gem and dependencies to v8.0.1 alongside other minor gem
+  updates including test gems for better compatibility
+- Enhanced Sentry logging on both Rails and VUE/JS implementations
+
+### Fixed
+
+- Resolved Error handling in the landing, browse, and compare pages to ensure
   that the correct error message is displayed to the user when an error occurs
   [GH-465](https://github.com/epimorphics/ukhpi/issues/465)
-  - (Jon) Add error raising for date parsing failures by returning the error to
-   the application as well as logging the error message to the logs
-- (Jon) Updates the test suite with rubocop linting recommendations
-- (Jon) Updated pre-push githook to call a single `make test` command instead of
-  triggering both unit tests and system tests separately
-- (Jon) Added deprecation warning for `to_time` behaviour change and set
-  `to_time_preserves_timezone` to `:zone` to preserve system timezone
-- (Jon) applied recommended linting corrections from Rubocop
-- (Jon) Updated the logging to utilise a call-flow diagram to display the
-  sequence of messages that are sent between the app and the api.
-  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
-- (Jon) Updated visibility and search input types
-  - Added conditional class for hiding elements in non-dev environments.
-  - Changed text fields to search fields for better UX.
-  - Cleaned up HTML structure for improved readability.
-- (Jon) Added pre-commit and pre-push hooks
-  - Introduced a pre-commit hook to run Rubocop on staged Ruby files.
-  - Implemented a pre-push hook to run Rails tests before pushing.
-- (Jon) Changed time measurement from microseconds to milliseconds in the main
-  query method
-- (Jon) Removed duplicated gem entry
-- (Jon) Updated the rails gem and dependencies to v8.0.1 alongside other minor
-  gem updates including test gems for better compatibility
-- (Jon) Added dynamic `LOG_LEVEL` env variable
-  - Defaults to `debug` in development and `info` in production/test.
-- (Jon) Enhanced Sentry logging on both Rails and VUE/JS implementations
+  - Added error raising for date parsing failures by returning the error to the
+    application as well as logging the error message to the logs
 
-## 2.0.1 - 2025-01
+### Removed
 
-- (Jon) Refactored UI code to use if/elsif/else in error page responses to
-  ensure a message is displayed at all times no matter what status is passed in
-  as per best practices
-- (Jon) Updated the `ApplicationController` to handle each error status
-  appropriately as well as ensure that the `instrument_internal_error` method is
-  called when an internal error is raised
-- (Jon) Updated the `instrument_internal_error` method to replace the
+- Duplicated gem entry is no longer
+
+## [2.0.1] - 2025-01
+
+### Changed
+
+- Refactored UI code to use if/elsif/else in error page responses to ensure a
+  message is displayed at all times no matter what status is passed in as per
+  best practices
+- Updated the `ApplicationController` to handle each error status appropriately
+  as well as ensure that the `instrument_internal_error` method is called when
+  an internal error is raised
+- Updated the `instrument_internal_error` method to replace the
   `maybe_report_to_sentry` method while reporting internal errors to the
   Prometheus metrics only when necessary
-- (Jon) Removed the custom error handling by deleting the `ExceptionsController`
-  and the `exceptions` initialiser
-- (Jon) Fix for casting long strings to `Date`, `Time` or `DateTime` in Ruby
-  3.1.0
-- (Jon) Improves error metrics reporting to ensure that logging always happens
-  with the appropriate severity depending on the exception status while reducing
-  the types of errors that can trigger a an error metric and therefore a
-  notification in slack
-  [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
+- Improved error metrics reporting to ensure that logging always happens with the
+  appropriate severity depending on the exception status while reducing the
+  types of errors that can trigger an error metric and therefore a notification
+  in slack [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
 
-## 2.0.0 - 2024-11
+### Fixed
 
-- (Bogdan) Updated all gems by regenerating `Gemfile.lock`
-- (Bogdan) Upgraded alpine to `3.20`
-- (Bogdan) Upgraded node to `20.12.2`
-- (Bogdan) Upgraded rails to `7.2.2`
-- (Bogdan) Upgraded ruby to `3.3.5`
+- Refactored casting long strings to `Date`, `Time` or `DateTime` in Ruby 3.1.0
+
+### Removed
+
+- Eliminated ustom error handling by deleting the `ExceptionsController` and the
+  `exceptions` initialiser
+
+## [2.0.0] - 2024-11
+
+### Changed
+
+- Updated all gems by regenerating `Gemfile.lock`
+  - Upgraded alpine to `3.20`
+  - Upgraded node to `20.12.2`
+  - Upgraded rails to `7.2.2`
+  - Upgraded ruby to `3.3.5`
+
+---
 
 ## 1.8.0 - 2024-10
 
