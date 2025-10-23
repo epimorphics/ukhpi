@@ -36,18 +36,21 @@ Rails.application.configure do
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
 
+  # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
+  config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
+
   # Tag rails logs with useful information
   config.log_tags = %i[subdomain request_id request_method]
+
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
+
   # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout)
+  config.logger = JsonRailsLogger::Logger.new($stdout) if config.log_level == :debug
 
   # API location can be specified in the environment
   # But defaults to the dev service
   config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')
 
-  # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
-  config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
 end
