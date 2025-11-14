@@ -85,7 +85,9 @@ image: auth
 	@echo Done.
 
 lint: assets
-	@${BUNDLE} exec rubocop
+	@echo "Running code linting for ${NAME} ..."
+# Auto-correct offenses safely where possible with the `-a` flag
+	@${BUNDLE} exec rubocop -a
 
 locations:
 	@echo "Generating new UKHPI location files ... "
