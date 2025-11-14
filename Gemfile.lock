@@ -383,6 +383,9 @@ GEM
     rubocop-ast (1.46.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
+    rubocop-capybara (2.22.1)
+      lint_roller (~> 1.1)
+      rubocop (~> 1.72, >= 1.72.1)
     rubocop-rails (2.33.3)
       activesupport (>= 4.2.0)
       lint_roller (~> 1.1)
@@ -561,6 +564,7 @@ DEPENDENCIES
   rails (~> 8.0)
   rdf-turtle
   rubocop
+  rubocop-capybara
   rubocop-rails
   ruby-lsp
   sass-rails
