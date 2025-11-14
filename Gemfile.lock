@@ -531,10 +531,10 @@ DEPENDENCIES
   csv
   data_services_api!
   dotenv
-  faraday
-  faraday-encoding (~> 0.0.6)
-  faraday-follow_redirects (~> 0.3.0)
-  faraday-retry (~> 2.0)
+  faraday (~> 2.13, >= 2.13.0)
+  faraday-encoding (~> 0.0, >= 0.0.6)
+  faraday-follow_redirects (~> 0.3, >= 0.3.0)
+  faraday-retry (~> 2.0, >= 2.0)
   font-awesome-rails
   foreman
   get_process_mem
