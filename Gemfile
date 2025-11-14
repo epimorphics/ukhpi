@@ -2,41 +2,39 @@
 
 source 'https://rubygems.org'
 
-# Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+# Web framework core
+gem 'puma'
 gem 'rails', '~> 8.0'
 
-# Gems for front-end asset management
-gem 'font-awesome-rails'
-gem 'sass-rails'
-# Use Uglifier as compressor for JavaScript assets
-# gem 'uglifier'
-gem 'terser' # Updating to terser for ES6+ support
-gem 'vite_rails'
-
-# Gems for different use cases
-gem 'csv'
-
-# Faraday v2 requires individual middlewares to be specified
-# Resolve open-ended gem versioning warnings by setting explicit version minimums
+# HTTP client libraries
 gem 'faraday', '~> 2.13', '>= 2.13.0'
 gem 'faraday-encoding', '~> 0.0', '>= 0.0.6'
 gem 'faraday-follow_redirects', '~> 0.4', '>= 0.4.0'
 gem 'faraday-retry', '~> 2.0', '>= 2.0'
 
-gem 'get_process_mem'
+# Template and view helpers
 gem 'govuk_template'
 gem 'haml-rails'
 gem 'http_accept_language'
 gem 'js-routes'
+
+# Data processing and utilities
+gem 'csv'
 gem 'ostruct'
-gem 'prometheus-client'
-gem 'puma'
-gem 'puma-metrics'
 gem 'rdf-turtle'
-gem 'rubocop', require: false
-gem 'rubocop-rails', require: false
-gem 'sentry-rails'
 gem 'yajl-ruby', require: 'yajl'
+
+# Error tracking and monitoring (production)
+gem 'get_process_mem'
+gem 'prometheus-client'
+gem 'puma-metrics'
+gem 'sentry-rails'
+
+# Asset pipeline and front-end
+gem 'font-awesome-rails'
+gem 'sass-rails'
+gem 'terser' # Updating to terser for ES6+ support
+gem 'vite_rails'
 
 group :development, :test do
   gem 'byebug'
@@ -78,7 +76,7 @@ group :test do
   gem 'vcr'
 end
 
-# TODO: In production you want to set this to the gem from the epimorphics group package repository
+# Private gem source for Epimorphics packages
 source 'https://rubygems.pkg.github.com/epimorphics' do
   gem 'data_services_api'
   gem 'json_rails_logger'
