@@ -19,7 +19,7 @@ if ENV['SENTRY_ENABLED'] == 'true' && ENV['SENTRY_API_KEY'].present?
     # * Set the environment name from the SENTRY_ENVIRONMENT configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)
     # ^ Default to only reporting info, warnings and errors to Sentry
-    config.logger.level = Rails.application.config.log_level || :info
+    config.sdk_logger.level = Rails.application.config.log_level || :info
     # * Set the release version to the current version
     config.release = Version::VERSION
     # ! Sentry recommends adjusting this value in production hence the ternary operator.
