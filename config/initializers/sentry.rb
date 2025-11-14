@@ -24,7 +24,7 @@ if ENV['SENTRY_ENABLED'] == 'true' && ENV['SENTRY_API_KEY'].present?
     config.release = Version::VERSION
     # ! Sentry recommends adjusting this value in production hence the ternary operator.
     # * Set traces_sample_rate to 1.0 to capture 100% of transactions for tracing.
-    config.traces_sample_rate = Rails.env.production? ? 0.1: 1.0
+    config.traces_sample_rate = Rails.env.production? ? 0.1 : 1.0
     # ! Sentry recommends adjusting this value in production hence the ternary operator.
     # * Set profiles_sample_rate to profile 100% of sampled transactions.
     config.profiles_sample_rate = Rails.env.production? ? 1.0 : 0.1
