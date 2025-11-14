@@ -25,7 +25,8 @@ class PrintController < ApplicationController
   end
 
   def print_multiple_locations
-    Log.info('Requesting Print Controller: Multiple Locations', { params: params, path: request.path })
+    Log.info('Requesting Print Controller: Multiple Locations',
+             { params: params, path: request.path })
     pparams = params.permit(*UserSelections::PERMITTED, location: [])
     location_gss = pparams.delete('location')
     locations = location_gss.map { |gss| Locations.lookup_gss(gss).uri }
