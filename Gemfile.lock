@@ -135,7 +135,7 @@ GEM
       logger
     faraday-encoding (0.0.6)
       faraday
-    faraday-follow_redirects (0.3.0)
+    faraday-follow_redirects (0.4.0)
       faraday (>= 1, < 3)
     faraday-net_http (3.4.2)
       net-http (~> 0.5)
@@ -502,11 +502,11 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.6.0)
-      faraday (~> 2.13)
-      faraday-encoding (~> 0.0.6)
-      faraday-follow_redirects (~> 0.3.0)
-      faraday-retry (~> 2.0)
+    data_services_api (1.6.1)
+      faraday (~> 2.13, >= 2.13.0)
+      faraday-encoding (~> 0.0, >= 0.0.6)
+      faraday-follow_redirects (~> 0.4, >= 0.4.0)
+      faraday-retry (~> 2.0, >= 2.0)
       json (~> 2.0)
       yajl-ruby (~> 1.4)
     json_rails_logger (2.2.0)
@@ -533,7 +533,7 @@ DEPENDENCIES
   dotenv
   faraday (~> 2.13, >= 2.13.0)
   faraday-encoding (~> 0.0, >= 0.0.6)
-  faraday-follow_redirects (~> 0.3, >= 0.3.0)
+  faraday-follow_redirects (~> 0.4, >= 0.4.0)
   faraday-retry (~> 2.0, >= 2.0)
   font-awesome-rails
   foreman
