@@ -17,8 +17,8 @@ class QueryCommand
   # Perform the UKHPI query encapsulated by this command object
   # @param [DataServicesApi::Service] service the API service to use
   # Defaults to the UKHPI API service endpoint
-  def perform_query(service = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    time_taken = execute_query(service, query) / 1000
+  def perform_query(service = nil)
+    execute_query(service, query) / 1000
   end
 
   # @return True if this a query execution command
