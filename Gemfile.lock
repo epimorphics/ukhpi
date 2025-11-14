@@ -191,7 +191,7 @@ GEM
     js-routes (2.3.5)
       railties (>= 5)
       sorbet-runtime
-    json (2.13.2)
+    json (2.16.0)
     json_expressions (0.9.0)
     kramdown (2.5.1)
       rexml (>= 3.3.9)
@@ -509,7 +509,7 @@ GEM
       faraday-retry (~> 2.0)
       json (~> 2.0)
       yajl-ruby (~> 1.4)
-    json_rails_logger (2.0.6)
+    json_rails_logger (2.2.0)
       json
       lograge
       railties
