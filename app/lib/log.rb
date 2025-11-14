@@ -58,7 +58,7 @@ module Log
 
   # Log a request with the given fields and type
   def make_log(message, fields = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
-    puts "\n" if Rails.env.development? && Rails.logger.debug?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
 
     # * Set initial values for logged fields
     # ! fields[:message] = "#{action} request for #{message}".humanize if message.present?
@@ -117,7 +117,7 @@ module Log
     fields.compact!
 
     maybe_log(fields[:status], fields.sort.to_h, level)
-    puts "\n" if Rails.env.development? && Rails.logger.debug?
+    puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
   end
 
   # Set the appropriate log level passed in or based on the status code
