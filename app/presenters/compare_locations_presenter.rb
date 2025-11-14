@@ -77,7 +77,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     pred = selected_statistic_uri
 
     data_by_columns.transpose.map do |row|
-      [period_date(row)] + (row.map { |values| values&.fetch(pred, nil)&.first })
+      [period_date(row)] + row.map { |values| values&.fetch(pred, nil)&.first }
     end
   end
 
@@ -152,7 +152,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
   def ensure_even_row_lengths(by_columns) # rubocop:disable Metrics/CyclomaticComplexity
     return [] unless by_columns&.any?(&:present?)
 
-    max_results = by_columns&.map(&:length).max
+    max_results = by_columns&.map(&:length)&.max
 
     by_columns.each do |results|
       results.unshift(nil) while results.length < max_results

@@ -88,7 +88,7 @@ class DataView # rubocop:disable Metrics/ClassLength
 
   # @return A node ID for this data view, identifying the indicator and theme
   def node_id
-    "#{indicator ? "#{indicator.slug}-" : ''}#{theme.slug}".tr('_', '-')
+    "#{"#{indicator.slug}-" if indicator}#{theme.slug}".tr('_', '-')
   end
 
   private
