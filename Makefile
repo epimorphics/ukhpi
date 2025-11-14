@@ -39,17 +39,15 @@ ${GITHUB_TOKEN}:
 
 all: image
 
-assets:
-	@echo "Installing bundled gems ..."
-	@${BUNDLE} install
-	@echo "Installing yarn packages ..."
-	@yarn install
-	@echo "Removing old compiled assets and compiling via vite ..."
-	@NODE_OPTIONS=--openssl-legacy-provider ${RAILS} vite:clobber vite:build
+assets: bundles modules compiled
 	@echo vite info
 	@${RAILS} vite:info
 
 auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
+
+bundles:
+	@echo "Installing Ruby gems via Bundler..."
+	@${BUNDLE} install
 
 check: lint test
 	@echo "All checks passed."
@@ -62,6 +60,10 @@ clean:
 	@${RAILS} tmp:cache:clear
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
+
+compiled:
+	@echo "Removing old compiled assets and compiling via vite ..."
+	@NODE_OPTIONS=--openssl-legacy-provider ${RAILS} vite:clobber vite:build
 
 forceclean: realclean
 # Remove all bundled files
@@ -93,6 +95,10 @@ locations:
 	@echo "Generating new UKHPI location files ... "
 	@${RAILS} ukhpi:locations
 	@echo "Done."
+
+modules:
+	@echo "Installing node packages ..."
+	@yarn install
 
 name:
 	@echo ${SHORTNAME}
