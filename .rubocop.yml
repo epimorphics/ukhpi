@@ -5,6 +5,7 @@ AllCops:
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
+    - bin/**/*
     - "node_modules/**/*"
     - "Gemfile"
   NewCops: enable
