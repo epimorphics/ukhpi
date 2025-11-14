@@ -160,13 +160,13 @@ GEM
       activesupport (>= 6.1)
     govuk_template (0.26.0)
       rails (>= 3.1)
-    haml (6.3.0)
+    haml (7.0.2)
       temple (>= 0.8.2)
       thor
       tilt
     haml-lint (0.999.999)
       haml_lint
-    haml-rails (2.1.0)
+    haml-rails (3.0.0)
       actionpack (>= 5.1)
       activesupport (>= 5.1)
       haml (>= 4.0.6)
