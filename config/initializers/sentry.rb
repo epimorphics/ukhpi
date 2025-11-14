@@ -35,7 +35,7 @@ Rails.application.reloader.to_prepare do
 
   # * Set additional tags for the Sentry event to allow for better filtering in the Sentry UI
   # ? These tags are set in either a local .env file or the instance configuration
-  # ! Remove any nil values from the sentry_tags hash before setting the tags
+  # ! `.compact!` removes any nil values from the sentry_tags hash before setting the tags
   sentry_tags = {
     'band' => ENV.fetch('SENTRY_BAND', nil),
     'enabled' => ENV.fetch('SENTRY_ENABLED', nil),
