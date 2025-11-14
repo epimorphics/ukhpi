@@ -15,11 +15,13 @@ gem 'vite_rails'
 
 # Gems for different use cases
 gem 'csv'
+
 # Faraday v2 requires individual middlewares to be specified
-gem 'faraday'
-gem 'faraday-encoding', '~> 0.0.6'
-gem 'faraday-follow_redirects', '~> 0.3.0'
-gem 'faraday-retry', '~> 2.0'
+# Resolve open-ended gem versioning warnings by setting explicit version minimums
+gem 'faraday', '~> 2.13', '>= 2.13.0'
+gem 'faraday-encoding', '~> 0.0', '>= 0.0.6'
+gem 'faraday-follow_redirects', '~> 0.3', '>= 0.3.0'
+gem 'faraday-retry', '~> 2.0', '>= 2.0'
 
 gem 'get_process_mem'
 gem 'govuk_template'
