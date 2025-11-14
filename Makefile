@@ -84,8 +84,8 @@ image: auth
 		.
 	@echo Done.
 
-lint: assets
-	@echo "Running code linting for ${NAME} ..."
+lint:
+	@echo "Running code linting for ${SHORTNAME} ..."
 # Auto-correct offenses safely where possible with the `-a` flag
 	@${BUNDLE} exec rubocop -a
 
