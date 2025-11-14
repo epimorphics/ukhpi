@@ -8,9 +8,9 @@ def user_selections(params)
 end
 
 # Unit tests on the UserSelections class
-class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class UserSelectionsTest < ActiveSupport::TestCase
   # Test cases for UserSelections
-  describe 'UserSelections' do # rubocop:disable Metrics/BlockLength
+  describe 'UserSelections' do
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
         selections = user_selections('location' => 'test-region')

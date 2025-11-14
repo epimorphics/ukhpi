@@ -142,7 +142,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
 
   let(:presenter) { CompareLocationsPresenter.new(user_selections, query_results) }
 
-  describe 'CompareLocationsPresenter' do # rubocop:disable Metrics/BlockLength
+  describe 'CompareLocationsPresenter' do
     before do
       I18n.locale = :en
     end

@@ -3,7 +3,7 @@
 require 'test_helper'
 
 # Unit tests on UserCompareSelections class
-class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class UserCompareSelectionsTest < ActiveSupport::TestCase
   before do
     I18n.locale = :en # Set default locale for tests
   end
@@ -12,7 +12,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
     I18n.locale = I18n.default_locale # Reset locale after tests
   end
 
-  describe 'UserCompareSelections' do # rubocop:disable Metrics/BlockLength
+  describe 'UserCompareSelections' do
     describe '#initialize' do
       it 'should allow permitted params' do
         params = ActionController::Parameters.new(from: '2019-12-01')

@@ -12,7 +12,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
     I18n.locale = I18n.default_locale # Reset locale after tests
   end
 
-  describe 'UkhpiStatistic' do # rubocop:disable Metrics/BlockLength
+  describe 'UkhpiStatistic' do
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', true)

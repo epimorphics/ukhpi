@@ -12,7 +12,7 @@ class UkhpiThemeTest < ActiveSupport::TestCase
     I18n.locale = I18n.default_locale # Reset locale after tests
   end
 
-  describe 'UkhpiTheme' do # rubocop:disable Metrics/BlockLength
+  describe 'UkhpiTheme' do
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = stub

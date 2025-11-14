@@ -75,7 +75,7 @@ class DataView # rubocop:disable Metrics/ClassLength
 
   # @return A Hash of the attributes needed to convey the key parameters of
   # this data view to JavaScript code
-  def as_js_attributes # rubocop:disable Metrics/AbcSize
+  def as_js_attributes
     {
       indicator: indicator.to_h(user_selections).to_json,
       theme: theme.to_h(user_selections).to_json,

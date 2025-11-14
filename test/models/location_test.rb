@@ -24,7 +24,7 @@ class RegionTest < ActiveSupport::TestCase
     )
   end
 
-  describe 'Location' do # rubocop:disable Metrics/BlockLength
+  describe 'Location' do
     before do
       I18n.locale = :en # Ensure tests run in English locale
     end
