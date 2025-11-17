@@ -47,6 +47,9 @@ Lint/MixedRegexpCaptureTypes:
 Lint/RaiseException:
   Enabled: true
 
+Lint/RedundantCopDisableDirective:
+  Enabled: true
+
 Lint/StructNewOverride:
   Enabled: true
 
