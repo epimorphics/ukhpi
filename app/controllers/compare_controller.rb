@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Controller for the user action of copmaring statistics between two or more
 # locations
 class CompareController < ApplicationController

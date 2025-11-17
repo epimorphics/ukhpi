@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Common shared code for UKHPI presenters
 class Presenter
   attr_reader :cmd

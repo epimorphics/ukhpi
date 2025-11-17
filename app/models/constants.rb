@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Convenient place to keep shared constants
 
 class Constants

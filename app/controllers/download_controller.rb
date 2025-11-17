@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Controller for the action of downloading UKHPI data in a variety of data formats
 # (csv, json, RDF etc)
 class DownloadController < ApplicationController

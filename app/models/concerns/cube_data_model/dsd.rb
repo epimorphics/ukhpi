@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Keep Zeitwerk happy. Without this declaration, Zeitwerk thinks
 # the classname in this file should be CubeDataModel::Dsd
 ActiveSupport::Inflector.inflections { |infl| infl.acronym('DSD') } if defined?(ActiveSupport)

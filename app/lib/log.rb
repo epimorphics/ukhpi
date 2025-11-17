@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This module provides logging functionality for the application.
 # It includes methods for logging messages at different levels (debug, info, warn, error)
 # and a method for logging requests with various fields.

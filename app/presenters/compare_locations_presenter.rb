@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections

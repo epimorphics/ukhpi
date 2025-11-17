@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This class encapsulates the user input regarding language only.
 # It is used on the landing page.
 class UserLanguageSelection

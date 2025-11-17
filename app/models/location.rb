@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates a single location where UKHPI observations can be made. Locations
 # may be countries or European regions, local authorities, or counties or
 # regions of England

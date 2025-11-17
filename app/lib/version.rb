@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Version
   MAJOR = 2
   MINOR = 2

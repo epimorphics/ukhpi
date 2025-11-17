@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 prometheus = Prometheus::Client.registry
 
 # Prometheus counters

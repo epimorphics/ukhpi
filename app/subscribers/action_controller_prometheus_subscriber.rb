@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Subscribe to :action_controller events to monitor memory usage and thread status
 class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :action_controller

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates an indicator for the various UKHPI statistics in the overall
 # dataset. An indicator denotes a common characteristic across the statistics,
 # such as 'average price' or 'percentage monthly change'. Indicators apply

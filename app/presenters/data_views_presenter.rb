@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Presenter object that calculates the set of `DataView`s that should be
 # created from a given `UserSelection`.
 class DataViewsPresenter

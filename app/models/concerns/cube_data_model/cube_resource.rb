@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CubeDataModel
   # Concern that encapsulates an RDF resource in a DataCube model
   class CubeResource

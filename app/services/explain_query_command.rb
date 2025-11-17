@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Explain query command. This is an extension of the QueryCommand, and differs
 # only that it asks the DsAPI to explain its query strategy, rather than performing
 # the query.

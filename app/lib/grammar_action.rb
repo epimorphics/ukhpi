@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates a change resulting from applying grammar rules
 class GrammarAction
   attr_reader :options, :result, :prefix, :suffix

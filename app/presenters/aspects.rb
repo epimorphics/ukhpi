@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Presenter for managing which measures of the cube are presented as aspects,
 # according to the current user preferences
 class Aspects

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # User selections for the task of comparing one or more locations with
 # each other
 class UserCompareSelections

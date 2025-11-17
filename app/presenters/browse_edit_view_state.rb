@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_dependency 'active_support/core_ext/module/delegation'
 
 # Adapter mapping the view state in a browse controller to the browse view

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_dependency 'locations_table'
 
 # Encapsulates the set of all of the locations that UKHPI observations can apply to

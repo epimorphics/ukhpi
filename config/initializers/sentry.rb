@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'version'
 
 Rails.application.reloader.to_prepare do

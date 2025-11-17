@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # :nodoc:
 module CubeDataModel
   # Specialises a CubeResource to add behaviour specific to DataCube measures

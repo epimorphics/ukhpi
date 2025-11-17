@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_dependency 'active_support/core_ext/module/delegation'
 
 # Domain model object encapsulating a particular data view in the UI, based

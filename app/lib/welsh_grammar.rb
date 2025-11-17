@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Assistance with formulating correct Welsh grammar
 class WelshGrammar
   MUTATIONS = {

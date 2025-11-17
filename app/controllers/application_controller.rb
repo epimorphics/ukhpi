@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # :nodoc:
 class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
   include Rails.application.routes.url_helpers

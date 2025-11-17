@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # A presenter for the printable view, based on the download view presenter
 class PrintPresenter < DownloadPresenter
   include ActionView::Helpers::NumberHelper

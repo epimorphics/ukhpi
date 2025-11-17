@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Controller for the action of generating a printable view of the data
 class PrintController < ApplicationController
   def show

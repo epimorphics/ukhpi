@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require_relative 'concerns/cube_data_model/dsd'
 
 # An encapsulation of the DSD denoting the RDF cube data model for UKHPI

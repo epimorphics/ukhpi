@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CubeDataModel
   # Module encapsulating the concern of a Component in a data cube, which
   # specialises a generic resource by having a qb:component property denoting

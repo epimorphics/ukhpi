@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This class encapsulates the user input via the request params, and uses that
 # to determine which UKHPI statistics should be selected from the store and
 # subsequently displayed.

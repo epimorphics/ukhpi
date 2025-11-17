@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 require 'json'
 require 'csv'
 
 # Constants
 
-NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm package?'
+NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm package?'.freeze
 
 # Helper classes
 
