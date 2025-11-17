@@ -54,8 +54,9 @@ group :development do
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
   # Code quality and linting (development only)
   gem 'rubocop', require: false
-  gem 'rubocop-rails', require: false
   gem 'rubocop-capybara', require: false
+  gem 'rubocop-rails', require: false
+  gem "rubocop-rails-omakase", require: false
   gem 'ruby-lsp'
   gem 'solargraph'
   # Spring speeds up development by keeping your application running in the background
