@@ -2,7 +2,7 @@
 # may be countries or European regions, local authorities, or counties or
 # regions of England
 class Location
-  WALES = 'http://landregistry.data.gov.uk/id/region/wales'
+  WALES = 'http://landregistry.data.gov.uk/id/region/wales'.freeze
 
   attr_reader :uri, :labels, :type, :parent, :gss
 

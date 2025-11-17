@@ -14,10 +14,10 @@ class UserSelections
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
   DEFAULT_STATISTICS = %w[all].freeze
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
-  DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
-  DEFAULT_REGION_TYPE = 'country'
+  DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'.freeze
+  DEFAULT_REGION_TYPE = 'country'.freeze
   DEFAULT_THEMES = %w[property_type volume].freeze
-  DEFAULT_LANGUAGE = 'en'
+  DEFAULT_LANGUAGE = 'en'.freeze
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),

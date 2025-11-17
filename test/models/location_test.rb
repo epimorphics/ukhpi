@@ -3,8 +3,8 @@ require 'location'
 
 # Unit tests on the Location class
 class RegionTest < ActiveSupport::TestCase
-  BOROUGH_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'
-  COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'
+  BOROUGH_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough'.freeze
+  COUNTY_TYPE = 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County'.freeze
 
   let(:region) do
     # Initializes a new Location instance.

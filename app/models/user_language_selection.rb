@@ -4,7 +4,7 @@ class UserLanguageSelection
   include UserChoices
   include UserLanguage
 
-  DEFAULT_LANGUAGE = 'en'
+  DEFAULT_LANGUAGE = 'en'.freeze
 
   USER_PARAMS_MODEL = {
     'lang' => Struct::UserParam.new(DEFAULT_LANGUAGE, false, nil)

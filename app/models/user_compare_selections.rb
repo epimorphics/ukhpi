@@ -4,8 +4,8 @@ class UserCompareSelections
   include UserChoices
   include UserLanguage
 
-  DEFAULT_INDICATOR = 'hpi'
-  DEFAULT_STATISTIC = 'all'
+  DEFAULT_INDICATOR = 'hpi'.freeze
+  DEFAULT_STATISTIC = 'all'.freeze
   DEFAULT_LOCATIONS = %w[K02000001 W92000004 S92000003 E92000001 N92000002].freeze
 
   USER_PARAMS_MODEL = {

@@ -5,8 +5,8 @@ class UkhpiDataCube
   include CubeDataModel::Vocabularies
 
   # rubocop:disable Layout/LineLength
-  CONFIG_DIR = 'dsapi'
-  DSD_FILE = 'UKHPI-dsd.ttl'
+  CONFIG_DIR = 'dsapi'.freeze
+  DSD_FILE = 'UKHPI-dsd.ttl'.freeze
   THEMES = {
     property_type: UkhpiTheme.new('property_type', [
                                     UkhpiStatistic.new('all', '', 'all_property_types', true),
