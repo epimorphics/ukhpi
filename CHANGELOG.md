@@ -3,13 +3,38 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic
+Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.2.2] - 2025-11
+
 ### Changed
 
-- Adjusted test logging to respect log level and reduce logs displayed unless debugging
+- Updated Rails framework and dependency gem versions to address security
+  vulnerabilities and improve stability
+  [#522](https://github.com/epimorphics/ukhpi/issues/522)
+- Reorganized and documented Gemfile structure with functional grouping for
+  improved maintainability
+- Updated Sentry error tracking dependencies and configuration to their SDK v6
+  standards
+- Upgraded Faraday HTTP client libraries and middleware to v2.13+
+- Enhanced RuboCop linting configuration with Capybara support and improved code
+  style rules
+- Refactored application configuration by removing deprecated settings and
+  improving environment variable handling
+- Improved Makefile with modular asset build tasks for better maintainability
+- Standardized code style across all Ruby files by removing inline RuboCop
+  disables and frozen string literal comments
+
+### Fixed
+
+- Corrected Sentry sample rate and profiling configuration logic
+- Improved Gemfile dependency presence checks to prevent errors with blank
+  environment variables
+- Fixed spacing and operator usage issues across codebase for Ruby style
+  compliance
 
 ## [2.2.1] - 2025-08
 
@@ -189,6 +214,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Upgraded ruby to `3.3.5`
 
 ---
+<!-- Versions below this point use legacy changelog format -->
 
 ## 1.8.0 - 2024-10
 
