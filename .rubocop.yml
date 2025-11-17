@@ -165,3 +165,6 @@ Style/SlicingWithRange:
 
 Style/OpenStructUse:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
