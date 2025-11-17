@@ -8,9 +8,9 @@ Rails.application.reloader.to_prepare do
     config.breadcrumbs_logger = %i[sentry_logger monotonic_active_support_logger http_logger]
     # * The DSN tells the SDK where to send events.
     # ! By default, events will be sent to Sentry in all environments.
-    #! If you don't want to send events in a specific environment,
-    #! you can unset the SENTRY_DSN [SENTRY_API_KEY] variable in that environment.
-    config.dsn = ENV['SENTRY_API_KEY']
+    # ! If you don't want to send events in a specific environment,
+    # ! you can unset the SENTRY_DSN [SENTRY_API_KEY] variable in that environment.
+    config.dsn = ENV.fetch('SENTRY_API_KEY', nil)
     # ! Only report errors in these environments:
     config.enabled_environments = %w[production prod preprod dev]
     # ! Ignore exceptions that are not useful to us
