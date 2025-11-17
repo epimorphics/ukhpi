@@ -142,6 +142,9 @@ Style/ExponentialNotation:
 Style/FormatStringToken:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
 Style/HashAsLastArrayItem:
   Enabled: true
 
@@ -175,8 +178,11 @@ Style/RedundantRegexpEscape:
 Style/SlicingWithRange:
   Enabled: true
 
-Style/OpenStructUse:
-  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
 
-Style/FrozenStringLiteralComment:
-  EnforcedStyle: never
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
