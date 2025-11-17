@@ -85,7 +85,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Update Data Services Api gem version to include update for ticket in Dev and
-  PreProd [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+  PreProd [#493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## [2.1.0] - 2025-04
 
@@ -111,7 +111,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - Updated Data Services Api gem version to include update for ticket in Prod
-  instance [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+  instance [#493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## [2.0.2] - 2025-03
 
@@ -153,7 +153,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Applied recommended linting corrections from Rubocop
 - Updated the logging to utilise a call-flow diagram to display the sequence of
   messages that are sent between the app and the api
-  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+  [#478](https://github.com/epimorphics/ukhpi/issues/478)
 - Updated visibility and search input types
   - Added conditional class for hiding elements in non-dev environments
   - Changed text fields to search fields for better UX
@@ -168,7 +168,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Resolved Error handling in the landing, browse, and compare pages to ensure
   that the correct error message is displayed to the user when an error occurs
-  [GH-465](https://github.com/epimorphics/ukhpi/issues/465)
+  [#465](https://github.com/epimorphics/ukhpi/issues/465)
   - Added error raising for date parsing failures by returning the error to the
     application as well as logging the error message to the logs
 
@@ -189,10 +189,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Updated the `instrument_internal_error` method to replace the
   `maybe_report_to_sentry` method while reporting internal errors to the
   Prometheus metrics only when necessary
-- Improved error metrics reporting to ensure that logging always happens with the
-  appropriate severity depending on the exception status while reducing the
+- Improved error metrics reporting to ensure that logging always happens with
+  the appropriate severity depending on the exception status while reducing the
   types of errors that can trigger an error metric and therefore a notification
-  in slack [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
+  in slack [#149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
 
 ### Fixed
 
