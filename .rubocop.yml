@@ -160,6 +160,9 @@ Style/HashTransformKeys:
 Style/HashTransformValues:
   Enabled: true
 
+Style/OpenStructUse:
+  Enabled: false
+
 Style/RedundantAssignment:
   Enabled: true
 
