@@ -27,6 +27,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Improved Makefile with modular asset build tasks for better maintainability
 - Standardized code style across all Ruby files by removing inline RuboCop
   disables and frozen string literal comments
+- Adjusted test logging to respect log level and reduce logs displayed unless
+  system is being debugged
 
 ### Fixed
 
