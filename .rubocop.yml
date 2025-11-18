@@ -1,11 +1,6 @@
-# # Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
-
-# Overwrite or add rules to create your own house style
-#
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# Omakase Ruby styling for Rails
+inherit_gem:
+  rubocop-rails-omakase: rubocop.yml
 
 plugins:
   - rubocop-capybara
@@ -162,6 +157,9 @@ Style/HashTransformValues:
 
 Style/OpenStructUse:
   Enabled: false
+
+Style/QuotedSymbols:
+  EnforcedStyle: same_as_string_literals
 
 Style/RedundantAssignment:
   Enabled: true
