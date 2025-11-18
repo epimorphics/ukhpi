@@ -19,7 +19,7 @@ class UserCompareSelections
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),
-    'utf8' => Struct::UserParam.new(nil, false, nil)
+    'utf8' => Struct::UserParam.new(nil, false, nil),
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL
@@ -55,7 +55,7 @@ class UserCompareSelections
   end
 
   def selected_statistics
-    [selected_statistic]
+    [ selected_statistic ]
   end
 
   def selected_indicator
@@ -63,7 +63,7 @@ class UserCompareSelections
   end
 
   def selected_indicators
-    [selected_indicator]
+    [ selected_indicator ]
   end
 
   def search_term
@@ -88,7 +88,7 @@ class UserCompareSelections
       locations: selected_locations.map(&:to_h).to_json,
       themes: ukhpi_data_cube.themes.map do |_slug, theme|
         theme.to_h(self)
-      end.to_json
+      end.to_json,
     }
   end
 

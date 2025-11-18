@@ -4,27 +4,27 @@ prometheus = Prometheus::Client.registry
 prometheus.counter(
   :api_status,
   docstring: 'Response from back-end API',
-  labels: [:status]
+  labels: [ :status ]
 )
 prometheus.counter(
   :api_requests,
   docstring: 'Overall count of back-end API requests',
-  labels: [:result]
+  labels: [ :result ]
 )
 prometheus.counter(
   :api_connection_failure,
   docstring: 'Reasons for back-end API connection failure',
-  labels: [:message]
+  labels: [ :message ]
 )
 prometheus.counter(
   :api_service_exception,
   docstring: 'The response from the back-end data API was not processed',
-  labels: [:message]
+  labels: [ :message ]
 )
 prometheus.counter(
   :internal_application_error,
   docstring: 'Unexpected events and internal error count',
-  labels: [:message]
+  labels: [ :message ]
 )
 
 # Prometheus gauges
@@ -36,7 +36,7 @@ prometheus.gauge(
 prometheus.gauge(
   :process_threads,
   docstring: 'The number of process threads, labelled by status',
-  labels: [:status],
+  labels: [ :status ],
   preset_labels: { status: 'total' }
 )
 

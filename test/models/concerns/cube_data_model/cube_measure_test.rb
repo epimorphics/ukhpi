@@ -52,11 +52,11 @@ class CubeMeasureTest < ActiveSupport::TestCase
 
   describe 'CubeMeasure' do
     it 'should return the units' do
-      _(measure0.units.map(&:to_s)).must_equal ['http://dbpedia.org/resource/Number']
+      _(measure0.units.map(&:to_s)).must_equal [ 'http://dbpedia.org/resource/Number' ]
     end
 
     it 'should return the range' do
-      _(measure0.range.map(&:to_s)).must_equal [RDF::XSD.integer.to_s]
+      _(measure0.range.map(&:to_s)).must_equal [ RDF::XSD.integer.to_s ]
     end
 
     it 'should return true for a percentage measure' do

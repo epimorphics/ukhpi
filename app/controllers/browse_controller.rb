@@ -48,7 +48,7 @@ class BrowseController < ApplicationController
 
     redirect_to({
       controller: :browse,
-      action: :show
+      action: :show,
     }.merge(url_params))
   end
 
@@ -61,14 +61,14 @@ class BrowseController < ApplicationController
     { user_selections: user_selections, error: e.message }
   end
 
-  def render_view_state(view_state) # rubocop:disable Metrics/MethodLength
+  def render_view_state(view_state)
     @view_state = view_state
     if view_state.respond_to?(:[]) && view_state[:error]
       user_selections = if view_state.respond_to?(:user_selections)
                           view_state.user_selections
-                        else
+      else
                           view_state[:user_selections]
-                        end
+      end
       render_request_error(user_selections, :internal_server_error) unless Rails.env.development?
     else
       respond_to do |format|
@@ -97,7 +97,7 @@ class BrowseController < ApplicationController
     if view_state.location_search_term.present?
       match_location(view_state)
     else
-      flash[:search] = 'Missing search term' # rubocop:disable Rails/I18nLocaleTexts
+      flash[:search] = 'Missing search term'
     end
   end
 
@@ -116,7 +116,7 @@ class BrowseController < ApplicationController
   end
 
   def match_no_locations
-    flash.now[:search] = 'Sorry, no locations match that search term' # rubocop:disable Rails/I18nLocaleTexts
+    flash.now[:search] = 'Sorry, no locations match that search term'
   end
 
   def match_single_location(view_state, locations)
@@ -133,7 +133,7 @@ class BrowseController < ApplicationController
     Log.info { "Redirecting to #{new_params}" } if Rails.env.development?
     redirect_to({
       controller: :browse,
-      action: :show
+      action: :show,
     }.merge(new_params))
   end
 end

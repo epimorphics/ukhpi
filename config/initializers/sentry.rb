@@ -15,7 +15,7 @@ Rails.application.reloader.to_prepare do
     config.excluded_exceptions += [
       'ActionController::BadRequest',
       'ActionController::RoutingError',
-      'ActiveRecord::RecordNotFound'
+      'ActiveRecord::RecordNotFound',
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)
@@ -37,7 +37,7 @@ Rails.application.reloader.to_prepare do
   sentry_tags = {
     'band' => ENV.fetch('SENTRY_BAND', nil),
     'enabled' => ENV.fetch('SENTRY_ENABLED', nil),
-    'hostname' => ENV.fetch('SENTRY_HOSTNAME', nil)
+    'hostname' => ENV.fetch('SENTRY_HOSTNAME', nil),
   }.compact!
   # * Set the tags in the Sentry event with remaining values but only if there are any
   sentry_tags&.each { |k, v| Sentry.set_tags(k.to_s => v) }

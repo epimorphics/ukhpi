@@ -14,7 +14,7 @@ class UkhpiThemeTest < ActiveSupport::TestCase
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = stub
-        theme = UkhpiTheme.new('foo', [stat])
+        theme = UkhpiTheme.new('foo', [ stat ])
         _(theme.slug).must_equal 'foo'
         _(theme.statistics.length).must_equal 1
       end
@@ -25,9 +25,9 @@ class UkhpiThemeTest < ActiveSupport::TestCase
         stat0 = stub(volume?: true)
         stat1 = stub(volume?: false)
 
-        _(UkhpiTheme.new('foo', [stat0]).indicators.length).must_equal 5
-        _(UkhpiTheme.new('foo', [stat1]).indicators.length).must_equal 4
-        _(UkhpiTheme.new('foo', [stat0, stat1]).indicators.length).must_equal 5
+        _(UkhpiTheme.new('foo', [ stat0 ]).indicators.length).must_equal 5
+        _(UkhpiTheme.new('foo', [ stat1 ]).indicators.length).must_equal 4
+        _(UkhpiTheme.new('foo', [ stat0, stat1 ]).indicators.length).must_equal 5
       end
     end
 
@@ -43,7 +43,7 @@ class UkhpiThemeTest < ActiveSupport::TestCase
         stat1 = stub(volume?: false, to_h: {})
         user_selections = stub
 
-        hash = UkhpiTheme.new('property_type', [stat0, stat1]).to_h(user_selections)
+        hash = UkhpiTheme.new('property_type', [ stat0, stat1 ]).to_h(user_selections)
 
         _(hash[:slug]).must_equal 'property_type'
         _(hash[:label]).must_equal 'Type of property'

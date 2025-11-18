@@ -61,7 +61,7 @@ module Rails
         msg = {
           ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
           level: 'INFO',
-          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}"
+          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}",
         }
         say msg.to_json
       end

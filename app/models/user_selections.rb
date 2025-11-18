@@ -41,7 +41,7 @@ class UserSelections
     'ai' => Struct::UserParam.new(nil, true, 'in'),
     'ac' => Struct::UserParam.new(nil, true, 'st'),
     'region' => Struct::UserParam.new(nil, false, 'location'),
-    'region-selection' => Struct::UserParam.new(nil, false, 'location-term')
+    'region-selection' => Struct::UserParam.new(nil, false, 'location-term'),
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL
@@ -115,7 +115,7 @@ class UserSelections
       in: '%s',
       location: '%s',
       from: 'from %s',
-      to: 'to %s'
+      to: 'to %s',
     }
 
     apply_templates(templates, @params).join(' ')

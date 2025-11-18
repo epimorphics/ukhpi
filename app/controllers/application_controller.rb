@@ -1,5 +1,5 @@
 # :nodoc:
-class ApplicationController < ActionController::Base # rubocop:disable Metrics/ClassLength
+class ApplicationController < ActionController::Base
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::TranslationHelper
   include Log
@@ -45,7 +45,7 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
         params:,
         path: request.path,
         request_status: 'processing',
-        status: response.status
+        status: response.status,
       }
     )
   end
@@ -69,14 +69,14 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   end
 
   # Render the appropriate error page based on the exception
-  def handle_internal_error(exception) # rubocop:disable Metrics/MethodLength
+  def handle_internal_error(exception)
     # Render the appropriate error page based on the exception
     if exception.instance_of? ArgumentError
       render_error(400)
     else
       cname = exception.class.name
       logged_fields = {
-        status: Rack::Utils::HTTP_STATUS_CODES[exception]
+        status: Rack::Utils::HTTP_STATUS_CODES[exception],
       }
       if Rails.env.development? || Rails.logger.debug?
         logged_fields[:backtrace] =
@@ -92,19 +92,19 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
     end
   end
 
-  def render_400(_exception = nil) # rubocop:disable Naming/VariableNumber
+  def render_400(_exception = nil)
     render_error(400)
   end
 
-  def render_403(_exception = nil) # rubocop:disable Naming/VariableNumber
+  def render_403(_exception = nil)
     render_error(403)
   end
 
-  def render_404(_exception = nil) # rubocop:disable Naming/VariableNumber
+  def render_404(_exception = nil)
     render_error(404)
   end
 
-  def render_500(_exception = nil) # rubocop:disable Naming/VariableNumber
+  def render_500(_exception = nil)
     render_error(500)
   end
 
@@ -164,11 +164,10 @@ class ApplicationController < ActionController::Base # rubocop:disable Metrics/C
   # @param [exc] exp the exception that caused the error
   # @return [ActiveSupport::Notifications::Event] provides an object-oriented
   # interface to the event
-  # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def instrument_application_error(exc, status = nil)
     err = {
       message: exc&.message || exc,
-      status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc]
+      status: exc&.status || Rack::Utils::SYMBOL_TO_STATUS_CODE[exc],
     }
     err[:status] = status if status
     err[:type] = exc.class&.name if exc&.class

@@ -35,7 +35,7 @@ class UkhpiIndicator
       rootName: root_name,
       label: label,
       isVolume: volume?,
-      isSelected: selected?(user_selections)
+      isSelected: selected?(user_selections),
     }
   end
 end

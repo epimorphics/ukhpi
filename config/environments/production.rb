@@ -68,7 +68,7 @@ Rails.application.configure do
   # This will affect assets in /public, e.g. webpacker assets.
   config.public_file_server.headers = {
     'Cache-Control' => "public, max-age=#{2.minutes.to_i}",
-    'Expires' => 2.minutes.from_now.to_fs(:rfc822)
+    'Expires' => 2.minutes.from_now.to_fs(:rfc822),
   }
 
   # Ignore bad email addresses and do not raise email delivery errors.

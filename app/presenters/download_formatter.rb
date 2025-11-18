@@ -25,13 +25,13 @@ module DownloadFormatter
     DownloadColumn.new(
       label: 'Reporting period',
       format: ->(row) { row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly' }
-    )
+    ),
   ].freeze
 
   SUPPLEMENTARY_COLUMNS = [
     DownloadColumn.new(
       label: 'Pivotable date',
       format: ->(row) { "#{row['ukhpi:refMonth']['@value']}-01" }
-    )
+    ),
   ].freeze
 end

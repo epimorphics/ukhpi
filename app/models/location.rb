@@ -53,7 +53,7 @@ class Location
   end
 
   def in_wales?
-    [uri, parent].include?(WALES)
+    [ uri, parent ].include?(WALES)
   end
 
   def to_h
@@ -61,7 +61,7 @@ class Location
       uri: uri,
       labels: @labels,
       type: type,
-      gss: gss
+      gss: gss,
     }
   end
 end

@@ -8,22 +8,22 @@ class Locations
   LocationSearchType = Struct.new('LocationSearchType', :label, :rdf_types)
 
   # Formatting update to reduce line length warnings from Rubocop
-  EUROPEAN_REGION = ['http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion'].freeze
+  EUROPEAN_REGION = [ 'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion' ].freeze
   LOCAL_AUTHORITIES = [
     'http://data.ordnancesurvey.co.uk/ontology/admingeo/Borough',
     'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
     'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
     'http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict',
-    'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority'
+    'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
   ].freeze
-  ENGLAND_REGION = ['http://landregistry.data.gov.uk/def/ukhpi/Region'].freeze
-  ENGLAND_COUNTY = ['http://data.ordnancesurvey.co.uk/ontology/admingeo/County'].freeze
+  ENGLAND_REGION = [ 'http://landregistry.data.gov.uk/def/ukhpi/Region' ].freeze
+  ENGLAND_COUNTY = [ 'http://data.ordnancesurvey.co.uk/ontology/admingeo/County' ].freeze
 
   LOCATION_SEARCH_TYPES = {
     'country' => LocationSearchType.new('Country', EUROPEAN_REGION),
     'local_authority' => LocationSearchType.new('Local authority', LOCAL_AUTHORITIES),
     'england_region' => LocationSearchType.new('Region (England only)', ENGLAND_REGION),
-    'england_county' => LocationSearchType.new('County (England only)', ENGLAND_COUNTY)
+    'england_county' => LocationSearchType.new('County (England only)', ENGLAND_COUNTY),
   }.freeze
 
   # @return The Location with the given URI, if it exists
@@ -40,7 +40,7 @@ class Locations
   # for building a select element in the UI
   def self.location_search_options
     LOCATION_SEARCH_TYPES.map do |key, search_option|
-      [search_option.label, key]
+      [ search_option.label, key ]
     end
   end
 

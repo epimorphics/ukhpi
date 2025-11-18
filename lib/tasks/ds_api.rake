@@ -1,4 +1,3 @@
-# rubocop:disable Layout/LineLength
 namespace :ukhpi do
   desc 'Create the DSAPI config file from the current DSD'
   task dsapi_config: :environment do

@@ -11,7 +11,7 @@ class LatestValuesCommand
 
   private
 
-  def service_api(service) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def service_api(service)
     begin
       # Set service to ukhpi dataset if not already set
       service ||= dataset(:ukhpi)
@@ -37,13 +37,13 @@ class LatestValuesCommand
 
       # Log the request status and response if there's an error
       Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
+      puts "\n" if Rails.env.development? && Rails.logger.debug?
     end
     # Always return the service object, even if it's nil
     service
   end
 
-  def run_query(hpi) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def run_query(hpi)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
     success = true
@@ -85,7 +85,7 @@ class LatestValuesCommand
       else
         Log.error(message, log_fields)
       end
-      puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
+      puts "\n" if Rails.env.development? && Rails.logger.debug?
     end
 
     success

@@ -5,7 +5,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 # a view of the  `averagePrice` indicator, together with the relevant dates,
 # location and other options, and access to the underlying data, to enable
 # the renderer to draw the display
-class DataView # rubocop:disable Metrics/ClassLength
+class DataView
   include Rails.application.routes.url_helpers
 
   attr_reader :user_selections, :query_result, :indicator, :theme
@@ -80,7 +80,7 @@ class DataView # rubocop:disable Metrics/ClassLength
       location: Locations.lookup_location(selected_location).to_json,
       from_date: { date: user_selections.from_date }.to_json,
       to_date: { date: user_selections.to_date }.to_json,
-      first: first ? 'true' : nil
+      first: first ? 'true' : nil,
     }
   end
 
@@ -112,7 +112,7 @@ class DataView # rubocop:disable Metrics/ClassLength
       <span class='o-data-view__location-preposition'>#{title_location_translated[:preposition]}</span>
       <a href='#{change_path}' class='o-data-view__location'>#{title_location_translated[:html]}</a>
     TITLE
-      .html_safe # rubocop:disable Rails/OutputSafety
+      .html_safe
   end
 
   def title_location
@@ -120,13 +120,13 @@ class DataView # rubocop:disable Metrics/ClassLength
 
     llabel = if location.welsh_name?
                WelshGrammar.apply(source: location.label, assuming_prefix: I18n.t('preposition.in'))
-             else
+    else
                OpenStruct.new(result: location.label, prefix: I18n.t('preposition.in'))
-             end
+    end
 
     {
       html: "<span class='o-data-view__location-name'>#{llabel.result}</span> #{icon}",
-      preposition: llabel.prefix
+      preposition: llabel.prefix,
     }
   end
 
@@ -144,7 +144,7 @@ class DataView # rubocop:disable Metrics/ClassLength
   end
 
   def as_table_columns
-    [{ label: I18n.t('label.date'), pred: 'ukhpi:refMonth' }] +
+    [ { label: I18n.t('label.date'), pred: 'ukhpi:refMonth' } ] +
       theme.statistics.map do |statistic|
         if statistic_selected?(statistic)
           { label: I18n.t("statistic.#{statistic.label_key}"), pred: pred_name(statistic) }

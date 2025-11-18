@@ -16,7 +16,7 @@ module CubeDataModel
 
     def components
       graph
-        .query([root, QB.component, nil])
+        .query([ root, QB.component, nil ])
         .map { |stmt| CubeComponent.new(graph, stmt.object) }
     end
 

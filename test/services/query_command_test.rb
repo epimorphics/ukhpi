@@ -13,17 +13,17 @@ def validate_json(json)
     '@and':
     [
       { 'ukhpi:refMonth': {
-        '@ge': { '@value': '2015-01', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
+        '@ge': { '@value': '2015-01', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' },
       } },
       { 'ukhpi:refMonth': {
-        '@le': { '@value': '2016-06', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' }
+        '@le': { '@value': '2016-06', '@type': 'http://www.w3.org/2001/XMLSchema#gYearMonth' },
       } },
       { 'ukhpi:refRegion': {
-        '@eq': { '@id': 'http://fubar.com/foo' }
-      } }
+        '@eq': { '@id': 'http://fubar.com/foo' },
+      } },
     ],
     '@sort' => [
-      { '@up' => 'ukhpi:refMonth' }
+      { '@up' => 'ukhpi:refMonth' },
     ]
   )
 end

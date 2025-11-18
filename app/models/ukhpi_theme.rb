@@ -30,7 +30,7 @@ class UkhpiTheme
       slug: slug,
       label: label,
       indicators: indicators,
-      statistics: statistics.map { |stat| stat.to_h(user_selections) }
+      statistics: statistics.map { |stat| stat.to_h(user_selections) },
     }
   end
 

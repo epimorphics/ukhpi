@@ -32,7 +32,7 @@ module CubeDataModel
       range.include?(RDF::XSD.decimal)
     end
 
-    def unit_type # rubocop:disable Metrics/MethodLength
+    def unit_type
       if scalar?
         :scalar
       elsif percentage?

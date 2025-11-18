@@ -2,7 +2,7 @@ require_dependency 'active_support/core_ext/module/delegation'
 
 # Presenter class that encapsulates the behaviour of mapping the user-selections
 # to side-by-side comparisons for different areas
-class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
+class CompareLocationsPresenter
   include I18n
   include LocationsTable
 
@@ -75,7 +75,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     pred = selected_statistic_uri
 
     data_by_columns.transpose.map do |row|
-      [period_date(row)] + row.map { |values| values&.fetch(pred, nil)&.first }
+      [ period_date(row) ] + row.map { |values| values&.fetch(pred, nil)&.first }
     end
   end
 
@@ -147,7 +147,7 @@ class CompareLocationsPresenter # rubocop:disable Metrics/ClassLength
     ensure_even_row_lengths(by_columns)
   end
 
-  def ensure_even_row_lengths(by_columns) # rubocop:disable Metrics/CyclomaticComplexity
+  def ensure_even_row_lengths(by_columns)
     return [] unless by_columns&.any?(&:present?)
 
     max_results = by_columns&.map(&:length)&.max

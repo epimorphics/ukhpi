@@ -100,7 +100,7 @@ class LocationContainer
   end
 
   def in_wales?
-    [container, container2, container3].include?('http://landregistry.data.gov.uk/id/region/wales')
+    [ container, container2, container3 ].include?('http://landregistry.data.gov.uk/id/region/wales')
   end
 
   # Post-condition invariant: there should be two labels, one English and
@@ -133,7 +133,7 @@ class LocationContainer
       "container2: \"#{container2}\"",
       "container3: \"#{container3}\"",
       "type: \"#{preferred_type}\"",
-      "message: \"#{message}\""
+      "message: \"#{message}\"",
     ].join(', ')
   end
 end
@@ -287,7 +287,7 @@ namespace :ukhpi do
   end
 
   desc 'SPARQL-describe the given URI'
-  task :describe, [:uri] => [:environment] do |_t, args|
+  task :describe, [ :uri ] => [ :environment ] do |_t, args|
     uri = args[:uri]
     query = "describe <#{uri}>"
     root = Rails.root.to_s

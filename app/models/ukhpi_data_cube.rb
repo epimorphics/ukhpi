@@ -4,8 +4,7 @@ require_relative 'concerns/cube_data_model/dsd'
 class UkhpiDataCube
   include CubeDataModel::Vocabularies
 
-  # rubocop:disable Layout/LineLength
-  CONFIG_DIR = 'dsapi'.freeze
+    CONFIG_DIR = 'dsapi'.freeze
   DSD_FILE = 'UKHPI-dsd.ttl'.freeze
   THEMES = {
     property_type: UkhpiTheme.new('property_type', [
@@ -13,23 +12,23 @@ class UkhpiDataCube
                                     UkhpiStatistic.new('det', 'Detached',       'detached_houses', false),
                                     UkhpiStatistic.new('sem', 'SemiDetached',   'semi_detached_houses', false),
                                     UkhpiStatistic.new('ter', 'Terraced',       'terraced_houses', false),
-                                    UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes', false)
+                                    UkhpiStatistic.new('fla', 'FlatMaisonette', 'flats_and_maisonettes', false),
                                   ]),
 
     buyer_status: UkhpiTheme.new('buyer_status', [
                                    UkhpiStatistic.new('ftb', 'FirstTimeBuyer', 'first_time_buyers', false),
-                                   UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers', false)
+                                   UkhpiStatistic.new('foo', 'FormerOwnerOccupier', 'former_owner_occupiers', false),
                                  ]),
 
     funding_status: UkhpiTheme.new('funding_status', [
                                      UkhpiStatistic.new('cas', 'Cash', 'cash_purchases', true),
-                                     UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases', true)
+                                     UkhpiStatistic.new('mor', 'Mortgage', 'mortgage_purchases', true),
                                    ]),
 
     property_status: UkhpiTheme.new('property_status', [
                                       UkhpiStatistic.new('new', 'NewBuild', 'new_build', true),
-                                      UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true)
-                                    ])
+                                      UkhpiStatistic.new('exi', 'ExistingProperty', 'existing_properties', true),
+                                    ]),
   }.freeze
   # rubocop:enable Layout/LineLength
 
@@ -39,7 +38,7 @@ class UkhpiDataCube
       UkhpiIndicator.new('pac', 'percentageAnnualChange', 'percentage_annual_change'),
       UkhpiIndicator.new('pmc', 'percentageChange',       'percentage_monthly_change'),
       UkhpiIndicator.new('hpi', 'housePriceIndex',        'house_price_index'),
-      UkhpiIndicator.new('vol', 'salesVolume',            'sales_volume')
+      UkhpiIndicator.new('vol', 'salesVolume',            'sales_volume'),
     ].freeze
 
   attr_reader :dsd
@@ -109,6 +108,6 @@ class UkhpiDataCube
 
   def read_data_model
     file = Rails.root.join('config', CONFIG_DIR, DSD_FILE)
-    @@model = RDF::Graph.load(file, format: :ttl) # rubocop:disable Style/ClassVars
+    @@model = RDF::Graph.load(file, format: :ttl)
   end
 end

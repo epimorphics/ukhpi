@@ -68,21 +68,21 @@ class RegionTest < ActiveSupport::TestCase
 
     describe '#matches_name?' do
       it 'should match the name and type' do
-        assert region.matches_name?('foo', [BOROUGH_TYPE], :en)
-        assert_not region.matches_name?('bar', [BOROUGH_TYPE], :en)
+        assert region.matches_name?('foo', [ BOROUGH_TYPE ], :en)
+        assert_not region.matches_name?('bar', [ BOROUGH_TYPE ], :en)
 
-        assert_not region.matches_name?('foo', [COUNTY_TYPE], :en)
-        assert region.matches_name?('foo', [COUNTY_TYPE, BOROUGH_TYPE], :en)
+        assert_not region.matches_name?('foo', [ COUNTY_TYPE ], :en)
+        assert region.matches_name?('foo', [ COUNTY_TYPE, BOROUGH_TYPE ], :en)
       end
 
       it 'should fail to match the name and different lang' do
-        assert_not region.matches_name?('foo', [COUNTY_TYPE], :en)
-        assert_not region.matches_name?('bar', [COUNTY_TYPE], :en)
+        assert_not region.matches_name?('foo', [ COUNTY_TYPE ], :en)
+        assert_not region.matches_name?('bar', [ COUNTY_TYPE ], :en)
       end
 
       it 'should match a partial name and type' do
-        assert region.matches_name?('fo', [BOROUGH_TYPE], :en)
-        assert_not region.matches_name?('ba', [BOROUGH_TYPE], :en)
+        assert region.matches_name?('fo', [ BOROUGH_TYPE ], :en)
+        assert_not region.matches_name?('ba', [ BOROUGH_TYPE ], :en)
       end
 
       it 'should allow the region type to be omitted' do
@@ -101,7 +101,7 @@ class RegionTest < ActiveSupport::TestCase
         regions = [
           Location.new('http://foo.bar/a', { en: 'A' }, nil, nil, nil),
           Location.new('http://foo.bar/c', { en: 'C' }, nil, nil, nil),
-          Location.new('http://foo.bar/b', { en: 'B' }, nil, nil, nil)
+          Location.new('http://foo.bar/b', { en: 'B' }, nil, nil, nil),
         ]
         regions.sort!
         _(regions[0].label).must_equal 'A'

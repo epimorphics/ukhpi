@@ -44,7 +44,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
     describe '#selected_locations' do
       it 'should return the selected locations' do
         params = ActionController::Parameters.new(
-          'location' => ['S92000003']
+          'location' => [ 'S92000003' ]
         )
         fixture = UserCompareSelections.new(params).selected_locations
         _(fixture.first.label).must_equal('Scotland')
@@ -52,7 +52,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
 
       it 'should raise an error if the location is undefined' do
         params = ActionController::Parameters.new(
-          'location' => ['wimbledon common']
+          'location' => [ 'wimbledon common' ]
         )
         fixture = UserCompareSelections.new(params)
 
@@ -96,7 +96,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
         fixture = UserCompareSelections
                   .new(params)
                   .selected_statistics
-        _(fixture).must_equal(['avg'])
+        _(fixture).must_equal([ 'avg' ])
       end
 
       it 'should return the default statistic' do
@@ -104,7 +104,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
         fixture = UserCompareSelections
                   .new(params)
                   .selected_statistics
-        _(fixture).must_equal(['all'])
+        _(fixture).must_equal([ 'all' ])
       end
     end
 
@@ -122,7 +122,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
         fixture = UserCompareSelections
                   .new(params)
                   .selected_indicators
-        _(fixture).must_equal(['hpi'])
+        _(fixture).must_equal([ 'hpi' ])
       end
 
       it 'should return the default indicator' do
@@ -130,7 +130,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
         fixture = UserCompareSelections
                   .new(params)
                   .selected_indicators
-        _(fixture).must_equal(['hpi'])
+        _(fixture).must_equal([ 'hpi' ])
       end
     end
 
