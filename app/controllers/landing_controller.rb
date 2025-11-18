@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # :nodoc:
 class LandingController < ApplicationController
   def index
@@ -8,9 +6,9 @@ class LandingController < ApplicationController
   rescue StandardError => e
     status = if e.respond_to?(:status)
                e.status
-             else
+    else
                Rack::Utils::SYMBOL_TO_STATUS_CODE[:internal_server_error]
-             end
+    end
     render_request_error(UserLanguageSelection.new(params), status) unless Rails.env.development?
   end
 end

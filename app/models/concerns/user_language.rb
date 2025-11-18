@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Shared code for working with user lanuage choices
 module UserLanguage
   def english?

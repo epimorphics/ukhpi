@@ -1,10 +1,21 @@
+# # Omakase Ruby styling for Rails
+inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+
+# Overwrite or add rules to create your own house style
+#
+# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
+# Layout/SpaceInsideArrayLiteralBrackets:
+#   Enabled: false
+
 plugins:
+  - rubocop-capybara
   - rubocop-rails
 
 AllCops:
   Exclude:
     - app/models/regions_table.rb
     - app/models/locations_table.rb
+    - bin/**/*
     - "node_modules/**/*"
     - "Gemfile"
   NewCops: enable
@@ -34,6 +45,9 @@ Lint/MixedRegexpCaptureTypes:
   Enabled: true
 
 Lint/RaiseException:
+  Enabled: true
+
+Lint/RedundantCopDisableDirective:
   Enabled: true
 
 Lint/StructNewOverride:
@@ -128,6 +142,9 @@ Style/ExponentialNotation:
 Style/FormatStringToken:
   Enabled: false
 
+Style/FrozenStringLiteralComment:
+  EnforcedStyle: never
+
 Style/HashAsLastArrayItem:
   Enabled: true
 
@@ -142,6 +159,9 @@ Style/HashTransformKeys:
 
 Style/HashTransformValues:
   Enabled: true
+
+Style/OpenStructUse:
+  Enabled: false
 
 Style/RedundantAssignment:
   Enabled: true
@@ -161,5 +181,11 @@ Style/RedundantRegexpEscape:
 Style/SlicingWithRange:
   Enabled: true
 
-Style/OpenStructUse:
-  Enabled: false
+Style/StringLiterals:
+  EnforcedStyle: single_quotes
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma

@@ -1,11 +1,8 @@
-# frozen_string_literal: true
-
 # Subscribe to :action_controller events to monitor memory usage and thread status
 class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :action_controller
 
-  # rubocop:disable Metrics/AbcSize
-  def process_action(_event)
+    def process_action(_event)
     mem = GetProcessMem.new
     Prometheus::Client.registry
                       .get(:memory_used_mb)
@@ -16,7 +13,7 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                       .set(
                         Thread.list.select { |thread| thread.status == 'aborting' }.count,
                         labels: {
-                          status: 'aborting'
+                          status: 'aborting',
                         }
                       )
     # description: 'Thread is sleeping or waiting on I/O'
@@ -25,7 +22,7 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                       .set(
                         Thread.list.select { |thread| thread.status == 'sleep' }.count,
                         labels: {
-                          status: 'sleep'
+                          status: 'sleep',
                         }
                       )
     # description: 'Thread is executing'
@@ -34,7 +31,7 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                       .set(
                         Thread.list.select { |thread| thread.status == 'run' }.count,
                         labels: {
-                          status: 'run'
+                          status: 'run',
                         }
                       )
     # description: 'Thread is terminated normally'
@@ -43,7 +40,7 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                       .set(
                         Thread.list.select { |thread| thread.status == false }.count,
                         labels: {
-                          status: 'false'
+                          status: 'false',
                         }
                       )
     # description: 'Thread is terminated with an exception'
@@ -52,7 +49,7 @@ class ActionControllerPrometheusSubscriber < ActiveSupport::Subscriber
                       .set(
                         Thread.list.select { |thread| thread.status.nil? }.count,
                         labels: {
-                          status: 'nil'
+                          status: 'nil',
                         }
                       )
   end

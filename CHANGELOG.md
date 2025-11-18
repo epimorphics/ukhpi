@@ -3,13 +3,40 @@
 All notable changes to this project will be documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+and this project adheres to [Semantic
+Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [2.2.2] - 2025-11
+
 ### Changed
 
-- Adjusted test logging to respect log level and reduce logs displayed unless debugging
+- Updated Rails framework and dependency gem versions to address security
+  vulnerabilities and improve stability
+  [#522](https://github.com/epimorphics/ukhpi/issues/522)
+- Reorganized and documented Gemfile structure with functional grouping for
+  improved maintainability
+- Updated Sentry error tracking dependencies and configuration to their SDK v6
+  standards
+- Upgraded Faraday HTTP client libraries and middleware to v2.13+
+- Enhanced RuboCop linting configuration with Capybara support and improved code
+  style rules
+- Refactored application configuration by removing deprecated settings and
+  improving environment variable handling
+- Improved Makefile with modular asset build tasks for better maintainability
+- Standardized code style across all Ruby files by removing inline RuboCop
+  disables and frozen string literal comments
+- Adjusted test logging to respect log level and reduce logs displayed unless
+  system is being debugged
+
+### Fixed
+
+- Corrected Sentry sample rate and profiling configuration logic
+- Improved Gemfile dependency presence checks to prevent errors with blank
+  environment variables
+- Fixed spacing and operator usage issues across codebase for Ruby style
+  compliance
 
 ## [2.2.1] - 2025-08
 
@@ -60,7 +87,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Update Data Services Api gem version to include update for ticket in Dev and
-  PreProd [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+  PreProd [#493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## [2.1.0] - 2025-04
 
@@ -86,7 +113,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Updated Data Services Api gem version to include update for ticket in Prod
-  instance [GH-493](https://github.com/epimorphics/ukhpi/issues/493)
+  instance [#493](https://github.com/epimorphics/ukhpi/issues/493)
 
 ## [2.0.2] - 2025-03
 
@@ -128,7 +155,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Applied recommended linting corrections from Rubocop
 - Updated the logging to utilise a call-flow diagram to display the sequence of
   messages that are sent between the app and the api
-  [GH-478](https://github.com/epimorphics/ukhpi/issues/478)
+  [#478](https://github.com/epimorphics/ukhpi/issues/478)
 - Updated visibility and search input types
   - Added conditional class for hiding elements in non-dev environments
   - Changed text fields to search fields for better UX
@@ -143,7 +170,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Resolved Error handling in the landing, browse, and compare pages to ensure
   that the correct error message is displayed to the user when an error occurs
-  [GH-465](https://github.com/epimorphics/ukhpi/issues/465)
+  [#465](https://github.com/epimorphics/ukhpi/issues/465)
   - Added error raising for date parsing failures by returning the error to the
     application as well as logging the error message to the logs
 
@@ -164,10 +191,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Updated the `instrument_internal_error` method to replace the
   `maybe_report_to_sentry` method while reporting internal errors to the
   Prometheus metrics only when necessary
-- Improved error metrics reporting to ensure that logging always happens with the
-  appropriate severity depending on the exception status while reducing the
+- Improved error metrics reporting to ensure that logging always happens with
+  the appropriate severity depending on the exception status while reducing the
   types of errors that can trigger an error metric and therefore a notification
-  in slack [GH-149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
+  in slack [#149](https://github.com/epimorphics/hmlr-linked-data/issues/149)
 
 ### Fixed
 
@@ -189,6 +216,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Upgraded ruby to `3.3.5`
 
 ---
+<!-- Versions below this point use legacy changelog format -->
 
 ## 1.8.0 - 2024-10
 

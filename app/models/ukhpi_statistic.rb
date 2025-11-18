@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates an individual statistic within the UKHPI dataset, for example
 # 'detached houses'. Statistics are matched with indicators, such as average
 # price or percentage annual change to denote measures in the statistical
@@ -36,7 +34,7 @@ class UkhpiStatistic
       rootName: root_name,
       label: label,
       hasVolume: volume?,
-      isSelected: selected?(user_selections)
+      isSelected: selected?(user_selections),
     }
   end
 end

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Presenter for managing which measures of the cube are presented as aspects,
 # according to the current user preferences
 class Aspects
@@ -16,18 +14,18 @@ class Aspects
     { root: 'Cash',                    label: 'cash_purchases',           advanced: true },
     { root: 'Mortgage',                label: 'mortgage_purchases',       advanced: true },
     { root: 'FirstTimeBuyer',          label: 'first_time_buyers',        advanced: true },
-    { root: 'FormerOwnerOccupier',     label: 'former_owner_occupiers',   advanced: true }
+    { root: 'FormerOwnerOccupier',     label: 'former_owner_occupiers',   advanced: true },
   ].freeze
 
   INDICATORS = [
     { root: 'housePriceIndex',         label: 'house_price_index' },
     { root: 'averagePrice',            label: 'average_price' },
     { root: 'percentageChange',        label: 'percentage_monthly_change' },
-    { root: 'percentageAnnualChange',  label: 'percentage_annual_change' }
+    { root: 'percentageAnnualChange',  label: 'percentage_annual_change' },
   ].freeze
 
   COMMON_STATS = [
-    { root: 'salesVolume',             label: 'sales_volume' }
+    { root: 'salesVolume',             label: 'sales_volume' },
   ].freeze
 
   def initialize(prefs)

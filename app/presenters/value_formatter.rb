@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Format values in a consistent way
 class ValueFormatter
   def self.format(value, options)

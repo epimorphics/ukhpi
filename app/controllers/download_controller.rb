@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Controller for the action of downloading UKHPI data in a variety of data formats
 # (csv, json, RDF etc)
 class DownloadController < ApplicationController
@@ -17,7 +15,8 @@ class DownloadController < ApplicationController
 
   # Create a download file for just a single location
   def download_single_location
-    Log.info('Requesting Download Controller: Single Location', { params: params, path: request.path })
+    Log.info('Requesting Download Controller: Single Location',
+             { params: params, path: request.path })
     user_selections = UserSelections.new(params)
     query_command = QueryCommand.new(user_selections)
     query_command.perform_query
@@ -26,7 +25,8 @@ class DownloadController < ApplicationController
   end
 
   def download_multiple_locations
-    Log.info('Requesting Download Controller: Multiple Locations', { params: params, path: request.path })
+    Log.info('Requesting Download Controller: Multiple Locations',
+             { params: params, path: request.path })
     pparams = params.permit(*UserSelections::PERMITTED, location: [])
     location_gss = pparams.delete('location')
     locations = location_gss.map { |gss| Locations.lookup_gss(gss).uri }

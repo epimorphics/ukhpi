@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Decorator-pattern class for creating presentations and renderings of
 # UserSelections objects
 class UserSelectionsPresenter
@@ -24,7 +22,7 @@ class UserSelectionsPresenter
     templates = {
       location: '%s',
       from: 'from %s',
-      to: 'to %s'
+      to: 'to %s',
     }
 
     apply_templates(templates, params).join(' ')
@@ -41,7 +39,7 @@ class UserSelectionsPresenter
     if vs.is_a?(Array)
       k = "#{k}[]"
     else
-      vs = [vs]
+      vs = [ vs ]
     end
 
     vs

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Controller for the user action of copmaring statistics between two or more
 # locations
 class CompareController < ApplicationController
@@ -44,7 +42,7 @@ class CompareController < ApplicationController
     base_selection = UserSelections.new(
       __safe_params: {
         'from' => user_compare_selections.from_date,
-        'to' => user_compare_selections.to_date
+        'to' => user_compare_selections.to_date,
       }
     )
 

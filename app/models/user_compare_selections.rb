@@ -1,13 +1,11 @@
-# frozen_string_literal: true
-
 # User selections for the task of comparing one or more locations with
 # each other
 class UserCompareSelections
   include UserChoices
   include UserLanguage
 
-  DEFAULT_INDICATOR = 'hpi'
-  DEFAULT_STATISTIC = 'all'
+  DEFAULT_INDICATOR = 'hpi'.freeze
+  DEFAULT_STATISTIC = 'all'.freeze
   DEFAULT_LOCATIONS = %w[K02000001 W92000004 S92000003 E92000001 N92000002].freeze
 
   USER_PARAMS_MODEL = {
@@ -21,7 +19,7 @@ class UserCompareSelections
 
     # used by selections update form
     'form-action' => Struct::UserParam.new(nil, false, nil),
-    'utf8' => Struct::UserParam.new(nil, false, nil)
+    'utf8' => Struct::UserParam.new(nil, false, nil),
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL
@@ -57,7 +55,7 @@ class UserCompareSelections
   end
 
   def selected_statistics
-    [selected_statistic]
+    [ selected_statistic ]
   end
 
   def selected_indicator
@@ -65,7 +63,7 @@ class UserCompareSelections
   end
 
   def selected_indicators
-    [selected_indicator]
+    [ selected_indicator ]
   end
 
   def search_term
@@ -90,7 +88,7 @@ class UserCompareSelections
       locations: selected_locations.map(&:to_h).to_json,
       themes: ukhpi_data_cube.themes.map do |_slug, theme|
         theme.to_h(self)
-      end.to_json
+      end.to_json,
     }
   end
 

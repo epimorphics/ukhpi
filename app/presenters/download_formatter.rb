@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Module that encapsulates the concern of formatting values in a suitable way
 # for rendering as part of a download
 module DownloadFormatter
@@ -27,13 +25,13 @@ module DownloadFormatter
     DownloadColumn.new(
       label: 'Reporting period',
       format: ->(row) { row['ukhpi:refPeriodDuration'].first == 3 ? 'quarterly' : 'monthly' }
-    )
+    ),
   ].freeze
 
   SUPPLEMENTARY_COLUMNS = [
     DownloadColumn.new(
       label: 'Pivotable date',
       format: ->(row) { "#{row['ukhpi:refMonth']['@value']}-01" }
-    )
+    ),
   ].freeze
 end

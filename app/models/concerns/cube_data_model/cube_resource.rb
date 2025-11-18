@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CubeDataModel
   # Concern that encapsulates an RDF resource in a DataCube model
   class CubeResource
@@ -11,15 +9,15 @@ module CubeDataModel
     end
 
     def label
-      graph.query([resource, RDF::RDFS.label, nil]).first.object.to_s
+      graph.query([ resource, RDF::RDFS.label, nil ]).first.object.to_s
     end
 
     def comment
-      graph.query([resource, RDF::RDFS.comment, nil]).first.object.to_s
+      graph.query([ resource, RDF::RDFS.comment, nil ]).first.object.to_s
     end
 
     def range
-      graph.query([resource, RDF::RDFS.range, nil]).first.object
+      graph.query([ resource, RDF::RDFS.range, nil ]).first.object
     end
 
     def slug
@@ -40,7 +38,7 @@ module CubeDataModel
     end
 
     def objects_of(pred)
-      stmts = graph.query([resource, pred, nil])
+      stmts = graph.query([ resource, pred, nil ])
       (stmts || []).map(&:object)
     end
 

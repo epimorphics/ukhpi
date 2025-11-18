@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates a notional column in the download of a set of statistics, including
 # the means for formatting a value for the download file.
 class DownloadColumn
