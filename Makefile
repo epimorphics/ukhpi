@@ -58,6 +58,8 @@ clean:
 	@[ -d public/assets ] && ${RAILS} assets:clobber || :
 # Clear cache files from tmp/
 	@${RAILS} tmp:cache:clear
+# Clean yarn cache
+	@yarn cache clean
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
 
