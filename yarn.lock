@@ -4173,13 +4173,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-trap-vue@npm:^0.0.6":
-  version: 0.0.6
-  resolution: "focus-trap-vue@npm:0.0.6"
+"focus-trap-vue@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "focus-trap-vue@npm:1.1.1"
   peerDependencies:
-    focus-trap: ^5.0.2
+    focus-trap: ^6.0.1
     vue: ^2.6.0
-  checksum: 10c0/619cbeeb1ec519ea7007c21ec533433f8a9e803b9f88a3e5d86cf92308f2ad7c8f55b239da09f1bf1159ad49e6a85038d934c2f725108b077c28372aa59c9563
+  checksum: 10c0/90129ee8ced202b6751edd3c996b6d53040a6d84a460ef952a8223eed0f60dc94edd41f6e484543cd3c6fd6b50101f53804c079db4d56e82f75674e8be4ec6af
   languageName: node
   linkType: hard
 
@@ -7663,7 +7663,7 @@ __metadata:
     eslint-plugin-promise: "npm:^4.2.1"
     eslint-plugin-standard: "npm:^4.0.1"
     focus-trap: "npm:^6.0.1"
-    focus-trap-vue: "npm:^0.0.6"
+    focus-trap-vue: "npm:^1.1.1"
     glob: "npm:^7.1.2"
     govuk-elements-sass: "npm:^3.1.3"
     govuk-frontend: "npm:^5.9.0"
