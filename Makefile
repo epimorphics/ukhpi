@@ -49,7 +49,7 @@ bundles:
 	@echo "Installing Ruby gems via Bundler..."
 	@${BUNDLE} install
 
-check: lint test
+checks: lint test
 	@echo "All checks passed."
 
 clean:
