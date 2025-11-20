@@ -2491,13 +2491,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"any-promise@npm:^0.1.0":
-  version: 0.1.0
-  resolution: "any-promise@npm:0.1.0"
-  checksum: 10c0/babd4c74c8edc5a816972c6510b072b1bc8a1a4d3b519226b37d27ea006ac88f6fff9b5e94734550fe5345a3baf98b57f6411d497f9c04edb8728dbf1feb4d7d
-  languageName: node
-  linkType: hard
-
 "anymatch@npm:~3.1.2":
   version: 3.1.3
   resolution: "anymatch@npm:3.1.3"
@@ -2729,7 +2722,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"babel-runtime@npm:6.x, babel-runtime@npm:^6.26.0":
+"babel-runtime@npm:6.x":
   version: 6.26.0
   resolution: "babel-runtime@npm:6.26.0"
   dependencies:
@@ -2875,7 +2868,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chalk@npm:^2.1.0, chalk@npm:^2.4.1":
+"chalk@npm:^2.1.0":
   version: 2.4.2
   resolution: "chalk@npm:2.4.2"
   dependencies:
@@ -4448,17 +4441,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"gonzales-pe@npm:^4.0.3":
-  version: 4.3.0
-  resolution: "gonzales-pe@npm:4.3.0"
-  dependencies:
-    minimist: "npm:^1.2.5"
-  bin:
-    gonzales: bin/gonzales.js
-  checksum: 10c0/b99a6ef4bf28ca0b0adcc0b42fd0179676ee8bfe1d3e3c0025d7d38ba35a3f2d5b1d4beb16101a7fc7cb2dbda1ec045bbce0932697095df41d729bac1703476f
-  languageName: node
-  linkType: hard
-
 "gopd@npm:^1.0.1, gopd@npm:^1.2.0":
   version: 1.2.0
   resolution: "gopd@npm:1.2.0"
@@ -5236,7 +5218,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19, lodash@npm:^4.17.4":
+"lodash@npm:^4.17.14, lodash@npm:^4.17.15, lodash@npm:^4.17.19":
   version: 4.17.21
   resolution: "lodash@npm:4.17.21"
   checksum: 10c0/d8cbea072bb08655bb4c989da418994b073a608dffa608b09ac04b43a791b12aeae7cd7ad919aa4c925f33b48490b5cfe6c1f71d827956071dae2e7bb3a6b74c
@@ -5368,7 +5350,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"minimist@npm:^1.2.0, minimist@npm:^1.2.5, minimist@npm:^1.2.6":
+"minimist@npm:^1.2.0, minimist@npm:^1.2.6":
   version: 1.2.8
   resolution: "minimist@npm:1.2.8"
   checksum: 10c0/19d3fcdca050087b84c2029841a093691a91259a47def2f18222f41e7645a0b7c44ef4b40e88a1e58a40c84d2ef0ee6047c55594d298146d0eb3f6b737c20ce6
@@ -5499,7 +5481,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nanoid@npm:^3.3.8":
+"nanoid@npm:^3.3.11, nanoid@npm:^3.3.8":
   version: 3.3.11
   resolution: "nanoid@npm:3.3.11"
   bin:
@@ -5615,13 +5597,6 @@ __metadata:
   version: 2.0.6
   resolution: "numeral@npm:2.0.6"
   checksum: 10c0/5ed008d3fae05cfa4986b77a85ca10bff29ae6e1fa41a04cce05ea21f08a8a104226f88868930e2a94e3239708d6985d111b5d1291e8b9a3049ffc5365c332d4
-  languageName: node
-  linkType: hard
-
-"object-assign@npm:^4.1.1":
-  version: 4.1.1
-  resolution: "object-assign@npm:4.1.1"
-  checksum: 10c0/1f4df9945120325d041ccf7b86f31e8bcc14e73d29171e37a7903050e96b81323784ec59f93f102ec635bcf6fa8034ba3ea0a8c7e69fa202b87ae3b6cec5a414
   languageName: node
   linkType: hard
 
@@ -6006,15 +5981,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-flexbugs-fixes@npm:^5.0.2":
-  version: 5.0.2
-  resolution: "postcss-flexbugs-fixes@npm:5.0.2"
-  peerDependencies:
-    postcss: ^8.1.4
-  checksum: 10c0/b413f73cc3c005f33479df95e1357467c28183e62ba8b25e06b8590b2a69e60d624f07824c0ff85fb1dfdd5bb7dfa321dad0885d42ec3c8f000669960b30894f
-  languageName: node
-  linkType: hard
-
 "postcss-focus-visible@npm:^10.0.1":
   version: 10.0.1
   resolution: "postcss-focus-visible@npm:10.0.1"
@@ -6272,25 +6238,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-sass@npm:^0.2.0":
-  version: 0.2.0
-  resolution: "postcss-sass@npm:0.2.0"
-  dependencies:
-    gonzales-pe: "npm:^4.0.3"
-    postcss: "npm:^6.0.6"
-  checksum: 10c0/6324fd0500d3234e547eaa1c2f5ca892438ba3afe64c7fb956345d9ed997ca2f7a36e4322a01cc27eb591728381bcdba0c50dfce28ecaaefa1c64060a6ec7d86
-  languageName: node
-  linkType: hard
-
-"postcss-scss@npm:^1.0.2":
-  version: 1.0.6
-  resolution: "postcss-scss@npm:1.0.6"
-  dependencies:
-    postcss: "npm:^6.0.23"
-  checksum: 10c0/dcb693f6637acdb0a9203a4ccb7998d9a209d5726828242d8b0c5aae07b0465b8c53a4581e160eae41b3aac5f4d138e4e5bf58107566387258efa6643ec488d0
-  languageName: node
-  linkType: hard
-
 "postcss-selector-not@npm:^8.0.1":
   version: 8.0.1
   resolution: "postcss-selector-not@npm:8.0.1"
@@ -6312,47 +6259,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss-smart-import@npm:^0.7.6":
-  version: 0.7.6
-  resolution: "postcss-smart-import@npm:0.7.6"
-  dependencies:
-    babel-runtime: "npm:^6.26.0"
-    lodash: "npm:^4.17.4"
-    object-assign: "npm:^4.1.1"
-    postcss: "npm:^6.0.14"
-    postcss-sass: "npm:^0.2.0"
-    postcss-scss: "npm:^1.0.2"
-    postcss-value-parser: "npm:^3.3.0"
-    promise-each: "npm:^2.2.0"
-    read-cache: "npm:^1.0.0"
-    resolve: "npm:^1.5.0"
-    sugarss: "npm:^1.0.1"
-  checksum: 10c0/776dd0bb20c2d548020c5defce5a9566493863c57789c4e946bc03a4f3d14b22ec3f7305938babc0ba6bc629ae543ab50850c992f255b7c5f2de62afa347cd2c
-  languageName: node
-  linkType: hard
-
-"postcss-value-parser@npm:^3.3.0":
-  version: 3.3.1
-  resolution: "postcss-value-parser@npm:3.3.1"
-  checksum: 10c0/23eed98d8eeadb1f9ef1db4a2757da0f1d8e7c1dac2a38d6b35d971aab9eb3c6d8a967d0e9f435558834ffcd966afbbe875a56bcc5bcdd09e663008c106b3e47
-  languageName: node
-  linkType: hard
-
 "postcss-value-parser@npm:^4.0.0, postcss-value-parser@npm:^4.2.0":
   version: 4.2.0
   resolution: "postcss-value-parser@npm:4.2.0"
   checksum: 10c0/f4142a4f56565f77c1831168e04e3effd9ffcc5aebaf0f538eee4b2d465adfd4b85a44257bb48418202a63806a7da7fe9f56c330aebb3cac898e46b4cbf49161
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^6.0.14, postcss@npm:^6.0.23, postcss@npm:^6.0.6":
-  version: 6.0.23
-  resolution: "postcss@npm:6.0.23"
-  dependencies:
-    chalk: "npm:^2.4.1"
-    source-map: "npm:^0.6.1"
-    supports-color: "npm:^5.4.0"
-  checksum: 10c0/45d45184ffbb9d510e7585d9441af9a1a771a56b7553b1d598544e54acdfd31df439a95d5f00a6dc57b85b76d0c8925fec18614b1cc795887c845c3965e32e63
   languageName: node
   linkType: hard
 
@@ -6364,6 +6274,17 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.1"
   checksum: 10c0/b75510d7b28c3ab728c8733dd01538314a18c52af426f199a3c9177e63eb08602a3938bfb66b62dc01350b9aed62087eabbf229af97a1659eb8d3513cec823b3
+  languageName: node
+  linkType: hard
+
+"postcss@npm:^8.5.6":
+  version: 8.5.6
+  resolution: "postcss@npm:8.5.6"
+  dependencies:
+    nanoid: "npm:^3.3.11"
+    picocolors: "npm:^1.1.1"
+    source-map-js: "npm:^1.2.1"
+  checksum: 10c0/5127cc7c91ed7a133a1b7318012d8bfa112da9ef092dddf369ae699a1f10ebbd89b1b9f25f3228795b84585c72aabd5ced5fc11f2ba467eedf7b081a66fad024
   languageName: node
   linkType: hard
 
@@ -6394,15 +6315,6 @@ __metadata:
   version: 2.0.3
   resolution: "progress@npm:2.0.3"
   checksum: 10c0/1697e07cb1068055dbe9fe858d242368ff5d2073639e652b75a7eb1f2a1a8d4afd404d719de23c7b48481a6aa0040686310e2dac2f53d776daa2176d3f96369c
-  languageName: node
-  linkType: hard
-
-"promise-each@npm:^2.2.0":
-  version: 2.2.0
-  resolution: "promise-each@npm:2.2.0"
-  dependencies:
-    any-promise: "npm:^0.1.0"
-  checksum: 10c0/52b5850f4e45cf448a2499eb12f87f9be563ced1424cd93adbeb6071050d06b6ce667fef8cb8110999b134b48b1ef878b1587df7c5c3e27435f3a0025460e29e
   languageName: node
   linkType: hard
 
@@ -6614,7 +6526,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@npm:^1.1.7, resolve@npm:^1.10.1, resolve@npm:^1.12.0, resolve@npm:^1.14.2, resolve@npm:^1.22.4, resolve@npm:^1.5.0":
+"resolve@npm:^1.1.7, resolve@npm:^1.10.1, resolve@npm:^1.12.0, resolve@npm:^1.14.2, resolve@npm:^1.22.4":
   version: 1.22.10
   resolution: "resolve@npm:1.22.10"
   dependencies:
@@ -6627,7 +6539,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"resolve@patch:resolve@npm%3A^1.1.7#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.14.2#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.4#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.5.0#optional!builtin<compat/resolve>":
+"resolve@patch:resolve@npm%3A^1.1.7#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.10.1#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.12.0#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.14.2#optional!builtin<compat/resolve>, resolve@patch:resolve@npm%3A^1.22.4#optional!builtin<compat/resolve>":
   version: 1.22.10
   resolution: "resolve@patch:resolve@npm%3A1.22.10#optional!builtin<compat/resolve>::version=1.22.10&hash=c3c19d"
   dependencies:
@@ -7453,16 +7365,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sugarss@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "sugarss@npm:1.0.1"
-  dependencies:
-    postcss: "npm:^6.0.14"
-  checksum: 10c0/1298c8cfff4fffe40f63c8b17c9cde29ed70be9e6cc931bc55139f6de6659fc16e0fe4a63c3c6a2d941e5eb769bd3d36e0e4adfd13ac5cd704a36acb3c93aa11
-  languageName: node
-  linkType: hard
-
-"supports-color@npm:^5.3.0, supports-color@npm:^5.4.0":
+"supports-color@npm:^5.3.0":
   version: 5.5.0
   resolution: "supports-color@npm:5.5.0"
   dependencies:
@@ -7773,11 +7676,10 @@ __metadata:
     moment: "npm:^2.18.1"
     numeral: "npm:^2.0.6"
     path-complete-extname: "npm:^1.0.0"
-    postcss-flexbugs-fixes: "npm:^5.0.2"
+    postcss: "npm:^8.5.6"
     postcss-import: "npm:^16.1.0"
     postcss-loader: "npm:^8.1.1"
     postcss-preset-env: "npm:^10.1.5"
-    postcss-smart-import: "npm:^0.7.6"
     query-string: "npm:^6.8.2"
     regenerator-runtime: "npm:^0.13.3"
     sass-embedded: "npm:^1.86.0"
