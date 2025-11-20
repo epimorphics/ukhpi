@@ -21,6 +21,7 @@ export default defineConfig(({ mode }) => {
     plugins: [
       Erb(),
       ViteRails(),
+      // Load YAML files as JSON - useful for translation files
       ViteYaml(),
       vue(),
       // Put the Sentry vite plugin after all other plugins
