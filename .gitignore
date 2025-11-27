@@ -95,6 +95,3 @@ vite.config.js.timestamp-*-*.mjs
 .env
 .env*.local
 !.env.development
-
-# Sentry Config File
-.env.sentry-build-plugin
