@@ -2359,13 +2359,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue2@npm:^2.3.3":
-  version: 2.3.3
-  resolution: "@vitejs/plugin-vue2@npm:2.3.3"
+"@vitejs/plugin-vue2@npm:^2.3.4":
+  version: 2.3.4
+  resolution: "@vitejs/plugin-vue2@npm:2.3.4"
   peerDependencies:
-    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0
+    vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0
     vue: ^2.7.0-0
-  checksum: 10c0/0deb4e7d6a0130a3e8101d14270c10a88e755bafb3993a30f50140a68640ad7949b83c1cce67ac90396581c6eda75f91dcea0f303eaefbdb0f7a398f41ee1379
+  checksum: 10c0/9e0c4c410d93046f239fd85d1396da164474c19e82218cbf5341dc9e58caa8357a0a0ea8cbb976cd11ecb67b1e3923a4dcb7ee0cccd08156339d09b8ded51450
   languageName: node
   linkType: hard
 
@@ -7662,7 +7662,7 @@ __metadata:
     "@sentry/vite-plugin": "npm:^3.6.1"
     "@sentry/vue": "npm:^9.47.1"
     "@types/node": "npm:^22.13.13"
-    "@vitejs/plugin-vue2": "npm:^2.3.3"
+    "@vitejs/plugin-vue2": "npm:^2.3.4"
     axios: "npm:^0.30.2"
     babel-eslint: "npm:^10.0.2"
     core-js: "npm:^3.2.1"
