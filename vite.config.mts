@@ -26,9 +26,9 @@ export default defineConfig(({ mode }) => {
       vue(),
       // Put the Sentry vite plugin after all other plugins
       sentryVitePlugin({
+        authToken: env.SENTRY_AUTH_TOKEN,
         org: env.SENTRY_ORG,
         project: env.SENTRY_PROJECT,
-        authToken: env.SENTRY_AUTH_TOKEN,
         release: {
           name: `${env.SENTRY_PROJECT}@${currentAppRelease}`
         },
