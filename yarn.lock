@@ -2359,7 +2359,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@vitejs/plugin-vue2@npm:^2.3.3":
+"@vitejs/plugin-vue2@npm:^2.3.4":
   version: 2.3.4
   resolution: "@vitejs/plugin-vue2@npm:2.3.4"
   peerDependencies:
@@ -7659,7 +7659,7 @@ __metadata:
     "@sentry/vite-plugin": "npm:^4.6.1"
     "@sentry/vue": "npm:^9.47.1"
     "@types/node": "npm:^22.13.13"
-    "@vitejs/plugin-vue2": "npm:^2.3.3"
+    "@vitejs/plugin-vue2": "npm:^2.3.4"
     axios: "npm:^0.30.2"
     babel-eslint: "npm:^10.0.2"
     core-js: "npm:^3.2.1"
