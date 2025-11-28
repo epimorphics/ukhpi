@@ -2466,7 +2466,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-vue@npm:^9.31.0":
+"eslint-plugin-vue@npm:^9.33.0":
   version: 9.33.0
   resolution: "eslint-plugin-vue@npm:9.33.0"
   dependencies:
@@ -2518,7 +2518,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint@npm:^9.15.0":
+"eslint@npm:^9.39.1":
   version: 9.39.1
   resolution: "eslint@npm:9.39.1"
   dependencies:
@@ -5272,8 +5272,8 @@ __metadata:
     dompurify: "npm:^3.3.0"
     dotenv: "npm:^16.4.7"
     element-ui: "npm:2.15.13"
-    eslint: "npm:^9.15.0"
-    eslint-plugin-vue: "npm:^9.31.0"
+    eslint: "npm:^9.39.1"
+    eslint-plugin-vue: "npm:^9.33.0"
     focus-trap: "npm:^6.0.1"
     focus-trap-vue: "npm:^1.1.1"
     glob: "npm:^7.1.2"
