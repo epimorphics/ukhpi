@@ -49,7 +49,7 @@ bundles:
 	@echo "Installing Ruby gems via Bundler..."
 	@${BUNDLE} install
 
-check: lint test
+checks: lint test
 	@echo "All checks passed."
 
 clean:
@@ -58,6 +58,8 @@ clean:
 	@[ -d public/assets ] && ${RAILS} assets:clobber || :
 # Clear cache files from tmp/
 	@${RAILS} tmp:cache:clear
+# Clean yarn cache
+	@yarn cache clean
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
 

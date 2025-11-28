@@ -28,7 +28,7 @@ fi
 if [ -n "$RUBY_FILES" ]; then
   printf '\n\033[0;33mRunning Rubocop...\033[0m\n'
   for file in $RUBY_FILES; do
-    git show :"$file" | bundle exec rubocop -A --stdin "$file"
+    git show :"$file" | bundle exec rubocop -a --stdin "$file"
   done
   RUBOCOP_EXIT_CODE=$?
   WORK_DONE=1

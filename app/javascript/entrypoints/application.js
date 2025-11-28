@@ -58,7 +58,7 @@ if (currentEnvironment === 'development') {
     Sentry.init({
       Vue,
       debug: currentEnvironment.includes('dev'),
-      dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+      dsn: import.meta.env.SENTRY_API_KEY,
       enabled: !currentEnvironment.includes('dev'),
       environment: currentEnvironment,
       ignoreErrors: ['Non-Error promise rejection captured'],

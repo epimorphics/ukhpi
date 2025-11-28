@@ -56,7 +56,7 @@ group :development do
   gem 'rubocop', require: false
   gem 'rubocop-capybara', require: false
   gem 'rubocop-rails', require: false
-  gem "rubocop-rails-omakase", require: false
+  gem 'rubocop-rails-omakase', '~> 1.1', require: false
   gem 'ruby-lsp'
   gem 'solargraph'
   # Spring speeds up development by keeping your application running in the background
