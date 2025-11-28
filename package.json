@@ -59,9 +59,6 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.23.2",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@babel/preset-env": "^7.23.2",
     "@eslint/js": "^9.15.0",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@types/node": "^22.13.13",
