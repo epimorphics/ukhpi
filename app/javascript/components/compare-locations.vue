@@ -1,82 +1,133 @@
 <template>
-  <div class='c-compare__selections'>
+  <div class="c-compare__selections">
     <el-row>
-      <el-col :span='24'>
+      <el-col :span="24">
         <label>
           {{ $t('js.compare.compare_action') }}
-          <el-select v-model='indicatorSlug'>
-            <el-option v-for='item in indicators' :key='item.slug' :label='item.label' :value='item.slug'
-              :disabled='isDisabledIndicator(item.slug)' :aria-disabled='isDisabledIndicator(item.slug)'>
-            </el-option>
+          <el-select v-model="indicatorSlug">
+            <el-option
+              v-for="item in indicators"
+              :key="item.slug"
+              :label="item.label"
+              :value="item.slug"
+              :disabled="isDisabledIndicator(item.slug)"
+              :aria-disabled="isDisabledIndicator(item.slug)"
+            />
           </el-select>
         </label>
         <label>
           {{ $t('preposition.for') }}
-          <el-select v-model='statisticSlug'>
-            <el-option-group v-for='theme in themes' :key='theme.slug' :label='theme.label'>
-              <el-option v-for='item in theme.statistics' :key='item.slug' :label='item.label' :value='item.slug'
-                :disabled='isDisabledStatistic(item.slug)' :aria-disabled='isDisabledStatistic(item.slug)'>
-              </el-option>
+          <el-select v-model="statisticSlug">
+            <el-option-group
+              v-for="theme in themes"
+              :key="theme.slug"
+              :label="theme.label"
+            >
+              <el-option
+                v-for="item in theme.statistics"
+                :key="item.slug"
+                :label="item.label"
+                :value="item.slug"
+                :disabled="isDisabledStatistic(item.slug)"
+                :aria-disabled="isDisabledStatistic(item.slug)"
+              />
             </el-option-group>
           </el-select>
         </label>
         {{ $t('preposition.from') }}
-        <data-view-dates prefix='preposition.from' />
+        <data-view-dates prefix="preposition.from" />
       </el-col>
-      <el-col :span='24'>
-        <el-alert type='warning' :title='illegalIndicatorStatisticCombo' v-if='illegalIndicatorStatisticCombo'>
-        </el-alert>
+      <el-col :span="24">
+        <el-alert
+          v-if="illegalIndicatorStatisticCombo"
+          type="warning"
+          :title="illegalIndicatorStatisticCombo"
+        />
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span='24'>
+      <el-col :span="24">
         {{ $t('js.compare.for_locations') }}
-        <ul class='c-compare__locations'>
-          <li v-for='location in locations' :key='location.slug' class='c-compare__location'>
+        <ul class="c-compare__locations">
+          <li
+            v-for="location in locations"
+            :key="location.slug"
+            class="c-compare__location"
+          >
             {{ location.labels[$locale] || location.labels.en }}
-            <button @click='onRemoveLocation(location)' class='c-compare__locations--modify'
-              :title="$t('action.remove')" :aria-label="$t('action.remove')">
-              <i class='fa fa-times-circle'></i>
+            <button
+              class="c-compare__locations--modify"
+              :title="$t('action.remove')"
+              :aria-label="$t('action.remove')"
+              @click="onRemoveLocation(location)"
+            >
+              <i class="fa fa-times-circle" />
             </button>
           </li>
-          <li v-if='showAddLocationButton' class='c-compare__location'>
-            <button class='u-full-width c-compare__locations--modify' @click='onAddLocation'
-              :title="$t('action.add_location')" :aria-label="$t('action.add_location')">
-              <i class='fa fa-plus-circle'></i>
+          <li
+            v-if="showAddLocationButton"
+            class="c-compare__location"
+          >
+            <button
+              class="u-full-width c-compare__locations--modify"
+              :title="$t('action.add_location')"
+              :aria-label="$t('action.add_location')"
+              @click="onAddLocation"
+            >
+              <i class="fa fa-plus-circle" />
             </button>
-            <compare-additional-location></compare-additional-location>
+            <compare-additional-location />
           </li>
         </ul>
       </el-col>
     </el-row>
     <el-row>
-      <el-col :span='24' v-if='oneOrMoreLocations'>
-        <compare-locations-table v-if='statisticSlug && indicatorSlug' :statistic='statistic' :indicator='indicator'
-          :locations='locations'>
-        </compare-locations-table>
-        <div class='c-compare__actions'>
-          <div class='c-compare__print'>
-            <a :href='printUrl' target='_' class='c-compare__print-link o-print-action'>
-              <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
+      <el-col
+        v-if="oneOrMoreLocations"
+        :span="24"
+      >
+        <compare-locations-table
+          v-if="statisticSlug && indicatorSlug"
+          :statistic="statistic"
+          :indicator="indicator"
+          :locations="locations"
+        />
+        <div class="c-compare__actions">
+          <div class="c-compare__print">
+            <a
+              :href="printUrl"
+              target="_"
+              class="c-compare__print-link o-print-action"
+            >
+              <i class="fa fa-print" /> {{ $t('js.action.print_table') }}
             </a>
           </div>
-          <div class='c-compare__download'>
+          <div class="c-compare__download">
             <div>
               {{ $t('js.action.download_data_as') }}
               &nbsp;
             </div>
-            <div class='c-compare__download-links'>
-              <a :href='downloadUrlCsv' class='button c-compare__download-link c-compare__download-csv'>
-                {{ $t('js.compare.csv_format') }} <i class='fa fa-external-link'></i>
+            <div class="c-compare__download-links">
+              <a
+                :href="downloadUrlCsv"
+                class="button c-compare__download-link c-compare__download-csv"
+              >
+                {{ $t('js.compare.csv_format') }} <i class="fa fa-external-link" />
               </a>
-              <a :href='downloadUrlJson' class='button c-compare__download-link c-compare__download-json'>
-                {{ $t('js.compare.json_format') }} <i class='fa fa-external-link'></i>
+              <a
+                :href="downloadUrlJson"
+                class="button c-compare__download-link c-compare__download-json"
+              >
+                {{ $t('js.compare.json_format') }} <i class="fa fa-external-link" />
               </a>
             </div>
           </div>
         </div>
       </el-col>
-      <el-col :span='24' v-else>
+      <el-col
+        v-else
+        :span="24"
+      >
         <p>
           <em>{{ $t('js.compare.select_locations') }}</em>
         </p>
@@ -104,49 +155,18 @@ import unavailable from '../models/ukhpi-cube-metadata';
 const MAX_LOCATIONS = 5;
 
 export default {
-  data: () => ({
-    statisticSlug: null,
-    indicatorSlug: null,
-    indicators: [],
-    themes: [],
-  }),
 
   components: {
     DataViewDates,
     CompareAdditionalLocation,
     CompareLocationsTable,
   },
-
-  mounted () {
-    const node = document.querySelector('.c-location-compare__data');
-    const attrs = node.attributes;
-    const initialData = {};
-
-    for (let i = 0; i < attrs.length; i += 1) {
-      const attr = attrs.item(i);
-
-      if (attr.name.match(/^data-/)) {
-        const name = kebabCase.reverse(attr.name.replace(/^data-/, ''));
-        let value = JSON.parse(attr.value);
-
-        if (value.date) {
-          value = new Date(value.date);
-        }
-
-        initialData[name] = value;
-      }
-    }
-
-    this.$store.commit(INITIALISE, {
-      fromDate: initialData.from,
-      toDate: initialData.to,
-      compareLocations: initialData.locations,
-      compareIndicator: initialData.in,
-      compareStatistic: initialData.st,
-    });
-    this.themes = initialData.themes;
-    this.indicators = initialData.indicators;
-  },
+  data: () => ({
+    statisticSlug: null,
+    indicatorSlug: null,
+    indicators: [],
+    themes: [],
+  }),
 
   computed: {
     statistic () {
@@ -285,6 +305,37 @@ export default {
         this.indicatorSlug = ind;
       }
     },
+  },
+
+  mounted () {
+    const node = document.querySelector('.c-location-compare__data');
+    const attrs = node.attributes;
+    const initialData = {};
+
+    for (let i = 0; i < attrs.length; i += 1) {
+      const attr = attrs.item(i);
+
+      if (attr.name.match(/^data-/)) {
+        const name = kebabCase.reverse(attr.name.replace(/^data-/, ''));
+        let value = JSON.parse(attr.value);
+
+        if (value.date) {
+          value = new Date(value.date);
+        }
+
+        initialData[name] = value;
+      }
+    }
+
+    this.$store.commit(INITIALISE, {
+      fromDate: initialData.from,
+      toDate: initialData.to,
+      compareLocations: initialData.locations,
+      compareIndicator: initialData.in,
+      compareStatistic: initialData.st,
+    });
+    this.themes = initialData.themes;
+    this.indicators = initialData.indicators;
   },
 
   methods: {

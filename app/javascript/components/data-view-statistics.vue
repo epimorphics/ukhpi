@@ -1,22 +1,24 @@
 <template>
-  <div class='o-data-view__js-options-statistics'>
-    <label v-for='(statistic, index) in statistics'
-      :key='statistic.slug'
-      class="checkbox-container">
+  <div class="o-data-view__js-options-statistics">
+    <label
+      v-for="(statistic, index) in statistics"
+      :key="statistic.slug"
+      class="checkbox-container"
+    >
       <input
         type="checkbox"
-        :name='statistic.label'
-        :data-slug='statistic.slug'
-        @change='onSelectStatistic'
-        :checked='isSelectedStatistic(statistic.slug)'
+        :name="statistic.label"
+        :data-slug="statistic.slug"
+        :checked="isSelectedStatistic(statistic.slug)"
+        @change="onSelectStatistic"
         @keydown.enter="onSelectStatistic"
-      />
-        <img
-          :src='imageSrcPath(index, false)'
-          :srcset='imageSrcPath(index, true)'
-          :alt='`marker image for ${statistic.label}`'
-        />
-        {{ statistic.label }}
+      >
+      <img
+        :src="imageSrcPath(index, false)"
+        :srcset="imageSrcPath(index, true)"
+        :alt="`marker image for ${statistic.label}`"
+      >
+      {{ statistic.label }}
     </label>
   </div>
 </template>
@@ -34,9 +36,6 @@ const MARKERS = [
 ];
 
 export default {
-  data: () => ({
-    statistics: [],
-  }),
 
   props: {
     initialStatistics: {
@@ -48,6 +47,9 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    statistics: [],
+  }),
 
   mounted() {
     this.initStatistics();

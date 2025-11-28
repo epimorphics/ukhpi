@@ -1,26 +1,29 @@
 <template>
-  <div class='c-data-view-graph-zoomed'>
+  <div class="c-data-view-graph-zoomed">
     <el-dialog
-      :visible.sync='showZoomedGraph'
-      :title='dialogTitle'
-      :show-close='true'
-      width='80%'
-      top='10vh'
-      @close='onCloseDialog'
-      @open='onOpenDialog'
+      :visible.sync="showZoomedGraph"
+      :title="dialogTitle"
+      :show-close="true"
+      width="80%"
+      top="10vh"
+      @close="onCloseDialog"
+      @open="onOpenDialog"
     >
-    <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='availableStatistics' :zoom='true'></data-view-statistics>
-    </div>
+      <div class="o-data-view__js-options">
+        <data-view-statistics
+          :initial-statistics="availableStatistics"
+          :zoom="true"
+        />
+      </div>
 
-    <data-view-graph
-      :elementId='elementId'
-      :theme='theme'
-      :indicator='indicator'
-      :zoom='true'
-      :timestamp='timestamp'
-    ></data-view-graph>
-  </el-dialog>
+      <data-view-graph
+        :element-id="elementId"
+        :theme="theme"
+        :indicator="indicator"
+        :zoom="true"
+        :timestamp="timestamp"
+      />
+    </el-dialog>
   </div>
 </template>
 
@@ -31,6 +34,11 @@ import DataViewStatistics from './data-view-statistics.vue';
 import AvailableStatistics from '../mixins/available-statistics';
 
 export default {
+
+  components: {
+    DataViewGraph,
+    DataViewStatistics,
+  },
   mixins: [AvailableStatistics],
 
   data: () => ({
@@ -63,9 +71,8 @@ export default {
     },
   },
 
-  components: {
-    DataViewGraph,
-    DataViewStatistics,
+  mounted() {
+    bus.$on('zoomGraph', this.onZoomGraph);
   },
 
   methods: {
@@ -87,10 +94,6 @@ export default {
         this.$nextTick(function deferredUpdate() { this.timestamp += 1; });
       }
     },
-  },
-
-  mounted() {
-    bus.$on('zoomGraph', this.onZoomGraph);
   },
 };
 </script>

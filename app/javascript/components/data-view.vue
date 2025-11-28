@@ -1,60 +1,79 @@
 <template>
-  <div class='o-data-view__vue-root u-js-only'>
-    <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='availableStatistics' :zoom='false'></data-view-statistics>
+  <div class="o-data-view__vue-root u-js-only">
+    <div class="o-data-view__js-options">
+      <data-view-statistics
+        :initial-statistics="availableStatistics"
+        :zoom="false"
+      />
     </div>
-    <div role='tabpanel' aria-describedby='tabpanel-accessibility-message' class='o-data-view__data-display'>
+    <div
+      role="tabpanel"
+      aria-describedby="tabpanel-accessibility-message"
+      class="o-data-view__data-display"
+    >
       <el-tabs
-        v-model='activeTab'
-        @tab-click='onChangeTab'
+        v-model="activeTab"
+        @tab-click="onChangeTab"
       >
-        <el-tab-pane :label='$t("js.action.data_graph")' :name='`graphs-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane
+          :label="$t('js.action.data_graph')"
+          :name="`graphs-tab-${indicator.slug}-${theme.slug}`"
+        >
           <data-view-graph
-            :theme='theme'
-            :indicator='indicator'
-            :elementId='elementId'
-            :key='`data-view-graph-${theme}-${indicator}-${elementId}`'
-          >
-          </data-view-graph>
+            :key="`data-view-graph-${theme}-${indicator}-${elementId}`"
+            :theme="theme"
+            :indicator="indicator"
+            :element-id="elementId"
+          />
         </el-tab-pane>
-        <el-tab-pane :label='$t("js.action.data_table")' :name='`data-tab-${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane
+          :label="$t('js.action.data_table')"
+          :name="`data-tab-${indicator.slug}-${theme.slug}`"
+        >
           <data-view-table
-            :statistics='availableStatistics'
-            :indicator='indicator'
-            :theme='theme'
-            :key='`data-view-table-${theme}-${indicator}-${elementId}`'
-          >
-          </data-view-table>
+            :key="`data-view-table-${theme}-${indicator}-${elementId}`"
+            :statistics="availableStatistics"
+            :indicator="indicator"
+            :theme="theme"
+          />
         </el-tab-pane>
-        <el-tab-pane :label='$t("js.action.download")' :name='`download-tab${indicator.slug}-${theme.slug}`'>
+        <el-tab-pane
+          :label="$t('js.action.download')"
+          :name="`download-tab${indicator.slug}-${theme.slug}`"
+        >
           <data-view-download
-            :theme='theme'
-            :indicator='indicator'
-          >
-          </data-view-download>
+            :theme="theme"
+            :indicator="indicator"
+          />
         </el-tab-pane>
-        <el-tab-pane :label='$t("js.action.compare")' :name='`compare-tab-${indicator.slug}-${theme.slug}`'>
-          <p v-if='selectedLocation'>
-            {{ $t('js.compare.prompt', { selectedLocationLabel: this.selectedLocationLabel }) }}
-            <el-button @click='onCompareSelect'>
+        <el-tab-pane
+          :label="$t('js.action.compare')"
+          :name="`compare-tab-${indicator.slug}-${theme.slug}`"
+        >
+          <p v-if="selectedLocation">
+            {{ $t('js.compare.prompt', { selectedLocationLabel: selectedLocationLabel }) }}
+            <el-button @click="onCompareSelect">
               {{ $t('js.compare.select_action') }}
             </el-button>
           </p>
         </el-tab-pane>
       </el-tabs>
     </div>
-    <p id="tabpanel-accessibility-message" class="u-sr-only" aria-hidden="true">
+    <p
+      id="tabpanel-accessibility-message"
+      class="u-sr-only"
+      aria-hidden="true"
+    >
       {{ $t('js.action.accessibility_tabpanel') }}
     </p>
   </div>
-
 </template>
 
 <script>
 import kebabCase from 'kebab-case';
 import _ from 'lodash';
-import DataViewLocation from './data-view-location.vue';
-import DataViewDates from './data-view-dates.vue';
+// import DataViewLocation from './data-view-location.vue';
+// import DataViewDates from './data-view-dates.vue';
 import DataViewStatistics from './data-view-statistics.vue';
 import DataViewTable from './data-view-table.vue';
 import DataViewGraph from './data-view-graph.vue';
@@ -68,6 +87,16 @@ import i18n from '../lang'
 import { mutateName } from '../lang/welsh-name-mutations'
 
 export default {
+
+  components: {
+    // Registered but not used directly:
+    // DataViewLocation,
+    // DataViewDates,
+    DataViewStatistics,
+    DataViewTable,
+    DataViewGraph,
+    DataViewDownload,
+  },
   mixins: [AvailableStatistics],
 
   i18n,
@@ -82,13 +111,47 @@ export default {
     first: false,
   }),
 
-  components: {
-    DataViewLocation,
-    DataViewDates,
-    DataViewStatistics,
-    DataViewTable,
-    DataViewGraph,
-    DataViewDownload,
+  computed: {
+    /** @return The node ID that would have been assigned to this data view, given
+     * the indicator and theme */
+    elementId() {
+      const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
+      return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
+    },
+
+    selectedLocation() {
+      return this.$store.state.location;
+    },
+
+    selectedLocationLabel () {
+      return this.selectedLocation.labels[this.$locale] || this.selectedLocation.labels.en
+    },
+
+    selectedLocationLabelWelsh () {
+      return this.selectedLocation.labels.cy
+    }
+  },
+
+  watch: {
+    selectedLocation() {
+      let name = this.selectedLocationLabel;
+      let preposition = this.$t('preposition.in')
+
+      // we only want to perform Welsh consonant mutation IF the location has a given
+      // Welsh name. If we're in Welsh language mode, but showing a location with no
+      // given Welsh name, we use the English name instead but we *don't* do mutation.
+      if (window.ukhpi.locale === 'cy' && this.selectedLocationLabelWelsh) {
+        const mutated = mutateName(this.selectedLocationLabelWelsh, preposition, 'cy')
+        name = mutated.name
+        preposition = mutated.preposition
+      }
+
+      let nodes = document.querySelectorAll('.o-data-view__location-name');
+      safeForEach(nodes, node => { node.innerHTML = name })
+
+      nodes = document.querySelectorAll('.o-data-view__location-preposition');
+      safeForEach(nodes, node => { node.innerHTML = preposition })
+    },
   },
 
   beforeMount() {
@@ -110,27 +173,6 @@ export default {
     bus.$on('open-close-data-view', this.onOpenCloseDataView);
 
     this.activeTab = `graphs-tab-${this.indicator.slug}-${this.theme.slug}`;
-  },
-
-  computed: {
-    /** @return The node ID that would have been assigned to this data view, given
-     * the indicator and theme */
-    elementId() {
-      const indicatorSlug = this.indicator ? `${this.indicator.slug}-` : '';
-      return `${indicatorSlug}${this.theme.slug}`.replace(/_/g, '-');
-    },
-
-    selectedLocation() {
-      return this.$store.state.location;
-    },
-
-    selectedLocationLabel () {
-      return this.selectedLocation.labels[this.$locale] || this.selectedLocation.labels.en
-    },
-
-    selectedLocationLabelWelsh () {
-      return this.selectedLocation.labels.cy
-    }
   },
 
   methods: {
@@ -205,28 +247,6 @@ export default {
           statistic,
         });
       }
-    },
-  },
-
-  watch: {
-    selectedLocation() {
-      let name = this.selectedLocationLabel;
-      let preposition = this.$t('preposition.in')
-
-      // we only want to perform Welsh consonant mutation IF the location has a given
-      // Welsh name. If we're in Welsh language mode, but showing a location with no
-      // given Welsh name, we use the English name instead but we *don't* do mutation.
-      if (window.ukhpi.locale === 'cy' && this.selectedLocationLabelWelsh) {
-        const mutated = mutateName(this.selectedLocationLabelWelsh, preposition, 'cy')
-        name = mutated.name
-        preposition = mutated.preposition
-      }
-
-      let nodes = document.querySelectorAll('.o-data-view__location-name');
-      safeForEach(nodes, node => { node.innerHTML = name }) // eslint-disable-line no-param-reassign
-
-      nodes = document.querySelectorAll('.o-data-view__location-preposition');
-      safeForEach(nodes, node => { node.innerHTML = preposition }) // eslint-disable-line no-param-reassign
     },
   },
 

@@ -1,14 +1,17 @@
 <template>
-  <focus-trap v-model='showDialog' :initial-focus='initialFocusElement'>
-    <div class='o-select-location'>
+  <focus-trap
+    v-model="showDialog"
+    :initial-focus="initialFocusElement"
+  >
+    <div class="o-select-location">
       <el-dialog
-        :title='title'
-        :visible.sync='showDialog'
-        :show-close='true'
-        @close='notifyDialogClosed'
+        :title="title"
+        :visible.sync="showDialog"
+        :show-close="true"
+        @close="notifyDialogClosed"
       >
         <el-row>
-          <el-col :span='24'>
+          <el-col :span="24">
             <p>
               {{ prompt }}
             </p>
@@ -16,79 +19,130 @@
         </el-row>
 
         <el-row>
-          <el-col :span='24'>
+          <el-col :span="24">
             <label>
               {{ $t('js.location.search_locations_label') }}
               <el-input
-                v-model='searchInput'
-                @change='onSearchInput'
-                @keyup.native='onSearchKeyUp'
-                :autofocus='true'
-                ref='searchInputField'
-              >
-              </el-input>
+                ref="searchInputField"
+                v-model="searchInput"
+                :autofocus="true"
+                @change="onSearchInput"
+                @keyup.native="onSearchKeyUp"
+              />
             </label>
           </el-col>
-          <el-col :span='24'>
+          <el-col :span="24">
             <el-popover
-              placement='bottom'
-              :title='$t("js.location.results")'
-              width='400'
-              trigger='manual'
-              v-model='searchResultsVisible'
+              v-model="searchResultsVisible"
+              placement="bottom"
+              :title="$t('js.location.results')"
+              width="400"
+              trigger="manual"
             >
-              <ul v-for='result in searchResults' class='o-search-location__results'>
-                <li class='o-search-location__result'>
-                  <el-button type='text' @click='onSelectResult'>
+              <ul
+                v-for="result in searchResults"
+                :key="result.uri"
+                class="o-search-location__results"
+              >
+                <li class="o-search-location__result">
+                  <el-button
+                    type="text"
+                    @click="onSelectResult"
+                  >
                     {{ result.labels[$locale] || result.labels.en }}
                   </el-button>
                   ({{ locationTypeLabel(result) }})
                 </li>
               </ul>
-              <p v-if='manyResults > 0'>
+              <p v-if="manyResults > 0">
                 {{ $t("js.location.many_results", { manyResults }) }}
               </p>
             </el-popover>
           </el-col>
-          <el-alert type='warning' :title='noMatch' v-if='noMatch'></el-alert>
+          <el-alert
+            v-if="noMatch"
+            type="warning"
+            :title="noMatch"
+          />
         </el-row>
 
         <el-row>
-          <p v-if='validationMessage'>
+          <p v-if="validationMessage">
             <el-alert
-              :title='validationMessage'
-              type='warning'>
-            </el-alert>
+              :title="validationMessage"
+              type="warning"
+            />
           </p>
         </el-row>
 
         <el-row>
-          <div class='c-map'>
-            <div :id='mapElementId' class='c-map__map'></div>
-            <div class='c-map__controls'>
-              <div class='c-map__prompt'>
+          <div class="c-map">
+            <div
+              :id="mapElementId"
+              class="c-map__map"
+            />
+            <div class="c-map__controls">
+              <div class="c-map__prompt">
                 {{ $t("js.location.show_on_map") }}
               </div>
               <nav aria-label="show location type">
-                <div role="radiogroup" class="el-radio-group">
-                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_countries")' label='country'>{{ $t("js.location.type_countries") }}</el-radio>
-                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_las")' label='la'>{{ $t("js.location.type_las") }}</el-radio>
-                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_regions_england")' label='region'>{{ $t("js.location.type_regions_england") }}</el-radio>
-                  <el-radio class="el-radio-button" name="locationType" v-model='locationType' :aria-label='$t("js.location.type_counties_england")' label='county'>{{ $t("js.location.type_counties_england") }}</el-radio>
+                <div
+                  role="radiogroup"
+                  class="el-radio-group"
+                >
+                  <el-radio
+                    v-model="locationType"
+                    class="el-radio-button"
+                    name="locationType"
+                    :aria-label="$t('js.location.type_countries')"
+                    label="country"
+                  >
+                    {{ $t("js.location.type_countries") }}
+                  </el-radio>
+                  <el-radio
+                    v-model="locationType"
+                    class="el-radio-button"
+                    name="locationType"
+                    :aria-label="$t('js.location.type_las')"
+                    label="la"
+                  >
+                    {{ $t("js.location.type_las") }}
+                  </el-radio>
+                  <el-radio
+                    v-model="locationType"
+                    class="el-radio-button"
+                    name="locationType"
+                    :aria-label="$t('js.location.type_regions_england')"
+                    label="region"
+                  >
+                    {{ $t("js.location.type_regions_england") }}
+                  </el-radio>
+                  <el-radio
+                    v-model="locationType"
+                    class="el-radio-button"
+                    name="locationType"
+                    :aria-label="$t('js.location.type_counties_england')"
+                    label="county"
+                  >
+                    {{ $t("js.location.type_counties_england") }}
+                  </el-radio>
                 </div>
               </nav>
             </div>
           </div>
         </el-row>
 
-        <span slot='footer' class='dialog-footer'>
-          <el-button @click='onHideDialog'>{{ $t('js.action.cancel') }}</el-button>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="onHideDialog">{{ $t('js.action.cancel') }}</el-button>
           <el-button
-            type='primary'
-            @click='onSaveChanges'
-            :disabled='!allowConfirm'
-            :aria-disabled='!allowConfirm'
-            :aria-label='$t("js.action.confirm")'
+            type="primary"
+            :disabled="!allowConfirm"
+            :aria-disabled="!allowConfirm"
+            :aria-label="$t('js.action.confirm')"
+            @click="onSaveChanges"
           >{{ $t('js.action.confirm') }}</el-button>
         </span>
       </el-dialog>
@@ -107,24 +161,11 @@ import bus from '../lib/event-bus';
 const MAX_RESULTS = 10;
 
 export default {
-  name: 'select-location',
+  name: 'SelectLocation',
 
   components: {
     FocusTrap
   },
-
-  data: () => ({
-    showDialog: false,
-    locationType: 'country',
-    selectedLocation: null,
-    validationMessage: null,
-    searchInput: '',
-    manyResults: 0,
-    searchResults: [],
-    searchResultsVisible: false,
-    leafletMap: null,
-    noMatch: false
-  }),
 
   props: {
     dialogVisible: {
@@ -148,8 +189,22 @@ export default {
     emitEvent: {
       required: false,
       type: String,
+      default: () => ''
     },
   },
+
+  data: () => ({
+    showDialog: false,
+    locationType: 'country',
+    selectedLocation: null,
+    validationMessage: null,
+    searchInput: '',
+    manyResults: 0,
+    searchResults: [],
+    searchResultsVisible: false,
+    leafletMap: null,
+    noMatch: false
+  }),
 
   computed: {
     allowConfirm() {
@@ -193,6 +248,9 @@ export default {
         this.noMatch = `Sorry, no locations match '${this.searchInput}'.`;
       }
     },
+  },
+
+  mounted() {
   },
 
   methods: {
@@ -328,9 +386,6 @@ export default {
       const typeName = locationIndexType(location);
       return this.$t(`js.location.type.${typeName}`)
     }
-  },
-
-  mounted() {
   },
 };
 </script>

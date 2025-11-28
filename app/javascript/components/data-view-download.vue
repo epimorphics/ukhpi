@@ -1,51 +1,80 @@
 <template>
-  <div class='o-data-view-download'>
+  <div class="o-data-view-download">
     <el-row>
-      <el-col :span='18'>
-        <p v-html="$t('js.download.prompt', { qonsolePath: this.qonsolePath })" />
+      <el-col :span="18">
+        <p v-html="sanitised($t('js.download.prompt', { qonsolePath: qonsolePath }))" /><!-- eslint-disable-line vue/no-v-html -->
 
         <ul>
           <li>
+            <!-- eslint-disable vue/no-v-html-->
             <span
-              v-html="$t('js.download.selected', { themeName: this.themeName, indicatorName: this.indicatorName, locationName: this.locationName })" />
-            <br />
-            <a class='o-data-view-download__button' :href='downloadUrl("csv", true, true)'>
-              {{ $t('js.download.csv_prompt') }} <i class='fa fa-external-link'></i>
+              v-html="sanitised($t('js.download.selected', { themeName: themeName, indicatorName: indicatorName, locationName: locationName }))"
+            />
+            <!-- eslint-enable vue/no-v-html -->
+            <br>
+            <a
+              class="o-data-view-download__button"
+              :href="downloadUrl('csv', true, true)"
+            >
+              {{ $t('js.download.csv_prompt') }} <i class="fa fa-external-link" />
             </a>
-            <a class='o-data-view-download__button' :href='downloadUrl("json", true, true)'>
-              {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
+            <a
+              class="o-data-view-download__button"
+              :href="downloadUrl('json', true, true)"
+            >
+              {{ $t('js.download.json_prompt') }} <i class="fa fa-external-link" />
             </a>
           </li>
           <li>
-            <span v-html="$t('js.download.theme', { themeName: this.themeName, locationName: this.locationName })" />
-            <br />
-            <a class='o-data-view-download__button' :href='downloadUrl("csv", true, false)' download>
-              {{ $t('js.download.csv_prompt') }} <i class='fa fa-external-link'></i>
+            <span v-html="sanitised($t('js.download.theme', { themeName: themeName, locationName: locationName }))" /><!-- eslint-disable-line vue/no-v-html -->
+            <br>
+            <a
+              class="o-data-view-download__button"
+              :href="downloadUrl('csv', true, false)"
+              download
+            >
+              {{ $t('js.download.csv_prompt') }} <i class="fa fa-external-link" />
             </a>
-            <a class='o-data-view-download__button' :href='downloadUrl("json", true, false)' download>
-              {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
+            <a
+              class="o-data-view-download__button"
+              :href="downloadUrl('json', true, false)"
+              download
+            >
+              {{ $t('js.download.json_prompt') }} <i class="fa fa-external-link" />
             </a>
           </li>
         </ul>
         <p>
-          <span v-html="$t('js.download.all', { locationName: this.locationName })" />
-          <br />
-          <a class='o-data-view-download__button' :href='downloadUrl("csv", false, false)' download>
-            {{ $t('js.download.csv_prompt') }} <i class='fa fa-external-link'></i>
+          <span v-html="sanitised($t('js.download.all', { locationName: locationName }))" /><!-- eslint-disable-line vue/no-v-html -->
+          <br>
+          <a
+            class="o-data-view-download__button"
+            :href="downloadUrl('csv', false, false)"
+            download
+          >
+            {{ $t('js.download.csv_prompt') }} <i class="fa fa-external-link" />
           </a>
-          <a class='o-data-view-download__button' :href='downloadUrl("json", false, false)' download>
-            {{ $t('js.download.json_prompt') }} <i class='fa fa-external-link'></i>
+          <a
+            class="o-data-view-download__button"
+            :href="downloadUrl('json', false, false)"
+            download
+          >
+            {{ $t('js.download.json_prompt') }} <i class="fa fa-external-link" />
           </a>
-
         </p>
-        <p class='u-muted' v-html="$t('js.download.license')">
-        </p>
+        <!-- eslint-disable vue/no-v-html-->
+        <p
+          class="u-muted"
+          v-html="sanitised( $t('js.download.license') )"
+        />
+      <!-- eslint-enable vue/no-v-html-->
       </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
+import DOMPurify from 'dompurify';
 import { newDownloadPath } from '../lib/routes.js.erb';
 
 export default {
@@ -53,6 +82,7 @@ export default {
     indicator: {
       required: false,
       type: Object,
+      default: null,
     },
     theme: {
       required: true,
@@ -129,6 +159,15 @@ export default {
       }
 
       return `${newDownloadPath(options)}`;
+    },
+
+    /**
+     * Sanitise HTML content for safe rendering
+     * @param {String} html
+     * @return {String} Sanitised HTML
+     */
+    sanitised (html) {
+      return DOMPurify.sanitize(html);
     },
   },
 };

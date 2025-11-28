@@ -1,12 +1,12 @@
 <template>
   <select-location
-    :dialog-visible='dialogVisible'
-    :element-id='elementId'
-    @update:dialog-visible='val => dialogVisible = val'
-    :prompt='prompt'
-    :title='$t("js.action.choose_another_location")'
-    emit-event='compare-location-selected'
-  ></select-location>
+    :dialog-visible="dialogVisible"
+    :element-id="elementId"
+    :prompt="prompt"
+    :title="$t('js.action.choose_another_location')"
+    emit-event="compare-location-selected"
+    @update:dialog-visible="val => dialogVisible = val"
+  />
 </template>
 
 <script>
@@ -15,6 +15,10 @@ import store from '../store/index';
 import bus from '../lib/event-bus';
 
 export default {
+
+  components: {
+    SelectLocation,
+  },
   data: () => ({
     elementId: 'comparisonSelection',
     dialogVisible: false,
@@ -31,10 +35,6 @@ export default {
       const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : '';
       return this.$t('js.compare.action_prompt', { location: label });
     }
-  },
-
-  components: {
-    SelectLocation,
   },
 
   mounted() {

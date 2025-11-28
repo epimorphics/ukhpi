@@ -24,7 +24,7 @@ import L from 'leaflet'
 
 L.Rrose = L.Popup.extend({
 
-  /* eslint-disable no-underscore-dangle */
+   
   _initLayout () {
     const prefix = 'leaflet-rrose'
     const container = L.DomUtil.create('div', `${prefix} ${this.options.className} leaflet-zoom-animated`)

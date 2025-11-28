@@ -56,7 +56,7 @@ const LA_MAP_ERRATA = [
   'http://landregistry.data.gov.uk/id/region/tyne-and-wear'
 ]
 
-/* eslint-disable max-len, class-methods-use-this */
+ 
 export default class LocationsMap {
   constructor (elementId, locale) {
     this.elementId = elementId

@@ -1,25 +1,40 @@
 <template>
-  <div class='o-compare__table'>
-    <h2 class='o-heading--3'>
+  <div class="o-compare__table">
+    <h2 class="o-heading--3">
       {{ tableCaption }}
     </h2>
-    <table class='o-data-table'>
+    <table class="o-data-table">
       <thead>
         <tr>
-          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
-          <th v-for='location in locations'
-              :key='`th-${location.gss}`'
-              class='u-right'
-              scope='col'
+          <th
+            class="u-left"
+            scope="col"
+          >
+            {{ $t('js.data_table.date') }}
+          </th>
+          <th
+            v-for="location in locations"
+            :key="`th-${location.gss}`"
+            class="u-right"
+            scope="col"
           >
             {{ location.labels[$locale] || location.labels.en }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for='(row, rowIndex) in tableData' :key='`row-${rowIndex}`'>
-          <td class='u-left'>{{ dateFormatter(row['date']) }}</td>
-          <td v-for='(location, colIndex) in locations' :key='`td-${colIndex}-${rowIndex}`' class='u-right'>
+        <tr
+          v-for="(row, rowIndex) in tableData"
+          :key="`row-${rowIndex}`"
+        >
+          <td class="u-left">
+            {{ dateFormatter(row['date']) }}
+          </td>
+          <td
+            v-for="(location, colIndex) in locations"
+            :key="`td-${colIndex}-${rowIndex}`"
+            class="u-right"
+          >
             {{ valueFormatter(row[location.gss]) }}
           </td>
         </tr>
@@ -55,9 +70,6 @@ function ensureSeriesDates(dates, tSeries) {
 }
 
 export default {
-  data: () => ({
-    tableData: [],
-  }),
 
   props: {
     statistic: {
@@ -75,6 +87,9 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    tableData: [],
+  }),
 
   computed: {
     pred() {

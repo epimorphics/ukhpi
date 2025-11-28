@@ -1,26 +1,49 @@
 <template>
-  <div class='o-data-view__table'>
-    <table class='o-data-table'>
+  <div class="o-data-view__table">
+    <table class="o-data-table">
       <thead>
         <tr>
-          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
-          <th v-for='column in columns' :key='`th-${column.slug}`' class='u-right' scope='col'>
+          <th
+            class="u-left"
+            scope="col"
+          >
+            {{ $t('js.data_table.date') }}
+          </th>
+          <th
+            v-for="column in columns"
+            :key="`th-${column.slug}`"
+            class="u-right"
+            scope="col"
+          >
             {{ column.label }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for='(row, rowIndex) in tableData' :key='`row-${rowIndex}`'>
-          <td class='u-left'>{{ row['ukhpi:refMonth'] }}</td>
-          <td v-for='(column, colIndex) in columns' :key='`td-${colIndex}-${rowIndex}`' class='u-right'>
+        <tr
+          v-for="(row, rowIndex) in tableData"
+          :key="`row-${rowIndex}`"
+        >
+          <td class="u-left">
+            {{ row['ukhpi:refMonth'] }}
+          </td>
+          <td
+            v-for="(column, colIndex) in columns"
+            :key="`td-${colIndex}-${rowIndex}`"
+            class="u-right"
+          >
             {{ row[columnProp(column)] }}
           </td>
         </tr>
       </tbody>
     </table>
-    <div class='o-data-view__table-print'>
-      <a :href='printUrl' target='_' class='o-print-action'>
-        <i class='fa fa-print'></i> {{ $t('js.action.print_table') }}
+    <div class="o-data-view__table-print">
+      <a
+        :href="printUrl"
+        target="_"
+        class="o-print-action"
+      >
+        <i class="fa fa-print" /> {{ $t('js.action.print_table') }}
       </a>
     </div>
   </div>
@@ -30,9 +53,6 @@
 import { printPath } from '../lib/routes.js.erb';
 
 export default {
-  data: () => ({
-    tableData: [],
-  }),
 
   props: {
     statistics: {
@@ -43,13 +63,18 @@ export default {
     indicator: {
       type: Object,
       required: false,
+      default: null,
     },
 
     theme: {
       type: Object,
       required: false,
+      default: null,
     },
   },
+  data: () => ({
+    tableData: [],
+  }),
 
   computed: {
     printUrl () {
