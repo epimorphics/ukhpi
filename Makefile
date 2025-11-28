@@ -78,6 +78,10 @@ eject:
 	@echo "Removing VCR Cassettes to avoid stale data..."
 	@rm -rf test/vcr_cassettes/
 
+eslint:
+# Lint JavaScript files with ESLint and auto-fix where possible
+	@${BUNDLE} exec eslint --fix .
+
 forceclean: realclean
 # Remove all bundled files
 	@${BUNDLE} clean --force || :
@@ -92,6 +96,7 @@ help:
 	@echo "  clean - remove temporary files"
 	@echo "  compiled - remove old compiled assets and compile via vite"
 	@echo "  eject - remove vcr cassettes to avoid stale data"
+	@echo "  eslint - run ESLint on JavaScript files"
 	@echo "  forceclean - remove all generated files including bundled gems"
 	@echo "  help - show this help message"
 	@echo "  image - build the Docker image"
@@ -101,6 +106,7 @@ help:
 	@echo "  name - return the image name"
 	@echo "  publish - release the image to the Docker registry"
 	@echo "  realclean - remove all temporary files as well as authentication tokens"
+	@echo "  rubocop - run RuboCop on Ruby files"
 	@echo "  run - run the Docker image with Rails running"
 	@echo "  server - start the Rails server using foreman"
 	@echo "  start - start the Docker container"
@@ -149,13 +155,8 @@ image: auth
 		.
 	@echo Done.
 
-lint:
-	@echo "Running code linting for ${SHORTNAME} ..."
-# Auto-correct offenses safely where possible with the `-a` flag
-	@${BUNDLE} exec rubocop -a
-# Lint JavaScript files with ESLint and auto-fix where possible
-	@${BUNDLE} exec eslint --fix .
-	@echo "Linting complete."
+lint: rubocop eslint
+	@echo "All linting complete."
 
 locations:
 	@echo "Generating new UKHPI location files ... "
@@ -178,6 +179,11 @@ publish: image
 realclean: clean
 	@echo "Removing authentication from ${SHORTNAME}..."
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
+
+rubocop:
+	@echo "Running code linting for ${SHORTNAME} ..."
+# Auto-correct offenses safely where possible with the `-a` flag
+	@${BUNDLE} exec rubocop -a
 
 run: start
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
