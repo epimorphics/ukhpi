@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "target": "es2022",
+    "lib": ["ESNext", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "skipLibCheck": true, // Prevents checking files in node_modules
+    "checkJs": true, // Enables type-checking for JavaScript files
+    "allowJs": true, // Allows JavaScript files in the project
+    "noEmit": true, // Prevents emitting compiled files
+    "strict": true, // Enables strict type-checking
+    "baseUrl": "app/frontend",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "noImplicitAny": false,
+    "noUncheckedIndexedAccess": true,
+    "jsx": "preserve",
+    "types": ["vite/client"],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": [
+    "app/frontend/**/*.js",
+    "app/frontend/**/*.ts",
+    "app/frontend/**/*.d.ts",
+    "app/frontend/**/*.vue"
+  ], // Adjust the path to your JavaScript files
+  "exclude": ["node_modules"]
+}
