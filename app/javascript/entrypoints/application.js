@@ -15,10 +15,6 @@ import store from '../store/index'
 
 import getAppVersion from '../lib/app_version'
 
-// Issue https://github.com/epimorphics/ukhpi/issues/169
-// Add fix for IE Edge
-import '../lib/ie-d3-fix'
-
 // set up internationalization support
 import VueI18n from 'vue-i18n'
 import i18n from '../lang'
@@ -63,26 +59,24 @@ if (currentEnvironment === 'development') {
       environment: currentEnvironment,
       ignoreErrors: ['Non-Error promise rejection captured'],
       initialScope: {
-        tags: { app: 'ukhpi-js' }
+        tags: { app: 'ukhpi-js' },
       },
-      integrations: [
-        Sentry.replayIntegration()
-      ],
+      integrations: [Sentry.replayIntegration()],
       release: `${currentAppRelease}`,
       // Session Replay set by current MODE env variable:
       replaysSessionSampleRate: sessionSampleRate,
       replaysOnErrorSampleRate: errorSampleRate,
       telemetry: {
         tracesSampleRate: currentEnvironment.includes('dev') ? 1.0 : 0.1,
-        tracePropagationTargets: ['localhost', 'https://landregistry.gov.uk/app/ukhpi']
-      }
+        tracePropagationTargets: ['localhost', 'https://landregistry.gov.uk/app/ukhpi'],
+      },
     })
 
     const sentryTags = {
       app: 'ukhpi-js',
       band: import.meta.env.SENTRY_BAND || null,
       enabled: import.meta.env.SENTRY_ENABLED || null,
-      hostname: import.meta.env.SENTRY_HOSTNAME || null
+      hostname: import.meta.env.SENTRY_HOSTNAME || null,
     }
     sentryTags.each((value, key) => {
       if (value !== null) { // Only set tags that are not null
@@ -102,12 +96,12 @@ Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeElementCy }
 Numeral.register('locale', 'gb', {
   delimiters: {
     thousands: ',',
-    decimal: '.'
+    decimal: '.',
   },
   currency: {
-    symbol: '£'
+    symbol: '£',
   },
-  ordinal: () => ''
+  ordinal: () => '',
 })
 Numeral.locale('gb')
 
@@ -124,7 +118,7 @@ const mountVueApp = () => {
   new Vue({
     i18n,
     store,
-    router
+    router,
   }).$mount('#application')
 }
 
