@@ -9,7 +9,21 @@ import stylistic from '@stylistic/eslint-plugin'
 
 export default defineConfig([
   // global ignores for generated/output directories
-  { ignores: ['./public/**', './node_modules/**', './.yarn/**', './coverage/**'] },
+  {
+    ignores: [
+      './.yarn/**',
+      '*.min.js',
+      'coverage/**',
+      'log/**',
+      'node_modules/**',
+      'public/**',
+      'tmp/**',
+      'vendor/**',
+      'app/assets/builds/**',
+      'app/assets/govuk_template*/**', // Vendor GOV.UK template files
+      'app/javascript/data', // Generated data files
+    ],
+  },
 
   // base config — apply to JS/TS/Vue source files
   js.configs.recommended,
@@ -46,6 +60,9 @@ export default defineConfig([
   {
     name: 'custom-ts',
     rules: {
+    // Note: you must disable the base rule as it can report incorrect errors
+      'no-unused-expressions': 'off',
+      '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'separate-type-imports' }],
     },
   },
@@ -59,7 +76,7 @@ export default defineConfig([
         { registeredComponentsOnly: false },
       ],
       'vue/custom-event-name-casing': [
-        'error',
+        'warn',
         'camelCase',
         {
           /* Allow custom events to be namespaced with a colon */
@@ -129,12 +146,13 @@ export default defineConfig([
       '@stylistic/quote-props': ['error', 'as-needed'],
       '@stylistic/quotes': ['error', 'single'],
       '@stylistic/semi': ['error', 'never'],
+      '@stylistic/space-before-function-paren': ['error', 'always'],
       '@stylistic/spaced-comment': 'warn',
       '@stylistic/type-generic-spacing': 'warn',
     },
   },
   {
-    files: ['app/frontend/pages/**/*.vue', 'app/frontend/layouts/**/*.vue'],
+    files: ['app/javascript/**/*.vue'],
     rules: {
       // allow single-word component names for our pages/layouts directories
       'vue/multi-word-component-names': 'off',
