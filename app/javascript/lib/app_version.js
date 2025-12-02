@@ -6,10 +6,14 @@ import Axios from 'axios'
  */
 export default async function getAppVersion () {
   try {
+    if (window.sessionStorage.getItem('currentAppRelease')) {
+      return window.sessionStorage.getItem('currentAppRelease')
+    }
     const response = await Axios.get('/version')
-    console.debug(`Current Application Version: ${response.data.version}`)
-    window.sessionStorage.setItem('currentAppRelease', response.data.version)
-    return response.data.version
+    const { version } = response.data
+    console.debug(`Current Application Version: ${version}`)
+    window.sessionStorage.setItem('currentAppRelease', version)
+    return version
   } catch (error) {
     console.error('Failed to get current version', error)
     return null
