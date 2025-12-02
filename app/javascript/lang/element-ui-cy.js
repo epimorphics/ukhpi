@@ -37,7 +37,7 @@ export default {
         wed: 'Mer',
         thu: 'Iau',
         fri: 'Gwe',
-        sat: 'Sad'
+        sat: 'Sad',
       },
       months: {
         jan: 'Ion',
@@ -51,8 +51,8 @@ export default {
         sep: 'Medi',
         oct: 'Hyd',
         nov: 'Tach',
-        dec: 'Rhag'
-      }
-    }
-  }
+        dec: 'Rhag',
+      },
+    },
+  },
 }

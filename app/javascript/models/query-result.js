@@ -30,7 +30,8 @@ function formatTableDatum (prop, rawValue) {
   if (!value || value.length === 0) {
     return 'no value'
   } else if (prop.match(/percentage/i)) {
-    return Numeral(value).divide(100).format('0.00%')
+    return Numeral(value).divide(100)
+      .format('0.00%')
   } else if (prop.match(/housePriceIndex/)) {
     return Numeral(value).format('0.00')
   } else if (prop.match(/average/)) {

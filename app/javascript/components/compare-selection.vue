@@ -1,5 +1,5 @@
 <template>
-  <select-location
+  <SelectLocation
     :dialog-visible="dialogVisible"
     :element-id="elementId"
     :prompt="prompt"
@@ -10,9 +10,9 @@
 </template>
 
 <script>
-import SelectLocation from './select-location.vue';
-import store from '../store/index';
-import bus from '../lib/event-bus';
+import SelectLocation from './select-location.vue'
+import store from '../store/index'
+import bus from '../lib/event-bus'
 
 export default {
 
@@ -27,44 +27,41 @@ export default {
   }),
 
   computed: {
-    selectedLocation() {
-      return this.$store.state.location;
+    selectedLocation () {
+      return this.$store.state.location
     },
 
-    prompt() {
-      const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : '';
-      return this.$t('js.compare.action_prompt', { location: label });
-    }
+    prompt () {
+      const label = this.selectedLocation ? this.selectedLocation.labels[this.$locale] : ''
+      return this.$t('js.compare.action_prompt', { location: label })
+    },
   },
 
-  mounted() {
-    bus.$on('select-comparison', this.onSelectComparison);
-    bus.$on('compare-location-selected', this.onCompareLocationSelected);
+  mounted () {
+    bus.$on('selectComparison', this.onSelectComparison)
+    bus.$on('compare-location-selected', this.onCompareLocationSelected)
   },
 
   methods: {
-    onSelectComparison({ statistic, indicator }) {
-      this.indicator = indicator;
-      this.statistic = statistic;
-      this.dialogVisible = true;
+    onSelectComparison ({ statistic, indicator }) {
+      this.indicator = indicator
+      this.statistic = statistic
+      this.dialogVisible = true
     },
 
-    onCompareLocationSelected(location) {
-      const gss0 = this.selectedLocation.gss;
-      const gss1 = location.gss;
-      const from = this.$store.state.fromDate;
-      const to = this.$store.state.toDate;
-      const ind = this.indicator.slug;
-      const st = this.statistic.slug;
-      const path = document.location.pathname.replace(/browse/, 'compare');
+    onCompareLocationSelected (location) {
+      const gss0 = this.selectedLocation.gss
+      const gss1 = location.gss
+      const from = this.$store.state.fromDate
+      const to = this.$store.state.toDate
+      const ind = this.indicator.slug
+      const st = this.statistic.slug
+      const path = document.location.pathname.replace(/browse/, 'compare')
 
-      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}&lang=${this.$locale}`;
+      document.location = `${path}?from=${from}&to=${to}&in=${ind}&st=${st}&location[]=${gss0}&location[]=${gss1}&lang=${this.$locale}`
     },
   },
 
   store,
-};
+}
 </script>
-
-<style lang='css'>
-</style>

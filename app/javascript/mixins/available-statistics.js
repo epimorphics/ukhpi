@@ -8,7 +8,7 @@ export default {
 
     isVolumeIndicator () {
       return this.indicator.isVolume
-    }
+    },
   },
 
   methods: {
@@ -18,6 +18,6 @@ export default {
      */
     statisticIsAvailable (stat) {
       return !this.isVolumeIndicator || stat.hasVolume
-    }
-  }
+    },
+  },
 }

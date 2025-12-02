@@ -13,10 +13,8 @@ const QONSOLE_QUERY = 'qonsole.query'
  * Report an error, both to the console and the global event bus
  */
 function onError (error) {
-   
   console.log('server notify failure')
   console.log(error)
-   
 
   bus.$emit('server-notify-failure', error)
 }
@@ -28,17 +26,18 @@ function fetchQueryResults (userSelections, options) {
     {
       params: userSelections,
       headers: {
-        Accept: 'application/json'
-      }
-    }
+        Accept: 'application/json',
+      },
+    },
   ).then((response) => {
     store.commit(
       options.action,
-      Object.assign({ results: new QueryResults(response.data) }, options)
+      Object.assign({ results: new QueryResults(response.data) }, options),
     )
-  }).catch((error) => {
-    onError(error)
   })
+    .catch((error) => {
+      onError(error)
+    })
 }
 
 /** Get an explanation of the query from the server, and save it in the browser
@@ -50,15 +49,16 @@ function fetchQueryExplanation (userSelections) {
     {
       params: Object.assign({ explain: true }, userSelections),
       headers: {
-        Accept: 'application/json'
-      }
-    }
+        Accept: 'application/json',
+      },
+    },
   ).then((response) => {
     const { sparql } = response.data.results
     setSessionStore(QONSOLE_QUERY, sparql)
-  }).catch((error) => {
-    onError(error)
   })
+    .catch((error) => {
+      onError(error)
+    })
 }
 
 /**
