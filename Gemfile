@@ -36,6 +36,9 @@ gem 'sass-rails'
 gem 'terser' # Updating to terser for ES6+ support
 gem 'vite_rails'
 
+# Reduces boot times through caching; required in config/boot.rb
+gem 'bootsnap', require: false
+
 group :development, :test do
   gem 'byebug'
   gem 'dotenv'
