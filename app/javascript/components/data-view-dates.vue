@@ -1,58 +1,70 @@
 <template>
-  <focus-trap v-model='dialogVisible' :initial-focus='initialFocusElement'>
-    <div class='c-options-selection__dates'>
-      <span class='' v-if='fromDate'>
+  <focus-trap
+    v-model="dialogVisible"
+    :initial-focus="initialFocusElement"
+  >
+    <div class="c-options-selection__dates">
+      <span
+        v-if="fromDate"
+        class=""
+      >
         <el-button
-          @click='onChangeDates'
-          class='c-options-selection__button'
-          :title='$t("js.dates_picker.select_dates")'
+          class="c-options-selection__button"
+          :title="$t('js.dates_picker.select_dates')"
+          @click="onChangeDates"
         >
           {{ fromDateFormatted }}
           {{ $t('preposition.to') }}
           {{ toDateFormatted }}
-          <i class='fa fa-edit'></i>
+          <i class="fa fa-edit" />
         </el-button>
       </span>
 
       <el-dialog
-        :title='$t("js.dates_picker.date_range_prompt")'
-        :visible.sync='dialogVisible'
-        :show-close='true'
+        :title="$t('js.dates_picker.date_range_prompt')"
+        :visible.sync="dialogVisible"
+        :show-close="true"
       >
         <el-row>
-          <el-col :span='12'>
+          <el-col :span="12">
             <label>
-              {{ $t("js.dates_picker.start") }}<span class='u-sr-only'>{{ $t('browse.edit.form.dates_format_sr') }}</span>:
+              {{ $t("js.dates_picker.start") }}<span class="u-sr-only">{{ $t('browse.edit.form.dates_format_sr') }}</span>:
               <el-date-picker
-                v-model='newFromDate'
-                type='month'
-                :placeholder='$t("js.compare.dates_from")'
-                ref='fromDatePicker'
-              ></el-date-picker>
+                ref="fromDatePicker"
+                v-model="newFromDate"
+                type="month"
+                :placeholder="$t('js.compare.dates_from')"
+              />
             </label>
           </el-col>
-          <el-col :span='12'>
+          <el-col :span="12">
             <label>
-              {{ $t("js.dates_picker.end") }}<span class='u-sr-only'>{{ $t('browse.edit.form.dates_format_sr') }}</span>:
+              {{ $t("js.dates_picker.end") }}<span class="u-sr-only">{{ $t('browse.edit.form.dates_format_sr') }}</span>:
               <el-date-picker
-                v-model='newToDate'
-                type='month'
-                :placeholder='$t("js.compare.dates_to")'>
-              </el-date-picker>
+                v-model="newToDate"
+                type="month"
+                :placeholder="$t('js.compare.dates_to')"
+              />
             </label>
           </el-col>
         </el-row>
         <el-row>
-          <p v-if='validationMessage'>
+          <p v-if="validationMessage">
             <el-alert
-              :title='validationMessage'
-              type='warning'>
-            </el-alert>
+              :title="validationMessage"
+              type="warning"
+            />
           </p>
         </el-row>
-        <span slot='footer' class='dialog-footer'>
-          <el-button @click='dialogVisible = false'>{{ $t("js.action.cancel") }}</el-button>
-          <el-button type='primary' @click='onSaveChanges'>{{ $t("js.action.confirm") }}</el-button>
+        <span
+          slot="footer"
+          class="dialog-footer"
+        >
+          <el-button @click="dialogVisible = false">{{ $t("js.action.cancel") }}</el-button>
+          <el-button
+            type="primary"
+            @click="onSaveChanges"
+          >{{ $t("js.action.confirm") }}</el-button>
         </span>
       </el-dialog>
     </div>
@@ -67,7 +79,7 @@ import bus from '../lib/event-bus';
 import { mutateName } from '../lang/welsh-name-mutations'
 
 export default {
-  name: 'data-view-dates',
+  name: 'DataViewDates',
 
   components: {
     FocusTrap
@@ -118,6 +130,10 @@ export default {
     },
   },
 
+  mounted() {
+    bus.$on('change-dates', this.onChangeDates);
+  },
+
   methods: {
     initialFocusElement () {
       return this.$refs.fromDatePicker
@@ -147,10 +163,6 @@ export default {
     updateToDate(dateStr) {
       this.toDate = Moment(dateStr).date();
     },
-  },
-
-  mounted() {
-    bus.$on('change-dates', this.onChangeDates);
   },
 };
 </script>

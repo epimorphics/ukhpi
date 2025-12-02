@@ -79,7 +79,7 @@ function getCookie (name) {
  * @description This function sets the analytics acceptance cookie to true.
  * called from app/views/common/_cookie_banner.html.haml
  */
-// eslint-disable-next-line no-unused-vars
+ 
 function acceptCookie () {
   acceptAnalytics(true)
 }
@@ -90,7 +90,7 @@ function acceptCookie () {
  * @description This function sets the analytics acceptance cookie to false.
  * called from app/views/common/_cookie_banner.html.haml
  */
-// eslint-disable-next-line no-unused-vars
+ 
 function rejectCookie () {
   acceptAnalytics(false)
 }

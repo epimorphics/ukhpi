@@ -1,6 +1,6 @@
 <template>
-  <div :class='rootCssClass'>
-    <svg :id='graphElementId'></svg>
+  <div :class="rootCssClass">
+    <svg :id="graphElementId" />
   </div>
 </template>
 
@@ -10,14 +10,12 @@ import drawGraph from '../presenters/data-graph';
 import bus from '../lib/event-bus';
 
 export default {
-  data: () => ({
-    redrawScheduled: false,
-  }),
 
   props: {
     indicator: {
       required: false,
       type: Object,
+      default: null,
     },
     theme: {
       required: true,
@@ -38,6 +36,9 @@ export default {
       default: 0,
     },
   },
+  data: () => ({
+    redrawScheduled: false,
+  }),
 
   computed: {
     graphElementId() {
@@ -81,6 +82,12 @@ export default {
     },
   },
 
+  watch: {
+    indicator() {
+      this.redrawGraphNextTick();
+    },
+  },
+
   mounted() {
     this.$watch('$store.state.selectedStatistics', this.updateGraph, { deep: true });
     this.$watch('$store.state.queryResults', this.updateGraph, { deep: true });
@@ -91,12 +98,6 @@ export default {
     if (this.zoom) {
       this.updateGraph();
     }
-  },
-
-  watch: {
-    indicator() {
-      this.redrawGraphNextTick();
-    },
   },
 
   methods: {

@@ -1,12 +1,12 @@
 <template>
   <select-location
-    :dialog-visible='dialogVisible'
-    :element-id='elementId'
-    @update:dialog-visible='val => dialogVisible = val'
-    :prompt='prompt'
-    :title='$t("js.action.choose_another_location")'
-    emit-event='additional-location-selected'
-  ></select-location>
+    :dialog-visible="dialogVisible"
+    :element-id="elementId"
+    :prompt="prompt"
+    :title="$t('js.action.choose_another_location')"
+    emit-event="additional-location-selected"
+    @update:dialog-visible="val => dialogVisible = val"
+  />
 </template>
 
 <script>
@@ -17,6 +17,10 @@ import { SET_COMPARE_LOCATIONS } from '../store/mutation-types';
 import bus from '../lib/event-bus';
 
 export default {
+
+  components: {
+    SelectLocation,
+  },
   data: () => ({
     elementId: 'comparisonSelection',
     dialogVisible: false,
@@ -26,10 +30,6 @@ export default {
     prompt() {
       return 'Select an additional area to compare';
     },
-  },
-
-  components: {
-    SelectLocation,
   },
 
   mounted() {

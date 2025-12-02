@@ -1,21 +1,21 @@
 <template>
-  <div  class='c-options-selection__location'>
-    <span v-if='location'>
+  <div class="c-options-selection__location">
+    <span v-if="location">
       <el-button
-        @click='onChangeLocation'
-        class='c-options-selection__button'
-        :title='$t("js.action.select_location")'
+        class="c-options-selection__button"
+        :title="$t('js.action.select_location')"
+        @click="onChangeLocation"
       >
         {{ location.labels[$locale] || location.labels.en }}
-        <i class='fa fa-edit'></i>
+        <i class="fa fa-edit" />
       </el-button>
     </span>
 
     <select-location
-      :dialog-visible='dialogVisible'
-      :element-id='elementId'
-      @update:dialog-visible='val => dialogVisible = val'
-    ></select-location>
+      :dialog-visible="dialogVisible"
+      :element-id="elementId"
+      @update:dialog-visible="val => dialogVisible = val"
+    />
   </div>
 </template>
 
@@ -24,9 +24,10 @@ import SelectLocation from './select-location.vue';
 import bus from '../lib/event-bus';
 
 export default {
-  data: () => ({
-    dialogVisible: false,
-  }),
+
+  components: {
+    SelectLocation,
+  },
 
   props: {
     elementId: {
@@ -34,15 +35,14 @@ export default {
       type: String,
     },
   },
+  data: () => ({
+    dialogVisible: false,
+  }),
 
   computed: {
     location() {
       return this.$store.state.location;
     }
-  },
-
-  components: {
-    SelectLocation,
   },
 
   mounted() {

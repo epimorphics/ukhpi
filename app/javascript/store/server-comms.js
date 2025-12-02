@@ -13,10 +13,10 @@ const QONSOLE_QUERY = 'qonsole.query'
  * Report an error, both to the console and the global event bus
  */
 function onError (error) {
-  /* eslint-disable no-console */
+   
   console.log('server notify failure')
   console.log(error)
-  /* eslint-enable no-console */
+   
 
   bus.$emit('server-notify-failure', error)
 }

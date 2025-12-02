@@ -10,7 +10,7 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 /* Vuex's recommended style breaks an Airbnb eslint rule, so disable it for this file */
-/* eslint-disable no-param-reassign, no-multi-spaces */
+ 
 
 function updateSingleLocationResults (state) {
   const query = {
