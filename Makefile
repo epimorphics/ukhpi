@@ -81,7 +81,7 @@ eject:
 eslint:
 	@echo "Running ESLint for ${SHORTNAME} ..."
 # Lint JavaScript files with ESLint and auto-fix where possible
-	@${BUNDLE} exec eslint --fix .
+	@yarn lint
 
 forceclean: realclean
 # Remove all bundled files

@@ -6,8 +6,8 @@
   "description": "UK House Price Index - A search tool to find house price trends in the UK ~ Please view the latest version cadence found in the app/lib/version.rb file",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --fix .",
-    "lint:check": "eslint ."
+    "lint": "eslint . --format summary",
+    "lint:fix": "eslint --fix . --format summary"
   },
   "homepage": "https://github.com/epimorphics/ukhpi#readme",
   "bugs": {
@@ -18,10 +18,9 @@
     "type": "git",
     "url": "git+https://github.com/epimorphics/ukhpi.git"
   },
+  "version": "2.2.2",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
-    "@sentry/integrations": "^6.19.7",
-    "@sentry/vite-plugin": "^4.6.1",
     "@sentry/vue": "^9.47.1",
     "axios": "^0.30.2",
     "core-js": "^3.2.1",
