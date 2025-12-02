@@ -11,5 +11,5 @@ export default {
   markerStar: 'images/markers/star-green.png',
   markerStarSvg: 'images/markers/star-green.svg',
   markerSquareWhite: 'images/markers/square-white.png',
-  markerSquareWhiteSvg: 'images/markers/square-white.svg'
+  markerSquareWhiteSvg: 'images/markers/square-white.svg',
 }

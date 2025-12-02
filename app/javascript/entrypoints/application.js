@@ -19,7 +19,8 @@ import getAppVersion from '@/lib/app_version'
 import VueI18n from 'vue-i18n'
 import i18n from '@/lang'
 
-const currentAppRelease = window.ukhpi.version || getAppVersion()
+const currentAppVersion = window.sessionStorage.getItem('currentAppRelease') || getAppVersion()
+const currentAppRelease = `${import.meta.env.SENTRY_PROJECT}@${currentAppVersion}`.trim()
 
 const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
 
@@ -31,7 +32,7 @@ if (currentEnvironment === 'development') {
   console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
   console.debug(`Node environment: ${import.meta.env.MODE}`)
   console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
-  console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
+  console.debug(`HMLR UKHPI Release Version: ${currentAppRelease}`)
   console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
   console.debug(`Sentry Enabled: ${import.meta.env.SENTRY_ENABLED}`)
 
@@ -61,7 +62,10 @@ if (currentEnvironment === 'development') {
       initialScope: {
         tags: { app: 'ukhpi-js' },
       },
-      integrations: [Sentry.replayIntegration()],
+      integrations: [
+        Sentry.browserTracingIntegration({ router }),
+        Sentry.replayIntegration(),
+      ],
       release: `${currentAppRelease}`,
       // Session Replay set by current MODE env variable:
       replaysSessionSampleRate: sessionSampleRate,
