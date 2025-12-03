@@ -1,13 +1,48 @@
 ARG RUBY_VERSION=3.4.4
-ARG NODE_VERSION=22
+ARG NODE_VERSION=24
 ARG ALPINE_VERSION=3.22
-ARG BUNDLER_VERSION=2.7.1
+ARG BUNDLER_VERSION=2.7.2
 
 # Load node from official build
 FROM node:$NODE_VERSION-alpine AS node
 
-# Defines base image which builder and final stage use
+# Define the base image
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
+
+ENV APP_DIR=/rails
+
+WORKDIR ${APP_DIR}
+
+RUN apk add --no-cache \
+    curl \
+    jemalloc \
+    tzdata
+
+ENV RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development test"
+
+FROM base AS builder
+
+# Install packages required to build gems
+RUN apk add --update --no-cache \
+    yaml-dev \
+    build-base \
+    pkgconf \
+    bash \
+    coreutils \
+    && gem update --system
+
+# RUN apk add --update --no-cache \
+#     bash \
+#     coreutils \
+#     git \
+#     npm \
+#     nodejs \
+#     tzdata \
+#     yaml-dev \
+#     && gem update --system
 
 # Copy node binaries from the official image
 COPY --from=node /usr/lib /usr/lib
@@ -15,61 +50,63 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-ENV DIR=/usr/src/app
+# corepack is installed, but will no longer come with node >= 25, so re-install
+# following https://github.com/nodejs/corepack?tab=readme-ov-file#manual-installs
+RUN npm uninstall -g yarn pnpm && \
+    npm install -g corepack
 
-RUN apk add --update --no-cache \
-    bash \
-    coreutils \
-    git \
-    npm \
-    nodejs \
-    tzdata \
-    yaml-dev \
-    && gem update --system
-
-# for Bundler
+# Install a specific version of bundler
 ARG BUNDLER_VERSION
 RUN echo "Bundler version ${BUNDLER_VERSION}"
 RUN gem install bundler:$BUNDLER_VERSION
 
-# for Yarn
-RUN npm install -g corepack
-RUN corepack enable
-
-# installs the required gems
-FROM base AS gems
-RUN apk add --update build-base && gem update --system
-
-COPY bin bin
+# COPY bin bin
 COPY Gemfile Gemfile.lock ./
 # .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
 COPY .bundle/config /root/.bundle/config
-RUN bundle config set --local without 'development test' \
-    && bundle config set --local frozen 1 \
-    && bundle install
+
+RUN bundle install && \
+    rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
+    bundle exec bootsnap precompile --gemfile
+
+# RUN bundle config set --local without 'development test' \
+#     && bundle config set --local frozen 1 \
+#     && bundle install
+
+# for Yarn
+# RUN npm install -g corepack
+# RUN corepack enable
+
+# installs the required gems
+# FROM base AS gems
+# RUN apk add --update build-base && gem update --system
 
 # install the required node modules
-FROM base AS npm
-RUN apk add --update build-base && gem update --system
+# FROM base AS npm
+# RUN apk add --update build-base && gem update --system
 
-WORKDIR ${DIR}
-COPY package.json yarn.lock .yarnrc.yml ./
+# WORKDIR ${DIR}
+# COPY package.json yarn.lock .yarnrc.yml ./
+COPY package.json yarn.lock ./
 COPY .yarn .yarn
 RUN yarn install --immutable
 
 # runs build to compile assets
-FROM base AS builder
-RUN apk add --update build-base && gem update --system
+# FROM base AS builder
+# RUN apk add --update build-base && gem update --system
 
-WORKDIR ${DIR}
-# Copy the builds from the previous stages
-COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=npm --chown=app ${DIR}/node_modules ./node_modules
+# WORKDIR ${DIR}
+# # Copy the builds from the previous stages
+# COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
+# COPY --from=npm --chown=app ${DIR}/node_modules ./node_modules
 
-# Copy the rest of the application code
-COPY config.ru Gemfile Gemfile.lock Rakefile ./
-COPY package.json yarn.lock vite.config.mts .yarnrc.yml ./
-COPY .yarn .yarn
+# # Copy the rest of the application code
+
+COPY postcss.config.js ./
+COPY config.ru Rakefile ./
+COPY vite.config.mts ./
+# COPY package.json yarn.lock vite.config.mts .yarnrc.yml ./
+
 COPY app app
 COPY bin bin
 COPY config config
@@ -83,12 +120,12 @@ RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT}"
 RUN RAILS_ENV=production \
     VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
     NODE_OPTIONS=--max-old-space-size=4096 \
-    bundle exec rake vite:build \
-    && mkdir -m 777 ${DIR}/coverage \
-    && mkdir -m 777 ${DIR}/log
+    bundle exec rake vite:build
 
 # Start a new stage to minimise the final image size
 FROM base
+
+WORKDIR ${APP_DIR}
 
 ARG image_name
 ARG git_branch
@@ -103,15 +140,22 @@ LABEL com.epimorphics.name=$image_name \
       com.epimorphics.version=$VERSION
 
 RUN addgroup -S app && adduser -S -G app app
+
 EXPOSE 3000
 
-WORKDIR ${DIR}
-
-COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app ${DIR} .
+# Copy just the distribution requirements from the previous stage
+COPY --from=builder ${BUNDLE_PATH} ${BUNDLE_PATH}
+COPY --from=builder --chown=app ${APP_DIR}/app ./app
+COPY --from=builder --chown=app ${APP_DIR}/bin/rails ./bin/rails
+COPY --from=builder --chown=app ${APP_DIR}/config ./config
+COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ./
+COPY --from=builder --chown=app ${APP_DIR}/lib ./lib
+COPY --from=builder --chown=app ${APP_DIR}/public ./public
+COPY --from=builder --chown=app ${APP_DIR}/tmp ./tmp
 
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh "app/entrypoint.sh"
-ENTRYPOINT ["sh", "app/entrypoint.sh"]
+COPY entrypoint.sh ./
+
+ENTRYPOINT ["sh", "entrypoint.sh"]
