@@ -1,5 +1,4 @@
 import { defineConfig, loadEnv } from 'vite'
-import Erb from 'vite-plugin-erb'
 import gzipPlugin from 'rollup-plugin-gzip'
 import ViteRails from 'vite-plugin-rails'
 import ViteYaml from '@modyfi/vite-plugin-yaml'
@@ -19,7 +18,6 @@ export default defineConfig(({ mode }) => {
 
     envPrefix: ['VITE_', 'RAILS_', 'HMLR_', 'LOG_', 'SENTRY_'], // default: 'VITE_'
     plugins: [
-      Erb(),
       // Create gzip copies of relevant assets
       gzipPlugin(),
       // Integrate with ViteRails gem
