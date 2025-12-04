@@ -26,11 +26,12 @@ FROM base AS builder
 
 # Install packages required to build gems
 RUN apk add --update --no-cache \
-    yaml-dev \
-    build-base \
-    pkgconf \
     bash \
+    build-base \
     coreutils \
+    git \
+    pkgconf \
+    yaml-dev \
     && gem update --system
 
 # RUN apk add --update --no-cache \
@@ -49,10 +50,9 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-# corepack is installed, but will no longer come with node >= 25, so re-install
-# following https://github.com/nodejs/corepack?tab=readme-ov-file#manual-installs
-RUN npm uninstall -g yarn pnpm && \
-    npm install -g corepack
+# Remove existing global yarn and pnpm installs from the node image to avoid
+# conflicts with the project's Yarn Berry version in .yarn/releases
+RUN npm uninstall -g yarn pnpm
 
 # Install a specific version of bundler
 ARG BUNDLER_VERSION
