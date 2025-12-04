@@ -214,7 +214,7 @@ cy:
       date: "Dyddiad"
 
     download:
-      prompt: "Gallwch lawrlwytho’r data hwn er mwyn ei brosesu ymhellach eich hunain. Gallwch <a href='%{qonsolePath}'>roi cynnig ar yr ymholiad SPARQL</a> hefyd."
+      prompt: "Gallwch lawrlwytho’r data hwn er mwyn ei brosesu ymhellach eich hunain. Gallwch <a href='/app/qonsole'>roi cynnig ar yr ymholiad SPARQL</a> hefyd."
       selected: "Lawrlwytho <strong>%{indicatorName}</strong> yn unig yn ôl <strong>%{themeName}</strong> yn %{locationName}:"
       all: "Lawrlwytho <strong>holl ddata Mynegai Prisiau Tai y DU</strong> ar gyfer %{locationName} am y cyfnod hwn:"
       theme: "Lawrlwytho’r <strong>holl</strong> fynegai, pris cyfartalog a newid canrannol yn ôl %{themeName} yn %{locationName}:"
