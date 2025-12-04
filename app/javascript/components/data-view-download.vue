@@ -75,7 +75,9 @@
 
 <script>
 import DOMPurify from 'dompurify'
-import { newDownloadPath } from '../lib/routes.js.erb'
+import { download as newDownloadPath } from '../api'
+
+const downloadPath = newDownloadPath.new.pathTemplate
 
 export default {
   props: {
@@ -157,8 +159,7 @@ export default {
       if (withIndicator && this.indicator) {
         options['in[]'] = this.indicator.slug
       }
-
-      return `${newDownloadPath(options)}`
+      return `${downloadPath}?${new URLSearchParams(options).toString()}`
     },
 
     /**

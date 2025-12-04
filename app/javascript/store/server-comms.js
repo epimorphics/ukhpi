@@ -3,12 +3,12 @@
 import Axios from 'axios'
 import store from './index'
 import bus from '../lib/event-bus'
-import { browsePath } from '../lib/routes.js.erb'
+import { browse as newBrowsePath } from '../api'
 import QueryResults from '../models/query-results'
 import setSessionStore from '../lib/session-store'
 
 const QONSOLE_QUERY = 'qonsole.query'
-
+const browsePath = newBrowsePath.show.pathTemplate
 /**
  * Report an error, both to the console and the global event bus
  */
@@ -22,7 +22,7 @@ function onError (error) {
 /** Get the query results from the server. @return The promise object */
 function fetchQueryResults (userSelections, options) {
   return Axios.get(
-    browsePath(),
+    browsePath,
     {
       params: userSelections,
       headers: {
@@ -45,7 +45,7 @@ function fetchQueryResults (userSelections, options) {
  * @return The promise object */
 function fetchQueryExplanation (userSelections) {
   return Axios.get(
-    browsePath(),
+    browsePath,
     {
       params: Object.assign({ explain: true }, userSelections),
       headers: {

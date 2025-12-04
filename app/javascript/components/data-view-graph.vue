@@ -151,8 +151,8 @@ export default {
 </script>
 
 <style lang='scss'>
-.line {
-  fill: none;
-  stroke-width: 2px;
-}
+  .line {
+    fill: none;
+    stroke-width: 2px;
+  }
 </style>

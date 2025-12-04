@@ -6,11 +6,10 @@ import localeElementCy from '../lang/element-ui-cy'
 import localeD3Cy from '../lang/d3-timeformat-cy.json'
 import Numeral from 'numeral'
 import 'core-js/stable'
-import 'regenerator-runtime/runtime'
 import moment from 'moment'
 import { timeFormatDefaultLocale } from 'd3-time-format'
 
-import router from '../router/index.js.erb'
+import router from '../router/index.js'
 import store from '../store/index'
 
 import getAppVersion from '../lib/app_version'

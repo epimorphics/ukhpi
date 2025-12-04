@@ -1042,6 +1042,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@js-from-routes/client@npm:^1.0.4":
+  version: 1.0.4
+  resolution: "@js-from-routes/client@npm:1.0.4"
+  dependencies:
+    "@js-from-routes/core": "npm:^1.0.0"
+  checksum: 10c0/dd252b3ab42ab16307e7d7d7c7c5c680cba753d10adb642c384ec49d1d2f050d2cebb6996958012c002de523d847dadcd18a53cf3202cbd395756cb919bea20c
+  languageName: node
+  linkType: hard
+
+"@js-from-routes/core@npm:^1.0.0":
+  version: 1.0.2
+  resolution: "@js-from-routes/core@npm:1.0.2"
+  checksum: 10c0/9653e6fe3bc66dc7ba8a952a6bb54b0e002c61acd21947fdc09c760e655267e3e9167a9056b1bf2dc0b75334ce3fb8e69402a03dd4c7f89889152a1efe3785cc
+  languageName: node
+  linkType: hard
+
 "@modyfi/vite-plugin-yaml@npm:^1.1.1":
   version: 1.1.1
   resolution: "@modyfi/vite-plugin-yaml@npm:1.1.1"
@@ -4821,13 +4837,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"regenerator-runtime@npm:^0.13.3":
-  version: 0.13.11
-  resolution: "regenerator-runtime@npm:0.13.11"
-  checksum: 10c0/12b069dc774001fbb0014f6a28f11c09ebfe3c0d984d88c9bced77fdb6fedbacbca434d24da9ae9371bfbf23f754869307fb51a4c98a8b8b18e5ef748677ca24
-  languageName: node
-  linkType: hard
-
 "resize-observer-polyfill@npm:^1.5.0":
   version: 1.5.1
   resolution: "resize-observer-polyfill@npm:1.5.1"
@@ -5699,6 +5708,7 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.39.1"
     "@fortawesome/fontawesome-free": "npm:^6.7.2"
+    "@js-from-routes/client": "npm:^1.0.4"
     "@modyfi/vite-plugin-yaml": "npm:^1.1.1"
     "@sentry/vite-plugin": "npm:^4.6.1"
     "@sentry/vue": "npm:^9.47.1"
@@ -5742,7 +5752,6 @@ __metadata:
     postcss-loader: "npm:^8.2.0"
     postcss-preset-env: "npm:^10.1.5"
     query-string: "npm:^6.8.2"
-    regenerator-runtime: "npm:^0.13.3"
     rollup: "npm:^4.53.3"
     rollup-plugin-gzip: "npm:^4.1.1"
     sass-embedded: "npm:^1.86.0"
