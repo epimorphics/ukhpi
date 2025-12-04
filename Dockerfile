@@ -50,9 +50,12 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-# Remove existing global yarn and pnpm installs from the node image to avoid
-# conflicts with the project's Yarn Berry version in .yarn/releases
-RUN npm uninstall -g yarn pnpm
+# Remove bundled yarn/pnpm and reinstall corepack for future Node.js 25+ compatibility
+# Corepack is bundled with Node < 25 but will be removed in Node 25+
+# See: https://github.com/nodejs/corepack?tab=readme-ov-file#manual-installs
+RUN npm uninstall -g yarn pnpm && \
+    npm install -g corepack && \
+    corepack enable
 
 # Install a specific version of bundler
 ARG BUNDLER_VERSION
