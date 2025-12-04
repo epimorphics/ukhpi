@@ -16,7 +16,6 @@ gem 'faraday-retry', '~> 2.0', '>= 2.0'
 gem 'govuk_template'
 gem 'haml-rails'
 gem 'http_accept_language'
-# gem 'js-routes'
 
 # Data processing and utilities
 gem 'csv'
