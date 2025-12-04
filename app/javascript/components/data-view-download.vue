@@ -100,7 +100,8 @@ export default {
     qonsolePath () {
       // If the environment is development, use the local qonsole path
       // e.g. http://localhost:3000/qonsole?query=_localstore
-      // This is to ensure that the qonsole path is always the same as the current path, but with the last two segments replaced with 'qonsole'
+      // This is to ensure that the qonsole path is always the same as the current 
+      // path, but with the last two segments replaced with 'qonsole'
       if (window?.ukhpi?.environment === 'development') {
         return `${window.location.protocol}//${window.location.hostname}:3000/qonsole?query=_localstore`
       }
