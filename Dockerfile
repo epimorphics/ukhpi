@@ -78,10 +78,8 @@ RUN yarn install --immutable \
 
 # # Copy the rest of the application code
 COPY postcss.config.js ./
-COPY config.ru Rakefile ./
 COPY vite.config.mts ./
-# COPY package.json yarn.lock vite.config.mts .yarnrc.yml ./
-
+COPY config.ru Rakefile ./
 COPY app app
 COPY bin bin
 COPY config config
@@ -89,11 +87,10 @@ COPY lib lib
 COPY public public
 
 ARG RAILS_RELATIVE_URL_ROOT
-RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT}"
+RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT} for ${RAILS_ENV} build"
 
 # Precompile assets and build vite
-RUN RAILS_ENV=production \
-    VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
+RUN VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
     NODE_OPTIONS=--max-old-space-size=4096 \
     bundle exec rake vite:build
 
@@ -122,6 +119,7 @@ EXPOSE 3000
 COPY --from=builder ${BUNDLE_PATH} ${BUNDLE_PATH}
 COPY --from=builder --chown=app ${APP_DIR}/app ./app
 COPY --from=builder --chown=app ${APP_DIR}/bin/rails ./bin/rails
+COPY --from=builder --chown=app ${APP_DIR}/bin/vite ./bin/vite
 COPY --from=builder --chown=app ${APP_DIR}/config ./config
 COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ./
 COPY --from=builder --chown=app ${APP_DIR}/lib ./lib
