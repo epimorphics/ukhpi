@@ -68,39 +68,15 @@ RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
-# RUN bundle config set --local without 'development test' \
-#     && bundle config set --local frozen 1 \
-#     && bundle install
-
-# for Yarn
-# RUN npm install -g corepack
-# RUN corepack enable
-
-# installs the required gems
-# FROM base AS gems
-# RUN apk add --update build-base && gem update --system
-
-# install the required node modules
-# FROM base AS npm
-# RUN apk add --update build-base && gem update --system
-
-# WORKDIR ${DIR}
-# COPY package.json yarn.lock .yarnrc.yml ./
-COPY package.json yarn.lock ./
+# Install node modules using Yarn Berry
+COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
-RUN yarn install --immutable
-
-# runs build to compile assets
-# FROM base AS builder
-# RUN apk add --update build-base && gem update --system
-
-# WORKDIR ${DIR}
-# # Copy the builds from the previous stages
-# COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
-# COPY --from=npm --chown=app ${DIR}/node_modules ./node_modules
+RUN yarn install --immutable \
+    --immutable-cache \
+    --check-cache \
+    && yarn cache clean
 
 # # Copy the rest of the application code
-
 COPY postcss.config.js ./
 COPY config.ru Rakefile ./
 COPY vite.config.mts ./
