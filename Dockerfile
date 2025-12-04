@@ -9,7 +9,11 @@ FROM node:$NODE_VERSION-alpine AS node
 # Define the base image
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
 
-ENV APP_DIR=/rails
+ENV APP_DIR=/rails \
+    RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development test"
 
 WORKDIR ${APP_DIR}
 
@@ -17,11 +21,6 @@ RUN apk add --no-cache \
     curl \
     jemalloc \
     tzdata
-
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
 
 FROM base AS builder
 
