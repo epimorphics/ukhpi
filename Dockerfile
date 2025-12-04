@@ -71,13 +71,10 @@ RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
-# Install node modules using Yarn Berry
+# Install node modules using Yarn via Corepack
 COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
-RUN yarn install --immutable \
-    --immutable-cache \
-    --check-cache \
-    && yarn cache clean
+RUN yarn install --immutable
 
 # # Copy the rest of the application code
 COPY postcss.config.js ./
