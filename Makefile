@@ -191,7 +191,16 @@ run: start
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 server: start
-	@API_SERVICE_URL=${API_SERVICE_URL} ${RAILS} server -p ${PORT}
+ifdef DEBUG
+	@echo "Starting Rails server in debug mode...";
+	@echo "Remember to start foreman without the web process: ";
+	@echo "foreman start -f Procfile.dev -e .env.local,.env.development web=0,all=1";
+	@${RAILS} server -p ${PORT} -b 0.0.0.0;
+else
+	@echo "Starting Rails server in standard mode...";
+	@echo "If you need use the debugger gem, stop the server and use \`DEBUG=true make server\` instead";
+	@exec foreman start -f Procfile.dev -e .env.local,.env.development --color
+endif
 
 start: stop
 	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
