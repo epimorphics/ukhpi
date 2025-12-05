@@ -34,16 +34,6 @@ RUN apk add --update --no-cache \
     yaml-dev \
     && gem update --system
 
-# RUN apk add --update --no-cache \
-#     bash \
-#     coreutils \
-#     git \
-#     npm \
-#     nodejs \
-#     tzdata \
-#     yaml-dev \
-#     && gem update --system
-
 # Copy node binaries from the official image
 COPY --from=node /usr/lib /usr/lib
 COPY --from=node /usr/local/lib /usr/local/lib
@@ -62,11 +52,12 @@ ARG BUNDLER_VERSION
 RUN echo "Bundler version ${BUNDLER_VERSION}"
 RUN gem install bundler:$BUNDLER_VERSION
 
-# COPY bin bin
+# Copy Gemfile and lockfile to install gems
 COPY Gemfile Gemfile.lock ./
 # .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
 COPY .bundle/config /root/.bundle/config
 
+# Install gems and clean up unnecessary files
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
