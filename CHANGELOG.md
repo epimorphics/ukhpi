@@ -8,6 +8,36 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Consolidate Docker environment variables into single `ENV` instruction for
+  better layering
+- Reinstall `Corepack` via npm for Node.js 25+ compatibility instead of relying on
+  bundled version
+- Simplify Yarn module installation command for clarity
+- Update SPARQL documentation links to use static paths
+- Use `exec` with `--color` flag for Foreman to fix output streaming in Make
+  server target
+
+### Added
+
+- ESLint and TSConfig instructions to ensure common code format and whitespace
+- Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
+- Strict immutability flags for Yarn installation (`--immutable-cache`, `--check-cache`)
+- Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
+- Debug mode for server startup via `DEBUG=true make server`
+- Foreman initialisation for non-debug `make server` to initialise vite and rails
+
+### Fixed
+
+- Foreman output now streams correctly to terminal when invoked via Make
+
+### Removed
+
+- Cleaned up unused dependency remnants from previous webpacker upgrade
+- Unused dependency comments and outdated Corepack implementation
+- Redundant `RAILS_ENV=production` from `vite:build` task (already set via ENV)
+
 ## [2.2.2] - 2025-11
 
 ### Changed

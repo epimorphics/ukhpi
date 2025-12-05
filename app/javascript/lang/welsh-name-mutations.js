@@ -11,7 +11,7 @@ const MUTATIONS = {
     [/^T(.*)/, 'Nh$1', 'yn'],
     [/^C([^h].*)/, 'Ngh$1', 'yng'],
     [/^D(.*)/, 'N$1', 'yn'],
-    [/^M(.*)/, 'M$1', 'ym']
+    [/^M(.*)/, 'M$1', 'ym'],
   ],
   i: [
     [/^M(.*)/, 'F$1', 'i'],
@@ -22,7 +22,7 @@ const MUTATIONS = {
     [/^C([^h].*)/, 'G$1', 'i'],
     [/^D(.*)/, 'Dd$1', 'i'],
     [/^Ll(.*)/, '$1', 'i'],
-    [/^P(.*)/, 'B$1', 'i']
+    [/^P(.*)/, 'B$1', 'i'],
   ],
   o: [
     [/^M(.*)/, 'F$1', 'o'],
@@ -33,8 +33,8 @@ const MUTATIONS = {
     [/^C([^h].*)/, 'G$1', 'o'],
     [/^D(.*)/, 'Dd$1', 'o'],
     [/^Ll(.*)/, '$1', 'o'],
-    [/^P(.*)/, 'B$1', 'o']
-  ]
+    [/^P(.*)/, 'B$1', 'o'],
+  ],
 }
 
 function mutateWelshName (name, preposition) {
@@ -48,8 +48,8 @@ function mutate (name, preposition, mutations) {
         name:
           name
             .replace(rule[0], rule[1])
-            .replace(/^\w/, char => char.toLocaleUpperCase()),
-        preposition: rule[2]
+            .replace(/^\w/, (char) => char.toLocaleUpperCase()),
+        preposition: rule[2],
       }
     }
   }
