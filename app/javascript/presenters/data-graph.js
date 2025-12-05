@@ -9,7 +9,7 @@ import { scaleLinear, scaleTime } from 'd3-scale'
 import { mouse, select } from 'd3-selection'
 import {
   line, symbol, symbolCircle, symbolDiamond, symbolStar,
-  symbolTriangle, symbolSquare,
+  symbolTriangle, symbolSquare
 } from 'd3-shape'
 import { timeMonth } from 'd3-time'
 import { timeFormat } from 'd3-time-format'
@@ -23,13 +23,13 @@ const SERIES_MARKER = [
   symbolDiamond,
   symbolSquare,
   symbolStar,
-  symbolTriangle,
+  symbolTriangle
 ]
 
 /** Move line markers this many days along the x-axis, per series */
 const MARKER_OFFSET = {
   mult: 6,
-  constant: 2,
+  constant: 2
 }
 
 const oneDecimalPlace = format('.2g')
@@ -41,14 +41,14 @@ const GRAPH_OPTIONS = {
     yDomain: '',
     graphType: 'lineAndPoints',
     tickFormat (d) { return asCurrency(d) },
-    byPropertyType: true,
+    byPropertyType: true
   },
   housePriceIndex: {
     cssClass: 'house-price-index',
     ticksCount: 5,
     yDomain: '',
     graphType: 'lineAndPoints',
-    byPropertyType: true,
+    byPropertyType: true
   },
   percentageChange: {
     cssClass: 'percentage-monthly-change',
@@ -57,7 +57,7 @@ const GRAPH_OPTIONS = {
     graphType: 'lineAndPoints',
     symmetricalYAxis: true,
     tickFormat (d) { return `${oneDecimalPlace(d)}%` },
-    byPropertyType: true,
+    byPropertyType: true
   },
   percentageAnnualChange: {
     cssClass: 'percentage-annual-change',
@@ -66,22 +66,22 @@ const GRAPH_OPTIONS = {
     graphType: 'lineAndPoints',
     symmetricalYAxis: true,
     tickFormat (d) { return `${oneDecimalPlace(d)}%` },
-    byPropertyType: true,
+    byPropertyType: true
   },
   salesVolume: {
     cssClass: 'sales-volume',
     ticksCount: 5,
     yDomain: '',
     graphType: 'lineAndPoints',
-    byPropertyType: false,
-  },
+    byPropertyType: false
+  }
 }
 
 const GRAPH_PADDING = {
   top: 20,
   right: 25,
   bottom: 30,
-  left: 65,
+  left: 65
 }
 GRAPH_PADDING.horizontal = GRAPH_PADDING.left + GRAPH_PADDING.right
 GRAPH_PADDING.vertical = GRAPH_PADDING.top + GRAPH_PADDING.bottom
@@ -111,7 +111,7 @@ function isSelectedStatistic (statistic, graphConfig) {
 
 /** @return The currently visible statistics */
 function visibleStatistics (graphConfig) {
-  return graphConfig.theme.statistics.filter((stat) => isSelectedStatistic(stat, graphConfig))
+  return graphConfig.theme.statistics.filter(stat => isSelectedStatistic(stat, graphConfig))
 }
 
 /** @return The range of values in the projection of the selected statistics */
@@ -121,7 +121,7 @@ function calculateValueRange (projection, graphConfig) {
   _.each(graphConfig.theme.statistics, (statistic) => {
     const projected = projection[statistic.slug]
     if (isSelectedStatistic(statistic, graphConfig) && projected.length > 0) {
-      const yDomain = projected.map((datum) => datum.y)
+      const yDomain = projected.map(datum => datum.y)
       const [lo, hi] = extent(yDomain)
       min = Math.min(min, lo)
       max = Math.max(max, hi)
@@ -159,7 +159,7 @@ function createScales (graphConfig) {
   yScale.range([height, 0])
 
   return {
-    x: xScale, y: yScale, width, height,
+    x: xScale, y: yScale, width, height
   }
 }
 
@@ -189,7 +189,7 @@ function configureAxes (graphConfig) {
 
   return {
     scales,
-    axes,
+    axes
   }
 }
 
@@ -242,11 +242,12 @@ function drawAxes (graphConfig) {
       .attr('font-size', 18)
       .attr('fill', '#666')
       .attr('transform', `translate(${GRAPH_PADDING.left * -0.95},0)`)
-      .on('click', (() => () => {
-        if (!graphConfig.zoom) {
-          onGraphZoom({ graphConfig })
+      .on('click', (() =>
+        () => {
+          if (!graphConfig.zoom) {
+            onGraphZoom({ graphConfig })
+          }
         }
-      }
       )())
       .style('cursor', 'pointer')
       .text(() => '\uf00e')
@@ -281,7 +282,7 @@ function drawPoints (series, index, graphConfig) {
     .append('path')
     .attr('class', cssClass)
     .attr('d', (d, i) => symbol().type(SERIES_MARKER[index])(d, i))
-    .attr('transform', (d) => translateCmd(scales.x(d.x), scales.y(d.y)))
+    .attr('transform', d => translateCmd(scales.x(d.x), scales.y(d.y)))
 }
 
 /** Draw an SVG path representing the selected indicator as a line */
@@ -289,8 +290,8 @@ function drawLine (series, index, graphConfig) {
   const { x, y } = graphConfig.scales
 
   const ln = line()
-    .x((d) => x(d.x))
-    .y((d) => y(d.y))
+    .x(d => x(d.x))
+    .y(d => y(d.y))
 
   graphConfig.rootElem
     .append('path')
@@ -313,7 +314,7 @@ function drawGraphLines (series, index, graphConfig) {
 
 /* Drawing the overlay showing detailed figures */
 
-const bisectDate = bisector((d) => d.x).left
+const bisectDate = bisector(d => d.x).left
 
 function formatStatistic (indicator, statistic, value) {
   let label = statistic.label
@@ -347,7 +348,7 @@ function onXTrackMouseMove (projection, graphConfig, xTrack) {
   xTrack.attr('transform', translateCmd(x(d.x), -10))
 
   const dateLabel = timeFormat('%b %Y')(d.x)
-  const labeller = (() => (statistic) => xTrackLabel(statistic, projection, graphConfig, d))()
+  const labeller = (() => statistic => xTrackLabel(statistic, projection, graphConfig, d))()
   const label = `${dateLabel}: ${_.map(visibleStatistics(graphConfig), labeller).join(', ')}`
 
   const labelElem = xTrack.select('text')
@@ -394,13 +395,15 @@ function prepareOverlay (projection, graphConfig) {
     .attr('height', graphConfig.scales.height)
     .on('mouseover', () => { xTrack.style('display', null) })
     .on('mouseout', () => { xTrack.style('display', 'none') })
-    .on('mousemove', (() => () => { onXTrackMouseMove(projection, graphConfig, xTrack) }
+    .on('mousemove', (() =>
+      () => { onXTrackMouseMove(projection, graphConfig, xTrack) }
     )())
-    .on('click', (() => () => {
-      if (!graphConfig.zoom) {
-        onGraphZoom({ graphConfig })
+    .on('click', (() =>
+      () => {
+        if (!graphConfig.zoom) {
+          onGraphZoom({ graphConfig })
+        }
       }
-    }
     )())
 }
 

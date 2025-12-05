@@ -1,4 +1,5 @@
 /* Handle events for components outside the Vue component tree */
+ 
 
 import bus from './event-bus'
 import safeForEach from './safe-foreach'

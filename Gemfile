@@ -16,6 +16,7 @@ gem 'faraday-retry', '~> 2.0', '>= 2.0'
 gem 'govuk_template'
 gem 'haml-rails'
 gem 'http_accept_language'
+gem 'js-routes'
 
 # Data processing and utilities
 gem 'csv'
@@ -35,13 +36,9 @@ gem 'sass-rails'
 gem 'terser' # Updating to terser for ES6+ support
 gem 'vite_rails'
 
-# Reduces boot times through caching; required in config/boot.rb
-gem 'bootsnap', require: false
-
 group :development, :test do
   gem 'byebug'
   gem 'dotenv'
-  gem 'js_from_routes'
   gem 'json_expressions'
   gem 'nokogiri'
   gem 'oj'

@@ -61,7 +61,8 @@ function getCookie (name) {
   const key = name + '='
   const decodedCookie = decodeURIComponent(document.cookie)
   const cookieList = decodedCookie.split(';')
-  for (let cookie of cookieList) {
+  for (let i = 0; i < cookieList.length; i++) {
+    let cookie = cookieList[i]
     while (cookie.charAt(0) === ' ') {
       cookie = cookie.substring(1)
     }
@@ -69,7 +70,6 @@ function getCookie (name) {
       return cookie.substring(key.length, cookie.length)
     }
   }
-
   return ''
 }
 
@@ -79,7 +79,7 @@ function getCookie (name) {
  * @description This function sets the analytics acceptance cookie to true.
  * called from app/views/common/_cookie_banner.html.haml
  */
-
+ 
 function acceptCookie () {
   acceptAnalytics(true)
 }
@@ -90,7 +90,7 @@ function acceptCookie () {
  * @description This function sets the analytics acceptance cookie to false.
  * called from app/views/common/_cookie_banner.html.haml
  */
-
+ 
 function rejectCookie () {
   acceptAnalytics(false)
 }

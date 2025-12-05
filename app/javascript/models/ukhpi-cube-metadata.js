@@ -9,7 +9,7 @@ const unavailableStatInd = [
   { statistic: 'ter', indicator: 'vol' },
   { statistic: 'fla', indicator: 'vol' },
   { statistic: 'ftb', indicator: 'vol' },
-  { statistic: 'foo', indicator: 'vol' },
+  { statistic: 'foo', indicator: 'vol' }
 ]
 
 /**
