@@ -17,7 +17,7 @@ export default class QueryResults {
 
   results () {
     if (!this.$results) {
-      this.$results = _.map(this.json.results, (result) => new QueryResult(result))
+      this.$results = _.map(this.json.results, result => new QueryResult(result))
     }
 
     return this.$results
@@ -51,14 +51,14 @@ export default class QueryResults {
         return {
           x: r.periodDate().toDate(),
           y: r.value(pred),
-          pred,
+          pred
         }
       }
 
       return null
     })
 
-    return _.sortBy(_.compact(s), (d) => d.x)
+    return _.sortBy(_.compact(s), d => d.x)
   }
 
   /** @return The duration of the selected results, if known */

@@ -10,12 +10,12 @@ import { REINITIALISE } from './mutation-types'
 
 /** Mappers from store state to navigation state */
 const navigationStateFields = {
-  location: (state) => ({ location: state.location.uri }),
-  fromDate: (state) => ({ from: Moment(state.fromDate).format('YYYY-MM-DD') }),
-  toDate: (state) => ({ to: Moment(state.toDate).format('YYYY-MM-DD') }),
-  compareIndicator: (state) => ({ in: state.compareIndicator }),
-  compareStatistic: (state) => ({ st: state.compareStatistic }),
-  compareLocations: (state) => ({ location: state.compareLocations.map((location) => location.gss) }),
+  location: state => ({ location: state.location.uri }),
+  fromDate: state => ({ from: Moment(state.fromDate).format('YYYY-MM-DD') }),
+  toDate: state => ({ to: Moment(state.toDate).format('YYYY-MM-DD') }),
+  compareIndicator: state => ({ in: state.compareIndicator }),
+  compareStatistic: state => ({ st: state.compareStatistic }),
+  compareLocations: state => ({ location: state.compareLocations.map(location => location.gss) })
 }
 
 /**
@@ -38,7 +38,7 @@ function currentNavigationState (state) {
 
   return {
     navState,
-    url: `${window.location.pathname}?${queryLangStr}`,
+    url: `${window.location.pathname}?${queryLangStr}`
   }
 }
 

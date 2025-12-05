@@ -79,9 +79,8 @@ eject:
 	@rm -rf test/vcr_cassettes/
 
 eslint:
-	@echo "Running ESLint for ${SHORTNAME} ..."
 # Lint JavaScript files with ESLint and auto-fix where possible
-	@yarn lint
+	@${BUNDLE} exec eslint --fix .
 
 forceclean: realclean
 # Remove all bundled files
@@ -182,7 +181,7 @@ realclean: clean
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 rubocop:
-	@echo "Running RuboCop linting for ${SHORTNAME} ..."
+	@echo "Running code linting for ${SHORTNAME} ..."
 # Auto-correct offenses safely where possible with the `-a` flag
 	@${BUNDLE} exec rubocop -a
 
@@ -191,16 +190,7 @@ run: start
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
 server: start
-ifdef DEBUG
-	@echo "Starting Rails server in debug mode...";
-	@echo "Remember to start foreman without the web process: ";
-	@echo "foreman start -f Procfile.dev -e .env.local,.env.development web=0,all=1";
-	@${RAILS} server -p ${PORT} -b 0.0.0.0;
-else
-	@echo "Starting Rails server in standard mode...";
-	@echo "If you need use the debugger gem, stop the server and use \`DEBUG=true make server\` instead";
-	@exec foreman start -f Procfile.dev -e .env.local,.env.development --color
-endif
+	@API_SERVICE_URL=${API_SERVICE_URL} ${RAILS} server -p ${PORT}
 
 start: stop
 	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
