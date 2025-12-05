@@ -21,6 +21,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- ESLint and TSConfig instructions to ensure common code format and whitespace
 - Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
 - Strict immutability flags for Yarn installation (`--immutable-cache`, `--check-cache`)
 - Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
