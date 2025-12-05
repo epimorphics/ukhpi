@@ -190,8 +190,9 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jaro_winkler (1.6.1)
-    js_from_routes (4.0.2)
-      railties (>= 5.1, < 9)
+    js-routes (2.3.5)
+      railties (>= 5)
+      sorbet-runtime
     json (2.16.0)
     json_expressions (0.9.0)
     kramdown (2.5.1)
@@ -453,6 +454,7 @@ GEM
       yard (~> 0.9, >= 0.9.24)
       yard-activesupport-concern (~> 0.0)
       yard-solargraph (~> 0.1)
+    sorbet-runtime (0.6.12768)
     spring (4.4.0)
     sprockets (4.2.2)
       concurrent-ruby (~> 1.0)
@@ -559,7 +561,7 @@ DEPENDENCIES
   haml-rails
   htmlbeautifier
   http_accept_language
-  js_from_routes
+  js-routes
   json_expressions
   json_rails_logger!
   m

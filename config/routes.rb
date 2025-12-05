@@ -3,11 +3,11 @@ Rails.application.routes.draw do
   resources :landing, only: [ :index ]
   get '/explore', to: redirect("#{Rails.application.config.relative_url_root}/browse")
 
-  resources :download, only: [ :new ], export: true
-  resource :browse, only: %i[show edit], controller: :browse, export: true
+  resources :download, only: [ :new ]
+  resource :browse, only: %i[show edit], controller: :browse
 
-  resource :compare, only: %i[show], controller: :compare, export: true
-  resource :print, only: %i[show], controller: :print, export: true
+  resource :compare, only: %i[show], controller: :compare
+  resource :print, only: %i[show], controller: :print
 
   resources :changelog, only: %i[index]
   resources :doc, only: %i[index]

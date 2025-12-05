@@ -1042,22 +1042,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@js-from-routes/client@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "@js-from-routes/client@npm:1.0.4"
-  dependencies:
-    "@js-from-routes/core": "npm:^1.0.0"
-  checksum: 10c0/dd252b3ab42ab16307e7d7d7c7c5c680cba753d10adb642c384ec49d1d2f050d2cebb6996958012c002de523d847dadcd18a53cf3202cbd395756cb919bea20c
-  languageName: node
-  linkType: hard
-
-"@js-from-routes/core@npm:^1.0.0":
-  version: 1.0.2
-  resolution: "@js-from-routes/core@npm:1.0.2"
-  checksum: 10c0/9653e6fe3bc66dc7ba8a952a6bb54b0e002c61acd21947fdc09c760e655267e3e9167a9056b1bf2dc0b75334ce3fb8e69402a03dd4c7f89889152a1efe3785cc
-  languageName: node
-  linkType: hard
-
 "@modyfi/vite-plugin-yaml@npm:^1.1.1":
   version: 1.1.1
   resolution: "@modyfi/vite-plugin-yaml@npm:1.1.1"
@@ -5708,7 +5692,6 @@ __metadata:
   dependencies:
     "@eslint/js": "npm:^9.39.1"
     "@fortawesome/fontawesome-free": "npm:^6.7.2"
-    "@js-from-routes/client": "npm:^1.0.4"
     "@modyfi/vite-plugin-yaml": "npm:^1.1.1"
     "@sentry/vite-plugin": "npm:^4.6.1"
     "@sentry/vue": "npm:^9.47.1"
