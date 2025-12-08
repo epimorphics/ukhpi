@@ -103,15 +103,23 @@ LABEL com.epimorphics.name=$image_name \
       com.epimorphics.version=$VERSION
 
 RUN addgroup -S app && adduser -S -G app app
+
 EXPOSE 3000
 
-WORKDIR ${DIR}
-
-COPY --from=builder --chown=app /usr/local/bundle /usr/local/bundle
-COPY --from=builder --chown=app ${DIR} .
+# Copy just the distribution requirements from the previous stage
+COPY --from=builder ${BUNDLE_PATH} ${BUNDLE_PATH}
+COPY --from=builder --chown=app ${APP_DIR}/app ./app
+COPY --from=builder --chown=app ${APP_DIR}/bin/rails ./bin/rails
+COPY --from=builder --chown=app ${APP_DIR}/bin/vite ./bin/vite
+COPY --from=builder --chown=app ${APP_DIR}/config ./config
+COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ./
+COPY --from=builder --chown=app ${APP_DIR}/lib ./lib
+COPY --from=builder --chown=app ${APP_DIR}/public ./public
+COPY --from=builder --chown=app ${APP_DIR}/tmp ./tmp
 
 USER app
 
 # Add a script to be executed every time the container starts.
-COPY entrypoint.sh "app/entrypoint.sh"
-ENTRYPOINT ["sh", "app/entrypoint.sh"]
+COPY entrypoint.sh ./
+
+ENTRYPOINT ["sh", "entrypoint.sh"]
