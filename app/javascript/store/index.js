@@ -10,12 +10,13 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 /* Vuex's recommended style breaks an Airbnb eslint rule, so disable it for this file */
+ 
 
 function updateSingleLocationResults (state) {
   const query = {
     location: state.location.uri,
     from: state.fromDate,
-    to: state.toDate,
+    to: state.toDate
   }
 
   getUkhpiData(query, { explain: true, action: types.SET_UKHPI_QUERY_RESULTS })
@@ -24,12 +25,12 @@ function updateSingleLocationResults (state) {
 function updateMultipleLocationResults (state) {
   const baseQuery = {
     from: state.fromDate,
-    to: state.toDate,
+    to: state.toDate
   }
 
   const baseOptions = {
     action: types.ADD_COMPARISON_RESULTS,
-    explain: false,
+    explain: false
   }
 
   state.compareResults = {}
@@ -88,7 +89,7 @@ export const mutations = {
     state.selectedStatistics = Object.assign(
       {},
       state.selectedStatistics,
-      { [stat.slug]: stat.isSelected },
+      { [stat.slug]: stat.isSelected }
     )
   },
 
@@ -114,9 +115,9 @@ export const mutations = {
     state.compareResults = Object.assign(
       {},
       state.compareResults,
-      { [results.locationGss]: results.results },
+      { [results.locationGss]: results.results }
     )
-  },
+  }
 }
 
 export const getters = {
@@ -136,9 +137,9 @@ export default new Vuex.Store({
     compareLocations: [],
     compareStatistic: null,
     compareIndicator: null,
-    compareResults: null,
+    compareResults: null
   },
   mutations,
   getters,
-  actions,
+  actions
 })

@@ -1,7 +1,7 @@
 <template>
   <div>
-    <OptionsSelection />
-    <CompareSelection />
+    <options-selection />
+    <compare-selection />
   </div>
 </template>
 
@@ -12,11 +12,11 @@ import OptionsSelection from './options-selection.vue'
 import CompareSelection from './compare-selection.vue'
 import bindExternalEvents from '@/lib/bind-external-events'
 
-function locationButton (title, action) {
+function locationButton(title, action) {
   return `<button type='button' class='el-button c-options-selection__button o-data-view__location'
          title='${action}'>
          <span class='o-data-view__location-name'>${title}</span>
-         <i class='fa fa-edit'></i></span></button>`
+         <i class='fa fa-edit'></i></span></button>`;
 }
 
 export default {
@@ -25,20 +25,20 @@ export default {
     CompareSelection,
   },
 
-  mounted () {
+  mounted() {
     // location names should now be buttons not anchor elements
-    let nodes = document.querySelectorAll('.o-data-view__location')
+    let nodes = document.querySelectorAll('.o-data-view__location');
     for (let i = 0; i < nodes.length; i += 1) {
-      const node = nodes.item(i)
-      const locationName = node.querySelector('.o-data-view__location-name').innerHTML
-      node.outerHTML = locationButton(locationName, this.$t('js.action.select_location'))
+      const node = nodes.item(i);
+      const locationName = node.querySelector('.o-data-view__location-name').innerHTML;
+      node.outerHTML = locationButton(locationName, this.$t('js.action.select_location'));
     }
 
     // add DataView components
-    nodes = document.querySelectorAll('.o-data-view__vue-root')
+    nodes = document.querySelectorAll('.o-data-view__vue-root');
     for (let i = 0; i < nodes.length; i += 1) {
-      const node = nodes.item(i)
-      new Vue(DataView).$mount(node)
+      const node = nodes.item(i);
+      new Vue(DataView).$mount(node);
     }
 
     // // add options selection component
@@ -49,7 +49,10 @@ export default {
     // const compareNode = document.querySelector('.c-compare-select');
     // new Vue(CompareSelection).$mount(compareNode);
 
-    Vue.nextTick(bindExternalEvents)
+    Vue.nextTick(bindExternalEvents);
   },
-}
+};
 </script>
+
+<style lang='scss'>
+</style>

@@ -1,28 +1,28 @@
 <template>
-  <FocusTrap
+  <focus-trap
     v-model="showDialog"
     :initial-focus="initialFocusElement"
   >
     <div class="o-select-location">
-      <ElDialog
+      <el-dialog
         :title="title"
         :visible.sync="showDialog"
         :show-close="true"
         @close="notifyDialogClosed"
       >
-        <ElRow>
-          <ElCol :span="24">
+        <el-row>
+          <el-col :span="24">
             <p>
               {{ prompt }}
             </p>
-          </ElCol>
-        </ElRow>
+          </el-col>
+        </el-row>
 
-        <ElRow>
-          <ElCol :span="24">
+        <el-row>
+          <el-col :span="24">
             <label>
               {{ $t('js.location.search_locations_label') }}
-              <ElInput
+              <el-input
                 ref="searchInputField"
                 v-model="searchInput"
                 :autofocus="true"
@@ -30,9 +30,9 @@
                 @keyup.native="onSearchKeyUp"
               />
             </label>
-          </ElCol>
-          <ElCol :span="24">
-            <ElPopover
+          </el-col>
+          <el-col :span="24">
+            <el-popover
               v-model="searchResultsVisible"
               placement="bottom"
               :title="$t('js.location.results')"
@@ -45,37 +45,37 @@
                 class="o-search-location__results"
               >
                 <li class="o-search-location__result">
-                  <ElButton
+                  <el-button
                     type="text"
                     @click="onSelectResult"
                   >
                     {{ result.labels[$locale] || result.labels.en }}
-                  </ElButton>
+                  </el-button>
                   ({{ locationTypeLabel(result) }})
                 </li>
               </ul>
               <p v-if="manyResults > 0">
                 {{ $t("js.location.many_results", { manyResults }) }}
               </p>
-            </ElPopover>
-          </ElCol>
-          <ElAlert
+            </el-popover>
+          </el-col>
+          <el-alert
             v-if="noMatch"
             type="warning"
             :title="noMatch"
           />
-        </ElRow>
+        </el-row>
 
-        <ElRow>
+        <el-row>
           <p v-if="validationMessage">
-            <ElAlert
+            <el-alert
               :title="validationMessage"
               type="warning"
             />
           </p>
-        </ElRow>
+        </el-row>
 
-        <ElRow>
+        <el-row>
           <div class="c-map">
             <div
               :id="mapElementId"
@@ -90,7 +90,7 @@
                   role="radiogroup"
                   class="el-radio-group"
                 >
-                  <ElRadio
+                  <el-radio
                     v-model="locationType"
                     class="el-radio-button"
                     name="locationType"
@@ -98,8 +98,8 @@
                     label="country"
                   >
                     {{ $t("js.location.type_countries") }}
-                  </ElRadio>
-                  <ElRadio
+                  </el-radio>
+                  <el-radio
                     v-model="locationType"
                     class="el-radio-button"
                     name="locationType"
@@ -107,8 +107,8 @@
                     label="la"
                   >
                     {{ $t("js.location.type_las") }}
-                  </ElRadio>
-                  <ElRadio
+                  </el-radio>
+                  <el-radio
                     v-model="locationType"
                     class="el-radio-button"
                     name="locationType"
@@ -116,8 +116,8 @@
                     label="region"
                   >
                     {{ $t("js.location.type_regions_england") }}
-                  </ElRadio>
-                  <ElRadio
+                  </el-radio>
+                  <el-radio
                     v-model="locationType"
                     class="el-radio-button"
                     name="locationType"
@@ -125,46 +125,46 @@
                     label="county"
                   >
                     {{ $t("js.location.type_counties_england") }}
-                  </ElRadio>
+                  </el-radio>
                 </div>
               </nav>
             </div>
           </div>
-        </ElRow>
+        </el-row>
 
         <span
           slot="footer"
           class="dialog-footer"
         >
-          <ElButton @click="onHideDialog">{{ $t('js.action.cancel') }}</ElButton>
-          <ElButton
+          <el-button @click="onHideDialog">{{ $t('js.action.cancel') }}</el-button>
+          <el-button
             type="primary"
             :disabled="!allowConfirm"
             :aria-disabled="!allowConfirm"
             :aria-label="$t('js.action.confirm')"
             @click="onSaveChanges"
-          >{{ $t('js.action.confirm') }}</ElButton>
+          >{{ $t('js.action.confirm') }}</el-button>
         </span>
-      </ElDialog>
+      </el-dialog>
     </div>
-  </FocusTrap>
+  </focus-trap>
 </template>
 
 <script>
-import _ from 'lodash'
+import _ from 'lodash';
 import { FocusTrap } from 'focus-trap-vue'
 import { locationIndexType, locationsNamed, findLocationById } from '@/lib/locations'
 import LocationsMap from '@/presenters/locations-map'
 import { SET_LOCATION } from '@/store/mutation-types'
 import bus from '@/lib/event-bus'
 
-const MAX_RESULTS = 10
+const MAX_RESULTS = 10;
 
 export default {
   name: 'SelectLocation',
 
   components: {
-    FocusTrap,
+    FocusTrap
   },
 
   props: {
@@ -179,7 +179,7 @@ export default {
     prompt: {
       required: false,
       type: String,
-      default: function () { return this.$t('js.location.default_prompt') },
+      default: function () { return this.$t('js.location.default_prompt')},
     },
     title: {
       required: false,
@@ -189,7 +189,7 @@ export default {
     emitEvent: {
       required: false,
       type: String,
-      default: () => '',
+      default: () => ''
     },
   },
 
@@ -203,59 +203,62 @@ export default {
     searchResults: [],
     searchResultsVisible: false,
     leafletMap: null,
-    noMatch: false,
+    noMatch: false
   }),
 
   computed: {
-    allowConfirm () {
-      return this.selectedLocation
+    allowConfirm() {
+      return this.selectedLocation;
     },
 
-    mapElementId () {
-      return `${this.elementId}__map`
-    },
+    mapElementId() {
+      return `${this.elementId}__map`;
+    }
   },
 
   watch: {
-    dialogVisible () {
-      this.showDialog = this.dialogVisible
+    dialogVisible() {
+      this.showDialog = this.dialogVisible;
 
       if (this.dialogVisible) {
-        this.leafletMap = this.leafletMap || new LocationsMap(this.mapElementId, this.$locale)
+        this.leafletMap = this.leafletMap || new LocationsMap(this.mapElementId, this.$locale);
 
-        this.resetDialog()
-        const cb = _.bind(this.onSelectLocationURI, this)
-        this.$nextTick(() => { this.leafletMap.showMap(this.locationType, cb) })
+        this.resetDialog();
+        const cb = _.bind(this.onSelectLocationURI, this);
+        this.$nextTick(() => { this.leafletMap.showMap(this.locationType, cb); });
       }
     },
 
-    locationType () {
-      const cb = _.bind(this.onSelectLocationURI, this)
-      this.leafletMap.showMap(this.locationType, cb)
+    locationType() {
+      const cb = _.bind(this.onSelectLocationURI, this);
+      this.leafletMap.showMap(this.locationType, cb);
     },
 
-    selectedLocation () {
+    selectedLocation() {
       if (this.selectedLocation) {
-        this.locationType = locationIndexType(this.selectedLocation)
-        this.$nextTick(() => { this.leafletMap.setSelectedLocationMap(this.selectedLocation) })
+        this.locationType = locationIndexType(this.selectedLocation);
+        this.$nextTick(() => { this.leafletMap.setSelectedLocationMap(this.selectedLocation); });
       }
     },
 
-    searchResults () {
-      this.searchResultsVisible = this.searchResults && this.searchResults.length > 0
-      if (this.searchResults && this.searchResults.length === 0
-        && this.searchInput.length > 1 && !this.selectedLocation) {
-        this.noMatch = `Sorry, no locations match '${this.searchInput}'.`
+    searchResults() {
+      this.searchResultsVisible = this.searchResults && this.searchResults.length > 0;
+      if (this.searchResults && this.searchResults.length === 0 &&
+          this.searchInput.length > 1 && !this.selectedLocation) {
+        this.noMatch = `Sorry, no locations match '${this.searchInput}'.`;
       }
     },
   },
 
+  mounted() {
+  },
+
   methods: {
-    resetDialog () {
-      this.selectedLocation = null
-      this.searchInput = ''
-      this.manyResults = 0
-      this.searchResults = []
+    resetDialog() {
+      this.selectedLocation = null;
+      this.searchInput = '';
+      this.manyResults = 0;
+      this.searchResults = [];
       this.noMatch = null
     },
 
@@ -263,59 +266,59 @@ export default {
       return this.$refs.searchInputField
     },
 
-    onSaveChanges () {
+    onSaveChanges() {
       if (this.selectedLocation) {
-        this.validationMessage = null
+        this.validationMessage = null;
 
         if (this.emitEvent) {
-          bus.$emit(this.emitEvent, this.selectedLocation)
+          bus.$emit(this.emitEvent, this.selectedLocation);
         } else {
-          this.$store.commit(SET_LOCATION, this.selectedLocation)
+          this.$store.commit(SET_LOCATION, this.selectedLocation);
         }
 
-        this.onHideDialog()
+        this.onHideDialog();
       } else {
-        this.validationMessage
-          = `Sorry, '${this.selectedLocation}' is not a recognised location of type '${this.locationType}'`
+        this.validationMessage =
+          `Sorry, '${this.selectedLocation}' is not a recognised location of type '${this.locationType}'`;
       }
     },
 
-    onHideDialog () {
-      this.showDialog = false
+    onHideDialog() {
+      this.showDialog = false;
     },
 
-    onSelectLocationURI (uri) {
-      const locationAndType = findLocationById(uri, 'uri')
-      this.selectedLocation = locationAndType.location
-      this.searchInput = locationAndType.location.labels[this.$locale] || locationAndType.location.labels.en
-      this.noMatch = null
+    onSelectLocationURI(uri) {
+      const locationAndType = findLocationById(uri, 'uri');
+      this.selectedLocation = locationAndType.location;
+      this.searchInput = locationAndType.location.labels[this.$locale] || locationAndType.location.labels.en;
+      this.noMatch = null;
     },
 
-    isForthcomingLocation (location) {
+    isForthcomingLocation(location) {
       return !_.isEmpty(location.message)
     },
 
-    isExactMatch (term, results) {
+    isExactMatch(term, results) {
       const locale = this.$locale
-      const termLC = term.toLocaleLowerCase()
+      const termLC = term.toLocaleLowerCase();
 
-      const location = results && results.find((result) => {
+      const location = results && results.find(result => {
         return (result.labels[locale] || result.labels.en).toLocaleLowerCase() === termLC
-      })
+      });
 
       return location && !this.isForthcomingLocation(location) ? location : null
     },
 
-    setFoundLocation (location) {
-      this.$set(this, 'selectedLocation', location)
+    setFoundLocation(location) {
+      this.$set(this, 'selectedLocation', location);
 
       if (location) {
-        this.$set(this, 'searchResults', [])
-        this.$set(this, 'searchInput', location.labels[this.$locale] || location.labels.en)
+        this.$set(this, 'searchResults', []);
+        this.$set(this, 'searchInput', location.labels[this.$locale] || location.labels.en);
       }
     },
 
-    showForthcoming (results) {
+    showForthcoming(results) {
       if (results.length === 1 && this.isForthcomingLocation(results[0])) {
         this.manyResults = 0
         this.searchResults = null
@@ -323,66 +326,69 @@ export default {
       }
     },
 
-    onSearchInput (term) {
-      const trimmedTerm = term.trim()
-      const filtered = locationsNamed(trimmedTerm)
-      const match = this.isExactMatch(trimmedTerm, filtered)
+    onSearchInput(term) {
+      const trimmedTerm = term.trim();
+      const filtered = locationsNamed(trimmedTerm);
+      const match = this.isExactMatch(trimmedTerm, filtered);
 
-      this.setFoundLocation(match)
+      this.setFoundLocation(match);
 
       if (!match && filtered) {
-        this.manyResults = filtered.length - MAX_RESULTS
-        this.searchResults = filtered.slice(0, MAX_RESULTS)
+        this.manyResults = filtered.length - MAX_RESULTS;
+        this.searchResults = filtered.slice(0, MAX_RESULTS);
         this.showForthcoming(filtered)
       }
     },
 
-    onSearchKeyUp (event) {
+    onSearchKeyUp(event) {
       this.noMatch = null
 
       if (event.code === 'Enter') {
         if (this.selectedLocation) {
           // enter acts as confirm if we have a selected location
-          this.onSaveChanges()
+          this.onSaveChanges();
         } else {
           // enter can short-cut making a selection from the list
-          let match = null
+          let match = null;
 
           if (this.searchResults.length === 1) {
             // have exactly one search result
-            [match] = this.searchResults
+            [match] = this.searchResults;
           } else {
-            match = this.isExactMatch(this.searchInput, this.searchResults)
+            match = this.isExactMatch(this.searchInput, this.searchResults);
           }
 
           if (match) {
-            this.setFoundLocation(match)
+            this.setFoundLocation(match);
           }
         }
       } else {
-        this.onSearchInput(this.searchInput)
+        this.onSearchInput(this.searchInput);
       }
     },
 
     /** User has selected an autocomplete option */
-    clearValidation () {
-      this.validationMessage = null
+    clearValidation() {
+      this.validationMessage = null;
     },
 
     /** Notify the parent container that the dialog has closed */
-    notifyDialogClosed () {
-      this.$emit('update:dialog-visible', false)
+    notifyDialogClosed() {
+      this.$emit('update:dialog-visible', false);
     },
 
-    onSelectResult (event) {
-      this.searchInput = event.target.innerText
-      this.onSearchInput(this.searchInput)
+    onSelectResult(event) {
+      this.searchInput = event.target.innerText;
+      this.onSearchInput(this.searchInput);
     },
 
     locationTypeLabel (location) {
-      const typeName = locationIndexType(location)
+      const typeName = locationIndexType(location);
       return this.$t(`js.location.type.${typeName}`)
-    },
+    }
   },
-}
+};
 </script>
+
+<style lang='scss'>
+</style>

@@ -1,9 +1,9 @@
 <template>
   <div class="c-options-selection">
-    <DataViewLocation :element-id="elementId" />
+    <data-view-location :element-id="elementId" />
     {{ $t('preposition.for') }}
-    <DataViewDates />
-    <DataViewGraphZoomed />
+    <data-view-dates />
+    <data-view-graph-zoomed />
   </div>
 </template>
 
@@ -25,5 +25,8 @@ export default {
   }),
 
   store,
-}
+};
 </script>
+
+<style lang='css'>
+</style>

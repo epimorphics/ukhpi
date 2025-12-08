@@ -79,9 +79,8 @@ eject:
 	@rm -rf test/vcr_cassettes/
 
 eslint:
-	@echo "Running ESLint for ${SHORTNAME} ..."
 # Lint JavaScript files with ESLint and auto-fix where possible
-	@yarn lint
+	@${BUNDLE} exec eslint --fix .
 
 forceclean: realclean
 # Remove all bundled files
@@ -182,7 +181,7 @@ realclean: clean
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
 rubocop:
-	@echo "Running RuboCop linting for ${SHORTNAME} ..."
+	@echo "Running code linting for ${SHORTNAME} ..."
 # Auto-correct offenses safely where possible with the `-a` flag
 	@${BUNDLE} exec rubocop -a
 

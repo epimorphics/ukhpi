@@ -1,17 +1,17 @@
 <template>
   <div class="c-options-selection__location">
     <span v-if="location">
-      <ElButton
+      <el-button
         class="c-options-selection__button"
         :title="$t('js.action.select_location')"
         @click="onChangeLocation"
       >
         {{ location.labels[$locale] || location.labels.en }}
         <i class="fa fa-edit" />
-      </ElButton>
+      </el-button>
     </span>
 
-    <SelectLocation
+    <select-location
       :dialog-visible="dialogVisible"
       :element-id="elementId"
       @update:dialog-visible="val => dialogVisible = val"
@@ -40,19 +40,22 @@ export default {
   }),
 
   computed: {
-    location () {
-      return this.$store.state.location
-    },
+    location() {
+      return this.$store.state.location;
+    }
   },
 
-  mounted () {
-    bus.$on('change-location', this.onChangeLocation)
+  mounted() {
+    bus.$on('change-location', this.onChangeLocation);
   },
 
   methods: {
-    onChangeLocation () {
-      this.dialogVisible = true
+    onChangeLocation() {
+      this.dialogVisible = true;
     },
   },
-}
+};
 </script>
+
+<style lang="scss">
+</style>
