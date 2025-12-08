@@ -1,13 +1,13 @@
 import Vue from 'vue/dist/vue.esm';
 import Router from 'vue-router';
-import SingleLocation from '../components/single-location.vue';
-import CompareLocations from '../components/compare-locations.vue';
+import SingleLocation from '@/components/single-location.vue';
+import CompareLocations from '@/components/compare-locations.vue';
 
 Vue.use(Router);
 
 // # This is a workaround to avoid the issue of Vue Router not being able to handle
 // # relative URLs correctly when using Rails' asset pipeline.
-const relativeUrlRoot = '<%= Rails.application.config.relative_url_root unless Rails.application.config.relative_url_root == '/' %>';
+const relativeUrlRoot = window.ukhpi.root_path || '';
 
 export default new Router({
   routes: [
