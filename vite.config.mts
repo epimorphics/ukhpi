@@ -14,7 +14,6 @@ export default defineConfig(({ mode }) => {
    * `VITE_` prefix.
    */
   const env = loadEnv(mode, process.cwd(), '')
-  const currentAppRelease = env.HMLR_APP_VERSION || '1.0.0'
 
   return {
 
@@ -28,6 +27,7 @@ export default defineConfig(({ mode }) => {
       ViteRails(),
       // Load YAML files as JSON - useful for translation files
       ViteYaml(),
+      // Enable Vue 2 support
       vue(),
       // Put the Sentry vite plugin after all other plugins
       sentryVitePlugin({
@@ -35,48 +35,48 @@ export default defineConfig(({ mode }) => {
         org: env.SENTRY_ORG,
         project: env.SENTRY_PROJECT,
         release: {
-          name: `${env.SENTRY_PROJECT}@${currentAppRelease}`
+          name: `${env.SENTRY_PROJECT}@${env.HMLR_APP_VERSION || '1.0.0'}`,
         },
 
         sourcemaps: {
-          ignore: ['node_modules']
+          ignore: ['node_modules'],
         },
-        telemetry: env.RAILS_ENV === 'production'
-      })
+        telemetry: env.RAILS_ENV === 'production',
+      }),
     ],
     build: {
       assetsInlineLimit: 0, // Prevents inlining of all assets, resolves issues with graph icons
       base: env.VITE_RUBY_BASE,
-      sourcemap: true, // Source map generation must be turned on for Sentry to work
-      target: 'esnext'
+      sourcemap: 'hidden', // Generate but don't expose in production
+      target: 'esnext',
     },
     css: {
       preprocessorOptions: {
         sass: {
           api: 'modern-compiler',
           includePaths: ['node_modules'],
-          quietDeps: true
+          quietDeps: true,
         },
         scss: {
           api: 'modern-compiler',
           includePaths: ['node_modules'],
-          quietDeps: true
-        }
-      }
+          quietDeps: true,
+        },
+      },
     },
     optimizeDeps: {
       esbuildOptions: {
-        target: 'esnext'
+        target: 'esnext',
       },
       optimizeDeps: {
-        include: ['govuk_frontend_toolkit', 'govuk-elements-sass', 'element-ui', 'leaflet']
-      }
+        include: ['govuk_frontend_toolkit', 'govuk-elements-sass', 'element-ui', 'leaflet'],
+      },
     },
     resolve: {
       alias: {
         '@': fileURLToPath(new URL('./app/javascript', import.meta.url)),
-        '@assets': fileURLToPath(new URL('./app/assets', import.meta.url))
-      }
-    }
+        '@assets': fileURLToPath(new URL('./app/assets', import.meta.url)),
+      },
+    },
   }
 })
