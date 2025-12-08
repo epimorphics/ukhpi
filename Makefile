@@ -199,7 +199,13 @@ ifdef DEBUG
 else
 	@echo "Starting Rails server in standard mode...";
 	@echo "If you need use the debugger gem, stop the server and use \`DEBUG=true make server\` instead";
-	@exec foreman start -f Procfile.dev -e .env.local,.env.development --color
+	@if [ "$$RAILS_ENV" = "production" ]; then \
+		echo "Starting Rails server for production environment..."; \
+		${RAILS} server -p ${PORT} -b 0.0.0.0; \
+	else \
+		echo "Starting Rails server for development environment..."; \
+		exec foreman start -f Procfile.dev -e .env.local,.env.development --color; \
+	fi
 endif
 
 start: stop
