@@ -28,10 +28,10 @@
 </template>
 
 <script>
-import bus from '../lib/event-bus'
+import bus from '@/lib/event-bus'
 import DataViewGraph from './data-view-graph.vue'
 import DataViewStatistics from './data-view-statistics.vue'
-import AvailableStatistics from '../mixins/available-statistics'
+import AvailableStatistics from '@/mixins/available-statistics'
 
 export default {
 

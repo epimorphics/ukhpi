@@ -145,14 +145,14 @@ import Moment from 'moment'
 import {
   SET_COMPARE_LOCATIONS, SET_COMPARE_STATISTIC,
   SET_COMPARE_INDICATOR, INITIALISE,
-} from '../store/mutation-types'
+} from '@/store/mutation-types'
 
 import DataViewDates from './data-view-dates.vue'
 import CompareAdditionalLocation from './compare-additional-location.vue'
 import CompareLocationsTable from './compare-locations-table.vue'
-import bus from '../lib/event-bus'
+import bus from '@/lib/event-bus'
 import { download as newDownloadPath, compare as newComparePath } from '../api'
-import unavailable from '../models/ukhpi-cube-metadata'
+import unavailable from '@/models/ukhpi-cube-metadata'
 
 const MAX_LOCATIONS = 5
 const comparePath = newComparePath.show.pathTemplate

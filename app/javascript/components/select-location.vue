@@ -153,10 +153,10 @@
 <script>
 import _ from 'lodash'
 import { FocusTrap } from 'focus-trap-vue'
-import { locationIndexType, locationsNamed, findLocationById } from '../lib/locations'
-import LocationsMap from '../presenters/locations-map'
-import { SET_LOCATION } from '../store/mutation-types'
-import bus from '../lib/event-bus'
+import { locationIndexType, locationsNamed, findLocationById } from '@/lib/locations'
+import LocationsMap from '@/presenters/locations-map'
+import { SET_LOCATION } from '@/store/mutation-types'
+import bus from '@/lib/event-bus'
 
 const MAX_RESULTS = 10
 

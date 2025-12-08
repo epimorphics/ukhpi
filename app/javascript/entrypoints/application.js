@@ -2,21 +2,21 @@ import Vue from 'vue/dist/vue.esm'
 import * as Sentry from '@sentry/vue'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
-import localeElementCy from '../lang/element-ui-cy'
-import localeD3Cy from '../lang/d3-timeformat-cy.json'
+import localeElementCy from '@/lang/element-ui-cy'
+import localeD3Cy from '@/lang/d3-timeformat-cy.json'
 import Numeral from 'numeral'
 import 'core-js/stable'
 import moment from 'moment'
 import { timeFormatDefaultLocale } from 'd3-time-format'
 
-import router from '../router/index.js'
-import store from '../store/index'
+import router from '@/router/index.js'
+import store from '@/store/index'
 
-import getAppVersion from '../lib/app_version'
+import getAppVersion from '@/lib/app_version'
 
 // set up internationalization support
 import VueI18n from 'vue-i18n'
-import i18n from '../lang'
+import i18n from '@/lang'
 
 const currentAppVersion = window.sessionStorage.getItem('currentAppRelease') || getAppVersion()
 const currentAppRelease = `${import.meta.env.SENTRY_PROJECT}@${currentAppVersion}`.trim()

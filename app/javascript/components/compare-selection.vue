@@ -11,8 +11,8 @@
 
 <script>
 import SelectLocation from './select-location.vue'
-import store from '../store/index'
-import bus from '../lib/event-bus'
+import store from '@/store/index'
+import bus from '@/lib/event-bus'
 
 export default {
 

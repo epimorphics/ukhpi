@@ -10,7 +10,7 @@ import Vue from 'vue/dist/vue.esm'
 import DataView from './data-view.vue'
 import OptionsSelection from './options-selection.vue'
 import CompareSelection from './compare-selection.vue'
-import bindExternalEvents from '../lib/bind-external-events'
+import bindExternalEvents from '@/lib/bind-external-events'
 
 function locationButton (title, action) {
   return `<button type='button' class='el-button c-options-selection__button o-data-view__location'

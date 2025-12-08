@@ -2,10 +2,10 @@
 
 import Axios from 'axios'
 import store from './index'
-import bus from '../lib/event-bus'
+import bus from '@/lib/event-bus'
 import { browse as newBrowsePath } from '../api'
-import QueryResults from '../models/query-results'
-import setSessionStore from '../lib/session-store'
+import QueryResults from '@/models/query-results'
+import setSessionStore from '@/lib/session-store'
 
 const QONSOLE_QUERY = 'qonsole.query'
 const browsePath = newBrowsePath.show.pathTemplate

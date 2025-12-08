@@ -24,8 +24,8 @@
 </template>
 
 <script>
-import { SELECT_STATISTIC } from '../store/mutation-types'
-import markerRoutes from '../images/markers/'
+import { SELECT_STATISTIC } from '@/store/mutation-types'
+import markerRoutes from '@/images/markers/'
 
 const MARKERS = [
   'Circle',

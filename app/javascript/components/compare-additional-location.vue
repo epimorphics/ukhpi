@@ -12,9 +12,9 @@
 <script>
 import _ from 'lodash'
 import SelectLocation from './select-location.vue'
-import store from '../store/index'
-import { SET_COMPARE_LOCATIONS } from '../store/mutation-types'
-import bus from '../lib/event-bus'
+import store from '@/store/index'
+import { SET_COMPARE_LOCATIONS } from '@/store/mutation-types'
+import bus from '@/lib/event-bus'
 
 export default {
 

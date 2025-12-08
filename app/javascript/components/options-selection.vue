@@ -11,7 +11,7 @@
 import DataViewLocation from './data-view-location.vue'
 import DataViewDates from './data-view-dates.vue'
 import DataViewGraphZoomed from './data-view-graph-zoomed.vue'
-import store from '../store/index'
+import store from '@/store/index'
 
 export default {
 
