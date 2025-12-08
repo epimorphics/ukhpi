@@ -31,6 +31,7 @@ gem 'puma-metrics'
 gem 'sentry-rails'
 
 # Asset pipeline and front-end
+gem 'bootsnap', require: false
 gem 'font-awesome-rails'
 gem 'sass-rails'
 gem 'terser' # Updating to terser for ES6+ support
