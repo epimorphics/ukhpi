@@ -95,7 +95,3 @@ vite.config.js.timestamp-*-*.mjs
 .env
 .env*.local
 !.env.development
-
-# Ignore automatically generated js-routes files.
-/app/javascript/routes.js
-/app/javascript/routes.d.ts
