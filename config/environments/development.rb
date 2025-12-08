@@ -54,8 +54,4 @@ Rails.application.configure do
 
   # Set the log level to the value of the LOG_LEVEL environment variable, or 'debug' if not set
   config.log_level = ENV.fetch('LOG_LEVEL', 'debug').to_sym
-
-  # Automatically update js-routes file
-  # when routes.rb is changed
-  config.middleware.use(JsRoutes::Middleware)
 end

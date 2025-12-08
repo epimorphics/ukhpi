@@ -151,12 +151,10 @@ import DataViewDates from './data-view-dates.vue'
 import CompareAdditionalLocation from './compare-additional-location.vue'
 import CompareLocationsTable from './compare-locations-table.vue'
 import bus from '@/lib/event-bus'
-import { download as newDownloadPath, compare as newComparePath } from '../api'
+import { newDownloadPath, comparePath } from '@/lib/routes.js.erb'
 import unavailable from '@/models/ukhpi-cube-metadata'
 
 const MAX_LOCATIONS = 5
-const comparePath = newComparePath.show.pathTemplate
-const downloadPath = newDownloadPath.new.pathTemplate
 
 export default {
 
@@ -251,12 +249,12 @@ export default {
 
     downloadUrlJson () {
       const options = Object.assign({ format: 'json' }, this.pathOptions)
-      return `${downloadPath}?${new URLSearchParams(options).toString()}`
+      return `${newDownloadPath(options)}`
     },
 
     downloadUrlCsv () {
       const options = Object.assign({ format: 'csv' }, this.pathOptions)
-      return `${downloadPath}?${new URLSearchParams(options).toString()}`
+      return `${newDownloadPath(options)}`
     },
 
     printUrl () {
@@ -274,7 +272,7 @@ export default {
 
       options.lang = window.ukhpi.locale
 
-      return `${comparePath}?${new URLSearchParams(options).toString()}`
+      return comparePath(options)
     },
   },
 

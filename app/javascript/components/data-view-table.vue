@@ -50,8 +50,7 @@
 </template>
 
 <script>
-import { print as newPrintPath } from '../api'
-const printPath = newPrintPath.show.pathTemplate
+import { printPath } from '@/lib/routes.js.erb'
 
 export default {
 
@@ -91,7 +90,7 @@ export default {
         location: location.uri,
         lang: this.$locale,
       }
-      return `${printPath}?${new URLSearchParams(params).toString()}`
+      return `${printPath(params)}`
     },
 
     columns () {

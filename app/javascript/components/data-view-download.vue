@@ -75,9 +75,7 @@
 
 <script>
 import DOMPurify from 'dompurify'
-import { download as newDownloadPath } from '../api'
-
-const downloadPath = newDownloadPath.new.pathTemplate
+import { newDownloadPath } from '@/lib/routes.js.erb'
 
 export default {
   props: {
@@ -100,7 +98,7 @@ export default {
     qonsolePath () {
       // If the environment is development, use the local qonsole path
       // e.g. http://localhost:3000/qonsole?query=_localstore
-      // This is to ensure that the qonsole path is always the same as the current 
+      // This is to ensure that the qonsole path is always the same as the current
       // path, but with the last two segments replaced with 'qonsole'
       if (window?.ukhpi?.environment === 'development') {
         return `${window.location.protocol}//${window.location.hostname}:3000/qonsole?query=_localstore`
@@ -160,7 +158,7 @@ export default {
       if (withIndicator && this.indicator) {
         options['in[]'] = this.indicator.slug
       }
-      return `${downloadPath}?${new URLSearchParams(options).toString()}`
+      return `${newDownloadPath(options)}`
     },
 
     /**
