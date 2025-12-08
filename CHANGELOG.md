@@ -8,6 +8,26 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Changed
+
+- Consolidate Docker environment variables into single `ENV` instruction for
+  better layering
+- Reinstall `Corepack` via npm for Node.js 25+ compatibility instead of relying on
+  bundled version
+- Simplify Yarn module installation command for clarity
+- Update SPARQL documentation links to use static paths
+
+### Added
+
+- Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
+- Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
+
+### Removed
+
+- Cleaned up unused dependency remnants from previous webpacker upgrade
+- Unused dependency comments and outdated Corepack implementation
+- Redundant `RAILS_ENV=production` from `vite:build` task (already set via ENV)
+
 ## [2.2.2] - 2025-11
 
 ### Changed
