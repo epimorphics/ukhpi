@@ -16,7 +16,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   bundled version
 - Simplify Yarn module installation command for clarity
 - Update SPARQL documentation links to use static paths
-- Set app version to cahce in session storage
+- Set app version to cache in session storage
 
 ### Added
 
@@ -25,7 +25,6 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Removed
 
-- Cleaned up unused dependency remnants from previous webpacker upgrade
 - Unused dependency comments and outdated Corepack implementation
 - Redundant `RAILS_ENV=production` from `vite:build` task (already set via ENV)
 
