@@ -78,18 +78,17 @@ COPY lib lib
 COPY public public
 
 ARG RAILS_RELATIVE_URL_ROOT
-RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT}"
+RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT} for ${RAILS_ENV} build"
 
 # Precompile assets and build vite
-RUN RAILS_ENV=production \
-    VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
+RUN VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
     NODE_OPTIONS=--max-old-space-size=4096 \
-    bundle exec rake vite:build \
-    && mkdir -m 777 ${DIR}/coverage \
-    && mkdir -m 777 ${DIR}/log
+    bundle exec rake vite:build
 
 # Start a new stage to minimise the final image size
 FROM base
+
+WORKDIR ${APP_DIR}
 
 ARG image_name
 ARG git_branch
