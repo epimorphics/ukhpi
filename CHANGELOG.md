@@ -22,6 +22,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 - Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
 - Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
+- Added bootsnap to speed up boot time by caching expensive operations
 
 ### Removed
 
