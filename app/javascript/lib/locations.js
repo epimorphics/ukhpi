@@ -7,7 +7,7 @@ const locationsIndex = {
   country: {},
   la: {},
   region: {},
-  county: {}
+  county: {},
 }
 
 const exceptions = {
@@ -22,7 +22,7 @@ const exceptions = {
   'Aberdeen City': 'City of Aberdeen',
   'Dundee City': 'City of Dundee',
   'Glasgow City': 'City of Glasgow',
-  'Outline of Northern Ireland': 'Northern Ireland'
+  'Outline of Northern Ireland': 'Northern Ireland',
 }
 
 const UK_COUNTRIES = /(wales|scotland|ireland|great britain|united kingdom)/i
@@ -83,8 +83,8 @@ export function locationsNamed (locationName) {
 
   const regex = new RegExp(locationName, 'i')
   const locale = window.ukhpi.locale
-  const locationsLocale = locationsList.filter(location => location.labels[locale] && location.labels[locale].match(regex))
-  const locationsEn = locationsList.filter(location => location.labels.en.match(regex))
+  const locationsLocale = locationsList.filter((location) => location.labels[locale] && location.labels[locale].match(regex))
+  const locationsEn = locationsList.filter((location) => location.labels.en.match(regex))
 
   return _.union(locationsLocale || [], locationsEn || [])
 }
@@ -102,13 +102,12 @@ export function findLocationNamed (locationName) {
   const locale = window.ukhpi.locale
   let result = null
 
-  _.find(indexedLocations(), (typedLocations, locationType) =>
-    _.find(typedLocations, (location) => {
-      if (matcher.test(location.labels[locale] || location.labels.en)) {
-        result = { location, locationType }
-      }
-      return result
-    }))
+  _.find(indexedLocations(), (typedLocations, locationType) => _.find(typedLocations, (location) => {
+    if (matcher.test(location.labels[locale] || location.labels.en)) {
+      result = { location, locationType }
+    }
+    return result
+  }))
 
   return result
 }
@@ -117,13 +116,12 @@ export function findLocationNamed (locationName) {
 export function findLocationById (id, prop = 'gss') {
   let result = null
 
-  _.find(indexedLocations(), (typedLocations, locationType) =>
-    _.find(typedLocations, (location) => {
-      if (location[prop] === id) {
-        result = { location, locationType }
-      }
-      return result
-    }))
+  _.find(indexedLocations(), (typedLocations, locationType) => _.find(typedLocations, (location) => {
+    if (location[prop] === id) {
+      result = { location, locationType }
+    }
+    return result
+  }))
 
   return result
 }

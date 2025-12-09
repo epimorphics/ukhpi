@@ -1,5 +1,5 @@
 <template>
-  <select-location
+  <SelectLocation
     :dialog-visible="dialogVisible"
     :element-id="elementId"
     :prompt="prompt"
@@ -10,11 +10,11 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import SelectLocation from './select-location.vue';
-import store from '../store/index';
-import { SET_COMPARE_LOCATIONS } from '../store/mutation-types';
-import bus from '../lib/event-bus';
+import _ from 'lodash'
+import SelectLocation from './select-location.vue'
+import store from '@/store/index'
+import { SET_COMPARE_LOCATIONS } from '@/store/mutation-types'
+import bus from '@/lib/event-bus'
 
 export default {
 
@@ -27,31 +27,28 @@ export default {
   }),
 
   computed: {
-    prompt() {
-      return 'Select an additional area to compare';
+    prompt () {
+      return 'Select an additional area to compare'
     },
   },
 
-  mounted() {
-    bus.$on('select-comparison', this.onSelectComparison);
-    bus.$on('additional-location-selected', this.onAdditionalLocation);
+  mounted () {
+    bus.$on('selectComparison', this.onSelectComparison)
+    bus.$on('additional-location-selected', this.onAdditionalLocation)
   },
 
   methods: {
-    onSelectComparison() {
-      this.dialogVisible = true;
+    onSelectComparison () {
+      this.dialogVisible = true
     },
 
-    onAdditionalLocation(location) {
-      const newLocations = this.$store.state.compareLocations.concat([location]);
-      const uniqLocations = _.uniqBy(newLocations, 'gss');
-      this.$store.commit(SET_COMPARE_LOCATIONS, uniqLocations);
+    onAdditionalLocation (location) {
+      const newLocations = this.$store.state.compareLocations.concat([location])
+      const uniqLocations = _.uniqBy(newLocations, 'gss')
+      this.$store.commit(SET_COMPARE_LOCATIONS, uniqLocations)
     },
   },
 
   store,
-};
+}
 </script>
-
-<style lang='css'>
-</style>

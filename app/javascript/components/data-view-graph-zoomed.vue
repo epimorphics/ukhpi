@@ -1,6 +1,6 @@
 <template>
   <div class="c-data-view-graph-zoomed">
-    <el-dialog
+    <ElDialog
       :visible.sync="showZoomedGraph"
       :title="dialogTitle"
       :show-close="true"
@@ -10,28 +10,28 @@
       @open="onOpenDialog"
     >
       <div class="o-data-view__js-options">
-        <data-view-statistics
+        <DataViewStatistics
           :initial-statistics="availableStatistics"
           :zoom="true"
         />
       </div>
 
-      <data-view-graph
+      <DataViewGraph
         :element-id="elementId"
         :theme="theme"
         :indicator="indicator"
         :zoom="true"
         :timestamp="timestamp"
       />
-    </el-dialog>
+    </ElDialog>
   </div>
 </template>
 
 <script>
-import bus from '../lib/event-bus';
-import DataViewGraph from './data-view-graph.vue';
-import DataViewStatistics from './data-view-statistics.vue';
-import AvailableStatistics from '../mixins/available-statistics';
+import bus from '@/lib/event-bus'
+import DataViewGraph from './data-view-graph.vue'
+import DataViewStatistics from './data-view-statistics.vue'
+import AvailableStatistics from '@/mixins/available-statistics'
 
 export default {
 
@@ -48,55 +48,52 @@ export default {
   }),
 
   computed: {
-    dialogTitle() {
-      const root = this.graphConfig.elementId && this.graphConfig.elementId.replace(/-graph/, '');
+    dialogTitle () {
+      const root = this.graphConfig.elementId && this.graphConfig.elementId.replace(/-graph/, '')
       if (root) {
-        const node = document.querySelector(`#${root} h2`);
-        return node && node.innerText.replace(/(hide|reveal|cuddio|dangos) *$/, '');
+        const node = document.querySelector(`#${root} h2`)
+        return node && node.innerText.replace(/(hide|reveal|cuddio|dangos) *$/, '')
       }
 
-      return '';
+      return ''
     },
 
-    elementId() {
-      return `${this.graphConfig.elementId}-zoomed`;
+    elementId () {
+      return `${this.graphConfig.elementId}-zoomed`
     },
 
-    theme() {
-      return this.graphConfig.theme || {};
+    theme () {
+      return this.graphConfig.theme || {}
     },
 
-    indicator() {
-      return this.graphConfig.indicator || {};
+    indicator () {
+      return this.graphConfig.indicator || {}
     },
   },
 
-  mounted() {
-    bus.$on('zoomGraph', this.onZoomGraph);
+  mounted () {
+    bus.$on('zoomGraph', this.onZoomGraph)
   },
 
   methods: {
-    onZoomGraph(config) {
-      this.graphConfig = config.graphConfig;
-      this.showZoomedGraph = true;
+    onZoomGraph (config) {
+      this.graphConfig = config.graphConfig
+      this.showZoomedGraph = true
     },
 
-    onCloseDialog() {
-      this.timestamp += 1;
+    onCloseDialog () {
+      this.timestamp += 1
     },
 
     /** When we open the dialog, if this is not the first time then wait one update
      * cycle then update the timestamp. This way, the change of timestamp will be
      * noticed by the graph component, which will know to update the graph in case
      * the selected statistics have changed since first draw. */
-    onOpenDialog() {
+    onOpenDialog () {
       if (this.timestamp > 0) {
-        this.$nextTick(function deferredUpdate() { this.timestamp += 1; });
+        this.$nextTick(function deferredUpdate () { this.timestamp += 1 })
       }
     },
   },
-};
+}
 </script>
-
-<style lang='css'>
-</style>
