@@ -62,7 +62,11 @@ export default defineConfig([
     rules: {
     // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-expressions': 'off',
+      // Allow empty arrow functions for stubs/mocks in tests
+      '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
+      // Allow short circuit expressions (a && a()) in place of if statements
       '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
+      // Enforce consistent usage of type imports
       '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', fixStyle: 'separate-type-imports' }],
     },
   },
