@@ -81,7 +81,7 @@ eject:
 eslint:
 	@echo "Running ESLint for ${SHORTNAME} ..."
 # Lint JavaScript files with ESLint and auto-fix where possible
-	@${BUNDLE} exec eslint --fix .
+	@yarn lint:fix
 
 forceclean: realclean
 # Remove all bundled files
@@ -165,7 +165,7 @@ locations:
 	@echo "Done."
 
 modules:
-	@echo "Installing node packages ..."
+	@echo "Installing node modules via yarn ..."
 	@yarn install
 
 name:
