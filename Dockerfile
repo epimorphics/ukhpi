@@ -9,7 +9,11 @@ FROM node:$NODE_VERSION-alpine AS node
 # Define the base image
 FROM ruby:$RUBY_VERSION-alpine$ALPINE_VERSION AS base
 
-ENV APP_DIR=/rails
+ENV APP_DIR=/rails \
+    RAILS_ENV="production" \
+    BUNDLE_DEPLOYMENT="1" \
+    BUNDLE_PATH="/usr/local/bundle" \
+    BUNDLE_WITHOUT="development test"
 
 WORKDIR ${APP_DIR}
 
@@ -18,31 +22,17 @@ RUN apk add --no-cache \
     jemalloc \
     tzdata
 
-ENV RAILS_ENV="production" \
-    BUNDLE_DEPLOYMENT="1" \
-    BUNDLE_PATH="/usr/local/bundle" \
-    BUNDLE_WITHOUT="development test"
-
 FROM base AS builder
 
 # Install packages required to build gems
 RUN apk add --update --no-cache \
-    yaml-dev \
-    build-base \
-    pkgconf \
     bash \
+    build-base \
     coreutils \
+    git \
+    pkgconf \
+    yaml-dev \
     && gem update --system
-
-# RUN apk add --update --no-cache \
-#     bash \
-#     coreutils \
-#     git \
-#     npm \
-#     nodejs \
-#     tzdata \
-#     yaml-dev \
-#     && gem update --system
 
 # Copy node binaries from the official image
 COPY --from=node /usr/lib /usr/lib
@@ -50,63 +40,37 @@ COPY --from=node /usr/local/lib /usr/local/lib
 COPY --from=node /usr/local/include /usr/local/include
 COPY --from=node /usr/local/bin /usr/local/bin
 
-# corepack is installed, but will no longer come with node >= 25, so re-install
-# following https://github.com/nodejs/corepack?tab=readme-ov-file#manual-installs
+# Remove bundled yarn/pnpm and reinstall corepack for future Node.js 25+ compatibility
+# Corepack is bundled with Node < 25 but will be removed in Node 25+
+# See: https://github.com/nodejs/corepack?tab=readme-ov-file#manual-installs
 RUN npm uninstall -g yarn pnpm && \
-    npm install -g corepack
+    npm install -g corepack && \
+    corepack enable
 
 # Install a specific version of bundler
 ARG BUNDLER_VERSION
 RUN echo "Bundler version ${BUNDLER_VERSION}"
 RUN gem install bundler:$BUNDLER_VERSION
 
-# COPY bin bin
+# Copy Gemfile and lockfile to install gems
 COPY Gemfile Gemfile.lock ./
 # .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
 COPY .bundle/config /root/.bundle/config
 
+# Install gems and clean up unnecessary files
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
     bundle exec bootsnap precompile --gemfile
 
-# RUN bundle config set --local without 'development test' \
-#     && bundle config set --local frozen 1 \
-#     && bundle install
-
-# for Yarn
-# RUN npm install -g corepack
-# RUN corepack enable
-
-# installs the required gems
-# FROM base AS gems
-# RUN apk add --update build-base && gem update --system
-
-# install the required node modules
-# FROM base AS npm
-# RUN apk add --update build-base && gem update --system
-
-# WORKDIR ${DIR}
-# COPY package.json yarn.lock .yarnrc.yml ./
-COPY package.json yarn.lock ./
+# Install node modules using Yarn via Corepack
+COPY package.json yarn.lock .yarnrc.yml ./
 COPY .yarn .yarn
 RUN yarn install --immutable
 
-# runs build to compile assets
-# FROM base AS builder
-# RUN apk add --update build-base && gem update --system
-
-# WORKDIR ${DIR}
-# # Copy the builds from the previous stages
-# COPY --from=gems --chown=app /usr/local/bundle /usr/local/bundle
-# COPY --from=npm --chown=app ${DIR}/node_modules ./node_modules
-
 # # Copy the rest of the application code
-
-COPY postcss.config.js ./
-COPY config.ru Rakefile ./
+COPY postcss.config.cjs ./
 COPY vite.config.mts ./
-# COPY package.json yarn.lock vite.config.mts .yarnrc.yml ./
-
+COPY config.ru Rakefile ./
 COPY app app
 COPY bin bin
 COPY config config
@@ -114,11 +78,10 @@ COPY lib lib
 COPY public public
 
 ARG RAILS_RELATIVE_URL_ROOT
-RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT}"
+RUN echo "VITE_RUBY_BASE set to: ${RAILS_RELATIVE_URL_ROOT} for ${RAILS_ENV} build"
 
 # Precompile assets and build vite
-RUN RAILS_ENV=production \
-    VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
+RUN VITE_RUBY_BASE=$RAILS_RELATIVE_URL_ROOT \
     NODE_OPTIONS=--max-old-space-size=4096 \
     bundle exec rake vite:build
 
@@ -147,6 +110,7 @@ EXPOSE 3000
 COPY --from=builder ${BUNDLE_PATH} ${BUNDLE_PATH}
 COPY --from=builder --chown=app ${APP_DIR}/app ./app
 COPY --from=builder --chown=app ${APP_DIR}/bin/rails ./bin/rails
+COPY --from=builder --chown=app ${APP_DIR}/bin/vite ./bin/vite
 COPY --from=builder --chown=app ${APP_DIR}/config ./config
 COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ./
 COPY --from=builder --chown=app ${APP_DIR}/lib ./lib

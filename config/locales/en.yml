@@ -214,7 +214,7 @@ en:
       date: "Date"
 
     download:
-      prompt: "You can download this data, so that you can process it further yourself. You can also <a href='%{qonsolePath}'>try the SPARQL query</a>."
+      prompt: "You can download this data, so that you can process it further yourself. You can also <a href='/app/qonsole'>try the SPARQL query</a>."
       selected: "Download only <strong>%{indicatorName}</strong> by <strong>%{themeName}</strong> in %{locationName}:"
       all: "Download <strong>all UKHPI data</strong> for %{locationName} for this period:"
       theme: "Download <strong>all</strong> of index, average and percentage change by <strong>%{themeName}</strong> in %{locationName}:"
