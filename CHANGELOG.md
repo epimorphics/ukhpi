@@ -29,6 +29,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Unused dependency comments and outdated Corepack implementation
 - Redundant `RAILS_ENV=production` from `vite:build` task (already set via ENV)
 
+### Fixed
+
+- Restored SPARQL link to use dynamic `qonsolePath` in downloads
+
 ## [2.2.2] - 2025-11
 
 ### Changed
