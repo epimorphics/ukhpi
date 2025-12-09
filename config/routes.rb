@@ -2,8 +2,6 @@ Rails.application.routes.draw do
   root 'landing#index'
   resources :landing, only: [ :index ]
   get '/explore', to: redirect("#{Rails.application.config.relative_url_root}/browse")
-  resources :download, only: [ :new ]
-  resource :browse, only: %i[show edit], controller: :browse
 
   resource :browse, only: %i[show edit], controller: :browse
   resources :changelog, only: %i[index]
