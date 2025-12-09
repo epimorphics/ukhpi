@@ -68,7 +68,7 @@ COPY .yarn .yarn
 RUN yarn install --immutable
 
 # # Copy the rest of the application code
-COPY postcss.config.cjs ./
+COPY postcss.config.js ./
 COPY vite.config.mts ./
 COPY config.ru Rakefile ./
 COPY app app
