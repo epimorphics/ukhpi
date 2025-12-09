@@ -60,7 +60,7 @@ export default defineConfig([
   {
     name: 'custom-ts',
     rules: {
-    // Note: you must disable the base rule as it can report incorrect errors
+      // Note: you must disable the base rule as it can report incorrect errors
       'no-unused-expressions': 'off',
       // Allow empty arrow functions for stubs/mocks in tests
       '@typescript-eslint/no-empty-function': ['error', { allow: ['arrowFunctions'] }],
