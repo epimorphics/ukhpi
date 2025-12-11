@@ -12,13 +12,12 @@ import { timeFormatDefaultLocale } from 'd3-time-format'
 import router from '@/router/index.js'
 import store from '@/store/index'
 
-import getAppVersion from '@/lib/app_version'
-
 // set up internationalization support
 import VueI18n from 'vue-i18n'
 import i18n from '@/lang'
 
-const currentAppVersion = window.sessionStorage.getItem('currentAppRelease') || getAppVersion()
+// Get app version from build-time injected constant
+const currentAppVersion = __APP_VERSION__
 const currentAppRelease = `${import.meta.env.SENTRY_PROJECT}@${currentAppVersion}`.trim()
 
 const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
@@ -117,6 +116,13 @@ if (i18n.locale === 'cy') {
 }
 
 const mountVueApp = () => {
+  if (document.getElementById('application') === null) {
+    // No application element to mount to
+    // Prevents errors when navigating non-Vue pages
+    console.debug('No #application element found, skipping Vue app mount')
+    return
+  }
+  console.debug('Mounting Vue app')
   // This is the main entry point for the Vue app
   new Vue({
     i18n,

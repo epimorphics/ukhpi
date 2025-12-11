@@ -6,6 +6,7 @@ import ViteYaml from '@modyfi/vite-plugin-yaml'
 import vue from '@vitejs/plugin-vue2'
 import { fileURLToPath, URL } from 'node:url'
 import { sentryVitePlugin } from '@sentry/vite-plugin'
+import { getAppVersion } from './app/javascript/lib/app_version.js'
 
 export default defineConfig(({ mode }) => {
   /*
@@ -14,8 +15,14 @@ export default defineConfig(({ mode }) => {
    * `VITE_` prefix.
    */
   const env = loadEnv(mode, process.cwd(), '')
+  const HMLR_APP_VERSION = getAppVersion() || '1.0.0'
+  console.debug(`🚀  HMLR_APP_VERSION: ${HMLR_APP_VERSION}`)
 
   return {
+    define: {
+      // Inject the version at build time so it's available in the browser
+      __APP_VERSION__: JSON.stringify(HMLR_APP_VERSION),
+    },
 
     envPrefix: ['VITE_', 'RAILS_', 'HMLR_', 'LOG_', 'SENTRY_'], // default: 'VITE_'
     plugins: [
@@ -35,12 +42,13 @@ export default defineConfig(({ mode }) => {
         org: env.SENTRY_ORG,
         project: env.SENTRY_PROJECT,
         release: {
-          name: `${env.SENTRY_PROJECT}@${env.HMLR_APP_VERSION || '1.0.0'}`,
+          name: `${env.SENTRY_PROJECT}@${HMLR_APP_VERSION}`,
         },
 
         sourcemaps: {
           ignore: ['node_modules'],
         },
+        // Send Sentry specific errors and telemetry only in production builds
         telemetry: env.RAILS_ENV === 'production',
       }),
     ],
