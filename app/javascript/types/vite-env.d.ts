@@ -15,7 +15,7 @@
  * the build process. The value is embedded directly into the compiled JavaScript,
  * making it available without any file system access or HTTP requests.
  *
- * @example "2.2.2"
- * @example "2.2.2.beta"
+ * @example "1.2.3"
+ * @example "1.2.3.beta"
  */
 declare const __APP_VERSION__: string
