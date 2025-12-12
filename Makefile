@@ -33,6 +33,7 @@ BUNDLE_CFG=.bundle/config
 BUNDLE=./bin/bundle
 GITHUB_TOKEN=.github-token
 RAILS=./bin/rails
+SPRING=./bin/spring
 VITE=./bin/vite
 
 ${BUNDLE_CFG}: ${GITHUB_TOKEN}
@@ -220,6 +221,9 @@ tag:
 
 test:
 	@echo "Running unit tests ..."
+# Ensure Spring is stopped to avoid stale state during tests
+	@${SPRING} stop
+# Run Rails tests
 	@${RAILS} test
 
 test-assets:
