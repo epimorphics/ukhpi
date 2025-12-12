@@ -50,7 +50,6 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Restored SPARQL link to use dynamic `qonsolePath` in downloads
 - Vue Router path matching failure caused by improper `root_path` normalisation
   by removing trailing slashes if they exist
-- Added default props to components to prevent mount errors
 
 ## [2.2.2] - 2025-11
 
