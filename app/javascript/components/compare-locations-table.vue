@@ -75,19 +75,16 @@ export default {
     statistic: {
       type: Object,
       required: true,
-      default: () => ({}),
     },
 
     indicator: {
       type: Object,
       required: true,
-      default: () => ({}),
     },
 
     locations: {
       type: Array,
       required: true,
-      default: () => [],
     },
   },
   data: () => ({

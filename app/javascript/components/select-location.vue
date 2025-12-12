@@ -171,12 +171,10 @@ export default {
     dialogVisible: {
       required: true,
       type: Boolean,
-      default: false,
     },
     elementId: {
       required: true,
       type: String,
-      default: () => '',
     },
     prompt: {
       required: false,

@@ -41,12 +41,10 @@ export default {
     initialStatistics: {
       type: Array,
       required: true,
-      default: () => [],
     },
     zoom: {
       type: Boolean,
       required: true,
-      default: false,
     },
   },
   data: () => ({

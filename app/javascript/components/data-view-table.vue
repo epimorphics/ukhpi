@@ -58,7 +58,6 @@ export default {
     statistics: {
       type: Array,
       required: true,
-      default: () => [],
     },
 
     indicator: {

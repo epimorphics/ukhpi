@@ -25,7 +25,7 @@ export default {
     elementId: {
       required: true,
       type: String,
-      default: () => '',
+      default: '',
     },
     zoom: {
       required: false,

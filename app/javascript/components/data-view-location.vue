@@ -33,7 +33,6 @@ export default {
     elementId: {
       required: true,
       type: String,
-      default: () => '',
     },
   },
   data: () => ({
