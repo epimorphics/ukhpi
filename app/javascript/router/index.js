@@ -7,7 +7,8 @@ Vue.use(Router)
 
 // # This is a workaround to avoid the issue of Vue Router not being able to handle
 // # relative URLs correctly when using Rails' asset pipeline.
-const relativeUrlRoot = window.ukhpi.root_path || ''
+// Normalise root_path: default to empty string in dev and remove trailing slash, if any
+const relativeUrlRoot = (window.ukhpi?.root_path === '/app/ukhpi' ? window.ukhpi?.root_path : '').replace(/\/$/, '')
 
 export default new Router({
   routes: [

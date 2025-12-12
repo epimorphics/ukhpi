@@ -10,6 +10,14 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Refactored application version handling to use build-time injected
+  constants instead of async HTTP requests
+  - Application now uses `__APP_VERSION__` directly in browser code
+  - Vite config reads version.rb at build/dev-server startup and injects version
+    as constant
+- Restructured version utilities: consolidated into app/javascript/lib/version.js
+  (Node.js only for vite.config.mts, reads from version.rb)
+- Refactored `head` markup into a reusable partial for maintainability
 - Consolidate Docker environment variables into single `ENV` instruction for
   better layering
 - Reinstall `Corepack` via npm for Node.js 25+ compatibility instead of relying on
@@ -20,18 +28,28 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Build-time version injection via Vite's define configuration, eliminating
+  runtime HTTP requests for version lookup
+- TypeScript declarations for  `__APP_VERSION__` global constant in `vite-env.d.ts`
+  (based on community and documentation recommendations)
+- JSDoc documentation for version utilities with type annotations and usage examples
 - Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
 - Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
 - Added bootsnap to speed up boot time by caching expensive operations
 
 ### Removed
 
+- Browser-based async version fetching function and SessionStorage caching for
+  obtaining the application version as it is no longer needed with build-time injection
 - Unused dependency comments and outdated Corepack implementation
 - Redundant `RAILS_ENV=production` from `vite:build` task (already set via ENV)
+- HTTP `/version` endpoint dependency for frontend version display
 
 ### Fixed
 
 - Restored SPARQL link to use dynamic `qonsolePath` in downloads
+- Vue Router path matching failure caused by improper `root_path` normalisation
+  by removing trailing slashes if they exist
 
 ## [2.2.2] - 2025-11
 

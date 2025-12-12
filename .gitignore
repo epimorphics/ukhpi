@@ -92,6 +92,5 @@ query-results.json
 vite.config.js.timestamp-*-*.mjs
 
 # Ignore local configuration files
-.env
-.env*.local
+.env*
 !.env.development
