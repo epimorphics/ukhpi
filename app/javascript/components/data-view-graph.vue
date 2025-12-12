@@ -1,6 +1,6 @@
 <template>
   <div :class="rootCssClass">
-    <svg :id="graphElementId" />
+    <svg :id="graphElementId"></svg>
   </div>
 </template>
 
@@ -15,15 +15,17 @@ export default {
     indicator: {
       required: false,
       type: Object,
-      default: null,
+      default: () => ({}),
     },
     theme: {
       required: true,
       type: Object,
+      default: () => ({}),
     },
     elementId: {
       required: true,
       type: String,
+      default: '',
     },
     zoom: {
       required: false,
