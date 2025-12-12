@@ -87,6 +87,7 @@ export default {
     theme: {
       required: true,
       type: Object,
+      default: () => ({}),
     },
   },
 
