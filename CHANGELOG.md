@@ -17,6 +17,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
     as constant
 - Restructured version utilities: consolidated into app/javascript/lib/version.js
   (Node.js only for vite.config.mts, reads from version.rb)
+- Refactored `head` markup into a reusable partial for maintainability
 - Consolidate Docker environment variables into single `ENV` instruction for
   better layering
 - Reinstall `Corepack` via npm for Node.js 25+ compatibility instead of relying on
