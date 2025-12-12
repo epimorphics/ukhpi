@@ -122,13 +122,22 @@ const mountVueApp = () => {
     console.debug('No #application element found, skipping Vue app mount')
     return
   }
+
   console.debug('Mounting Vue app')
+  console.debug('Router routes:', router.options.routes)
+  console.debug('Current location:', window.location.pathname)
+  console.debug('window.ukhpi.root_path:', window.ukhpi?.root_path)
+
   // This is the main entry point for the Vue app
-  new Vue({
+  const app = new Vue({
     i18n,
     store,
     router,
   }).$mount('#application')
+
+  // Debug router state after mounting
+  console.debug('Router current route:', router.currentRoute)
+  return app
 }
 
 /**
