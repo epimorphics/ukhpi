@@ -9,15 +9,15 @@ import { join } from 'path'
  * Vite configuration files where synchronous operations are acceptable.
  *
  * The version format follows semantic versioning: MAJOR.MINOR.PATCH[.SUFFIX]
- * where SUFFIX is optional (e.g., "2.2.2" or "2.2.2.beta").
+ * where SUFFIX is optional (e.g., "1.2.3" or "1.2.3.beta").
  *
- * @returns {string} The application version string (e.g., "2.2.2") or "0.0.0" on error
+ * @returns {string} The application version string (e.g., "1.2.3") or "0.0.0" on error
  * @throws {Error} If window object exists (browser environment detected)
  *
  * @example
  * // In vite.config.mts
  * import { getAppVersion } from './app/javascript/lib/app_version.js'
- * const version = getAppVersion() // "2.2.2"
+ * const version = getAppVersion() // "1.2.3"
  */
 export function getAppVersion() {
   try {
