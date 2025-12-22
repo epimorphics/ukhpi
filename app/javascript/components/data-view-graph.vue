@@ -15,6 +15,7 @@ export default {
     indicator: {
       required: false,
       type: Object,
+      default: () => ({}),
     },
     theme: {
       required: true,

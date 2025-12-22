@@ -19,7 +19,7 @@ import { join } from 'path'
  * import { getAppVersion } from './app/javascript/lib/app_version.js'
  * const version = getAppVersion() // "1.2.3"
  */
-export function getAppVersion() {
+export function getAppVersion () {
   try {
     /** @type {string} Absolute path to version.rb file */
     const versionFilePath = join(process.cwd(), 'app/lib/version.rb')
