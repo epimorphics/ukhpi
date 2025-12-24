@@ -28,6 +28,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Added
 
+- Introduces Cucumber feature files for the UK House Price Index (UKHPI)
+  application for use in CuPIT.
+- Implements feature files covering data display, data comparison, data querying,
+  and ELDA page functionality.
+- Adds tests to verify correct static content and headline figures.
+- Includes scenarios for navigation, language toggling, and location filtering.
 - Build-time version injection via Vite's define configuration, eliminating
   runtime HTTP requests for version lookup
 - TypeScript declarations for  `__APP_VERSION__` global constant in `vite-env.d.ts`
