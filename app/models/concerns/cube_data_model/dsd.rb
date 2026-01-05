@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Keep Zeitwerk happy. Without this declaration, Zeitwerk thinks
 # the classname in this file should be CubeDataModel::Dsd
 ActiveSupport::Inflector.inflections { |infl| infl.acronym('DSD') } if defined?(ActiveSupport)
@@ -18,7 +16,7 @@ module CubeDataModel
 
     def components
       graph
-        .query([root, QB.component, nil])
+        .query([ root, QB.component, nil ])
         .map { |stmt| CubeComponent.new(graph, stmt.object) }
     end
 

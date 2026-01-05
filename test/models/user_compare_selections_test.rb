@@ -1,9 +1,7 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 # Unit tests on UserCompareSelections class
-class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class UserCompareSelectionsTest < ActiveSupport::TestCase
   before do
     I18n.locale = :en # Set default locale for tests
   end
@@ -12,7 +10,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
     I18n.locale = I18n.default_locale # Reset locale after tests
   end
 
-  describe 'UserCompareSelections' do # rubocop:disable Metrics/BlockLength
+  describe 'UserCompareSelections' do
     describe '#initialize' do
       it 'should allow permitted params' do
         params = ActionController::Parameters.new(from: '2019-12-01')
@@ -46,7 +44,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
     describe '#selected_locations' do
       it 'should return the selected locations' do
         params = ActionController::Parameters.new(
-          'location' => ['S92000003']
+          'location' => [ 'S92000003' ]
         )
         fixture = UserCompareSelections.new(params).selected_locations
         _(fixture.first.label).must_equal('Scotland')
@@ -54,7 +52,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
 
       it 'should raise an error if the location is undefined' do
         params = ActionController::Parameters.new(
-          'location' => ['wimbledon common']
+          'location' => [ 'wimbledon common' ]
         )
         fixture = UserCompareSelections.new(params)
 
@@ -98,7 +96,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
         fixture = UserCompareSelections
                   .new(params)
                   .selected_statistics
-        _(fixture).must_equal(['avg'])
+        _(fixture).must_equal([ 'avg' ])
       end
 
       it 'should return the default statistic' do
@@ -106,7 +104,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
         fixture = UserCompareSelections
                   .new(params)
                   .selected_statistics
-        _(fixture).must_equal(['all'])
+        _(fixture).must_equal([ 'all' ])
       end
     end
 
@@ -124,7 +122,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
         fixture = UserCompareSelections
                   .new(params)
                   .selected_indicators
-        _(fixture).must_equal(['hpi'])
+        _(fixture).must_equal([ 'hpi' ])
       end
 
       it 'should return the default indicator' do
@@ -132,7 +130,7 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metr
         fixture = UserCompareSelections
                   .new(params)
                   .selected_indicators
-        _(fixture).must_equal(['hpi'])
+        _(fixture).must_equal([ 'hpi' ])
       end
     end
 

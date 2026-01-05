@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Assistance with formulating correct Welsh grammar
 class WelshGrammar
   MUTATIONS = {
@@ -11,7 +9,7 @@ class WelshGrammar
         Mutation.new(/t(.*)/i, 'nh\1'),
         Mutation.new(/c([^h].*)/i, 'ngh\1', 'yng'),
         Mutation.new(/d(.*)/i, 'n\1'),
-        Mutation.new(/m(.*)/i, 'm\1', 'ym')
+        Mutation.new(/m(.*)/i, 'm\1', 'ym'),
       ],
     'o' =>
       [
@@ -23,7 +21,7 @@ class WelshGrammar
         Mutation.new(/c([^h].*)/i, 'g\1'),
         Mutation.new(/d(.*)/i, 'dd\1'),
         Mutation.new(/ll(.*)/i, '\1'),
-        Mutation.new(/p(.*)/i, 'b\1')
+        Mutation.new(/p(.*)/i, 'b\1'),
       ],
     'i' =>
       [
@@ -35,8 +33,8 @@ class WelshGrammar
         Mutation.new(/c([^h].*)/i, 'g\1'),
         Mutation.new(/d(.*)/i, 'dd\1'),
         Mutation.new(/ll(.*)/i, '\1'),
-        Mutation.new(/p(.*)/i, 'b\1')
-      ]
+        Mutation.new(/p(.*)/i, 'b\1'),
+      ],
   }.freeze
 
   def self.apply(options)

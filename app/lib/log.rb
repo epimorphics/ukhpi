@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This module provides logging functionality for the application.
 # It includes methods for logging messages at different levels (debug, info, warn, error)
 # and a method for logging requests with various fields.
@@ -33,7 +31,7 @@ module Log
     # The status of a request
     request_status: %w[received processing complete],
     # Time taken to process the event (in seconds) - maybe a float/decimal value
-    request_time: 'number'
+    request_time: 'number',
   }.freeze
 
   def debug(message, fields = {})
@@ -57,7 +55,7 @@ module Log
   end
 
   # Log a request with the given fields and type
-  def make_log(message, fields = {}) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def make_log(message, fields = {})
     puts "\n" if Rails.env.development? && Rails.logger.debug?
 
     # * Set initial values for logged fields

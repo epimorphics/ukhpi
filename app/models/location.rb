@@ -1,10 +1,8 @@
-# frozen_string_literal: true
-
 # Encapsulates a single location where UKHPI observations can be made. Locations
 # may be countries or European regions, local authorities, or counties or
 # regions of England
 class Location
-  WALES = 'http://landregistry.data.gov.uk/id/region/wales'
+  WALES = 'http://landregistry.data.gov.uk/id/region/wales'.freeze
 
   attr_reader :uri, :labels, :type, :parent, :gss
 
@@ -55,7 +53,7 @@ class Location
   end
 
   def in_wales?
-    [uri, parent].include?(WALES)
+    [ uri, parent ].include?(WALES)
   end
 
   def to_h
@@ -63,7 +61,7 @@ class Location
       uri: uri,
       labels: @labels,
       type: type,
-      gss: gss
+      gss: gss,
     }
   end
 end

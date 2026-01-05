@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Entry wrapper for applying generalised grammar rules. Mostly
 # this will be used for Welsh grammar actions, such as consonant
 # mutations

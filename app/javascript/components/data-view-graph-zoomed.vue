@@ -1,36 +1,44 @@
 <template>
-  <div class='c-data-view-graph-zoomed'>
-    <el-dialog
-      :visible.sync='showZoomedGraph'
-      :title='dialogTitle'
-      :show-close='true'
-      width='80%'
-      top='10vh'
-      @close='onCloseDialog'
-      @open='onOpenDialog'
+  <div class="c-data-view-graph-zoomed">
+    <ElDialog
+      :visible.sync="showZoomedGraph"
+      :title="dialogTitle"
+      :show-close="true"
+      width="80%"
+      top="10vh"
+      @close="onCloseDialog"
+      @open="onOpenDialog"
     >
-    <div class='o-data-view__js-options'>
-      <data-view-statistics :initial-statistics='availableStatistics' :zoom='true'></data-view-statistics>
-    </div>
+      <div class="o-data-view__js-options">
+        <DataViewStatistics
+          :initial-statistics="availableStatistics"
+          :zoom="true"
+        />
+      </div>
 
-    <data-view-graph
-      :elementId='elementId'
-      :theme='theme'
-      :indicator='indicator'
-      :zoom='true'
-      :timestamp='timestamp'
-    ></data-view-graph>
-  </el-dialog>
+      <DataViewGraph
+        :element-id="elementId"
+        :theme="theme"
+        :indicator="indicator"
+        :zoom="true"
+        :timestamp="timestamp"
+      />
+    </ElDialog>
   </div>
 </template>
 
 <script>
-import bus from '../lib/event-bus';
-import DataViewGraph from './data-view-graph.vue';
-import DataViewStatistics from './data-view-statistics.vue';
-import AvailableStatistics from '../mixins/available-statistics';
+import bus from '@/lib/event-bus'
+import DataViewGraph from './data-view-graph.vue'
+import DataViewStatistics from './data-view-statistics.vue'
+import AvailableStatistics from '@/mixins/available-statistics'
 
 export default {
+
+  components: {
+    DataViewGraph,
+    DataViewStatistics,
+  },
   mixins: [AvailableStatistics],
 
   data: () => ({
@@ -40,60 +48,52 @@ export default {
   }),
 
   computed: {
-    dialogTitle() {
-      const root = this.graphConfig.elementId && this.graphConfig.elementId.replace(/-graph/, '');
+    dialogTitle () {
+      const root = this.graphConfig.elementId && this.graphConfig.elementId.replace(/-graph/, '')
       if (root) {
-        const node = document.querySelector(`#${root} h2`);
-        return node && node.innerText.replace(/(hide|reveal|cuddio|dangos) *$/, '');
+        const node = document.querySelector(`#${root} h2`)
+        return node && node.innerText.replace(/(hide|reveal|cuddio|dangos) *$/, '')
       }
 
-      return '';
+      return ''
     },
 
-    elementId() {
-      return `${this.graphConfig.elementId}-zoomed`;
+    elementId () {
+      return `${this.graphConfig.elementId}-zoomed`
     },
 
-    theme() {
-      return this.graphConfig.theme || {};
+    theme () {
+      return this.graphConfig.theme || {}
     },
 
-    indicator() {
-      return this.graphConfig.indicator || {};
+    indicator () {
+      return this.graphConfig.indicator || {}
     },
   },
 
-  components: {
-    DataViewGraph,
-    DataViewStatistics,
+  mounted () {
+    bus.$on('zoomGraph', this.onZoomGraph)
   },
 
   methods: {
-    onZoomGraph(config) {
-      this.graphConfig = config.graphConfig;
-      this.showZoomedGraph = true;
+    onZoomGraph (config) {
+      this.graphConfig = config.graphConfig
+      this.showZoomedGraph = true
     },
 
-    onCloseDialog() {
-      this.timestamp += 1;
+    onCloseDialog () {
+      this.timestamp += 1
     },
 
     /** When we open the dialog, if this is not the first time then wait one update
      * cycle then update the timestamp. This way, the change of timestamp will be
      * noticed by the graph component, which will know to update the graph in case
      * the selected statistics have changed since first draw. */
-    onOpenDialog() {
+    onOpenDialog () {
       if (this.timestamp > 0) {
-        this.$nextTick(function deferredUpdate() { this.timestamp += 1; });
+        this.$nextTick(function deferredUpdate () { this.timestamp += 1 })
       }
     },
   },
-
-  mounted() {
-    bus.$on('zoomGraph', this.onZoomGraph);
-  },
-};
+}
 </script>
-
-<style lang='css'>
-</style>

@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Puma can serve each request in a thread from an internal thread pool.
 # The `threads` method setting takes two numbers a minimum and maximum.
 # Any libraries that use thread pools should be configured to match
@@ -64,6 +62,6 @@ log_formatter do |str|
   {
     ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
     level: 'INFO',
-    message: str
+    message: str,
   }.to_json
 end

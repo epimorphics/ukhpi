@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # A presenter for the printable view, based on the download view presenter
 class PrintPresenter < DownloadPresenter
   include ActionView::Helpers::NumberHelper
@@ -27,7 +25,7 @@ class PrintPresenter < DownloadPresenter
         val = row['ukhpi:salesVolume'].try(:first)
         "<div class='u-text-right'>#{val}</div>".html_safe
       end
-    )
+    ),
   ].freeze
 
   SALES_VOLUME_COL = 2 # PRINT_COLUMNS.map(&:label).index('Sales volume')
@@ -85,7 +83,7 @@ class PrintPresenter < DownloadPresenter
     @dates ||=
       [
         user_selections.from_date,
-        user_selections.to_date
+        user_selections.to_date,
       ]
   end
 

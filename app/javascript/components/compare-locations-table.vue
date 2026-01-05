@@ -1,25 +1,40 @@
 <template>
-  <div class='o-compare__table'>
-    <h2 class='o-heading--3'>
+  <div class="o-compare__table">
+    <h2 class="o-heading--3">
       {{ tableCaption }}
     </h2>
-    <table class='o-data-table'>
+    <table class="o-data-table">
       <thead>
         <tr>
-          <th class='u-left' scope='col'>{{ $t('js.data_table.date') }}</th>
-          <th v-for='location in locations'
-              :key='`th-${location.gss}`'
-              class='u-right'
-              scope='col'
+          <th
+            class="u-left"
+            scope="col"
+          >
+            {{ $t('js.data_table.date') }}
+          </th>
+          <th
+            v-for="location in locations"
+            :key="`th-${location.gss}`"
+            class="u-right"
+            scope="col"
           >
             {{ location.labels[$locale] || location.labels.en }}
           </th>
         </tr>
       </thead>
       <tbody>
-        <tr v-for='(row, rowIndex) in tableData' :key='`row-${rowIndex}`'>
-          <td class='u-left'>{{ dateFormatter(row['date']) }}</td>
-          <td v-for='(location, colIndex) in locations' :key='`td-${colIndex}-${rowIndex}`' class='u-right'>
+        <tr
+          v-for="(row, rowIndex) in tableData"
+          :key="`row-${rowIndex}`"
+        >
+          <td class="u-left">
+            {{ dateFormatter(row['date']) }}
+          </td>
+          <td
+            v-for="(location, colIndex) in locations"
+            :key="`td-${colIndex}-${rowIndex}`"
+            class="u-right"
+          >
             {{ valueFormatter(row[location.gss]) }}
           </td>
         </tr>
@@ -29,9 +44,9 @@
 </template>
 
 <script>
-import _ from 'lodash';
-import Moment from 'moment';
-import Numeral from 'numeral';
+import _ from 'lodash'
+import Moment from 'moment'
+import Numeral from 'numeral'
 
 /**
  * Helper to normalise data series to a given reference set of dates. If a series
@@ -41,23 +56,20 @@ import Numeral from 'numeral';
  * date in dates, and each series in tSeries will be sorted in ascending order
  * of date.
  */
-function ensureSeriesDates(dates, tSeries) {
+function ensureSeriesDates (dates, tSeries) {
   _.each(tSeries, (series) => {
     _.each(dates, (date) => {
-      const dateValue = date.date.valueOf();
-      if (!_.find(series, datum => datum.x.valueOf() === dateValue)) {
-        series.push({ x: date.date });
+      const dateValue = date.date.valueOf()
+      if (!_.find(series, (datum) => datum.x.valueOf() === dateValue)) {
+        series.push({ x: date.date })
       }
-    });
+    })
 
-    series.sort((datum0, datum1) => datum0.x.valueOf() - datum1.x.valueOf());
-  });
+    series.sort((datum0, datum1) => datum0.x.valueOf() - datum1.x.valueOf())
+  })
 }
 
 export default {
-  data: () => ({
-    tableData: [],
-  }),
 
   props: {
     statistic: {
@@ -75,36 +87,39 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    tableData: [],
+  }),
 
   computed: {
-    pred() {
-      return `ukhpi:${this.indicator.rootName}${this.statistic.rootName}`;
+    pred () {
+      return `ukhpi:${this.indicator.rootName}${this.statistic.rootName}`
     },
 
-    compareResults() {
-      return this.$store.state.compareResults;
+    compareResults () {
+      return this.$store.state.compareResults
     },
 
-    tableCaption() {
-      const indLabel = this.indicator.label.toLocaleLowerCase();
-      const statLabel = this.statistic.label.toLocaleLowerCase();
-      let locLabel = '';
+    tableCaption () {
+      const indLabel = this.indicator.label.toLocaleLowerCase()
+      const statLabel = this.statistic.label.toLocaleLowerCase()
+      let locLabel = ''
 
       switch (this.locations.length) {
         case 0:
           locLabel = this.$t('js.compare.zero_locations')
-          break;
+          break
         case 1:
           locLabel = this.$t('js.compare.one_locations')
-          break;
+          break
         case 2:
           locLabel = this.$t('js.compare.two_locations')
-          break;
+          break
         default:
           locLabel = this.$t('js.compare.n_locations', { num: this.locations.length })
       }
 
-      return this.$t('js.compare.title', { indLabel, statLabel, locLabel });
+      return this.$t('js.compare.title', { indLabel, statLabel, locLabel })
     },
   },
 
@@ -117,44 +132,41 @@ export default {
      * that we're taking dates from the longest available series, because some statistics
      * lag in some locations so we can have partial series in some cases.
      */
-    compareResults() {
-      const tSeries = _.mapValues(this.compareResults, qResults => qResults.series(this.pred));
-      const longestSeries = _.last(_.sortBy(_.values(tSeries), series => series.length));
+    compareResults () {
+      const tSeries = _.mapValues(this.compareResults, (qResults) => qResults.series(this.pred))
+      const longestSeries = _.last(_.sortBy(_.values(tSeries), (series) => series.length))
 
-      const dates = _.map(longestSeries, datum => ({ date: new Date(datum.x) }));
-      ensureSeriesDates(dates, tSeries);
-      const tData = _.map(tSeries, (series, gss) => _.map(series, datum => ({ [gss]: datum.y })));
+      const dates = _.map(longestSeries, (datum) => ({ date: new Date(datum.x) }))
+      ensureSeriesDates(dates, tSeries)
+      const tData = _.map(tSeries, (series, gss) => _.map(series, (datum) => ({ [gss]: datum.y })))
 
-      this.tableData = _.map(_.zip(dates, ...tData), row => _.assign({}, ...row));
+      this.tableData = _.map(_.zip(dates, ...tData), (row) => _.assign({}, ...row))
     },
   },
 
   methods: {
     dateFormatter: (date) => Moment(date).format('MMMM YYYY'),
 
-    valueFormatter(value) {
-      const ind = this.indicator.slug;
-      let format = '0,0';
-      let scale = 1;
+    valueFormatter (value) {
+      const ind = this.indicator.slug
+      let format = '0,0'
+      let scale = 1
 
       if (_.isUndefined(value)) {
-        return 'no data';
+        return 'no data'
       }
 
       if (ind === 'avg') {
-        format = '$0,0.';
+        format = '$0,0.'
       } else if (ind === 'pac' || ind === 'pmc') {
-        format = '0.0%';
-        scale = 100;
+        format = '0.0%'
+        scale = 100
       } else if (ind === 'hpi') {
-        format = '0,0.0';
+        format = '0,0.0'
       }
 
-      return Numeral(value / scale).format(format);
+      return Numeral(value / scale).format(format)
     },
-  }
-};
+  },
+}
 </script>
-
-<style lang='scss'>
-</style>

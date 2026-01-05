@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This class encapsulates the user input via the request params, and uses that
 # to determine which UKHPI statistics should be selected from the store and
 # subsequently displayed.
@@ -16,10 +14,10 @@ class UserSelections
   DEFAULT_INDICATORS = %w[hpi avg pmc pac].freeze
   DEFAULT_STATISTICS = %w[all].freeze
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
-  DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'
-  DEFAULT_REGION_TYPE = 'country'
+  DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'.freeze
+  DEFAULT_REGION_TYPE = 'country'.freeze
   DEFAULT_THEMES = %w[property_type volume].freeze
-  DEFAULT_LANGUAGE = 'en'
+  DEFAULT_LANGUAGE = 'en'.freeze
 
   USER_PARAMS_MODEL = {
     'location' => Struct::UserParam.new(DEFAULT_REGION, false, nil),
@@ -43,7 +41,7 @@ class UserSelections
     'ai' => Struct::UserParam.new(nil, true, 'in'),
     'ac' => Struct::UserParam.new(nil, true, 'st'),
     'region' => Struct::UserParam.new(nil, false, 'location'),
-    'region-selection' => Struct::UserParam.new(nil, false, 'location-term')
+    'region-selection' => Struct::UserParam.new(nil, false, 'location-term'),
   }.freeze
 
   PERMITTED = USER_PARAMS_MODEL
@@ -117,7 +115,7 @@ class UserSelections
       in: '%s',
       location: '%s',
       from: 'from %s',
-      to: 'to %s'
+      to: 'to %s',
     }
 
     apply_templates(templates, @params).join(' ')

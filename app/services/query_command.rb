@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Class encapsulating the user action of making a UKHPI query
 class QueryCommand
   include DataService
@@ -17,8 +15,8 @@ class QueryCommand
   # Perform the UKHPI query encapsulated by this command object
   # @param [DataServicesApi::Service] service the API service to use
   # Defaults to the UKHPI API service endpoint
-  def perform_query(service = nil) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-    time_taken = execute_query(service, query) / 1000
+  def perform_query(service = nil)
+    execute_query(service, query) / 1000
   end
 
   # @return True if this a query execution command
@@ -54,7 +52,7 @@ class QueryCommand
   # @param [DataServicesApi::Service] service the API service to use
   # @param [DataServicesApi::Query] query the query to execute
   # @return [Integer] the time taken to execute the query in microseconds
-  def execute_query(service, query) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  def execute_query(service, query)
     begin
       start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
@@ -83,7 +81,7 @@ class QueryCommand
       log_fields[:request_time] = time_taken
       log_fields[:status] = status
       Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug? # rubocop:disable Rails/Output
+      puts "\n" if Rails.env.development? && Rails.logger.debug?
     end
     # Always return the time taken to execute the query
     time_taken

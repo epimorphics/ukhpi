@@ -1,29 +1,31 @@
 <template>
-  <div class='o-data-view__js-options-statistics'>
-    <label v-for='(statistic, index) in statistics'
-      :key='statistic.slug'
-      class="checkbox-container">
+  <div class="o-data-view__js-options-statistics">
+    <label
+      v-for="(statistic, index) in statistics"
+      :key="statistic.slug"
+      class="checkbox-container"
+    >
       <input
         type="checkbox"
-        :name='statistic.label'
-        :data-slug='statistic.slug'
-        @change='onSelectStatistic'
-        :checked='isSelectedStatistic(statistic.slug)'
+        :name="statistic.label"
+        :data-slug="statistic.slug"
+        :checked="isSelectedStatistic(statistic.slug)"
+        @change="onSelectStatistic"
         @keydown.enter="onSelectStatistic"
-      />
-        <img
-          :src='imageSrcPath(index, false)'
-          :srcset='imageSrcPath(index, true)'
-          :alt='`marker image for ${statistic.label}`'
-        />
-        {{ statistic.label }}
+      >
+      <img
+        :src="imageSrcPath(index, false)"
+        :srcset="imageSrcPath(index, true)"
+        :alt="`marker image for ${statistic.label}`"
+      >
+      {{ statistic.label }}
     </label>
   </div>
 </template>
 
 <script>
-import { SELECT_STATISTIC } from '../store/mutation-types';
-import markerRoutes from '../images/markers/';
+import { SELECT_STATISTIC } from '@/store/mutation-types'
+import markerRoutes from '@/images/markers/'
 
 const MARKERS = [
   'Circle',
@@ -31,12 +33,9 @@ const MARKERS = [
   'Square',
   'Star',
   'Triangle',
-];
+]
 
 export default {
-  data: () => ({
-    statistics: [],
-  }),
 
   props: {
     initialStatistics: {
@@ -48,46 +47,46 @@ export default {
       required: true,
     },
   },
+  data: () => ({
+    statistics: [],
+  }),
 
-  mounted() {
-    this.initStatistics();
+  mounted () {
+    this.initStatistics()
   },
 
   methods: {
-    initStatistics() {
+    initStatistics () {
       if (this.statistics !== this.initialStatistics) {
-        this.statistics = this.initialStatistics;
+        this.statistics = this.initialStatistics
       }
       if (!this.zoom) {
-        this.syncSelectedStatisticsToStore();
+        this.syncSelectedStatisticsToStore()
       }
     },
 
-    syncSelectedStatisticsToStore() {
-      const store = this.$store;
+    syncSelectedStatisticsToStore () {
+      const store = this.$store
       this.initialStatistics.forEach((stat) => {
-        store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected });
-      });
+        store.commit(SELECT_STATISTIC, { slug: stat.slug, isSelected: stat.isSelected })
+      })
     },
 
-    onSelectStatistic(event) {
-      const slug = event.target.getAttribute('data-slug');
-      const selected = this.isSelectedStatistic(slug);
-      this.$store.commit(SELECT_STATISTIC, { slug, isSelected: !selected });
+    onSelectStatistic (event) {
+      const slug = event.target.getAttribute('data-slug')
+      const selected = this.isSelectedStatistic(slug)
+      this.$store.commit(SELECT_STATISTIC, { slug, isSelected: !selected })
     },
 
-    isSelectedStatistic(slug) {
-      return this.$store.state.selectedStatistics[slug];
+    isSelectedStatistic (slug) {
+      return this.$store.state.selectedStatistics[slug]
     },
 
-    imageSrcPath(index, svg) {
-      const imageRoot = MARKERS[index];
-      const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`;
-      return new URL(`../${markerRoutes[imagePathKey]}`, import.meta.url).pathname;
+    imageSrcPath (index, svg) {
+      const imageRoot = MARKERS[index]
+      const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`
+      return new URL(`../${markerRoutes[imagePathKey]}`, import.meta.url).pathname
     },
   },
-};
+}
 </script>
-
-<style lang='scss'>
-</style>

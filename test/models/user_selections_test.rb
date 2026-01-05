@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 require 'i18n'
 
@@ -8,9 +6,9 @@ def user_selections(params)
 end
 
 # Unit tests on the UserSelections class
-class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
+class UserSelectionsTest < ActiveSupport::TestCase
   # Test cases for UserSelections
-  describe 'UserSelections' do # rubocop:disable Metrics/BlockLength
+  describe 'UserSelections' do
     describe '#initialize' do
       it 'should process the parameters correctly with action-controller params' do
         selections = user_selections('location' => 'test-region')
@@ -25,14 +23,14 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
 
     describe '#indicators' do
       it 'should access the selected indicator from the params' do
-        selections = user_selections('in' => ['test-in'])
-        _(selections.selected_indicators).must_equal(['test-in'])
-        _(selections.selected_indicators(all: true)).must_equal(['test-in'])
+        selections = user_selections('in' => [ 'test-in' ])
+        _(selections.selected_indicators).must_equal([ 'test-in' ])
+        _(selections.selected_indicators(all: true)).must_equal([ 'test-in' ])
       end
 
       it 'should recognise a legacy parameter' do
-        selections = user_selections('ai' => ['test-in'])
-        _(selections.selected_indicators).must_equal(['test-in'])
+        selections = user_selections('ai' => [ 'test-in' ])
+        _(selections.selected_indicators).must_equal([ 'test-in' ])
       end
 
       it 'should return the default value if nothing is defined' do
@@ -58,12 +56,12 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
 
     describe '#selected_statistics' do
       it 'should return the selected statistics if they are specified' do
-        _(user_selections(st: ['fla']).selected_statistics).must_equal ['fla']
-        _(user_selections(st: ['fla']).selected_statistics(all: true)).must_equal ['fla']
+        _(user_selections(st: [ 'fla' ]).selected_statistics).must_equal [ 'fla' ]
+        _(user_selections(st: [ 'fla' ]).selected_statistics(all: true)).must_equal [ 'fla' ]
       end
 
       it 'should return the default statistics if they are not specified' do
-        _(user_selections({}).selected_statistics).must_equal ['all']
+        _(user_selections({}).selected_statistics).must_equal [ 'all' ]
       end
 
       it 'should allow returning all statistics if none are specified' do
@@ -99,17 +97,17 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
 
     describe '#with_the_additional_array_value' do
       it 'should create a new user preferences with an additional array value' do
-        selections0 = user_selections('in' => ['averagePrice'])
-        _(selections0.selected_indicators).must_equal ['averagePrice']
+        selections0 = user_selections('in' => [ 'averagePrice' ])
+        _(selections0.selected_indicators).must_equal [ 'averagePrice' ]
 
         selections1 = selections0.with('in', 'percentageMonthlyChange')
-        _(selections0.selected_indicators).must_equal ['averagePrice']
+        _(selections0.selected_indicators).must_equal [ 'averagePrice' ]
         _(selections1.selected_indicators.length).must_equal 2
         _(selections1.selected_indicators).must_include 'averagePrice'
         _(selections1.selected_indicators).must_include 'percentageMonthlyChange'
 
         selections2 = selections1.with('in', 'percentageAnnualChange')
-        _(selections0.selected_indicators).must_equal ['averagePrice']
+        _(selections0.selected_indicators).must_equal [ 'averagePrice' ]
         _(selections1.selected_indicators.length).must_equal 2
         _(selections2.selected_indicators.length).must_equal 3
         _(selections2.selected_indicators).must_include 'averagePrice'
@@ -120,10 +118,10 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
 
     describe '#with_array_valued_params' do
       it 'should not create duplicate values in array-valued params' do
-        selections0 = user_selections('in' => ['averagePrice'])
+        selections0 = user_selections('in' => [ 'averagePrice' ])
         selections1 = selections0.with('in', 'averagePrice')
-        _(selections0.selected_indicators).must_equal ['averagePrice']
-        _(selections1.selected_indicators).must_equal ['averagePrice']
+        _(selections0.selected_indicators).must_equal [ 'averagePrice' ]
+        _(selections1.selected_indicators).must_equal [ 'averagePrice' ]
       end
     end
 
@@ -158,7 +156,7 @@ class UserSelectionsTest < ActiveSupport::TestCase # rubocop:disable Metrics/Cla
 
     describe '#summary' do
       it 'should produce a summary of the preferences including the theme' do
-        selections = user_selections('thm' => ['property_type'],
+        selections = user_selections('thm' => [ 'property_type' ],
                                      'from' => '2017-01',
                                      'to' => '2017-10',
                                      'location' => 'http://landregistry.data.gov.uk/id/region/england')

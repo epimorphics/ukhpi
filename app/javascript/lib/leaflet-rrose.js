@@ -24,7 +24,6 @@ import L from 'leaflet'
 
 L.Rrose = L.Popup.extend({
 
-  /* eslint-disable no-underscore-dangle */
   _initLayout () {
     const prefix = 'leaflet-rrose'
     const container = L.DomUtil.create('div', `${prefix} ${this.options.className} leaflet-zoom-animated`)
@@ -49,8 +48,8 @@ L.Rrose = L.Popup.extend({
       this.options.position = 's'
     }
     // or too far east...
-    let xDiff = this._map.latLngToContainerPoint(this._latlng).x -
-      (this._map.getSize().x - xBound)
+    let xDiff = this._map.latLngToContainerPoint(this._latlng).x
+      - (this._map.getSize().x - xBound)
     if (xDiff > 0) {
       this.options.position += 'w'
     } else {
@@ -64,21 +63,21 @@ L.Rrose = L.Popup.extend({
     // Create the necessary DOM elements in the correct order. Pure 'n' and 's'
     // conditions need only one class for styling, others need two.
     if (/s/.test(this.options.position)) {
-      this._tipContainer = L.DomUtil.create('div', `${prefix}-tip-container` +
-        ` ${prefix}-tip-container-${this.options.position}`, container)
-      wrapper = L.DomUtil.create('div', `${prefix}-content-wrapper` +
-        ` ${prefix}-content-wrapper-${this.options.position}`, container)
+      this._tipContainer = L.DomUtil.create('div', `${prefix}-tip-container`
+      + ` ${prefix}-tip-container-${this.options.position}`, container)
+      wrapper = L.DomUtil.create('div', `${prefix}-content-wrapper`
+      + ` ${prefix}-content-wrapper-${this.options.position}`, container)
       this._wrapper = wrapper
     } else {
-      wrapper = L.DomUtil.create('div', `${prefix}-content-wrapper` +
-        ` ${prefix}-content-wrapper-${this.options.position}`, container)
+      wrapper = L.DomUtil.create('div', `${prefix}-content-wrapper`
+      + ` ${prefix}-content-wrapper-${this.options.position}`, container)
       this._wrapper = wrapper
-      this._tipContainer = L.DomUtil.create('div', `${prefix}-tip-container` +
-        ` ${prefix}-tip-container-${this.options.position}`, container)
+      this._tipContainer = L.DomUtil.create('div', `${prefix}-tip-container`
+      + ` ${prefix}-tip-container-${this.options.position}`, container)
     }
 
-    this._tip = L.DomUtil.create('div', `${prefix}-tip` +
-      ` ${prefix}-tip-${this.options.position}`, this._tipContainer)
+    this._tip = L.DomUtil.create('div', `${prefix}-tip`
+    + ` ${prefix}-tip-${this.options.position}`, this._tipContainer)
     L.DomEvent.disableClickPropagation(wrapper)
     this._contentNode = L.DomUtil.create('div', `${prefix}-content`, wrapper)
     L.DomEvent.on(this._contentNode, 'mousewheel', L.DomEvent.stopPropagation)
@@ -103,8 +102,8 @@ L.Rrose = L.Popup.extend({
     }
 
     if (/s/.test(this.options.position)) {
-      this._containerBottom = (-this._container.offsetHeight + offset.y) -
-        (is3d ? 0 : pos.y)
+      this._containerBottom = (-this._container.offsetHeight + offset.y)
+        - (is3d ? 0 : pos.y)
     } else {
       this._containerBottom = -offset.y - (is3d ? 0 : pos.y)
     }
@@ -112,15 +111,15 @@ L.Rrose = L.Popup.extend({
     if (/e/.test(this.options.position)) {
       this._containerLeft = offset.x + (is3d ? 0 : pos.x)
     } else if (/w/.test(this.options.position)) {
-      this._containerLeft = -Math.round(this._containerWidth) + offset.x +
-        (is3d ? 0 : pos.x)
+      this._containerLeft = -Math.round(this._containerWidth) + offset.x
+        + (is3d ? 0 : pos.x)
     } else {
-      this._containerLeft = -Math.round(this._containerWidth / 2) +
-        offset.x + (is3d ? 0 : pos.x)
+      this._containerLeft = -Math.round(this._containerWidth / 2)
+        + offset.x + (is3d ? 0 : pos.x)
     }
 
     this._container.style.bottom = `${this._containerBottom}px`
     this._container.style.left = `${this._containerLeft}px`
-  }
+  },
 
 })

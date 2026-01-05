@@ -1,11 +1,9 @@
-# frozen_string_literal: true
-
 require 'json'
 require 'csv'
 
 # Constants
 
-NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm package?'
+NO_ESLINT = 'Failed to perform eslint step. Is eslint installed as a global npm package?'.freeze
 
 # Helper classes
 
@@ -102,7 +100,7 @@ class LocationContainer
   end
 
   def in_wales?
-    [container, container2, container3].include?('http://landregistry.data.gov.uk/id/region/wales')
+    [ container, container2, container3 ].include?('http://landregistry.data.gov.uk/id/region/wales')
   end
 
   # Post-condition invariant: there should be two labels, one English and
@@ -135,12 +133,12 @@ class LocationContainer
       "container2: \"#{container2}\"",
       "container3: \"#{container3}\"",
       "type: \"#{preferred_type}\"",
-      "message: \"#{message}\""
+      "message: \"#{message}\"",
     ].join(', ')
   end
 end
 
-def write_locations_files(locations, all_types) # rubocop:disable Metrics/AbcSize, Metrics/MethodLength, Metrics/CyclomaticComplexity
+def write_locations_files(locations, all_types)
   location_names = []
   gss_index = {}
 
@@ -206,13 +204,12 @@ def process_location_data(location_data, locations, all_types)
   end
 end
 
-namespace :ukhpi do # rubocop:disable Metrics/BlockLength
+namespace :ukhpi do
   desc 'Generate the locations files by SPARQL query'
   task locations: %i[locations_query locations_generate locations_files_lint move_locations_files]
 
   # run the SPARQL query to generate the locations results
-  task locations_query: :environment do # rubocop:disable Metrics/BlockLength
-
+  task locations_query: :environment do
     query = "
       prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
       prefix qb: <http://purl.org/linked-data/cube#>
@@ -290,7 +287,7 @@ namespace :ukhpi do # rubocop:disable Metrics/BlockLength
   end
 
   desc 'SPARQL-describe the given URI'
-  task :describe, [:uri] => [:environment] do |_t, args|
+  task :describe, [ :uri ] => [ :environment ] do |_t, args|
     uri = args[:uri]
     query = "describe <#{uri}>"
     root = Rails.root.to_s

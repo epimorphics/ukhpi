@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 # Unit tests on the UkhpiStatistic class
@@ -12,7 +10,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
     I18n.locale = I18n.default_locale # Reset locale after tests
   end
 
-  describe 'UkhpiStatistic' do # rubocop:disable Metrics/BlockLength
+  describe 'UkhpiStatistic' do
     describe '#initialize' do
       it 'should provide accessors to initialization state' do
         stat = UkhpiStatistic.new('foo', 'foo_r', 'all_property_types', true)
@@ -31,7 +29,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
 
     describe '#selected?' do
       it 'should correctly determine whether a statistic is selected' do
-        user_selections = stub(selected_statistics: ['foo'])
+        user_selections = stub(selected_statistics: [ 'foo' ])
         assert UkhpiStatistic.new('foo', 'foo_r', 'a', true).selected?(user_selections)
         assert_not UkhpiStatistic.new('bar', 'bar_r', 'b', false).selected?(user_selections)
       end
@@ -39,7 +37,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
 
     describe '#to_h' do
       it 'should serialize the statistic to a hash correctly when selected' do
-        user_selections = stub(selected_statistics: ['foo'])
+        user_selections = stub(selected_statistics: [ 'foo' ])
         hash = UkhpiStatistic
                .new('foo', 'foo_r', 'all_property_types', true)
                .to_h(user_selections)
@@ -52,7 +50,7 @@ class UkhpiStatisticTest < ActiveSupport::TestCase
       end
 
       it 'should serialize the statistic to a hash correctly when not selected' do
-        user_selections = stub(selected_statistics: ['foo'])
+        user_selections = stub(selected_statistics: [ 'foo' ])
         hash = UkhpiStatistic
                .new('bar', 'foo_r', 'all_property_types', true)
                .to_h(user_selections)

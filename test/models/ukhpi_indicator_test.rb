@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'test_helper'
 
 # Unit tests on the UkhpiIndicator class
@@ -29,7 +27,7 @@ class UkhpiIndicatorTest < ActiveSupport::TestCase
         I18n.default_locale = :en
         I18n.locale = :en
 
-        user_selections = stub(selected_indicators: ['foo'])
+        user_selections = stub(selected_indicators: [ 'foo' ])
 
         hash = UkhpiIndicator.new('foo', 'r', 'average_price').to_h(user_selections)
         _(hash[:slug]).must_equal 'foo'

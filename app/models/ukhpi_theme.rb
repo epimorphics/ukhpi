@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Encapsulates a theme of UKHPI statistics, which are natural groupings of the
 # various statistics in the overall dataset. Example themes include
 # 'property type' and 'buyer status'
@@ -32,7 +30,7 @@ class UkhpiTheme
       slug: slug,
       label: label,
       indicators: indicators,
-      statistics: statistics.map { |stat| stat.to_h(user_selections) }
+      statistics: statistics.map { |stat| stat.to_h(user_selections) },
     }
   end
 

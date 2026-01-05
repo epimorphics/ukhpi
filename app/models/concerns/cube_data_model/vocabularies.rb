@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module CubeDataModel
   # RDF vocabularies for the key concepts in the Cube data model for UKHPI
   module Vocabularies

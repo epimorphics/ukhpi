@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Subscribe to :api events
 class ApiPrometheusSubscriber < ActiveSupport::Subscriber
   attach_to :api

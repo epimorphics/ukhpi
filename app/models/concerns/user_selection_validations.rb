@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # A collection of validation rules we apply to check whether a given set of user
 # input selections is valid
 module UserSelectionValidations

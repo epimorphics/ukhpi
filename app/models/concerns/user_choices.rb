@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Shared functionality for user models that provide access to the users'
 # choices articulated via the params in the incoming request
 module UserChoices
@@ -14,7 +12,7 @@ module UserChoices
   def with(param, val)
     new_params =
       if array_valued?(param)
-        new_values = (param_or_default(param) + [val]).uniq
+        new_values = (param_or_default(param) + [ val ]).uniq
         @params.merge(param => new_values)
       else
         @params.merge(param => val)
@@ -66,7 +64,7 @@ module UserChoices
       # to avoid potential errors from maliciously long strings.
       potential_date = date.to_s.first(10)
       # strings that match YYYY-MM will be transformed to YYYY-MM-01 (i.e. 10 chars)
-      date_str = potential_date.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{potential_date}-01" : potential_date # rubocop:disable Layout/LineLength
+      date_str = potential_date.match?(/\d\d\d\d-(1[012]|0[1-9])/) ? "#{potential_date}-01" : potential_date
       # We can now parse the date string and fail if it is not a valid date.
       Date.parse(date_str)
     end

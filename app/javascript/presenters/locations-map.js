@@ -13,35 +13,36 @@ const LOCAL_AUTHORITY_TYPES = [
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/District',
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/LondonBorough',
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/MetropolitanDistrict',
-  'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority'
+  'http://data.ordnancesurvey.co.uk/ontology/admingeo/UnitaryAuthority',
 ]
 
 const COUNTY_TYPES = [
   'http://data.ordnancesurvey.co.uk/ontology/admingeo/County',
-  'http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority'
+  'http://data.ordnancesurvey.co.uk/ontology/admingeo/GreaterLondonAuthority',
 ]
 
-const REGION_TYPES = [
-  'http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion'
-]
+const REGION_TYPES = ['http://data.ordnancesurvey.co.uk/ontology/admingeo/EuropeanRegion']
 
 /** Cases where selecting one thing highlights several things */
 const LOCATION_EXPANSIONS = {
   'http://landregistry.data.gov.uk/id/region/great-britain':
-    ['http://landregistry.data.gov.uk/id/region/england',
-      'http://landregistry.data.gov.uk/id/region/scotland',
-      'http://landregistry.data.gov.uk/id/region/wales'
-    ],
-  'http://landregistry.data.gov.uk/id/region/united-kingdom':
-    ['http://landregistry.data.gov.uk/id/region/england',
+    [
+      'http://landregistry.data.gov.uk/id/region/england',
       'http://landregistry.data.gov.uk/id/region/scotland',
       'http://landregistry.data.gov.uk/id/region/wales',
-      'http://landregistry.data.gov.uk/id/region/northern-ireland'
+    ],
+  'http://landregistry.data.gov.uk/id/region/united-kingdom':
+    [
+      'http://landregistry.data.gov.uk/id/region/england',
+      'http://landregistry.data.gov.uk/id/region/scotland',
+      'http://landregistry.data.gov.uk/id/region/wales',
+      'http://landregistry.data.gov.uk/id/region/northern-ireland',
     ],
   'http://landregistry.data.gov.uk/id/region/england-and-wales':
-    ['http://landregistry.data.gov.uk/id/region/england',
-      'http://landregistry.data.gov.uk/id/region/wales'
-    ]
+    [
+      'http://landregistry.data.gov.uk/id/region/england',
+      'http://landregistry.data.gov.uk/id/region/wales',
+    ],
 }
 
 /** A list of reqions that are typed as metropolitan districts but which should not appear
@@ -53,10 +54,9 @@ const LA_MAP_ERRATA = [
   'http://landregistry.data.gov.uk/id/region/west-yorkshire',
   'http://landregistry.data.gov.uk/id/region/south-yorkshire',
   'http://landregistry.data.gov.uk/id/region/merseyside',
-  'http://landregistry.data.gov.uk/id/region/tyne-and-wear'
+  'http://landregistry.data.gov.uk/id/region/tyne-and-wear',
 ]
 
-/* eslint-disable max-len, class-methods-use-this */
 export default class LocationsMap {
   constructor (elementId, locale) {
     this.elementId = elementId
@@ -108,7 +108,7 @@ export default class LocationsMap {
       opacity: 1,
       color: 'white',
       dashArray: '3',
-      fillOpacity: 0.7
+      fillOpacity: 0.7,
     }
   }
 
@@ -118,7 +118,7 @@ export default class LocationsMap {
       color: '#999999',
       weight: 1,
       dashArray: '3',
-      fillOpacity: 0.7
+      fillOpacity: 0.7,
     }
   }
 
@@ -126,7 +126,7 @@ export default class LocationsMap {
     return {
       color: '#222',
       fillColor: '#ded',
-      weight: 2
+      weight: 2,
     }
   }
 
@@ -135,7 +135,7 @@ export default class LocationsMap {
       fillColor: '#C0C006',
       color: '#686',
       fillOpacity: 0.7,
-      dashArray: ''
+      dashArray: '',
     })
   }
 
@@ -148,7 +148,7 @@ export default class LocationsMap {
   determineStyle (layer) {
     return _.bind(
       this.isLayerSelected(layer) ? this.selectedLocationStyle : this.standardLocationStyle,
-      this
+      this,
     )
   }
 
@@ -172,8 +172,10 @@ export default class LocationsMap {
       this.popup = new L.Rrose({
         offset: new L.Point(0, -10),
         closeButton: false,
-        autoPan: false
-      }).setLatLng(point).setContent(label).openOn(this.leafletMap)
+        autoPan: false,
+      }).setLatLng(point)
+        .setContent(label)
+        .openOn(this.leafletMap)
 
       const hidePopup = (function onHidePopup (m, p) {
         return function onClosePopup () { m.closePopup(p) }
@@ -217,7 +219,7 @@ export default class LocationsMap {
     layer.on({
       mouseover: onHighlightFeature,
       mouseout: onUnhighlightFeature,
-      click: onSelectFeature
+      click: onSelectFeature,
     })
   }
 
@@ -261,8 +263,8 @@ export default class LocationsMap {
         partitionKeys.push('la')
       }
 
-      if (_.includes(LOCAL_AUTHORITY_TYPES, location.type) &&
-        !_.includes(LA_MAP_ERRATA, location.uri)) {
+      if (_.includes(LOCAL_AUTHORITY_TYPES, location.type)
+        && !_.includes(LA_MAP_ERRATA, location.uri)) {
         partitionKeys.push('la')
       }
     }
@@ -285,7 +287,7 @@ export default class LocationsMap {
     const onEachFeature = _.bind(this.onEachFeature, this)
     return L.geoJson(json, {
       style: this.standardLocationStyle,
-      onEachFeature
+      onEachFeature,
     })
   }
 
@@ -332,7 +334,7 @@ export default class LocationsMap {
 
       this.leafletMap = L.map(this.elementId, {
         zoomDelta: 0.5,
-        zoomSnap: 0
+        zoomSnap: 0,
       })
         .setView([55.7, -2], 4.7)
       this.leafletMap

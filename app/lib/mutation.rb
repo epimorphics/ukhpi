@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Denotes a consonant mutation in Welsh
 class Mutation
   attr_reader :pattern, :replacement_pattern, :new_prefix

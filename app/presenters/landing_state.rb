@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # Presenter for the state needed to drive the landing page
 class LandingState
   attr_reader :latest, :user_selections

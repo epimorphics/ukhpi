@@ -2,28 +2,23 @@ import Vue from 'vue/dist/vue.esm'
 import * as Sentry from '@sentry/vue'
 import ElementUI from 'element-ui'
 import localeEn from 'element-ui/lib/locale/lang/en'
-import localeElementCy from '../lang/element-ui-cy'
-import localeD3Cy from '../lang/d3-timeformat-cy.json'
+import localeElementCy from '@/lang/element-ui-cy'
+import localeD3Cy from '@/lang/d3-timeformat-cy.json'
 import Numeral from 'numeral'
 import 'core-js/stable'
-import 'regenerator-runtime/runtime'
 import moment from 'moment'
 import { timeFormatDefaultLocale } from 'd3-time-format'
 
-import router from '../router/index.js.erb'
-import store from '../store/index'
-
-import getAppVersion from '../lib/app_version'
-
-// Issue https://github.com/epimorphics/ukhpi/issues/169
-// Add fix for IE Edge
-import '../lib/ie-d3-fix'
+import router from '@/router/index.js'
+import store from '@/store/index'
 
 // set up internationalization support
 import VueI18n from 'vue-i18n'
-import i18n from '../lang'
+import i18n from '@/lang'
 
-const currentAppRelease = window.ukhpi.version || getAppVersion()
+// Get app version from build-time injected constant
+const currentAppVersion = __APP_VERSION__
+const currentAppRelease = `${import.meta.env.SENTRY_PROJECT}@${currentAppVersion}`.trim()
 
 const currentEnvironment = import.meta.env.MODE || 'production' // fallback to production for safety
 
@@ -35,7 +30,7 @@ if (currentEnvironment === 'development') {
   console.debug(`Rails environment: ${import.meta.env.RAILS_ENV}`)
   console.debug(`Node environment: ${import.meta.env.MODE}`)
   console.debug(`HMLR UKHPI Environment: ${import.meta.env.SENTRY_ENVIRONMENT}`)
-  console.debug(`HMLR UKHPI Version: ${currentAppRelease}`)
+  console.debug(`HMLR UKHPI Release Version: ${currentAppRelease}`)
   console.debug(`Log Level: ${import.meta.env.LOG_LEVEL}`)
   console.debug(`Sentry Enabled: ${import.meta.env.SENTRY_ENABLED}`)
 
@@ -58,15 +53,16 @@ if (currentEnvironment === 'development') {
     Sentry.init({
       Vue,
       debug: currentEnvironment.includes('dev'),
-      dsn: 'https://1150348b449a444bb3ac47ddd82b37c4@sentry.io/251669',
+      dsn: import.meta.env.SENTRY_API_KEY,
       enabled: !currentEnvironment.includes('dev'),
       environment: currentEnvironment,
       ignoreErrors: ['Non-Error promise rejection captured'],
       initialScope: {
-        tags: { app: 'ukhpi-js' }
+        tags: { app: 'ukhpi-js' },
       },
       integrations: [
-        Sentry.replayIntegration()
+        Sentry.browserTracingIntegration({ router }),
+        Sentry.replayIntegration(),
       ],
       release: `${currentAppRelease}`,
       // Session Replay set by current MODE env variable:
@@ -74,15 +70,15 @@ if (currentEnvironment === 'development') {
       replaysOnErrorSampleRate: errorSampleRate,
       telemetry: {
         tracesSampleRate: currentEnvironment.includes('dev') ? 1.0 : 0.1,
-        tracePropagationTargets: ['localhost', 'https://landregistry.gov.uk/app/ukhpi']
-      }
+        tracePropagationTargets: ['localhost', 'https://landregistry.gov.uk/app/ukhpi'],
+      },
     })
 
     const sentryTags = {
       app: 'ukhpi-js',
       band: import.meta.env.SENTRY_BAND || null,
       enabled: import.meta.env.SENTRY_ENABLED || null,
-      hostname: import.meta.env.SENTRY_HOSTNAME || null
+      hostname: import.meta.env.SENTRY_HOSTNAME || null,
     }
     sentryTags.each((value, key) => {
       if (value !== null) { // Only set tags that are not null
@@ -102,12 +98,12 @@ Vue.use(ElementUI, { locale: i18n.locale === 'en' ? localeEn : localeElementCy }
 Numeral.register('locale', 'gb', {
   delimiters: {
     thousands: ',',
-    decimal: '.'
+    decimal: '.',
   },
   currency: {
-    symbol: '£'
+    symbol: '£',
   },
-  ordinal: () => ''
+  ordinal: () => '',
 })
 Numeral.locale('gb')
 
@@ -120,12 +116,28 @@ if (i18n.locale === 'cy') {
 }
 
 const mountVueApp = () => {
+  if (document.getElementById('application') === null) {
+    // No application element to mount to
+    // Prevents errors when navigating non-Vue pages
+    console.debug('No #application element found, skipping Vue app mount')
+    return
+  }
+
+  console.debug('Mounting Vue app')
+  console.debug('Router routes:', router.options.routes)
+  console.debug('Current location:', window.location.pathname)
+  console.debug('window.ukhpi.root_path:', window.ukhpi?.root_path)
+
   // This is the main entry point for the Vue app
-  new Vue({
+  const app = new Vue({
     i18n,
     store,
-    router
+    router,
   }).$mount('#application')
+
+  // Debug router state after mounting
+  console.debug('Router current route:', router.currentRoute)
+  return app
 }
 
 /**
