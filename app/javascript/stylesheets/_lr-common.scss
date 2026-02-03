@@ -39,7 +39,7 @@ $lr-top-line: $lr-green-nav;
 $lr-footer-grey: #f0f5f0;
 $lr-footer-link: color.adjust($lr-separator, $lightness: 10%);
 $lr-footer-background: #818181;
-$lr-green-nav-darkened: color.adjust( $lr-green-nav, $lightness: -20%);
+$lr-green-nav-darkened: color.adjust($lr-green-nav, $lightness: -20%);
 
 $graph-colours: (
   graph-0: $lr-graph-fuschia,
@@ -51,7 +51,10 @@ $graph-colours: (
 );
 /* settings */
 
-ol, ul, nav ol, nav ul {
+ol,
+ul,
+nav ol,
+nav ul {
   list-style: unset;
   list-style-type: none;
   list-style-position: inside;
@@ -88,6 +91,7 @@ input[type=radio] {
 .o-flash-message {
   padding-top: 3px;
   padding-bottom: 3px;
+
   p {
     border-left: 8px solid $lr-yellow;
     padding-left: 12px;
@@ -220,6 +224,7 @@ input[type=radio] {
 
 // override UK gov stylesheet, which uses the highly specific #global-header selector
 #global-header {
+
   &.lr-header,
   &.with-proposition {
     background-color: white;
@@ -228,8 +233,7 @@ input[type=radio] {
       background-color: white;
 
       .header-proposition {
-        padding-block-end: 1rem;;
-        #proposition-name{
+        #proposition-name {
           &.lr-header--proposition-name {
             color: $lr-link;
           }
@@ -251,10 +255,12 @@ input[type=radio] {
       }
 
       @media screen and (min-width: 769px) {
+
         .header-global,
         .header-proposition {
           width: unset;
         }
+
         .header-proposition {
           float: right;
         }
@@ -264,21 +270,26 @@ input[type=radio] {
 
 }
 
-.o-container,#content {
-    max-width: 960px;
-    margin: 0 15px
+.o-container,
+#content {
+  max-width: 960px;
+  margin: 0 15px
 }
 
 @media (min-width: 641px) {
-    .o-container,#content {
-        margin:0 30px
-    }
+
+  .o-container,
+  #content {
+    margin: 0 30px
+  }
 }
 
 @media (min-width: 1020px) {
-    .o-container,#content {
-        margin:0 auto
-    }
+
+  .o-container,
+  #content {
+    margin: 0 auto
+  }
 }
 
 #footer {
@@ -315,7 +326,7 @@ input[type=radio] {
   }
 
   .u-muted--footer {
-    font-size: 11pt ;
+    font-size: 11pt;
     color: #444;
     margin-top: 1em;
   }
@@ -326,7 +337,7 @@ input[type=radio] {
 }
 
 
-:focus, a:focus {
+:focus,
+a:focus {
   outline: 2px solid $lr-yellow !important;
 }
-
