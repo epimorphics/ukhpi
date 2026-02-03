@@ -1,0 +1,3 @@
+.accredited-statistic-logo
+  = link_to(root_path(lang: I18n.locale), class: 'content', title: t('common.header.accredited_statistic')) do
+    = vite_image_tag("images/accredited_official_statistics_logo-en.png", srcset: vite_asset_path("images/accredited_official_statistics_logo-en.svg"), alt: t('common.header.accredited_statistic'))
