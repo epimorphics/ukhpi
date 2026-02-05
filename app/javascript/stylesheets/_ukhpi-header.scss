@@ -75,6 +75,18 @@
           #proposition-links a {
             color: lr-common.$lr-black;
           }
+
+          #proposition-links {
+            @media (max-width: 767px) {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: stretch;
+
+              li {
+                align-self: flex-end;
+              }
+            }
+          }
         }
       }
 
