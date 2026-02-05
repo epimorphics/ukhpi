@@ -1,0 +1,47 @@
+// override UK gov stylesheet, which uses the highly specific #global-header selector
+#global-header {
+
+  &.lr-header,
+  &.with-proposition {
+    background-color: white;
+
+    .header-wrapper {
+      background-color: white;
+
+      .header-proposition {
+        #proposition-name {
+          &.lr-header--proposition-name {
+            color: $lr-link;
+          }
+        }
+
+        #proposition-links {
+          .lr-header--header-proposition--a {
+            color: $lr-link-quiet;
+          }
+
+          .lr-header--header-proposition--a__active {
+            color: $lr-link;
+          }
+
+          .lr-header--header-proposition {
+            color: $lr-headline;
+          }
+        }
+      }
+
+      @media screen and (min-width: 769px) {
+
+        .header-global,
+        .header-proposition {
+          width: unset;
+        }
+
+        .header-proposition {
+          float: right;
+        }
+      }
+    }
+  }
+
+}

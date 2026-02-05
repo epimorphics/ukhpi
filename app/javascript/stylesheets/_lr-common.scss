@@ -222,53 +222,6 @@ input[type=radio] {
   margin-left: 2.5rem;
 }
 
-// override UK gov stylesheet, which uses the highly specific #global-header selector
-#global-header {
-
-  &.lr-header,
-  &.with-proposition {
-    background-color: white;
-
-    .header-wrapper {
-      background-color: white;
-
-      .header-proposition {
-        #proposition-name {
-          &.lr-header--proposition-name {
-            color: $lr-link;
-          }
-        }
-
-        #proposition-links {
-          .lr-header--header-proposition--a {
-            color: $lr-link-quiet;
-          }
-
-          .lr-header--header-proposition--a__active {
-            color: $lr-link;
-          }
-
-          .lr-header--header-proposition {
-            color: $lr-headline;
-          }
-        }
-      }
-
-      @media screen and (min-width: 769px) {
-
-        .header-global,
-        .header-proposition {
-          width: unset;
-        }
-
-        .header-proposition {
-          float: right;
-        }
-      }
-    }
-  }
-
-}
 
 .o-container,
 #content {
@@ -292,45 +245,6 @@ input[type=radio] {
   }
 }
 
-#footer {
-  margin-top: 3rem;
-
-  .footer-meta .footer-meta-inner {
-    width: 100% !important;
-  }
-
-  .footer-meta a {
-    text-decoration: underline;
-  }
-
-  .footer-meta .footer-meta-inner .logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 41px;
-    height: 100%;
-  }
-
-  .footer-meta .footer-meta-inner .open-government-licence .logo a {
-    background-image: url('../images/ogl-symbol-41px-black.png');
-    display: block;
-    width: 41px;
-    height: 17px;
-    overflow: hidden;
-    text-indent: -999em;
-  }
-
-  .footer-meta .footer-meta-inner .open-government-licence p {
-    margin: 0;
-    padding-top: 0.1em;
-  }
-
-  .u-muted--footer {
-    font-size: 11pt;
-    color: #444;
-    margin-top: 1em;
-  }
-}
 
 .panel {
   border: 0;
