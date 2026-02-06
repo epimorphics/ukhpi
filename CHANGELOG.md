@@ -8,8 +8,32 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added accredited official statistics logo assets in English and Welsh, with
+  locale-aware selection
+  [#571](https://github.com/epimorphics/ukhpi/issues/571)
+- Added an accredited official statistics section to the landing page
+  [#571](https://github.com/epimorphics/ukhpi/issues/571)
+- Added Welsh translations for accredited official statistics section
+  [#571](https://github.com/epimorphics/ukhpi/issues/571)
+- Added a development helper script for local start-up
+- Build-time version injection via Vite's define configuration, eliminating
+  runtime HTTP requests for version lookup
+- TypeScript declarations for  `__APP_VERSION__` global constant in `vite-env.d.ts`
+  (based on community and documentation recommendations)
+- JSDoc documentation for version utilities with type annotations and usage examples
+- Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
+- Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
+- Added bootsnap to speed up boot time by caching expensive operations
+
 ### Changed
 
+- Refined header and footer styling for better responsiveness and consistency
+- Updated cookie banner and skip link spacing for layout consistency
+- Improved start-up logging for clearer server boot information
+- Improved development hooks for code quality checks
+- Updated browser compatibility data dependencies
 - Refactored application version handling to use build-time injected
   constants instead of async HTTP requests
   - Application now uses `__APP_VERSION__` directly in browser code
@@ -25,17 +49,6 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Simplify Yarn module installation command for clarity
 - Update SPARQL documentation links to use static paths
 - Set app version to cache in session storage
-
-### Added
-
-- Build-time version injection via Vite's define configuration, eliminating
-  runtime HTTP requests for version lookup
-- TypeScript declarations for  `__APP_VERSION__` global constant in `vite-env.d.ts`
-  (based on community and documentation recommendations)
-- JSDoc documentation for version utilities with type annotations and usage examples
-- Enhanced Docker build logging to show `RAILS_ENV` context during asset compilation
-- Copy `bin/vite` executable to production Docker stage for Rails/Vite integration
-- Added bootsnap to speed up boot time by caching expensive operations
 
 ### Removed
 
