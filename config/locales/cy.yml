@@ -6,6 +6,7 @@ cy:
       app_title: "Mynegai Prisiau Tai y DU"
       beta_tag: "[cy] BETA"
       feedback_request: "Problem neu awgrym? Bydd eich <a rel='external' href='mailto:data.services@mail.landregistry.gov.uk'>adborth</a> yn ein helpu i wella’r gwasanaeth hwn."
+      accredited_statistic: "Ystadegau Swyddogol Achrededig"
 
     cookie_banner:
       heading: "Mae’r wefan hon yn defnyddio cwcis"

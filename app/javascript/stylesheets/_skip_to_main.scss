@@ -17,6 +17,9 @@
 
 .c-skip-to-main {
   background: white;
-  padding: 1rem;
   z-index: 9999;
+
+  a {
+    padding: 1rem;
+  }
 }

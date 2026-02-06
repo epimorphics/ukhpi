@@ -1,36 +1,114 @@
-
 @use 'lr-common';
-
-.c-hmlr-header-colours {
-  color: lr-common.$lr-black;
-  background-color: white;
-}
 
 #global-header {
   &.c-hmlr-header {
-    @extend .c-hmlr-header-colours;
+    background-color: white;
 
-    a, nav {
-      @extend .c-hmlr-header-colours;
+    a,
+    nav {
+      color: lr-common.$lr-black;
     }
   }
 
-  .header-wrapper {
-    @extend .c-hmlr-header-colours;
-    padding-bottom: 0;
-  }
+  &.with-proposition {
 
-  .header-proposition #proposition-name {
-    @extend .c-hmlr-header-colours;
-  }
+    .header-wrapper {
+      padding-bottom: 1rem;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      height: 200px;
+      transition:
+        width 1s,
+        height 1s;
 
-  .header-proposition #proposition-links a {
-    @extend .c-hmlr-header-colours;
-  }
+      @media (min-width: 768px) {
+        height: 120px;
+      }
 
-  .header-wrapper .header-global .header-logo .content img {
-    margin-top: 14px;
-    height: 40px;
+      @media (min-width: 1024px) {
+        flex-wrap: nowrap;
+        height: 80px;
+      }
+
+      .header-global {
+        flex: 1 0 auto;
+        order: 1;
+        margin-right: auto;
+        align-content: flex-start;
+
+        @media (min-width: 1024px) {
+          align-content: flex-end;
+        }
+
+        .header-logo {
+          .content {
+            img {
+              height: 40px;
+              margin-top: 14px;
+            }
+          }
+        }
+      }
+
+      .header-proposition {
+        flex: 3 1 100%;
+        order: 3;
+        align-content: flex-end;
+        padding-bottom: 0;
+
+        @media (min-width: 1024px) {
+          order: 2;
+          flex: 0 0 auto;
+          width: auto;
+        }
+
+        .content {
+          @media (min-width: 768px) {
+            margin: unset;
+            margin-left: auto;
+            width: fit-content;
+          }
+
+          #proposition-name,
+          #proposition-links a {
+            color: lr-common.$lr-black;
+          }
+
+          #proposition-links {
+            @media (max-width: 767px) {
+              display: flex;
+              flex-wrap: wrap;
+              align-items: stretch;
+
+              li {
+                align-self: flex-end;
+              }
+            }
+          }
+        }
+      }
+
+      .accredited-statistic-logo {
+        flex: 0 0 auto;
+        order: 2;
+        display: inline-block;
+        margin-left: auto;
+        margin-top: 0;
+        vertical-align: middle;
+        align-content: flex-end;
+
+        @media (min-width: 1024px) {
+          order: 3;
+          margin-right: 1rem;
+        }
+
+        img {
+          height: 6rem;
+        }
+      }
+    }
   }
 }
 

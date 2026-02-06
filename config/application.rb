@@ -58,12 +58,14 @@ module Rails
     # :nodoc:
     class ServerCommand
       def print_boot_information(server, url)
-        msg = {
+        msg = "Starting #{server} Rails #{Rails.version} in #{Rails.env}"
+        msg += " on #{url}" if url
+        info = {
           ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
           level: 'INFO',
-          message: "Starting #{server} Rails #{Rails.version} in #{Rails.env} #{url}",
+          message: msg,
         }
-        say msg.to_json
+        say info.to_json
       end
     end
   end
