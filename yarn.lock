@@ -2446,7 +2446,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-axis@npm:^1.0.8":
+"d3-axis@npm:^1.0.12":
   version: 1.0.12
   resolution: "d3-axis@npm:1.0.12"
   checksum: 10c0/e42d089bd5707f8384acbdfa47246630885d2d02ac5650f5570881c50a0f2983aef4105e2e4063b960939ad61af389c3f84cbf9140c97b3beabae1d193ccfa2a
@@ -5833,7 +5833,7 @@ __metadata:
     axios: "npm:^0.30.2"
     core-js: "npm:^3.2.1"
     d3-array: "npm:^2.4.0"
-    d3-axis: "npm:^1.0.8"
+    d3-axis: "npm:^1.0.12"
     d3-format: "npm:^1.2.0"
     d3-interpolate: "npm:^1.4.0"
     d3-scale: "npm:^3.2.1"
