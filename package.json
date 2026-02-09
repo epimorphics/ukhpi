@@ -34,7 +34,7 @@
     "d3-time-format": "^2.0.5",
     "dompurify": "^3.3.1",
     "dotenv": "^16.4.7",
-    "element-ui": "2.15.13",
+    "element-ui": "2.15.14",
     "focus-trap": "^6.0.1",
     "focus-trap-vue": "^1.1.1",
     "glob": "^7.1.2",

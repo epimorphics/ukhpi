@@ -2686,9 +2686,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"element-ui@npm:2.15.13":
-  version: 2.15.13
-  resolution: "element-ui@npm:2.15.13"
+"element-ui@npm:2.15.14":
+  version: 2.15.14
+  resolution: "element-ui@npm:2.15.14"
   dependencies:
     async-validator: "npm:~1.8.1"
     babel-helper-vue-jsx-merge-props: "npm:^2.0.0"
@@ -2698,7 +2698,7 @@ __metadata:
     throttle-debounce: "npm:^1.0.1"
   peerDependencies:
     vue: ^2.5.17
-  checksum: 10c0/9f31a5b4c361e9730bf2a1a66ca1cae603d272db94d42d47f0e0e30ac85017b32d1556fdfd24d02440839cc7acf63907d06bc9df289f146d9d2ef03ce08c83d5
+  checksum: 10c0/84a29272a10778aeeda9386984ef435d890546a476740f1f2a43776e060e7a353f101ec9f797113ba5ead027bbf114ac22667623285d11f89ae89920568a50aa
   languageName: node
   linkType: hard
 
@@ -5843,7 +5843,7 @@ __metadata:
     d3-time-format: "npm:^2.0.5"
     dompurify: "npm:^3.3.1"
     dotenv: "npm:^16.4.7"
-    element-ui: "npm:2.15.13"
+    element-ui: "npm:2.15.14"
     eslint: "npm:^9.39.2"
     eslint-formatter-summary: "npm:^2.0.2"
     eslint-plugin-vue: "npm:^9.33.0"
