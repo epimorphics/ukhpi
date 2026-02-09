@@ -198,13 +198,21 @@ test-assets: ## Run unit tests with assets rebuilt
 
 update: ## Review and update dependencies interactively
 	@echo "Checking for outdated dependencies..."
+	@make update-node && make update-gems
+	@echo "All dependencies checked for updates."
+
+update-gems: ## Review and update Ruby gems interactively
+	@echo "Checking for outdated Ruby gems..."
+	@${BUNDLE} outdated --only-explicit || true
+
+update-node: ## Review and update Node modules interactively
+	@echo "Checking for outdated Node modules..."
 	@if [ -f package.json ]; then \
 		echo "Running yarn upgrade-interactive..."; \
 		yarn upgrade-interactive; \
+	else \
+		echo "No package.json found. Skipping Node module update."; \
 	fi
-	@echo "Running bundle outdated to check Ruby gems..."
-# Let bundler handle output; treat this as informational even if deps are outdated
-	@${BUNDLE} outdated --only-explicit || true
 
 vars: ## Display environment variables
 	@echo "Docker: ${REPO}:${TAG}"
