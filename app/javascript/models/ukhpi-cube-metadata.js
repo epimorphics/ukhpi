@@ -16,7 +16,7 @@ const unavailableStatInd = [
  * Return true if the given combination of statistic and indicator is not available
  * @param  {String} stat Statistic slug
  * @param  {String} ind  Indicator slug
- * @return {Boolean}      True if indicator+statistic combination is not available
+ * @return {Boolean} - True if indicator+statistic combination is not available
  */
 export default function unavailable (stat, ind) {
   return !!_.find(unavailableStatInd, { statistic: stat, indicator: ind })

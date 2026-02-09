@@ -1,5 +1,6 @@
 import _ from 'lodash'
 import QueryResult from './query-result'
+import { isNotNullOrEmpty } from '@/utilities'
 
 /** Data model encapsulating the results we got back from the server */
 export default class QueryResults {
@@ -47,7 +48,7 @@ export default class QueryResults {
     const s = this.results().map((r) => {
       const val = r.value(pred)
 
-      if (_.isFinite(val)) {
+      if (Number.isFinite(val)) {
         return {
           x: r.periodDate().toDate(),
           y: r.value(pred),
@@ -58,7 +59,7 @@ export default class QueryResults {
       return null
     })
 
-    return _.sortBy(_.compact(s), (d) => d.x)
+    return s.filter((d) => isNotNullOrEmpty(d)).sort((a, b) => a.x - b.x)
   }
 
   /** @return The duration of the selected results, if known */

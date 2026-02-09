@@ -17,6 +17,7 @@ import { interpolateNumber } from 'd3-interpolate'
 import { asCurrency, formatValue } from '../lib/values'
 import bus from '../lib/event-bus'
 import VueI18n from '../lang'
+import { isNotNullOrEmpty, isNullOrEmpty } from '@/utilities'
 
 const SERIES_MARKER = [
   symbolCircle,
@@ -209,7 +210,7 @@ function drawAxes (graphConfig) {
     .attr('class', 'y axis')
     .call(graphConfig.axes.y)
 
-  if (_.isNaN(graphConfig.scales.y(0))) {
+  if (Number.isNaN(graphConfig.scales.y(0))) {
     return
   }
 
@@ -333,7 +334,7 @@ function xTrackLabel (statistic, projection, graphConfig, d) {
 /** Track mouse movement and update the overlay */
 function onXTrackMouseMove (projection, graphConfig, xTrack) {
   const aSeries = _.first(_.values(projection))
-  if (_.isEmpty(aSeries)) {
+  if (isNullOrEmpty(aSeries)) {
     return
   }
 
