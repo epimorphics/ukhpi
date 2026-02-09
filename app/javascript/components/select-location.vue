@@ -157,6 +157,7 @@ import { locationIndexType, locationsNamed, findLocationById } from '@/lib/locat
 import LocationsMap from '@/presenters/locations-map'
 import { SET_LOCATION } from '@/store/mutation-types'
 import bus from '@/lib/event-bus'
+import { isNotNullOrEmpty } from '@/utilities'
 
 const MAX_RESULTS = 10
 
@@ -292,7 +293,7 @@ export default {
     },
 
     isForthcomingLocation (location) {
-      return !_.isEmpty(location.message)
+      return isNotNullOrEmpty(location.message)
     },
 
     isExactMatch (term, results) {
