@@ -45,7 +45,7 @@
     "kebab-case": "^1.0.2",
     "leaflet": "^1.9.4",
     "leaflet-clonelayer": "^1.0.4",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.23",
     "moment": "^2.18.1",
     "numeral": "^2.0.6",
     "path-complete-extname": "^1.0.0",
