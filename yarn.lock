@@ -3834,7 +3834,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"leaflet-clonelayer@npm:^1.0.4":
+"leaflet-clonelayer@npm:^1.0.7":
   version: 1.0.7
   resolution: "leaflet-clonelayer@npm:1.0.7"
   checksum: 10c0/4dc6549d0649e0ef0433b1156d8f45af813d2f4c8c57cb7bde2d6b90191e89f45a2195449e41690accb2a7f9812fdca9af5e332654f89afe603cb10101429e81
@@ -5857,7 +5857,7 @@ __metadata:
     js-yaml: "npm:^4.1.1"
     kebab-case: "npm:^1.0.2"
     leaflet: "npm:^1.9.4"
-    leaflet-clonelayer: "npm:^1.0.4"
+    leaflet-clonelayer: "npm:^1.0.7"
     lodash: "npm:^4.17.23"
     moment: "npm:^2.18.1"
     numeral: "npm:^2.0.6"
