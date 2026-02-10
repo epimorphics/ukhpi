@@ -79,7 +79,7 @@
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.55.0",
     "vite": "^5.4.21",
-    "vite-plugin-erb": "^1.1.3",
+    "vite-plugin-erb": "^1.2.0",
     "vite-plugin-rails": "^0.5.0",
     "vite-plugin-ruby": "^5.1.2"
   },

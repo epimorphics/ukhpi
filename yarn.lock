@@ -6152,7 +6152,7 @@ __metadata:
     typescript: "npm:^5.9.3"
     typescript-eslint: "npm:^8.55.0"
     vite: "npm:^5.4.21"
-    vite-plugin-erb: "npm:^1.1.3"
+    vite-plugin-erb: "npm:^1.2.0"
     vite-plugin-rails: "npm:^0.5.0"
     vite-plugin-ruby: "npm:^5.1.2"
     vue: "npm:^2.7.16"
@@ -6246,15 +6246,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite-plugin-erb@npm:^1.1.3":
-  version: 1.1.3
-  resolution: "vite-plugin-erb@npm:1.1.3"
+"vite-plugin-erb@npm:^1.2.0":
+  version: 1.2.0
+  resolution: "vite-plugin-erb@npm:1.2.0"
   dependencies:
     debug: "npm:^4.3"
     execa: "npm:^5.0"
+    picomatch: "npm:^4.0.3"
   peerDependencies:
     vite: ">= 5"
-  checksum: 10c0/438752c8e36e872e1a7517764e84b092c11569c797734b5eef1e6679a31070635887b11cab523d1ece751ecdeb9c70490c28eff768314edc3a3eb430e6b45165
+  checksum: 10c0/8f21ee367bf20aa95e7f907678eb9c21aab2db8a8ac9015d03ea906e3d252656f45885f5318f76bd50b4d1262fa5902218181f56e79dc6b4be61d7f013cae09d
   languageName: node
   linkType: hard
 
