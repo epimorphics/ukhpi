@@ -5155,7 +5155,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:^6.8.2":
+"query-string@npm:^6.14.1":
   version: 6.14.1
   resolution: "query-string@npm:6.14.1"
   dependencies:
@@ -6143,7 +6143,7 @@ __metadata:
     postcss-import: "npm:^16.1.1"
     postcss-loader: "npm:^8.2.0"
     postcss-preset-env: "npm:^10.6.1"
-    query-string: "npm:^6.8.2"
+    query-string: "npm:^6.14.1"
     regenerator-runtime: "npm:^0.13.11"
     rollup: "npm:^4.57.1"
     rollup-plugin-gzip: "npm:^4.1.1"
