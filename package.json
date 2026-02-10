@@ -60,7 +60,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.2",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
-    "@sentry/vite-plugin": "^4.9.0",
+    "@sentry/vite-plugin": "^4.9.1",
     "@stylistic/eslint-plugin": "^5.8.0",
     "@types/node": "^22.19.10",
     "@vitejs/plugin-vue2": "^2.3.4",
