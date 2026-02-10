@@ -6157,7 +6157,7 @@ __metadata:
     vite-plugin-ruby: "npm:^5.1.2"
     vue: "npm:^2.7.16"
     vue-i18n: "npm:^8.28.2"
-    vue-router: "npm:^3.0.1"
+    vue-router: "npm:^3.6.5"
     vue-template-compiler: "npm:^2.7.16"
     vuex: "npm:^3.0.1"
   languageName: unknown
@@ -6393,7 +6393,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vue-router@npm:^3.0.1":
+"vue-router@npm:^3.6.5":
   version: 3.6.5
   resolution: "vue-router@npm:3.6.5"
   checksum: 10c0/f1c81854a7bb943fe78ad1516acc948fffbf71646ee4d568c52c0c680dd4763152d1c317ac240a5066bc24682700b4698bd135d54c2fc7d8cb21d068a99e50ac
