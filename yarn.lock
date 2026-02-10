@@ -1550,10 +1550,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/babel-plugin-component-annotate@npm:4.6.1":
-  version: 4.6.1
-  resolution: "@sentry/babel-plugin-component-annotate@npm:4.6.1"
-  checksum: 10c0/cb03d042c103d410ec8b84da255dbb7372439340fd2a3ebcde74488dd8656f49d0f63588b5b41127d0cdcfd84978c12c5de1f9565ebaa2a04573ca360e931fe2
+"@sentry/babel-plugin-component-annotate@npm:4.9.0":
+  version: 4.9.0
+  resolution: "@sentry/babel-plugin-component-annotate@npm:4.9.0"
+  checksum: 10c0/9c096d788abe7fd14d87b2048fea61d6d3649a9cfe6ee22eea202a78d09d97cfdc12f3fed06413fdba559ef50558f591fb1bdd23b20475a1e4fd96f4c182314c
   languageName: node
   linkType: hard
 
@@ -1570,19 +1570,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/bundler-plugin-core@npm:4.6.1":
-  version: 4.6.1
-  resolution: "@sentry/bundler-plugin-core@npm:4.6.1"
+"@sentry/bundler-plugin-core@npm:4.9.0":
+  version: 4.9.0
+  resolution: "@sentry/bundler-plugin-core@npm:4.9.0"
   dependencies:
     "@babel/core": "npm:^7.18.5"
-    "@sentry/babel-plugin-component-annotate": "npm:4.6.1"
+    "@sentry/babel-plugin-component-annotate": "npm:4.9.0"
     "@sentry/cli": "npm:^2.57.0"
     dotenv: "npm:^16.3.1"
     find-up: "npm:^5.0.0"
     glob: "npm:^10.5.0"
     magic-string: "npm:0.30.8"
     unplugin: "npm:1.0.1"
-  checksum: 10c0/34dfd1d5f60c0082f8894643ff7d4cdbcca376051a79fbc88b505908af6cf979954148f36ef34f2e6f560f87dede2ede2e0c7f580dac51508e9be397714651d5
+  checksum: 10c0/000b8e96b97e221f05c93540cc4a81ae306658f0e6f3227b6c8b1371f256fafcec68828ad7e684eca35b8d065798d3de4a0e6036e752a4199a0588cf281a59ef
   languageName: node
   linkType: hard
 
@@ -1689,13 +1689,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@sentry/vite-plugin@npm:^4.6.1":
-  version: 4.6.1
-  resolution: "@sentry/vite-plugin@npm:4.6.1"
+"@sentry/vite-plugin@npm:^4.9.0":
+  version: 4.9.0
+  resolution: "@sentry/vite-plugin@npm:4.9.0"
   dependencies:
-    "@sentry/bundler-plugin-core": "npm:4.6.1"
+    "@sentry/bundler-plugin-core": "npm:4.9.0"
     unplugin: "npm:1.0.1"
-  checksum: 10c0/a68f4342e31ba9676ff57c90ed61bb0e77880b6a1841d9095fece191ad3623bd7836779587e3e766ba6a36ce82528e35e3fbe570edea70f85f07f22645ef806a
+  checksum: 10c0/eb5b4df0018a4b736ea65e716e4fbffab83974e74e66ba1a721a1d901a54deb535683f8d72b66fdb349c8fadc93b23e2b2bc275270ce6ee43c97e822102e0c4b
   languageName: node
   linkType: hard
 
@@ -5842,7 +5842,7 @@ __metadata:
     "@eslint/js": "npm:^9.39.2"
     "@fortawesome/fontawesome-free": "npm:^6.7.2"
     "@modyfi/vite-plugin-yaml": "npm:^1.1.1"
-    "@sentry/vite-plugin": "npm:^4.6.1"
+    "@sentry/vite-plugin": "npm:^4.9.0"
     "@sentry/vue": "npm:^9.47.1"
     "@stylistic/eslint-plugin": "npm:^5.8.0"
     "@types/node": "npm:^22.19.10"
