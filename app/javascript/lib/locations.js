@@ -67,7 +67,7 @@ function indexedLocations () {
 
 /** @return The types of location that we know about */
 export function locationTypes () {
-  return _.keys(locationsIndex)
+  return Object.keys(locationsIndex)
 }
 
 /** @return The locations of a given type */
