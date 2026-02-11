@@ -3458,7 +3458,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"focus-trap@npm:^6.0.1":
+"focus-trap@npm:^6.9.4":
   version: 6.9.4
   resolution: "focus-trap@npm:6.9.4"
   dependencies:
@@ -6124,7 +6124,7 @@ __metadata:
     eslint: "npm:^9.39.2"
     eslint-formatter-summary: "npm:^2.0.2"
     eslint-plugin-vue: "npm:^9.33.0"
-    focus-trap: "npm:^6.0.1"
+    focus-trap: "npm:^6.9.4"
     focus-trap-vue: "npm:^1.1.1"
     glob: "npm:^7.1.2"
     globals: "npm:^15.15.0"
