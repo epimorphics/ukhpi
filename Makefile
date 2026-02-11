@@ -1,4 +1,4 @@
-.PHONY:	all assets auth bundles checks clean compiled eject forceclean help image lint locations modules name publish realclean run server start stop tag test test-assets vars version
+.PHONY:	all assets auth bundles check checks clean compiled coverage eject forceclean help image lint locations modules name publish realclean rubocop run server start stop tag test test-assets update vars version
 
 ALPINE_VERSION?=3.22
 BUNDLER_VERSION?=$(shell tail -1 Gemfile.lock | tr -d ' ')
@@ -15,7 +15,6 @@ PORT?=3002
 
 SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
 STAGE?=dev
-# Please pass in the API_SERVICE_URL from your command line or .env.development file
 API_SERVICE_URL?=http://localhost:8888
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
 RUN_VARS?=-p
@@ -42,23 +41,25 @@ ${BUNDLE_CFG}: ${GITHUB_TOKEN}
 ${GITHUB_TOKEN}:
 	@echo ${PAT} > ${GITHUB_TOKEN}
 
-all: image
+all: image ## Default target: build the Docker image
 
-assets: bundles modules compiled
+assets: bundles compiled ## Compile static assets for serving
 	@echo vite info
 	@${RAILS} vite:info
 
-auth: ${GITHUB_TOKEN} ${BUNDLE_CFG}
+auth: ${GITHUB_TOKEN} ${BUNDLE_CFG} ## Set up authentication for GitHub and Bundler
 	@echo "Authentication set up for GitHub and Bundler."
 
-bundles:
+bundles: ## Install Ruby gems via Bundler
 	@echo "Installing Ruby gems via Bundler..."
 	@${BUNDLE} install
 
-checks: lint test
+check: checks ## Alias for `checks` target
+
+checks: lint test ## Run all checks: linting and tests
 	@echo "All checks passed."
 
-clean:
+clean: ## Clean up temporary and compiled files
 	@echo "Cleaning up ${SHORTNAME} files..."
 # Clean up the project
 	@[ -d public/assets ] && ${RAILS} assets:clobber || :
@@ -69,78 +70,42 @@ clean:
 # Remove temporary files and directories
 	@@ rm -rf bundle coverage log node_modules tmp
 # Remove VCR cassettes to avoid using stale data
-	@@ rm test/vcr_cassettes/* || :
+	@make eject
 
-compiled:
-	@echo "Removing old compiled assets and compiling via vite ..."
+compiled: ## Compile assets for production
+	@echo "Cleaning and precompiling static assets via vite ..."
 	@NODE_OPTIONS=--openssl-legacy-provider ${RAILS} vite:clobber vite:build
 
-eject:
-	@echo "Removing VCR Cassettes to avoid stale data..."
-	@rm -rf test/vcr_cassettes/
+coverage: ## Display test coverage report
+	@open coverage/index.html
+	@echo "Displaying test coverage report in browser..."
 
-eslint:
+eject: ##Remove VCR cassettes to avoid using stale data
+	@echo "Removing VCR Cassettes to avoid stale data..."
+	@@ rm test/vcr_cassettes/* || :
+
+eslint: ## Run ESLint linting
 	@echo "Running ESLint for ${SHORTNAME} ..."
 # Lint JavaScript files with ESLint and auto-fix where possible
 	@yarn lint:fix
 
-forceclean: realclean
-# Remove all bundled files
+forceclean: realclean ## Remove all bundled files
 	@${BUNDLE} clean --force || :
 
-help:
-	@echo "Make targets:"
-	@echo "  all - build the Docker image (default)"
-	@echo "  assets - install gems and yarn packages, compile assets"
-	@echo "  auth - set up authentication for GitHub and Bundler"
-	@echo "  bundles - install Ruby gems via Bundler"
-	@echo "  checks - run all linting and tests as a single task"
-	@echo "  clean - remove temporary files"
-	@echo "  compiled - remove old compiled assets and compile via vite"
-	@echo "  eject - remove vcr cassettes to avoid stale data"
-	@echo "  eslint - run ESLint on JavaScript files"
-	@echo "  forceclean - remove all generated files including bundled gems"
-	@echo "  help - show this help message"
-	@echo "  image - build the Docker image"
-	@echo "  lint - run linters"
-	@echo "  locations - generate new UKHPI location files"
-	@echo "  modules - install node packages via yarn"
-	@echo "  name - return the image name"
-	@echo "  publish - release the image to the Docker registry"
-	@echo "  realclean - remove all temporary files as well as authentication tokens"
-	@echo "  rubocop - run RuboCop on Ruby files"
-	@echo "  run - run the Docker image with Rails running"
-	@echo "  server - start the Rails server using foreman"
-	@echo "  start - start the Docker container"
-	@echo "  stop - stop the Docker container"
-	@echo "  tag - return a tag string for the current build"
-	@echo "  test - run rails tests"
-	@echo "  test-assets - rebuild assets and run rails tests"
-	@echo "  vars - display all environment variables and their values"
-	@echo "  version - show the current app version"
+help: ## Display this message
+	@echo "Available make targets:"
+	@grep -hE '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | sort | awk 'BEGIN {FS = ":.*?## "}; {printf "%-20s %s\n", $$1, $$2}'
 	@echo ""
+	@echo ""
+ifdef AWS_PROFILE
 	@echo "Environment variables (optional: all variables have defaults):"
-	@echo "  ACCOUNT - AWS account ID for ECR (default: from aws cli)"
-	@echo "  ALPINE_VERSION - version of Alpine Linux to use (default: from Dockerfile)"
-	@echo "  AWS_REGION - AWS region for ECR (default: from aws cli)"
-	@echo "  BUNDLER_VERSION - version of Bundler to use (default: from Gemfile.lock)"
-	@echo "  ECR - URL of the ECR registry (default: from aws cli)"
-	@echo "  GPR_OWNER - GitHub owner for the package registry (default: from git config)"
-	@echo "  IMAGE - name of the Docker image (default: ${NAME}:${TAG})"
-	@echo "  API_SERVICE_URL - URL of the FSA Data Dot Food API (default: ${API_SERVICE_URL})"
-	@echo "  NAME - name of the Application (default: from deployment.yaml)"
-	@echo "  NODE_VERSION - version of Node.js to use (default: from .nvmrc)"
-	@echo "  PAT - GitHub personal access token (default: prompt)"
-	@echo "  PORT - port to expose from the Docker container (default: 3000)"
-	@echo "  RUBY_VERSION - version of Ruby to use (default: from .ruby-version)"
-	@echo "  RAILS_RELATIVE_URL_ROOT - relative URL root (default: /catalog)"
-	@echo "  RUN_VARS - additional docker run variables (default: -p)"
-	@echo "  SHORTNAME - short name of the application (default: from NAME)"
-	@echo "  STAGE - deployment stage (default: dev)"
-	@echo "  TAG - tag to apply to the Docker image (default: VERSION_COMMIT_GITHUB_RUN_NUMBER)"
-	@echo "  VERSION - version of the application (default: from VERSION file)"
+	@make vars
+else
+	@echo "Warning: AWS_PROFILE environment variable is not set. AWS CLI commands may fail."
+	@echo "Re-run with AWS_PROFILE set to see all variables"
+endif
 
-image: auth
+image: auth ## Build the Docker image
 	@echo Building ${NAME}:${TAG} ...
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
@@ -157,41 +122,41 @@ image: auth
 		.
 	@echo Done.
 
-lint: rubocop eslint
+lint: rubocop eslint ## Run linting checks
 	@echo "All linting complete."
 
-locations:
+locations: ## Generate UKHPI location files
 	@echo "Generating new UKHPI location files ... "
 	@${RAILS} ukhpi:locations
 	@echo "Done."
 
-modules:
+modules: ## Install node modules via yarn
 	@echo "Installing node modules via yarn ..."
 	@yarn install
 
-name:
+name: ## Display the shortname of the application
 	@echo ${SHORTNAME}
 
-publish: image
+publish: image ## Publish the Docker image to the registry
 	@echo Publishing image: ${REPO}:${TAG} ...
 	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
 	@docker push ${REPO}:${TAG} 2>&1
 	@echo Done.
 
-realclean: clean
+realclean: clean ## Remove all generated files and authentication
 	@echo "Removing authentication from ${SHORTNAME}..."
 	@rm -f ${GITHUB_TOKEN} ${BUNDLE_CFG}
 
-rubocop:
+rubocop: ## Run RuboCop linting
 	@echo "Running RuboCop linting for ${SHORTNAME} ..."
 # Auto-correct offenses safely where possible with the `-a` flag
 	@${BUNDLE} exec rubocop -a
 
-run: start
+run: start ## Run the Docker container locally
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
 	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
 
-server: start
+server: start ## Run the Rails server locally
 ifdef DEBUG
 	@echo "Starting Rails server in debug mode...";
 	@echo "Remember to start foreman without the web process: ";
@@ -205,33 +170,43 @@ else
 		${RAILS} server -p ${PORT} -b 0.0.0.0; \
 	else \
 		echo "Starting Rails server for development environment..."; \
-		exec foreman start -f Procfile.dev -e .env.local,.env.development --color; \
+		exec bin/dev -f Procfile.dev -e .env.local,.env.development --color; \
 	fi
 endif
 
-start: stop
+start: stop ## Start the application
 	@echo "Starting ${SHORTNAME} pointing to ${API_SERVICE_URL} API ..."
 
-stop:
+stop: ## Stop the application
 	@echo "Stopping ${SHORTNAME} ..."
 	@docker stop ${SHORTNAME} > /dev/null 2>&1 || :
 
-tag:
+tag: ## Display the Docker image tag
 	@echo ${TAG}
 
-test:
+test: ## Run unit tests
 	@echo "Running unit tests ..."
 # Ensure Spring is stopped to avoid stale state during tests
 	@${SPRING} stop
 # Run Rails tests
 	@${RAILS} test
 
-test-assets:
+test-assets: ## Run unit tests with assets rebuilt
 	@echo "Running unit tests with assets rebuilt..."
 	@${VITE} build --clobber --mode=test
 	@${RAILS} test
 
-vars:
+update: ## Review and update dependencies interactively
+	@echo "Checking for outdated dependencies..."
+	@if [ -f package.json ]; then \
+		echo "Running yarn upgrade-interactive..."; \
+		yarn upgrade-interactive; \
+	fi
+	@echo "Running bundle outdated to check Ruby gems..."
+# Let bundler handle output; treat this as informational even if deps are outdated
+	@${BUNDLE} outdated --only-explicit || true
+
+vars: ## Display environment variables
 	@echo "Docker: ${REPO}:${TAG}"
 	@echo "ACCOUNT = ${ACCOUNT}"
 	@echo "ALPINE_VERSION = ${ALPINE_VERSION}"
@@ -250,5 +225,5 @@ vars:
 	@echo "TAG = ${TAG}"
 	@echo "VERSION = ${VERSION}"
 
-version:
+version: ## Display the application version
 	@echo ${VERSION}

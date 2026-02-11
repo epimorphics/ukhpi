@@ -94,3 +94,6 @@ vite.config.js.timestamp-*-*.mjs
 # Ignore local configuration files
 .env*
 !.env.development
+
+# Ignore local TODO files
+TODO.md

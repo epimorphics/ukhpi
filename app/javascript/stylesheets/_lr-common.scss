@@ -39,7 +39,7 @@ $lr-top-line: $lr-green-nav;
 $lr-footer-grey: #f0f5f0;
 $lr-footer-link: color.adjust($lr-separator, $lightness: 10%);
 $lr-footer-background: #818181;
-$lr-green-nav-darkened: color.adjust( $lr-green-nav, $lightness: -20%);
+$lr-green-nav-darkened: color.adjust($lr-green-nav, $lightness: -20%);
 
 $graph-colours: (
   graph-0: $lr-graph-fuschia,
@@ -51,7 +51,10 @@ $graph-colours: (
 );
 /* settings */
 
-ol, ul, nav ol, nav ul {
+ol,
+ul,
+nav ol,
+nav ul {
   list-style: unset;
   list-style-type: none;
   list-style-position: inside;
@@ -88,6 +91,7 @@ input[type=radio] {
 .o-flash-message {
   padding-top: 3px;
   padding-bottom: 3px;
+
   p {
     border-left: 8px solid $lr-yellow;
     padding-left: 12px;
@@ -218,115 +222,36 @@ input[type=radio] {
   margin-left: 2.5rem;
 }
 
-// override UK gov stylesheet, which uses the highly specific #global-header selector
-#global-header {
-  &.lr-header,
-  &.with-proposition {
-    background-color: white;
 
-    .header-wrapper {
-      background-color: white;
-
-      .header-proposition {
-        padding-block-end: 1rem;;
-        #proposition-name{
-          &.lr-header--proposition-name {
-            color: $lr-link;
-          }
-        }
-
-        #proposition-links {
-          .lr-header--header-proposition--a {
-            color: $lr-link-quiet;
-          }
-
-          .lr-header--header-proposition--a__active {
-            color: $lr-link;
-          }
-
-          .lr-header--header-proposition {
-            color: $lr-headline;
-          }
-        }
-      }
-
-      @media screen and (min-width: 769px) {
-        .header-global,
-        .header-proposition {
-          width: unset;
-        }
-        .header-proposition {
-          float: right;
-        }
-      }
-    }
-  }
-
-}
-
-.o-container,#content {
-    max-width: 960px;
-    margin: 0 15px
+.o-container,
+#content {
+  max-width: 960px;
+  margin: 0 15px
 }
 
 @media (min-width: 641px) {
-    .o-container,#content {
-        margin:0 30px
-    }
+
+  .o-container,
+  #content {
+    margin: 0 30px
+  }
 }
 
 @media (min-width: 1020px) {
-    .o-container,#content {
-        margin:0 auto
-    }
-}
 
-#footer {
-  margin-top: 3rem;
-
-  .footer-meta .footer-meta-inner {
-    width: 100% !important;
-  }
-
-  .footer-meta a {
-    text-decoration: underline;
-  }
-
-  .footer-meta .footer-meta-inner .logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 41px;
-    height: 100%;
-  }
-
-  .footer-meta .footer-meta-inner .open-government-licence .logo a {
-    background-image: url('../images/ogl-symbol-41px-black.png');
-    display: block;
-    width: 41px;
-    height: 17px;
-    overflow: hidden;
-    text-indent: -999em;
-  }
-
-  .footer-meta .footer-meta-inner .open-government-licence p {
-    margin: 0;
-    padding-top: 0.1em;
-  }
-
-  .u-muted--footer {
-    font-size: 11pt ;
-    color: #444;
-    margin-top: 1em;
+  .o-container,
+  #content {
+    margin: 0 auto
   }
 }
+
 
 .panel {
   border: 0;
 }
 
 
-:focus, a:focus {
+:focus,
+a:focus {
   outline: 2px solid $lr-yellow !important;
 }
-
