@@ -27,12 +27,6 @@ Layout/LineLength:
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
 
-Layout/SpaceAroundMethodCallOperator:
-  EnforcedStyle: compact
-
-Layout/SpaceAroundBlockParameters:
-  EnforcedStyle: compact
-
 Layout/SpaceInsideArrayLiteralBrackets:
   EnforcedStyle: compact
 
