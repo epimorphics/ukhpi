@@ -8,6 +8,23 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added shared helpers for null or empty value checks in front-end code.
+
+### Changed
+
+- Updated runtime and build dependencies as part of the 2026-01 audit.
+  [#570](https://github.com/epimorphics/ukhpi/issues/570)
+  - Updated Rails and Ruby dependencies for security and stability.
+  - Updated front-end packages and build tooling for compatibility.
+  - Reduced lodash usage in client-side utilities to simplify runtime code.
+  - Split dependency update tasks to cover Node and Ruby separately.
+
+### Removed
+
+- Removed `glob`, an unused front-end dependency, from the build toolchain.
+
 ## [2.3.0] - 2026-02
 
 ### Added
