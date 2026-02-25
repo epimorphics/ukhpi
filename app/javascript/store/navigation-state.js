@@ -7,6 +7,7 @@ import QueryString from 'query-string'
 import Moment from 'moment'
 import store from './index'
 import { REINITIALISE } from './mutation-types'
+import { isNotNullOrEmpty } from '@/utilities'
 
 /** Mappers from store state to navigation state */
 const navigationStateFields = {
@@ -27,7 +28,7 @@ function currentNavigationState (state) {
   const urlState = {} // relevant state variables translated to URL query string form
 
   _.forEach(state, (value, key) => {
-    if (!_.isEmpty(value) && navigationStateFields[key]) {
+    if (isNotNullOrEmpty(value) && navigationStateFields[key]) {
       Object.assign(navState, { [key]: value })
       Object.assign(urlState, navigationStateFields[key](state))
     }

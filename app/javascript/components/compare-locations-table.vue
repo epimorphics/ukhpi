@@ -44,6 +44,7 @@
 </template>
 
 <script>
+import { isNullOrEmpty } from '@/utilities'
 import _ from 'lodash'
 import Moment from 'moment'
 import Numeral from 'numeral'
@@ -152,7 +153,7 @@ export default {
       let format = '0,0'
       let scale = 1
 
-      if (_.isUndefined(value)) {
+      if (isNullOrEmpty(value)) {
         return 'no data'
       }
 

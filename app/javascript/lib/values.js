@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { isNullOrEmpty } from '@/utilities'
 import Numeral from 'numeral'
 
 export function asCurrency (value) {
@@ -6,7 +6,7 @@ export function asCurrency (value) {
 }
 
 export function formatValue (indicator, value) {
-  if (_.isNull(value) || _.isUndefined(value)) {
+  if (isNullOrEmpty(value)) {
     return 'not available'
   }
 
