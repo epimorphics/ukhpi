@@ -35,7 +35,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageChangeCash' => [],
          'ukhpi:refMonth' =>
          { '@value' => '2018-07',
-           '@type' => 'http://www.w3.org/2001/XMLSchema#gYearMonth' },
+           '@type' => 'http://www.w3.org/2001/XMLSchema#gYearMonth', },
          'ukhpi:percentageChangeSemiDetached' => [ 0.05 ],
          'ukhpi:percentageChangeFormerOwnerOccupier' => [],
          'ukhpi:refRegion' =>
@@ -50,7 +50,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageAnnualChangeMortgage' => [],
          'ukhpi:refPeriodStart' =>
          [ { '@value' => '2018-07-01',
-            '@type' => 'http://www.w3.org/2001/XMLSchema#date' } ],
+            '@type' => 'http://www.w3.org/2001/XMLSchema#date', } ],
          'ukhpi:housePriceIndexDetached' => [ 122.38 ],
          'ukhpi:percentageChange' => [ 1.16 ],
          'ukhpi:salesVolume' => [],
@@ -72,7 +72,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageChangeFlatMaisonette' => [ 1.58 ],
          'ukhpi:housePriceIndexNewBuild' => [],
          'ukhpi:percentageChangeFirstTimeBuyer' => [],
-         'ukhpi:housePriceIndexFormerOwnerOccupier' => [] } ],
+         'ukhpi:housePriceIndexFormerOwnerOccupier' => [], } ],
       'Nottinghamshire' =>
       [ { 'ukhpi:averagePriceSA' => [],
          'ukhpi:percentageChangeNewBuild' => [],
@@ -98,7 +98,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageChangeCash' => [ 0.84 ],
          'ukhpi:refMonth' =>
          { '@value' => '2018-07',
-           '@type' => 'http://www.w3.org/2001/XMLSchema#gYearMonth' },
+           '@type' => 'http://www.w3.org/2001/XMLSchema#gYearMonth', },
          'ukhpi:percentageChangeSemiDetached' => [ 0.5 ],
          'ukhpi:percentageChangeFormerOwnerOccupier' => [ 0.7 ],
          'ukhpi:refRegion' =>
@@ -113,7 +113,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageAnnualChangeMortgage' => [ 5.03 ],
          'ukhpi:refPeriodStart' =>
          [ { '@value' => '2018-07-01',
-            '@type' => 'http://www.w3.org/2001/XMLSchema#date' } ],
+            '@type' => 'http://www.w3.org/2001/XMLSchema#date', } ],
          'ukhpi:housePriceIndexDetached' => [ 121.34 ],
          'ukhpi:percentageChange' => [ 0.63 ],
          'ukhpi:salesVolume' => [],
@@ -135,7 +135,7 @@ class CompareLocationsPresenterTest < ActiveSupport::TestCase
          'ukhpi:percentageChangeFlatMaisonette' => [ 0.25 ],
          'ukhpi:housePriceIndexNewBuild' => [],
          'ukhpi:percentageChangeFirstTimeBuyer' => [ 0.54 ],
-         'ukhpi:housePriceIndexFormerOwnerOccupier' => [ 120.61 ] } ] }
+         'ukhpi:housePriceIndexFormerOwnerOccupier' => [ 120.61 ], } ], }
   end
 
   let(:presenter) { CompareLocationsPresenter.new(user_selections, query_results) }

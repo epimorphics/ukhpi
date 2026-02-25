@@ -17,7 +17,7 @@ import { interpolateNumber } from 'd3-interpolate'
 import { asCurrency, formatValue } from '../lib/values'
 import bus from '../lib/event-bus'
 import VueI18n from '../lang'
-import { isNotNullOrEmpty, isNullOrEmpty } from '@/utilities'
+import { isNullOrEmpty } from '@/utilities'
 
 const SERIES_MARKER = [
   symbolCircle,
