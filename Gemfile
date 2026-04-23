@@ -2,6 +2,8 @@
 
 source 'https://rubygems.org'
 
+ruby file: ".ruby-version"
+
 # Web framework core
 gem 'puma'
 gem 'rails', '~> 8.0'

@@ -20,6 +20,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   - Updated front-end packages and build tooling for compatibility.
   - Reduced lodash usage in client-side utilities to simplify runtime code.
   - Split dependency update tasks to cover Node and Ruby separately.
+- Updated to Ruby version 3.4.9 [[#580](https://github.com/epimorphics/ukhpi/issues/580)]
+- Renamed `NAME` in Makefile to eliminate conflicts with reserved environment variables in Windows Subsystem for Linux
 
 ### Removed
 
