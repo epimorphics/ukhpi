@@ -128,18 +128,44 @@
 
   %h2.heading-medium Service and data changes
 
-  %p
+    %p
     For details on changes to the service or changes to the data see
     = succeed "." do
       = link_to('the changelog', changelog_index_path)
 
     %p
-      Changes may include Government administration and local government geography changes.
+      When local authority boundaries change, merge, split or are renamed, the UKHPI series is updated to reflect the
+      new geography. Historical data is revised so that figures are presented on a consistent local authority basis
+      over time.
 
-  %p
-    Links to other sources of open data are provided under the Open Government Licence
-    (ONS) and Open Data Licence (OS). HM Land Registry is not responsible for the
-    content or reliability of any linked websites.
+    %p
+      This means:
+      %ul.list.list-bullet
+        %li
+          Time series data remains comparable across years.
+        %li
+          The same local authority geography is used throughout the published series.
+        %li
+          Users do not need to manually adjust for historic boundary changes.
+      
+    %p
+      If a local authority is created or reorganised, the published UKHPI data will reflect that updated structure
+      across the full time series.
+    
+    %p
+      This is important because if you are analysing long-term trends for a local authority, the UKHPI dataset provides
+      a consistent statistical series that aligns with current local authority boundaries.
+
+    %p
+      For more information about the historical boundary changes see the
+      %a{ href: 'https://www.ons.gov.uk/methodology/geography/ukgeographies/administrativegeography/ourchanginggeography' }Our changing geography
+      pages by the Office for National Statistics.
+
+  %h2.heading-medium Links to other data
+
+    %p
+      Links to other sources of open data are provided under the Open Government Licence (ONS) and Open Data Licence
+      (OS). HM Land Registry is not responsible for the content or reliability of any linked websites.
 
   %h2.heading-medium Contact details
   %p
