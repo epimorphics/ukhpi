@@ -1,10 +1,10 @@
-import _ from 'lodash'
+import { isNullOrEmpty } from '@/utilities'
 import Moment from 'moment'
 import Numeral from 'numeral'
 
 /** @return A simplified data value, suitable for display in a data table */
 function toSimpleValue (value) {
-  if (_.isUndefined(value)) {
+  if (isNullOrEmpty(value)) {
     return value
   }
 
@@ -18,7 +18,7 @@ function toSimpleValue (value) {
     simpleValue = simpleValue['@id']
   }
   if (simpleValue instanceof Array && simpleValue.length === 1) {
-    simpleValue = _.first(simpleValue)
+    simpleValue = simpleValue[0]
   }
 
   return simpleValue
@@ -76,7 +76,7 @@ export default class QueryResult {
   asTableData () {
     const tableData = {}
 
-    _.forEach(this.json, (value, key) => {
+    Object.entries(this.json).forEach(([key, value]) => {
       tableData[key] = formatTableDatum(key, value)
     })
 

@@ -9,11 +9,11 @@ ACCOUNT?=$(shell aws sts get-caller-identity | jq -r .Account)
 AWS_REGION?=eu-west-1
 ECR?=${ACCOUNT}.dkr.ecr.${AWS_REGION}.amazonaws.com
 GPR_OWNER?=epimorphics
-NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
+APP_NAME?=$(shell awk -F: '$$1=="name" {print $$2}' deployment.yaml | sed -e 's/[[:blank:]]//g')
 PAT?=$(shell read -p 'Github access token:' TOKEN; echo $$TOKEN)
 PORT?=3002
 
-SHORTNAME?=$(shell echo ${NAME} | cut -f2 -d/)
+SHORTNAME?=$(shell echo ${APP_NAME} | cut -f2 -d/)
 STAGE?=dev
 API_SERVICE_URL?=http://localhost:8888
 RAILS_RELATIVE_URL_ROOT?=/app/ukhpi
@@ -25,7 +25,7 @@ COMMIT=$(shell git rev-parse --short HEAD)
 VERSION?=$(shell /usr/bin/env ruby -e 'require "./app/lib/version" ; puts Version::VERSION')
 TAG?=$(shell printf '%s_%s_%08d' ${VERSION} ${COMMIT} ${GITHUB_RUN_NUMBER})
 
-IMAGE?=${NAME}/${STAGE}
+IMAGE?=${APP_NAME}/${STAGE}
 REPO?=${ECR}/${IMAGE}
 
 BUNDLE_CFG=.bundle/config
@@ -106,7 +106,7 @@ else
 endif
 
 image: auth ## Build the Docker image
-	@echo Building ${NAME}:${TAG} ...
+	@echo Building ${APP_NAME}:${TAG} ...
 	@docker build \
 		--build-arg ALPINE_VERSION=${ALPINE_VERSION} \
 		--build-arg RUBY_VERSION=${RUBY_VERSION} \
@@ -117,8 +117,8 @@ image: auth ## Build the Docker image
 		--build-arg git_branch=${BRANCH} \
 		--build-arg git_commit_hash=${COMMIT} \
 		--build-arg github_run_number=${GITHUB_RUN_NUMBER} \
-		--build-arg image_name=${NAME} \
-		--tag ${NAME}:${TAG} \
+		--build-arg image_name=${APP_NAME} \
+		--tag ${APP_NAME}:${TAG} \
 		.
 	@echo Done.
 
@@ -139,7 +139,7 @@ name: ## Display the shortname of the application
 
 publish: image ## Publish the Docker image to the registry
 	@echo Publishing image: ${REPO}:${TAG} ...
-	@docker tag ${NAME}:${TAG} ${REPO}:${TAG} 2>&1
+	@docker tag ${APP_NAME}:${TAG} ${REPO}:${TAG} 2>&1
 	@docker push ${REPO}:${TAG} 2>&1
 	@echo Done.
 
@@ -154,7 +154,7 @@ rubocop: ## Run RuboCop linting
 
 run: start ## Run the Docker container locally
 	@if docker network inspect dnet > /dev/null 2>&1; then echo "Using docker network dnet"; else echo "Create docker network dnet"; docker network create dnet; sleep 2; fi
-	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${NAME}:${TAG}
+	@docker run ${RUN_VARS} ${PORT}:3000 --env API_SERVICE_URL=${API_SERVICE_URL} --network dnet --rm --name ${SHORTNAME} ${APP_NAME}:${TAG}
 
 server: start ## Run the Rails server locally
 ifdef DEBUG
@@ -198,13 +198,21 @@ test-assets: ## Run unit tests with assets rebuilt
 
 update: ## Review and update dependencies interactively
 	@echo "Checking for outdated dependencies..."
+	@make update-node && make update-gems
+	@echo "All dependencies checked for updates."
+
+update-gems: ## Review and update Ruby gems interactively
+	@echo "Checking for outdated Ruby gems..."
+	@${BUNDLE} outdated --only-explicit || true
+
+update-node: ## Review and update Node modules interactively
+	@echo "Checking for outdated Node modules..."
 	@if [ -f package.json ]; then \
 		echo "Running yarn upgrade-interactive..."; \
 		yarn upgrade-interactive; \
+	else \
+		echo "No package.json found. Skipping Node module update."; \
 	fi
-	@echo "Running bundle outdated to check Ruby gems..."
-# Let bundler handle output; treat this as informational even if deps are outdated
-	@${BUNDLE} outdated --only-explicit || true
 
 vars: ## Display environment variables
 	@echo "Docker: ${REPO}:${TAG}"
@@ -214,7 +222,7 @@ vars: ## Display environment variables
 	@echo "BUNDLER_VERSION = ${BUNDLER_VERSION}"
 	@echo "ECR = ${ECR}"
 	@echo "GPR_OWNER = ${GPR_OWNER}"
-	@echo "NAME = ${NAME}"
+	@echo "NAME = ${APP_NAME}"
 	@echo "RAILS_RELATIVE_URL_ROOT = ${RAILS_RELATIVE_URL_ROOT}"
 	@echo "RUBY_VERSION = ${RUBY_VERSION}"
 	@echo "NODE_VERSION = ${NODE_VERSION}"

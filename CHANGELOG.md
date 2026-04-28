@@ -6,7 +6,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [2.3.1] - 2026-04
+
+- Fixed an issue where front page guidance notes were not being displayed correctly
+- Updated guidance notes for both English and Welsh translations [#581](https://github.com/epimorphics/ukhpi/issues/581)
+- Added shared helpers for null or empty value checks in front-end code.
+- Updated runtime and build dependencies as part of the 2026-01 audit.
+  [#570](https://github.com/epimorphics/ukhpi/issues/570)
+  - Updated Rails and Ruby dependencies for security and stability.
+  - Updated front-end packages and build tooling for compatibility.
+  - Reduced lodash usage in client-side utilities to simplify runtime code.
+  - Split dependency update tasks to cover Node and Ruby separately.
+- Updated to Ruby version 3.4.9 [[#580](https://github.com/epimorphics/ukhpi/issues/580)]
+- Renamed `NAME` in Makefile to eliminate conflicts with reserved environment variables in Windows Subsystem for Linux
+- Removed `glob`, an unused front-end dependency, from the build toolchain.
 
 ## [2.3.0] - 2026-02
 

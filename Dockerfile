@@ -1,4 +1,4 @@
-ARG RUBY_VERSION=3.4.4
+ARG RUBY_VERSION=3.4.9
 ARG NODE_VERSION=24
 ARG ALPINE_VERSION=3.22
 ARG BUNDLER_VERSION=2.7.2
@@ -53,7 +53,7 @@ RUN echo "Bundler version ${BUNDLER_VERSION}"
 RUN gem install bundler:$BUNDLER_VERSION
 
 # Copy Gemfile and lockfile to install gems
-COPY Gemfile Gemfile.lock ./
+COPY Gemfile Gemfile.lock .ruby-version ./
 # .bundle/config contains the information required to access rubygems.pkg.github.com/epimorphics/
 COPY .bundle/config /root/.bundle/config
 
@@ -112,7 +112,7 @@ COPY --from=builder --chown=app ${APP_DIR}/app ./app
 COPY --from=builder --chown=app ${APP_DIR}/bin/rails ./bin/rails
 COPY --from=builder --chown=app ${APP_DIR}/bin/vite ./bin/vite
 COPY --from=builder --chown=app ${APP_DIR}/config ./config
-COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ./
+COPY --from=builder --chown=app ${APP_DIR}/config.ru ${APP_DIR}/Gemfile ${APP_DIR}/Gemfile.lock ${APP_DIR}/.ruby-version ./
 COPY --from=builder --chown=app ${APP_DIR}/lib ./lib
 COPY --from=builder --chown=app ${APP_DIR}/public ./public
 COPY --from=builder --chown=app ${APP_DIR}/tmp ./tmp
