@@ -8,6 +8,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+- Fixed an issue where front page guidance notes were not being displayed correctly
 - Updated guidance notes for both English and Welsh translations [#581](https://github.com/epimorphics/ukhpi/issues/581)
 - Added shared helpers for null or empty value checks in front-end code.
 - Updated runtime and build dependencies as part of the 2026-01 audit.
