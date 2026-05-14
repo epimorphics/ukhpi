@@ -208,6 +208,120 @@ Branch-to-environment mapping is defined in `deployment.yaml`. CI runs
 `publish` and `deploy` automatically on push via
 `.github/workflows/publish-deploy.yml`.
 
+## Releasing
+
+This repository uses long-lived environment branches (`preprod`, `prod`) that are kept
+as strict fast-forward pointers to tagged commits on `dev`. CI deploys automatically on
+push, so promoting an environment is a case of fast-forwarding its branch and pushing.
+
+**Key invariant:** environment branches always point to a tagged commit on `dev`'s
+linear history. Direct pushes to environment branches are not permitted.
+
+### Standard release
+
+**1. Finish work on `dev`**
+
+Merge all feature branches into `dev` and ensure CI passes.
+
+**2. Bump the version and update the changelog**
+
+Edit `app/lib/version.rb` and `CHANGELOG.md`, then commit and push to `dev`:
+
+```bash
+git add app/lib/version.rb CHANGELOG.md
+git commit -m "chore: release vx.y.z"
+git push origin dev
+```
+
+**3. Tag the release commit**
+
+```bash
+git tag vx.y.z
+git push origin vx.y.z
+```
+
+**4. Promote each environment branch in turn**
+
+Fast-forward `preprod` first, verify the deployment, then repeat for `prod`:
+
+```bash
+git checkout preprod
+git merge --ff-only vx.y.z
+git push origin preprod
+```
+
+CI will trigger automatically on push. Verify the deployment before promoting the next
+environment. If `--ff-only` is refused, the branch has diverged — investigate before
+proceeding.
+
+```bash
+git checkout prod
+git merge --ff-only vx.y.z
+git push origin prod
+```
+
+**5. Optionally create a GitHub release**
+
+Go to **Releases** on the repository page, draft a new release from the tag, and
+publish. GitHub's *Generate release notes* will draft notes from merged PR titles.
+
+---
+
+### Hotfix release
+
+Use this when a critical fix must reach production before in-progress `dev` work is
+ready to ship.
+
+**1. Branch off the current production tag**
+
+```bash
+git checkout -b hotfix/vx.y.z vx.y.(z-1)
+```
+
+**2. Make the fix, tag it, and push**
+
+```bash
+git add <files>
+git commit -m "fix: <description>"
+git tag vx.y.z
+git push origin hotfix/vx.y.z vx.y.z
+```
+
+**3. Bring the fix into `dev`**
+
+The fix must land on `dev` before any environment is promoted.
+
+Preferred — rebase (clean linear history):
+
+```bash
+git rebase hotfix/vx.y.z dev
+git push --force-with-lease origin dev
+```
+
+Safe fallback — cherry-pick (no history rewrite):
+
+```bash
+git checkout dev
+git cherry-pick vx.y.z
+git push origin dev
+```
+
+If cherry-picking, tag the resulting commit on `dev` and use that tag for promotion.
+
+**4. Promote environment branches to the hotfix tag**
+
+Same as a standard release — fast-forward `preprod` then `prod`, verifying each before
+moving to the next.
+
+**5. Clean up the hotfix branch**
+
+```bash
+git branch -d hotfix/vx.y.z
+git push origin --delete hotfix/vx.y.z
+```
+
+---
+
 ## Dependency maintenance
 
 ```bash

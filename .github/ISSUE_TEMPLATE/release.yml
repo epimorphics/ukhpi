@@ -1,0 +1,43 @@
+name: Release
+description: Track a standard or hotfix release through all environments
+title: "chore: release v"
+labels: ["release"]
+body:
+  - type: input
+    id: version
+    attributes:
+      label: Version
+      placeholder: "2.4.0"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Standard release
+        - Hotfix release
+    validations:
+      required: true
+
+  - type: textarea
+    id: summary
+    attributes:
+      label: What's in this release?
+      description: Key changes, linked PRs, or a CHANGELOG reference.
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checklist
+    attributes:
+      label: Release checklist
+      options:
+        - label: Version bumped in `app/lib/version.rb`
+        - label: "`CHANGELOG.md` updated"
+        - label: Version commit pushed to `dev` and CI is green
+        - label: Release tagged (`vx.y.z`) and pushed
+        - label: "`preprod` fast-forwarded to tag and deployment verified"
+        - label: "`prod` fast-forwarded to tag and deployment verified"
+        - label: GitHub release created from tag (optional)
