@@ -30,7 +30,7 @@ gem 'yajl-ruby', require: 'yajl'
 gem 'get_process_mem'
 gem 'prometheus-client'
 gem 'puma-metrics'
-gem 'sentry-rails'
+gem 'sentry-rails', '~> 6.0'
 
 # Asset pipeline and front-end
 gem 'bootsnap', require: false
@@ -56,9 +56,9 @@ group :development do
   # (https://github.com/dejan/rails_panel/issues/209#issuecomment-2621877079_)
   gem 'meta_request', github: 'dejan/rails_panel', ref: 'meta_request-v0.8.5'
   # Code quality and linting (development only)
-  gem 'rubocop', require: false
-  gem 'rubocop-capybara', require: false
-  gem 'rubocop-rails', require: false
+  gem 'rubocop', '~> 1.0', require: false
+  gem 'rubocop-capybara', '~> 2.0', require: false
+  gem 'rubocop-rails', '~> 2.0', require: false
   gem 'rubocop-rails-omakase', '~> 1.1', require: false
   gem 'ruby-lsp'
   gem 'solargraph'
