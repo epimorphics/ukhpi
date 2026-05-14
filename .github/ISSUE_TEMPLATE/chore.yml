@@ -1,0 +1,41 @@
+name: Chore
+description: Routine maintenance — dependency updates, tooling changes, code cleanup, refactoring
+title: "chore: "
+labels: ["chore"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: What needs doing?
+      description: Brief description of the task.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Kind
+      options:
+        - Dependency update
+        - Code cleanup / refactor
+        - Tooling / config
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why now?
+      description: What's prompting this — a security advisory, audit, tech debt, failing CI, etc.?
+
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      placeholder: |
+        - [ ] ...
+        - [ ] ...
+    validations:
+      required: true

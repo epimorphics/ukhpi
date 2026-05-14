@@ -1,0 +1,41 @@
+name: Investigation
+description: Explore a question, diagnose unexpected behaviour, or research a decision
+title: "chore: investigate "
+labels: ["investigation"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: What are we investigating?
+      description: Describe the question, unexpected behaviour, or area of uncertainty.
+    validations:
+      required: true
+
+  - type: textarea
+    id: background
+    attributes:
+      label: Background
+      description: What prompted this — an incident, a bug report, a code review comment, etc.?
+
+  - type: textarea
+    id: approach
+    attributes:
+      label: Approach
+      description: How do we plan to investigate? What tools, logs, or people are involved?
+
+  - type: textarea
+    id: findings
+    attributes:
+      label: Findings
+      description: To be filled in during or after the investigation.
+
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      description: To be selected once resolved.
+      options:
+        - No action needed
+        - Follow-up ticket raised
+        - Fix applied directly
+        - Decision documented
