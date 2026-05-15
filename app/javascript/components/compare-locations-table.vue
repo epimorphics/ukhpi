@@ -104,7 +104,7 @@ export default {
     tableCaption () {
       const indLabel = this.indicator.label.toLocaleLowerCase()
       const statLabel = this.statistic.label.toLocaleLowerCase()
-      let locLabel = ''
+      let locLabel
 
       switch (this.locations.length) {
         case 0:

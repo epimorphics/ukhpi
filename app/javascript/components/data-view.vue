@@ -11,9 +11,7 @@
       aria-describedby="tabpanel-accessibility-message"
       class="o-data-view__data-display"
     >
-      <ElTabs
-        v-model="activeTab"
-      >
+      <ElTabs v-model="activeTab">
         <ElTabPane
           :label="$t('js.action.data_graph')"
           :name="`graphs-tab-${indicator.slug}-${theme.slug}`"

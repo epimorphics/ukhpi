@@ -347,7 +347,7 @@ export default {
           this.onSaveChanges()
         } else {
           // enter can short-cut making a selection from the list
-          let match = null
+          let match
 
           if (this.searchResults.length === 1) {
             // have exactly one search result

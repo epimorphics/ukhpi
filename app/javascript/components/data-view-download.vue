@@ -7,9 +7,7 @@
         <ul>
           <li>
             <!-- eslint-disable vue/no-v-html-->
-            <span
-              v-html="sanitised($t('js.download.selected', { themeName: themeName, indicatorName: indicatorName, locationName: locationName }))"
-            />
+            <span v-html="sanitised($t('js.download.selected', { themeName: themeName, indicatorName: indicatorName, locationName: locationName }))" />
             <!-- eslint-enable vue/no-v-html -->
             <br>
             <a
