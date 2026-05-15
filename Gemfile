@@ -6,12 +6,12 @@ ruby file: ".ruby-version"
 
 # Web framework core
 gem 'puma'
-gem 'rails', '~> 8.0'
+gem 'rails', '~> 8.1'
 
 # HTTP client libraries
-gem 'faraday', '~> 2.13', '>= 2.13.0'
-gem 'faraday-encoding', '~> 0.0', '>= 0.0.6'
-gem 'faraday-follow_redirects', '~> 0.4', '>= 0.4.0'
+gem 'faraday', '~> 2.0'
+gem 'faraday-encoding', '~> 0.0'
+gem 'faraday-follow_redirects', '~> 0.5'
 gem 'faraday-retry', '~> 2.0', '>= 2.0'
 
 # Template and view helpers
