@@ -1,0 +1,56 @@
+name: 'Verify Code'
+
+permissions:
+  contents: read
+  packages: read
+
+on:
+  workflow_call: {}
+
+jobs:
+  lint:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Run ESLint
+        run: yarn lint
+
+  lint-ruby:
+    name: RuboCop Lint
+    env:
+      BUNDLE_RUBYGEMS__PKG__GITHUB__COM: "x-access-token:${{ secrets.GITHUB_TOKEN }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby Environment
+        uses: ./.github/actions/setup-ruby
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run RuboCop
+        run: bundle exec rubocop --parallel
+
+  test-ruby:
+    name: Rails Test Suite
+    env:
+      BUNDLE_RUBYGEMS__PKG__GITHUB__COM: "x-access-token:${{ secrets.GITHUB_TOKEN }}"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby Environment
+        uses: ./.github/actions/setup-ruby
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Run Rails tests
+        run: bin/rails test
