@@ -1,8 +1,10 @@
 # UK House Price Index (UKHPI) open data application
 
-This is the repo for the application that presents UKHPI open data on behalf of
-Land Registry (England and Wales), Registers of Scotland, Land and Property
-Services (Northern Ireland) and the UK Office for National Statistics (ONS).
+This is a web application that presents UK House Price Index open data, allowing
+users to browse, compare, and download UKHPI statistics by geography, property
+type, and time period. It is published on behalf of Land Registry (England and
+Wales), Registers of Scotland, Land and Property Services (Northern Ireland) and
+the UK Office for National Statistics (ONS).
 
 Please see the other repositories in the [HM Land Registry Open
 Data](https://github.com/epimorphics/hmlr-linked-data/) project for more
@@ -180,8 +182,8 @@ To generate the location files, run the following command:
 SERVER=https://landregistry.data.gov.uk/app/ukhpi ./bin/rails ukhpi:locations
 ```
 
-> [!NOTE] The `SERVER` env var should point to the appropriate SPARQL endpoint.
-> Please verify the endpoint before running the command.
+**Note:** The `SERVER` env var should point to the appropriate SPARQL endpoint.
+Please verify the endpoint before running the command.
 
 Further details on the generation of location files can be found in the
 [wiki](https://github.com/epimorphics/ukhpi/wiki/Updating-geographies).
