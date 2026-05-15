@@ -7,6 +7,25 @@ import tseslint from 'typescript-eslint'
 import pluginVue from 'eslint-plugin-vue'
 import stylistic from '@stylistic/eslint-plugin'
 
+const INLINE_ELEMENTS = [
+  'InertiaLink',
+  'a',
+  'span',
+  'strong',
+  'em',
+  'b',
+  'i',
+  'small',
+  'abbr',
+  'label',
+  'code',
+  'kbd',
+  'samp',
+  'sub',
+  'sup',
+  'time',
+]
+
 export default defineConfig([
   // global ignores for generated/output directories
   {
@@ -90,15 +109,48 @@ export default defineConfig([
       ],
       'vue/define-emits-declaration': ['error', 'type-based'],
       'vue/define-props-declaration': ['error', 'type-based'],
+      'vue/first-attribute-linebreak': [
+        'error', {
+          singleline: 'beside',
+          multiline: 'below',
+        },
+      ],
       'vue/html-button-has-type': [
         'error',
         { button: true, submit: true, reset: true },
+      ],
+      'vue/html-closing-bracket-newline': [
+        'error', {
+          singleline: 'never',
+          multiline: 'always',
+        },
+      ],
+      'vue/html-indent': ['error', 2],
+      'vue/max-attributes-per-line': [
+        'error', {
+          singleline: 1,
+          multiline: 1,
+        },
+      ],
+      'vue/multiline-html-element-content-newline': [
+        'error', {
+          ignoreWhenEmpty: true,
+          allowEmptyLines: false,
+          ignores: [...INLINE_ELEMENTS],
+        },
       ],
       'vue/no-boolean-default': ['error', 'default-false'],
       'vue/no-empty-component-block': 'error',
       'vue/no-required-prop-with-default': 'error',
       'vue/no-root-v-if': 'error',
       'vue/prefer-separate-static-class': 'error',
+      'vue/singleline-html-element-content-newline': [
+        'error', {
+          ignoreWhenNoAttributes: true,
+          ignoreWhenEmpty: true,
+          ignores: [...INLINE_ELEMENTS],
+        },
+      ],
     },
   },
   {

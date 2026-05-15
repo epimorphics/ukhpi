@@ -10,6 +10,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Updated `eslint`, `eslint.config`, and related dependencies to their latest versions [#596](https://github.com/epimorphics/ukhpi/issues/596).
 - Updated dependencies with patch updates available [#590](https://github.com/epimorphics/ukhpi/issues/590).
 
 ## [2.3.1] - 2026-04
