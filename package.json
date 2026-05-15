@@ -61,7 +61,7 @@
     "@modyfi/vite-plugin-yaml": "^1.1.1",
     "@sentry/vite-plugin": "^4.9.1",
     "@stylistic/eslint-plugin": "^5.10.0",
-    "@types/node": "^22.19.19",
+    "@types/node": "^24.1.0",
     "@vitejs/plugin-vue2": "^2.3.4",
     "eslint": "^9.39.4",
     "eslint-formatter-summary": "^2.0.2",
