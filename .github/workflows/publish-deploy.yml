@@ -1,7 +1,40 @@
 name: "Build & Publish Docker Image"
 on:
   workflow_dispatch: {}
-  push: {}
+  push:
+    branches:
+      - dev
+      - preprod
+      - prod
+    paths:
+      # Image definition and entrypoint
+      - 'Dockerfile'
+      - 'entrypoint.sh'
+      - 'Makefile'
+      # Ruby dependencies
+      - 'Gemfile'
+      - 'Gemfile.lock'
+      - '.ruby-version'
+      - '.bundle/**'
+      # Node dependencies
+      - 'package.json'
+      - 'yarn.lock'
+      - '.yarnrc.yml'
+      - '.yarn/**'
+      # Build configuration
+      - 'postcss.config.js'
+      - 'vite.config.mts'
+      - 'tsconfig.json'
+      # Rails application
+      - 'config.ru'
+      - 'Rakefile'
+      - 'app/**'
+      - 'bin/**'
+      - 'config/**'
+      - 'lib/**'
+      - 'public/**'
+      # Workflow itself
+      - '.github/workflows/**'
 
 jobs:
   publish:
