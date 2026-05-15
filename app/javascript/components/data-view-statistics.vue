@@ -85,7 +85,7 @@ export default {
     imageSrcPath (index, svg) {
       const imageRoot = MARKERS[index]
       const imagePathKey = `marker${imageRoot}${svg ? 'Svg' : ''}`
-      return new URL(`../${markerRoutes[imagePathKey]}`, import.meta.url).pathname
+      return markerRoutes[imagePathKey]
     },
   },
 }
