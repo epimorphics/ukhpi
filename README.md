@@ -113,22 +113,37 @@ precedence. `.env.local` is gitignored.
 Vite exposes any variable prefixed with `VITE_`, `RAILS_`, `HMLR_`, `LOG_`,
 or `SENTRY_` to the browser bundle.
 
+## Data API
+
+The app queries a backing data API at `API_SERVICE_URL` (default
+`http://localhost:8888`). To run it locally, install Maven and follow the
+instructions in the
+[lr-data-api](https://github.com/epimorphics/lr-data-api) repository, ensuring
+it listens on port `8888`.
+
 ## Running locally
 
-Start the Rails server and Vite dev server together via foreman:
-
 ```bash
-bin/dev -f Procfile.dev -e .env.local,.env.development --color
+bin/dev
 ```
 
-The app is served on port 3002 by default. It expects a data API at
-`API_SERVICE_URL` (see `.env.development`).
+This starts the Rails server and Vite dev server together. The app is served on
+port 3002 by default, using the defaults in `.env.development`.
+
+To override environment variables, pass your env file(s) explicitly:
+
+```bash
+bin/dev -e .env.local,.env.development
+```
+
+`.env.local` is gitignored — put local overrides there. Files listed later take
+lower precedence, so `.env.development` acts as the fallback.
 
 To use the debugger, start foreman without the web process and run Rails
 separately:
 
 ```bash
-foreman start -f Procfile.dev -e .env.local,.env.development web=0,all=1
+foreman start -f Procfile.dev -e .env.development web=0,all=1
 ./bin/rails server -p 3002 -b 0.0.0.0
 ```
 
