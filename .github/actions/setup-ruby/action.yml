@@ -9,7 +9,3 @@ runs:
       with:
         ruby-version: .ruby-version
         bundler-cache: true
-
-    - name: Install dependencies
-      shell: bash
-      run: bundle install --verbose
