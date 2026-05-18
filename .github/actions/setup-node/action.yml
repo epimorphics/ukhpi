@@ -1,0 +1,25 @@
+name: Setup Node Environment
+description: Shared setup for Node.js scripts using Yarn
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version-file: '.nvmrc'
+        cache: 'yarn'
+
+    - name: Install Yarn
+      run: |
+        corepack enable
+        corepack prepare yarn@stable --activate
+        yarn --version
+      shell: bash
+
+    - name: Install dependencies
+      run: yarn install --immutable
+      shell: bash

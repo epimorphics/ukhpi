@@ -1,0 +1,11 @@
+name: Setup Ruby Environment
+description: Shared setup for Ruby scripts, Bundler, and Rails tooling
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: .ruby-version
+        bundler-cache: true
