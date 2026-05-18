@@ -10,6 +10,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Upgraded `vite` from `^5.4.21` to `^7.0.0`; paused at v7 because `@vitejs/plugin-vue2` does not yet declare Vite 8 peer-dep support. Also fixed a silently-ignored nested `optimizeDeps` key in `vite.config.mts` [#601](https://github.com/epimorphics/ukhpi/issues/601).
 - Upgraded `axios` from `^0.30.3` to `^1.16.1` [#600](https://github.com/epimorphics/ukhpi/issues/600).
 - Updated `eslint`, `eslint.config`, and related dependencies to their latest versions [#596](https://github.com/epimorphics/ukhpi/issues/596).
 - Updated dependencies with patch updates available [#590](https://github.com/epimorphics/ukhpi/issues/590).

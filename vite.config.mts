@@ -76,9 +76,7 @@ export default defineConfig(({ mode }) => {
       esbuildOptions: {
         target: 'esnext',
       },
-      optimizeDeps: {
-        include: ['govuk_frontend_toolkit', 'govuk-elements-sass', 'element-ui', 'leaflet'],
-      },
+      include: ['element-ui', 'leaflet'],
     },
     resolve: {
       alias: {

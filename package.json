@@ -77,7 +77,7 @@
     "terser": "^5.47.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.59.3",
-    "vite": "^5.4.21",
+    "vite": "^7.0.0",
     "vite-plugin-erb": "^1.2.0",
     "vite-plugin-rails": "^0.6.0",
     "vite-plugin-ruby": "^5.2.2",

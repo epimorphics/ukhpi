@@ -1,15 +1,27 @@
-/** Paths to the server assets */
+import markerCircle from './circle-fuschia.png'
+import markerCircleSvg from './circle-fuschia.svg'
+import markerDiamond from './diamond-light-blue.png'
+import markerDiamondSvg from './diamond-light-blue.svg'
+import markerSquare from './square-mellow-red.png'
+import markerSquareSvg from './square-mellow-red.svg'
+import markerTriangle from './triangle-up-orange.png'
+import markerTriangleSvg from './triangle-up-orange.svg'
+import markerStar from './star-green.png'
+import markerStarSvg from './star-green.svg'
+import markerSquareWhite from './square-white.png'
+import markerSquareWhiteSvg from './square-white.svg'
+
 export default {
-  markerCircle: 'images/markers/circle-fuschia.png',
-  markerCircleSvg: 'images/markers/circle-fuschia.svg',
-  markerDiamond: 'images/markers/diamond-light-blue.png',
-  markerDiamondSvg: 'images/markers/diamond-light-blue.svg',
-  markerSquare: 'images/markers/square-mellow-red.png',
-  markerSquareSvg: 'images/markers/square-mellow-red.svg',
-  markerTriangle: 'images/markers/triangle-up-orange.png',
-  markerTriangleSvg: 'images/markers/triangle-up-orange.svg',
-  markerStar: 'images/markers/star-green.png',
-  markerStarSvg: 'images/markers/star-green.svg',
-  markerSquareWhite: 'images/markers/square-white.png',
-  markerSquareWhiteSvg: 'images/markers/square-white.svg',
+  markerCircle,
+  markerCircleSvg,
+  markerDiamond,
+  markerDiamondSvg,
+  markerSquare,
+  markerSquareSvg,
+  markerTriangle,
+  markerTriangleSvg,
+  markerStar,
+  markerStarSvg,
+  markerSquareWhite,
+  markerSquareWhiteSvg,
 }
