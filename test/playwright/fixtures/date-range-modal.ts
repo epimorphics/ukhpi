@@ -27,11 +27,11 @@ export class DateRangeModal {
   }
 
   getStartInput (): Locator {
-    return this.dialog.getByLabel('Start').locator('input')
+    return this.dialog.getByPlaceholder('Starting from')
   }
 
   getEndInput (): Locator {
-    return this.dialog.getByLabel('End').locator('input')
+    return this.dialog.getByPlaceholder('up until')
   }
 
   async getStartValue () {
@@ -45,7 +45,7 @@ export class DateRangeModal {
   async clearStart () {
     const input = this.getStartInput()
     await input.hover()
-    const clearBtn = this.dialog.getByLabel('Start').locator('.el-input__clear')
+    const clearBtn = input.locator('xpath=../..').locator('.el-input__clear')
     if (await clearBtn.isVisible()) {
       await clearBtn.click()
     } else {

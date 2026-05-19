@@ -9,6 +9,7 @@ export default defineConfig({
 
   use: {
     baseURL,
+    screenshot: 'only-on-failure',
   },
 
   projects: [

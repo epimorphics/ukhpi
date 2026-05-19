@@ -3,7 +3,7 @@
     <span v-if="location">
       <ElButton
         class="c-options-selection__button"
-        :title="$t('js.action.select_location')"
+        :aria-label="$t('js.action.select_location')"
         @click="onChangeLocation"
       >
         {{ location.labels[$locale] || location.labels.en }}
