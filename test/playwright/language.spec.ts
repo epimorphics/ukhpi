@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures/index'
 
 test.describe('Change language', () => {
   test('clicking Cymraeg changes the page to Welsh', async ({ page }) => {
@@ -16,12 +16,11 @@ test.describe('Change language', () => {
     await expect(page.getByRole('link', { name: 'cymharu lleoliadau' })).toBeVisible()
   })
 
-  test('clicking the header logo from the Welsh page returns to English', async ({ page }) => {
+  test('clicking the header logo from the Welsh page returns to the home page', async ({ page }) => {
     await page.goto('?lang=cy')
-    await page.locator('header#global-header').getByRole('link', { name: /homepage/i })
-      .click()
-    await expect(page).not.toHaveURL(/lang=cy/)
-    await expect(page.getByRole('heading', { name: 'UK House Price Index', level: 1 })).toBeVisible()
+    await page.locator('header#global-header').getByRole('link', { name: 'UKHPI Logo' }).click()
+    await expect(page).toHaveURL(/lang=cy/)
+    await expect(page.getByRole('heading', { name: 'Mynegai Prisiau Tai y DU', level: 1 })).toBeVisible()
   })
 
   test('clicking English link restores English language', async ({ page }) => {
