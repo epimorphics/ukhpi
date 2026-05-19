@@ -68,6 +68,7 @@
     "@types/node": "^24.12.4",
     "@vitejs/plugin-vue2": "^2.3.4",
     "eslint": "^10.3.0",
+    "eslint-plugin-playwright": "^2.10.3",
     "eslint-plugin-vue": "^10.9.1",
     "globals": "^17.6.0",
     "jiti": "^2.6.1",

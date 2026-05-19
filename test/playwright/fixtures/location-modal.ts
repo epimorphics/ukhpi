@@ -43,13 +43,15 @@ export class LocationModal {
   }
 
   async clickFirstMapSegment () {
-    await this.dialog.locator('.c-map__map path').first()
-      .click({ force: true })
+    const path = this.dialog.locator('.c-map__map path').first()
+    // eslint-disable-next-line playwright/no-force-option -- Leaflet SVG paths are perpetually redrawn and never pass stability checks
+    await path.click({ force: true })
   }
 
   async hoverFirstMapSegment () {
-    await this.dialog.locator('.c-map__map path').first()
-      .hover({ force: true })
+    const path = this.dialog.locator('.c-map__map path').first()
+    // eslint-disable-next-line playwright/no-force-option -- Leaflet SVG paths are perpetually redrawn and never pass stability checks
+    await path.hover({ force: true })
   }
 
   async getSearchValue () {

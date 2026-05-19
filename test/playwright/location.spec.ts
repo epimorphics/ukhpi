@@ -22,6 +22,7 @@ test.describe('Location modal', () => {
       await expect(page.getByRole('button', { name: 'Zoom out' })).toBeVisible()
     })
 
+    // eslint-disable-next-line playwright/expect-expect -- assertion is inside modal.close()
     test('close icon dismisses the modal', async () => {
       await modal.open()
       await modal.close()

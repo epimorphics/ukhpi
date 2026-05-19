@@ -6,6 +6,7 @@ import tseslint from 'typescript-eslint'
 
 import pluginVue from 'eslint-plugin-vue'
 import stylistic from '@stylistic/eslint-plugin'
+import playwright from 'eslint-plugin-playwright'
 
 const INLINE_ELEMENTS = [
   'InertiaLink',
@@ -214,5 +215,9 @@ export default defineConfig([
       // allow single-word component names for our pages/layouts directories
       'vue/multi-word-component-names': 'off',
     },
+  },
+  {
+    ...playwright.configs['flat/recommended'],
+    files: ['test/playwright/**/*.ts'],
   },
 ])

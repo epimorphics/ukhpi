@@ -2994,6 +2994,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"eslint-plugin-playwright@npm:^2.10.3":
+  version: 2.10.3
+  resolution: "eslint-plugin-playwright@npm:2.10.3"
+  dependencies:
+    globals: "npm:^17.3.0"
+  peerDependencies:
+    eslint: ">=8.40.0"
+  checksum: 10c0/15892bfd4352e72ce832a3953b4f45877c6f3275c43682d863619329994980060d8358b1e3478a922f67f28e68dbb36b860341e4c24998314789fc9bc946faba
+  languageName: node
+  linkType: hard
+
 "eslint-plugin-vue@npm:^10.9.1":
   version: 10.9.1
   resolution: "eslint-plugin-vue@npm:10.9.1"
@@ -3500,7 +3511,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"globals@npm:^17.6.0":
+"globals@npm:^17.3.0, globals@npm:^17.6.0":
   version: 17.6.0
   resolution: "globals@npm:17.6.0"
   checksum: 10c0/cf94fb4329cc5c68cf81018fd68324f413181ee169f0235b0b33b82bc93fe7825a21beea951f83a80e8e4bbdad9c0c80515a145b5fd4b5cb52f2a80db899a93f
@@ -5847,6 +5858,7 @@ __metadata:
     dotenv: "npm:^16.6.1"
     element-ui: "npm:2.15.14"
     eslint: "npm:^10.3.0"
+    eslint-plugin-playwright: "npm:^2.10.3"
     eslint-plugin-vue: "npm:^10.9.1"
     focus-trap: "npm:^6.9.4"
     focus-trap-vue: "npm:^1.1.1"
