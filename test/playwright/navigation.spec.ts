@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures/index'
 
 test.describe('Header and primary navigation', () => {
   test.beforeEach(async ({ page }) => {
@@ -15,32 +15,36 @@ test.describe('Header and primary navigation', () => {
   })
 
   test('clicking Browse routes to the data display', async ({ page }) => {
-    await page.getByRole('link', { name: 'browse' }).click()
+    await page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'browse' })
+      .click()
     await expect(page).toHaveURL(/browse/)
   })
 
   test('clicking Compare locations routes to the comparison view', async ({ page }) => {
-    await page.getByRole('link', { name: 'compare locations' }).click()
+    await page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'compare locations' })
+      .click()
     await expect(page).toHaveURL(/compare/)
   })
 
   test('SPARQL query link points to the SPARQL console', async ({ page }) => {
-    const link = page.getByRole('link', { name: 'SPARQL query' })
+    const link = page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'SPARQL query' })
     await expect(link).toHaveAttribute('href', /qonsole/)
   })
 
-  test('clicking User guide routes to the user guide', async ({ page }) => {
-    await page.getByRole('link', { name: 'user guide' }).click()
-    await expect(page).toHaveURL(/doc/)
+  test('user guide link points to the user guide PDF', async ({ page }) => {
+    const link = page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'user guide' })
+    await expect(link).toHaveAttribute('href', /ukhpi-user-guide/)
   })
 
   test('clicking About UKHPI routes to the about page', async ({ page }) => {
-    await page.getByRole('link', { name: 'about UKHPI' }).click()
+    await page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'about UKHPI', exact: true })
+      .click()
     await expect(page).toHaveURL(/doc/)
   })
 
   test('clicking Change history routes to the changelog', async ({ page }) => {
-    await page.getByRole('link', { name: 'change history' }).click()
+    await page.locator('nav[aria-label="application menu"]').getByRole('link', { name: 'change history' })
+      .click()
     await expect(page).toHaveURL(/changelog/)
   })
 })
