@@ -1,12 +1,14 @@
 import { defineConfig, devices } from '@playwright/test'
 
+const baseURL = process.env['PLAYWRIGHT_BASE_URL'] ?? 'http://localhost:3000/'
+
 export default defineConfig({
   testDir: 'test/playwright',
   outputDir: 'tmp/test-results',
   reporter: [['html', { outputFolder: 'tmp/playwright-report', open: 'never' }]],
 
   use: {
-    baseURL: 'http://localhost:3002/app/ukhpi',
+    baseURL,
   },
 
   projects: [
@@ -16,10 +18,12 @@ export default defineConfig({
     },
   ],
 
-  webServer: {
-    command: 'bin/rails server',
-    url: 'http://localhost:3002',
-    reuseExistingServer: true,
-    timeout: 30_000,
-  },
+  webServer: process.env['PLAYWRIGHT_BASE_URL']
+    ? undefined
+    : {
+      command: 'bin/rails server',
+      url: 'http://localhost:3000',
+      reuseExistingServer: true,
+      timeout: 60_000,
+    },
 })
