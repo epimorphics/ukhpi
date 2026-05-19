@@ -203,6 +203,25 @@ yarn test:e2e:report
 Test files live in `test/playwright/`. Results and reports are written to
 `tmp/test-results/` and `tmp/playwright-report/` respectively (both gitignored).
 
+#### Running against a deployed environment
+
+The E2E suite can be pointed at any deployed environment by setting `E2E_BASE_URL`.
+Some environments are HTTP Basic Auth protected — pass credentials via `E2E_USERNAME` and `E2E_PASSWORD`:
+
+```bash
+E2E_USERNAME=user E2E_PASSWORD=pass E2E_BASE_URL=https://hmlr-dev-pres.epimorphics.net/app/ukhpi/ yarn test:e2e
+```
+
+A manually-triggered GitHub Actions workflow is also available under
+**Actions → E2E Tests → Run workflow**. Paste the target environment URL into the
+`base_url` input when prompted.
+
+| Environment | URL |
+|---|---|
+| dev | `https://hmlr-dev-pres.epimorphics.net/app/ukhpi/` |
+| preprod | `https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/` |
+| prod | `https://landregistry.data.gov.uk/app/ukhpi/` |
+
 ## Linting
 
 ```bash
@@ -310,6 +329,15 @@ git push origin prod
 
 Go to **Releases** on the repository page, draft a new release from the tag, and
 publish. GitHub's *Generate release notes* will draft notes from merged PR titles.
+
+**6. Run E2E tests against each promoted environment**
+
+Trigger the E2E workflow from **Actions → E2E Tests → Run workflow**, or run locally:
+
+```bash
+E2E_BASE_URL=https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/ yarn test:e2e
+E2E_BASE_URL=https://landregistry.data.gov.uk/app/ukhpi/ yarn test:e2e
+```
 
 ---
 

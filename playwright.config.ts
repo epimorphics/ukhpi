@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const baseURL = process.env['PLAYWRIGHT_BASE_URL'] ?? 'http://localhost:3000/'
+const baseURL = process.env['E2E_BASE_URL'] ?? 'http://localhost:3000/'
 
 export default defineConfig({
   testDir: 'test/playwright',
@@ -10,6 +10,14 @@ export default defineConfig({
   use: {
     baseURL,
     screenshot: 'only-on-failure',
+    ...(process.env['E2E_USERNAME']
+      ? {
+        httpCredentials: {
+          username: process.env['E2E_USERNAME'],
+          password: process.env['E2E_PASSWORD'] ?? '',
+        },
+      }
+      : {}),
   },
 
   projects: [
@@ -19,7 +27,7 @@ export default defineConfig({
     },
   ],
 
-  webServer: process.env['PLAYWRIGHT_BASE_URL']
+  webServer: process.env['E2E_BASE_URL']
     ? undefined
     : {
       command: 'bin/rails server',

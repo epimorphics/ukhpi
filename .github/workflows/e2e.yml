@@ -30,7 +30,9 @@ jobs:
 
       - name: Run E2E tests
         env:
-          PLAYWRIGHT_BASE_URL: ${{ inputs.base_url }}
+          E2E_BASE_URL: ${{ inputs.base_url }}
+          E2E_USERNAME: ${{ secrets.E2E_USERNAME }}
+          E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
         run: npx playwright test
 
       - name: Upload test report
