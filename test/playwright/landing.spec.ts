@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures/index'
 
 test.describe('Landing page', () => {
   test.beforeEach(async ({ page }) => {
@@ -11,10 +11,7 @@ test.describe('Landing page', () => {
   })
 
   test('page contains multiple links to the application', async ({ page }) => {
-    const baseURL = page.url().replace(/\/$/, '')
-    const origin = new URL(baseURL).origin
-    const internalLinks = page.locator(`a[href^="${origin}"]`)
-    await expect(internalLinks).toHaveCount(await internalLinks.count())
+    const internalLinks = page.locator('a[href^="/"]')
     expect(await internalLinks.count()).toBeGreaterThan(1)
   })
 
