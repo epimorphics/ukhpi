@@ -84,6 +84,10 @@ uk.json
 # Used by the location.rake task, don't delete or commit
 query-results.json
 
+# Playwright
+/test-results/
+/playwright-report/
+
 # Vite Ruby
 /public/vite*
 # Vite uses dotenv and suggests to ignore local-only env files. See

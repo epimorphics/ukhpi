@@ -25,7 +25,8 @@
     "app/javascript/**/*.js",
     "app/javascript/**/*.ts",
     "app/javascript/**/*.d.ts",
-    "app/javascript/**/*.vue"
+    "app/javascript/**/*.vue",
+    "test/playwright/**/*.ts"
   ], // Adjust the path to your JavaScript files
   "exclude": [ "node_modules", "**/*.cjs" ]
 }

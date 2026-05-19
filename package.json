@@ -6,6 +6,9 @@
   "description": "UK House Price Index - A search tool to find house price trends in the UK ~ Please view the latest version cadence found in the app/lib/version.rb file",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:e2e:report": "playwright show-report tmp/playwright-report",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -59,6 +62,7 @@
   "devDependencies": {
     "@eslint/js": "^10.0.1",
     "@modyfi/vite-plugin-yaml": "^1.1.1",
+    "@playwright/test": "^1.60.0",
     "@sentry/vite-plugin": "^5.3.0",
     "@stylistic/eslint-plugin": "^5.10.0",
     "@types/node": "^24.1.0",

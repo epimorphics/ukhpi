@@ -174,6 +174,35 @@ View the coverage report after a test run:
 open coverage/index.html
 ```
 
+### End-to-end tests (Playwright)
+
+One-time browser install:
+
+```bash
+yarn playwright install --with-deps chromium
+```
+
+Run the suite (the Rails server must be running, or Playwright will start it automatically):
+
+```bash
+yarn test:e2e
+```
+
+Open the interactive UI runner:
+
+```bash
+yarn test:e2e:ui
+```
+
+View the last HTML report:
+
+```bash
+yarn test:e2e:report
+```
+
+Test files live in `test/playwright/`. Results and reports are written to
+`tmp/test-results/` and `tmp/playwright-report/` respectively (both gitignored).
+
 ## Linting
 
 ```bash
