@@ -18,7 +18,8 @@ test.describe('Change language', () => {
 
   test('clicking the header logo from the Welsh page returns to the home page', async ({ page }) => {
     await page.goto('?lang=cy')
-    await page.locator('header#global-header').getByRole('link', { name: 'UKHPI Logo' }).click()
+    await page.locator('header#global-header').getByRole('link', { name: 'UKHPI Logo' })
+      .click()
     await expect(page).toHaveURL(/lang=cy/)
     await expect(page.getByRole('heading', { name: 'Mynegai Prisiau Tai y DU', level: 1 })).toBeVisible()
   })
