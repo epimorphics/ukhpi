@@ -74,27 +74,27 @@ test.describe('Location modal', () => {
 
     test('Countries radio button can be selected', async ({ page }) => {
       await modal.selectMapType('Countries')
-      await expect(page.getByLabel('Countries')).toBeChecked()
+      await expect(page.getByRole('radio', { name: 'Countries' })).toBeChecked()
     })
 
     test('Local authorities radio button can be selected', async ({ page }) => {
       await modal.selectMapType('Local authorities')
-      await expect(page.getByLabel('Local authorities')).toBeChecked()
+      await expect(page.getByRole('radio', { name: 'Local authorities' })).toBeChecked()
     })
 
     test('Regions of England radio button can be selected', async ({ page }) => {
       await modal.selectMapType('Regions of England')
-      await expect(page.getByLabel('Regions of England')).toBeChecked()
+      await expect(page.getByRole('radio', { name: 'Regions of England' })).toBeChecked()
     })
 
     test('Counties of England radio button can be selected', async ({ page }) => {
       await modal.selectMapType('Counties of England')
-      await expect(page.getByLabel('Counties of England')).toBeChecked()
+      await expect(page.getByRole('radio', { name: 'Counties of England' })).toBeChecked()
     })
 
     test('hovering a map segment shows a tooltip', async ({ page }) => {
       await modal.hoverFirstMapSegment()
-      await expect(page.locator('.leaflet-tooltip')).toBeVisible()
+      await expect(page.locator('.leaflet-rrose')).toBeVisible()
     })
 
     test('clicking a map segment populates the search field', async () => {
@@ -103,11 +103,12 @@ test.describe('Location modal', () => {
       expect(value.length).toBeGreaterThan(0)
     })
 
-    test('confirming a map-selected region sets the location', async ({ page }) => {
+    test('confirming a map-selected region updates the location away from the default', async ({ page }) => {
       await modal.clickFirstMapSegment()
       await modal.confirm()
       const locationBtn = page.getByRole('button', { name: 'select a different location' })
       await expect(locationBtn).toBeVisible()
+      await expect(locationBtn).not.toContainText('United Kingdom')
     })
   })
 })

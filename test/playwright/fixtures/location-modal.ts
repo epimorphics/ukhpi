@@ -39,17 +39,17 @@ export class LocationModal {
   }
 
   async selectMapType (label: string) {
-    await this.dialog.getByLabel(label).click()
+    await this.dialog.getByRole('radio', { name: label }).click()
   }
 
   async clickFirstMapSegment () {
     await this.dialog.locator('.c-map__map path').first()
-      .click()
+      .click({ force: true })
   }
 
   async hoverFirstMapSegment () {
     await this.dialog.locator('.c-map__map path').first()
-      .hover()
+      .hover({ force: true })
   }
 
   async getSearchValue () {
