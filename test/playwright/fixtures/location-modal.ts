@@ -29,11 +29,12 @@ export class LocationModal {
   }
 
   async search (term: string) {
-    await this.searchInput.fill(term)
+    await this.searchInput.pressSequentially(term)
   }
 
   async selectResult (index = 0) {
     await this.page.locator('.o-search-location__result').nth(index)
+      .getByRole('button')
       .click()
   }
 

@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect } from './fixtures/index'
 import { LocationModal } from './fixtures/location-modal'
 
 test.describe('Location modal', () => {
@@ -18,8 +18,8 @@ test.describe('Location modal', () => {
 
     test('map zoom in and zoom out buttons are present', async ({ page }) => {
       await modal.open()
-      await expect(page.getByTitle('Zoom in')).toBeVisible()
-      await expect(page.getByTitle('Zoom out')).toBeVisible()
+      await expect(page.getByRole('button', { name: 'Zoom in' })).toBeVisible()
+      await expect(page.getByRole('button', { name: 'Zoom out' })).toBeVisible()
     })
 
     test('close icon dismisses the modal', async () => {
@@ -32,7 +32,7 @@ test.describe('Location modal', () => {
     test('typing a partial term shows a dropdown of suggestions', async ({ page }) => {
       await modal.open()
       await modal.search('Bi')
-      await expect(page.locator('.o-search-location__results')).toBeVisible()
+      await expect(page.locator('.o-search-location__results').first()).toBeVisible()
       await expect(page.locator('.o-search-location__result').first()).toBeVisible()
     })
 
