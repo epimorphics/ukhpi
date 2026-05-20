@@ -10,7 +10,7 @@
       >
         <ElButton
           class="c-options-selection__button"
-          :title="$t('js.dates_picker.select_dates')"
+          :aria-label="$t('js.dates_picker.select_dates')"
           @click="onChangeDates"
         >
           {{ fromDateFormatted }}

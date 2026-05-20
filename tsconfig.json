@@ -9,15 +9,14 @@
     "allowJs": true, // Allows JavaScript files in the project
     "noEmit": true, // Prevents emitting compiled files
     "strict": true, // Enables strict type-checking
-    "baseUrl": "app/javascript",
     "paths": {
-      "@/*": [ "*" ]
+      "@/*": [ "./app/javascript/*" ]
     },
     "noImplicitAny": false,
     "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "jsx": "preserve",
-    "types": [ "vite/client" ],
+    "types": [ "vite/client", "node" ],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },
@@ -25,7 +24,9 @@
     "app/javascript/**/*.js",
     "app/javascript/**/*.ts",
     "app/javascript/**/*.d.ts",
-    "app/javascript/**/*.vue"
+    "app/javascript/**/*.vue",
+    "test/playwright/**/*.ts",
+    "playwright.config.ts"
   ], // Adjust the path to your JavaScript files
   "exclude": [ "node_modules", "**/*.cjs" ]
 }

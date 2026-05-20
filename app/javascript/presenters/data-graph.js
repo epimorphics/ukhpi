@@ -1,7 +1,7 @@
 /** Component for showing the queried index data as a set of graphs */
 
 import _ from 'lodash'
-import * as Sentry from '@sentry/browser'
+import * as Sentry from '@sentry/vue'
 import { axisBottom, axisLeft } from 'd3-axis'
 import { extent, bisector } from 'd3-array'
 import { format } from 'd3-format'
