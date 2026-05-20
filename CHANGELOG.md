@@ -8,6 +8,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Add Playwright test translation of QA specs
+
 ### Changed
 
 - Upgraded `vite` from `^5.4.21` to `^7.0.0`; paused at v7 because `@vitejs/plugin-vue2` does not yet declare Vite 8 peer-dep support. Also fixed a silently-ignored nested `optimizeDeps` key in `vite.config.mts` [#601](https://github.com/epimorphics/ukhpi/issues/601).
