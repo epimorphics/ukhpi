@@ -26,14 +26,14 @@ jobs:
           key: playwright-chromium-${{ hashFiles('yarn.lock') }}
 
       - name: Install Playwright browsers
-        run: npx playwright install chromium --with-deps
+        run: yarn playwright install chromium --with-deps
 
       - name: Run E2E tests
         env:
           E2E_BASE_URL: ${{ inputs.base_url }}
           E2E_USERNAME: ${{ secrets.E2E_USERNAME }}
           E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
-        run: npx playwright test
+        run: yarn playwright test
 
       - name: Upload test report
         uses: actions/upload-artifact@v7
