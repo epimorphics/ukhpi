@@ -48,3 +48,10 @@ test.describe('Header and primary navigation', () => {
     await expect(page).toHaveURL(/changelog/)
   })
 })
+
+test.describe('URL redirects', () => {
+  test('/explore redirects to /browse', async ({ page }) => {
+    await page.goto('explore')
+    await expect(page).toHaveURL(/browse/)
+  })
+})

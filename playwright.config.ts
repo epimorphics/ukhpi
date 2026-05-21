@@ -1,6 +1,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
-const baseURL = process.env['E2E_BASE_URL'] ?? 'http://localhost:3000/'
+const rawBaseURL = process.env['E2E_BASE_URL'] ?? 'http://localhost:3000/'
+const baseURL = rawBaseURL.endsWith('/') ? rawBaseURL : `${rawBaseURL}/`
 
 export default defineConfig({
   testDir: 'test/playwright',
