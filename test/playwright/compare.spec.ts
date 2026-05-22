@@ -12,7 +12,6 @@ test.describe('Compare locations', () => {
 
     test('default query is set to United Kingdom', async ({ page }) => {
       const selectDifferentLocationButton = page.getByRole('button', { name: 'select a different location' })
-      await selectDifferentLocationButton.waitFor()
       await expect(selectDifferentLocationButton).toHaveText(/United Kingdom/i)
     })
 

@@ -13,7 +13,6 @@ test.describe('UKHPI data display', () => {
 
     test('defaults to showing United Kingdom as location', async ({ page }) => {
       const selectDifferentLocationButton = page.getByRole('button', { name: 'select a different location' })
-      await selectDifferentLocationButton.waitFor()
       await expect(selectDifferentLocationButton).toHaveText(/United Kingdom/i)
     })
 

@@ -11,6 +11,8 @@ export default defineConfig({
   use: {
     baseURL,
     screenshot: 'only-on-failure',
+    actionTimeout: 15_000,
+    navigationTimeout: 15_000,
     ...(process.env['E2E_USERNAME']
       ? {
         httpCredentials: {
