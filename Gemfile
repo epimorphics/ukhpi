@@ -9,7 +9,7 @@ gem 'puma'
 gem 'rails', '~> 8.1'
 
 # HTTP client libraries
-gem 'faraday', '~> 2.0'
+gem 'faraday', '~> 2.14'
 gem 'faraday-encoding', '~> 0.0'
 gem 'faraday-follow_redirects', '~> 0.5'
 gem 'faraday-retry', '~> 2.0', '>= 2.0'
