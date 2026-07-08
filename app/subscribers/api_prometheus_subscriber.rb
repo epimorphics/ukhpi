@@ -18,19 +18,35 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
   end
 
   def connection_failure(event)
-    message = event.payload[:exception]
+    exception = event.payload[:exception]
     Prometheus::Client.registry
                       .get(:api_requests)
                       .increment(labels: { result: 'failure' })
     Prometheus::Client.registry
                       .get(:api_connection_failure)
-                      .increment(labels: { message: message.to_s })
+                      .increment(labels: { message: exception.to_s })
+
+    Log.error(
+      "API connection failure: #{exception.message} - #{exception.class.name}",
+      {
+        request_status: 'error',
+        status: 503,
+      }
+    )
   end
 
   def service_exception(event)
-    message = event.payload[:exception]
+    exception = event.payload[:exception]
     Prometheus::Client.registry
                       .get(:api_service_exception)
-                      .increment(labels: { message: message.to_s })
+                      .increment(labels: { message: exception.to_s })
+
+    Log.error(
+      "API service exception: #{exception.message} - #{exception.class.name}",
+      {
+        request_status: 'error',
+        status: exception.respond_to?(:status) ? exception.status : 502,
+      }
+    )
   end
 end
