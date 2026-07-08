@@ -8,6 +8,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Added
+
+- Added log-lines to `ApiPrometheusSubscriber` on connection failure and service exception events [#614](https://github.com/epimorphics/ukhpi/issues/614).
+- Added an `ApiPrometheusSubscriberTest` [#614](https://github.com/epimorphics/ukhpi/issues/614).
+
 ## [2.3.2] - 2026-05
 
 ### Added
