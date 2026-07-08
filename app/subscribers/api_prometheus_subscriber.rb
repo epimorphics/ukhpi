@@ -27,9 +27,9 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { message: exception.to_s })
 
     Log.error(
-      "API connection failure: #{exception.message}",
+      "API connection failure: #{exception.message} - #{exception.class.name}",
       {
-        error_class: exception.class.name,
+        request_status: 'error',
         status: 503,
       }
     )
@@ -42,9 +42,9 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
                       .increment(labels: { message: exception.to_s })
 
     Log.error(
-      "API service exception: #{exception.message}",
+      "API service exception: #{exception.message} - #{exception.class.name}",
       {
-        error_class: exception.class.name,
+        request_status: 'error',
         status: exception.respond_to?(:status) ? exception.status : 502,
       }
     )

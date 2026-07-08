@@ -12,8 +12,8 @@ class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
         Prometheus::Client.registry.get(:api_connection_failure).expects(:increment)
           .with(labels: { message: exception.to_s })
         Log.expects(:error).with(
-          "API connection failure: #{exception.message}",
-          { error_class: 'Faraday::ConnectionFailed', status: 503 }
+          "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
+          { request_status: 'error', status: 503 }
         )
 
         ApiPrometheusSubscriber.new.connection_failure(event)
@@ -28,8 +28,8 @@ class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
         Prometheus::Client.registry.get(:api_service_exception).expects(:increment)
           .with(labels: { message: exception.to_s })
         Log.expects(:error).with(
-          "API service exception: #{exception.message}",
-          { error_class: 'StandardError', status: 502 }
+          "API service exception: #{exception.message} - StandardError",
+          { request_status: 'error', status: 502 }
         )
 
         ApiPrometheusSubscriber.new.service_exception(event)
