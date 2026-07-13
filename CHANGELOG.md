@@ -13,6 +13,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Added log-lines to `ApiPrometheusSubscriber` on connection failure and service exception events [#614](https://github.com/epimorphics/ukhpi/issues/614).
 - Added an `ApiPrometheusSubscriberTest` [#614](https://github.com/epimorphics/ukhpi/issues/614).
 
+### Changed
+
+- Adopted `data_services_api` 1.7.0 to pick up per-reason HTTP retry configuration (a longer, more generous retry budget for connection failures, a shorter and more conservative one for timeouts, and `Faraday::ResourceNotFound` no longer retried) [#622](https://github.com/epimorphics/ukhpi/issues/622).
+
 ## [2.3.2] - 2026-05
 
 ### Added
