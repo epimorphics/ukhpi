@@ -8,6 +8,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed phone number and contact form links on the landing page by using symantic html[#618](https://github.com/epimorphics/ukhpi/issues/618).
+
 ## [2.3.3] - 2026-07-14
 
 ### Added
