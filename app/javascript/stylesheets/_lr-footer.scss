@@ -9,21 +9,24 @@
     text-decoration: underline;
   }
 
-  .footer-meta .footer-meta-inner .logo {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 41px;
-    height: 100%;
+  @media (min-width: 641px) {
+    .footer-meta .footer-meta-inner .logo {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 41px;
+      height: 100%;
+    }
   }
 
   .footer-meta .footer-meta-inner .open-government-licence .logo a {
-    background-image: url('../images/ogl-symbol-41px-black.png');
+    display: block;
+  }
+
+  .footer-meta .footer-meta-inner .open-government-licence .logo img {
     display: block;
     width: 41px;
-    height: 17px;
-    overflow: hidden;
-    text-indent: -999em;
+    height: auto;
   }
 
   .footer-meta .footer-meta-inner .open-government-licence p {

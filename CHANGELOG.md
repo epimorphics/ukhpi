@@ -11,6 +11,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed focus order of accredited statistics logo to meet WCAG visual flow standards [619](https://github.com/epimorphics/ukhpi/issues/619)
+- Fixed the Open Government Licence footer logo overlapping the licence text at high browser zoom levels by rendering it as a real `img` element and making its container's absolute positioning responsive, matching the GOV.UK template's own breakpoint [#621](https://github.com/epimorphics/ukhpi/issues/621).
 - Fixed phone number and contact form links on the landing page by using symantic html[#618](https://github.com/epimorphics/ukhpi/issues/618).
 
 ## [2.3.3] - 2026-07-14
