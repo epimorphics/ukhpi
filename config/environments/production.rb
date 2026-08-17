@@ -53,8 +53,6 @@ Rails.application.configure do
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # Use a different cache store in production.
   # config.cache_store = :mem_cache_store

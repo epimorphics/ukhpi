@@ -27,7 +27,7 @@ class LatestValuesCommand
     end
 
     if service.nil?
-      log_fields = { service: service, params: {} }
+      log_fields = { message: message, service: service, params: {} }
 
       log_fields[:body] = "Caused by: #{e.cause} in " if e.cause
       log_fields[:body] += "\r\n(#{e.class})" if Rails.logger.debug?
@@ -36,7 +36,7 @@ class LatestValuesCommand
       log_fields[:status] = e.status
 
       # Log the request status and response if there's an error
-      Rails.logger.error(log_fields.merge(message: message).compact)
+      Rails.logger.error(log_fields)
     end
     # Always return the service object, even if it's nil
     service
@@ -74,15 +74,15 @@ class LatestValuesCommand
     if success == false # log the error if the request was unsuccessful
       # Calculate the time taken to execute the query and pass in the details to be logged
       time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-      log_fields = { service: 'ukhpi', params: {} }
+      log_fields = { message: message, service: 'ukhpi', params: {} }
       log_fields[:request_status] = 'error'
       log_fields[:request_time] = time_taken
       log_fields[:status] = status
 
       if (400..499).cover?(status)
-        Rails.logger.warn(log_fields.merge(message: message).compact)
+        Rails.logger.warn(log_fields)
       else
-        Rails.logger.error(log_fields.merge(message: message).compact)
+        Rails.logger.error(log_fields)
       end
     end
 
