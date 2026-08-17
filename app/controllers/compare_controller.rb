@@ -19,16 +19,11 @@ class CompareController < ApplicationController
 
     CompareLocationsPresenter.new(user_compare_selections, query_results)
   rescue ArgumentError => e
-    { user_selections: user_compare_selections, error: e.message }
+    raise ApplicationRequestError.new(user_compare_selections, :internal_server_error, e.message)
   end
 
   def render_interactive(view_state)
     @view_state = view_state
-    if view_state.respond_to?(:[]) && view_state[:error] && Rails.env.production?
-      render_request_error(@view_state[:user_selections], :internal_server_error)
-    else
-      @view_state
-    end
   end
 
   def render_print
