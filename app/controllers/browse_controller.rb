@@ -5,8 +5,6 @@ class BrowseController < ApplicationController
   layout 'application'
 
   def show
-    Log.info('Requesting Browse Controller', { params: params, path: request.path })
-
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
@@ -130,7 +128,6 @@ class BrowseController < ApplicationController
 
   def view_result(view_state)
     new_params = view_state.user_selections.without('form-action', nil).params
-    Log.info { "Redirecting to #{new_params}" } if Rails.env.development?
     redirect_to({
       controller: :browse,
       action: :show,
