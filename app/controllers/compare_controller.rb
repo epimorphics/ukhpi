@@ -46,10 +46,6 @@ class CompareController < ApplicationController
     )
 
     user_compare_selections.selected_locations.each do |location|
-      log_fields = { params: base_selection.params, path: request.path }
-      msg = 'Received request'
-      msg += " for #{location.label}"
-      Log.info(msg, log_fields)
       query_results[location.label] = query_with(base_selection, location)
     end
 
