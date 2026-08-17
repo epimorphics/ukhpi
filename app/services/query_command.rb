@@ -80,8 +80,7 @@ class QueryCommand
       log_fields[:request_status] = 'error'
       log_fields[:request_time] = time_taken
       log_fields[:status] = status
-      Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
+      Rails.logger.error(log_fields.merge(message: message).compact)
     end
     # Always return the time taken to execute the query
     time_taken

@@ -36,8 +36,7 @@ class LatestValuesCommand
       log_fields[:status] = e.status
 
       # Log the request status and response if there's an error
-      Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
+      Rails.logger.error(log_fields.merge(message: message).compact)
     end
     # Always return the service object, even if it's nil
     service
@@ -81,11 +80,10 @@ class LatestValuesCommand
       log_fields[:status] = status
 
       if (400..499).cover?(status)
-        Log.warn(message, log_fields)
+        Rails.logger.warn(log_fields.merge(message: message).compact)
       else
-        Log.error(message, log_fields)
+        Rails.logger.error(log_fields.merge(message: message).compact)
       end
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
     end
 
     success

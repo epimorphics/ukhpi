@@ -2,7 +2,6 @@
 class ApplicationController < ActionController::Base
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::TranslationHelper
-  include Log
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
