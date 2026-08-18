@@ -44,6 +44,16 @@ class ApplicationController < ActionController::Base
   private
 
   def render_unexpected_error(exception)
+    log_fields = {
+      message: "Unhandled exception: #{exception.message} (#{exception.class.name})",
+      request_status: 'error',
+      status: 500,
+    }
+    log_fields[:backtrace] = exception.backtrace&.join("\n") if Rails.env.development? || Rails.logger.debug?
+    Rails.logger.error(log_fields.compact)
+
+    Sentry.capture_exception(exception)
+
     render_application_request_error(
       ApplicationRequestError.new(nil, :internal_server_error, exception.message)
     )
