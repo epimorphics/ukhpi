@@ -3,6 +3,38 @@ require 'test_helper'
 # Unit tests on the ApiRequestLogSubscriber class
 class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
   describe 'ApiRequestLogSubscriber' do
+    describe '#request' do
+      it 'should log the method and full path including the query string' do
+        event = stub(payload: { path: '/landregistry/id/ukhpi', method: 'GET', query_string: '_limit=1' })
+
+        Rails.logger.expects(:info).with(
+          {
+            message: 'Calling API: GET /landregistry/id/ukhpi?_limit=1',
+            method: 'GET',
+            path: '/landregistry/id/ukhpi?_limit=1',
+            request_status: 'processing',
+          }
+        )
+
+        ApiRequestLogSubscriber.new.request(event)
+      end
+
+      it 'should omit the query string when absent' do
+        event = stub(payload: { path: '/landregistry/id/ukhpi', method: 'POST', query_string: nil })
+
+        Rails.logger.expects(:info).with(
+          {
+            message: 'Calling API: POST /landregistry/id/ukhpi',
+            method: 'POST',
+            path: '/landregistry/id/ukhpi',
+            request_status: 'processing',
+          }
+        )
+
+        ApiRequestLogSubscriber.new.request(event)
+      end
+    end
+
     describe '#response' do
       it 'should log the row count, path and timing for a successful response' do
         url = stub(path: '/landregistry/id/ukhpi', query: 'refRegion=uk&_limit=1')
@@ -132,6 +164,26 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
     # matching the equivalent test on ApiPrometheusSubscriber - see that file
     # for why calling #response directly isn't enough on its own.
     describe 'ActiveSupport::Notifications wiring' do
+      it 'invokes #request when request.data_services_api fires' do
+        ApiRequestLogSubscriber
+
+        Rails.logger.expects(:info).with(
+          {
+            message: 'Calling API: GET /landregistry/id/ukhpi?_limit=1',
+            method: 'GET',
+            path: '/landregistry/id/ukhpi?_limit=1',
+            request_status: 'processing',
+          }
+        )
+
+        ActiveSupport::Notifications.instrument(
+          'request.data_services_api',
+          path: '/landregistry/id/ukhpi',
+          method: 'GET',
+          query_string: '_limit=1'
+        )
+      end
+
       it 'invokes #response when response.data_services_api fires' do
         # Force the subscriber class to load (and so attach_to to run) before firing the
         # notification - Zeitwerk autoloads it lazily since nothing else references it by

@@ -2,6 +2,20 @@
 class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   attach_to :data_services_api
 
+  def request(event)
+    query_string = event.payload[:query_string]
+    path = query_string ? "#{event.payload[:path]}?#{query_string}" : event.payload[:path]
+
+    Rails.logger.info(
+      {
+        message: "Calling API: #{event.payload[:method]} #{path}",
+        method: event.payload[:method],
+        path: path,
+        request_status: 'processing',
+      }.compact
+    )
+  end
+
   def response(event)
     response = event.payload[:response]
     duration = event.payload[:duration]
