@@ -50,6 +50,11 @@ class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
     # so a future rename would fail here instead of going unnoticed.
     describe 'ActiveSupport::Notifications wiring' do
       it 'invokes #connection_failure when connection_failure.data_services_api fires' do
+        # Force the subscriber class to load (and so attach_to to run) before firing the
+        # notification - Zeitwerk autoloads it lazily since nothing else references it by
+        # name, so without this the test's pass/fail depends on random test ordering.
+        ApiPrometheusSubscriber
+
         exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
 
         Prometheus::Client.registry.get(:api_requests).expects(:increment).with(labels: { result: 'failure' })
@@ -67,6 +72,8 @@ class ApiPrometheusSubscriberTest < ActiveSupport::TestCase
       end
 
       it 'invokes #service_exception when service_exception.data_services_api fires' do
+        ApiPrometheusSubscriber
+
         exception = StandardError.new('Unexpected response from data-api')
 
         Prometheus::Client.registry.get(:api_service_exception).expects(:increment)
