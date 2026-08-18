@@ -57,11 +57,7 @@ metrics_port = ENV.fetch('METRICS_PORT', 9393)
 # Bind the metric server to "url". "tcp://" is the only accepted protocol.
 metrics_url "tcp://0.0.0.0:#{metrics_port}" if Rails.env.development?
 
-# Use a custom log formatter to emit Puma log messages in a JSON format
-log_formatter do |str|
-  {
-    ts: DateTime.now.utc.strftime('%FT%T.%3NZ'),
-    level: 'INFO',
-    message: str,
-  }.to_json
-end
+# Use epilog_rails' JSON formatter to emit Puma log messages in the same
+# structured format as the rest of the application's logs
+require 'epilog_rails/json_formatter'
+log_formatter(&EpilogRails::JsonFormatter.puma_formatter)
