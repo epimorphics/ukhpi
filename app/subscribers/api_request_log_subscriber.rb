@@ -22,10 +22,15 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     url = response.env.url
     returned_rows = response.body.size if response.body.is_a?(Array)
 
+    message = if returned_rows
+      "API returned #{returned_rows} row#{'s' unless returned_rows == 1}, time taken: #{duration} ms"
+    else
+      "API responded, time taken: #{duration} ms"
+    end
+
     Rails.logger.info(
       {
-        message: "API returned #{returned_rows || 0} row#{'s' unless returned_rows == 1}, " \
-                  "time taken: #{duration} ms",
+        message: message,
         method: response.env.method.to_s.upcase,
         path: url.query ? "#{url.path}?#{url.query}" : url.path,
         request_status: 'processing',
@@ -42,8 +47,8 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     Rails.logger.warn(
       {
         message: "Retrying API request after #{exception.class.name}: #{exception.message} " \
-                  "(attempt #{event.payload[:retry_count]}, " \
-                  "retrying in #{event.payload[:will_retry_in].round(2)}s)",
+          "(attempt #{event.payload[:retry_count]}, " \
+          "retrying in #{event.payload[:will_retry_in].round(2)}s)",
         method: event.payload[:method],
         path: event.payload[:path],
         request_status: 'processing',
@@ -57,7 +62,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     Rails.logger.error(
       {
         message: "API connection failure: #{exception.message} - #{exception.class.name}",
-        request_status: 'error',
+        request_status: 'processing',
         status: 503,
       }
     )
@@ -69,7 +74,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     Rails.logger.error(
       {
         message: "API service exception: #{exception.message} - #{exception.class.name}",
-        request_status: 'error',
+        request_status: 'processing',
         status: exception.respond_to?(:status) ? exception.status : 502,
       }
     )

@@ -78,7 +78,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         ApiRequestLogSubscriber.new.response(event)
       end
 
-      it 'should omit returned_rows when the response body is not an array' do
+      it 'should omit returned_rows and not claim a row count when the response body is not an array' do
         url = stub(path: '/landregistry/id/ukhpi', query: nil)
         env = stub(url: url, method: :get)
         response = stub(env: env, status: 200, body: { 'result' => 'ok' })
@@ -86,7 +86,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API returned 0 rows, time taken: 5 ms',
+            message: 'API responded, time taken: 5 ms',
             method: 'GET',
             path: '/landregistry/id/ukhpi',
             request_status: 'processing',
@@ -134,7 +134,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).with(
           {
             message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
-            request_status: 'error',
+            request_status: 'processing',
             status: 503,
           }
         )
@@ -151,7 +151,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).with(
           {
             message: "API service exception: #{exception.message} - StandardError",
-            request_status: 'error',
+            request_status: 'processing',
             status: 502,
           }
         )
@@ -242,7 +242,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).with(
           {
             message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
-            request_status: 'error',
+            request_status: 'processing',
             status: 503,
           }
         )
@@ -258,7 +258,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).with(
           {
             message: "API service exception: #{exception.message} - StandardError",
-            request_status: 'error',
+            request_status: 'processing',
             status: 502,
           }
         )
