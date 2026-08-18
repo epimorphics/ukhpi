@@ -34,7 +34,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
         method: response.env.method.to_s.upcase,
         path: url.query ? "#{url.path}?#{url.query}" : url.path,
         request_status: 'processing',
-        request_time: format('%.3f', duration / 1000.0),
+        request_time: (duration / 1000.0).round(3),
         returned_rows: returned_rows,
         status: response.status,
       }.compact

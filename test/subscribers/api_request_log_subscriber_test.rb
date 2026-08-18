@@ -48,7 +48,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
             method: 'GET',
             path: '/landregistry/id/ukhpi?refRegion=uk&_limit=1',
             request_status: 'processing',
-            request_time: '1.233',
+            request_time: 1.233,
             returned_rows: 1,
             status: 200,
           }
@@ -69,7 +69,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
             method: 'GET',
             path: '/landregistry/id/ukhpi',
             request_status: 'processing',
-            request_time: '0.042',
+            request_time: 0.042,
             returned_rows: 2,
             status: 200,
           }
@@ -90,7 +90,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
             method: 'GET',
             path: '/landregistry/id/ukhpi',
             request_status: 'processing',
-            request_time: '0.005',
+            request_time: 0.005,
             status: 200,
           }
         )
@@ -200,7 +200,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
             method: 'GET',
             path: '/landregistry/id/ukhpi',
             request_status: 'processing',
-            request_time: '0.010',
+            request_time: 0.01,
             returned_rows: 1,
             status: 200,
           }
