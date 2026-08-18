@@ -11,35 +11,11 @@ class LatestValuesCommand
 
   private
 
+  # Set service to ukhpi dataset if not already set. Building a Dataset here is
+  # local object construction only (no network call), so nothing here can raise
+  # a connection or service failure - those only happen in #run_query.
   def service_api(service)
-    begin
-      # Set service to ukhpi dataset if not already set
-      service ||= dataset(:ukhpi)
-    rescue Faraday::ConnectionFailed => e
-      message = 'Failed to connect to UKHPI service'
-      service = nil
-    rescue DataServicesApi::ServiceException => e
-      message = 'Failed to get response from UKHPI service'
-      service = nil
-    rescue RuntimeError => e
-      message = "Runtime error #{e.inspect}"
-      service = nil
-    end
-
-    if service.nil?
-      log_fields = { message: message, service: service, params: {} }
-
-      log_fields[:body] = "Caused by: #{e.cause} in " if e.cause
-      log_fields[:body] += "\r\n(#{e.class})" if Rails.logger.debug?
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:request_status] = 'error'
-      log_fields[:status] = e.status
-
-      # Log the request status and response if there's an error
-      Rails.logger.error(log_fields)
-    end
-    # Always return the service object, even if it's nil
-    service
+    service || dataset(:ukhpi)
   end
 
   def run_query(hpi)
