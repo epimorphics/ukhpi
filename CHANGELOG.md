@@ -6,6 +6,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic
 Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- Adopted `epilog_rails` for structured JSON request-lifecycle logging (received/completed entries with `request_id` correlation), replacing `json_rails_logger`.
+- Added `ApiRequestLogSubscriber`, logging every stage of an outbound API call (request sent, response received, retry attempts, connection/service failures) via `data_services_api`'s own `ActiveSupport::Notifications` events.
+- Restored the `render_404` action on `ApplicationController`. It had been removed during an unrelated error-handling refactor while `config/routes.rb`'s wildcard route still pointed to it, so unmatched routes were rendering as unhandled 500s (with a Sentry alert) instead of clean 404s in production.
+
+### Changed
+
+- Adopted `data_services_api` v2: its `ActiveSupport::Notifications` events moved from the `*.api` to the `*.data_services_api` namespace, and `ApiPrometheusSubscriber` is updated to match.
+- Split API logging responsibilities: `ApiPrometheusSubscriber` now only records Prometheus metrics; all logging (including on connection/service failures) moved to `ApiRequestLogSubscriber`.
+- `request_status` on API failure log lines now stays `processing` rather than jumping to `error`, since a single failed upstream call doesn't determine the outcome of the overall incoming request, the app may still recover (e.g. graceful degradation).
+- Removed the custom `Log` module (`app/lib/log.rb`) and every call site; logging now goes directly through `Rails.logger` with plain field hashes.
+
+### Fixed
+
+- Unhandled exceptions had silently lost their log line and Sentry capture during the `rescue_from`-based error-handling refactor; both are restored in `render_unexpected_error`.
+- Removed duplicate error logging in `QueryCommand`, and dead-code error handling in `LatestValuesCommand#service_api` for exceptions that method could never actually raise.
+- API responses without a row count (e.g. explain queries) no longer log a misleading "API returned 0 rows"; the row count is omitted from the message entirely when not applicable.
+- `request_time` is now logged as a float in seconds rather than a formatted string, matching the org logging standard.
+
+### Removed
+
+- Removed the unused, unreachable `AboutController` and its stray class-body log line.
+- Removed the `json_rails_logger` gem.
+
 ## [2.3.4] - 2026-07-30
 
 ### Fixed

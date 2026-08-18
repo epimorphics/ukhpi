@@ -82,9 +82,10 @@ end
 
 # Private gem source for Epimorphics packages
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'epilog_rails', '0.1.0'
+  gem 'data_services_api', '2.0.0.prerelease'
+  gem 'epilog_rails', '0.2.0'
 end
 
 # TODO: For gem development and testing, you can use the local path to the gem
-gem 'data_services_api', path: '../data_services_api'
+# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
 # gem 'epilog_rails', path: '~/Epimorphics/shared/epilog_rails'
