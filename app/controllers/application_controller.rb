@@ -41,6 +41,12 @@ class ApplicationController < ActionController::Base
     render json: { version: Version::VERSION }
   end
 
+  # Catch-all for unmatched routes, see config/routes.rb
+  def render_404
+    @view_state ||= { user_selections: UserLanguageSelection.new(params) }
+    render_html_error_page(404, nil)
+  end
+
   private
 
   def render_unexpected_error(exception)
