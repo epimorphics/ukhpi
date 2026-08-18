@@ -1,6 +1,6 @@
-# Subscribe to :api events
+# Subscribe to :data_services_api events
 class ApiPrometheusSubscriber < ActiveSupport::Subscriber
-  attach_to :api
+  attach_to :data_services_api
 
   def response(event)
     response = event.payload[:response]
