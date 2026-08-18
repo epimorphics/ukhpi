@@ -36,4 +36,28 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
       }.compact
     )
   end
+
+  def connection_failure(event)
+    exception = event.payload[:exception]
+
+    Rails.logger.error(
+      {
+        message: "API connection failure: #{exception.message} - #{exception.class.name}",
+        request_status: 'error',
+        status: 503,
+      }
+    )
+  end
+
+  def service_exception(event)
+    exception = event.payload[:exception]
+
+    Rails.logger.error(
+      {
+        message: "API service exception: #{exception.message} - #{exception.class.name}",
+        request_status: 'error',
+        status: exception.respond_to?(:status) ? exception.status : 502,
+      }
+    )
+  end
 end

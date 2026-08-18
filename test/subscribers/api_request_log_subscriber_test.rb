@@ -94,6 +94,40 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#connection_failure' do
+      it 'should log an error' do
+        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+        event = stub(payload: { exception: exception })
+
+        Rails.logger.expects(:error).with(
+          {
+            message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
+            request_status: 'error',
+            status: 503,
+          }
+        )
+
+        ApiRequestLogSubscriber.new.connection_failure(event)
+      end
+    end
+
+    describe '#service_exception' do
+      it 'should log an error' do
+        exception = StandardError.new('Unexpected response from data-api')
+        event = stub(payload: { exception: exception })
+
+        Rails.logger.expects(:error).with(
+          {
+            message: "API service exception: #{exception.message} - StandardError",
+            request_status: 'error',
+            status: 502,
+          }
+        )
+
+        ApiRequestLogSubscriber.new.service_exception(event)
+      end
+    end
+
     # Regression coverage for the event-namespace wiring itself (`attach_to`),
     # matching the equivalent test on ApiPrometheusSubscriber - see that file
     # for why calling #response directly isn't enough on its own.
@@ -146,6 +180,38 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
           exception: exception,
           will_retry_in: 0.5
         )
+      end
+
+      it 'invokes #connection_failure when connection_failure.data_services_api fires' do
+        ApiRequestLogSubscriber
+
+        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+
+        Rails.logger.expects(:error).with(
+          {
+            message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
+            request_status: 'error',
+            status: 503,
+          }
+        )
+
+        ActiveSupport::Notifications.instrument('connection_failure.data_services_api', exception: exception)
+      end
+
+      it 'invokes #service_exception when service_exception.data_services_api fires' do
+        ApiRequestLogSubscriber
+
+        exception = StandardError.new('Unexpected response from data-api')
+
+        Rails.logger.expects(:error).with(
+          {
+            message: "API service exception: #{exception.message} - StandardError",
+            request_status: 'error',
+            status: 502,
+          }
+        )
+
+        ActiveSupport::Notifications.instrument('service_exception.data_services_api', exception: exception)
       end
     end
   end
