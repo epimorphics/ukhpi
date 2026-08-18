@@ -67,6 +67,33 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#retry' do
+      it 'should log a warning with the exception, path, method and retry timing' do
+        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+        event = stub(
+          payload: {
+            path: '/landregistry/id/ukhpi',
+            method: 'GET',
+            retry_count: 2,
+            exception: exception,
+            will_retry_in: 1.084,
+          }
+        )
+
+        Rails.logger.expects(:warn).with(
+          {
+            message: 'Retrying API request after Faraday::ConnectionFailed: ' \
+                      'Failed to open TCP connection to data-api:8080 (attempt 2, retrying in 1.08s)',
+            method: 'GET',
+            path: '/landregistry/id/ukhpi',
+            request_status: 'processing',
+          }
+        )
+
+        ApiRequestLogSubscriber.new.retry(event)
+      end
+    end
+
     # Regression coverage for the event-namespace wiring itself (`attach_to`),
     # matching the equivalent test on ApiPrometheusSubscriber - see that file
     # for why calling #response directly isn't enough on its own.
@@ -94,6 +121,31 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         )
 
         ActiveSupport::Notifications.instrument('response.data_services_api', response: response, duration: 10)
+      end
+
+      it 'invokes #retry when retry.data_services_api fires' do
+        ApiRequestLogSubscriber
+
+        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+
+        Rails.logger.expects(:warn).with(
+          {
+            message: 'Retrying API request after Faraday::ConnectionFailed: ' \
+                      'Failed to open TCP connection to data-api:8080 (attempt 1, retrying in 0.5s)',
+            method: 'GET',
+            path: '/landregistry/id/ukhpi',
+            request_status: 'processing',
+          }
+        )
+
+        ActiveSupport::Notifications.instrument(
+          'retry.data_services_api',
+          path: '/landregistry/id/ukhpi',
+          method: 'GET',
+          retry_count: 1,
+          exception: exception,
+          will_retry_in: 0.5
+        )
       end
     end
   end

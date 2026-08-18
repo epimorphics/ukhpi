@@ -21,4 +21,19 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
       }.compact
     )
   end
+
+  def retry(event)
+    exception = event.payload[:exception]
+
+    Rails.logger.warn(
+      {
+        message: "Retrying API request after #{exception.class.name}: #{exception.message} " \
+                  "(attempt #{event.payload[:retry_count]}, " \
+                  "retrying in #{event.payload[:will_retry_in].round(2)}s)",
+        method: event.payload[:method],
+        path: event.payload[:path],
+        request_status: 'processing',
+      }.compact
+    )
+  end
 end
