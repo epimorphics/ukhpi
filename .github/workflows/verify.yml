@@ -8,8 +8,8 @@ on:
   workflow_call: {}
 
 jobs:
-  lint:
-    name: Lint Code
+  lint-js:
+    name: ESLint (JS/TS)
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -22,7 +22,7 @@ jobs:
         run: yarn lint
 
   lint-ruby:
-    name: RuboCop Lint
+    name: RuboCop (Ruby)
     env:
       BUNDLE_RUBYGEMS__PKG__GITHUB__COM: "x-access-token:${{ secrets.GITHUB_TOKEN }}"
     runs-on: ubuntu-latest
