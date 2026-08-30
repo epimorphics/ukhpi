@@ -5,7 +5,6 @@
         = link_to(root_path(lang: I18n.locale), class: 'content', title: t('common.header.home_link')) do
           = vite_image_tag('images/ukhpi-icon.png', srcset: vite_asset_path('images/ukhpi-icon.svg'), alt: 'UKHPI Logo')
 
-    = render partial: 'common/accredited_statistic_logo'
     .header-proposition
       .content
         = link_to(t('common.header.menu_text'), '#proposition-links', class: 'menu sr-only')
@@ -26,7 +25,7 @@
             %li
               = link_to(t('action.changelog'), changelog_index_path(lang: I18n.locale), class: active_class(changelog_index_path))
 
-
+    = render partial: 'common/accredited_statistic_logo'
 
 .o-lr-top-bar
 
