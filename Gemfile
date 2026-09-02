@@ -82,7 +82,7 @@ end
 
 # Private gem source for Epimorphics packages
 source 'https://rubygems.pkg.github.com/epimorphics' do
-  gem 'data_services_api', '2.0.0.prerelease'
+  gem 'data_services_api', '2.0.0.prerelease2'
   gem 'epilog_rails', '0.2.0'
 end
 
