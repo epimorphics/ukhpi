@@ -87,5 +87,5 @@ source 'https://rubygems.pkg.github.com/epimorphics' do
 end
 
 # TODO: For gem development and testing, you can use the local path to the gem
-# gem 'data_services_api', path: '~/Epimorphics/shared/data_services_api'
+# gem 'data_services_api', path: "~/epi/data_services_api"
 # gem 'epilog_rails', path: '~/Epimorphics/shared/epilog_rails'
