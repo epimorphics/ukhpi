@@ -5,12 +5,10 @@ class BrowseController < ApplicationController
   layout 'application'
 
   def show
-    Log.info('Requesting Browse Controller', { params: params, path: request.path })
-
     user_selections = UserSelections.new(params)
 
     if !user_selections.valid?
-      render_request_error(user_selections, :bad_request)
+      raise ApplicationRequestError.new(user_selections, :bad_request)
     elsif explain_non_json?(user_selections)
       redirect_to_html_view(user_selections)
     else
@@ -58,23 +56,14 @@ class BrowseController < ApplicationController
 
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
-    { user_selections: user_selections, error: e.message }
+    raise ApplicationRequestError.new(user_selections, :internal_server_error, e.message)
   end
 
   def render_view_state(view_state)
     @view_state = view_state
-    if view_state.respond_to?(:[]) && view_state[:error]
-      user_selections = if view_state.respond_to?(:user_selections)
-                          view_state.user_selections
-      else
-                          view_state[:user_selections]
-      end
-      render_request_error(user_selections, :internal_server_error) unless Rails.env.development?
-    else
-      respond_to do |format|
-        format.html
-        format.json { render json: @view_state }
-      end
+    respond_to do |format|
+      format.html
+      format.json { render json: @view_state }
     end
   end
 
@@ -130,7 +119,6 @@ class BrowseController < ApplicationController
 
   def view_result(view_state)
     new_params = view_state.user_selections.without('form-action', nil).params
-    Log.info { "Redirecting to #{new_params}" } if Rails.env.development?
     redirect_to({
       controller: :browse,
       action: :show,

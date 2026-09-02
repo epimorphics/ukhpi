@@ -33,6 +33,7 @@ wiki](https://github.com/epimorphics/ukhpi/wiki).
 | UI components | Element UI |
 | Internationalisation | Vue I18n (English / Welsh) |
 | Error tracking | Sentry |
+| Logging | Structured JSON logging via the `epilog_rails` gem |
 | CSS | Sass + PostCSS + GOV.UK Frontend |
 
 The Rails layer handles routing and data fetching; the Vue layer owns the UI,
@@ -73,7 +74,7 @@ corepack prepare     # installs the exact version declared in package.json
 
 ### 4. Authenticate with the private gem registry
 
-The `data_services_api` and `json_rails_logger` gems are hosted on the
+The `data_services_api` and `epilog_rails` gems are hosted on the
 Epimorphics GitHub Package Registry. You need a GitHub Personal Access Token
 with the `read:packages` scope.
 

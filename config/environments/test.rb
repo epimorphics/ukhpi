@@ -44,9 +44,6 @@ Rails.application.configure do
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
 
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout) if config.log_level == :debug
-
   # API location can be specified in the environment
   # But defaults to the dev service
   config.api_service_url = ENV.fetch('API_SERVICE_URL', 'http://localhost:8080')

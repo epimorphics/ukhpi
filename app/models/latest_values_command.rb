@@ -11,36 +11,11 @@ class LatestValuesCommand
 
   private
 
+  # Set service to ukhpi dataset if not already set. Building a Dataset here is
+  # local object construction only (no network call), so nothing here can raise
+  # a connection or service failure - those only happen in #run_query.
   def service_api(service)
-    begin
-      # Set service to ukhpi dataset if not already set
-      service ||= dataset(:ukhpi)
-    rescue Faraday::ConnectionFailed => e
-      message = 'Failed to connect to UKHPI service'
-      service = nil
-    rescue DataServicesApi::ServiceException => e
-      message = 'Failed to get response from UKHPI service'
-      service = nil
-    rescue RuntimeError => e
-      message = "Runtime error #{e.inspect}"
-      service = nil
-    end
-
-    if service.nil?
-      log_fields = { service: service, params: {} }
-
-      log_fields[:body] = "Caused by: #{e.cause} in " if e.cause
-      log_fields[:body] += "\r\n(#{e.class})" if Rails.logger.debug?
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:request_status] = 'error'
-      log_fields[:status] = e.status
-
-      # Log the request status and response if there's an error
-      Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
-    end
-    # Always return the service object, even if it's nil
-    service
+    service || dataset(:ukhpi)
   end
 
   def run_query(hpi)
@@ -75,17 +50,16 @@ class LatestValuesCommand
     if success == false # log the error if the request was unsuccessful
       # Calculate the time taken to execute the query and pass in the details to be logged
       time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-      log_fields = { service: 'ukhpi', params: {} }
+      log_fields = { message: message, service: 'ukhpi', params: {} }
       log_fields[:request_status] = 'error'
       log_fields[:request_time] = time_taken
       log_fields[:status] = status
 
       if (400..499).cover?(status)
-        Log.warn(message, log_fields)
+        Rails.logger.warn(log_fields)
       else
-        Log.error(message, log_fields)
+        Rails.logger.error(log_fields)
       end
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
     end
 
     success

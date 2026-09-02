@@ -207,11 +207,6 @@ GEM
     link_header (0.0.8)
     lint_roller (1.1.0)
     logger (1.7.0)
-    lograge (0.15.0)
-      actionpack (>= 4)
-      activesupport (>= 4)
-      railties (>= 4)
-      request_store (~> 1.0)
     loofah (2.25.1)
       crass (~> 1.0.2)
       nokogiri (>= 1.12.0)
@@ -378,8 +373,6 @@ GEM
     regexp_parser (2.12.0)
     reline (0.6.3)
       io-console (~> 0.5)
-    request_store (1.7.0)
-      rack (>= 1.4)
     reverse_markdown (3.0.2)
       nokogiri
     rexml (3.4.4)
@@ -535,17 +528,12 @@ GEM
 GEM
   remote: https://rubygems.pkg.github.com/epimorphics/
   specs:
-    data_services_api (1.7.0)
+    data_services_api (2.0.0.prerelease2)
       faraday (~> 2.13, >= 2.13.0)
-      faraday-encoding (~> 0.0, >= 0.0.6)
       faraday-follow_redirects (~> 0.4, >= 0.4.0)
       faraday-retry (~> 2.0, >= 2.0)
       json (~> 2.0)
-      yajl-ruby (~> 1.4)
-    json_rails_logger (3.0.0)
-      json (>= 1.8, < 5.0)
-      lograge (>= 0.10, < 2.0)
-      railties (>= 6.0, < 9.0)
+    epilog_rails (0.2.0)
 
 PLATFORMS
   aarch64-linux-gnu
@@ -563,8 +551,9 @@ DEPENDENCIES
   capybara
   capybara-playwright-driver
   csv
-  data_services_api!
+  data_services_api (= 2.0.0.prerelease2)!
   dotenv
+  epilog_rails (= 0.2.0)!
   faraday (~> 2.14)
   faraday-encoding (~> 0.0)
   faraday-follow_redirects (~> 0.5)
@@ -579,7 +568,6 @@ DEPENDENCIES
   http_accept_language
   js-routes
   json_expressions
-  json_rails_logger!
   m
   meta_request!
   minitest-rails

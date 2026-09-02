@@ -41,8 +41,6 @@ Rails.application.configure do
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # By default Rails expects that your application is running at the root directory (e.g. /).
   # Rails needs to know this directory to generate the appropriate routes.

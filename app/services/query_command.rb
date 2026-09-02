@@ -53,38 +53,17 @@ class QueryCommand
   # @param [DataServicesApi::Query] query the query to execute
   # @return [Integer] the time taken to execute the query in microseconds
   def execute_query(service, query)
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+
     begin
-      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-
       @results = api_service(service).query(query)
-    rescue Faraday::ConnectionFailed => e
-      message = e.message
-      status = 503 # Service Unavailable
-    rescue DataServicesApi::ServiceException => e
-      message = e.service_message
-      status = 503 # Service Unavailable
-    rescue RuntimeError => e
-      message = "Runtime error #{e.inspect}"
-      message += "Caused by: #{e.cause}" if e.cause
-      message += " in (#{e.class})" if Rails.logger.debug?
-      status = 500 # Internal Server Error
+    rescue Faraday::ConnectionFailed, DataServicesApi::ServiceException, RuntimeError
+      # Swallow: the failure (and its status/backtrace) is already logged by
+      # ApiRequestLogSubscriber via the data_services_api gem's instrumentation.
     end
 
-    # Calculate the time taken to execute the query and pass in the details to be logged
-    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-
-    # Log the final request status and response if there's an error
-    if status.present?
-      log_fields = { service: 'ukhpi', params: user_selections.params, path: request.path }
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:request_status] = 'error'
-      log_fields[:request_time] = time_taken
-      log_fields[:status] = status
-      Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
-    end
-    # Always return the time taken to execute the query
-    time_taken
+    # Always return the time taken to execute the query, even on failure
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
   end
 
   # Add a date range constraint to the given query

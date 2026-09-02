@@ -14,22 +14,16 @@ class CompareController < ApplicationController
   private
 
   def setup_view_state
-    Log.info('Requesting Compare Controller', { params: params, path: request.path })
     user_compare_selections = UserCompareSelections.new(params)
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
     CompareLocationsPresenter.new(user_compare_selections, query_results)
   rescue ArgumentError => e
-    { user_selections: user_compare_selections, error: e.message }
+    raise ApplicationRequestError.new(user_compare_selections, :internal_server_error, e.message)
   end
 
   def render_interactive(view_state)
     @view_state = view_state
-    if view_state.respond_to?(:[]) && view_state[:error] && Rails.env.production?
-      render_request_error(@view_state[:user_selections], :internal_server_error)
-    else
-      @view_state
-    end
   end
 
   def render_print
@@ -47,10 +41,6 @@ class CompareController < ApplicationController
     )
 
     user_compare_selections.selected_locations.each do |location|
-      log_fields = { params: base_selection.params, path: request.path }
-      msg = 'Received request'
-      msg += " for #{location.label}"
-      Log.info(msg, log_fields)
       query_results[location.label] = query_with(base_selection, location)
     end
 
