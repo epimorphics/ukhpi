@@ -52,5 +52,15 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # public/vite* is gitignored, so the manifest has to be built here. Any
+      # test that renders the application layout calls vite_asset_path, which
+      # raises without it. Vite Ruby's autoBuild can't cover for this, as that
+      # shells out to a build that needs the Node toolchain installed below.
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Build Vite assets for test
+        run: bin/vite build --mode=test
+
       - name: Run Rails tests
         run: bin/rails test
