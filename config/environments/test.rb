@@ -21,7 +21,10 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  # NB. must be :none, not false. Rails 7.1 deprecated the boolean form and
+  # 8.0 removed it, so `false` is silently ignored and controller exceptions
+  # get swallowed into opaque 500 responses with no backtrace.
+  config.action_dispatch.show_exceptions = :none
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
