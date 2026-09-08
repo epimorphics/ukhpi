@@ -55,7 +55,8 @@ jobs:
       # public/vite* is gitignored, so the manifest has to be built here. Any
       # test that renders the application layout calls vite_asset_path, which
       # raises without it. Vite Ruby's autoBuild can't cover for this, as that
-      # shells out to a build that needs the Node toolchain installed below.
+      # shells out to a build needing both the Node toolchain installed below
+      # and the bundle installed above (bin/vite is a Ruby binstub).
       - name: Setup Node Environment
         uses: ./.github/actions/setup-node
 
