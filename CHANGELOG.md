@@ -11,6 +11,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Fixed
 
 - Fixed focus order of accredited statistics logo to meet WCAG visual flow standards [#619](https://github.com/epimorphics/ukhpi/issues/619).
+- Bump `node` and `gem` dependencies within safe ranges.
 
 ## [2.3.4] - 2026-07-30
 
