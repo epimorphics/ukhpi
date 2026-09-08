@@ -14,3 +14,13 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+# Tells Zeitwerk that app/models/concerns/cube_data_model/dsd.rb defines
+# CubeDataModel::DSD rather than CubeDataModel::Dsd. This has to be declared
+# here, ahead of any reference to the constant: declaring it inside dsd.rb
+# itself is circular (Zeitwerk derives the constant name from the filename
+# before anything in the file can run) and left the constant resolvable only
+# by accident of load order.
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.acronym 'DSD'
+end
