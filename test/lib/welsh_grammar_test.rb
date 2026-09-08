@@ -5,6 +5,10 @@ class WelshGrammarTest < ActiveSupport::TestCase
   describe 'WelshGrammar' do
     teardown do
       I18n.default_locale = :en
+      # These tests set I18n.locale = :cy individually. Without restoring it
+      # here it leaks into every subsequent test in the run, which shows up as
+      # order-dependent failures in unrelated suites.
+      I18n.locale = :en
     end
 
     describe 'mutations' do
