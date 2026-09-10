@@ -52,5 +52,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Build Vite assets for test
+        run: bin/vite build --mode=test
+
       - name: Run Rails tests
         run: bin/rails test
