@@ -32,6 +32,9 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Removed the redundant checkout step from the `setup-node` composite action [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Removed the redundant checkout step from the `setup-node` composite action [#640](https://github.com/epimorphics/ukhpi/issues/640).
 
 ## [2.3.5]
 
