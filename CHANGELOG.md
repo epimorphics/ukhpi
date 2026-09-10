@@ -14,6 +14,18 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   Zeitwerk acronym is now declared in `config/initializers/inflections.rb`
   instead of inside the file it names
   [#641](https://github.com/epimorphics/ukhpi/issues/641).
+- Fixed `config.action_dispatch.show_exceptions` in the test environment, which
+  was using the boolean form removed in Rails 8.0, silently swallowing
+  controller exceptions [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Fixed `I18n.locale` leaking out of the Welsh grammar tests into subsequent
+  tests in the same run [#640](https://github.com/epimorphics/ukhpi/issues/640).
+
+### Changed
+
+- CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Removed the redundant checkout step from the `setup-node` composite action [#640](https://github.com/epimorphics/ukhpi/issues/640).
+
 
 ## [2.3.5]
 
