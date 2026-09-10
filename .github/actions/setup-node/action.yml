@@ -4,9 +4,6 @@ description: Shared setup for Node.js scripts using Yarn
 runs:
   using: 'composite'
   steps:
-    - name: Checkout repository
-      uses: actions/checkout@v6
-
     - name: Setup Node
       uses: actions/setup-node@v6
       with:
