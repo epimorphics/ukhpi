@@ -5,6 +5,7 @@ class WelshGrammarTest < ActiveSupport::TestCase
   describe 'WelshGrammar' do
     teardown do
       I18n.default_locale = :en
+      I18n.locale = :en
     end
 
     describe 'mutations' do
