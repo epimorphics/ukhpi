@@ -75,13 +75,15 @@ class QueryCommand
 
     # Log the final request status and response if there's an error
     if status.present?
-      log_fields = { service: 'ukhpi', params: user_selections.params, path: request.path }
-      log_fields[:backtrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      log_fields[:request_status] = 'error'
-      log_fields[:request_time] = time_taken
-      log_fields[:status] = status
-      Log.error(message, log_fields)
-      puts "\n" if Rails.env.development? && Rails.logger.debug?
+      log_fields = {
+        message: message,
+        path: request.path,
+        request_status: 'error',
+        request_time: time_taken / 1000.0,
+        status: status,
+      }
+      log_fields[:stacktrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
+      Rails.logger.error(log_fields)
     end
     # Always return the time taken to execute the query
     time_taken
