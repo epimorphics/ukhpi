@@ -38,15 +38,19 @@ Rails.application.configure do
   # Set the log level to the value of the LOG_LEVEL environment variable, or 'info' if not set
   config.log_level = ENV.fetch('LOG_LEVEL', 'info').to_sym
 
-  # Tag rails logs with useful information
-  config.log_tags = %i[subdomain request_id request_method]
-
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
 
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout) if config.log_level == :debug
+  # Keep test logs in log/test.log so request log entries don't flood the test
+  # output. epilog_rails 0.2.0's Railtie assigns config.logger unconditionally,
+  # overwriting any logger set here, so redirect its output once booted instead.
+  config.after_initialize do
+    file_logger = ActiveSupport::Logger.new(Rails.root.join('log/test.log'), level: Rails.logger.level)
+    file_logger.formatter = EpilogRails::JsonFormatter.new
+    Rails.logger.broadcasts.dup.each { |sink| Rails.logger.stop_broadcasting_to(sink) }
+    Rails.logger.broadcast_to(file_logger)
+  end
 
   # API location can be specified in the environment
   # But defaults to the dev service
