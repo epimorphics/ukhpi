@@ -36,13 +36,9 @@ Rails.application.configure do
   # Don't print a log message every time an asset file is loaded
   # config.assets.quiet = true
 
-  # Tag rails logs with useful information
-  config.log_tags = %i[subdomain request_id request_method]
   # When sync mode is true, all output is immediately flushed to the underlying
   # operating system and is not buffered by Ruby internally.
   $stdout.sync = true
-  # Log the stdout output to the Epimorphics JSON logging gem
-  config.logger = JsonRailsLogger::Logger.new($stdout)
 
   # By default Rails expects that your application is running at the root directory (e.g. /).
   # Rails needs to know this directory to generate the appropriate routes.
