@@ -73,6 +73,15 @@ module Ukhpi
       'BadRequestError' => :bad_request,
       'UpstreamError' => :internal_server_error
     )
+
+    # Expected failures (404, 400, 422, ...) are already recorded by the
+    # request's completed log entry, so don't also log them as exceptions.
+    config.action_dispatch.log_rescued_responses = false
+
+    # Log genuine unhandled exceptions at ERROR, not FATAL. This is the Rails
+    # 7.1+ default, which this app does not get because it never calls
+    # `config.load_defaults`.
+    config.action_dispatch.debug_exception_log_level = :error
   end
 end
 
