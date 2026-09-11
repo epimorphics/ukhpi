@@ -16,5 +16,6 @@ Rails.application.routes.draw do
 
   get '/version', to: 'application#version'
 
-  get '*unmatched_route', to: 'application#render_404'
+  # No catch-all route for unmatched paths: the routing error is rendered as a 404
+  # by `config.exceptions_app`, see config/application.rb.
 end
