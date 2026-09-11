@@ -2,7 +2,6 @@
 class ApplicationController < ActionController::Base
   include Rails.application.routes.url_helpers
   include ActionView::Helpers::TranslationHelper
-  include Log
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -10,8 +9,6 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
   before_action :change_default_caching_policy
-
-  around_action :log_response
 
   # Set the user's preferred locale. An explicit locale set via
   # the URL param `lang` is preeminent, otherwise we look to the
@@ -30,24 +27,6 @@ class ApplicationController < ActionController::Base
   # unless overridden in the action
   def change_default_caching_policy
     expires_in 2.minutes, public: true, must_revalidate: true if Rails.env.production?
-  end
-
-  def log_response
-    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-    yield
-    # Calculate elapsed time and convert to milliseconds
-    duration = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-    Log.info(
-      'Processing request',
-      {
-        duration:,
-        method: request.method,
-        params:,
-        path: request.path,
-        request_status: 'processing',
-        status: response.status,
-      }
-    )
   end
 
   def version
