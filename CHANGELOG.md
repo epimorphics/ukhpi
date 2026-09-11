@@ -22,6 +22,9 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 - Fixed error pages returning 200 OK instead of their real status, and
   unhandled exceptions rendering nothing, by moving error handling to Rails'
   `config.exceptions_app` [#656](https://github.com/epimorphics/ukhpi/issues/656).
+- Fixed expected errors such as 404s being logged as `FATAL`. They are now
+  recorded only by the request's completed log entry, and genuine unhandled
+  exceptions are logged at `ERROR` [#644](https://github.com/epimorphics/ukhpi/issues/644).
 
 ### Changed
 
@@ -29,6 +32,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   [#656](https://github.com/epimorphics/ukhpi/issues/656).
 - Removed the catch-all route for unmatched paths, which now reach the 404
   page through the exceptions middleware [#656](https://github.com/epimorphics/ukhpi/issues/656).
+- Replaced the bespoke `Log` module and `json_rails_logger` with `epilog_rails`,
+  which logs a structured received/completed entry with a `request_id` for
+  every request [#644](https://github.com/epimorphics/ukhpi/issues/644).
+- Removed the per-action `Requesting …` log lines and the unused
+  `AboutController` [#644](https://github.com/epimorphics/ukhpi/issues/644).
 
 - CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).
