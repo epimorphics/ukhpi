@@ -122,6 +122,21 @@ instructions in the
 [lr-data-api](https://github.com/epimorphics/lr-data-api) repository, ensuring
 it listens on port `8888`.
 
+### API logging and metrics
+
+`ApiRequestLogSubscriber` logs every API request, response, retry and failure,
+and `ApiPrometheusSubscriber` records the matching metrics. Both listen to the
+`*.data_services_api` notifications that the gem emits, so service objects must
+not log API calls themselves: doing so produces duplicate entries that drift out
+of step with the gem's behaviour.
+
+`config/initializers/subscribers.rb` references each subscriber class on boot,
+and is load-bearing. `attach_to` only runs when the class is first loaded,
+nothing else references these classes by name, and eager loading is off in
+development and test. Without the initializer the subscribers silently never
+attach outside production, so API logging and metrics do nothing locally with no
+error to notice.
+
 ## Running locally
 
 ```bash
