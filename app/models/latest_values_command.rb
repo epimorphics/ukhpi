@@ -11,81 +11,33 @@ class LatestValuesCommand
 
   private
 
+  # Building the dataset only constructs a local object; it makes no request and
+  # cannot raise a connection or service failure. The rescues that used to be
+  # here were unreachable, and referenced `e` outside the scope where it was
+  # bound, so they would have raised NameError had they ever run. Real API
+  # failures surface from #run_query and are logged by ApiRequestLogSubscriber.
   def service_api(service)
-    begin
-      # Set service to ukhpi dataset if not already set
-      service ||= dataset(:ukhpi)
-    rescue Faraday::ConnectionFailed => e
-      message = 'Failed to connect to UKHPI service'
-      service = nil
-    rescue DataServicesApi::ServiceException => e
-      message = 'Failed to get response from UKHPI service'
-      service = nil
-    rescue RuntimeError => e
-      message = "Runtime error #{e.inspect}"
-      service = nil
-    end
-
-    if service.nil?
-      message += " (caused by: #{e.cause})" if e.cause
-      message += " (#{e.class})" if Rails.logger.debug?
-      log_fields = { message: message, request_status: 'error', status: e.status }
-      log_fields[:stacktrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-
-      # Log the request status and response if there's an error
-      Rails.logger.error(log_fields)
-    end
-    # Always return the service object, even if it's nil
-    service
+    service || dataset(:ukhpi)
   end
 
+  # Only upstream failures are caught, so the landing page can degrade to the
+  # apology message when the data API is unavailable. Everything else, including
+  # NoMethodError and ArgumentError, is a bug in our own code and propagates:
+  # those used to be hidden behind the same friendly message, which made them
+  # invisible in production.
+  #
+  # The failure itself is not logged here. ApiRequestLogSubscriber logs it once,
+  # from the gem's instrumentation.
   def run_query(hpi)
-    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-
-    success = true
     query = add_date_range_constraint(base_query)
     query = add_location_constraint(query)
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
-    begin
-      @results = hpi.query(query)
-    rescue NoMethodError => e
-      message = "Data API request failed with: NoMethodError: #{e}"
-      status = 405 # Method Not Allowed
-      success = false
-    rescue ArgumentError => e
-      message = "Data API request failed with: ArgumentError: #{e}"
-      status = 422 # Unprocessable Entity
-      success = false
-    rescue RuntimeError => e
-      message = "Data API request failed with: #{e}"
-      status = 400 # Bad Request
-      success = false
-    rescue StandardError => e
-      message = "Application failed with: #{e}"
-      status = 500 # Internal Server Error
-      success = false
-    end
-
-    if success == false # log the error if the request was unsuccessful
-      # Calculate the time taken to execute the query and pass in the details to be logged
-      time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-      log_fields = {
-        message: message,
-        request_status: 'error',
-        request_time: time_taken / 1000.0,
-        status: status,
-      }
-
-      if (400..499).cover?(status)
-        Rails.logger.warn(log_fields)
-      else
-        Rails.logger.error(log_fields)
-      end
-    end
-
-    success
+    @results = hpi.query(query)
+    true
+  rescue Faraday::ConnectionFailed, DataServicesApi::ServiceException
+    false
   end
 
   def add_date_range_constraint(query)
