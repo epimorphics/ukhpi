@@ -14,3 +14,13 @@
 # ActiveSupport::Inflector.inflections(:en) do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+
+# Zeitwerk works out the constant name a file should define from its filename,
+# before any code in that file runs. An acronym therefore has to be declared
+# here, ahead of the first reference to the constant. Declaring it inside the
+# file it names cannot work, which is what app/models/concerns/cube_data_model/
+# dsd.rb used to do: CubeDataModel::DSD then resolved only by accident of load
+# order, and failed whenever nothing else had loaded that file first.
+ActiveSupport::Inflector.inflections(:en) do |inflect|
+  inflect.acronym 'DSD'
+end
