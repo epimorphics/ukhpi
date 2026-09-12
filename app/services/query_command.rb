@@ -52,41 +52,16 @@ class QueryCommand
   # @param [DataServicesApi::Service] service the API service to use
   # @param [DataServicesApi::Query] query the query to execute
   # @return [Integer] the time taken to execute the query in microseconds
+  # Failures are not caught or logged here. ApiRequestLogSubscriber logs every
+  # API failure once, from the gem's own instrumentation, and the exception
+  # itself belongs to the caller: swallowing it here left the command reporting
+  # success with no results.
   def execute_query(service, query)
-    begin
-      start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
+    start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
-      @results = api_service(service).query(query)
-    rescue Faraday::ConnectionFailed => e
-      message = e.message
-      status = 503 # Service Unavailable
-    rescue DataServicesApi::ServiceException => e
-      message = e.service_message
-      status = 503 # Service Unavailable
-    rescue RuntimeError => e
-      message = "Runtime error #{e.inspect}"
-      message += "Caused by: #{e.cause}" if e.cause
-      message += " in (#{e.class})" if Rails.logger.debug?
-      status = 500 # Internal Server Error
-    end
+    @results = api_service(service).query(query)
 
-    # Calculate the time taken to execute the query and pass in the details to be logged
-    time_taken = (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
-
-    # Log the final request status and response if there's an error
-    if status.present?
-      log_fields = {
-        message: message,
-        path: request.path,
-        request_status: 'error',
-        request_time: time_taken / 1000.0,
-        status: status,
-      }
-      log_fields[:stacktrace] = e&.backtrace&.join("\n") if Rails.logger.debug?
-      Rails.logger.error(log_fields)
-    end
-    # Always return the time taken to execute the query
-    time_taken
+    (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
   end
 
   # Add a date range constraint to the given query
