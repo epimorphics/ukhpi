@@ -1,6 +1,7 @@
-# Subscribe to :api events
+# Records metrics for data API interactions. Logging for the same events is
+# ApiRequestLogSubscriber's job, so this subscriber does not log.
 class ApiPrometheusSubscriber < ActiveSupport::Subscriber
-  attach_to :api
+  attach_to :data_services_api
 
   def response(event)
     response = event.payload[:response]
@@ -25,14 +26,6 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
     Prometheus::Client.registry
                       .get(:api_connection_failure)
                       .increment(labels: { message: exception.to_s })
-
-    Rails.logger.error(
-      {
-        message: "API connection failure: #{exception.message} - #{exception.class.name}",
-        request_status: 'error',
-        status: 503,
-      }
-    )
   end
 
   def service_exception(event)
@@ -40,13 +33,5 @@ class ApiPrometheusSubscriber < ActiveSupport::Subscriber
     Prometheus::Client.registry
                       .get(:api_service_exception)
                       .increment(labels: { message: exception.to_s })
-
-    Rails.logger.error(
-      {
-        message: "API service exception: #{exception.message} - #{exception.class.name}",
-        request_status: 'error',
-        status: exception.respond_to?(:status) ? exception.status : 502,
-      }
-    )
   end
 end
