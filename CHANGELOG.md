@@ -37,6 +37,15 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   every request [#644](https://github.com/epimorphics/ukhpi/issues/644).
 - Removed the per-action `Requesting …` log lines and the unused
   `AboutController` [#644](https://github.com/epimorphics/ukhpi/issues/644).
+- Data API calls are now logged once, by `ApiRequestLogSubscriber` listening to
+  the gem's own instrumentation, instead of by hand in each service object
+  [#643](https://github.com/epimorphics/ukhpi/issues/643).
+- Bumped `data_services_api` to 2.0.0, which renames its notification events to
+  the `*.data_services_api` namespace
+  [#643](https://github.com/epimorphics/ukhpi/issues/643).
+- Errors in the application's own code no longer hide behind the landing page's
+  "values are not available" message; only data API failures do
+  [#643](https://github.com/epimorphics/ukhpi/issues/643).
 
 - CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).
