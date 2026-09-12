@@ -19,8 +19,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   controller exceptions [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Fixed `I18n.locale` leaking out of the Welsh grammar tests into subsequent
   tests in the same run [#640](https://github.com/epimorphics/ukhpi/issues/640).
+- Fixed error pages returning 200 OK instead of their real status, and
+  unhandled exceptions rendering nothing, by moving error handling to Rails'
+  `config.exceptions_app` [#656](https://github.com/epimorphics/ukhpi/issues/656).
 
 ### Changed
+
+- Error pages can no longer be requested directly; `/500` is now a 404
+  [#656](https://github.com/epimorphics/ukhpi/issues/656).
+- Removed the catch-all route for unmatched paths, which now reach the 404
+  page through the exceptions middleware [#656](https://github.com/epimorphics/ukhpi/issues/656).
 
 - CI now builds Vite assets before running the Rails test suite [#640](https://github.com/epimorphics/ukhpi/issues/640).
 - Renamed the CI lint jobs to name the tool that failed [#640](https://github.com/epimorphics/ukhpi/issues/640).

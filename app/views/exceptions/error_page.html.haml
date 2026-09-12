@@ -1,6 +1,3 @@
-- puts "Rendering error page with status: #{status.inspect}" if Rails.env.development?
-- puts "View state: #{@view_state.inspect}" if Rails.env.development?
-
 %article.u-clear
   - if status == 400
     %h1.o-heading--1 Request not understood
@@ -10,12 +7,14 @@
       message as a result of using the HPI or PPD applications, please let us
       know so that we can correct the problem.
 
-    - if @view_state && @view_state[:user_selections].errors.any?
+    -# Errors come from the raised ApplicationRequestError, which knows whether the
+    -# user's selections carry any. Not every selections object has them.
+    - if @view_state && @view_state[:errors].present?
       %p
         The following issues were identified in your request:
 
       %ul.list.list-bullet
-        - @view_state[:user_selections].errors.each do |err_msg|
+        - @view_state[:errors].each do |err_msg|
           %li
             = err_msg
 

@@ -47,6 +47,32 @@ module Ukhpi
 
     # Add deflater to compress JSON payloads
     config.middleware.use Rack::Deflater
+
+    # Render error pages through the application, rather than the static files in
+    # public/, so they can be localised and use the application layout.
+    #
+    # ActionDispatch::ShowExceptions catches the exception, maps it to a status via
+    # `rescue_responses` below, resets the response, and hands the request to
+    # ErrorsController with the path rewritten to the status code. It runs outside
+    # the router, so unlike `rescue_from` it also catches routing errors. The
+    # application never decides which status an exception deserves.
+    #
+    # Dispatched straight to the controller rather than via `routes`, so the error
+    # pages have no public URLs: requesting /500 directly is just an unmatched path.
+    # The lambda defers the constant lookup until an error occurs, after autoloading
+    # is set up.
+    config.exceptions_app = ->(env) { ErrorsController.action(:show).call(env) }
+
+    # Statuses for the errors the application raises deliberately. Rails already
+    # knows the framework's own exceptions (RoutingError is 404, ParameterMissing
+    # is 400, and so on), so only ours need registering.
+    #
+    # This map is class to status and is read once at boot, so a status that varies
+    # per call site needs its own exception class rather than an attribute.
+    config.action_dispatch.rescue_responses.merge!(
+      'BadRequestError' => :bad_request,
+      'UpstreamError' => :internal_server_error
+    )
   end
 end
 
