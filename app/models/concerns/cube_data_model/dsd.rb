@@ -1,7 +1,7 @@
-# Keep Zeitwerk happy. Without this declaration, Zeitwerk thinks
-# the classname in this file should be CubeDataModel::Dsd
-ActiveSupport::Inflector.inflections { |infl| infl.acronym('DSD') } if defined?(ActiveSupport)
-
+# The DSD acronym is declared in config/initializers/inflections.rb, which runs
+# before anything can reference this constant. It cannot be declared here:
+# Zeitwerk derives the expected constant name from the filename before any code
+# in this file runs.
 module CubeDataModel
   # Encapsulates a DataCube DSD
   class DSD

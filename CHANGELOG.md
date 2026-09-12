@@ -8,6 +8,13 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Fixed `CubeDataModel::DSD` resolving only by accident of load order. Its
+  Zeitwerk acronym is now declared in `config/initializers/inflections.rb`
+  instead of inside the file it names
+  [#641](https://github.com/epimorphics/ukhpi/issues/641).
+
 ## [2.3.5]
 
 ### Fixed
