@@ -1,11 +1,12 @@
 name: "Build & Publish Docker Image"
 on:
   workflow_dispatch: {}
+  # Deliberately not filtered by base branch. This workflow is the CI
+  # coordinator: its `publish` job only proves the image builds, and it
+  # publishes or deploys only for an environment branch. Running it on every
+  # pull request means stacked pull requests, based on another feature branch
+  # rather than on dev, still get checks.
   pull_request:
-    branches:
-      - dev
-      - preprod
-      - prod
     paths:
       # Image definition and entrypoint
       - 'Dockerfile'
@@ -33,6 +34,8 @@ on:
       - 'config/**'
       - 'lib/**'
       - 'public/**'
+      # Tests
+      - 'test/**'
       # Workflow itself
       - '.github/workflows/**'
   push:
