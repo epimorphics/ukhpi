@@ -41,6 +41,13 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.body, 'incorrect or missing &quot;from&quot; date'
   end
 
+  test 'unparseable compare selections render the 400 page' do
+    get '/compare', params: { from: 'not-a-date' }
+
+    assert_response :bad_request
+    assert_includes @response.body, 'Request not understood'
+  end
+
   test 'an unhandled exception renders the 500 page' do
     LandingState.stubs(:new).raises(RuntimeError, 'boom')
 

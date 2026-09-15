@@ -58,7 +58,7 @@ class BrowseController < ApplicationController
 
     DataViewsPresenter.new(user_selections, command.results)
   rescue ArgumentError => e
-    raise UpstreamError.new(e.message, user_selections: user_selections)
+    raise BadRequestError.new(e.message, user_selections: user_selections)
   end
 
   def render_view_state(view_state)
