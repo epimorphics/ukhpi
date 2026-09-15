@@ -20,7 +20,7 @@ class CompareController < ApplicationController
 
     CompareLocationsPresenter.new(user_compare_selections, query_results)
   rescue ArgumentError => e
-    raise UpstreamError.new(e.message, user_selections: user_compare_selections)
+    raise BadRequestError.new(e.message, user_selections: user_compare_selections)
   end
 
   def render_interactive(view_state)
