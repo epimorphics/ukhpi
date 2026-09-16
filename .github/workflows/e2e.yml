@@ -1,12 +1,7 @@
 name: E2E Tests
 
 on:
-  workflow_dispatch:
-    inputs:
-      base_url:
-        description: 'URL of the environment to test (e.g. https://staging.example.com)'
-        required: true
-        type: string
+  workflow_dispatch: {}
 
 jobs:
   e2e:
@@ -30,7 +25,9 @@ jobs:
 
       - name: Run E2E tests
         env:
-          E2E_BASE_URL: ${{ inputs.base_url }}
+          # Preprod only: the dev hosts are too small to complete the large
+          # queries some tests make, so runs against dev fail spuriously.
+          E2E_BASE_URL: https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/
           E2E_USERNAME: ${{ secrets.E2E_USERNAME }}
           E2E_PASSWORD: ${{ secrets.E2E_PASSWORD }}
         run: yarn playwright test
