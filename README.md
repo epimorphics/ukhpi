@@ -221,22 +221,22 @@ Test files live in `test/playwright/`. Results and reports are written to
 
 #### Running against a deployed environment
 
-The E2E suite can be pointed at any deployed environment by setting `E2E_BASE_URL`.
-Some environments are HTTP Basic Auth protected — pass credentials via `E2E_USERNAME` and `E2E_PASSWORD`:
+Set `E2E_BASE_URL` to any URL from [Environments](#environments). For
+pre-production, also pass the Basic Auth [credentials](#credentials):
 
 ```bash
-E2E_USERNAME=user E2E_PASSWORD=pass E2E_BASE_URL=https://hmlr-dev-pres.epimorphics.net/app/ukhpi/ yarn test:e2e
+E2E_BASE_URL=https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/ \
+E2E_USERNAME=user \
+E2E_PASSWORD=secret \
+yarn test:e2e
 ```
 
-A manually-triggered GitHub Actions workflow is also available under
-**Actions → E2E Tests → Run workflow**. Paste the target environment URL into the
-`base_url` input when prompted.
+#### In CI
 
-| Environment | URL |
-|---|---|
-| dev | `https://hmlr-dev-pres.epimorphics.net/app/ukhpi/` |
-| preprod | `https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/` |
-| prod | `https://landregistry.data.gov.uk/app/ukhpi/` |
+The **E2E Tests** workflow (`.github/workflows/e2e.yml`) is manual only: run it
+from **Actions > E2E Tests > Run workflow**. It always targets pre-production.
+The dev hosts are too small to complete some of the large queries the suite
+makes, so runs against dev fail for reasons unrelated to the code.
 
 ## Linting
 
@@ -269,6 +269,13 @@ Further details on the generation of location files can be found in the
 
 ## Building and publishing
 
+> [!WARNING]
+> Do not trigger deployments concurrently. ukhpi, ppd-explorer,
+> standard-reports-ui and lr-landing all deploy to the same hosts with the
+> same Ansible playbook, and nothing stops two deploys from overlapping. Before
+> pushing to `dev`, `preprod` or `prod`, check the Actions tab of all four
+> repositories and wait for any deploy in progress to finish.
+
 The `Makefile` is scoped to the Docker image build and publish pipeline.
 
 ```bash
@@ -293,19 +300,36 @@ Branch-to-environment mapping is defined in `deployment.yaml`. CI runs
 
 Releases follow the [Frontend Release Process](https://github.com/epimorphics/internal/wiki/Release-Process-Frontend).
 
-| Branch | Environment | URL |
-|--------|-------------|-----|
-| `dev` | Dev | https://hmlr-dev-pres.epimorphics.net/app/ukhpi/ |
-| `preprod` | Pre-production | https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/ |
-| `prod` | Production | https://landregistry.data.gov.uk/app/ukhpi/ |
-
 The canonical version file is `app/lib/version.rb`. The changelog is maintained in `CHANGELOG.md`.
 
-Environment branches are kept as strict fast-forward pointers to tagged commits on `dev`. Branch-to-environment mapping is also declared in `deployment.yaml`.
+Environment branches are kept as strict fast-forward pointers to tagged commits on `dev`. URLs for each environment are listed under [Environments](#environments).
 
-After promoting all environments, trigger the E2E workflow from **Actions → E2E Tests → Run workflow** (or run it locally — see [End-to-end tests](#end-to-end-tests-playwright) above) to verify each environment.
+After promoting to pre-production, run the E2E workflow (see
+[In CI](#in-ci)) to verify it.
 
----
+## Environments
+
+| Branch | Environment | URL | Basic Auth |
+|--------|-------------|-----|------------|
+| `dev` | Dev | https://hmlr-dev-pres.epimorphics.net/app/ukhpi/ | No |
+| `preprod` | Pre-production | https://hmlr-preprod-pres.epimorphics.net/app/ukhpi/ | Yes |
+| `prod` | Production | https://landregistry.data.gov.uk/app/ukhpi/ | No |
+
+Pushing to an environment branch builds, publishes and deploys to that
+environment (see [Building and publishing](#building-and-publishing)).
+
+### Credentials
+
+Pre-production is protected by HTTP Basic Auth. The credentials are not stored
+in this repository: ask Ops for them. The E2E workflow reads the same
+credentials from the `E2E_USERNAME` and `E2E_PASSWORD` repository secrets.
+
+## Observability
+
+Metrics for the presentation hosts of all HMLR apps are in
+[Grafana](https://grafana-hmlr.epimorphics.net/). Use it to see how each
+environment has behaved over time and to line up a problem with when it
+started. Ask Ops for access.
 
 ## Dependency maintenance
 
