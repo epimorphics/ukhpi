@@ -98,19 +98,26 @@ checked in — no copying required. The app will start without any further
 configuration.
 
 If you need to override a value (e.g. point at a different API), create
-`.env.local` alongside it — foreman loads both and `.env.local` takes
-precedence. `.env.local` is gitignored.
+`.env.local` alongside it. Both are loaded by dotenv, and `.env.local` takes
+precedence. `.env.local` is gitignored, so secrets belong there.
 
 | Variable | Default | Purpose |
 |---|---|---|
 | `API_SERVICE_URL` | `http://localhost:8888` | Backing SPARQL/data API |
 | `PORT` | `3002` | Rails server port |
-| `RAILS_ENV` | `development` | Rails environment |
+| `METRICS_PORT` | `9395` | Port for Puma's Prometheus metrics server, bound in development only |
+| `RAILS_ENV` | `development` | Rails environment. Also read by Vite, which reports it in the browser bundle |
 | `LOG_LEVEL` | `debug` | Log verbosity |
-| `SENTRY_ENABLED` | `false` | Enable Sentry error tracking |
+| `SENTRY_ENABLED` | `false` | Initialises browser-side Sentry and is recorded as a tag. Server-side reporting is gated by `SENTRY_API_KEY` and `enabled_environments` instead |
+| `SENTRY_ENVIRONMENT` | `development` | Environment name reported to Sentry. The browser bundle also derives its sampling rates from it |
 | `SENTRY_LOG_LEVEL` | `warn` | Verbosity of the Sentry SDK's own diagnostics, independent of `LOG_LEVEL`. Raise to `debug` to see why an event was or was not sent |
+| `SENTRY_BAND` | `dev` | Tag on Sentry events, for filtering in the Sentry UI |
+| `SENTRY_HOSTNAME` | `localhost` | Tag on Sentry events, for filtering in the Sentry UI |
+| `SENTRY_ORG` | `epimorphics-ltd` | Sentry organisation, used at build time for source map upload |
+| `SENTRY_PROJECT` | `lr-dgu-ukhpi` | Sentry project, used at build time for source map upload and the release name |
 | `SENTRY_AUTH_TOKEN` | — | Required only for production builds (source map upload) |
-| `SENTRY_API_KEY` | — | Required only if `SENTRY_ENABLED=true` |
+| `SENTRY_API_KEY` | — | The Sentry DSN. Required only if reporting to Sentry |
+| `VITE_RUBY_BASE` | `/` | URL prefix baked into built asset paths. Read by Vite when assets are built, not by Rails at runtime |
 
 Vite exposes any variable prefixed with `VITE_`, `RAILS_`, `HMLR_`, `LOG_`,
 or `SENTRY_` to the browser bundle.
