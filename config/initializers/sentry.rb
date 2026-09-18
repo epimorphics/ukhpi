@@ -19,8 +19,13 @@ Rails.application.reloader.to_prepare do
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)
-    # ^ Default to only reporting info, warnings and errors to Sentry
-    config.sdk_logger.level = Rails.application.config.log_level || :info
+    # The SDK's own diagnostics, not what is reported to Sentry: that is decided
+    # by `excluded_exceptions` and the sample rates below. sentry-rails gives the
+    # SDK a copy of Rails.logger, so without its own level these would follow
+    # LOG_LEVEL and put Sentry's internals in the application log whenever we
+    # turn on DEBUG to look at the app. Raise to `debug` to see why Sentry did or
+    # did not send an event.
+    config.sdk_logger.level = ENV.fetch('SENTRY_LOG_LEVEL', 'warn').to_sym
     # * Set the release version to the current version
     config.release = Version::VERSION
     # ! Sentry recommends adjusting this value in production hence the ternary operator.

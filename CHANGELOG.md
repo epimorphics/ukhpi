@@ -10,6 +10,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- The Sentry SDK's own diagnostics now have their own log level, `SENTRY_LOG_LEVEL`
+  (default `warn`), instead of following `LOG_LEVEL`. Running the app at `debug` no
+  longer fills the log with Sentry's tracing and exclusion messages. What is
+  reported to Sentry is unchanged
+  [#669](https://github.com/epimorphics/ukhpi/issues/669).
 - Upgraded `epilog_rails` to 0.3.0. Request log entries now record the path the
   client requested rather than the internal error page path Rails re-dispatches
   to, so a 404 logs `/app/ukhpi/bruwse` instead of `/app/ukhpi/404`, and the
