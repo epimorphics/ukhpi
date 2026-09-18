@@ -108,6 +108,7 @@ precedence. `.env.local` is gitignored.
 | `RAILS_ENV` | `development` | Rails environment |
 | `LOG_LEVEL` | `debug` | Log verbosity |
 | `SENTRY_ENABLED` | `false` | Enable Sentry error tracking |
+| `SENTRY_LOG_LEVEL` | `warn` | Verbosity of the Sentry SDK's own diagnostics, independent of `LOG_LEVEL`. Raise to `debug` to see why an event was or was not sent |
 | `SENTRY_AUTH_TOKEN` | — | Required only for production builds (source map upload) |
 | `SENTRY_API_KEY` | — | Required only if `SENTRY_ENABLED=true` |
 
