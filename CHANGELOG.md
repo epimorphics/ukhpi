@@ -10,6 +10,12 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ### Changed
 
+- Upgraded `epilog_rails` to 0.3.0. Request log entries now record the path the
+  client requested rather than the internal error page path Rails re-dispatches
+  to, so a 404 logs `/app/ukhpi/bruwse` instead of `/app/ukhpi/404`, and the
+  messages lead with the request: `GET /app/ukhpi/bruwse handled by
+  ErrorsController#show (404) in 0.047s`
+  [#668](https://github.com/epimorphics/ukhpi/issues/668).
 - Restricted the E2E workflow to pre-production, updated GitHub Actions versions,
   added a warning against concurrent deploys, and consolidated the README environment, credentials and
   observability documentation
