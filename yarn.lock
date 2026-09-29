@@ -3835,14 +3835,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^5.2.2":
-  version: 5.2.2
-  resolution: "js-yaml@npm:5.2.2"
+"js-yaml@npm:^5.4.1":
+  version: 5.4.1
+  resolution: "js-yaml@npm:5.4.1"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.mjs
-  checksum: 10c0/e8ded203b235b3d562818c67bf362122abbcee89e507b62bddcdd3085b2f2dd866071e5e78f8e617d41d1a0c0baa1cec12a8fdec5859c571bf862adf585e2684
+  checksum: 10c0/efe9dfaf222809694d375ad5ecca825561d2432eb55bc0f628911c0dfa4dbce98a71dcbc3252f630208bbdf5f4e9ac363847e4a7f49845b577ae2548b8fcf147
   languageName: node
   linkType: hard
 
@@ -5721,7 +5721,7 @@ __metadata:
     govuk-frontend: "npm:^6.5.0"
     govuk_frontend_toolkit: "npm:^9.0.1"
     jiti: "npm:^2.7.0"
-    js-yaml: "npm:^5.2.2"
+    js-yaml: "npm:^5.4.1"
     kebab-case: "npm:^1.0.2"
     leaflet: "npm:^1.9.4"
     leaflet-clonelayer: "npm:^1.0.7"
