@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [2.4.0] - 2026-10-06
+
 ### Changed
 
 - The Sentry SDK's own diagnostics now have their own log level, `SENTRY_LOG_LEVEL`
