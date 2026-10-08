@@ -294,6 +294,21 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#theme_is_valid?' do
+      it 'should report that a correctly stated theme is valid' do
+        selections = user_selections('thm' => %w[property_type buyer_status])
+        _(selections.valid?).must_equal(true)
+      end
+    end
+
+    describe '#theme_is_invalid?' do
+      it 'should report that an incorrectly stated theme is not valid' do
+        selections = user_selections('thm' => %w[property_type sales_volume])
+        _(selections.valid?).must_equal(false)
+        _(selections.errors).must_include 'unrecognised theme(s)'
+      end
+    end
+
     describe '#default_language_selected' do
       it 'should return English as the default' do
         selections = user_selections({})
