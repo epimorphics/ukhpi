@@ -23,7 +23,7 @@ prometheus.counter(
 )
 prometheus.counter(
   :internal_application_error,
-  docstring: 'Unexpected events and internal error count',
+  docstring: 'Unexpected events and internal error count, by exception class and action',
   labels: [ :message ]
 )
 
