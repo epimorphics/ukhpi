@@ -8,6 +8,14 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Printing a data table from a link without a theme, or with single-valued `thm`,
+  `in` or `st` params (`thm=property_type` rather than `thm[]=property_type`), now
+  shows the table instead of a 500 error. The default themes included `volume`,
+  which is not a theme, and single values were silently replaced by the defaults
+  [#675](https://github.com/epimorphics/ukhpi/issues/675).
+
 ## [2.4.0] - 2026-10-06
 
 ### Changed
