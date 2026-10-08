@@ -18,6 +18,7 @@ class BrowseController < ApplicationController
 
   def edit
     @view_state = BrowseEditViewState.new(params)
+    validated(@view_state.user_selections)
     process_form_action(@view_state)
   end
 
