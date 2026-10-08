@@ -16,6 +16,7 @@ module UserSelectionValidations
     validate_location('unrecognised location')
     validate_indicator('unrecognised indicator(s)')
     validate_statistic('unrecognised statistic(s)')
+    validate_theme('unrecognised theme(s)')
   end
 
   def validate_date(method, msg)
@@ -46,5 +47,11 @@ module UserSelectionValidations
       stats = selected_statistics.map { |stat| cube.statistic(stat) }
       errors << msg if stats.include?(nil)
     end
+  end
+
+  def validate_theme(msg)
+    cube = UkhpiDataCube.new
+    themes = selected_themes.map { |thm| cube.theme(thm) }
+    errors << msg if themes.empty? || themes.include?(nil)
   end
 end
