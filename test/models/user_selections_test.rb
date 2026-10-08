@@ -85,6 +85,24 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#scalar_array_params' do
+      it 'should read a scalar value of an array-valued param as a one-element array' do
+        selections = user_selections(thm: 'property_status', in: 'avg', st: 'exi')
+
+        _(selections.selected_themes).must_equal [ 'property_status' ]
+        _(selections.selected_indicators).must_equal [ 'avg' ]
+        _(selections.selected_statistics).must_equal [ 'exi' ]
+      end
+
+      it 'should read a scalar legacy param as a one-element array' do
+        _(user_selections(ai: 'avg').selected_indicators).must_equal [ 'avg' ]
+      end
+
+      it 'should treat a blank scalar as absent' do
+        _(user_selections(in: '').selected_indicators).must_equal UserSelections::DEFAULT_INDICATORS
+      end
+    end
+
     describe '#from_date' do
       it 'should convert a date string to a date' do
         _(user_selections('from' => '2017-09-18').from_date.month).must_equal 9

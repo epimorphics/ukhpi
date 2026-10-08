@@ -48,8 +48,25 @@ class UserSelections
               .map { |k, v| v.array? ? { k => [] } : k }
               .freeze
 
+  # `permit` only allows the array form of array-valued params, so `thm=property_type`
+  # would be dropped and replaced by the default. Read a scalar as a one-element array
+  # instead, and a blank scalar (`in=`) as absent.
+  def self.normalise_array_params(params)
+    params.dup.tap do |normalised|
+      USER_PARAMS_MODEL.each do |key, model|
+        value = normalised[key]
+        next unless model.array? && value.is_a?(String)
+
+        value.blank? ? normalised.delete(key) : normalised[key] = [ value ]
+      end
+    end
+  end
+
   def initialize(params)
-    @params = params[:__safe_params] || params.permit(*PERMITTED) unless defined? @params
+    return if defined? @params
+
+    @params = params[:__safe_params] ||
+              self.class.normalise_array_params(params).permit(*PERMITTED)
   end
 
   def user_params_model
