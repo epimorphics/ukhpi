@@ -12,9 +12,11 @@ class ApplicationController < ActionController::Base
 
   # Set the user's preferred locale. An explicit locale set via
   # the URL param `lang` is preeminent, otherwise we look to the
-  # user's preferred language specified via browser headers
+  # user's preferred language specified via browser headers. A `lang` we don't
+  # support, including a blank one, is ignored rather than passed to I18n, which
+  # would raise I18n::InvalidLocale
   def set_locale
-    user_locale = params['lang']
+    user_locale = params['lang'].presence_in(I18n.available_locales.map(&:to_s))
     user_locale ||= http_accept_language.compatible_language_from(I18n.available_locales)
 
     I18n.locale = user_locale if Rails.application.config.welsh_language_enabled

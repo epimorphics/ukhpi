@@ -30,6 +30,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   what wasn't understood, instead of a 500 error. Download files fall back to the
   region URI for a region missing from the location table
   [#676](https://github.com/epimorphics/ukhpi/issues/676).
+- An unsupported or empty `lang` param (such as `?lang=en\` or `?lang=`) is now
+  ignored, and the page is shown in the browser's preferred language or English,
+  instead of a plain-text 500 error
+  [#678](https://github.com/epimorphics/ukhpi/issues/678).
 
 ## [2.4.0] - 2026-10-06
 
