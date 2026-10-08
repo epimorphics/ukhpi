@@ -97,6 +97,29 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     assert_empty events
   end
 
+  test 'a malformed query string renders the 400 page' do
+    # Set directly: the test helper would reject this URL before it reached the app
+    get '/', env: { 'QUERY_STRING' => 'sk=%%_subscriberKey%%' }
+
+    assert_response :bad_request
+    assert_includes @response.body, 'Request not understood'
+  end
+
+  test 'a malformed form body still renders the error page' do
+    post '/this-route-does-not-exist', params: 'sk=%%_subscriberKey%%',
+                                       headers: { 'CONTENT_TYPE' => 'application/x-www-form-urlencoded' }
+
+    assert_response :not_found
+    assert_includes @response.body, 'Page not found'
+  end
+
+  test 'an unsupported lang still renders the error page' do
+    get '/this-route-does-not-exist?lang=en%5C'
+
+    assert_response :not_found
+    assert_includes @response.body, 'Page not found'
+  end
+
   test 'non-HTML requests get a plain text body with the same status' do
     get '/this-route-does-not-exist', headers: { 'Accept' => 'text/plain' }
 

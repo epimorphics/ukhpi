@@ -60,8 +60,8 @@ module Ukhpi
     # Dispatched straight to the controller rather than via `routes`, so the error
     # pages have no public URLs: requesting /500 directly is just an unmatched path.
     # The lambda defers the constant lookup until an error occurs, after autoloading
-    # is set up.
-    config.exceptions_app = ->(env) { ErrorsController.action(:show).call(env) }
+    # is set up. `render_error` also copes with requests whose params can't be parsed.
+    config.exceptions_app = ->(env) { ErrorsController.render_error(env) }
 
     # Statuses for the errors the application raises deliberately. Rails already
     # knows the framework's own exceptions (RoutingError is 404, ParameterMissing

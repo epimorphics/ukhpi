@@ -34,6 +34,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   ignored, and the page is shown in the browser's preferred language or English,
   instead of a plain-text 500 error
   [#678](https://github.com/epimorphics/ukhpi/issues/678).
+- A request whose query string or form body can't be parsed, such as a link
+  containing an unescaped `%%_subscriberKey%%`, now gets the 400 error page.
+  Previously the error page failed in the same way and Rails returned its
+  plain-text "500 Internal Server Error" fallback
+  [#679](https://github.com/epimorphics/ukhpi/issues/679).
 
 ## [2.4.0] - 2026-10-06
 
