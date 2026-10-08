@@ -4,7 +4,11 @@ module DownloadFormatter
   FIXED_COLUMNS = [
     DownloadColumn.new(
       label: 'Name',
-      format: ->(row) { Locations.lookup_location(row['ukhpi:refRegion']['@id']).label }
+      # Fall back to the URI for a region the API knows but our location table doesn't
+      format: lambda do |row|
+        uri = row['ukhpi:refRegion']['@id']
+        Locations.lookup_location(uri)&.label || uri
+      end
     ),
     DownloadColumn.new(
       label: 'URI',
@@ -12,7 +16,7 @@ module DownloadFormatter
     ),
     DownloadColumn.new(
       label: 'Region GSS code',
-      format: ->(row) { Locations.lookup_location(row['ukhpi:refRegion']['@id']).gss }
+      format: ->(row) { Locations.lookup_location(row['ukhpi:refRegion']['@id'])&.gss }
     ),
     DownloadColumn.new(
       label: 'Period',
