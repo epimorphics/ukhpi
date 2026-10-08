@@ -32,4 +32,23 @@ class ApplicationController < ActionController::Base
   def version
     render json: { version: Version::VERSION }
   end
+
+  private
+
+  # @return The given selections, if they are valid
+  # @raise BadRequestError listing what was wrong with them, if not
+  def validated(user_selections)
+    return user_selections if user_selections.valid?
+
+    raise BadRequestError.new('Invalid selections', user_selections: user_selections)
+  end
+
+  # @return The location URIs for the given GSS codes
+  # @raise BadRequestError if any code does not name a location we know
+  def location_uris_for_gss(gss_codes)
+    gss_codes.map do |gss|
+      Locations.lookup_gss(gss)&.uri ||
+        raise(BadRequestError, "Location code not understood: #{gss}")
+    end
+  end
 end

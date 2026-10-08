@@ -2,8 +2,6 @@
 # (csv, json, RDF etc)
 class DownloadController < ApplicationController
   def new
-    return unless validate_params?
-
     if params[:location].is_a?(Array)
       download_multiple_locations
     else
@@ -15,8 +13,7 @@ class DownloadController < ApplicationController
 
   # Create a download file for just a single location
   def download_single_location
-    user_selections = UserSelections.new(params)
-    query_command = QueryCommand.new(user_selections)
+    query_command = QueryCommand.new(validated(UserSelections.new(params)))
     query_command.perform_query
 
     format_download_results(query_command)
@@ -26,11 +23,11 @@ class DownloadController < ApplicationController
     pparams = UserSelections.normalise_array_params(params)
                             .permit(*UserSelections::PERMITTED, location: [])
     location_gss = pparams.delete('location')
-    locations = location_gss.map { |gss| Locations.lookup_gss(gss).uri }
+    locations = location_uris_for_gss(location_gss)
 
     query_commands = locations.map do |location|
       query_params = ActionController::Parameters.new(location: location).merge(pparams)
-      QueryCommand.new(UserSelections.new(query_params))
+      QueryCommand.new(validated(UserSelections.new(query_params)))
     end
 
     format_download_results(query_commands)
@@ -84,10 +81,5 @@ class DownloadController < ApplicationController
 
   def internet_explorer?
     request.env['HTTP_USER_AGENT'].match?(/msie/i)
-  end
-
-  # Check that we have the params we expect
-  def validate_params?
-    true # TODO: add validation
   end
 end

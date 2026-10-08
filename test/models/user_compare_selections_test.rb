@@ -134,6 +134,27 @@ class UserCompareSelectionsTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#valid?' do
+      it 'should be valid with the default indicator and statistic' do
+        fixture = UserCompareSelections.new(ActionController::Parameters.new({}))
+        _(fixture.valid?).must_equal(true)
+      end
+
+      it 'should report an unrecognised indicator' do
+        params = ActionController::Parameters.new(in: 'average_price')
+        fixture = UserCompareSelections.new(params)
+        _(fixture.valid?).must_equal(false)
+        _(fixture.errors).must_equal([ 'unrecognised indicator' ])
+      end
+
+      it 'should report an unrecognised statistic' do
+        params = ActionController::Parameters.new(st: 'semi-detached')
+        fixture = UserCompareSelections.new(params)
+        _(fixture.valid?).must_equal(false)
+        _(fixture.errors).must_equal([ 'unrecognised statistic' ])
+      end
+    end
+
     describe 'search' do
       it 'should return the search term' do
         params = ActionController::Parameters.new('location-term': 'womble')

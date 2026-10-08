@@ -14,7 +14,7 @@ class CompareController < ApplicationController
   private
 
   def setup_view_state
-    user_compare_selections = UserCompareSelections.new(params)
+    user_compare_selections = validated(UserCompareSelections.new(params))
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
     CompareLocationsPresenter.new(user_compare_selections, query_results)

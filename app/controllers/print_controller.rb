@@ -1,8 +1,6 @@
 # Controller for the action of generating a printable view of the data
 class PrintController < ApplicationController
   def show
-    return unless validate_params?
-
     if params[:location].is_a?(Array)
       print_multiple_locations
     else
@@ -14,8 +12,7 @@ class PrintController < ApplicationController
 
   # Create a download file for just a single location
   def print_single_location
-    user_selections = UserSelections.new(params)
-    query_command = QueryCommand.new(user_selections)
+    query_command = QueryCommand.new(validated(UserSelections.new(params)))
     query_command.perform_query
 
     format_print_results(query_command)
@@ -25,11 +22,11 @@ class PrintController < ApplicationController
     pparams = UserSelections.normalise_array_params(params)
                             .permit(*UserSelections::PERMITTED, location: [])
     location_gss = pparams.delete('location')
-    locations = location_gss.map { |gss| Locations.lookup_gss(gss).uri }
+    locations = location_uris_for_gss(location_gss)
 
     query_commands = locations.map do |location|
       query_params = ActionController::Parameters.new(location: location).merge(pparams)
-      QueryCommand.new(UserSelections.new(query_params))
+      QueryCommand.new(validated(UserSelections.new(query_params)))
     end
 
     format_print_results(query_commands)
@@ -42,10 +39,5 @@ class PrintController < ApplicationController
         render layout: 'print'
       end
     end
-  end
-
-  # Check that we have the params we expect
-  def validate_params?
-    true # TODO: add validation
   end
 end

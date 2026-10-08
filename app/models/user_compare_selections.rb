@@ -66,6 +66,18 @@ class UserCompareSelections
     [ selected_indicator ]
   end
 
+  # @return Messages describing any selected indicator or statistic we don't recognise
+  def errors
+    @errors ||= [
+      ('unrecognised indicator' unless ukhpi_data_cube.indicator(selected_indicator)),
+      ('unrecognised statistic' unless ukhpi_data_cube.statistic(selected_statistic)),
+    ].compact
+  end
+
+  def valid?
+    errors.empty?
+  end
+
   def search_term
     @search_term ||= params[:'location-term']
   end
