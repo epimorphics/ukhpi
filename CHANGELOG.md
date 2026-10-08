@@ -15,6 +15,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   shows the table instead of a 500 error. The default themes included `volume`,
   which is not a theme, and single values were silently replaced by the defaults
   [#675](https://github.com/epimorphics/ukhpi/issues/675).
+- Print, download, compare and browse-edit requests that name an indicator,
+  statistic, theme, location or date we don't recognise now get a 400 page saying
+  what wasn't understood, instead of a 500 error. Download files fall back to the
+  region URI for a region missing from the location table
+  [#676](https://github.com/epimorphics/ukhpi/issues/676).
 
 ## [2.4.0] - 2026-10-06
 
