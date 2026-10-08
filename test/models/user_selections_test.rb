@@ -71,6 +71,20 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#selected_themes' do
+      it 'should return the selected themes if they are specified' do
+        _(user_selections(thm: [ 'buyer_status' ]).selected_themes).must_equal [ 'buyer_status' ]
+      end
+
+      it 'should only default to themes that exist' do
+        cube = UkhpiDataCube.new
+
+        user_selections({}).selected_themes.each do |slug|
+          _(cube.theme(slug)).wont_be_nil
+        end
+      end
+    end
+
     describe '#from_date' do
       it 'should convert a date string to a date' do
         _(user_selections('from' => '2017-09-18').from_date.month).must_equal 9
