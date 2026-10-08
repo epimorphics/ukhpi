@@ -16,7 +16,7 @@ class UserSelections
   DEFAULT_NON_PT_INDICATORS = %w[salesVolume].freeze
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'.freeze
   DEFAULT_REGION_TYPE = 'country'.freeze
-  DEFAULT_THEMES = %w[property_type volume].freeze
+  DEFAULT_THEMES = %w[property_type].freeze
   DEFAULT_LANGUAGE = 'en'.freeze
 
   USER_PARAMS_MODEL = {
