@@ -19,6 +19,8 @@ class ErrorsController < ApplicationController
   def show
     status = Rack::Utils.status_code(request.path_info.delete_prefix('/').to_i)
     exception = request.get_header('action_dispatch.exception')
+    # The action that failed, captured before the fallback below replaces it
+    action = request.path_parameters.values_at(:controller, :action).compact.join('#').presence
 
     # The header's language switcher links with a bare params hash, which
     # `url_for` resolves against the route the request matched. A routing error
@@ -34,7 +36,7 @@ class ErrorsController < ApplicationController
       errors: exception.try(:errors) || [],
     }
 
-    instrument_internal_error(exception, status)
+    instrument_internal_error(exception, status, action)
 
     respond_to do |format|
       format.html { render 'exceptions/error_page', locals: { status: status, sentry_code: nil }, status: status }
@@ -46,12 +48,14 @@ class ErrorsController < ApplicationController
 
   # Feeds the `internal_application_error` Prometheus counter, previously
   # instrumented by ApplicationController's own exception handler.
-  def instrument_internal_error(exception, status)
+  def instrument_internal_error(exception, status, action)
     return if status < 500
 
     ActiveSupport::Notifications.instrument(
       'internal_error.application',
-      exception: { message: exception.message, status: status }
+      exception: {
+        class: exception.class.name, action: action, message: exception.message, status: status,
+      }
     )
   end
 end

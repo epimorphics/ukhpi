@@ -8,6 +8,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- The `internal_application_error` Prometheus counter's `message` label is now a
+  short generic description naming the exception class and the action that
+  raised it, such as `Unhandled NoMethodError in print#show`, rather than the
+  full error message. Messages can carry user input and made a new time series
+  per distinct error; they remain in the logs and Sentry. The label keeps its
+  name, so the existing alert rule and its message template work unchanged
+  [#677](https://github.com/epimorphics/ukhpi/issues/677).
+
 ### Fixed
 
 - Printing a data table from a link without a theme, or with single-valued `thm`,
