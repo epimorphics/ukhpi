@@ -17,6 +17,9 @@ class UserSelections
   DEFAULT_REGION = 'http://landregistry.data.gov.uk/id/region/united-kingdom'.freeze
   DEFAULT_REGION_TYPE = 'country'.freeze
   DEFAULT_THEMES = %w[property_type].freeze
+  # Not themes, but older versions of the app put them in its own links (the
+  # defaults once included `volume`), so links containing them are still accepted
+  LEGACY_THEMES = %w[volume].freeze
   DEFAULT_LANGUAGE = 'en'.freeze
 
   USER_PARAMS_MODEL = {
@@ -50,7 +53,7 @@ class UserSelections
 
   # `permit` only allows the array form of array-valued params, so `thm=property_type`
   # would be dropped and replaced by the default. Read a scalar as a one-element array
-  # instead, and a blank scalar (`in=`) as absent.
+  # instead, and a blank scalar (`in=`) as absent. Legacy themes are dropped.
   def self.normalise_array_params(params)
     params.dup.tap do |normalised|
       USER_PARAMS_MODEL.each do |key, model|
@@ -59,8 +62,19 @@ class UserSelections
 
         value.blank? ? normalised.delete(key) : normalised[key] = [ value ]
       end
+      drop_legacy_themes(normalised)
     end
   end
+
+  # Removes LEGACY_THEMES from `thm`, treating it as absent if none are left
+  def self.drop_legacy_themes(params)
+    themes = params['thm']
+    return unless themes.is_a?(Array)
+
+    themes -= LEGACY_THEMES
+    themes.empty? ? params.delete('thm') : params['thm'] = themes
+  end
+  private_class_method :drop_legacy_themes
 
   def initialize(params)
     return if defined? @params

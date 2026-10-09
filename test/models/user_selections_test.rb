@@ -103,6 +103,22 @@ class UserSelectionsTest < ActiveSupport::TestCase
       end
     end
 
+    describe '#legacy_themes' do
+      it 'should ignore the legacy volume theme alongside real themes' do
+        selections = user_selections(thm: %w[buyer_status volume])
+        _(selections.selected_themes).must_equal [ 'buyer_status' ]
+        _(selections.valid?).must_equal true
+      end
+
+      it 'should use the default themes when volume is the only theme' do
+        _(user_selections(thm: 'volume').selected_themes).must_equal UserSelections::DEFAULT_THEMES
+      end
+
+      it 'should still reject other unknown themes' do
+        _(user_selections(thm: %w[volume sales_volume]).valid?).must_equal false
+      end
+    end
+
     describe '#from_date' do
       it 'should convert a date string to a date' do
         _(user_selections('from' => '2017-09-18').from_date.month).must_equal 9

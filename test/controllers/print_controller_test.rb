@@ -48,4 +48,12 @@ class PrintControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
   end
+
+  test 'prints from a link with the legacy volume theme' do
+    get '/print', params: { 'in[]' => 'avg', 'thm[]' => %w[property_status volume],
+                            location: UK, lang: 'en', }
+
+    assert_response :success
+    assert_includes @response.body, I18n.t('theme.property_status').downcase
+  end
 end

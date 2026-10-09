@@ -30,6 +30,10 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   what wasn't understood, instead of a 500 error. Download files fall back to the
   region URI for a region missing from the location table
   [#676](https://github.com/epimorphics/ukhpi/issues/676).
+- Links containing the theme `volume`, which older versions of the app generated
+  in their own show/hide-theme links, still work: `volume` is ignored rather than
+  rejected as an unrecognised theme
+  [#687](https://github.com/epimorphics/ukhpi/issues/687).
 - An unsupported or empty `lang` param (such as `?lang=en\` or `?lang=`) is now
   ignored, and the page is shown in the browser's preferred language or English,
   instead of a plain-text 500 error
