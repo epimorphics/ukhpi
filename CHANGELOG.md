@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [2.4.1] - 2026-10-09
+
 ### Changed
 
 - The `internal_application_error` Prometheus counter's `message` label is now a
