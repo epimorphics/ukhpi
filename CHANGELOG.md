@@ -30,6 +30,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   application's JavaScript, which is loaded as a module
   [#658](https://github.com/epimorphics/ukhpi/issues/658).
 
+### Fixed
+
+- Downloads requested without a `User-Agent` header, as scripts and some bots
+  do, now succeed instead of returning a 500 error. The header was only read to
+  apply a workaround for Internet Explorer 6 to 8, which has been removed: every
+  client now gets the file's real `Content-Type` (`text/csv` or
+  `application/json`) and no longer the IE-only `text/plain`, `Pragma`,
+  `Cache-Control` and `Expires` headers
+  [#689](https://github.com/epimorphics/ukhpi/issues/689).
+
 ## [2.4.1] - 2026-10-09
 
 ### Changed

@@ -67,19 +67,7 @@ class DownloadController < ApplicationController
   end
 
   def update_response_headers(filename, mime_type)
-    if internet_explorer?
-      headers['Pragma'] = 'public'
-      headers['Content-type'] = 'text/plain'
-      headers['Cache-Control'] = 'no-cache, must-revalidate, post-check=0, pre-check=0'
-      headers['Expires'] = '0'
-    else
-      headers['Content-Type'] ||= mime_type
-    end
-
+    headers['Content-Type'] ||= mime_type
     headers['Content-Disposition'] = "attachment; filename=\"#{filename}\""
-  end
-
-  def internet_explorer?
-    request.env['HTTP_USER_AGENT'].match?(/msie/i)
   end
 end
