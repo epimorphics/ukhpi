@@ -18,6 +18,10 @@ Bundler.require(*Rails.groups)
 module Ukhpi
   # :nodoc:
   class Application < Rails::Application
+    # Framework defaults for the Rails version in use. On every Rails upgrade, run
+    # `bin/rails app:update` and move this forward: see "Upgrading Rails" in the README.
+    config.load_defaults 8.1
+
     # Set the Google Analytics ID, if available
     # This can be set in the environment variables or left as old value
     # for backwards compatibility.
@@ -77,11 +81,6 @@ module Ukhpi
     # Expected failures (404, 400, 422, ...) are already recorded by the
     # request's completed log entry, so don't also log them as exceptions.
     config.action_dispatch.log_rescued_responses = false
-
-    # Log genuine unhandled exceptions at ERROR, not FATAL. This is the Rails
-    # 7.1+ default, which this app does not get because it never calls
-    # `config.load_defaults`.
-    config.action_dispatch.debug_exception_log_level = :error
   end
 end
 
