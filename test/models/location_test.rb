@@ -1,5 +1,4 @@
 require 'test_helper'
-require 'location'
 
 # Unit tests on the Location class
 class RegionTest < ActiveSupport::TestCase
