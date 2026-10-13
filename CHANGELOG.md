@@ -22,6 +22,14 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   but uses more memory
   [#658](https://github.com/epimorphics/ukhpi/issues/658).
 
+### Removed
+
+- The Internet Explorer 8 shims (`html5shiv`, `es5-shim`, `es5-sham` and a
+  global `lodash`, loaded from CDNs inside an `[if lt IE 9]` comment) are no
+  longer included in the page head. No version of Internet Explorer runs the
+  application's JavaScript, which is loaded as a module
+  [#658](https://github.com/epimorphics/ukhpi/issues/658).
+
 ## [2.4.1] - 2026-10-09
 
 ### Changed
