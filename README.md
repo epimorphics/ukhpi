@@ -339,6 +339,24 @@ Metrics for the presentation hosts of all HMLR apps are in
 environment has behaved over time and to line up a problem with when it
 started. Ask Ops for access.
 
+## Upgrading Rails
+
+Bumping the `rails` gem is only half of an upgrade. Each time, also:
+
+1. Run `./bin/rails app:update` and review what it proposes file by file. It
+   offers to overwrite most of `bin/` and `config/` with the stock templates:
+   keep the genuinely new settings and reject anything that replaces
+   app-specific configuration (answer `d` at the prompt to see the diff).
+2. Use the `config/initializers/new_framework_defaults_X_Y.rb` it generates to
+   turn the new framework defaults on a few at a time, running the tests and
+   comparing response headers (`curl -I`) as you go.
+3. Once they are all on, move `config.load_defaults` in `config/application.rb`
+   forward to the new version and delete that initializer.
+
+Without the last step the app keeps running on the previous version's
+defaults. That is how it came to be on Rails 8.1 with the defaults of Rails 4
+([#658](https://github.com/epimorphics/ukhpi/issues/658)).
+
 ## Dependency maintenance
 
 ```bash
