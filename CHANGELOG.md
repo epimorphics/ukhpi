@@ -8,6 +8,20 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- The app now runs on the Rails 8.1 framework defaults (`config.load_defaults
+  8.1`). Until now it had never loaded any, so it ran on the oldest default for
+  every setting. Visible effects: responses send `X-XSS-Protection: 0` and no
+  longer send `X-Download-Options`; HTML pages send a `Link` header preloading
+  the application script and stylesheets; the session cookie is `SameSite=Lax`
+  and is encrypted differently, so cookies issued before the upgrade are
+  discarded (they hold only a CSRF token and flash messages); the location
+  search form no longer adds `utf8=✓` to its URLs; JSON responses no longer
+  escape `<`, `>` and `&`; and YJIT is enabled in production, which is faster
+  but uses more memory
+  [#658](https://github.com/epimorphics/ukhpi/issues/658).
+
 ## [2.4.1] - 2026-10-09
 
 ### Changed
