@@ -25,13 +25,3 @@
     %link{ rel: 'canonical', href: '//#{request.host_with_port}#{@preferences.as_path(:view)}' }
 
   %link{ rel:'license', href: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
-
-  /[if lt IE 9]
-    -# No preload `Link` headers for these: every browser would fetch them, not just old IE
-    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js',
-      '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js',
-      '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js',
-      '//cdn.jsdelivr.net/lodash/4.9.0/lodash.js',
-      preload_links_header: false
-    :javascript
-      window.isIE8 = true;
