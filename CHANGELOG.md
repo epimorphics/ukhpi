@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [2.4.2] - 2026-10-13
+
 ### Changed
 
 - The app now runs on the Rails 8.1 framework defaults (`config.load_defaults
