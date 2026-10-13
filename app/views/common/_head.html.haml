@@ -15,7 +15,10 @@
   - if Rails.env.production? || Rails.logger.debug?
     = vite_javascript_tag 'cookie', defer: true
     = csrf_meta_tags
-  = vite_javascript_tag 'application'
+  -#
+    `media` applies to the stylesheets the entrypoint imports. Rails 7.0 stopped
+    defaulting stylesheet links to `media="screen"`, so keep it explicit.
+  = vite_javascript_tag 'application', media: 'screen'
   = vite_stylesheet_tag 'application', media: 'all'
 
   - if @preferences
@@ -24,9 +27,11 @@
   %link{ rel:'license', href: 'http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3' }
 
   /[if lt IE 9]
-    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js'
-    = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js'
-    = javascript_include_tag '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js'
-    = javascript_include_tag '//cdn.jsdelivr.net/lodash/4.9.0/lodash.js'
+    -# No preload `Link` headers for these: every browser would fetch them, not just old IE
+    = javascript_include_tag '//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js',
+      '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-shim.js',
+      '//cdn.jsdelivr.net/es5.shim/4.5.7/es5-sham.js',
+      '//cdn.jsdelivr.net/lodash/4.9.0/lodash.js',
+      preload_links_header: false
     :javascript
       window.isIE8 = true;
