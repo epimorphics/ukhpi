@@ -8,6 +8,14 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- The location search no longer stops updating its suggestions when the search
+  text contains characters such as `(` or `*`. The text was read as a regular
+  expression, so these characters raised a JavaScript error on every keystroke;
+  it is now matched literally
+  [#500](https://github.com/epimorphics/ukhpi/issues/500).
+
 ## [2.4.2] - 2026-10-13
 
 ### Changed

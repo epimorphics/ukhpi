@@ -81,7 +81,7 @@ export function locationsNamed (locationName) {
     return null
   }
 
-  const regex = new RegExp(locationName, 'i')
+  const regex = new RegExp(_.escapeRegExp(locationName), 'i')
   const locale = window.ukhpi.locale
   const locationsLocale = locationsList.filter((location) => location.labels[locale] && location.labels[locale].match(regex))
   const locationsEn = locationsList.filter((location) => location.labels.en.match(regex))

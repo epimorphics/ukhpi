@@ -46,6 +46,16 @@ test.describe('Location modal', () => {
       await expect(locationBtn).not.toHaveText(/England$/)
     })
 
+    test('search text with regex characters is matched literally', async ({ page }) => {
+      const errors: Error[] = []
+      page.on('pageerror', (error) => errors.push(error))
+
+      await modal.open()
+      await modal.search('Bi(')
+      await expect(page.getByText(/no locations match 'Bi\('/)).toBeVisible()
+      expect(errors).toEqual([])
+    })
+
     test('location modal can be reopened after selection', async ({ page }) => {
       await modal.open()
       await modal.search('Bi')
