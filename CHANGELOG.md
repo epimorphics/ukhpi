@@ -8,6 +8,7 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+<<<<<<< HEAD
 ### Fixed
 
 - The location search no longer stops updating its suggestions when the search
@@ -15,6 +16,23 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   expression, so these characters raised a JavaScript error on every keystroke;
   it is now matched literally
   [#500](https://github.com/epimorphics/ukhpi/issues/500).
+=======
+### Changed
+
+- Data API log entries now follow the logging standard. Failures are logged at
+  WARN rather than ERROR, so a request that fails because of the API has one
+  ERROR entry, its completed entry. The call is described in `upstream_*`
+  fields: `upstream_url` (the API's address), `upstream_method`,
+  `upstream_path`, `upstream_status` and `upstream_time`. Messages follow
+  epilog_rails' format, such as `API GET /landregistry/id/ukhpi?… (503) in
+  0.012s`, with times in seconds. A connection failure no longer reports a
+  status, since no response arrived
+  [#699](https://github.com/epimorphics/ukhpi/issues/699),
+  [#696](https://github.com/epimorphics/ukhpi/issues/696). **Ops:** Kibana
+  searches on `log_status`, `log_path` or `log_request_time` for API entries
+  should use the `log_upstream_*` fields instead. No metric, label or alert
+  has changed.
+>>>>>>> 7f8c67e (fix(logging): log data API failures as warnings with upstream fields)
 
 ## [2.4.2] - 2026-10-13
 

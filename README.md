@@ -138,6 +138,13 @@ and `ApiPrometheusSubscriber` records the matching metrics. Both listen to the
 not log API calls themselves: doing so produces duplicate entries that drift out
 of step with the gem's behaviour.
 
+API log entries describe the call to the API in `upstream_*` fields
+(`upstream_url`, `upstream_method`, `upstream_path`, `upstream_status`,
+`upstream_time`), so `status`, `path` and `request_time` always describe the
+incoming request. API failures are logged at WARN: when the request fails as a
+result, its completed entry is the one ERROR. To follow one request through
+ukhpi and the data API, search Kibana for its `log_request_id`.
+
 `config/initializers/subscribers.rb` references each subscriber class on boot,
 and is load-bearing. `attach_to` only runs when the class is first loaded,
 nothing else references these classes by name, and eager loading is off in
