@@ -73,9 +73,17 @@ module Ukhpi
     #
     # This map is class to status and is read once at boot, so a status that varies
     # per call site needs its own exception class rather than an attribute.
+    #
+    # Failures of the data API are handled errors too: the user gets an honest
+    # gateway status rather than a 500, and the failure is not counted as an
+    # internal error. These are the only exceptions `data_services_api` raises,
+    # and it records each one in the API metrics before raising it, so the API
+    # alerts still fire.
     config.action_dispatch.rescue_responses.merge!(
       'BadRequestError' => :bad_request,
-      'UpstreamError' => :internal_server_error
+      'DataServicesApi::ServiceException' => :bad_gateway,
+      'Faraday::ConnectionFailed' => :bad_gateway,
+      'Faraday::TimeoutError' => :gateway_timeout
     )
 
     # Expected failures (404, 400, 422, ...) are already recorded by the

@@ -32,6 +32,15 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   expression, so these characters raised a JavaScript error on every keystroke;
   it is now matched literally
   [#500](https://github.com/epimorphics/ukhpi/issues/500).
+- Data API failures are now handled errors. Users get a "Data service
+  unavailable" page with `502 Bad Gateway` (`504 Gateway Timeout` for a
+  timeout) instead of a 500 that blamed the application. **Ops:** these
+  failures no longer increment `internal_application_error`, so an API outage
+  raises only the `APIConnectionError` or `APIServiceException` alert, not
+  `ApplicationInternalError` as well. `internal_application_error` now counts
+  only unhandled exceptions (500s). No metric or label has changed. The
+  failures are no longer sent to Sentry either, since the API metrics and logs
+  already record them.
 
 ## [2.4.2] - 2026-10-13
 

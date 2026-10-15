@@ -72,8 +72,12 @@ class ErrorsController < ApplicationController
 
   # Feeds the `internal_application_error` Prometheus counter, previously
   # instrumented by ApplicationController's own exception handler.
+  #
+  # Only a 500 counts: that is the status for an exception nothing handled. Other
+  # 5xx statuses come from handled errors in `rescue_responses`, such as a data
+  # API failure, which the API metrics already alert on.
   def instrument_internal_error(exception, status, action)
-    return if status < 500
+    return unless status == 500
 
     ActiveSupport::Notifications.instrument(
       'internal_error.application',

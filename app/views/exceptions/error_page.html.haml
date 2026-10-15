@@ -26,6 +26,15 @@
       Please check the spelling of the page address (URL). If you require further
       assistance, please see the contact details below.
 
+  - elsif [ 502, 504 ].include?(status)
+    %h1.o-heading--1 Data service unavailable
+
+    %p
+      We're sorry, but the service that provides the house price data did not
+      respond as expected, so we could not complete your request. This is usually
+      temporary: please try again in a few minutes. If the problem persists, please
+      use one of the contact methods below to let us know.
+
   - else
     %h1.o-heading--1 Application error
 

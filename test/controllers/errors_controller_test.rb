@@ -97,6 +97,53 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     assert_empty events
   end
 
+  test 'a data API error renders the 502 page' do
+    QueryCommand.any_instance.stubs(:perform_query)
+                .raises(DataServicesApi::ServiceException.new('Internal Server Error', 500))
+
+    get '/browse'
+
+    assert_response :bad_gateway
+    assert_includes @response.body, 'Data service unavailable'
+  end
+
+  test 'a data API connection failure renders the 502 page' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(Faraday::ConnectionFailed.new('Connection refused'))
+
+    get '/browse'
+
+    assert_response :bad_gateway
+    assert_includes @response.body, 'Data service unavailable'
+  end
+
+  test 'a data API timeout renders the 504 page' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(Faraday::TimeoutError.new('timeout'))
+
+    get '/browse'
+
+    assert_response :gateway_timeout
+    assert_includes @response.body, 'Data service unavailable'
+  end
+
+  test 'a data API failure is not counted as an internal error' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(Faraday::ConnectionFailed.new('Connection refused'))
+    events = []
+    callback = ->(*, payload) { events << payload }
+
+    ActiveSupport::Notifications.subscribed(callback, 'internal_error.application') { get '/browse' }
+
+    assert_empty events
+  end
+
+  test 'a data API failure from a JSON request gets the gateway status' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(Faraday::ConnectionFailed.new('Connection refused'))
+
+    get '/browse', headers: { 'Accept' => 'application/json' }
+
+    assert_response :bad_gateway
+    assert_equal 'Bad Gateway', @response.body.strip
+  end
+
   test 'a malformed query string renders the 400 page' do
     # Set directly: the test helper would reject this URL before it reached the app
     get '/', env: { 'QUERY_STRING' => 'sk=%%_subscriberKey%%' }

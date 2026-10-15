@@ -14,6 +14,11 @@ Rails.application.reloader.to_prepare do
       'ActionController::BadRequest',
       'ActionController::RoutingError',
       'ActiveRecord::RecordNotFound',
+      # Data API failures are handled (see `rescue_responses` in
+      # config/application.rb) and alerted on through the API metrics.
+      'DataServicesApi::ServiceException',
+      'Faraday::ConnectionFailed',
+      'Faraday::TimeoutError',
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)
