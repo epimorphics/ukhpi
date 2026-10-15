@@ -2,16 +2,24 @@ require 'test_helper'
 
 # Unit tests on the ApiRequestLogSubscriber class
 class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
+  API_URL = 'http://data-api:8080'.freeze
+  QUERY_PATH = '/landregistry/id/ukhpi?_limit=1'.freeze
+
   describe 'ApiRequestLogSubscriber' do
+    before do
+      Rails.application.config.stubs(:api_service_url).returns(API_URL)
+    end
+
     describe '#request' do
       it 'should log the method and full path including the query string' do
         event = stub(payload: { path: '/landregistry/id/ukhpi', method: 'GET', query_string: '_limit=1' })
 
         Rails.logger.expects(:info).with(
           {
-            message: 'Calling API: GET /landregistry/id/ukhpi?_limit=1',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi?_limit=1',
+            message: "API GET #{QUERY_PATH} sent",
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: QUERY_PATH,
             request_status: 'processing',
           }
         )
@@ -24,9 +32,26 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'Calling API: POST /landregistry/id/ukhpi',
-            method: 'POST',
-            path: '/landregistry/id/ukhpi',
+            message: 'API POST /landregistry/id/ukhpi sent',
+            upstream_url: API_URL,
+            upstream_method: 'POST',
+            upstream_path: '/landregistry/id/ukhpi',
+            request_status: 'processing',
+          }
+        )
+
+        ApiRequestLogSubscriber.new.request(event)
+      end
+
+      it 'should log GET when the gem gives no method' do
+        event = stub(payload: { path: '/landregistry/id/ukhpi', query_string: '_limit=1' })
+
+        Rails.logger.expects(:info).with(
+          {
+            message: "API GET #{QUERY_PATH} sent",
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: QUERY_PATH,
             request_status: 'processing',
           }
         )
@@ -36,7 +61,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
     end
 
     describe '#response' do
-      it 'should log the row count, path and timing for a successful response' do
+      it 'should log the status, row count, path and timing for a successful response' do
         url = stub(path: '/landregistry/id/ukhpi', query: 'refRegion=uk&_limit=1')
         env = stub(url: url, method: :get)
         response = stub(env: env, status: 200, body: [ { 'refMonth' => '2024-01' } ])
@@ -44,13 +69,14 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API returned 1 row, time taken: 1233 ms',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi?refRegion=uk&_limit=1',
-            request_status: 'processing',
-            request_time: 1.233,
+            message: 'API GET /landregistry/id/ukhpi?refRegion=uk&_limit=1 (200) returned 1 row in 1.233s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi?refRegion=uk&_limit=1',
+            upstream_status: 200,
+            upstream_time: 1.233,
             returned_rows: 1,
-            status: 200,
+            request_status: 'processing',
           }
         )
 
@@ -65,13 +91,14 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API returned 2 rows, time taken: 42 ms',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi',
-            request_status: 'processing',
-            request_time: 0.042,
+            message: 'API GET /landregistry/id/ukhpi (200) returned 2 rows in 0.042s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_status: 200,
+            upstream_time: 0.042,
             returned_rows: 2,
-            status: 200,
+            request_status: 'processing',
           }
         )
 
@@ -86,12 +113,13 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API responded, time taken: 5 ms',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi',
+            message: 'API GET /landregistry/id/ukhpi (200) in 0.005s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_status: 200,
+            upstream_time: 0.005,
             request_status: 'processing',
-            request_time: 0.005,
-            status: 200,
           }
         )
 
@@ -114,10 +142,13 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'Retrying API request after Faraday::ConnectionFailed: ' \
-                     'Failed to open TCP connection to data-api:8080 (attempt 2, retrying in 1.08s)',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi',
+            message: 'API GET /landregistry/id/ukhpi raised Faraday::ConnectionFailed ' \
+                     '(Failed to open TCP connection to data-api:8080), retrying in 1.08s (attempt 2)',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            retry_count: 2,
+            exception: 'Faraday::ConnectionFailed',
             request_status: 'processing',
           }
         )
@@ -127,15 +158,25 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
     end
 
     describe '#connection_failure' do
-      it 'should log an error' do
+      it 'should log a warning with no status, ignoring the one the gem sends' do
         exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
-        event = stub(payload: { exception: exception })
+        event = stub(
+          payload: {
+            exception: exception, path: '/landregistry/id/ukhpi', query_string: '_limit=1', duration: 10, status: 503,
+          }
+        )
 
-        Rails.logger.expects(:error).with(
+        Rails.logger.expects(:error).never
+        Rails.logger.expects(:warn).with(
           {
-            message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
+            message: "API GET #{QUERY_PATH} raised Faraday::ConnectionFailed " \
+                     '(Failed to open TCP connection to data-api:8080) after 0.01s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: QUERY_PATH,
+            upstream_time: 0.01,
+            exception: 'Faraday::ConnectionFailed',
             request_status: 'processing',
-            status: 503,
           }
         )
 
@@ -144,19 +185,81 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
     end
 
     describe '#service_exception' do
-      it 'should log an error' do
-        exception = StandardError.new('Unexpected response from data-api')
-        event = stub(payload: { exception: exception })
+      it 'should log a warning with the status the API returned' do
+        exception = DataServicesApi::ServiceException.new('the server responded with status 503', 503)
+        event = stub(
+          payload: {
+            exception: exception, path: '/landregistry/id/ukhpi', query_string: '_limit=1', duration: 12, status: 503,
+          }
+        )
 
-        Rails.logger.expects(:error).with(
+        Rails.logger.expects(:error).never
+        Rails.logger.expects(:warn).with(
           {
-            message: "API service exception: #{exception.message} - StandardError",
+            message: "API GET #{QUERY_PATH} (503) in 0.012s",
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: QUERY_PATH,
+            upstream_status: 503,
+            upstream_time: 0.012,
+            exception: 'DataServicesApi::ServiceException',
             request_status: 'processing',
-            status: 502,
           }
         )
 
         ApiRequestLogSubscriber.new.service_exception(event)
+      end
+
+      it 'should describe the exception when the API gave no status' do
+        exception = DataServicesApi::ServiceException.new('unexpected token', nil)
+        event = stub(
+          payload: {
+            exception: exception, path: '/landregistry/id/ukhpi', query_string: nil, duration: 12, status: nil,
+          }
+        )
+
+        Rails.logger.expects(:warn).with(
+          {
+            message: 'API GET /landregistry/id/ukhpi raised DataServicesApi::ServiceException ' \
+                     '(unexpected token) after 0.012s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_time: 0.012,
+            exception: 'DataServicesApi::ServiceException',
+            request_status: 'processing',
+          }
+        )
+
+        ApiRequestLogSubscriber.new.service_exception(event)
+      end
+    end
+
+    describe 'upstream_url' do
+      def logged_upstream_url(api_service_url)
+        Rails.application.config.stubs(:api_service_url).returns(api_service_url)
+        logged = nil
+        Rails.logger.stubs(:info).with { |entry| logged = entry }
+
+        ApiRequestLogSubscriber.new.request(stub(payload: { path: '/landregistry/id/ukhpi' }))
+        logged.fetch(:upstream_url, :absent)
+      end
+
+      it 'should be the scheme, host and port of the configured API' do
+        assert_equal 'http://data-api:8080', logged_upstream_url('http://data-api:8080/some/path')
+      end
+
+      it 'should leave out the default port' do
+        assert_equal 'https://data-api.example', logged_upstream_url('https://data-api.example:443/')
+      end
+
+      it 'should be absent when no API is configured' do
+        assert_equal :absent, logged_upstream_url(nil)
+      end
+
+      it 'should be the configured value when it cannot be parsed' do
+        assert_equal 'http://local host:8888', logged_upstream_url('http://local host:8888')
+        assert_equal 'localhost:8888', logged_upstream_url('localhost:8888')
       end
     end
 
@@ -168,9 +271,10 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       it 'invokes #request when request.data_services_api fires' do
         Rails.logger.expects(:info).with(
           {
-            message: 'Calling API: GET /landregistry/id/ukhpi?_limit=1',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi?_limit=1',
+            message: "API GET #{QUERY_PATH} sent",
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: QUERY_PATH,
             request_status: 'processing',
           }
         )
@@ -178,7 +282,6 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         ActiveSupport::Notifications.instrument(
           'request.data_services_api',
           path: '/landregistry/id/ukhpi',
-          method: 'GET',
           query_string: '_limit=1'
         )
       end
@@ -190,13 +293,14 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API returned 1 row, time taken: 10 ms',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi',
-            request_status: 'processing',
-            request_time: 0.01,
+            message: 'API GET /landregistry/id/ukhpi (200) returned 1 row in 0.01s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_status: 200,
+            upstream_time: 0.01,
             returned_rows: 1,
-            status: 200,
+            request_status: 'processing',
           }
         )
 
@@ -208,10 +312,13 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'Retrying API request after Faraday::ConnectionFailed: ' \
-                     'Failed to open TCP connection to data-api:8080 (attempt 1, retrying in 0.5s)',
-            method: 'GET',
-            path: '/landregistry/id/ukhpi',
+            message: 'API GET /landregistry/id/ukhpi raised Faraday::ConnectionFailed ' \
+                     '(Failed to open TCP connection to data-api:8080), retrying in 0.5s (attempt 1)',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            retry_count: 1,
+            exception: 'Faraday::ConnectionFailed',
             request_status: 'processing',
           }
         )
@@ -227,31 +334,46 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       end
 
       it 'invokes #connection_failure when connection_failure.data_services_api fires' do
-        exception = Faraday::ConnectionFailed.new('Failed to open TCP connection to data-api:8080')
+        exception = Faraday::TimeoutError.new('timeout')
 
-        Rails.logger.expects(:error).with(
+        Rails.logger.expects(:warn).with(
           {
-            message: "API connection failure: #{exception.message} - Faraday::ConnectionFailed",
+            message: 'API GET /landregistry/id/ukhpi raised Faraday::TimeoutError (timeout) after 0.5s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_time: 0.5,
+            exception: 'Faraday::TimeoutError',
             request_status: 'processing',
-            status: 503,
           }
         )
 
-        ActiveSupport::Notifications.instrument('connection_failure.data_services_api', exception: exception)
+        ActiveSupport::Notifications.instrument(
+          'connection_failure.data_services_api',
+          exception: exception, path: '/landregistry/id/ukhpi', query_string: nil, duration: 500, status: 503
+        )
       end
 
       it 'invokes #service_exception when service_exception.data_services_api fires' do
-        exception = StandardError.new('Unexpected response from data-api')
+        exception = DataServicesApi::ServiceException.new('the server responded with status 500', 500)
 
-        Rails.logger.expects(:error).with(
+        Rails.logger.expects(:warn).with(
           {
-            message: "API service exception: #{exception.message} - StandardError",
+            message: 'API GET /landregistry/id/ukhpi (500) in 0.02s',
+            upstream_url: API_URL,
+            upstream_method: 'GET',
+            upstream_path: '/landregistry/id/ukhpi',
+            upstream_status: 500,
+            upstream_time: 0.02,
+            exception: 'DataServicesApi::ServiceException',
             request_status: 'processing',
-            status: 502,
           }
         )
 
-        ActiveSupport::Notifications.instrument('service_exception.data_services_api', exception: exception)
+        ActiveSupport::Notifications.instrument(
+          'service_exception.data_services_api',
+          exception: exception, path: '/landregistry/id/ukhpi', query_string: nil, duration: 20, status: 500
+        )
       end
     end
   end
