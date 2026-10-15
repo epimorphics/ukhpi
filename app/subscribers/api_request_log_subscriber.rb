@@ -2,19 +2,10 @@
 # instrumentation. Service objects should not log API calls themselves: doing so
 # duplicates these entries and drifts out of step with the gem's retry behaviour.
 #
-# Each entry describes the call to the API, so its values go in `upstream_*`
-# fields: epilog_rails uses `status`, `path` and `request_time` for the incoming
-# request, and a field must mean the same thing on every line. request_status is
-# always 'processing': the call is a step in handling the incoming request, whose
-# received and completed entries epilog_rails logs.
-#
-# Messages are plain sentences an operator can read without the fields: what
-# happened, to which call, with the status, the time in seconds and the
-# exception's own text. Class names stay in the `exception` field.
-#
-# Failures are WARN, not ERROR. Whoever handles a failure decides whether it is
-# fatal, and this subscriber cannot know whether the request will recover. When it
-# does not, epilog_rails' completed entry is the one ERROR for the request.
+# The API's values go in `upstream_*` fields, so that `status`, `path` and
+# `request_time` keep meaning the incoming request. Failures are WARN: this
+# subscriber can't know whether the request will recover, so the ERROR belongs to
+# whatever reports the request's outcome.
 class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   attach_to :data_services_api
 
@@ -71,8 +62,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   end
 
   # The API could not be reached, or did not answer in time, after any retries.
-  # No response arrived, so no status is logged: the gem's payload carries a
-  # fixed 503 that the API never sent.
+  # No response arrived, so no status is logged, whatever the payload says.
   def connection_failure(event)
     call = method_and_path(event.payload)
     time = seconds(event.payload[:duration])
@@ -123,14 +113,11 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     }
   end
 
-  # The call, as it appears in messages
   def method_and_path(payload)
     "#{upstream_method(payload)} #{path_with_query(payload)}"
   end
 
-  # Only the retry event carries the method. The others can fall back to GET
-  # because the gem sends nothing else: `perform_request` is only called through
-  # `conn.get`.
+  # The gem only makes GET requests, and only its retry event says so
   def upstream_method(payload)
     payload[:method] || 'GET'
   end
@@ -139,8 +126,8 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     payload[:query_string].present? ? "#{payload[:path]}?#{payload[:query_string]}" : payload[:path]
   end
 
-  # The scheme, host and port of the configured API. A malformed URL is logged as
-  # configured rather than raising: logging must not be what breaks the request.
+  # Scheme, host and port. A malformed URL is logged as configured: logging must
+  # not raise.
   def upstream_url
     url = Rails.application.config.api_service_url
     return if url.blank?
