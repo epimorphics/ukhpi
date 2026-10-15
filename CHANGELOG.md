@@ -23,10 +23,11 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   WARN rather than ERROR, so a request that fails because of the API has one
   ERROR entry, its completed entry. The call is described in `upstream_*`
   fields: `upstream_url` (the API's address), `upstream_method`,
-  `upstream_path`, `upstream_status` and `upstream_time`. Messages follow
-  epilog_rails' format, such as `API GET /landregistry/id/ukhpi?… (503) in
-  0.012s`, with times in seconds. A connection failure no longer reports a
-  status, since no response arrived
+  `upstream_path`, `upstream_status` and `upstream_time`. Messages are plain
+  sentences that include the method, path, status and time in seconds, such as
+  `API returned an error for GET /landregistry/id/ukhpi?… (status 503,
+  0.012s)`. A connection failure no longer reports a status, since no response
+  arrived
   [#699](https://github.com/epimorphics/ukhpi/issues/699),
   [#696](https://github.com/epimorphics/ukhpi/issues/696). **Ops:** Kibana
   searches on `log_status`, `log_path` or `log_request_time` for API entries

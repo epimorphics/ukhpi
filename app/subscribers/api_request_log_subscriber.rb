@@ -6,8 +6,11 @@
 # fields: epilog_rails uses `status`, `path` and `request_time` for the incoming
 # request, and a field must mean the same thing on every line. request_status is
 # always 'processing': the call is a step in handling the incoming request, whose
-# received and completed entries epilog_rails logs. Messages follow the same
-# shape as epilog_rails' entries, with times in seconds.
+# received and completed entries epilog_rails logs.
+#
+# Messages are plain sentences an operator can read without the fields: what
+# happened, to which call, with the status, the time in seconds and the
+# exception's own text. Class names stay in the `exception` field.
 #
 # Failures are WARN, not ERROR. Whoever handles a failure decides whether it is
 # fatal, and this subscriber cannot know whether the request will recover. When it
@@ -18,7 +21,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   def request(event)
     Rails.logger.info(
       {
-        message: "API #{method_and_path(event.payload)} sent",
+        message: "Calling API: #{method_and_path(event.payload)}",
         **upstream_call(event.payload),
         request_status: 'processing',
       }.compact
@@ -34,11 +37,11 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     # Only array bodies have a row count; an explain query returns a Hash, and
     # claiming "0 rows" for one would be misleading.
     returned_rows = response.body.size if response.body.is_a?(Array)
-    rows = " returned #{returned_rows} row#{'s' unless returned_rows == 1}" if returned_rows
+    outcome = returned_rows ? "returned #{returned_rows} row#{'s' unless returned_rows == 1} for" : 'responded to'
 
     Rails.logger.info(
       {
-        message: "API #{method} #{path} (#{response.status})#{rows} in #{time}s",
+        message: "API #{outcome} #{method} #{path} (status #{response.status}, #{time}s)",
         upstream_url: upstream_url,
         upstream_method: method,
         upstream_path: path,
@@ -56,8 +59,9 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
 
     Rails.logger.warn(
       {
-        message: "API #{method_and_path(event.payload)} raised #{exception.class.name} (#{exception.message}), " \
-                 "retrying in #{event.payload[:will_retry_in].round(2)}s (attempt #{event.payload[:retry_count]})",
+        message: "Retrying API request #{method_and_path(event.payload)} " \
+                 "in #{event.payload[:will_retry_in].round(2)}s (attempt #{event.payload[:retry_count]}): " \
+                 "#{exception.message}",
         **upstream_call(event.payload),
         retry_count: event.payload[:retry_count],
         exception: exception.class.name,
@@ -70,32 +74,42 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
   # No response arrived, so no status is logged: the gem's payload carries a
   # fixed 503 that the API never sent.
   def connection_failure(event)
-    log_failure(event, status: nil)
+    call = method_and_path(event.payload)
+    time = seconds(event.payload[:duration])
+    exception = event.payload[:exception]
+    message = if exception.is_a?(Faraday::TimeoutError)
+                "API did not respond in time to #{call} (#{time}s): #{exception.message}"
+    else
+                "Could not connect to the API for #{call} (#{time}s): #{exception.message}"
+    end
+
+    log_failure(event, message, status: nil)
   end
 
   # The API answered, but with an error status or a body that could not be read
   def service_exception(event)
-    log_failure(event, status: event.payload[:status])
+    call = method_and_path(event.payload)
+    time = seconds(event.payload[:duration])
+    status = event.payload[:status]
+    message = if status
+                "API returned an error for #{call} (status #{status}, #{time}s)"
+    else
+                "API response to #{call} could not be read (#{time}s): #{event.payload[:exception].message}"
+    end
+
+    log_failure(event, message, status: status)
   end
 
   private
 
-  def log_failure(event, status:)
-    exception = event.payload[:exception]
-    time = seconds(event.payload[:duration])
-    message = if status
-                "API #{method_and_path(event.payload)} (#{status}) in #{time}s"
-    else
-                "API #{method_and_path(event.payload)} raised #{exception.class.name} (#{exception.message}) after #{time}s"
-    end
-
+  def log_failure(event, message, status:)
     Rails.logger.warn(
       {
         message: message,
         **upstream_call(event.payload),
         upstream_status: status,
-        upstream_time: time,
-        exception: exception.class.name,
+        upstream_time: seconds(event.payload[:duration]),
+        exception: event.payload[:exception].class.name,
         request_status: 'processing',
       }.compact
     )
@@ -109,7 +123,7 @@ class ApiRequestLogSubscriber < ActiveSupport::Subscriber
     }
   end
 
-  # The method and path, as epilog_rails gives them for the incoming request
+  # The call, as it appears in messages
   def method_and_path(payload)
     "#{upstream_method(payload)} #{path_with_query(payload)}"
   end

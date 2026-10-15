@@ -16,7 +16,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: "API GET #{QUERY_PATH} sent",
+            message: "Calling API: GET #{QUERY_PATH}",
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: QUERY_PATH,
@@ -32,7 +32,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API POST /landregistry/id/ukhpi sent',
+            message: 'Calling API: POST /landregistry/id/ukhpi',
             upstream_url: API_URL,
             upstream_method: 'POST',
             upstream_path: '/landregistry/id/ukhpi',
@@ -48,7 +48,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: "API GET #{QUERY_PATH} sent",
+            message: "Calling API: GET #{QUERY_PATH}",
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: QUERY_PATH,
@@ -69,7 +69,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API GET /landregistry/id/ukhpi?refRegion=uk&_limit=1 (200) returned 1 row in 1.233s',
+            message: 'API returned 1 row for GET /landregistry/id/ukhpi?refRegion=uk&_limit=1 (status 200, 1.233s)',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi?refRegion=uk&_limit=1',
@@ -91,7 +91,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API GET /landregistry/id/ukhpi (200) returned 2 rows in 0.042s',
+            message: 'API returned 2 rows for GET /landregistry/id/ukhpi (status 200, 0.042s)',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -113,7 +113,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API GET /landregistry/id/ukhpi (200) in 0.005s',
+            message: 'API responded to GET /landregistry/id/ukhpi (status 200, 0.005s)',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -142,8 +142,8 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'API GET /landregistry/id/ukhpi raised Faraday::ConnectionFailed ' \
-                     '(Failed to open TCP connection to data-api:8080), retrying in 1.08s (attempt 2)',
+            message: 'Retrying API request GET /landregistry/id/ukhpi in 1.08s (attempt 2): ' \
+                     'Failed to open TCP connection to data-api:8080',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -169,8 +169,8 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).never
         Rails.logger.expects(:warn).with(
           {
-            message: "API GET #{QUERY_PATH} raised Faraday::ConnectionFailed " \
-                     '(Failed to open TCP connection to data-api:8080) after 0.01s',
+            message: "Could not connect to the API for GET #{QUERY_PATH} (0.01s): " \
+                     'Failed to open TCP connection to data-api:8080',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: QUERY_PATH,
@@ -196,7 +196,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
         Rails.logger.expects(:error).never
         Rails.logger.expects(:warn).with(
           {
-            message: "API GET #{QUERY_PATH} (503) in 0.012s",
+            message: "API returned an error for GET #{QUERY_PATH} (status 503, 0.012s)",
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: QUERY_PATH,
@@ -220,8 +220,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'API GET /landregistry/id/ukhpi raised DataServicesApi::ServiceException ' \
-                     '(unexpected token) after 0.012s',
+            message: 'API response to GET /landregistry/id/ukhpi could not be read (0.012s): unexpected token',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -271,7 +270,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
       it 'invokes #request when request.data_services_api fires' do
         Rails.logger.expects(:info).with(
           {
-            message: "API GET #{QUERY_PATH} sent",
+            message: "Calling API: GET #{QUERY_PATH}",
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: QUERY_PATH,
@@ -293,7 +292,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:info).with(
           {
-            message: 'API GET /landregistry/id/ukhpi (200) returned 1 row in 0.01s',
+            message: 'API returned 1 row for GET /landregistry/id/ukhpi (status 200, 0.01s)',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -312,8 +311,8 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'API GET /landregistry/id/ukhpi raised Faraday::ConnectionFailed ' \
-                     '(Failed to open TCP connection to data-api:8080), retrying in 0.5s (attempt 1)',
+            message: 'Retrying API request GET /landregistry/id/ukhpi in 0.5s (attempt 1): ' \
+                     'Failed to open TCP connection to data-api:8080',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -338,7 +337,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'API GET /landregistry/id/ukhpi raised Faraday::TimeoutError (timeout) after 0.5s',
+            message: 'API did not respond in time to GET /landregistry/id/ukhpi (0.5s): timeout',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
@@ -359,7 +358,7 @@ class ApiRequestLogSubscriberTest < ActiveSupport::TestCase
 
         Rails.logger.expects(:warn).with(
           {
-            message: 'API GET /landregistry/id/ukhpi (500) in 0.02s',
+            message: 'API returned an error for GET /landregistry/id/ukhpi (status 500, 0.02s)',
             upstream_url: API_URL,
             upstream_method: 'GET',
             upstream_path: '/landregistry/id/ukhpi',
