@@ -37,6 +37,13 @@ class LatestValuesCommandTest < ActiveSupport::TestCase
         _(LatestValuesCommand.new.perform_query(service)).must_equal apology
       end
 
+      it 'degrades to the apology message on a timeout' do
+        service = stub
+        service.expects(:query).raises(Faraday::TimeoutError.new('timeout'))
+
+        _(LatestValuesCommand.new.perform_query(service)).must_equal apology
+      end
+
       it 'does not log the failure itself, since ApiRequestLogSubscriber does' do
         service = stub
         service.expects(:query).raises(Faraday::ConnectionFailed.new('Connection refused'))

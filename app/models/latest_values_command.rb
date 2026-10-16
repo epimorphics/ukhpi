@@ -36,7 +36,7 @@ class LatestValuesCommand
 
     @results = hpi.query(query)
     true
-  rescue Faraday::ConnectionFailed, DataServicesApi::ServiceException
+  rescue Faraday::ConnectionFailed, Faraday::TimeoutError, DataServicesApi::ServiceException
     false
   end
 
