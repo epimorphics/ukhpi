@@ -74,15 +74,16 @@ module Ukhpi
     # This map is class to status and is read once at boot, so a status that varies
     # per call site needs its own exception class rather than an attribute.
     #
-    # Failures of the data API are handled errors too: the user gets an honest
-    # gateway status rather than a 500, and the failure is not counted as an
-    # internal error. These are the only exceptions `data_services_api` raises,
-    # and it records each one in the API metrics before raising it, so the API
-    # alerts still fire.
+    # Failures of the data API are handled errors too: the user gets a 503 (504
+    # for a timeout) rather than a 500, and the failure is not counted as an
+    # internal error. The gem records each one in the API metrics before raising
+    # it, so the API alerts still fire. A 4xx from the API is re-raised as
+    # ApiQueryError (see DataService), which is deliberately not listed here: it
+    # means we sent a bad query, so it stays a 500.
     config.action_dispatch.rescue_responses.merge!(
       'BadRequestError' => :bad_request,
-      'DataServicesApi::ServiceException' => :bad_gateway,
-      'Faraday::ConnectionFailed' => :bad_gateway,
+      'DataServicesApi::ServiceException' => :service_unavailable,
+      'Faraday::ConnectionFailed' => :service_unavailable,
       'Faraday::TimeoutError' => :gateway_timeout
     )
 

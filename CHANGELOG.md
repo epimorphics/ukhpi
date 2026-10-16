@@ -33,13 +33,18 @@ Versioning](https://semver.org/spec/v2.0.0.html).
   it is now matched literally
   [#500](https://github.com/epimorphics/ukhpi/issues/500).
 - Data API failures are now handled errors. Users get a "Data service
-  unavailable" page with `502 Bad Gateway` (`504 Gateway Timeout` for a
-  timeout) instead of a 500 that blamed the application. **Ops:** these
-  failures no longer increment `internal_application_error`, so an API outage
-  raises only the `APIConnectionError` or `APIServiceException` alert, not
+  unavailable" page with `503 Service Unavailable` (`504 Gateway Timeout` for
+  a timeout) instead of a 500 that blamed the application. A 4xx from the API
+  is the exception: it means the application sent a bad query, so it is still
+  a 500, is counted as an internal error and is sent to Sentry. The landing
+  page now also shows its "latest values unavailable" message when the API
+  times out, as it already did for other API failures
+  [#700](https://github.com/epimorphics/ukhpi/issues/700). **Ops:** API
+  outages no longer increment `internal_application_error`, so they raise only
+  the `APIConnectionError` or `APIServiceException` alert, not
   `ApplicationInternalError` as well. `internal_application_error` now counts
-  only unhandled exceptions (500s). No metric or label has changed. The
-  failures are no longer sent to Sentry either, since the API metrics and logs
+  only unhandled exceptions (500s). No metric or label has changed. API
+  outages are no longer sent to Sentry either, since the API metrics and logs
   already record them.
 
 ## [2.4.2] - 2026-10-13

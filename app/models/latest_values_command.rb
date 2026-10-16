@@ -34,7 +34,7 @@ class LatestValuesCommand
     query = add_sort_constraint(query)
     query = add_limit_constraint(query)
 
-    @results = hpi.query(query)
+    @results = classify_api_errors { hpi.query(query) }
     true
   rescue Faraday::ConnectionFailed, Faraday::TimeoutError, DataServicesApi::ServiceException
     false

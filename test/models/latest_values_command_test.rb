@@ -55,6 +55,13 @@ class LatestValuesCommandTest < ActiveSupport::TestCase
     end
 
     describe 'when our own code raises' do
+      it 'lets a query the API rejects propagate as ApiQueryError' do
+        service = stub
+        service.expects(:query).raises(DataServicesApi::ServiceException.new('Bad Request', 400))
+
+        _ { LatestValuesCommand.new.perform_query(service) }.must_raise ApiQueryError
+      end
+
       it 'lets a NoMethodError propagate rather than showing the apology' do
         service = stub
         service.expects(:query).raises(NoMethodError.new("undefined method 'foo'"))

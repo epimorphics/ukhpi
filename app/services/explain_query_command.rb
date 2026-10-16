@@ -9,7 +9,7 @@ class ExplainQueryCommand < QueryCommand
   # Explain the given query, and stash the results. Return time taken in microseconds.
   def execute_query(service, query)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
-    @results = api_service(service).explain(query)
+    @results = classify_api_errors { api_service(service).explain(query) }
     (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start)
   end
 

@@ -97,22 +97,22 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
     assert_empty events
   end
 
-  test 'a data API error renders the 502 page' do
+  test 'a data API error renders the 503 page' do
     QueryCommand.any_instance.stubs(:perform_query)
                 .raises(DataServicesApi::ServiceException.new('Internal Server Error', 500))
 
     get '/browse'
 
-    assert_response :bad_gateway
+    assert_response :service_unavailable
     assert_includes @response.body, 'Data service unavailable'
   end
 
-  test 'a data API connection failure renders the 502 page' do
+  test 'a data API connection failure renders the 503 page' do
     QueryCommand.any_instance.stubs(:perform_query).raises(Faraday::ConnectionFailed.new('Connection refused'))
 
     get '/browse'
 
-    assert_response :bad_gateway
+    assert_response :service_unavailable
     assert_includes @response.body, 'Data service unavailable'
   end
 
@@ -140,8 +140,29 @@ class ErrorsControllerTest < ActionDispatch::IntegrationTest
 
     get '/browse', headers: { 'Accept' => 'application/json' }
 
-    assert_response :bad_gateway
-    assert_equal 'Bad Gateway', @response.body.strip
+    assert_response :service_unavailable
+    assert_equal 'Service Unavailable', @response.body.strip
+  end
+
+  test 'a data API error raised by the gem renders the 503 page' do
+    DataServicesApi::Dataset.any_instance.stubs(:query)
+                            .raises(DataServicesApi::ServiceException.new('Service Unavailable', 503))
+
+    get '/browse'
+
+    assert_response :service_unavailable
+  end
+
+  # A 4xx means the API rejected a query we built: our bug, not an outage
+  test 'a data API 4xx renders the 500 page and is counted as an internal error' do
+    DataServicesApi::Dataset.any_instance.stubs(:query)
+                            .raises(DataServicesApi::ServiceException.new('Bad Request', 400))
+
+    assert_difference -> { internal_error_count('Unhandled ApiQueryError in browse#show') }, 1 do
+      get '/browse'
+    end
+    assert_response :internal_server_error
+    assert_includes @response.body, 'Application error'
   end
 
   test 'a malformed query string renders the 400 page' do

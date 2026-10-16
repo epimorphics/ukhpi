@@ -59,7 +59,7 @@ class QueryCommand
   def execute_query(service, query)
     start = Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond)
 
-    @results = api_service(service).query(query)
+    @results = classify_api_errors { api_service(service).query(query) }
 
     (Process.clock_gettime(Process::CLOCK_MONOTONIC, :microsecond) - start) / 1000
   end
