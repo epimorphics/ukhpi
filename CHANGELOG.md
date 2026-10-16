@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [2.4.3] - 2026-10-16
+
 ### Changed
 
 - Data API log entries now follow the logging standard. Failures are logged at
