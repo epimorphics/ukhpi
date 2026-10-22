@@ -2357,6 +2357,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"argparse@npm:^3.0.3":
+  version: 3.0.3
+  resolution: "argparse@npm:3.0.3"
+  checksum: 10c0/8d715f1c4bb0aa14a8b8ee749d6ab6f12d380caba33139d527cac79988af152cfd160f152c3964c76c7ea473f1899bd0989bd1e9cfdba22e68f50b6a4b5c9d0d
+  languageName: node
+  linkType: hard
+
 "async-validator@npm:~1.8.1":
   version: 1.8.5
   resolution: "async-validator@npm:1.8.5"
@@ -3835,14 +3842,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:^5.4.3":
-  version: 5.4.3
-  resolution: "js-yaml@npm:5.4.3"
+"js-yaml@npm:^5.5.0":
+  version: 5.5.0
+  resolution: "js-yaml@npm:5.5.0"
   dependencies:
-    argparse: "npm:^2.0.1"
+    argparse: "npm:^3.0.3"
   bin:
     js-yaml: bin/js-yaml.mjs
-  checksum: 10c0/7180bf35feef9815a06cb2f8845c1196f1e4264430a04623884d87c3d21475de7d46a86c9c5142dcc1646c788bc0e676eb09ba817810707e0b4e984f7cf93a5f
+  checksum: 10c0/311619f44dd788657e9b81d4b5c60ff367441f364045e3796bc604a41f25819852748fb173ae82f2553d53cb609d7fdb79e0a74148892cb2c085eebe91839b53
   languageName: node
   linkType: hard
 
@@ -4787,14 +4794,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.5.30":
-  version: 8.5.30
-  resolution: "postcss@npm:8.5.30"
+"postcss@npm:^8.5.31":
+  version: 8.5.31
+  resolution: "postcss@npm:8.5.31"
   dependencies:
     nanoid: "npm:^3.3.20"
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.2"
-  checksum: 10c0/219cdc50ba3f2b6d0f8b779c4939514cb9d9f53cc9eb92dae1a06f2d6eb910b2ce339a3ee93e7c893b89e50241509fd92c04f0639af1cdf41a1e13983a476029
+  checksum: 10c0/52f94c6655f86f568a803ce9c8eb3c749e109cc711d26644c4cde953b30c1b947a2f25af3b9453de68584ac655572f46ed8e830b8ab2f21dd226b3f640992e00
   languageName: node
   linkType: hard
 
@@ -5730,7 +5737,7 @@ __metadata:
     govuk-frontend: "npm:^6.5.0"
     govuk_frontend_toolkit: "npm:^9.0.1"
     jiti: "npm:^2.7.0"
-    js-yaml: "npm:^5.4.3"
+    js-yaml: "npm:^5.5.0"
     kebab-case: "npm:^1.0.2"
     leaflet: "npm:^1.9.4"
     leaflet-clonelayer: "npm:^1.0.7"
@@ -5738,7 +5745,7 @@ __metadata:
     moment: "npm:^2.31.0"
     numeral: "npm:^2.0.6"
     path-complete-extname: "npm:^1.0.0"
-    postcss: "npm:^8.5.30"
+    postcss: "npm:^8.5.31"
     postcss-import: "npm:^16.2.0"
     postcss-loader: "npm:^8.2.1"
     postcss-preset-env: "npm:^10.6.1"
@@ -5750,7 +5757,7 @@ __metadata:
     terser: "npm:^5.51.2"
     typescript: "npm:^6.0.3"
     typescript-eslint: "npm:^8.69.0"
-    vite: "npm:^7.3.6"
+    vite: "npm:^7.3.7"
     vite-plugin-erb: "npm:^1.2.0"
     vite-plugin-rails: "npm:^0.6.0"
     vite-plugin-ruby: "npm:^5.2.3"
@@ -5903,9 +5910,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vite@npm:^7.3.6":
-  version: 7.3.6
-  resolution: "vite@npm:7.3.6"
+"vite@npm:^7.3.7":
+  version: 7.3.7
+  resolution: "vite@npm:7.3.7"
   dependencies:
     esbuild: "npm:^0.27.0 || ^0.28.0"
     fdir: "npm:^6.5.0"
@@ -5954,7 +5961,7 @@ __metadata:
       optional: true
   bin:
     vite: bin/vite.js
-  checksum: 10c0/c6d359f84ad362f5c97ff7988b77c90add04162c60cdf6059375a7d9e3217848c53a8cb6b6c48517bef84b6bba4c9bc85319a889b5236acb7d5a2bc8cb7b9a8d
+  checksum: 10c0/6a3f868a33b849383e29c4e39550155563cf0522b5b6504ab60ff5e44dd07ad472ff87a4d5d2c08f1f70cc6602357f95c38d27371b7612d84801cb790f325a7e
   languageName: node
   linkType: hard
 
