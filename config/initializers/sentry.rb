@@ -14,6 +14,10 @@ Rails.application.reloader.to_prepare do
       'ActionController::BadRequest',
       'ActionController::RoutingError',
       'ActiveRecord::RecordNotFound',
+      # Selections the user got wrong, answered with a 400: there is nothing to fix
+      # in the code, and http_server_requests_total already counts them. Not their
+      # parent ApplicationRequestError, whose other subclass, UpstreamError, is a 500.
+      'BadRequestError',
     ]
     # * Set the environment name from the SENTRY_ENVIRONMENT configuration value
     config.environment = ENV.fetch('SENTRY_ENVIRONMENT', Rails.env)

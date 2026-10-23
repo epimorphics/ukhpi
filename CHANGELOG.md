@@ -8,6 +8,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Requests with selections the app does not recognise, such as an unknown theme
+  or location, are no longer reported to Sentry. They are answered with a 400,
+  so there is nothing to fix in the code, but since 2.4.0 each one had been
+  reported as a `BadRequestError`: over 8,000 events in a month, using the
+  error quota. They are still counted by `http_server_requests_total` with
+  `code="400"`
+  [#706](https://github.com/epimorphics/ukhpi/issues/706).
+
 ## [2.4.3] - 2026-10-16
 
 ### Changed
