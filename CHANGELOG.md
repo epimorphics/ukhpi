@@ -8,6 +8,26 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Changed
+
+- The Docker image is built on Ruby 3.4.12 and Alpine 3.24, up from Ruby 3.4.9
+  and Alpine 3.23, to pick up their security and bug fixes.
+
+### Security
+
+- Updated JavaScript dependencies to clear the open Dependabot alerts:
+  - `postcss` to 8.5.31: a CSS `sourceMappingURL` comment could read arbitrary
+    `.map` files.
+  - `d3-color` to 3.1.0, forced through a resolution under the d3 v1/v2
+    modules: ReDoS when parsing colour strings.
+  - `query-string` to 10.0.0, which no longer depends on
+    `decode-uri-component` (denial of service on malformed percent-encoding).
+    The URLs it builds are unchanged.
+  - `js-yaml` 4.x to 4.3.2, forced through a resolution (build-time only):
+    quadratic CPU use on crafted merge keys.
+  - `vite` 7.3.6 to 7.3.7 and `follow-redirects` 1.16.0 to 1.16.1, from
+    Dependabot.
+
 ### Fixed
 
 - Requests with selections the app does not recognise, such as an unknown theme
