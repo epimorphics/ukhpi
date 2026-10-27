@@ -601,7 +601,7 @@ DEPENDENCIES
   yajl-ruby
 
 RUBY VERSION
-  ruby 3.4.9
+  ruby 3.4.12
 
 BUNDLED WITH
   4.0.10
