@@ -2693,17 +2693,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"d3-color@npm:1":
-  version: 1.4.1
-  resolution: "d3-color@npm:1.4.1"
-  checksum: 10c0/668721dedc1d7e84aa9b3c51ccbaa1facd92ae9303d86ea0d5d0cf589dab892bc4cc7e155696537ed43e8f053d3ad0dde86363e1a789bad800a786f2ede527d7
-  languageName: node
-  linkType: hard
-
-"d3-color@npm:1 - 2":
-  version: 2.0.0
-  resolution: "d3-color@npm:2.0.0"
-  checksum: 10c0/5aa58dfb78e3db764373a904eabb643dc024ff6071128a41e86faafa100e0e17a796e06ac3f2662e9937242bb75b8286788629773d76936f11c17bd5fe5e15cd
+"d3-color@npm:^3.1.0":
+  version: 3.1.0
+  resolution: "d3-color@npm:3.1.0"
+  checksum: 10c0/a4e20e1115fa696fce041fbe13fbc80dc4c19150fa72027a7c128ade980bc0eeeba4bcf28c9e21f0bce0e0dbfe7ca5869ef67746541dcfda053e4802ad19783c
   languageName: node
   linkType: hard
 
@@ -2837,13 +2830,6 @@ __metadata:
     supports-color:
       optional: true
   checksum: 10c0/d79136ec6c83ecbefd0f6a5593da6a9c91ec4d7ddc4b54c883d6e71ec9accb5f67a1a5e96d00a328196b5b5c86d365e98d8a3a70856aaf16b4e7b1985e67f5a6
-  languageName: node
-  linkType: hard
-
-"decode-uri-component@npm:^0.2.0":
-  version: 0.2.2
-  resolution: "decode-uri-component@npm:0.2.2"
-  checksum: 10c0/1f4fa54eb740414a816b3f6c24818fbfcabd74ac478391e9f4e2282c994127db02010ce804f3d08e38255493cfe68608b3f5c8e09fd6efc4ae46c807691f7a31
   languageName: node
   linkType: hard
 
@@ -3372,10 +3358,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"filter-obj@npm:^1.1.0":
-  version: 1.1.0
-  resolution: "filter-obj@npm:1.1.0"
-  checksum: 10c0/071e0886b2b50238ca5026c5bbf58c26a7c1a1f720773b8c7813d16ba93d0200de977af14ac143c5ac18f666b2cfc83073f3a5fe6a4e996c49e0863d5500fccf
+"filter-obj@npm:^6.1.0":
+  version: 6.1.0
+  resolution: "filter-obj@npm:6.1.0"
+  checksum: 10c0/bd190c7a7dbb6ccba36b3f73efe7fc6c899310518c9e4fdfef7772c1d3432030abf65de4a01f979ade08d52b137cb4fb79243824745cd05ee806548382b39f0d
   languageName: node
   linkType: hard
 
@@ -3831,14 +3817,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"js-yaml@npm:4.1.0, js-yaml@npm:^4.1.0":
-  version: 4.1.0
-  resolution: "js-yaml@npm:4.1.0"
+"js-yaml@npm:^4.3.2":
+  version: 4.3.2
+  resolution: "js-yaml@npm:4.3.2"
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
     js-yaml: bin/js-yaml.js
-  checksum: 10c0/184a24b4eaacfce40ad9074c64fd42ac83cf74d8c8cd137718d456ced75051229e5061b8633c3366b8aada17945a7a356b337828c19da92b51ae62126575018f
+  checksum: 10c0/dedd34c2e8fef1d504687f1bc94ed0ee1311a1f78770fa2800352c6d59c635ccf555009d74e9afe529ae62199da2b1ccef30e53dc84dcd8d2d8187c22574bc97
   languageName: node
   linkType: hard
 
@@ -4086,15 +4072,6 @@ __metadata:
   version: 2.1.3
   resolution: "ms@npm:2.1.3"
   checksum: 10c0/d924b57e7312b3b63ad21fc5b3dc0af5e78d61a1fc7cfb5457edaf26326bf62be5307cc87ffb6862ef1c2b33b0233cdb5d4f01c4c958cc0d660948b65a287a48
-  languageName: node
-  linkType: hard
-
-"nanoid@npm:^3.3.11, nanoid@npm:^3.3.8":
-  version: 3.3.18
-  resolution: "nanoid@npm:3.3.18"
-  bin:
-    nanoid: bin/nanoid.cjs
-  checksum: 10c0/b994b4e396730f8be2520923284e2040d61eaee55cc6d4935ef6d38d34bafdc46133eda4d3faea5073bda545aa6079d82b886caeac5c731cf9ac18bcc1301425
   languageName: node
   linkType: hard
 
@@ -4783,18 +4760,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.4.14":
-  version: 8.5.3
-  resolution: "postcss@npm:8.5.3"
-  dependencies:
-    nanoid: "npm:^3.3.8"
-    picocolors: "npm:^1.1.1"
-    source-map-js: "npm:^1.2.1"
-  checksum: 10c0/b75510d7b28c3ab728c8733dd01538314a18c52af426f199a3c9177e63eb08602a3938bfb66b62dc01350b9aed62087eabbf229af97a1659eb8d3513cec823b3
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.5.31":
+"postcss@npm:^8.4.14, postcss@npm:^8.5.31, postcss@npm:^8.5.6":
   version: 8.5.31
   resolution: "postcss@npm:8.5.31"
   dependencies:
@@ -4802,17 +4768,6 @@ __metadata:
     picocolors: "npm:^1.1.1"
     source-map-js: "npm:^1.2.2"
   checksum: 10c0/52f94c6655f86f568a803ce9c8eb3c749e109cc711d26644c4cde953b30c1b947a2f25af3b9453de68584ac655572f46ed8e830b8ab2f21dd226b3f640992e00
-  languageName: node
-  linkType: hard
-
-"postcss@npm:^8.5.6":
-  version: 8.5.14
-  resolution: "postcss@npm:8.5.14"
-  dependencies:
-    nanoid: "npm:^3.3.11"
-    picocolors: "npm:^1.1.1"
-    source-map-js: "npm:^1.2.1"
-  checksum: 10c0/48138207cf5ef5581be1bfe2cb65ccfe0ac75e43888ba045afc8ed6043d7b56aeb3b9a9fe5b353ff554be943cd0cc15d826ccb991525159175971e5ee8ab0237
   languageName: node
   linkType: hard
 
@@ -4876,15 +4831,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"query-string@npm:^6.14.1":
-  version: 6.14.1
-  resolution: "query-string@npm:6.14.1"
+"query-string@npm:^10.0.0":
+  version: 10.0.0
+  resolution: "query-string@npm:10.0.0"
   dependencies:
-    decode-uri-component: "npm:^0.2.0"
-    filter-obj: "npm:^1.1.0"
-    split-on-first: "npm:^1.0.0"
-    strict-uri-encode: "npm:^2.0.0"
-  checksum: 10c0/900e0fa788000e9dc5f929b6f4141742dcf281f02d3bab9714bc83bea65fab3de75169ea8d61f19cda996bc0dcec72e156efe3c5614c6bce65dcf234ac955b14
+    filter-obj: "npm:^6.1.0"
+    split-on-first: "npm:^4.0.0"
+  checksum: 10c0/0cf6181f841510be1edabd6678ee1d752f047203a6672ee05a368a29b56f8698bec6a37f2937607d98fab55ebc882ccdfabfde26410dd8a57c0e1687991f2ece
   languageName: node
   linkType: hard
 
@@ -5472,7 +5425,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.2.1, source-map-js@npm:^1.2.2":
+"source-map-js@npm:>=0.6.2 <2.0.0, source-map-js@npm:^1.2.2":
   version: 1.2.2
   resolution: "source-map-js@npm:1.2.2"
   checksum: 10c0/d5d6dec62266834f83dd4f8a2606a196fb1a006ca5d53b0ef80ee513b7eba2f4e2ae241f4bc129ae7e9b80dea24f6e3d92b446b7e6e96be7653cab8888168a94
@@ -5496,10 +5449,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"split-on-first@npm:^1.0.0":
-  version: 1.1.0
-  resolution: "split-on-first@npm:1.1.0"
-  checksum: 10c0/56df8344f5a5de8521898a5c090023df1d8b8c75be6228f56c52491e0fc1617a5236f2ac3a066adb67a73231eac216ccea7b5b4a2423a543c277cb2f48d24c29
+"split-on-first@npm:^4.0.0":
+  version: 4.0.0
+  resolution: "split-on-first@npm:4.0.0"
+  checksum: 10c0/c586c242e12762e56ec7bcb13231b13c18ff5c986fb48403dd31a315f0105d96ca496afe0bd0ccb10af1045afd57317e24c3c663c43dda9163b8ef6457e173a9
   languageName: node
   linkType: hard
 
@@ -5507,13 +5460,6 @@ __metadata:
   version: 3.1.0
   resolution: "stimulus-vite-helpers@npm:3.1.0"
   checksum: 10c0/828252f43b238191d71b7b4d2048b7df9845c789963a0a23ea0979941e55ad0e14d2b98646eba328e9f4432cf0c0c8340830c5cde1fc9046077c6f1109b4a671
-  languageName: node
-  linkType: hard
-
-"strict-uri-encode@npm:^2.0.0":
-  version: 2.0.0
-  resolution: "strict-uri-encode@npm:2.0.0"
-  checksum: 10c0/010cbc78da0e2cf833b0f5dc769e21ae74cdc5d5f5bd555f14a4a4876c8ad2c85ab8b5bdf9a722dc71a11dcd3184085e1c3c0bd50ec6bb85fffc0f28cf82597d
   languageName: node
   linkType: hard
 
@@ -5749,7 +5695,7 @@ __metadata:
     postcss-import: "npm:^16.2.0"
     postcss-loader: "npm:^8.2.1"
     postcss-preset-env: "npm:^10.6.1"
-    query-string: "npm:^6.14.1"
+    query-string: "npm:^10.0.0"
     regenerator-runtime: "npm:^0.14.1"
     rollup: "npm:^4.63.1"
     rollup-plugin-gzip: "npm:^4.2.0"
