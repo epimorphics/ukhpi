@@ -8,6 +8,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+## [2.4.4] - 2026-10-27
+
 ### Changed
 
 - The Docker image is built on Ruby 3.4.12 and Alpine 3.24, up from Ruby 3.4.9
