@@ -11,7 +11,8 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 ### Changed
 
 - The Docker image is built on Ruby 3.4.12 and Alpine 3.24, up from Ruby 3.4.9
-  and Alpine 3.23, to pick up their security and bug fixes.
+  and Alpine 3.23, to pick up their security and bug fixes. The Alpine version
+  is now set only in the `Dockerfile`; the `Makefile` no longer overrides it.
 
 ### Security
 
