@@ -69,6 +69,8 @@ class UserCompareSelections
   # @return Messages describing any selected indicator or statistic we don't recognise
   def errors
     @errors ||= [
+      ('incorrect or missing "from" date' unless valid_date?(:from_date)),
+      ('incorrect or missing "to" date' unless valid_date?(:to_date)),
       ('unrecognised indicator' unless ukhpi_data_cube.indicator(selected_indicator)),
       ('unrecognised statistic' unless ukhpi_data_cube.statistic(selected_statistic)),
     ].compact
@@ -105,6 +107,13 @@ class UserCompareSelections
   end
 
   private
+
+  def valid_date?(method)
+    send(method)
+    true
+  rescue ArgumentError
+    false
+  end
 
   def ukhpi_data_cube
     @ukhpi_data_cube ||= UkhpiDataCube.new

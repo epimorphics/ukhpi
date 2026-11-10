@@ -18,8 +18,6 @@ class CompareController < ApplicationController
     query_results = perform_query(user_compare_selections) unless user_compare_selections.search?
 
     CompareLocationsPresenter.new(user_compare_selections, query_results)
-  rescue ArgumentError => e
-    raise BadRequestError.new(e.message, user_selections: user_compare_selections)
   end
 
   def render_interactive(view_state)

@@ -8,6 +8,16 @@ Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
 
+### Fixed
+
+- Invalid compare dates are rejected as bad requests, while application faults in compare and browse
+  are reported as internal errors (#715).
+
+### Ops
+
+- Faults previously hidden as bad requests on compare and browse now return 500 and raise
+  `ApplicationInternalError` (#715).
+
 ## [2.4.4] - 2026-10-27
 
 ### Changed
