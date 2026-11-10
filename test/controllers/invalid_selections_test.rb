@@ -43,15 +43,24 @@ class InvalidSelectionsTest < ActionDispatch::IntegrationTest
       [ '/compare', { in: 'average_price' } ],
     'compare with a blank indicator' =>
       [ '/compare', { in: '' } ],
+    'browse with an invalid from date' =>
+      [ '/browse', { from: 'notadate' }, 'incorrect or missing "from" date' ],
+    'browse with an invalid to date' =>
+      [ '/browse', { to: 'notadate' }, 'incorrect or missing "to" date' ],
+    'compare with an invalid from date' =>
+      [ '/compare', { from: 'notadate' }, 'incorrect or missing "from" date' ],
+    'compare with an invalid to date' =>
+      [ '/compare', { to: 'notadate' }, 'incorrect or missing "to" date' ],
     'compare print with an unknown statistic' =>
       [ '/compare', { print: 'true', 'location[]' => 'E12000007', st: 'semi-detached', in: 'avg' } ],
     'browse edit with a blank date' =>
       [ '/browse/edit', { from: '' } ],
-  }.each do |description, (path, params)|
+  }.each do |description, (path, params, expected_message)|
     test "#{description} is a bad request" do
       get path, params: DATES.merge(params)
 
       assert_response :bad_request
+      assert_includes @response.body, expected_message if expected_message
     end
   end
 
@@ -73,5 +82,37 @@ class InvalidSelectionsTest < ActionDispatch::IntegrationTest
     get '/print', params: DATES.merge('thm[]' => 'average_price', location: UK)
 
     assert_includes @response.body, 'unrecognised theme(s)'
+  end
+
+  test 'an ArgumentError from the browse query is an internal error' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(ArgumentError, 'unexpected query error')
+
+    get '/browse', params: DATES.merge(location: UK)
+
+    assert_response :internal_server_error
+  end
+
+  test 'an ArgumentError from the compare query is an internal error' do
+    QueryCommand.any_instance.stubs(:perform_query).raises(ArgumentError, 'unexpected query error')
+
+    get '/compare', params: DATES.merge('location[]' => 'E92000001')
+
+    assert_response :internal_server_error
+  end
+
+  test 'an ArgumentError from the browse presenter is an internal error' do
+    DataViewsPresenter.stubs(:new).raises(ArgumentError, 'unexpected presenter error')
+
+    get '/browse', params: DATES.merge(location: UK)
+
+    assert_response :internal_server_error
+  end
+
+  test 'an ArgumentError from the compare presenter is an internal error' do
+    CompareLocationsPresenter.stubs(:new).raises(ArgumentError, 'unexpected presenter error')
+
+    get '/compare', params: DATES.merge('location[]' => 'E92000001')
+
+    assert_response :internal_server_error
   end
 end
